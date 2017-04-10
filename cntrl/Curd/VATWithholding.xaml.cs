@@ -37,8 +37,6 @@ namespace cntrl
 
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                try
-                {
                     CollectionViewSource invoiceViewSource = new CollectionViewSource();
                     invoiceViewSource.Source = _invoiceList;
                     stackMain.DataContext = invoiceViewSource;
@@ -60,22 +58,16 @@ namespace cntrl
                             lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
             }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 payment_withholding_tax payment_withholding_tax = new payment_withholding_tax();
                 payment_withholding_tax.status = Status.Documents_General.Pending;
                 payment_withholding_tax.id_contact = ((dynamic)_invoiceList.FirstOrDefault()).id_contact;
-                if (cbxDocument.SelectedValue != null)
+
+            if (cbxDocument.SelectedValue != null)
                 {
                     payment_withholding_tax.id_range = (int)cbxDocument.SelectedValue;
                 }
@@ -131,28 +123,16 @@ namespace cntrl
 
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
-                parentGrid.Visibility = System.Windows.Visibility.Hidden;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                parentGrid.Visibility = Visibility.Hidden;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 PaymentDB.CancelAllChanges();
 
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
-                parentGrid.Visibility = System.Windows.Visibility.Hidden;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                parentGrid.Visibility = Visibility.Hidden;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

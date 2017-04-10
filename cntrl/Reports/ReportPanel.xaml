@@ -115,13 +115,13 @@
                     </StackPanel>
                 </Expander>
 
-                <!--<Expander x:Name="expMatrix">
+                <Expander x:Name="expMatrix">
                     <Expander.Header>
                         <Label Content="Matrix" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
                     </Expander.Header>
                     <syncfusion:PivotSchemaDesigner x:Name="schemaDesigner1" VisualStyle="Metro" HorizontalAlignment="Center"
                                                     MaxHeight="512" PivotControl="{Binding ElementName=sfPivotTable}" />
-                </Expander>-->
+                </Expander>
                 <Expander>
                     <Expander.Header>
                         <Label Content="{lex:Loc Share}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />

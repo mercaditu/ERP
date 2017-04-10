@@ -289,7 +289,7 @@ namespace cntrl
                     {
                         if (IsFirst == false)
                         {
-                            filter += " or ";
+                            filter += " and ";
                         }
                         filter += comboobox.DisplayMemberPath + "='" + comboobox.SelectedValue + "'";
                         IsFirst = false;
@@ -303,7 +303,7 @@ namespace cntrl
                     {
                         if (IsFirst == false)
                         {
-                            filter += " or ";
+                            filter += " and ";
                         }
                         filter += CheckBox.Tag + " = True";
                         IsFirst = false;

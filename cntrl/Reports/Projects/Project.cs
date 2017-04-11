@@ -50,7 +50,7 @@ sum(sbd.quantity * sbd.unit_price)-sum(ps.debit) as Balance,
 task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,0,TIMEDIFF( task.end_date_est, task.start_date_est ))) as QuantityAdditional,
 if(task.importance > 0, task.importance, null) as AveragePercentage,
 if(task.completed > 0, task.completed, null) as Percentage,
-(select value from item_price inner join item_price_list on item_price.id_price_list = item_price_list.id_price_list where item_price.id_item = item.id_item and item_price_list.is_default) as Price
+(select value from item_price inner join item_price_list on item_price.id_price_list = item_price_list.id_price_list where item_price.id_item = item.id_item and item_price_list.is_default limit 1) as Price
 
 from project_task as task
 

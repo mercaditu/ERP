@@ -727,6 +727,7 @@
     <EmbeddedResource Include="Reports\Projects\Project.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Projects\ProjectExecution.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectFinance.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectHR.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectImportance.rdlc" />

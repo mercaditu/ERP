@@ -9,9 +9,6 @@ using System.Windows.Input;
 
 namespace cntrl.PanelAdv
 {
-    /// <summary>
-    /// Interaction logic for ActionPanel.xaml
-    /// </summary>
     public partial class ActionPanelAnull : UserControl
     {
         public int ID { get; set; }
@@ -49,6 +46,7 @@ namespace cntrl.PanelAdv
 
                 item_movementList = db.item_movement.Where(x => x.sales_invoice_detail.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
                 item_movementViewSource.Source = item_movementList;
+
                 foreach (item_movement item_movement in item_movementList)
                 {
                     item_movement.ActionStatus = item_movement.ActionsStatus.Green;
@@ -119,6 +117,11 @@ namespace cntrl.PanelAdv
                 }
             }
 
+            if (db.payments.Where(x => x.payment_detail.Count() == 0).Count() == 0)
+            {
+                db.payments.RemoveRange(db.payments.Where(x => x.payment_detail.Count() == 0));
+            }
+
             foreach (item_movement item_movement in item_movementList)
             {
                 if (item_movement.Action == item_movement.Actions.Delete)
@@ -130,7 +133,10 @@ namespace cntrl.PanelAdv
                 {
                     foreach (var item in item_movement.child)
                     {
-                        List<item_movement> item_movementList = db.item_movement.Where(x => x.id_item_product == item_movement.id_item_product && x.id_movement != item_movement.id_movement && x.credit > 0).ToList();
+                        List<item_movement> item_movementList = db.item_movement.Where(x => 
+                        x.id_item_product == item_movement.id_item_product && 
+                        x.id_movement != item_movement.id_movement && 
+                        x.credit > 0).ToList();
                         foreach (item_movement _item_movement in item_movementList)
                         {
                             if (_item_movement.avlquantity > item.credit)

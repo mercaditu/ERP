@@ -320,23 +320,24 @@ namespace entity.Brillo.Logic
 
         public void DeletePaymentSchedual(db db, int SchedualID)
         {
-            payment_schedual payment_schedual = db.payment_schedual.Find(SchedualID);
+            payment_schedual parent_schedual = db.payment_schedual.Find(SchedualID);
 
-            if (payment_schedual != null)
+            if (parent_schedual != null)
             {
-                payment_schedual parent_paymnet_schedual = payment_schedual.child.FirstOrDefault();
-                if (parent_paymnet_schedual != null)
+                List<payment_schedual> child_schedual = parent_schedual.child.ToList();
+
+                foreach (payment_schedual child in child_schedual)
                 {
-                    db.app_account_detail.Remove(parent_paymnet_schedual.payment_detail.app_account_detail.FirstOrDefault());
-                    db.payments.Remove(parent_paymnet_schedual.payment_detail.payment);
-                    db.payment_detail.Remove(parent_paymnet_schedual.payment_detail);
-                    db.payment_schedual.Remove(parent_paymnet_schedual);
-                    db.payment_schedual.Remove(payment_schedual);
+                    db.app_account_detail.Remove(child.payment_detail.app_account_detail.FirstOrDefault());
+                    db.payment_detail.Remove(child.payment_detail);
                 }
-                else
+
+                if (parent_schedual.child.Count() > 0)
                 {
-                    db.payment_schedual.Remove(payment_schedual);
+                    db.payment_schedual.RemoveRange(parent_schedual.child);
                 }
+                
+                db.payment_schedual.Remove(parent_schedual);
             }
         }
     }

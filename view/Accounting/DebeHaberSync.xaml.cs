@@ -52,13 +52,13 @@ namespace Cognitivo.Accounting
             DatePanel.StartDate = DateTime.Now.AddMonths(-1);
             DatePanel.EndDate = DateTime.Now.Date.AddDays(1).AddTicks(-1);
 
-            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-            sales_returnViewSource = ((CollectionViewSource)(FindResource("sales_returnViewSource")));
-            purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));
-            purchase_returnViewSource = ((CollectionViewSource)(FindResource("purchase_returnViewSource")));
-            payment_detailViewSource = ((CollectionViewSource)(FindResource("payment_detailViewSource")));
-            item_assetViewSource = ((CollectionViewSource)(FindResource("item_assetViewSource")));
-            production_order_detailViewSource = ((CollectionViewSource)(FindResource("production_order_detailViewSource")));
+            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+            sales_returnViewSource = FindResource("sales_returnViewSource") as CollectionViewSource;
+            purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
+            purchase_returnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
+            payment_detailViewSource =FindResource("payment_detailViewSource") as CollectionViewSource;
+            item_assetViewSource = FindResource("item_assetViewSource") as CollectionViewSource;
+            production_order_detailViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
 
             RelationshipHash = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
 

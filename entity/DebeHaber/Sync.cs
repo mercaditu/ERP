@@ -84,7 +84,7 @@ namespace DebeHaber
             {
                 State = States.Approved;
             }
-            else
+            else if (sales_invoice.status == Status.Documents_General.Annulled)
             {
                 State = States.Annuled;
             }

@@ -25,8 +25,6 @@
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />
         <converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
-        <converter:CostCenterCanStockItemConverter x:Key="CostCenterCanStockItemCheck" />
-        <converter:CostCenterCanStockCodeConverter x:Key="CostCenterCanStockCodeCheck" />
         <CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_orderpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource purchase_orderViewSource}}" />
         <CollectionViewSource x:Key="purchase_order_detailpurchase_order_dimensionViewSource" Source="{Binding purchase_order_dimension, Source={StaticResource purchase_orderpurchase_order_detailViewSource}}" />

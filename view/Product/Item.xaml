@@ -10,7 +10,6 @@
 	  xmlns:prop="clr-namespace:Cognitivo.Product"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
-	  xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
 		xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:LocalizeDictionary.DesignCulture="es-PY"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"

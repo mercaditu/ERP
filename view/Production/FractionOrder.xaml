@@ -32,7 +32,6 @@
     <Page.Resources>
         <converter:TreeViewchildFilter x:Key="tree" />
         <converter:Type2Enable x:Key="Type2Enable" />
-        <converter:SecurityConverter x:Key="SecurityConverter" />
         <converter:Status_Production_2ColorConverter x:Key="ProjectStatus2Color" />
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool" />
         <converter:NotConverter x:Key="NotConverter" />

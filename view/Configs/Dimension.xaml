@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:entity="clr-namespace:entity;assembly=entity"
-      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:local="clr-namespace:Cognitivo.Converters"
       xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
       mc:Ignorable="d"

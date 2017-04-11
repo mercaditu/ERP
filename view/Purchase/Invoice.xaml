@@ -24,8 +24,6 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Status2Enable x:Key="Status2Enable" />
-        <converter:CostCenterCanStockItemConverter x:Key="CostCenterCanStockItemCheck" />
-        <converter:CostCenterCanStockCodeConverter x:Key="CostCenterCanStockCodeCheck" />
 
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />

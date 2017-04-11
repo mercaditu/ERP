@@ -23,8 +23,6 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
-        <converter:CostCenterCanStockItemConverter x:Key="CostCenterCanStockItemCheck" />
-        <converter:CostCenterCanStockCodeConverter x:Key="CostCenterCanStockCodeCheck" />
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_returnpurchase_return_detailViewSource" Source="{Binding purchase_return_detail, Source={StaticResource purchase_returnViewSource}}" />
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />

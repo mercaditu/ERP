@@ -427,6 +427,33 @@ namespace entity.Brillo.Logic
                     {
                         Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0).ToList());
                     }
+                    else
+                    {            
+                        //Link with Packing if necesary
+                        foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail
+                            .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() > 0))
+                        {
+                            List<sales_packing_relation> PackingList = detail.sales_packing_relation.ToList();
+                            foreach (sales_packing_relation sales_packing_relation in PackingList)
+                            {
+                                sales_packing_detail sales_packing_detail = sales_packing_relation.sales_packing_detail;
+                                if (sales_packing_detail != null)
+                                {
+                                    if (sales_packing_detail.item_movement != null)
+                                    {
+                                        List<item_movement> MovementList = sales_packing_detail.item_movement.ToList();
+                                        foreach (item_movement mov in MovementList)
+                                        {
+                                            mov.id_sales_invoice_detail = detail.id_sales_invoice_detail;
+                                            detail.batch_code = mov.code;
+                                            detail.expire_date = mov.expire_date;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
             else
@@ -529,6 +556,7 @@ namespace entity.Brillo.Logic
                     }
                 }
             }
+
             //Return List so we can save into context.
             return item_movementList;
         }

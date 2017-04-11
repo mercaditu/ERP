@@ -130,14 +130,7 @@ namespace entity
             {
                 if (invoice.id_sales_invoice == 0 && invoice.id_contact > 0)
                 {
-                    try
-                    {
-                        SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+                    SaveChanges();
                 }
 
                 invoice.app_condition = app_condition.Find(invoice.id_condition);
@@ -162,11 +155,9 @@ namespace entity
                     {
                         payment_schedual.AddRange(payment_schedualList);
                     }
+
                     //Item Movement
-                    if (IsDiscountStock)
-                    {
-                        Insert_Items_2_Movement(invoice);
-                    }
+                    Insert_Items_2_Movement(invoice);
 
                     if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range > 0)
                     {
@@ -231,7 +222,7 @@ namespace entity
             {
                 item_movement.AddRange(item_movementList);
 
-                foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product != null))
+                foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
                 {
                     if (sales_detail.item_movement.FirstOrDefault() != null)
                     {

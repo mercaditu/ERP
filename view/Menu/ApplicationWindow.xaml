@@ -1,4 +1,4 @@
-﻿<metro:MetroWindow x:Class="Cognitivo.Menu.ApplicationWindow" x:Name="winApplicationWindow"
+﻿<metro:MetroWindow x:Class="Cognitivo.Menu.ApplicationWindow"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -8,8 +8,7 @@
                     lex:ResxLocalizationProvider.DefaultDictionary="local"
                     GlowBrush="Black" WindowStartupLocation="CenterScreen"
                     RightWindowCommandsOverlayBehavior="Flyouts" MinHeight="550" MinWidth="750"
-                    Style="{DynamicResource MyCleanWindowStyle}"
-                   Background="White"
+                    Style="{DynamicResource MyCleanWindowStyle}" Background="White"
                     Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>

@@ -1754,10 +1754,6 @@
     <Resource Include="Images\Menu\modHR.png" />
     <Resource Include="Images\Menu\modStock.png" />
     <Resource Include="Images\Menu\modSales.png" />
-    <Resource Include="Images\People\boy48.png" />
-    <Resource Include="Images\People\family25.png" />
-    <Resource Include="Images\People\man204.png" />
-    <Resource Include="Images\People\man472.png" />
     <Resource Include="Images\Menu\modProject_Event.png" />
     <Resource Include="Images\Menu\modProject_PrintingPress.png" />
     <Resource Include="Images\Application\128\Promotion.png" />
@@ -1770,7 +1766,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Menu\modAccounting.png" />
-    <Resource Include="Images\Cognitivo_Outline.png" />
     <Resource Include="Images\Cognitivo-64.png" />
     <Resource Include="Images\CognitivoLogo.png" />
     <Resource Include="Images\cognitivo.ico" />
@@ -2001,26 +1996,6 @@
     <Resource Include="Images\Flags\af.png" />
     <Resource Include="Images\Flags\ae.png" />
     <Resource Include="Images\Flags\ad.png" />
-    <Resource Include="Images\Flags\_Wales.png" />
-    <Resource Include="Images\Flags\_United Nations.png" />
-    <Resource Include="Images\Flags\_Somaliland.png" />
-    <Resource Include="Images\Flags\_Scotland.png" />
-    <Resource Include="Images\Flags\_Red Cross.png" />
-    <Resource Include="Images\Flags\_OPEC.png" />
-    <Resource Include="Images\Flags\_Olimpic Movement.png" />
-    <Resource Include="Images\Flags\_Northern Ireland.png" />
-    <Resource Include="Images\Flags\_Northern Cyprus.png" />
-    <Resource Include="Images\Flags\_NATO.png" />
-    <Resource Include="Images\Flags\_Kosovo.png" />
-    <Resource Include="Images\Flags\_Islamic Conference.png" />
-    <Resource Include="Images\Flags\_European Union.png" />
-    <Resource Include="Images\Flags\_England.png" />
-    <Resource Include="Images\Flags\_Commonwealth.png" />
-    <Resource Include="Images\Flags\_CIS.png" />
-    <Resource Include="Images\Flags\_CARICOM.png" />
-    <Resource Include="Images\Flags\_ASEAN.png" />
-    <Resource Include="Images\Flags\_Arab League.png" />
-    <Resource Include="Images\Flags\_African Union%28OAS%29.png" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="de\Cognitivo.resources">

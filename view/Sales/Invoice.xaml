@@ -5,7 +5,6 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
-	  xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
@@ -24,14 +23,10 @@
     </Page.CommandBindings>
     <Page.Resources>
         <converter:Bool2Color x:Key="Bool2Color" />
-        <!--<converter:SecurityConverter x:Key="SecurityConverter" />-->
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-        <!--<converter:CustomStringFormatConverter x:Key="CustomStringFormat" />-->
         <converter:Status2Enable x:Key="Status2Enable" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
-        <!--<converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />-->
         <converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
-        <!--<converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />-->
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}" />
@@ -256,7 +251,6 @@
 											  SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True,
 											  Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 											  SelectedValuePath="id_condition" Grid.Row="1" SelectionChanged="cbxCondition_SelectionChanged">
-                                        <!--ItemsSource="{Binding Source={StaticResource conditionViewSource}}"-->
                                         <ComboBox.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <VirtualizingStackPanel />

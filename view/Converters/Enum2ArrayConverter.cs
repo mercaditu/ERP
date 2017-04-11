@@ -7,8 +7,6 @@ namespace Cognitivo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            //Add Localization code for translation here...
-
             return Enum.GetValues(value as Type);
         }
 

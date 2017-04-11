@@ -1,19 +1,14 @@
 ﻿<Page x:Class="Cognitivo.Project.EventFinance"
 	x:Name="_ProjectInvocie" Title="{lex:Loc EventFinance}"
-	xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:entity="clr-namespace:entity;assembly=entity"
-	xmlns:local="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
 	xmlns:converter="clr-namespace:Cognitivo.Converters"
-	xmlns:data="clr-namespace:entity;assembly=entity"
 	xmlns:lex="http://wpflocalizeextension.codeplex.com"
-	xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
 	lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	lex:ResxLocalizationProvider.DefaultDictionary="local"
 	mc:Ignorable="d"
@@ -26,8 +21,6 @@
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color" />
         <converter:Status2ColorConverter x:Key="Status2ColorConverter" />
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool" />
-        <converter:salesorderdetailtostatus x:Key="salesorderdetailtostatus" />
-        <converter:salesorderdetailtoEnable x:Key="salesorderdetailtoEnable" />
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
         <CollectionViewSource x:Key="project_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}" />
         <CollectionViewSource x:Key="sales_invoiceViewSource" Source="{Binding sales_invoice, Source={StaticResource projectViewSource}}" />

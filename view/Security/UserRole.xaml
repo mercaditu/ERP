@@ -4,9 +4,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-	  xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
-	  xmlns:cls="clr-namespace:Cognitivo.Class"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -20,7 +18,6 @@
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}" />
         <CollectionViewSource x:Key="security_roleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_role}, CreateList=True}" />
-        <!--<CollectionViewSource x:Key="security_privilageViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_privilage}, CreateList=True}" />-->
         <CollectionViewSource x:Key="security_rolesecurity_curdViewSource" Source="{Binding security_curd, Source={StaticResource security_roleViewSource}}" />
         <CollectionViewSource x:Key="security_rolesecurity_role_privilageViewSource" Source="{Binding security_role_privilage, Source={StaticResource security_roleViewSource}}" />
     </Page.Resources>

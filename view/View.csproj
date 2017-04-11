@@ -439,9 +439,11 @@
     <Compile Include="Configs\Version.xaml.cs">
       <DependentUpon>Version.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\Localize.cs" />
     <Compile Include="Converters\OrderTovisibility.cs" />
     <Compile Include="Converters\Bool2Color.cs" />
     <Compile Include="Converters\ProductionPending2BooleanConverter.cs" />
+    <Compile Include="Converters\SecurityConverter.cs" />
     <Compile Include="Menu\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>

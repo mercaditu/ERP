@@ -117,9 +117,12 @@ namespace cntrl.PanelAdv
                 }
             }
 
-            if (db.payments.Where(x => x.payment_detail.Count() == 0).Count() == 0)
+            ///Since the above Foreach will run through a mix of payment scheduals, we have no way of knowing if we will have
+            ///payment headers.
+            List<payment> EmptyPayments = db.payments.Where(x => x.payment_detail.Count() == 0).ToList();
+            if (EmptyPayments.Count() > 0)
             {
-                db.payments.RemoveRange(db.payments.Where(x => x.payment_detail.Count() == 0));
+                db.payments.RemoveRange(EmptyPayments);
             }
 
             foreach (item_movement item_movement in item_movementList)

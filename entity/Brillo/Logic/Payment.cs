@@ -328,7 +328,7 @@ namespace entity.Brillo.Logic
 
                 foreach (payment_schedual child in child_schedual)
                 {
-                    db.app_account_detail.Remove(child.payment_detail.app_account_detail.FirstOrDefault());
+                    db.app_account_detail.RemoveRange(child.payment_detail.app_account_detail);
                     db.payment_detail.Remove(child.payment_detail);
                 }
 

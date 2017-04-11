@@ -118,7 +118,7 @@ namespace cntrl.PanelAdv
             }
 
             ///Since the above Foreach will run through a mix of payment scheduals, we have no way of knowing if we will have
-            ///payment headers.
+            ///payment headers. So we run this code to clean.
             List<payment> EmptyPayments = db.payments.Where(x => x.payment_detail.Count() == 0).ToList();
             if (EmptyPayments.Count() > 0)
             {

@@ -27,7 +27,7 @@ namespace Cognitivo.Project.Development
         {
             project project = new project();
             project.IsSelected = true;
-
+            project.State = EntityState.Added;
             ProjectDB.Entry(project).State = EntityState.Added;
             ProjectViewSource.View.MoveCurrentToLast();
         }
@@ -50,8 +50,59 @@ namespace Cognitivo.Project.Development
             }
         }
 
-        private void btnSave_Click(object sender)
+        private async void btnSave_Click(object sender)
         {
+            entity.project _project = ((entity.project)ProjectViewSource.View.CurrentItem);
+            int id_type = 0;
+            if (_project.State==EntityState.Added)
+            {
+                if (_project != null)
+                {
+
+
+                    if (_project.id_project_template != null)
+                    {
+                        id_type = (int)_project.id_project_template;
+                    }
+
+                    await ProjectDB.project_template_detail.Where(x => x.id_project_template == id_type).ToListAsync();
+                    List<project_template_detail> project_template_detail = ProjectDB.project_template_detail.Local.ToList();
+
+                    if (project_template_detail != null)
+                    {
+                        foreach (project_template_detail item in project_template_detail)
+                        {
+                            project_task project_task = new project_task();
+                            project_task.id_project_task = item.id_template_detail;
+                            project_task.items = item.item;
+                            if (item.item_description != null)
+                            {
+                                project_task.item_description = item.item_description;
+                            }
+                            else
+                            {
+                                project_task.item_description = "Generic Task - Please Replace";
+                            }
+
+                            project_task.code = item.code;
+                            project_task.id_item = item.id_item;
+                            project_task.status = Status.Project.Pending;
+
+                            if (item.parent != null)
+                            {
+                                project_task _project_task = ProjectDB.project_task.Local.Where(x => x.id_project_task == item.parent.id_template_detail).FirstOrDefault();
+                                _project_task.child.Add(project_task);
+                            }
+
+                            _project.project_task.Add(project_task);
+                            // }
+                        }
+                    }
+                }
+            }
+
+         
+
             if (ProjectDB.SaveChanges() > 0)
             {
                 ProjectViewSource.View.Refresh();
@@ -119,6 +170,11 @@ namespace Cognitivo.Project.Development
 
             ProjectViewSource = ((CollectionViewSource)(FindResource("ProjectViewSource")));
             ProjectViewSource.Source = ProjectDB.projects.Local;
+
+
+            CollectionViewSource templateViewSource = (CollectionViewSource)FindResource("project_templateViewSource");
+            templateViewSource.Source = await ProjectDB.project_template.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).AsNoTracking().ToListAsync();
+
 
             CollectionViewSource branchViewSource = ((CollectionViewSource)(FindResource("branchViewSource")));
             branchViewSource.Source = await ProjectDB.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();

@@ -27,7 +27,7 @@
         <CollectionViewSource x:Key="ProjectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
         <CollectionViewSource x:Key="Projectproject_tag_detail" Source="{Binding project_tag_detail, Source={StaticResource ProjectViewSource}}" />
         <CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
-
+        <CollectionViewSource x:Key="project_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_template}, CreateList=True}" />
         <CollectionViewSource x:Key="project_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_tag}, CreateList=True}" />
         <converter:ActiveToStatus x:Key="ActiveToStatus" />
     </Page.Resources>
@@ -48,7 +48,7 @@
 						recordSecondaryName="{Binding priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                           Status="{Binding is_active,Converter={StaticResource ActiveToStatus},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                           Status="{Binding status,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -67,6 +67,10 @@
                 <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                 <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="64" />
+                <Label Content="{lex:Loc Template}" Style="{StaticResource input_label}" />
+                <ComboBox x:Name="cbxTemplate" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource project_templateViewSource}}"
+                          DisplayMemberPath="name" SelectedValuePath="id_project_template"
+                          SelectedValue="{Binding id_project_template, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
                 <ComboBox Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource branchViewSource}}"
                           DisplayMemberPath="name" SelectedValuePath="id_branch"

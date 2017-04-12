@@ -33,8 +33,12 @@ namespace Cognitivo.Product
             item_templateitem_template_detaildetailViewSource,
             itemitem_conversion_factorViewSource;
 
+        public bool CanSeeCost { get; set; }
+
         public Item()
         {
+            CanSeeCost = CurrentSession.UserRole.see_cost;
+
             InitializeComponent();
 
             itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
@@ -212,7 +216,7 @@ namespace Cognitivo.Product
         {
             if (ItemDB.ChangeTracker.HasChanges())
             {
-                MessageBoxResult savechnages = MessageBox.Show("Do you want to save changes?", "Cognitivo", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                MessageBoxResult savechnages = MessageBox.Show("Do you want to save changes?", "Cognitivo ERP", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (savechnages == MessageBoxResult.Yes)
                 {
                     IEnumerable<DbEntityValidationResult> validationresult = ItemDB.GetValidationErrors();
@@ -224,7 +228,7 @@ namespace Cognitivo.Product
                     }
                     else
                     {
-                        MessageBox.Show("Some values are missing. Please fillup all the fields and try again.", "Cognitivo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        MessageBox.Show("Some values are missing. Please fillup all the fields and try again.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                         return false;
                     }
                 }
@@ -278,7 +282,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 item item = (item)itemDataGrid.SelectedItem;
@@ -305,7 +309,7 @@ namespace Cognitivo.Product
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -449,9 +453,7 @@ namespace Cognitivo.Product
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (e.Parameter as item_price != null)
@@ -480,14 +482,46 @@ namespace Cognitivo.Product
                         itemitem_conversion_factorViewSource.View.Refresh();
                     }
                 }
-            }
-            catch
-            {
-            }
         }
 
         private void hrefCost_Click(object sender, RoutedEventArgs e)
         {
+            foreach (item item in ItemDB.items.Where(x => x.item_product.Count() > 0))
+            {
+                int ProductID = item.item_product.Select(x => x.id_item_product).FirstOrDefault();
+
+                if (ProductID > 0)
+                {
+                    /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
+                    item_movement item_movement;
+
+                    using (db db = new db())
+                    {
+                        //var cost = from im in db.item_movement
+                        //           join imv in db.item_movement_value on imv.id_movement equals im.id_movement
+                        //           where im.id_item_product = ProductID
+                        //           select new
+                        //           {
+                        //               unit_cost = 
+                        //           }
+
+                        //item_movement = db.item_movement
+                        //.Where(x =>
+                        //    x.id_item_product == &&
+                        //    (x.credit - x.child.Sum(y => y.debit)) > 0 &&
+                        //    x.item_movement_value.Sum(y => y.unit_value) > 0)
+                        //.OrderByDescending(x => x.trans_date)
+                        //.Include(x => x.item_movement_value).FirstOrDefault();
+
+                        //if (cost != null)
+                        //{
+                        //    item.unit_cost = cost.unit_value;
+                        //}
+                    }
+                }
+            }
+
+            ItemDB.SaveChangesAsync();
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
@@ -647,9 +681,7 @@ namespace Cognitivo.Product
                 if (disposing)
                 {
                     ItemDB.Dispose();
-                    // Dispose other managed resources.
                 }
-                //release unmanaged resources.
             }
         }
     }

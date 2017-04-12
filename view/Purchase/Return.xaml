@@ -87,17 +87,7 @@
                     <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label }" />
                     <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseReturn"
 										  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-										  LostFocus="cbxCurrency_LostFocus" Width="256" HorizontalAlignment="Left" MouseEnter="cbxCurrency_MouseEnter" />
-                    <!--<Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource input_label}" />-->
-                    <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-						<ComboBox x:Name="cbxPurchaseInvoice" Style="{StaticResource input_combobox}"
-								  ItemsSource="{Binding Source={StaticResource purchase_invoiceViewSource}}"
-								  DisplayMemberPath="number" SelectedValuePath="id_purchase_invoice"
-								  SelectedValue="{Binding id_purchase_invoice, Mode=TwoWay,
-								  ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-
-						<Button Content="O" FontSize="10" FontFamily="/Cognitivo;component/Resources/#cognitivo" Click="ButtonImport_Click" />
-					</StackPanel>-->
+										  LostFocus="cbxCurrency_LostFocus" Width="256" HorizontalAlignment="Left" />
                 </StackPanel>
                 <StackPanel Grid.Column="1"
 						   IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.ColumnSpan="2">

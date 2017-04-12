@@ -390,7 +390,7 @@
                 </StackPanel>
                 <Rectangle Height="1" Fill="Silver" Margin="16,4" />
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5" />
-                <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" Margin="3,2,0,5">
+                <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal">
                     <Label Content="A" Style="{StaticResource btn_Label}" />
                     <TextBlock x:Name="tbCustomize" MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
 							<Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}" /></Hyperlink></TextBlock>
@@ -440,11 +440,14 @@
                         </Border>
                     </Popup>
                 </StackPanel>
-                <StackPanel x:Name="stackpnlCost" Orientation="Horizontal" Margin="3,2,0,5" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <StackPanel x:Name="stackpnlCost" Orientation="Horizontal" 
+                            Visibility="{Binding ElementName=this, Path=CanSeeCost, Converter={StaticResource BoolToVisibility}}"
+                            IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="$" Style="{StaticResource btn_Label}" />
                     <TextBlock x:Name="tbCost" VerticalAlignment="Center">
 							<Hyperlink x:Name="hrefCost" Click="hrefCost_Click"><Run Text="{lex:Loc Cost}" /></Hyperlink>
                     </TextBlock>
+                    <Label Style="{StaticResource input_label}" Content="{Binding unit_cost, Mode=OneWay, FallbackValue=0, StringFormat=N2}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

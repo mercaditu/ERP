@@ -44,7 +44,7 @@
         <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="5" />
 
         <ListBox x:Name="purchase_orderDataGrid" Background="{StaticResource AccentColor_Brush}"
-				 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="purchase_orderDataGrid_SelectionChanged"
+				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
 				 ItemsSource="{Binding}" Grid.Row="1">
@@ -128,7 +128,7 @@
                             <Label Content="A" Style="{StaticResource btn_Label}"
 							   FontFamily="/Cognitivo;component/Resources/#cognitivo" />
                             <TextBlock x:Name="tbCustomize" VerticalAlignment="Center"
-								   MouseUp="tbCustomize_MouseUp" Margin="5,0"><Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}" /></Hyperlink></TextBlock>
+								       Margin="5,0"><Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}" /></Hyperlink></TextBlock>
                             <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
 							   PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                                 <Border BorderThickness="1" BorderBrush="Gray">

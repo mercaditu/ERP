@@ -44,7 +44,6 @@ namespace entity
 
         public override Task<int> SaveChangesAsync()
         {
-            validate_Item();
             return base.SaveChangesAsync();
         }
 

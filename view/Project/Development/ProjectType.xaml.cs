@@ -111,14 +111,6 @@ namespace Cognitivo.Project.Development
         private void btnNewTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
-            //itemSearchViewSource.View.Filter = i =>
-            //{
-            //    item item = (item)i;
-            //    if (item.is_active == true)
-            //        return true;
-            //    else
-            //        return false;
-            //};
 
             project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
             project_template_detail project_template_detail = treeProject.SelectedItem_ as project_template_detail;
@@ -140,7 +132,7 @@ namespace Cognitivo.Project.Development
             }
             else
             {
-                toolBar.msgWarning("Please Select Task");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
         }
@@ -148,14 +140,7 @@ namespace Cognitivo.Project.Development
         private void btnAddParentTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
-            //itemSearchViewSource.View.Filter = i =>
-            //{
-            //    item item = (item)i;
-            //    if (item.is_active == true)
-            //        return true;
-            //    else
-            //        return false;
-            //};
+
             project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
 
             project_template_detail n_project_template = new project_template_detail();

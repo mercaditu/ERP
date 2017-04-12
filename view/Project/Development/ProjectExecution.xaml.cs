@@ -11,7 +11,7 @@ namespace Cognitivo.Project
 {
     public partial class ProjectExecution : Page
     {
-        private dbContext dbContext = new dbContext();
+        private db db = new db();
         private CollectionViewSource project_taskViewSource, projectViewSource;
 
         public List<project_task> project_task { get; set; }
@@ -28,8 +28,8 @@ namespace Cognitivo.Project
             project_taskViewSource = ((CollectionViewSource)(this.FindResource("projectproject_taskViewSource")));
 
             projectViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
-            await dbContext.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).LoadAsync();
-            projectViewSource.Source = dbContext.db.projects.Local;
+            await db.projects.Where(a => a.is_active == true && a.is_archived == false && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            projectViewSource.Source = db.projects.Local;
             filter_task();
         }
 
@@ -55,12 +55,12 @@ namespace Cognitivo.Project
                     pnlOrder.project_taskLIST = project_task;
                     pnlOrder.projectViewSource = project_taskViewSource;
 
-                    pnlOrder.shared_dbContext = dbContext;
+                    pnlOrder.Shared_dbContext = db;
                     crud_modal.Children.Add(pnlOrder);
                 }
                 else
                 {
-                    toolBar.msgWarning("No Approved items Selected");
+                    toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
                 }
 
                 filter_task();

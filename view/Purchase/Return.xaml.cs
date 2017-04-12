@@ -12,7 +12,7 @@ namespace Cognitivo.Purchase
 {
     public partial class Return : Page
     {
-        private PurchaseReturnDB dbContext = new PurchaseReturnDB();
+        private PurchaseReturnDB PurchaseReturnDB = new PurchaseReturnDB();
 
         private CollectionViewSource
             purchaseReturnViewSource,
@@ -29,27 +29,27 @@ namespace Cognitivo.Purchase
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             //PurchaseReturn
-            purchaseReturnViewSource = (CollectionViewSource)FindResource("purchase_returnViewSource");
-            await dbContext.purchase_return.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
-            purchaseReturnViewSource.Source = dbContext.purchase_return.Local;
+            purchaseReturnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
+            await PurchaseReturnDB.purchase_return.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+            purchaseReturnViewSource.Source = PurchaseReturnDB.purchase_return.Local;
 
             purchase_returnpurchase_return_detailViewSource = FindResource("purchase_returnpurchase_return_detailViewSource") as CollectionViewSource;
 
-            CollectionViewSource app_cost_centerViewSource = (CollectionViewSource)FindResource("app_cost_centerViewSource");
-            app_cost_centerViewSource.Source = dbContext.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
+            CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
+            app_cost_centerViewSource.Source = PurchaseReturnDB.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
 
             cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                dbContext.purchase_return.Remove((purchase_return)purchase_returnDataGrid.SelectedItem);
+                PurchaseReturnDB.purchase_return.Remove((purchase_return)purchase_returnDataGrid.SelectedItem);
                 purchaseReturnViewSource.View.MoveCurrentToFirst();
                 toolBar_btnSave_Click(sender);
             }
@@ -57,16 +57,16 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnNew_Click(object sender)
         {
-            purchase_return purchase_return = dbContext.New();
-            dbContext.purchase_return.Add(purchase_return);
+            purchase_return purchase_return = PurchaseReturnDB.New();
+            PurchaseReturnDB.purchase_return.Add(purchase_return);
             purchaseReturnViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (dbContext.SaveChanges() > 0)
+            if (PurchaseReturnDB.SaveChanges() > 0)
             {
-                toolBar.msgSaved(dbContext.NumberOfRecords);
+                toolBar.msgSaved(PurchaseReturnDB.NumberOfRecords);
                 sbxContact.Text = "";
             }
         }
@@ -78,17 +78,17 @@ namespace Cognitivo.Purchase
                 purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
                 purchase_return.IsSelected = true;
                 purchase_return.State = EntityState.Modified;
-                dbContext.Entry(purchase_return).State = EntityState.Modified;
+                PurchaseReturnDB.Entry(purchase_return).State = EntityState.Modified;
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            PurchaseReturnDB.CancelAllChanges();
         }
 
         #region Datagrid Events
@@ -114,30 +114,29 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
-            try
+            if (!string.IsNullOrEmpty(query))
             {
-                if (!string.IsNullOrEmpty(query))
+                purchaseReturnViewSource.View.Filter = i =>
                 {
-                    purchaseReturnViewSource.View.Filter = i =>
+                    purchase_return purchase_return = i as purchase_return;
+                    string name = purchase_return.contact != null ? purchase_return.contact.name : "";
+                    string number = string.IsNullOrEmpty(purchase_return.number) ? purchase_return.number : "";
+                    string total = purchase_return.GrandTotal.ToString();
+
+                    if (name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()) || total.ToLower().Contains(query.ToLower()))
                     {
-                        purchase_return purchase_return = i as purchase_return;
-                        if (purchase_return.contact.name.ToLower().Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    purchaseReturnViewSource.View.Filter = null;
-                }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
-            catch (Exception)
-            { }
+            else
+            {
+                purchaseReturnViewSource.View.Filter = null;
+            }
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -152,13 +151,13 @@ namespace Cognitivo.Purchase
         {
             try
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     purchase_return purchase_return = purchaseReturnViewSource.View.CurrentItem as purchase_return;
                     //DeleteDetailGridRow
                     purchase_return_detailDataGrid.CancelEdit();
-                    dbContext.purchase_return_detail.Remove(e.Parameter as purchase_return_detail);
+                    PurchaseReturnDB.purchase_return_detail.Remove(e.Parameter as purchase_return_detail);
                     purchase_returnpurchase_return_detailViewSource.View.Refresh();
                 }
             }
@@ -172,15 +171,18 @@ namespace Cognitivo.Purchase
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-                purchase_return.id_contact = contact.id_contact;
-                purchase_return.contact = contact;
-
-                if (purchase_return != null)
+                contact contact = PurchaseReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                if (contact != null)
                 {
-                    ///Start Thread to get Data.
-                    Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                    purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
+                    purchase_return.id_contact = contact.id_contact;
+                    purchase_return.contact = contact;
+
+                    if (purchase_return != null)
+                    {
+                        ///Start Thread to get Data.
+                        Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                    }
                 }
             }
         }
@@ -222,7 +224,7 @@ namespace Cognitivo.Purchase
                 //Check for contact
                 if (id_contact > 0)
                 {
-                    contact contact = await dbContext.contacts.FindAsync(id_contact);
+                    contact contact = await PurchaseReturnDB.contacts.FindAsync(id_contact);
                     if (contact.app_cost_center != null)
                     {
                         app_cost_center app_cost_center = contact.app_cost_center as app_cost_center;
@@ -234,7 +236,7 @@ namespace Cognitivo.Purchase
                         }
                         else
                         {
-                            app_cost_center _app_cost_center = dbContext.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                            app_cost_center _app_cost_center = PurchaseReturnDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault();
                             if (_app_cost_center != null)
                                 id_cost_center = Convert.ToInt32(_app_cost_center.id_cost_center);
                             if (id_cost_center > 0)
@@ -243,22 +245,22 @@ namespace Cognitivo.Purchase
                     }
                     else
                     {
-                        if (dbContext.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                            id_cost_center = Convert.ToInt32(dbContext.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        if (PurchaseReturnDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                            id_cost_center = Convert.ToInt32(PurchaseReturnDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
                         if (id_cost_center > 0)
                             _purchase_return_detail.id_cost_center = id_cost_center;
                     }
                 }
                 else
                 {
-                    if (dbContext.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                        id_cost_center = Convert.ToInt32(dbContext.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                    if (PurchaseReturnDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                        id_cost_center = Convert.ToInt32(PurchaseReturnDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
                     if (id_cost_center > 0)
                         _purchase_return_detail.id_cost_center = id_cost_center;
                 }
-                if (dbContext.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                if (PurchaseReturnDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                 {
-                    _purchase_return_detail.id_vat_group = dbContext.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
+                    _purchase_return_detail.id_vat_group = PurchaseReturnDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
                 }
 
                 if (item_movement != null)
@@ -293,7 +295,7 @@ namespace Cognitivo.Purchase
             {
                 if (sbxItem.ItemID > 0)
                 {
-                    item item = await dbContext.items.FindAsync(sbxItem.ItemID);
+                    item item = await PurchaseReturnDB.items.FindAsync(sbxItem.ItemID);
                     item_product item_product = item.item_product.FirstOrDefault();
                     purchase_return purchase_return = purchase_returnDataGrid.SelectedItem as purchase_return;
                     if (item_product != null && item_product.can_expire)
@@ -319,7 +321,7 @@ namespace Cognitivo.Purchase
                         //Check for contact
                         if (sbxContact.ContactID > 0)
                         {
-                            contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                            contact contact = PurchaseReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                             if (contact.app_cost_center != null)
                             {
                                 app_cost_center app_cost_center = contact.app_cost_center as app_cost_center;
@@ -331,30 +333,30 @@ namespace Cognitivo.Purchase
                                 }
                                 else
                                 {
-                                    if (dbContext.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                                        id_cost_center = Convert.ToInt32(dbContext.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                                    if (PurchaseReturnDB.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                                        id_cost_center = Convert.ToInt32(PurchaseReturnDB.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
                                     if (id_cost_center > 0)
                                         _purchase_return_detail.id_cost_center = id_cost_center;
                                 }
                             }
                             else
                             {
-                                if (dbContext.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                                    id_cost_center = Convert.ToInt32(dbContext.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                                if (PurchaseReturnDB.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                                    id_cost_center = Convert.ToInt32(PurchaseReturnDB.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
                                 if (id_cost_center > 0)
                                     _purchase_return_detail.id_cost_center = id_cost_center;
                             }
                         }
                         else
                         {
-                            if (dbContext.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                                id_cost_center = Convert.ToInt32(dbContext.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                            if (PurchaseReturnDB.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                                id_cost_center = Convert.ToInt32(PurchaseReturnDB.app_cost_center.Where(a => a.is_product == false && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
                             if (id_cost_center > 0)
                                 _purchase_return_detail.id_cost_center = id_cost_center;
                         }
-                        if (dbContext.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                        if (PurchaseReturnDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                         {
-                            _purchase_return_detail.id_vat_group = dbContext.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
+                            _purchase_return_detail.id_vat_group = PurchaseReturnDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
                         }
                         _purchase_return_detail.purchase_return = purchase_return;
                         _purchase_return_detail.item_description = sbxItem.Text;
@@ -389,7 +391,7 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            dbContext.Approve();
+            PurchaseReturnDB.Approve();
             foreach (purchase_return purchase_return in purchaseReturnViewSource.View.Cast<purchase_return>().ToList())
             {
                 purchase_return.IsSelected = false;
@@ -398,23 +400,15 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            dbContext.Anull();
+            PurchaseReturnDB.Anull();
             foreach (purchase_return purchase_return in purchaseReturnViewSource.View.Cast<purchase_return>().ToList())
             {
                 purchase_return.IsSelected = false;
             }
         }
 
-        private void cbxCurrency_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-            //if (purchase_return != null)
-            //    purchase_return.is_edit = true;
-        }
-
         private void purchase_return_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
 
@@ -423,10 +417,10 @@ namespace Cognitivo.Purchase
             crud_modal.Visibility = Visibility.Visible;
             pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
             pnlPurchaseInvoice._entity = new ImpexDB();
-            //    pnlSalesInvoice.contactViewSource = contactViewSource;
+
             if (sbxContact.ContactID > 0)
             {
-                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = PurchaseReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 pnlPurchaseInvoice._contact = contact;
             }
 
@@ -451,26 +445,26 @@ namespace Cognitivo.Purchase
                 {
                     purchase_return_detail purchase_return_detail = new purchase_return_detail();
                     purchase_return_detail.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
-                    purchase_return_detail.purchase_invoice_detail = dbContext.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
+                    purchase_return_detail.purchase_invoice_detail = PurchaseReturnDB.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
                     purchase_return_detail.id_cost_center = _purchase_invoice_detail.id_cost_center;
                     purchase_return_detail.id_location = _purchase_invoice_detail.id_location;
 
-                    app_location app_location = dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault();
+                    app_location app_location = PurchaseReturnDB.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault();
                     if (app_location != null)
                     {
                         purchase_return_detail.app_location = app_location;
                     }
 
                     purchase_return_detail.purchase_return = _purchase_return;
-                    if (dbContext.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault() != null)
+                    if (PurchaseReturnDB.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault() != null)
                     {
                         purchase_return_detail.id_item = _purchase_invoice_detail.id_item;
-                        purchase_return_detail.item = dbContext.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault();
+                        purchase_return_detail.item = PurchaseReturnDB.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault();
                     }
 
                     purchase_return_detail.item_description = _purchase_invoice_detail.item_description;
 
-                    purchase_return_detail.quantity = _purchase_invoice_detail.quantity - dbContext.purchase_return_detail
+                    purchase_return_detail.quantity = _purchase_invoice_detail.quantity - PurchaseReturnDB.purchase_return_detail
                                                                                  .Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail)
                                                                                  .GroupBy(x => x.id_purchase_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
 
@@ -481,7 +475,7 @@ namespace Cognitivo.Purchase
                     purchase_return_detail.expire_date = _purchase_invoice_detail.expire_date;
                     _purchase_return.purchase_return_detail.Add(purchase_return_detail);
 
-                    dbContext.Entry(_purchase_return).Entity.State = EntityState.Added;
+                    PurchaseReturnDB.Entry(_purchase_return).Entity.State = EntityState.Added;
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
                     purchaseReturnViewSource.View.Refresh();
@@ -496,11 +490,11 @@ namespace Cognitivo.Purchase
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;
-                item item = await dbContext.items.FindAsync(sbxItem.ItemID);
+                item item = await PurchaseReturnDB.items.FindAsync(sbxItem.ItemID);
 
                 if (item != null && item.id_item > 0 && _purchase_return != null)
                 {
-                    item_movement item_movement = dbContext.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                    item_movement item_movement = PurchaseReturnDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
                     Task Thread = Task.Factory.StartNew(() => select_Item(_purchase_return, item, sbxContact.ContactID, item_movement));
                 }

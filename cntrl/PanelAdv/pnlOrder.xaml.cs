@@ -16,9 +16,9 @@ namespace cntrl.PanelAdv
     {
         private CollectionViewSource production_orderViewSource, production_lineViewSource; //, itemViewSource;
         public List<project_task> project_taskLIST { get; set; }
-        public dbContext shared_dbContext { get; set; }
+        public db Shared_dbContext { get; set; }
         public CollectionViewSource projectViewSource { get; set; }
-        private dbContext _dbContext = new dbContext();
+        //private dbContext _dbContext = new dbContext();
 
         public pnlOrder()
         {
@@ -47,13 +47,13 @@ namespace cntrl.PanelAdv
                 //Load your data here and assign the result to the CollectionViewSource.
                 production_orderViewSource = (CollectionViewSource)this.Resources["production_orderViewSource"];
 
-                shared_dbContext.db.production_order.Add(production_order);
+                Shared_dbContext.production_order.Add(production_order);
 
-                production_orderViewSource.Source = shared_dbContext.db.production_order.Local;
+                production_orderViewSource.Source = Shared_dbContext.production_order.Local;
 
                 production_lineViewSource = (CollectionViewSource)this.Resources["production_lineViewSource"];
-                shared_dbContext.db.production_line.Load();
-                production_lineViewSource.Source = shared_dbContext.db.production_line.Local;
+                Shared_dbContext.production_line.Load();
+                production_lineViewSource.Source = Shared_dbContext.production_line.Local;
             }
 
             if (project_taskLIST.Count() > 0)
@@ -83,16 +83,16 @@ namespace cntrl.PanelAdv
 
                 if (production_order.start_date_est == null || production_order.end_date_est == null)
                 {
-                    production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).FirstOrDefault().project.est_start_date;
-                    production_order.end_date_est = project_taskLIST.OrderByDescending(x => x.end_date_est).FirstOrDefault().project.est_end_date;
+                    production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).Select(x => x.project.est_start_date).FirstOrDefault();
+                    production_order.RaisePropertyChanged("start_date_est");
+
+                    production_order.end_date_est = project_taskLIST.OrderByDescending(x => x.end_date_est).Select(x => x.project.est_end_date).FirstOrDefault();
+                    production_order.RaisePropertyChanged("end_date_est");
                 }
 
-                production_order.RaisePropertyChanged("start_date_est");
-                production_order.RaisePropertyChanged("end_date_est");
-
-                foreach (var item in project_taskLIST.Where(x => x.status == Status.Project.Approved || x.status == Status.Project.InProcess))
+                foreach (project_task item in project_taskLIST.Where(x => x.status == Status.Project.Approved || x.status == Status.Project.InProcess))
                 {
-                    project_task _project_task = (project_task)item;
+                    project_task _project_task = item;
                     production_order_detail production_order_detail = new production_order_detail();
                     if (production_order_detail.item != null)
                     {
@@ -140,7 +140,7 @@ namespace cntrl.PanelAdv
 
                 if (production_order == null)
                 {
-                    shared_dbContext.db.production_order.Add(production_order);
+                    Shared_dbContext.production_order.Add(production_order);
                 }
 
                 production_orderViewSource.View.MoveCurrentToLast();
@@ -149,26 +149,22 @@ namespace cntrl.PanelAdv
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in project_taskLIST)
+            foreach (project_task item in project_taskLIST)
             {
-                project_task _project_task = (project_task)item;
+                project_task _project_task = item;
 
-                if (_project_task.status == entity.Status.Project.Approved)
+                if (_project_task.status == Status.Project.Approved)
                 {
                     _project_task.status = entity.Status.Project.InProcess;
                     _project_task.IsSelected = false;
                 }
             }
 
-            IEnumerable<DbEntityValidationResult> validationresult = _dbContext.db.GetValidationErrors();
+            Shared_dbContext.SaveChanges();
+            Grid parentGrid = (Grid)this.Parent;
+            parentGrid.Children.Clear();
+            parentGrid.Visibility = Visibility.Hidden;
 
-            if (validationresult.Count() == 0)
-            {
-                shared_dbContext.SaveChanges();
-                Grid parentGrid = (Grid)this.Parent;
-                parentGrid.Children.Clear();
-                parentGrid.Visibility = Visibility.Hidden;
-            }
             filter_task();
         }
 
@@ -195,7 +191,7 @@ namespace cntrl.PanelAdv
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             production_order production_order = (production_order)production_orderViewSource.View.CurrentItem;
-            shared_dbContext.db.production_order.Remove(production_order);
+            Shared_dbContext.production_order.Remove(production_order);
 
             foreach (var item in project_taskLIST)
             {

@@ -286,7 +286,7 @@ namespace Cognitivo.Project.Development
                         {
                             project_task n_project_task = new project_task();
                             n_project_task.id_project = project.id_project;
-                            n_project_task.status = entity.Status.Project.Pending;
+                            n_project_task.status = Status.Project.Pending;
                             n_project_task.quantity_est = 0;
                             n_project_task.parent = project_task;
                             n_project_task.State = EntityState.Added;
@@ -335,7 +335,7 @@ namespace Cognitivo.Project.Development
             }
             else
             {
-                toolBar.msgWarning("Select Project");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
 
             filter_task();
@@ -351,7 +351,7 @@ namespace Cognitivo.Project.Development
             }
             else
             {
-                toolBar.msgWarning("Select Task");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -533,39 +533,6 @@ namespace Cognitivo.Project.Development
                 filter_task();
             }
         }
-
-        //private void treeProject_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        //{
-        //    if (treeProject.SelectedItem_ != null)
-        //    {
-        //        project_task project_task = (project_task)treeProject.SelectedItem_;
-        //        if (project_task != null)
-        //        {
-        //            project_taskViewSource.View.MoveCurrentTo(project_task);
-        //            try
-        //            {
-        //                if (project_task_dimensionViewSource != null)
-        //                {
-        //                    if (project_task_dimensionViewSource.View != null)
-        //                    {
-        //                        project_task_dimensionViewSource.View.Filter = i =>
-        //                        {
-        //                            project_task_dimension _project_task_dimension = (project_task_dimension)i;
-        //                            if (_project_task_dimension.id_project_task == project_task.id_project_task)
-        //                                return true;
-        //                            else
-        //                                return false;
-        //                        };
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                toolBar.msgError(ex);
-        //            }
-        //        }
-        //    }
-        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

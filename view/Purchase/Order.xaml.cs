@@ -43,18 +43,27 @@ namespace Cognitivo.Purchase
 
             if (OrderSetting.filterbyBranch)
             {
-                await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company && a.is_archived == false && a.id_branch == CurrentSession.Id_Branch
-                                      ).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+                await PurchaseOrderDB.purchase_order.Where(a => 
+                a.id_company == CurrentSession.Id_Company && 
+                a.is_archived == false && 
+                a.id_branch == CurrentSession.Id_Branch
+                                      )
+                                      .Include(x => x.contact)
+                                      .OrderByDescending(x => x.trans_date)
+                                      .LoadAsync();
             }
             else
             {
                 await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company && a.is_archived == false
-                                      ).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
+                                      )
+                                      .Include(x => x.contact)
+                                      .OrderByDescending(x => x.trans_date)
+                                      .LoadAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                purchase_orderViewSource = (FindResource("purchase_orderViewSource") as CollectionViewSource);
+                purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
                 purchase_orderViewSource.Source = PurchaseOrderDB.purchase_order.Local;
             }));
         }
@@ -256,7 +265,7 @@ namespace Cognitivo.Purchase
 
         #region Datagrid Events
 
-        private void calculate_vat(object sender, EventArgs e)
+        private void Calculate_vat(object sender, EventArgs e)
         {
             purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
 
@@ -278,19 +287,19 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void purchase_invoice_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void Purchase_invoice_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            calculate_vat(sender, e);
+            Calculate_vat(sender, e);
         }
 
-        private void purchase_orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Purchase_orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
                 if (purchase_order != null)
                 {
-                    calculate_vat(sender, e);
+                    Calculate_vat(sender, e);
                 }
             }
             catch (Exception ex)
@@ -307,7 +316,7 @@ namespace Cognitivo.Purchase
 
         #endregion Datagrid Events
 
-        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+        private void TbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             popupCustomize.StaysOpen = false;
@@ -544,7 +553,7 @@ namespace Cognitivo.Purchase
             {
                 purchase_order.purchase_order_detail.Add(purchase_order_detail);
                 purchase_orderpurchase_order_detailViewSource.View.Refresh();
-                calculate_vat(sender, e);
+                Calculate_vat(sender, e);
             }));
         }
 
@@ -561,7 +570,7 @@ namespace Cognitivo.Purchase
                     }
                 }
             }
-            calculate_vat(sender, e);
+            Calculate_vat(sender, e);
         }
 
         public string _number { get; set; }
@@ -592,7 +601,7 @@ namespace Cognitivo.Purchase
 
         private void purchase_order_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            calculate_vat(sender, e);
+            Calculate_vat(sender, e);
         }
 
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)

@@ -204,7 +204,7 @@ namespace Cognitivo.Project.Development
                     }
                     else
                     {
-                        toolBar.msgWarning("Select a Task");
+                        toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
                     }
                 }
                 else

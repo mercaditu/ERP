@@ -10,9 +10,6 @@ using System.Windows.Input;
 
 namespace Cognitivo.Project.Development
 {
-    /// <summary>
-    /// Interaction logic for Project.xaml
-    /// </summary>
     public partial class Project : Page
     {
         private ProjectDB ProjectDB = new ProjectDB();
@@ -25,9 +22,12 @@ namespace Cognitivo.Project.Development
 
         private void btnNew_Click(object sender)
         {
-            project project = new project();
-            project.IsSelected = true;
-            project.State = EntityState.Added;
+            project project = new project()
+            {
+                IsSelected = true,
+                State = EntityState.Added
+            };
+
             ProjectDB.Entry(project).State = EntityState.Added;
             ProjectViewSource.View.MoveCurrentToLast();
         }
@@ -36,7 +36,7 @@ namespace Cognitivo.Project.Development
         {
             try
             {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     project project = (project)ProjectDataGrid.SelectedItem;
                     project.is_head = false;
@@ -52,7 +52,7 @@ namespace Cognitivo.Project.Development
 
         private async void btnSave_Click(object sender)
         {
-            entity.project _project = ((entity.project)ProjectViewSource.View.CurrentItem);
+            project _project = ((project)ProjectViewSource.View.CurrentItem);
             int id_type = 0;
             if (_project.State==EntityState.Added)
             {
@@ -95,7 +95,6 @@ namespace Cognitivo.Project.Development
                             }
 
                             _project.project_task.Add(project_task);
-                            // }
                         }
                     }
                 }
@@ -121,7 +120,7 @@ namespace Cognitivo.Project.Development
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -210,21 +209,15 @@ namespace Cognitivo.Project.Development
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                if (e.Parameter as project_tag_detail != null)
                 {
-                    if (e.Parameter as project_tag_detail != null)
-                    {
-                        project_tag_detailDataGrid.CancelEdit();
-                        ProjectDB.project_tag_detail.Remove(e.Parameter as project_tag_detail);
-                        Projectproject_tag_detail.View.Refresh();
-                    }
+                    project_tag_detailDataGrid.CancelEdit();
+                    ProjectDB.project_tag_detail.Remove(e.Parameter as project_tag_detail);
+                    Projectproject_tag_detail.View.Refresh();
                 }
-            }
-            catch
-            {
             }
         }
 
@@ -243,7 +236,6 @@ namespace Cognitivo.Project.Development
 
         private void Add_Tag()
         {
-            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
             if (cbxTag.Data != null)
             {
                 int id = Convert.ToInt32(((project_tag)cbxTag.Data).id_tag);

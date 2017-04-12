@@ -11,6 +11,7 @@ task.id_project_task,
 task.parent_id_project_task as ParentTask,
 item.name as  Item,
 item.code as ItemCode,
+item.id_item_type,
 CASE
       WHEN item.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
       WHEN item.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"'

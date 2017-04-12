@@ -221,6 +221,19 @@ namespace cntrl
             query = query.Replace("@ProjectID", ProjectID.ToString());
             dt = QueryExecutor.DT(query);
 
+            if (dt.Rows.Count>0)
+            {
+                if (Report.Name.ToLower() == "HumanResource".ToLower())
+                {
+                    dt = dt.Select("id_item_type=3 or id_item_type=7").CopyToDataTable();
+                }
+                else if (Report.Name.ToLower() == "RawMaterials".ToLower())
+                {
+                    dt = dt.Select("id_item_type=2").CopyToDataTable();
+                }
+
+            }
+
             ReportDt = dt;
             sfdatagrid.ItemsSource = dt;
             sfPivotTable.ItemSource = dt;

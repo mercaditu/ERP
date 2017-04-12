@@ -40,15 +40,16 @@ namespace Cognitivo.Purchase
         private async void load_PrimaryDataThread()
         {
             OrderSetting OrderSetting = new OrderSetting();
+
             if (OrderSetting.filterbyBranch)
             {
-                await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
-                                      ).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
+                await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company && a.is_archived == false && a.id_branch == CurrentSession.Id_Branch
+                                      ).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             }
             else
             {
-                await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company
-                                      ).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
+                await PurchaseOrderDB.purchase_order.Where(a => a.id_company == CurrentSession.Id_Company && a.is_archived == false
+                                      ).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -71,14 +72,14 @@ namespace Cognitivo.Purchase
             await PurchaseOrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+                CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
                 app_dimensionViewSource.Source = PurchaseOrderDB.app_dimension.Local;
             }));
 
             await PurchaseOrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+                CollectionViewSource app_measurementViewSource = FindResource("app_measurementViewSource") as CollectionViewSource;
                 app_measurementViewSource.Source = PurchaseOrderDB.app_measurement.Local;
             }));
 
@@ -125,7 +126,7 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    toolBar.msgWarning("Please select a record");
+                    toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
                 }
             }
         }
@@ -134,7 +135,7 @@ namespace Cognitivo.Purchase
         {
             try
             {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
                     purchase_order.is_head = false;
@@ -373,7 +374,7 @@ namespace Cognitivo.Purchase
         {
             try
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     purchase_order purchase_order = purchase_orderViewSource.View.CurrentItem as purchase_order;
@@ -608,7 +609,7 @@ namespace Cognitivo.Purchase
             }
             else
             {
-                toolBar.msgWarning("Please select");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 

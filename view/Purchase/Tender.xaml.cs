@@ -28,6 +28,11 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnApprove_Click(object sender)
         {
+            if (PurchaseTenderDB.SaveChanges() > 0)
+            {
+                PurchaseTenderDB.Approve();
+            }
+
             foreach (purchase_tender tender in PurchaseTenderDB.purchase_tender.Local.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
             {
                 tender.status = Status.Documents_General.Approved;
@@ -76,7 +81,7 @@ namespace Cognitivo.Purchase
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -84,7 +89,7 @@ namespace Cognitivo.Purchase
         {
             try
             {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     purchase_tender purchase_tender = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
                     purchase_tender.is_head = false;
@@ -100,7 +105,7 @@ namespace Cognitivo.Purchase
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await PurchaseTenderDB.purchase_tender.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+            await PurchaseTenderDB.purchase_tender.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
             purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
             purchase_tenderViewSource.Source = PurchaseTenderDB.purchase_tender.Local;
 
@@ -121,18 +126,18 @@ namespace Cognitivo.Purchase
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
             app_contractViewSource.Source = CurrentSession.Contracts;
 
-            PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
+            await PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToListAsync();
             CollectionViewSource app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
 
-            app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+            app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
             await PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_dimensionViewSource.Source = PurchaseTenderDB.app_dimension.Local;
 
-            app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+            app_measurementViewSource = FindResource("app_measurementViewSource") as CollectionViewSource;
             await PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
         }
@@ -212,7 +217,7 @@ namespace Cognitivo.Purchase
 
                 if (contact == null)
                 {
-                    toolBar.msgWarning("Please select Contact");
+                    toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
                     return;
                 }
 
@@ -242,7 +247,7 @@ namespace Cognitivo.Purchase
                     }
                     else
                     {
-                        toolBar.msgWarning("Please select Contract...");
+                        toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
                         return;
                     }
 
@@ -383,7 +388,7 @@ namespace Cognitivo.Purchase
             try
             {
                 DataGrid dg = (DataGrid)e.Source;
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     if (dg.Name == "purchase_tender_contact_detailDataGrid")
@@ -420,10 +425,6 @@ namespace Cognitivo.Purchase
             {
                 toolBar.msgError(ex);
             }
-        }
-
-        private void purchase_tender_contact_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
         }
 
         private void purchase_tender_itemDataGrid_LoadingRowDetails(object sender, EventArgs e)
@@ -493,7 +494,7 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        private void EditCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)e.Parameter;
 

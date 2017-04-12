@@ -217,7 +217,6 @@
                         </StackPanel>
                         <DataGrid x:Name="purchase_tender_itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"
-
                                   RowDetailsVisibilityMode="VisibleWhenSelected"
                                   IsReadOnly="{Binding IsEditable, Converter={StaticResource TrueToFalse}, ElementName=toolBar}">
                             <DataGrid.Columns>
@@ -360,18 +359,18 @@
                                                      Visibility="{Binding Source={x:Static pref:TenderSetting.Default}, Path=ShowFactorQty, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                     Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-  Visibility="{Binding Source={x:Static pref:TenderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                    Visibility="{Binding Source={x:Static pref:TenderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                     ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Cost}" Width="auto" />
                                 <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                     Visibility="{Binding Source={x:Static pref:TenderSetting.Default}, Path=VAT_Included, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                            Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
+                                                    Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
                                                     Visibility="{Binding Source={x:Static pref:TenderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                            Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
-                                            ElementStyle="{StaticResource RightAlignStyle}" />
+                                                    Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
+                                                    ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}"
                                                     Visibility="{Binding Source={x:Static pref:TenderSetting.Default}, Path=VAT_Included, Converter={StaticResource Bool2Visi}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                            Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
+                                                    Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

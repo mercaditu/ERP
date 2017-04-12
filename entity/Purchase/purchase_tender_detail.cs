@@ -27,7 +27,11 @@ namespace entity
         public Status.Documents_General status
         {
             get { return _status; }
-            set { _status = value; RaisePropertyChanged("status"); }
+            set {
+                _status = value;
+                RaisePropertyChanged("status");
+                RaisePropertyChanged("IsEditable");
+            }
         }
 
         private Status.Documents_General _status;

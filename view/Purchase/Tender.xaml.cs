@@ -28,11 +28,12 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            purchase_tender purchase_tender_old = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
-            if (purchase_tender_old != null)
+            foreach (purchase_tender tender in PurchaseTenderDB.purchase_tender.Local.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
             {
-                purchase_tender_old.status = Status.Documents_General.Approved;
+                tender.status = Status.Documents_General.Approved;
             }
+
+            PurchaseTenderDB.SaveChanges();
             purchase_tenderViewSource.View.Refresh();
         }
 

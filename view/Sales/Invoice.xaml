@@ -276,20 +276,13 @@
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
-                                    <Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}" />
-                                    <Label Content="{Binding contact.alias,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_invoiceViewSource}}" Style="{StaticResource input_label}" />
-                                    <StackPanel Orientation="Horizontal" Margin="4,0"
-												Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
-                                        <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green" />
-                                        <TextBlock Text="{lex:Loc Stock}" Style="{StaticResource text_Label}" />
-                                    </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="4,0"
 												Visibility="{Binding is_accounted, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibility}}">
-                                        <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green" />
+                                        <Label Content="j" Style="{StaticResource ico_Label}" Foreground="Green" FontSize="11" />
                                         <TextBlock Text="{lex:Loc Accounted}" Style="{StaticResource text_Label}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label Content="U" Style="{StaticResource ico_Label}" Foreground="Green" FontSize="11" HorizontalContentAlignment="Center" />
+                                        <Label Content="U" Style="{StaticResource ico_Label}" Foreground="Green" FontSize="11" />
                                         <TextBlock Text="{Binding security_user.name, FallbackValue=User,  Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Label}" />
                                     </StackPanel>
                                     <Label Content="{lex:Loc QuickActions}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />

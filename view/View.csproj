@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ashah\Desktop\ERP14.26\</PublishUrl>
+    <PublishUrl>C:\Users\ABC\Desktop\ERP14.25\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -439,11 +439,9 @@
     <Compile Include="Configs\Version.xaml.cs">
       <DependentUpon>Version.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\Localize.cs" />
     <Compile Include="Converters\OrderTovisibility.cs" />
     <Compile Include="Converters\Bool2Color.cs" />
     <Compile Include="Converters\ProductionPending2BooleanConverter.cs" />
-    <Compile Include="Converters\SecurityConverter.cs" />
     <Compile Include="Menu\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
@@ -484,6 +482,7 @@
     <Compile Include="Converters\ExpireDate2Visible.cs" />
     <Compile Include="Converters\NotConverter .cs" />
     <Compile Include="Converters\Projectfinance.cs" />
+    <Compile Include="Converters\SecurityConverter.cs" />
     <Compile Include="Converters\Status2ColorConverter.cs" />
     <Compile Include="Converters\Status2EnableForProject.cs">
       <SubType>Code</SubType>
@@ -491,6 +490,7 @@
     <Compile Include="Converters\StockLevel2ColorConverter.cs" />
     <Compile Include="Converters\ActiveToStatusforitem.cs" />
     <Compile Include="Converters\AddTwoValue.cs" />
+    <Compile Include="Converters\Localize.cs" />
     <Compile Include="Converters\CurrencyConverter.cs" />
     <Compile Include="Converters\Enum2ArrayConverter.cs" />
     <Compile Include="Converters\BooleanToIsIssuedConverter.cs" />
@@ -1750,6 +1750,9 @@
     <Resource Include="Images\Menu\modImpex.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Debug\Inventory\" />
+    <Folder Include="bin\Debug\Sales\" />
+    <Folder Include="Images\People\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>

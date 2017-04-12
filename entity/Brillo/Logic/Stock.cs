@@ -322,8 +322,19 @@ namespace entity.Brillo.Logic
                 .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null))
             {
                 item_product item_product = FindNFix_ItemProduct(packing_detail.item);
-                packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
-                packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+
+                int LocationID = 0;
+                if (packing_detail.id_location == null)
+                {
+                    LocationID = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
+                    packing_detail.app_location = db.app_location.Find(LocationID);
+                }
+                else
+                {
+                    packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+                    LocationID = (int)packing_detail.id_location;
+                }
+
                 item_movementList.Add(
                         CreditOnly_Movement(
                             Status.Stock.InStock,
@@ -332,7 +343,7 @@ namespace entity.Brillo.Logic
                             packing_detail.id_purchase_packing_detail,
                             CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                             packing_detail.item.item_product.Select(x => x.id_item_product).FirstOrDefault(),
-                            (int)packing_detail.id_location,
+                            LocationID,
                             (decimal)packing_detail.verified_quantity,
                             purchase_packing.trans_date,
                             packing_detail.purchase_order_detail.unit_cost,
@@ -428,7 +439,7 @@ namespace entity.Brillo.Logic
                         Invoice_WithProducts.AddRange(sales_invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0).ToList());
                     }
                     else
-                    {            
+                    {
                         //Link with Packing if necesary
                         foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail
                             .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() > 0))

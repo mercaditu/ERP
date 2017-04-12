@@ -513,8 +513,10 @@ namespace Cognitivo.Sales
                             discount = PackingDetail.sales_order_detail.discount,
                             id_vat_group = PackingDetail.sales_order_detail.id_vat_group,
                             sales_order_detail = PackingDetail.sales_order_detail,
-                            id_location = PackingDetail.sales_order_detail.id_location
-                        };
+                            id_location = PackingDetail.sales_order_detail.id_location,
+                            unit_price = PackingDetail.sales_order_detail.unit_price + PackingDetail.sales_order_detail.discount
+                           
+                    };
                         sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
                         sales_packing_relation.id_sales_invoice_detail = detail.id_sales_invoice_detail;
                         sales_packing_relation.sales_invoice_detail = detail;

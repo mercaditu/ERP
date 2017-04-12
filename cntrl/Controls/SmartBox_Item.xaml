@@ -93,15 +93,15 @@
                     </Button.Effect>
                 </Button>
                 <ToggleButton x:Name="toggleButton" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchonlyavailable}" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black" Margin="0"
-                              Visibility="Collapsed" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
+                              Visibility="{Binding Exclude_OutOfStock, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
                               IsChecked="{Binding Exclude_OutOfStock, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </ToggleButton.Effect>
                 </ToggleButton>
                 <ToggleButton x:Name="toggleButton1" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchexactcode}" Foreground="Black" Background="Gold" BorderBrush="Black"
-                              Visibility="Collapsed" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
-                              IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=ExactSearch, Mode=TwoWay}">
+                             Visibility="{Binding ExactSearch, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
+                              IsChecked="{Binding ExactSearch,ElementName=_SmartBox_Item, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </ToggleButton.Effect>

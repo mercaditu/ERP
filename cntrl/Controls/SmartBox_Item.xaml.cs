@@ -48,15 +48,45 @@ namespace cntrl.Controls
             get { return _Exclude_OutOfStock; }
             set
             {
-                if (_Exclude_OutOfStock != value)
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+                if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly))
                 {
                     _Exclude_OutOfStock = value;
-                    RaisePropertyChanged("Exclude_OutOfStock");
+                    RaisePropertyChanged("can_New");
                 }
+                else
+                {
+                    _Exclude_OutOfStock = false;
+                    RaisePropertyChanged("can_New");
+                }
+              
             }
         }
 
+
         private bool _Exclude_OutOfStock;
+        public bool ExactSearch
+        {
+            get { return _ExactSearch; }
+            set
+            {
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+                if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
+                {
+                    _ExactSearch = value;
+                    RaisePropertyChanged("can_New");
+                }
+                else
+                {
+                    _ExactSearch = false;
+                    RaisePropertyChanged("can_New");
+                }
+
+            }
+        }
+
+
+        private bool _ExactSearch;
 
         public bool can_New
         {
@@ -292,7 +322,12 @@ namespace cntrl.Controls
         private void Search_OnThread(string SearchText)
         {
             var predicate = PredicateBuilder.True<entity.BrilloQuery.Item>();
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+            if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
+            {
 
+            }
+        
             if (smartBoxItemSetting.Default.ExactSearch)
             {
                 predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) && (x.Code == SearchText));

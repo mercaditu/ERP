@@ -65,7 +65,8 @@ namespace Cognitivo.Production
             production_order production_order = OrderDB.New("", production_order.ProductionOrderTypes.Production, LineID);
             production_order.State = EntityState.Added;
             OrderDB.production_order.Add(production_order);
-
+            OrderDB.SaveChanges();
+            production_orderViewSource.View.Refresh();
             production_orderViewSource.View.MoveCurrentToLast();
             Update_Logistics();
             filter_task();

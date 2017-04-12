@@ -171,9 +171,21 @@ namespace cntrl.Controls
             {
                 return;
             }
-            if (item_types == entity.item.item_type.Product || item_types == entity.item.item_type.RawMaterial)
+
+            if (entity.CurrentSession.Show_InStockProductsOnly)
             {
                 Exclude_OutOfStock = true;
+            }
+            else if (item_types == entity.item.item_type.Product || item_types == entity.item.item_type.RawMaterial)
+            {
+                Exclude_OutOfStock = true;
+            }
+
+            if (entity.CurrentSession.Allow_BarCodeSearchOnly)
+            {
+                smartBoxItemSetting Settings = new smartBoxItemSetting();
+                Settings.ExactSearch = true;
+                smartBoxItemSetting.Default.Save();
             }
 
             LoadData();

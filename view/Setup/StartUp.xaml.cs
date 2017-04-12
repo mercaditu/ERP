@@ -3,6 +3,7 @@ using entity;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -224,44 +225,6 @@ namespace Cognitivo.Menu
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = true; }));
-
-            UpdateUnitCost();
-
-            Dispatcher.BeginInvoke((Action)(() => { progBarunitcost.IsIndeterminate = false; }));
-        }
-
-        public void UpdateUnitCost()
-        {
-            using (db db = new db())
-            {
-                List<item> items = db.items.ToList();
-                foreach (item item in items)
-                {
-                    if (item.item_product.FirstOrDefault() != null)
-                    {
-                        item_product item_product = item.item_product.FirstOrDefault();
-
-                        /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
-                        item_movement item_movement = db.item_movement
-                            .Where(x =>
-                                x.id_item_product == item_product.id_item_product &&
-                                x.credit > 0 &&
-                                x.parent == null &&
-                                x.item_movement_value.Sum(y => y.unit_value) > 0).OrderByDescending(x => x.trans_date).FirstOrDefault();
-
-                        if (item_movement != null)
-                        {
-                            item.unit_cost = item_movement.item_movement_value.Sum(x => x.unit_value);
-                        }
-                    }
-                }
-                db.SaveChanges();
-            }
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             string PASsWORD = Microsoft.VisualBasic.Interaction.InputBox("Password", "Cognitivo");
@@ -278,6 +241,38 @@ namespace Cognitivo.Menu
                     }
                     db.SaveChanges();
                 }
+            }
+        }
+
+        private async void btnUpdatePrice_Click(object sender, RoutedEventArgs e)
+        {
+            using (db db = new db())
+            {
+                List<item> items = await db.items.ToListAsync();
+
+                foreach (item item in items)
+                {
+                    item_product item_product = item.item_product.FirstOrDefault();
+
+                    if (item_product != null)
+                    {
+                        /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
+                        item_movement item_movement = db.item_movement
+                            .Where(x =>
+                                x.id_item_product == item_product.id_item_product &&
+                                (x.credit - x.child.Sum(y => y.debit)) > 0 &&
+                                x.item_movement_value.Sum(y => y.unit_value) > 0)
+                                .OrderByDescending(x => x.trans_date)
+                                .Include(x => x.item_movement_value).LastOrDefault();
+
+                        if (item_movement != null)
+                        {
+                            item.unit_cost = item_movement.item_movement_value.Sum(x => x.unit_value);
+                        }
+                    }
+                }
+
+                db.SaveChanges();
             }
         }
     }

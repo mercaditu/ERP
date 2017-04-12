@@ -131,7 +131,7 @@
                         <Label Content="Convert To Testing" FontSize="10" HorizontalContentAlignment="Center" />
                     </Grid>
                 </Button>
-                <Button IsDefault="True" Click="Button_Click" Background="Transparent"
+                <Button IsDefault="True" Click="btnUpdatePrice_Click" Background="Transparent"
                         BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
                         <ProgressBar x:Name="progBarunitcost" Margin="0" Width="{Binding}" Height="{Binding}" HorizontalAlignment="Stretch" />

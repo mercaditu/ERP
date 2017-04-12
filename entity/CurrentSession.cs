@@ -207,7 +207,7 @@ namespace entity
         {
             Brillo.Licence Licence = new Brillo.Licence();
 
-            CurrentSession.UserRole = Role;
+            UserRole = Role;
 
             //string licensekey = "";
             //app_company app_company;
@@ -254,6 +254,7 @@ namespace entity
                 User = Sec_User;
                 Id_User = User.id_user;
                 UserRole = Role;
+
                 using (db db = new db())
                 {
                     security_role security_role = db.security_role.Where(x => x.id_role == Role.id_role).FirstOrDefault();
@@ -266,7 +267,7 @@ namespace entity
                             {
                                 if (Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault() != null)
                                 {
-                                    security_role.Version = (CurrentSession.Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
+                                    security_role.Version = (Versions)Licence.CompanyLicence.versions.Where(x => x.version >= (int)Role.Version).FirstOrDefault().version;
                                     Version = Role.Version;
                                 }
                             }
@@ -341,6 +342,14 @@ namespace entity
                     Allow_UpdateSalesDetail = Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice &&
                         x.has_privilage).Count() > 0 ? true : false;
+
+                    Allow_BarCodeSearchOnly = Security_role_privilageList
+                        .Where(x => x.security_privilage.name == Privilage.Privilages.ItemBarcodeSearchOnly &&
+                        x.has_privilage).Count() > 0 ? true : false;
+
+                    Show_InStockProductsOnly = Security_role_privilageList
+                        .Where(x => x.security_privilage.name == Privilage.Privilages.InStockSearchOnly &&
+                        x.has_privilage).Count() > 0 ? true : false;
                 }
                 catch (Exception)
                 {
@@ -405,6 +414,8 @@ namespace entity
         public static List<app_currencyfx> CurrencyFX_ActiveRates { get; set; }
 
         public static bool Allow_UpdateSalesDetail { get; set; }
+        public static bool Allow_BarCodeSearchOnly { get; set; }
+        public static bool Show_InStockProductsOnly { get; set; }
 
         public static app_currencyfx Get_Currency_Default_Rate()
         {

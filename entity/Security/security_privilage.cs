@@ -35,6 +35,8 @@ namespace entity
             CanDisplayTask = 8,
             CanDisplaySupplies = 9,
             CanDisplayServiceContract = 10,
+            ItemBarcodeSearchOnly = 11,
+            InStockSearchOnly = 12
         }
     }
 }

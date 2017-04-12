@@ -78,7 +78,15 @@
                                  EndDate="{Binding EndDate, ElementName=this, Mode=TwoWay}" Visibility="Collapsed" />
                 </Expander>
 
-                <Expander x:Name="stpProject" Visibility="Collapsed">
+                <Expander x:Name="stpProject">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="T" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                                    FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="16"
+                                    Style="{DynamicResource MetroCircleButtonStyle}" />
+                            <Label Content="{lex:Loc Project}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                        </StackPanel>
+                    </Expander.Header>
                     <StackPanel>
                         <StackPanel.Background>
                             <SolidColorBrush Color="White" Opacity="0.64" />

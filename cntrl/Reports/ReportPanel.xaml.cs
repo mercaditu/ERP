@@ -225,13 +225,12 @@ namespace cntrl
             {
                 if (Report.Name.ToLower() == "HumanResource".ToLower())
                 {
-                    dt = dt.Select("id_item_type=3 or id_item_type=7").CopyToDataTable();
+                    dt = dt.Select("id_item_type=5 or id_item_type=3 or id_item_type=7").CopyToDataTable();
                 }
                 else if (Report.Name.ToLower() == "RawMaterials".ToLower())
                 {
-                    dt = dt.Select("id_item_type=2").CopyToDataTable();
+                    dt = dt.Select("id_item_type=5 or id_item_type=1 or id_item_type=2 or id_item_type=6").CopyToDataTable();
                 }
-
             }
 
             ReportDt = dt;

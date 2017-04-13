@@ -122,7 +122,10 @@ namespace Cognitivo.Product
                                                         && x.app_location.id_location == id_location
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
-                                                        ).OrderByDescending(x => x.trans_date).Take(100).Include(x => x.item_product).ToListAsync();
+                                                        )
+                                                        .OrderByDescending(x => x.trans_date)
+                                                        .Take(100)
+                                                        .Include(x => x.item_product).ToListAsync();
 
                     foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
                     {
@@ -155,10 +158,7 @@ namespace Cognitivo.Product
                             TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
                             TmpInventory.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
                             //This code checks for Quantity after checking for name. This will cause less loops.
-                            if (TmpInventory.Quantity == 0)
-                                return ShowZeros == true ? true : false;
-                            else
-                                return true;
+                            return TmpInventory.Quantity == 0 ? ShowZeros : true;
                         else
                             return false;
                     };

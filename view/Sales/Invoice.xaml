@@ -70,7 +70,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateStart" Width="124"
-												SelectedDate="{Binding ElementName=SalesInvoice, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+												SelectedDate="{Binding ElementName=SalesInvoice, Path=Start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
                                     <Label Style="{StaticResource input_label}">
@@ -80,7 +80,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateEnd" Width="124"
-												SelectedDate="{Binding ElementName=SalesInvoice, Path=end_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+												SelectedDate="{Binding ElementName=SalesInvoice, Path=End_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                             </StackPanel>
 

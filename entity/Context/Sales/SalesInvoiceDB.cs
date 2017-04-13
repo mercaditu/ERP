@@ -112,7 +112,7 @@ namespace entity
             }
         }
 
-        public bool Approve(bool IsDiscountStock)
+        public bool Approve()
         {
             bool ApprovalStatus = false;
             NumberOfRecords = 0;

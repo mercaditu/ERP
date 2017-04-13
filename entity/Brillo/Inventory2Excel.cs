@@ -30,7 +30,7 @@ namespace entity.Brillo
                         Brand = inv_detail.item_product.item.item_brand != null ? inv_detail.item_product.item.item_brand.name : "",
                         Code = inv_detail.item_product.item.code,
                         //Probably Trim item name if it is too long
-                        Product = inv_detail.item_product.item.name,
+                        Product = inv_detail.item_product.item.name.Substring(0, 254),
 
                         ExpiryDate = inv_detail.expire_date,
                         BatchCode = inv_detail.batch_code,
@@ -65,7 +65,7 @@ namespace entity.Brillo
                 //Add code to show save panel.
                 Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog()
                 {
-                    FileName = Localize.StringText("Inventory") + ": " + item_inventory.app_branch.name + " " + item_inventory.trans_date.Month + "|" + item_inventory.trans_date.Year, // Default file name
+                    FileName = Localize.StringText("Inventory") + "= " + item_inventory.app_branch.name + " " + item_inventory.trans_date.Month + "|" + item_inventory.trans_date.Year, // Default file name
                     DefaultExt = ".xlsx", // Default file extension
                     Filter = "Text documents (.xlsx)|*.xlsx" // Filter files by extension
                 };

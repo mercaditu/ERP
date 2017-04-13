@@ -333,16 +333,9 @@ namespace Cognitivo.Setup.Migration
                                     }
                                     else if (status == 1)
                                     {
-                                        if (sales_invoice.app_branch.can_stock)
-                                        {
-                                            db.Approve(true);
-                                        }
-                                        else
-                                        {
-                                            db.Approve(false);
-                                        }
-
-                                        sales_invoice.State = System.Data.Entity.EntityState.Modified;
+                                        db.Approve();
+                                        
+                                        sales_invoice.State = EntityState.Modified;
                                         sales_invoice.status = Status.Documents_General.Approved;
                                         sales_invoice.IsSelected = true;
 

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,9 +30,28 @@ namespace entity.Brillo
     {
         public int id { get; set; }
         public int lic_key_id { get; set; }
-        public int user_number { get; set; }
-        public int? version { get; set; }
+        public int web_user_count { get; set; }
+        public int local_user_count { get; set; }
+        public CurrentSession.Versions? version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+                using (db db = new db())
+                {
+                    List<security_role> security_roleList = db.security_role.ToList();
+                    local_user_count = security_roleList.Where(x => x.Version ==value).Sum(x => x.security_user.Count);
+                }
+                
+            }
+        }
+        CurrentSession.Versions? _version;
         public DateTime date_expiry { get; set; }
+      
     }
 
     public class Licence

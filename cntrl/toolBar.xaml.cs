@@ -195,15 +195,15 @@ namespace cntrl
             else if (Status == "Approved" || Status == "Issued" || Status == "Done")
             {
                 IsEditable = false;
-                if (appName == App.Names.Imports)
-                {
-                    Edit_IsEnabled = false;
-                }
-                else
-                {
-                    Edit_IsEnabled = true;
-                }
-
+                //if (appName == App.Names.Imports)
+                //{
+                //    Edit_IsEnabled = false;
+                //}
+                //else
+                //{
+                //    Edit_IsEnabled = true;
+                //}
+                Edit_IsEnabled = false;
                 Archived_IsEnabled = true;
                 Approve_IsEnabled = false;
                 Annul_IsEnabled = true;

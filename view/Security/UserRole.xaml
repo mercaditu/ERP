@@ -24,7 +24,7 @@
     <Grid DataContext="{StaticResource security_roleViewSource}" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="182" />
+            <RowDefinition Height="250" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -68,8 +68,21 @@
                     </ComboBox.ItemsPanel>
                 </ComboBox>
                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}" />
-                <StackPanel Orientation="Horizontal">
-                    <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" Width="180" />
+                <StackPanel Orientation="Horizontal" Height="101">
+                    <DataGrid x:Name="VersionGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+							 CanUserAddRows="False" IsReadOnly="True" 
+							  RowDetailsVisibilityMode="VisibleWhenSelected" Width="284">
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="Version" Width="*" 
+												Binding="{Binding version,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="WebUser" Width="*" 
+												Binding="{Binding web_user_count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="LocalUser" Width="*" 
+												Binding="{Binding local_user_count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                   <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" Width="180" />
                     <Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0" VerticalAlignment="Top" />
                 </StackPanel>
             </StackPanel>

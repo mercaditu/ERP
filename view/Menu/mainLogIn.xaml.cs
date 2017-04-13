@@ -103,7 +103,7 @@ namespace Cognitivo.Menu
                 myWindow.is_LoggedIn = true;
                 Dispatcher.BeginInvoke((Action)(() => myFrame.Navigate(new mainMenu_Corporate())));
             }
-            catch { } //Do Nothing
+            catch (Exception ex) { throw ex; } //Do Nothing
             finally
             {
                 Dispatcher.BeginInvoke((Action)(() =>

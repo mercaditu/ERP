@@ -52,6 +52,7 @@ namespace Cognitivo.Security
             if (app_company != null)
             {
                 Licence.VerifyCompanyLicence(app_company.version);
+                VersionGrid.ItemsSource = Licence.CompanyLicence.versions;
             }
         }
 
@@ -103,11 +104,11 @@ namespace Cognitivo.Security
                     int UserLimit = 0;
                     if (Licence.CompanyLicence != null)
                     {
-                        versions versions = Licence.CompanyLicence.versions.Where(x => x.version == (int)Version).FirstOrDefault();
+                        versions versions = Licence.CompanyLicence.versions.Where(x => x.version == Version).FirstOrDefault();
 
                         if (versions != null)
                         { //Exists = Yes.
-                            UserLimit = versions.user_number;
+                            UserLimit = versions.web_user_count;
 
                             if (UserLimit < UserCount)
                             { //No space Avaiable
@@ -394,11 +395,11 @@ namespace Cognitivo.Security
 
                 if (Licence.CompanyLicence != null)
                 {
-                    versions versions = Licence.CompanyLicence.versions.Where(x => x.version == (int)security_role.Version).FirstOrDefault();
+                    versions versions = Licence.CompanyLicence.versions.Where(x => x.version == security_role.Version).FirstOrDefault();
 
                     if (versions != null)
                     { //Exists = Yes.
-                        lblVersionInternet.Content = versions.user_number;
+                        lblVersionInternet.Content = versions.web_user_count;
                     }
                 }
             }

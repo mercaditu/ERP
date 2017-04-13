@@ -285,7 +285,7 @@ namespace entity
                     app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
                     app_account_detail.id_payment_type = payment_detail.id_payment_type;
                     app_account_detail.payment_detail = payment_detail;
-                    app_account_detail.trans_date = payment_detail.trans_date;
+                    app_account_detail.trans_date = payment_detail.payment.trans_date;
 
                     if (_payment_type.is_direct)
                     {

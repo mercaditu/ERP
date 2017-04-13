@@ -53,15 +53,20 @@
             //If Master is true, jump if, and return True.
             if (CurrentSession.User.security_role.is_master == false)
             {
-                if (Privilage > 0)
+                if (Privilage > 0 )
                 {
                     using (db db = new db())
                     {
                         security_privilage privilage = db.security_privilage.Where(x => x.name == Privilage).FirstOrDefault();
-                        if (CurrentSession.Security_role_privilageList.Where(x => x.id_privilage == privilage.id_privilage).FirstOrDefault() != null)
+                        if (privilage!=null)
                         {
-                            return CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage).FirstOrDefault().has_privilage;
+                            if (CurrentSession.Security_role_privilageList.Where(x => x.id_privilage == privilage.id_privilage).FirstOrDefault() != null)
+                            {
+                                return CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage).FirstOrDefault().has_privilage;
+                            }
+
                         }
+                    
                     }
                 }
             }

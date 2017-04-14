@@ -19,7 +19,7 @@ namespace Cognitivo.Sales
         /// </summary>
         private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
 
-        private PaymentDB PaymentDB = new PaymentDB();
+        private PaymentDB PaymentDB; // = new PaymentDB();
         private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Cognitivo.Sales
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
+                sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
                 sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }));
@@ -137,7 +137,7 @@ namespace Cognitivo.Sales
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+                paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
                 paymentViewSource.Source = PaymentDB.payments.Local;
                 paymentViewSource.View.MoveCurrentTo(payment);
 
@@ -261,10 +261,10 @@ namespace Cognitivo.Sales
             {
                 btnSave_Click(sender, e);
             }
-            else if (e.Key == Key.F5)
-            {
-                boderdiscount_MouseDown(sender, e);
-            }
+            //else if (e.Key == Key.F5)
+            //{
+            //    boderdiscount_MouseDown(sender, e);
+            //}
         }
 
         private void Cancel_MouseDown(object sender, EventArgs e)
@@ -321,7 +321,7 @@ namespace Cognitivo.Sales
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 sales_invoice_detail sales_invoice_detail = e.Parameter as sales_invoice_detail;
@@ -355,45 +355,45 @@ namespace Cognitivo.Sales
 
         #endregion Details
 
-        #region Discount
+        //#region Discount
 
-        private void boderdiscount_MouseDown(object sender, EventArgs e)
-        {
-            popupDiscount.IsOpen = true;
-        }
+        //private void boderdiscount_MouseDown(object sender, EventArgs e)
+        //{
+        //    popupDiscount.IsOpen = true;
+        //}
 
-        private void popupCustomize_Closed(object sender, EventArgs e)
-        {
-            popupDiscount.IsOpen = false;
-        }
+        //private void popupCustomize_Closed(object sender, EventArgs e)
+        //{
+        //    popupDiscount.IsOpen = false;
+        //}
 
-        #endregion Discount
+        //#endregion Discount
 
-        #region Contact CRUD
+        //#region Contact CRUD
 
-        private void btnNewCustomer_MouseDown(object sender, EventArgs e)
-        {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
+        //private void btnNewCustomer_MouseDown(object sender, EventArgs e)
+        //{
+        //    entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
 
-            if (Sec.create)
-            {
-                popCrud.IsOpen = true;
-                popCrud.Visibility = Visibility.Visible;
+        //    if (Sec.create)
+        //    {
+        //        popCrud.IsOpen = true;
+        //        popCrud.Visibility = Visibility.Visible;
 
-                //Add CRUD Panel into View.
-                cntrl.Curd.contact ContactCURD = new cntrl.Curd.contact();
-                ContactCURD.btnSave_Click += crudContact_btnCancel_Click;
-                ContactCURD.IsCustomer = true;
-                stackCustomer.Children.Add(ContactCURD);
-            }
-        }
+        //        //Add CRUD Panel into View.
+        //        cntrl.Curd.contact ContactCURD = new cntrl.Curd.contact();
+        //        ContactCURD.btnSave_Click += crudContact_btnCancel_Click;
+        //        ContactCURD.IsCustomer = true;
+        //        stackCustomer.Children.Add(ContactCURD);
+        //    }
+        //}
 
-        private void crudContact_btnCancel_Click(object sender)
-        {
-            sbxContact.LoadData();
-        }
+        //private void crudContact_btnCancel_Click(object sender)
+        //{
+        //    sbxContact.LoadData();
+        //}
 
-        #endregion Contact CRUD
+        //#endregion Contact CRUD
 
         private void lblGrandTotalsales_DataContextChanged(object sender, EventArgs e)
         {
@@ -403,9 +403,8 @@ namespace Cognitivo.Sales
                 {
                     if (sales_invoiceViewSource.View.CurrentItem != null && paymentViewSource.View.CurrentItem != null)
                     {
-                        sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                         payment payment = paymentViewSource.View.CurrentItem as payment;
-                        payment.GrandTotal = sales_invoice.GrandTotal;
+                        payment.GrandTotal = (sales_invoiceViewSource.View.CurrentItem as sales_invoice).GrandTotal;
                     }
                 }
             }
@@ -414,8 +413,7 @@ namespace Cognitivo.Sales
         private void NewPayment_MouseUp(object sender, MouseButtonEventArgs e)
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            payment_detail payment_detail = new payment_detail();
-            payment.payment_detail.Add(payment_detail);
+            payment.payment_detail.Add(new payment_detail());
         }
 
         private void Clear_MouseDown(object sender, EventArgs e)
@@ -440,11 +438,10 @@ namespace Cognitivo.Sales
         private async void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            List<sales_invoice_detail> promoList = sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList();
 
-            if (promoList.Count() > 0)
+            if ((sales_invoiceViewSource.View.CurrentItem as sales_invoice).sales_invoice_detail.Where(x => x.IsPromo).ToList().Count() > 0)
             {
-                foreach (sales_invoice_detail sales_invoice_detail in promoList)
+                foreach (sales_invoice_detail sales_invoice_detail in (sales_invoiceViewSource.View.CurrentItem as sales_invoice).sales_invoice_detail.Where(x => x.IsPromo).ToList())
                 {
                     if (sales_invoice_detail.id_sales_invoice_detail != sales_invoice_detail.PromoID)
                     {
@@ -454,7 +451,7 @@ namespace Cognitivo.Sales
             }
             StartPromo.Calculate_SalesInvoice(ref sales_invoice);
 
-            foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
+            foreach (sales_invoice_detail sales_invoice_detail in (sales_invoiceViewSource.View.CurrentItem as sales_invoice).sales_invoice_detail)
             {
                 //Gets the Item into view.
                 if (sales_invoice_detail.item == null)
@@ -471,7 +468,7 @@ namespace Cognitivo.Sales
 
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
             sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            sales_invoice.RaisePropertyChanged("GrandTotal");
+            (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
         }
 
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -483,7 +480,7 @@ namespace Cognitivo.Sales
 
                 cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
 
-                if (item != null && item.id_item > 0 && sales_invoice != null)
+                if (item != null && item.id_item > 0 && sales_invoiceViewSource.View.CurrentItem as sales_invoice != null)
                 {
                     Settings SalesSettings = new Settings();
 
@@ -493,7 +490,7 @@ namespace Cognitivo.Sales
                         decimal QuantityInStock = sbxItem.QuantityInStock;
 
                         sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, item_movement, sbxItem.Quantity);
-                        sales_invoice.RaisePropertyChanged("GrandTotal");
+                        (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
                     }
                 }
                 sales_invoiceViewSource.View.Refresh();

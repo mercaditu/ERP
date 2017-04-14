@@ -5,13 +5,11 @@
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
-	  mc:Ignorable="d" x:Class="Cognitivo.Menu.mainLogIn"
-
+	  mc:Ignorable="d" x:Class="Cognitivo.Menu.MainLogIn"
 		xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
-
 	  MinWidth="300" MinHeight="500" Loaded="Page_Loaded"
 	  Title="LogIn">
     <Page.Resources>

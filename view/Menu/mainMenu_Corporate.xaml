@@ -2,17 +2,13 @@
       x:Class="Cognitivo.Menu.mainMenu_Corporate" Title="mainMenu"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:my="clr-namespace:entity.Properties;assembly=entity"
       xmlns:entity="clr-namespace:entity;assembly=entity"
-      xmlns:chart="clr-namespace:cntrl.Chart;assembly=cntrl"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
       lex:LocalizeDictionary.DesignCulture="en-US" Loaded="Page_Loaded"
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       MinWidth="800" MinHeight="600">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visi" />
@@ -134,16 +130,6 @@
                         HorizontalAlignment="Center" Focusable="False"
                         Margin="0,64,0,0" />
             </ScrollViewer>
-            <!--<Expander Header="{lex:Loc Reports}" VerticalAlignment="Bottom" Height="256" ExpandDirection="Up">
-                <Grid Margin="-4">
-                    <Grid.Background>
-                        <SolidColorBrush Color="White" Opacity="0.64" />
-                    </Grid.Background>
-                    <StackPanel x:Name="stpkpi" Orientation="Horizontal">
-                        <chart:AccountReceivableControl Width="250" />
-                    </StackPanel>
-                </Grid>
-            </Expander>-->
         </Grid>
     </Grid>
 </Page>

@@ -8,9 +8,6 @@ using System.Windows.Data;
 
 namespace Cognitivo.Configs
 {
-    /// <summary>
-    /// Interaction logic for Bank.xaml
-    /// </summary>
     public partial class Bank : Page
     {
         private entity.dbContext entity = new entity.dbContext();

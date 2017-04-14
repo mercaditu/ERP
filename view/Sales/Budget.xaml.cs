@@ -46,14 +46,13 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
-            sales_budget sales_budget = sales_budgetDataGrid.SelectedItem as sales_budget;
-            if (sales_budget != null)
+            if (sales_budgetDataGrid.SelectedItem is sales_budget sales_budget)
             {
                 entity.Brillo.Document.Start.Manual(sales_budget, sales_budget.app_document_range);
             }
             else
             {
-                toolBar.msgWarning("Please select");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -79,7 +78,7 @@ namespace Cognitivo.Sales
             }
             else
             {
-                toolBar.msgWarning("Please Select A Record");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -95,7 +94,7 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 SalesBudgetDB.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);

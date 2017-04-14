@@ -4,7 +4,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:local="clr-namespace:Cognitivo.Converters"
 
@@ -28,13 +27,10 @@
         <StackPanel Background="{StaticResource appConfig}">
             <Image Style="{StaticResource img_Config}"
                    Source="/Cognitivo;component/Images/Application/128/EntryExit.png" />
-            <Label Content="{lex:Loc Postion}" HorizontalAlignment="Center"
+            <Label Content="{lex:Loc Position}" HorizontalAlignment="Center"
                    Style="{StaticResource H1}" />
             <Button Content="{lex:Loc Create}" Margin="15"
                         Style="{StaticResource btn_green}" Click="btnNew_Click" />
-            <!--<TextBlock Text="Banks have the ability to hold multiple Accounts."
-                            HorizontalAlignment="Center"
-                            Style="{StaticResource text_Instructions}" />-->
         </StackPanel>
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">

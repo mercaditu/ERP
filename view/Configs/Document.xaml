@@ -5,10 +5,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:entity="clr-namespace:entity;assembly=entity"
-       xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d"
 
-    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
@@ -36,13 +35,6 @@
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
 
-        <!--<DataGrid x:Name="app_documentDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True"
-                      ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
-                <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding name}" Header="name" Width="*" />
-                </DataGrid.Columns>
-            </DataGrid>-->
-
         <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="app_documentDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
@@ -64,13 +56,12 @@
             <ComboBox x:Name="cbxApplication" Style="{StaticResource input_combobox}"
                       SelectedValue="{Binding id_application, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                       SelectionChanged="cbxApplication_SelectionChanged" />
-            <TextBlock Style="{StaticResource text_Instructions}" Text="Limit the amount of rows a Document can have. 0 = UnLimited" />
-            <Label Content="{lex:Loc DocumentRowLimit}" Style="{DynamicResource input_label}" />
+            <Label Content="{lex:Loc RowLimit}" Style="{DynamicResource input_label}" />
             <TextBox Text="{Binding line_limit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}" />
             <Label Content="{lex:Loc Document}" Style="{DynamicResource input_label}" />
             <RadioButton Content="{lex:Loc StylePrinter}" x:Name="rbtnStylePrinter"
                       IsChecked="{Binding style_printer, Mode=TwoWay, FallbackValue=false, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_radiobutton}" />
-            <RadioButton Content="{lex:Loc Reciept}" x:Name="rbtnStyleReciept"
+            <RadioButton Content="{lex:Loc StyleReceipt}" x:Name="rbtnStyleReciept"
                       IsChecked="{Binding style_reciept, Mode=TwoWay, FallbackValue=true, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_radiobutton}" />
 
             <Label Content="{lex:Loc Filter}" Style="{DynamicResource input_label}" />
@@ -106,30 +97,12 @@
             <Label Content="{lex:Loc Header}" Style="{StaticResource input_label}" Foreground="White" />
             <TextBox x:Name="rtfheader" AcceptsReturn="True" TextWrapping="Wrap" Height="100" Text="{Binding reciept_header,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
-            <!--<toolkit:RichTextBox x:Name="rtfheader"  Width="256" Margin="8,0" MinHeight="128" FontFamily="{Binding ElementName=cbxFonts, Path=SelectedItem, Mode=TwoWay}"
-                          FontSize="{Binding ElementName=cbxfontsize, Path=Text, Mode=TwoWay}" Text="{Binding reciept_header,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <RichTextBox.Background>
-                    <SolidColorBrush Color="White" Opacity="0.85" />
-                </RichTextBox.Background>
-            </toolkit:RichTextBox>-->
             <Label Content="{lex:Loc Row}" Style="{StaticResource input_label}" Foreground="White" />
             <TextBox x:Name="rtfrow" AcceptsReturn="True" TextWrapping="Wrap" Height="100" Text="{Binding reciept_body,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
-            <!--<toolkit:RichTextBox x:Name="rtfrow" Width="256" Margin="8,0" MinHeight="32" FontFamily="{Binding ElementName=cbxFonts, Path=SelectedItem, Mode=TwoWay}"
-                          FontSize="{Binding ElementName=cbxfontsize, Path=Text, Mode=TwoWay}" Text="{Binding reciept_body,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <RichTextBox.Background>
-                    <SolidColorBrush Color="White" Opacity="0.85" />
-                </RichTextBox.Background>
-            </toolkit:RichTextBox>-->
             <Label Content="{lex:Loc Footer}" Style="{StaticResource input_label}" Foreground="White" />
             <TextBox x:Name="rtffooter" AcceptsReturn="True" TextWrapping="Wrap" Height="100" Text="{Binding reciept_footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
-            <!--<toolkit:RichTextBox x:Name="rtffooter"  Width="256" Margin="8,0" MinHeight="128" FontFamily="{Binding ElementName=cbxFonts, Path=SelectedItem, Mode=TwoWay}"
-                          FontSize="{Binding ElementName=cbxfontsize, Path=Text, Mode=TwoWay}" Text="{Binding reciept_footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <RichTextBox.Background>
-                    <SolidColorBrush Color="White" Opacity="0.85" />
-                </RichTextBox.Background>
-            </toolkit:RichTextBox>-->
             <TextBlock Margin="8" Foreground="White" Text="Hi there" />
             <TextBlock Margin="8,0" Foreground="White">
                 <Run />

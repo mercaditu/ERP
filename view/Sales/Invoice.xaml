@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Sales.Invoice" Title="{lex:Loc SalesInvoice}" x:Name="SalesInvoice"
+﻿<Page x:Class="Cognitivo.Sales.Invoice" Title="{lex:Loc SalesInvoice}" x:Name="this"
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -70,7 +70,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateStart" Width="124"
-												SelectedDate="{Binding ElementName=SalesInvoice, Path=Start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+												SelectedDate="{Binding ElementName=this, Path=Start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
                                     <Label Style="{StaticResource input_label}">
@@ -80,7 +80,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateEnd" Width="124"
-												SelectedDate="{Binding ElementName=SalesInvoice, Path=End_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+												SelectedDate="{Binding ElementName=this, Path=End_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                             </StackPanel>
 

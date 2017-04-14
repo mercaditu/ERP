@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:Class="Cognitivo.Sales.PointOfSale"
       xmlns:main="clr-namespace:Cognitivo.Properties"
       xmlns:pref="clr-namespace:Cognitivo.Sales"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,13 +6,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:cntrl="clr-namespace:cntrl.Controls;assembly=cntrl"
-      xmlns:curd="clr-namespace:cntrl.Curd;assembly=cntrl"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
-      xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Class="Cognitivo.Sales.PointOfSale"
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US"
@@ -37,54 +35,12 @@
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}" />
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
         <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}" />
-        <Storyboard x:Key="OnClick1">
-
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:BloomEffect.BloomIntensity)" Storyboard.TargetName="gridStart">
-                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="4.125" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2.6" Value="4.125" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3.4" Value="4.5916666666666668" />
-                <EasingDoubleKeyFrame KeyTime="0:0:4.1" Value="5" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Frequency)" Storyboard.TargetName="gridStart">
-                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="22" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="37" />
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="40" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Phase)" Storyboard.TargetName="gridStart">
-                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="6" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="8" />
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="10" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Magnitude)" Storyboard.TargetName="gridStart">
-                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.02" />
-                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.06" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0.08" />
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0.1" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="gridStart">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0.67" />
-                <EasingDoubleKeyFrame KeyTime="0:0:3.3" Value="0.33" />
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
     </Page.Resources>
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete"
                         CanExecute="DeleteCommandBinding_CanExecute"
                         Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="button">
-            <BeginStoryboard Storyboard="{StaticResource OnClick1}" />
-        </EventTrigger>
-    </Page.Triggers>
 
     <Grid DataContext="{StaticResource sales_invoiceViewSource}">
         <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
@@ -180,7 +136,8 @@
 							                                Get_Customers="True"
 							                                Select="sbxContact_Select" />
                         </Viewbox>
-                        <Viewbox Margin="16" VerticalAlignment="Top" HorizontalAlignment="Center" StretchDirection="Both" Stretch="Uniform" Height="45">
+                        
+                        <!--<Viewbox Margin="16" VerticalAlignment="Top" HorizontalAlignment="Center" StretchDirection="Both" Stretch="Uniform" Height="45">
                             <Grid Cursor="Hand" MouseDown="btnNewCustomer_MouseDown" TouchDown="btnNewCustomer_MouseDown" ToolTip="{lex:Loc New}">
                                 <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                                     <Border.Background>
@@ -200,7 +157,7 @@
                         </Viewbox>
                         <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Mouse" Visibility="Visible">
                             <StackPanel x:Name="stackCustomer" />
-                        </Popup>
+                        </Popup>-->
                     </StackPanel>
                 </TabItem>
                 <!-- SALES -->
@@ -479,101 +436,51 @@
             </StackPanel>
 
             <StackPanel x:Name="stackRight" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40" RenderTransformOrigin="0.5,0.5">
-                <!-- Clean decimal -->
-
-                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
-				Cursor="Hand" MouseDown="Clear_MouseDown" TouchDown="Clear_MouseDown" ToolTip="{lex:Loc Cancel}">
-                    <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <Border.Background>
-                            <SolidColorBrush Color="#FF004867" Opacity="0.32" />
-                        </Border.Background>
-                        <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                            <Label Content="{lex:Loc CleanDecimals}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" />
-                        </StackPanel>
-                    </Border>
-                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
-					BorderBrush="White" BorderThickness="1">
-                        <Label Content="w" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-						VerticalAlignment="Center" HorizontalAlignment="Center"
-						Foreground="White" />
-                    </Border>
-                </Grid>
-                <!-- Discount -->
-                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
-				Cursor="Hand" ToolTip="{lex:Loc Discount}" Visibility="Collapsed"
-				MouseUp="boderdiscount_MouseDown" TouchUp="boderdiscount_MouseDown">
-                    <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <Border.Background>
-                            <SolidColorBrush Color="#FF004867" Opacity="0.32" />
-                        </Border.Background>
-                        <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                            <Label Content="{lex:Loc Discount}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" />
-                        </StackPanel>
-                    </Border>
-                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
-					BorderBrush="White" BorderThickness="1">
-                        <Grid>
-                            <Popup x:Name="popupDiscount" Placement="Top" StaysOpen="False" IsOpen="False" Closed="popupCustomize_Closed">
-                                <Grid Background="{StaticResource AccentColor_Introvert}">
-                                    <Grid.Effect>
-                                        <DropShadowEffect ShadowDepth="0" Opacity="0.75" />
-                                    </Grid.Effect>
-                                    <StackPanel Margin="8">
-                                        <Label Content="Discount(%)" Style="{StaticResource input_label}" />
-                                        <TextBox metro:TextBoxHelper.SelectAllOnFocus="True"
-										Text="{Binding DiscountPercentage, Mode=TwoWay, Source={StaticResource sales_invoiceViewSource}, StringFormat=\{0:P\}, UpdateSourceTrigger=LostFocus}" Width="128" />
-                                        <Label Content="Discount" Style="{StaticResource input_label}" />
-                                        <TextBox metro:TextBoxHelper.SelectAllOnFocus="True"
-										Text="{Binding DiscountWithoutPercentage, Mode=TwoWay, Source={StaticResource sales_invoiceViewSource}, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" Width="128" />
-                                    </StackPanel>
-                                    <Polygon Margin="0,0,0,-10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Points="0,0 8,10 16,0" Fill="{StaticResource AccentColor_Introvert}" />
-                                </Grid>
-                            </Popup>
-                            <Label Content="%" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-							VerticalAlignment="Center" HorizontalAlignment="Center"
-							Foreground="White" />
-                        </Grid>
-                    </Border>
-                </Grid>
-
-                <!-- Approve -->
-                <Viewbox Margin="8" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <Grid Cursor="Hand" MouseDown="btnSave_Click" TouchDown="btnSave_Click" ToolTip="{lex:Loc Approve}">
-                        <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            <Border.Background>
-                                <SolidColorBrush Color="#FF004867" Opacity="0.32" />
-                            </Border.Background>
-                            <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                                <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke"><Run Text="{lex:Loc Save}" /><Run Text=" " /><Run Text="&amp;" /><Run Text=" " /><Run Text="{lex:Loc Print}" /></TextBlock>
-                            </StackPanel>
-                        </Border>
-                        <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
-						BorderBrush="White" BorderThickness="1">
-                            <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-							VerticalAlignment="Center" HorizontalAlignment="Center"
-							Foreground="White" />
-                        </Border>
-                    </Grid>
-                </Viewbox>
 
                 <!-- Cancel -->
                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
 				Cursor="Hand" MouseDown="Cancel_MouseDown" TouchDown="Cancel_MouseDown" ToolTip="{lex:Loc Cancel}">
                     <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <Border.Background>
-                            <SolidColorBrush Color="#FF004867" Opacity="0.32" />
+                            <SolidColorBrush Color="Crimson" Opacity="0.32" />
                         </Border.Background>
                         <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
                             <Label Content="{lex:Loc Cancel}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" />
                         </StackPanel>
                     </Border>
-                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
+                    <Border CornerRadius="32" Background="Crimson" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
 					BorderBrush="White" BorderThickness="1">
                         <Label Content="c" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
 						VerticalAlignment="Center" HorizontalAlignment="Center"
 						Foreground="White" />
                     </Border>
                 </Grid>
+                
+                <!-- Approve -->
+                <Viewbox Margin="8" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Grid Cursor="Hand" MouseDown="btnSave_Click" TouchDown="btnSave_Click" ToolTip="{lex:Loc Approve}">
+                        <Border CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                BorderBrush="White" BorderThickness="1" Margin="4,0,5,0">
+                            <Border.Background>
+                                <SolidColorBrush Color="RoyalBlue" Opacity="0.32" />
+                            </Border.Background>
+                            <StackPanel Orientation="Horizontal" Margin="2,0,24,0">
+                                <TextBlock Style="{StaticResource text_Label}" Margin="4" FontSize="10" FontWeight="Medium" Foreground="Black">
+                                    <Run Text="{lex:Loc Save}" />
+                                    <Run Text="&amp;" />
+                                    <Run Text="{lex:Loc Approve}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                        <Border CornerRadius="32" Background="{StaticResource AccentColor_Brush2}" Width="32" Height="32" 
+                                VerticalAlignment="Top" HorizontalAlignment="Right"
+						        BorderBrush="White" BorderThickness="1">
+                            <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
+							VerticalAlignment="Center" HorizontalAlignment="Center"
+							Foreground="White" />
+                        </Border>
+                    </Grid>
+                </Viewbox>
 
                 <!-- Account Utility -->
                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
@@ -584,14 +491,13 @@
                             <SolidColorBrush Color="#FF004867" Opacity="0.32" />
                         </Border.Background>
                         <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                            <Label Content="{lex:Loc AccountUtility}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" />
+                            <Label Content="{lex:Loc AccountUtility}" Style="{StaticResource input_label}" />
                         </StackPanel>
                     </Border>
-                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
-					BorderBrush="White" BorderThickness="1">
-                        <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-						VerticalAlignment="Center" HorizontalAlignment="Center"
-						Foreground="White" />
+                    <Border CornerRadius="32" Background="{StaticResource winBackground}" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
+					        BorderBrush="White" BorderThickness="1">
+                        <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
+						VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
                 </Grid>
             </StackPanel>

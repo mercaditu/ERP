@@ -33,13 +33,13 @@ namespace Cognitivo.Configs
             crud_modal.Visibility = Visibility.Visible;
             cntrl.hr_position hr_postion = new cntrl.hr_position();
             hr_postion.objCollectionViewSource = hr_positionViewSource;
-            hr_postion.operationMode = cntrl.Class.clsCommon.Mode.Add;
+            hr_postion.OperationMode = cntrl.Class.clsCommon.Mode.Add;
             //app_account app_account = new app_account();
             //entity.db.app_account.Add(app_account);
             //account.accountobject = app_account;
             // app_accountViewSource.View.MoveCurrentToLast();
             //account.objCollectionViewSource = app_accountViewSource;
-            hr_postion.entity = entity;
+            hr_postion.Entity = entity;
             crud_modal.Children.Add(hr_postion);
         }
 
@@ -50,13 +50,13 @@ namespace Cognitivo.Configs
             cntrl.hr_position hr_postion = new cntrl.hr_position();
             hr_postion.hr_positionobject = hr_position;
             hr_postion.objCollectionViewSource = hr_positionViewSource;
-            hr_postion.operationMode = cntrl.Class.clsCommon.Mode.Edit;
+            hr_postion.OperationMode = cntrl.Class.clsCommon.Mode.Edit;
             //app_account app_account = new app_account();
             //entity.db.app_account.Add(app_account);
             //account.accountobject = app_account;
             // app_accountViewSource.View.MoveCurrentToLast();
             //account.objCollectionViewSource = app_accountViewSource;
-            hr_postion.entity = entity;
+            hr_postion.Entity = entity;
             crud_modal.Children.Add(hr_postion);
         }
 

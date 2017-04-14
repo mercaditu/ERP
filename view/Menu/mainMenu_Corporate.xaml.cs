@@ -32,9 +32,12 @@ namespace Cognitivo.Menu
         {
             InitializeComponent();
 
-            cntrl.moduleIcon Icon = new cntrl.moduleIcon();
-            Icon.Tag = "Fav";
-            Icon.ModuleName = "Favorite";
+            cntrl.moduleIcon Icon = new cntrl.moduleIcon()
+            {
+                Tag = "Fav",
+                ModuleName = "Favorite"
+            };
+
             get_Apps(Icon, null);
         }
 
@@ -83,9 +86,8 @@ namespace Cognitivo.Menu
         private void get_Apps(object sender, EventArgs e)
         {
             string _modName;
-            cntrl.moduleIcon ico = sender as cntrl.moduleIcon;
 
-            if (ico != null)
+            if (sender is cntrl.moduleIcon ico)
             {
                 _modName = ico.Tag.ToString();
                 //Check to see if other icon (not module) has been clicked.
@@ -262,11 +264,13 @@ namespace Cognitivo.Menu
             }
             else if (Properties.Settings.Default.open_Window)
             {
-                ApplicationWindow appWindow = new ApplicationWindow();
-                appWindow.PagePath = name;
-                appWindow.ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true);
-                appWindow.Title = entity.Brillo.Localize.StringText(appName.Uid);
-                appWindow.Icon = appName.imgSource;
+                ApplicationWindow appWindow = new ApplicationWindow()
+                {
+                    PagePath = name,
+                    ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true),
+                    Title = entity.Brillo.Localize.StringText(appName.Uid),
+                    Icon = appName.imgSource
+                };
                 appWindow.Show();
             }
             else
@@ -299,11 +303,13 @@ namespace Cognitivo.Menu
 
             try
             {
-                ApplicationWindow appWindow = new ApplicationWindow();
-                appWindow.PagePath = name;
-                appWindow.ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true);
-                appWindow.Title = entity.Brillo.Localize.StringText(appName.Uid);
-                appWindow.Icon = appName.imgSource;
+                ApplicationWindow appWindow = new ApplicationWindow()
+                {
+                    PagePath = name,
+                    ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true),
+                    Title = entity.Brillo.Localize.StringText(appName.Uid),
+                    Icon = appName.imgSource
+                };
                 appWindow.Show();
             }
             catch { }

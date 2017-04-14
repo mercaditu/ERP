@@ -7,9 +7,9 @@ using System.Windows.Input;
 
 namespace Cognitivo.Menu
 {
-    public partial class mainConfiguration : Page
+    public partial class MainConfiguration : Page
     {
-        public mainConfiguration()
+        public MainConfiguration()
         {
             InitializeComponent();
         }

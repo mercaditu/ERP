@@ -22,10 +22,7 @@ namespace Cognitivo.Configs
 
         public void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         #endregion NotifyPropertyChange
@@ -59,12 +56,12 @@ namespace Cognitivo.Configs
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).Load();
+            await db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).LoadAsync();
 
             //Main Account DataGrid.
-            app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
+            app_accountViewSource = FindResource("app_accountViewSource") as CollectionViewSource;
             app_accountViewSource.Source = db.app_account.Local;
             app_accountapp_account_detailViewSource = this.FindResource("app_accountapp_account_detailViewSource") as CollectionViewSource;
 
@@ -76,25 +73,25 @@ namespace Cognitivo.Configs
 
             //Payment Type
             CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
-            payment_typeViewSource.Source = db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
+            payment_typeViewSource.Source = db.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToList();
 
             //CurrencyFx
             CollectionViewSource app_currencyfxViewSource = this.FindResource("app_currencyfxViewSource") as CollectionViewSource;
-            db.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+            await db.app_currencyfx.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Include(x => x.app_currency).LoadAsync();
             app_currencyfxViewSource.Source = db.app_currencyfx.Local;
 
             //For Adjust Tab.
             app_account_detail_adjustViewSource = this.FindResource("app_account_detail_adjustViewSource") as CollectionViewSource;
-            db.app_account_detail.Where(a => a.id_company == CurrentSession.Id_Company && a.id_company == CurrentSession.Id_Company).Load();
+            //await db.app_account_detail.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             app_account_detail_adjustViewSource.Source = db.app_account_detail.Local;
-            app_account_detail_adjustViewSource.View.Filter = item =>
-            {
-                app_account_detail objAcDetail = item as app_account_detail;
-                if (objAcDetail.id_account_detail == 0)
-                    return true;
-                else
-                    return false;
-            };
+            //app_account_detail_adjustViewSource.View.Filter = item =>
+            //{
+            //    app_account_detail objAcDetail = item as app_account_detail;
+            //    if (objAcDetail.id_account_detail == 0)
+            //        return true;
+
+            //    return false;
+            //};
 
             //Transfer
             listTransferAmt = new List<Class.clsTransferAmount>();
@@ -147,7 +144,7 @@ namespace Cognitivo.Configs
                     frmActive.Children.RemoveAt(0);
                 }
 
-                Configs.AccountActive AccountActive = new AccountActive();
+                AccountActive AccountActive = new AccountActive();
                 AccountActive.db = db;
                 AccountActive.app_accountViewSource = app_accountViewSource;
                 frmActive.Children.Add(AccountActive);
@@ -163,7 +160,7 @@ namespace Cognitivo.Configs
             app_accountViewSource.View.Refresh();
             app_accountapp_account_detailViewSource.View.Refresh();
             app_account_detail_adjustViewSource.View.Refresh();
-            MessageBox.Show("Adjustment Completed Successfully!", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
+            toolBar.msgSaved(1);
         }
 
         private void btnTransfer_Click(object sender, RoutedEventArgs e)
@@ -239,7 +236,7 @@ namespace Cognitivo.Configs
                 app_accountViewSource.View.Refresh();
                 app_accountapp_account_detailViewSource.View.Refresh();
                 app_account_detail_adjustViewSource.View.Refresh();
-                MessageBox.Show("Transfer Completed Successfully!", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
+                toolBar.msgSaved(1);
             }
         }
 
@@ -254,10 +251,8 @@ namespace Cognitivo.Configs
                     {
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return false;
                 };
             }
             else

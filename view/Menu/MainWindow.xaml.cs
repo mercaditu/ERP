@@ -111,7 +111,7 @@ namespace Cognitivo.Menu
         {
             if (_modName == "Config")
             {
-                mainFrame.Navigate(new mainConfiguration());
+                mainFrame.Navigate(new MainConfiguration());
             }
             else if (_modName == "Settings")
             {
@@ -120,7 +120,7 @@ namespace Cognitivo.Menu
             else if (_modName == "LogOut")
             {
                 is_LoggedIn = false;
-                mainFrame.Navigate(new mainLogIn());
+                mainFrame.Navigate(new MainLogIn());
             }
         }
 

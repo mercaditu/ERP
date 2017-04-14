@@ -34,9 +34,6 @@
                    Style="{StaticResource H1}" />
             <Button Content="{lex:Loc Create}" Margin="15"
                         Style="{StaticResource btn_green}" Click="btnNew_Click" />
-            <TextBlock Text="{lex:Loc desc_Tags}"
-                            HorizontalAlignment="Center"
-                            Style="{StaticResource text_Instructions}" />
         </StackPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch">
             <ItemsControl ItemsSource="{Binding}" Grid.Column="1" VerticalAlignment="Stretch">

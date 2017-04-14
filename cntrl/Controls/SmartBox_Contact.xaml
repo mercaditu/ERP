@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:crud="clr-namespace:cntrl.Curd"
              xmlns:pref="clr-namespace:cntrl.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Converter="clr-namespace:cntrl.Converters"
@@ -20,11 +19,10 @@
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Contact}, CreateList=True}" />
     </UserControl.Resources>
     <Grid Width="256">
-        <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
+        <!--<Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
             <StackPanel x:Name="stackCRUD">
             </StackPanel>
-            <!--<crud:contact x:Name="crudContact" />-->
-        </Popup>
+        </Popup>-->
 
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,0,0"
@@ -53,7 +51,7 @@
                                        Foreground="{StaticResource Label_ImportantColor}" VerticalAlignment="Center" />
                                     <Label Style="{StaticResource input_label}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc Search}" />
                                 </StackPanel>
-                                <CheckBox x:Name="rbtnExactCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc ExactCode}"
+                                <CheckBox x:Name="rbtnExactCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=ExactSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=1}"
@@ -87,11 +85,11 @@
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}" />
 
         <Popup x:Name="popContact" IsOpen="False">
-            <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="2">
-                <Grid MaxHeight="256">
+            <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Brush}" BorderThickness="2">
+                <StackPanel>
                     <TextBlock Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}"
                                Style="{StaticResource text_Instructions}" Margin="4,0" />
-                    <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" Margin="0,16,0,0" AutoGenerateColumns="False"
+                    <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" MaxHeight="256" AutoGenerateColumns="False"
                               HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource contactViewSource}}"
                               IsReadOnly="True" MouseDoubleClick="ContactGrid_MouseDoubleClick">
                         <DataGrid.Columns>
@@ -102,7 +100,49 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Address}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto" />
                         </DataGrid.Columns>
                     </DataGrid>
-                </Grid>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup x:Name="popContactInfo" IsOpen="False">
+            <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="Gold" BorderThickness="2">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="i" VerticalAlignment="Center" Foreground="White" FontFamily="/cntrl;component/Resources/#cognitivo"/>
+                        <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="White"/>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.Background>
+                            <SolidColorBrush Color="White" Opacity="0.90"/>
+                        </Grid.Background>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <pref:ImageViewer />
+                        <StackPanel Margin="8" Grid.Column="1" Width="256">
+                            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" FontSize="8"/>
+                            <TextBox Text="Abhishek Shah" Style="{StaticResource TextToLabelStyle}"/>
+                            <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}" FontSize="8"/>
+                            <TextBox Text="1528628" Style="{StaticResource TextToLabelStyle}"/>
+                            <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}" FontSize="8"/>
+                            <TextBox Text="CG Road. Satkar Building" Style="{StaticResource TextToLabelStyle}"/>
+                            <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}" FontSize="8"/>
+                            <TextBox Text="0981200042" Style="{StaticResource TextToLabelStyle}"/>
+                            <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}" FontSize="8"/>
+                            <TextBox Text="abhi@cognitivo.in" Style="{StaticResource TextToLabelStyle}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}" FontSize="8"/>
+                                <Label Content="Minorista" Style="{StaticResource input_label}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" FontSize="8"/>
+                                <Label Content="Contacto Principal" Style="{StaticResource input_label}"/>
+                            </StackPanel>
+                            <Button Click="SaveContact_Click" Content="{lex:Loc Save}" Margin="4" Width="Auto"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
             </Border>
         </Popup>
     </Grid>

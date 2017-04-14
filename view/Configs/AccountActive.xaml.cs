@@ -17,10 +17,7 @@ namespace Cognitivo.Configs
 
         public void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         #endregion NotifyPropertyChange
@@ -151,18 +148,17 @@ namespace Cognitivo.Configs
                     {
                         foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.id_company == CurrentSession.Id_Company).ToList())
                         {
-                            Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
-                            clsTransferAmount.PaymentTypeName = payment_type.name;
-
-                            clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-
-                            clsTransferAmount.amount = app_account.app_account_detail.Where(x =>
-                                x.app_currencyfx.id_currency == app_currency.id_currency
-                                && x.id_payment_type == payment_type.id_payment_type)
-                                .Sum(x => x.credit - x.debit);
-
-                            clsTransferAmount.Currencyfxname = app_currency.name;
-                            clsTransferAmount.id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
+                            Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount()
+                            {
+                                PaymentTypeName = payment_type.name,
+                                id_payment_type = payment_type.id_payment_type,
+                                amount = app_account.app_account_detail.Where(x =>
+                                    x.app_currencyfx.id_currency == app_currency.id_currency
+                                    && x.id_payment_type == payment_type.id_payment_type)
+                                .Sum(x => x.credit - x.debit),
+                                Currencyfxname = app_currency.name,
+                                id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx
+                            };
                             listOpenAmt.Add(clsTransferAmount);
                         }
                     }
@@ -178,7 +174,6 @@ namespace Cognitivo.Configs
             {
                 //Get the correct Account.
                 app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
-
                 app_account_session app_account_session = null;
 
                 if (db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).FirstOrDefault() != null)
@@ -197,19 +192,19 @@ namespace Cognitivo.Configs
                     //Loop through each account and create an Account Detail for the Opening Balance.
                     foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
                     {
-                        app_account_detail app_account_detail = new global::entity.app_account_detail();
-                        app_account_detail.id_session = app_account_session.id_session;
-                        app_account_detail.id_account = app_account_session.id_account;
-                        app_account_detail.id_currencyfx = counted_account_detail.id_currencyfx;
-                        app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
-                        app_account_detail.debit = counted_account_detail.amountCounted;
-                        app_account_detail.comment = "Closing Balance";
-                        app_account_detail.tran_type = app_account_detail.tran_types.Close;
-                        app_account_detail.trans_date = DateTime.Now;
+                        app_account_detail app_account_detail = new app_account_detail()
+                        {
+                            id_session = app_account_session.id_session,
+                            id_account = app_account_session.id_account,
+                            id_currencyfx = counted_account_detail.id_currencyfx,
+                            id_payment_type = counted_account_detail.id_payment_type,
+                            debit = counted_account_detail.amountCounted,
+                            comment = "Closing Balance",
+                            tran_type = app_account_detail.tran_types.Close,
+                            trans_date = DateTime.Now,
+                            app_account_session = app_account_session,
+                        };
 
-                        //CHECK
-                        app_account_detail.id_session = app_account_session.id_session;
-                        app_account_detail.app_account_session = app_account_session;
                         app_account_session.cl_date = DateTime.Now;
                         app_account_session.is_active = false;
 
@@ -222,7 +217,7 @@ namespace Cognitivo.Configs
                         RaisePropertyChanged("is_active");
                     }
 
-                    if (MessageBox.Show("Session is Closed, thank you for using CognitivoERP! "
+                    if (MessageBox.Show("Session is Closed, thank you for using Cognitivo ERP! "
                                    + "/n Would you like to Print the Z-Report?", "Print Z-Report?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         try
@@ -241,8 +236,10 @@ namespace Cognitivo.Configs
                     //We need to OPEN (Activate) the inactive Session..
 
                     //Create New Session.
-                    app_account_session = new entity.app_account_session();
-                    app_account_session.id_account = app_account.id_account;
+                    app_account_session = new entity.app_account_session()
+                    {
+                        id_account = app_account.id_account
+                    };
 
                     //Loop through each account and create an Account Detail for the Closing Balance.
                     foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)

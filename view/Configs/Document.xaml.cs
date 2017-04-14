@@ -14,7 +14,7 @@ namespace Cognitivo.Configs
 {
     public partial class Document : Page
     {
-        private DocumentDB dbcontext = new DocumentDB();
+        private DocumentDB DocumentDB = new DocumentDB();
         private CollectionViewSource app_documentViewSource;
 
         public Document()
@@ -24,35 +24,41 @@ namespace Cognitivo.Configs
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (dbcontext.SaveChanges() > 0)
+            if (DocumentDB.SaveChanges() > 0)
             {
                 app_documentViewSource.View.Refresh();
-                toolBar.msgSaved(dbcontext.NumberOfRecords);
+                toolBar.msgSaved(DocumentDB.NumberOfRecords);
             }
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (res == MessageBoxResult.Yes)
+            if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                dbcontext.app_document.Remove((app_document)app_documentDataGrid.SelectedItem);
-                app_documentViewSource.View.MoveCurrentToFirst();
-                toolBar_btnSave_Click(sender);
+                foreach (app_document Document in DocumentDB.app_document.Local.Where(x => x.IsSelected))
+                {
+                    Document.is_active = false;
+                    Document.State = EntityState.Modified;
+                }
+
+                DocumentDB.SaveChangesAsync();
             }
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbcontext.CancelAllChanges();
+            DocumentDB.CancelAllChanges();
         }
 
         private void toolBar_btnNew_Click(object sender)
         {
-            app_document app_document = new app_document();
-            app_document.State = EntityState.Added;
-            app_document.IsSelected = true;
-            dbcontext.Entry(app_document).State = EntityState.Added;
+            app_document app_document = new app_document()
+            {
+                State = EntityState.Added,
+                IsSelected = true
+            };
+
+            DocumentDB.Entry(app_document).State = EntityState.Added;
             app_documentViewSource.View.MoveCurrentToLast();
         }
 
@@ -62,19 +68,19 @@ namespace Cognitivo.Configs
             {
                 app_document Document = (app_document)app_documentDataGrid.SelectedItem;
                 Document.IsSelected = true;
-                Document.State = System.Data.Entity.EntityState.Modified;
+                Document.State = EntityState.Modified;
             }
             else
             {
-                toolBar.msgWarning("Please Select a Contact");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             app_documentViewSource = FindResource("app_documentViewSource") as CollectionViewSource;
-            await dbcontext.app_document.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).LoadAsync();
-            app_documentViewSource.Source = dbcontext.app_document.Local;
+            await DocumentDB.app_document.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
+            app_documentViewSource.Source = DocumentDB.app_document.Local;
 
             cbxApplication.ItemsSource = Enum.GetValues(typeof(entity.App.Names)).OfType<entity.App.Names>().ToList().OrderBy(x => x);
 
@@ -87,19 +93,19 @@ namespace Cognitivo.Configs
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            PrintDialog pd = new PrintDialog();
-            FlowDocument doc = new FlowDocument(new Paragraph(new Run(rtfheader.Text)));
-            doc.Name = "FlowDoc";
+            FlowDocument doc = new FlowDocument(new Paragraph(new Run(rtfheader.Text)))
+            {
+                Name = "FlowDoc"
+            };
             IDocumentPaginatorSource idpSource = doc;
-            pd.PrintDocument(idpSource.DocumentPaginator, "Hello WPF Printing.");
+            new PrintDialog().PrintDocument(idpSource.DocumentPaginator, "Hello WPF Printing.");
         }
 
         private void cbxApplication_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbxApplication.SelectedItem != null)
             {
-                entity.App.Names module = (entity.App.Names)cbxApplication.SelectedItem;
-                if (module == entity.App.Names.Movement)
+                if ((entity.App.Names)cbxApplication.SelectedItem == entity.App.Names.Movement)
                 {
                     lstfield.Items.Add("<<item>>");
                     lstfield.Items.Add("<<quantity>>");
@@ -116,39 +122,25 @@ namespace Cognitivo.Configs
         {
             if (!string.IsNullOrEmpty(query) && app_documentViewSource != null)
             {
-                try
+                app_documentViewSource.View.Filter = i =>
                 {
-                    app_documentViewSource.View.Filter = i =>
+                    if (i is app_document app_document)
                     {
-                        app_document app_document = i as app_document;
-                        if (app_document != null)
-                        {
-                            string name = "";
+                        string name = "";
 
-                            if (app_document.name != null)
-                            {
-                                name = app_document.name.ToLower();
-                            }
-
-                            if (name.Contains(query.ToLower()))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                        else
+                        if (app_document.name != null)
                         {
-                            return false;
+                            name = app_document.name.ToLower();
                         }
-                    };
-                }
-                catch (Exception ex)
-                {
-                    toolBar.msgError(ex);
-                }
+
+                        if (name.Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                };
             }
             else
             {

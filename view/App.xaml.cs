@@ -112,7 +112,7 @@ namespace Cognitivo
                 else
                 {
                     await db.app_company.Select(x => x.id_company).FirstOrDefaultAsync();
-                    MainWin.mainFrame.Navigate(new mainLogIn());// }));
+                    MainWin.mainFrame.Navigate(new MainLogIn());// }));
                 }
             }
 

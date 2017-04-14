@@ -33,17 +33,8 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                if (Sec.create)
-                {
-                    _can_new = value;
-                    RaisePropertyChanged("can_New");
-                }
-                else
-                {
-                    _can_new = false;
-                    RaisePropertyChanged("can_New");
-                }
+                _can_new = new entity.Brillo.Security(entity.App.Names.Items).create ? value : false;
+                RaisePropertyChanged("can_New");
             }
         }
 
@@ -54,17 +45,8 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                if (Sec.edit)
-                {
-                    _can_edit = value;
-                    RaisePropertyChanged("can_Edit");
-                }
-                else
-                {
-                    _can_edit = false;
-                    RaisePropertyChanged("can_Edit");
-                }
+                _can_edit = new entity.Brillo.Security(entity.App.Names.Items).edit ? value : false;
+                RaisePropertyChanged("can_Edit");
             }
         }
 
@@ -76,9 +58,7 @@ namespace cntrl.Controls
         {
             if (contactViewSource.View != null)
             {
-                entity.BrilloQuery.Contact Contact = contactViewSource.View.CurrentItem as entity.BrilloQuery.Contact;
-
-                if (Contact != null)
+                if (contactViewSource.View.CurrentItem is entity.BrilloQuery.Contact Contact)
                 {
                     ContactID = Contact.ID;
                     Text = Contact.Name;
@@ -286,14 +266,8 @@ namespace cntrl.Controls
                 {
                     popContact.IsOpen = true;
                 }
-                try
-                {
-                    contactViewSource.Source = ContactList.Where(predicate).ToList();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+
+                contactViewSource.Source = ContactList.Where(predicate).ToList();
             }));
         }
 
@@ -337,23 +311,13 @@ namespace cntrl.Controls
             smartBoxContactSetting.Default.Save();
         }
 
-        private void _SmartBox_Contact_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ContactID = 0;
-        }
-
-        private void crudContact_btnCancel_Click(object sender)
-        {
-            popCrud.IsOpen = false;
-        }
-
         private void openContactCRUD(object sender, MouseButtonEventArgs e)
         {
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
 
             if (Sec.create)
             {
-                cntrl.Curd.contact contactCURD = new Curd.contact();
+                Curd.contact contactCURD = new Curd.contact();
 
                 if (Get_Customers)
                 {
@@ -368,21 +332,26 @@ namespace cntrl.Controls
                     contactCURD.IsEmployee = true;
                 }
 
-                contactCURD.btnSave_Click += popCrud_Closed;
+                //contactCURD.btnSave_Click += popCrud_Closed;
 
-                popCrud.IsOpen = true;
-                stackCRUD.Children.Add(contactCURD);
+                //popCrud.IsOpen = true;
+                //stackCRUD.Children.Add(contactCURD);
             }
         }
 
-        private void popCrud_Closed(object sender)
-        {
-            LoadData();
-        }
+        //private void popCrud_Closed(object sender)
+        //{
+        //    LoadData();
+        //}
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             LoadData();
+        }
+
+        private void SaveContact_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Cognitivo.Configs
 {
     public partial class Account : Page
     {
-        private entity.dbContext entity = new entity.dbContext();
+        private db db = new db();
         private CollectionViewSource app_accountViewSource;
 
         public Account()
@@ -18,35 +18,37 @@ namespace Cognitivo.Configs
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
-            entity.db.app_account.Where(a => a.id_company == CurrentSession.Id_Company).Include("app_account_detail").OrderBy(a => a.name).Load();
-            app_accountViewSource.Source = entity.db.app_account.Local;
+            app_accountViewSource = FindResource("app_accountViewSource") as CollectionViewSource;
+            await db.app_account.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
+            app_accountViewSource.Source = db.app_account.Local;
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
-            account account = new account();
-            account.operationMode = cntrl.Class.clsCommon.Mode.Add;
+            account account = new account()
+            {
+                operationMode = cntrl.Class.clsCommon.Mode.Add
+            };
             crud_modal.Children.Add(account);
         }
 
         private void pnl_Account_Click(object sender, int idAccount)
         {
             crud_modal.Visibility = Visibility.Visible;
-            account account = new account();
-            account.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-            account.accountobject = entity.db.app_account.Where(x => x.id_account == idAccount).FirstOrDefault();
+            account account = new account()
+            {
+                operationMode = cntrl.Class.clsCommon.Mode.Edit,
+                accountobject = db.app_account.Where(x => x.id_account == idAccount).FirstOrDefault()
+            };
             crud_modal.Children.Add(account);
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            app_accountViewSource = ((CollectionViewSource)(FindResource("app_accountViewSource")));
-            entity.db.app_account.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Include("app_account_detail").OrderBy(a => a.name).Load();
-            app_accountViewSource.Source = entity.db.app_account.Local;
+            Page_Loaded(null, null);
         }
     }
 }

@@ -8,13 +8,13 @@ using System.Windows.Input;
 
 namespace Cognitivo.Menu
 {
-    public partial class mainLogIn : Page
+    public partial class MainLogIn : Page
     {
         private Frame myFrame;
         private Task taskAuth;
         private MainWindow myWindow;// = Window.GetWindow(this);// as MainWindow;
 
-        public mainLogIn()
+        public MainLogIn()
         {
             InitializeComponent();
         }
@@ -94,8 +94,11 @@ namespace Cognitivo.Menu
                 {
                     if (chbxRemember.IsChecked == true)
                     {
-                        entity.Properties.Settings Settings = new entity.Properties.Settings();
-                        Settings.user_UserName = tbxUser.Text;
+                        entity.Properties.Settings Settings = new entity.Properties.Settings()
+                        {
+                            user_UserName = tbxUser.Text
+                        };
+
                         Settings.Save();
                     }
                 }));

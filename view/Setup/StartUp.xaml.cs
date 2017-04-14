@@ -203,7 +203,7 @@ namespace Cognitivo.Menu
         {
             MainWindow myWindow = Window.GetWindow(this) as MainWindow;
             Frame myFrame = myWindow.mainFrame;
-            myFrame.Navigate(new mainLogIn());
+            myFrame.Navigate(new MainLogIn());
         }
 
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)

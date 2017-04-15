@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="cntrl.Controls.SmartBox_Contact" x:Name="_SmartBox_Contact"
+﻿<UserControl x:Class="cntrl.Controls.SmartBox_Contact" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,14 +19,10 @@
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Contact}, CreateList=True}" />
     </UserControl.Resources>
     <Grid Width="256">
-        <!--<Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
-            <StackPanel x:Name="stackCRUD">
-            </StackPanel>
-        </Popup>-->
 
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,0,0"
-                 Text="{Binding Path=Text, Delay=2000, ElementName=_SmartBox_Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Text, Delay=2000, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.SelectAllOnFocus="True"
@@ -73,12 +69,12 @@
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0"
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="openContactCRUD" Padding="4" FontWeight="Bold"
-                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" />
+                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=this, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" />
         </StackPanel>
 
         <!-- Progress Ring -->
-        <ProgressBar x:Name="progBar" IsIndeterminate="True" Height="26" Opacity=".32"
-                     Foreground="{DynamicResource AccentColor_Brush}" FontSize="32" BorderBrush="{DynamicResource AccentColor_Brush}" Background="#FF393939" />
+        <ProgressBar x:Name="progBar" IsIndeterminate="True" Height="26"
+                     FontSize="32" Opacity="0.64"/>
 
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"
@@ -119,7 +115,7 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
-                        <pref:ImageViewer />
+                        <pref:ImageViewer Width="128" ReferenceID="{Binding ContactID}"/>
                         <StackPanel Margin="8" Grid.Column="1" Width="256">
                             <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" FontSize="8"/>
                             <TextBox Text="Abhishek Shah" Style="{StaticResource TextToLabelStyle}"/>

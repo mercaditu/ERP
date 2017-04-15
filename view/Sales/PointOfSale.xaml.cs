@@ -14,9 +14,6 @@ namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
-        /// <summary>
-        /// Context
-        /// </summary>
         private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
 
         private PaymentDB PaymentDB; // = new PaymentDB();
@@ -203,19 +200,14 @@ namespace Cognitivo.Sales
         {
             ApplicationWindow myWindow = Window.GetWindow(this) as ApplicationWindow;
             //This code helps protect wrong Terminal and Branch PC from making same invoice.
-            if (CurrentSession.Id_Branch == 0 || CurrentSession.Id_Terminal == 0 || CurrentSession.Id_Account == 0)
-            {
-                //myWindow.mainFrame.Navigate(new Configs.Settings());
-                //return;
-            }
-            else
+            if (CurrentSession.Id_Branch > 0 || CurrentSession.Id_Terminal > 0 || CurrentSession.Id_Account > 0)
             {
                 app_branch Branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
                 app_terminal Terminal = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
 
                 string BranchName = Branch != null ? Branch.name : "Falta Sucursal";
                 string TerminalName = Terminal != null ? Terminal.name : "Falta Terminal";
-                myWindow.Title = myWindow.Title + " | " + BranchName + " | " + TerminalName;
+                myWindow.Title = myWindow.Title; // + " | " + BranchName + " | " + TerminalName;
             }
 
             New_Sale_Payment();
@@ -321,8 +313,7 @@ namespace Cognitivo.Sales
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 sales_invoice_detail sales_invoice_detail = e.Parameter as sales_invoice_detail;
                 if (sales_invoice_detail != null)
@@ -355,46 +346,6 @@ namespace Cognitivo.Sales
 
         #endregion Details
 
-        //#region Discount
-
-        //private void boderdiscount_MouseDown(object sender, EventArgs e)
-        //{
-        //    popupDiscount.IsOpen = true;
-        //}
-
-        //private void popupCustomize_Closed(object sender, EventArgs e)
-        //{
-        //    popupDiscount.IsOpen = false;
-        //}
-
-        //#endregion Discount
-
-        //#region Contact CRUD
-
-        //private void btnNewCustomer_MouseDown(object sender, EventArgs e)
-        //{
-        //    entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
-
-        //    if (Sec.create)
-        //    {
-        //        popCrud.IsOpen = true;
-        //        popCrud.Visibility = Visibility.Visible;
-
-        //        //Add CRUD Panel into View.
-        //        cntrl.Curd.contact ContactCURD = new cntrl.Curd.contact();
-        //        ContactCURD.btnSave_Click += crudContact_btnCancel_Click;
-        //        ContactCURD.IsCustomer = true;
-        //        stackCustomer.Children.Add(ContactCURD);
-        //    }
-        //}
-
-        //private void crudContact_btnCancel_Click(object sender)
-        //{
-        //    sbxContact.LoadData();
-        //}
-
-        //#endregion Contact CRUD
-
         private void lblGrandTotalsales_DataContextChanged(object sender, EventArgs e)
         {
             if (sales_invoiceViewSource != null && paymentViewSource != null)
@@ -403,8 +354,7 @@ namespace Cognitivo.Sales
                 {
                     if (sales_invoiceViewSource.View.CurrentItem != null && paymentViewSource.View.CurrentItem != null)
                     {
-                        payment payment = paymentViewSource.View.CurrentItem as payment;
-                        payment.GrandTotal = (sales_invoiceViewSource.View.CurrentItem as sales_invoice).GrandTotal;
+                        (paymentViewSource.View.CurrentItem as payment).GrandTotal = (sales_invoiceViewSource.View.CurrentItem as sales_invoice).GrandTotal;
                     }
                 }
             }
@@ -412,8 +362,7 @@ namespace Cognitivo.Sales
 
         private void NewPayment_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            payment.payment_detail.Add(new payment_detail());
+            (paymentViewSource.View.CurrentItem as payment).payment_detail.Add(new payment_detail());
         }
 
         private void Clear_MouseDown(object sender, EventArgs e)
@@ -439,9 +388,9 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
-            if ((sales_invoiceViewSource.View.CurrentItem as sales_invoice).sales_invoice_detail.Where(x => x.IsPromo).ToList().Count() > 0)
+            if (sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList().Count() > 0)
             {
-                foreach (sales_invoice_detail sales_invoice_detail in (sales_invoiceViewSource.View.CurrentItem as sales_invoice).sales_invoice_detail.Where(x => x.IsPromo).ToList())
+                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList())
                 {
                     if (sales_invoice_detail.id_sales_invoice_detail != sales_invoice_detail.PromoID)
                     {
@@ -449,6 +398,7 @@ namespace Cognitivo.Sales
                     }
                 }
             }
+
             StartPromo.Calculate_SalesInvoice(ref sales_invoice);
 
             foreach (sales_invoice_detail sales_invoice_detail in (sales_invoiceViewSource.View.CurrentItem as sales_invoice).sales_invoice_detail)
@@ -480,7 +430,7 @@ namespace Cognitivo.Sales
 
                 cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
 
-                if (item != null && item.id_item > 0 && sales_invoiceViewSource.View.CurrentItem as sales_invoice != null)
+                if (item != null && item.id_item > 0 && sales_invoice != null)
                 {
                     Settings SalesSettings = new Settings();
 

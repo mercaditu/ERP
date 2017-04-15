@@ -43,67 +43,37 @@ namespace cntrl.Controls
         private decimal _Quantity;
 
         //Setting that if Marked true, will exclude Out Of Stock.
+        private bool _Exclude_OutOfStock;
         public bool Exclude_OutOfStock
         {
             get { return _Exclude_OutOfStock; }
             set
             {
                 entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly))
-                {
-                    _Exclude_OutOfStock = value;
-                    RaisePropertyChanged("can_New");
-                }
-                else
-                {
-                    _Exclude_OutOfStock = false;
-                    RaisePropertyChanged("can_New");
-                }
-              
+                _Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly) ? value : false;
+                RaisePropertyChanged("Exclude_OutOfStock");
             }
         }
 
-
-        private bool _Exclude_OutOfStock;
+        private bool _ExactSearch;
         public bool ExactSearch
         {
             get { return _ExactSearch; }
             set
             {
                 entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
-                {
-                    _ExactSearch = value;
-                    RaisePropertyChanged("can_New");
-                }
-                else
-                {
-                    _ExactSearch = false;
-                    RaisePropertyChanged("can_New");
-                }
-
+                _ExactSearch = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly) ? value : false;
+                RaisePropertyChanged("ExactSearch");
             }
         }
-
-
-        private bool _ExactSearch;
 
         public bool can_New
         {
             get { return _can_new; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                if (Sec.create)
-                {
-                    _can_new = value;
-                    RaisePropertyChanged("can_New");
-                }
-                else
-                {
-                    _can_new = false;
-                    RaisePropertyChanged("can_New");
-                }
+                _can_new = new entity.Brillo.Security(entity.App.Names.Items).create ? value : false;
+                RaisePropertyChanged("can_New");
             }
         }
 
@@ -115,16 +85,8 @@ namespace cntrl.Controls
             set
             {
                 entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                if (Sec.edit)
-                {
-                    _can_edit = value;
-                    RaisePropertyChanged("can_Edit");
-                }
-                else
-                {
-                    _can_edit = false;
-                    RaisePropertyChanged("can_Edit");
-                }
+                _can_edit = new entity.Brillo.Security(entity.App.Names.Items).edit ? value : false;
+                RaisePropertyChanged("can_Edit");
             }
         }
 
@@ -149,8 +111,7 @@ namespace cntrl.Controls
                 if (itemViewSource.View != null)
                 {
                     entity.BrilloQuery.Item Item = itemViewSource.View.CurrentItem as entity.BrilloQuery.Item;
-
-                   
+                    
                     if (Item != null)
                     {
                         ItemID = Item.ID;
@@ -197,6 +158,7 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
+            ///Exists code if in design view.
             if (DesignerProperties.GetIsInDesignMode(this))
             {
                 return;

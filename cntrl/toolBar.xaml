@@ -4,7 +4,8 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 			 xmlns:lex="http://wpflocalizeextension.codeplex.com"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" x:Class="cntrl.toolBar" x:Name="_toolBar"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d" x:Class="cntrl.toolBar" x:Name="this"
 			 lex:LocalizeDictionary.DesignCulture="en-US"
 			 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 			 lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -113,7 +114,20 @@
 
             <Grid Grid.Column="1">
                 <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
-                <StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" />
+                <StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <metro:DropDownButton ArrowPressedBrush="Orange" ArrowMouseOverBrush="Red"
+                                   ArrowBrush="LightSteelBlue"
+                                          Content="Approve"
+    FontSize="16" BorderThickness="0" Orientation="Horizontal"
+    VerticalAlignment="Center" >
+                        <metro:DropDownButton.Icon>
+                            <Label Content="j" FontFamily="/cntrl;component/Resources/#cognitivo"/>
+                        </metro:DropDownButton.Icon>
+                        <metro:DropDownButton.Items>
+                            <Button />
+                        </metro:DropDownButton.Items>
+                    </metro:DropDownButton>
+                </StackPanel>
             </Grid>
 
             <Popup HorizontalAlignment="Right" x:Name="popMessages" AllowsTransparency="True">
@@ -121,7 +135,7 @@
             </Popup>
         </Grid>
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2"
-					Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
+					Visibility="{Binding ElementName=this, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
             <StackPanel x:Name="borderForm" Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
                 <Label x:Name="lblForm" Foreground="OrangeRed" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0" />

@@ -62,9 +62,7 @@ namespace cntrl.Controls
                 {
                     ContactID = Contact.ID;
                     Text = Contact.Name;
-
                     popContact.IsOpen = false;
-
                     Select?.Invoke(this, new RoutedEventArgs());
                 }
             }
@@ -95,7 +93,7 @@ namespace cntrl.Controls
                 return;
             }
 
-            contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
+            contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
 
             LoadData();
 
@@ -339,11 +337,6 @@ namespace cntrl.Controls
             }
         }
 
-        //private void popCrud_Closed(object sender)
-        //{
-        //    LoadData();
-        //}
-
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             LoadData();
@@ -351,7 +344,18 @@ namespace cntrl.Controls
 
         private void SaveContact_Click(object sender, RoutedEventArgs e)
         {
+            if (ContactID > 0)
+            {
 
+            }
+            else
+            {
+
+            }
+
+            //LoadData();
+            //ContactList.add
+            //Search_OnThread(SearchText);
         }
     }
 }

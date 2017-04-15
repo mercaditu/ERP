@@ -52,7 +52,11 @@ namespace Cognitivo.Security
             if (app_company != null)
             {
                 Licence.VerifyCompanyLicence(app_company.version);
-                VersionGrid.ItemsSource = Licence.CompanyLicence.versions;
+                if (Licence.CompanyLicence!=null)
+                {
+                    VersionGrid.ItemsSource = Licence.CompanyLicence.versions;
+                }
+                
             }
         }
 

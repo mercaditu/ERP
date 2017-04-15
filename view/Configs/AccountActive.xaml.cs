@@ -100,24 +100,24 @@ namespace Cognitivo.Configs
                         Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
                         clsTransferAmount.PaymentTypeName = item.payType;
                         clsTransferAmount.amount = item.amount;
-                        clsTransferAmount.Currencyfxname = item.cur;
+                        clsTransferAmount.Currencyfxnameorigin = item.cur;
                         clsTransferAmount.id_payment_type = item.id_paymenttype;
-                        clsTransferAmount.id_currencyfx = item.id_currencyfx;
+                        clsTransferAmount.id_currencyfxorigin = item.id_currencyfx;
                         listOpenAmt.Add(clsTransferAmount);
                     }
 
                     foreach (app_currencyfx app_currencyfx in db.app_currencyfx.Where(x => x.is_active).ToList())
                     {
-                        if (listOpenAmt.Where(x => x.id_currencyfx == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
+                        if (listOpenAmt.Where(x => x.id_currencyfxdest == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
                         {
                             foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
                             {
                                 Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
                                 clsTransferAmount.PaymentTypeName = payment_type.name;
                                 clsTransferAmount.amount = 0;
-                                clsTransferAmount.Currencyfxname = app_currencyfx.app_currency.name;
+                                clsTransferAmount.Currencyfxnameorigin = app_currencyfx.app_currency.name;
                                 clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-                                clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
+                                clsTransferAmount.id_currencyfxorigin = app_currencyfx.id_currencyfx;
                                 listOpenAmt.Add(clsTransferAmount);
                             }
                         }
@@ -125,14 +125,14 @@ namespace Cognitivo.Configs
                         {
                             foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
                             {
-                                if (listOpenAmt.Where(x => x.id_payment_type == payment_type.id_payment_type && x.id_currencyfx == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
+                                if (listOpenAmt.Where(x => x.id_payment_type == payment_type.id_payment_type && x.id_currencyfxorigin == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
                                 {
                                     Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
                                     clsTransferAmount.PaymentTypeName = payment_type.name;
                                     clsTransferAmount.amount = 0;
-                                    clsTransferAmount.Currencyfxname = app_currencyfx.app_currency.name;
+                                    clsTransferAmount.Currencyfxnameorigin = app_currencyfx.app_currency.name;
                                     clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-                                    clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
+                                    clsTransferAmount.id_currencyfxorigin = app_currencyfx.id_currencyfx;
                                     listOpenAmt.Add(clsTransferAmount);
                                 }
                             }
@@ -156,8 +156,8 @@ namespace Cognitivo.Configs
                                     x.app_currencyfx.id_currency == app_currency.id_currency
                                     && x.id_payment_type == payment_type.id_payment_type)
                                 .Sum(x => x.credit - x.debit),
-                                Currencyfxname = app_currency.name,
-                                id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx
+                                Currencyfxnameorigin = app_currency.name,
+                                id_currencyfxorigin = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx
                             };
                             listOpenAmt.Add(clsTransferAmount);
                         }
@@ -196,7 +196,7 @@ namespace Cognitivo.Configs
                         {
                             id_session = app_account_session.id_session,
                             id_account = app_account_session.id_account,
-                            id_currencyfx = counted_account_detail.id_currencyfx,
+                            id_currencyfx = counted_account_detail.id_currencyfxorigin,
                             id_payment_type = counted_account_detail.id_payment_type,
                             debit = counted_account_detail.amountCounted,
                             comment = "Closing Balance",
@@ -246,7 +246,7 @@ namespace Cognitivo.Configs
                     {
                         app_account_detail app_account_detail = new global::entity.app_account_detail();
                         app_account_detail.id_account = app_account.id_account;
-                        app_account_detail.id_currencyfx = counted_account_detail.id_currencyfx;
+                        app_account_detail.id_currencyfx = counted_account_detail.id_currencyfxorigin;
                         app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
                         app_account_detail.credit = counted_account_detail.amountCounted;
                         app_account_detail.comment = "Opening Balance";

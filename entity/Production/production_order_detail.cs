@@ -95,8 +95,12 @@ namespace entity
             {
                 if (_status != value)
                 {
-                    _status = (Status.Production)value;
-                    RaisePropertyChanged("status");
+                    if (value!=null)
+                    {
+                        _status = (Status.Production)value;
+                        RaisePropertyChanged("status");
+                    }
+                 
                 }
             }
         }

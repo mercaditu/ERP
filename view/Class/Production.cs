@@ -75,7 +75,11 @@ namespace Cognitivo.Class
             foreach (DataRow DataRow in dt.Rows)
             {
                 Logistics Logistics = new Logistics();
-                Logistics.ItemID = Convert.ToInt16(DataRow["ItemID"]);
+                if ((DataRow["ItemID"] is DBNull))
+                {
+                    Logistics.ItemID = Convert.ToInt16(DataRow["ItemID"]);
+                }
+               
                 Logistics.ItemCode = DataRow["ItemCode"].ToString();
                 Logistics.ItemName = DataRow["ItemName"].ToString();
 

@@ -124,7 +124,7 @@
                             <Label Content="j" FontFamily="/cntrl;component/Resources/#cognitivo"/>
                         </metro:DropDownButton.Icon>
                         <metro:DropDownButton.Items>
-                            <Button />
+                            <Button Content="Approve Edit" />
                         </metro:DropDownButton.Items>
                     </metro:DropDownButton>
                 </StackPanel>

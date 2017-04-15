@@ -182,124 +182,7 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
 
-            if (sales_invoice.status == Status.Documents_General.Approved && sales_invoice.is_issued == false)
-            {
-                if (sales_invoice != null)
-                {
-                    UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
-                    CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
-                    UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
-                    CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
-
-                    string Message = CheckPaymentReApprove.Check_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-
-                    Message = CheckPaymentReApprove.Check_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-
-                    Message = CheckPaymentReApprove.Check_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-
-                    Message += CheckPaymentReApprove.Check_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-
-                    Message = CheckPaymentReApprove.Check_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-
-                    Message = "";
-                    Message = CheckMovementReApprove.CheckQuantityUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.QuantityUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-                    Message = CheckMovementReApprove.CheckQuantityDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.QuantityDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-                    Message = CheckMovementReApprove.CheckDateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-
-                    Message = CheckMovementReApprove.CheckNewMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.NewMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-                    Message = CheckMovementReApprove.CheckDeleteMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.DeleteMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                        }
-                    }
-                }
-                //SalesInvoiceDB.ReApprove(sales_invoice);
-                sales_invoiceViewSource.View.Refresh();
-                SalesInvoiceDB.SaveChanges();
-            }
-            else
-            {
+         
                 app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
                 if (app_document_range != null)
                 {
@@ -315,7 +198,7 @@ namespace Cognitivo.Sales
                     sales_invoiceViewSource.View.Refresh();
                     toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
                 }
-            }
+            
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -1090,6 +973,129 @@ namespace Cognitivo.Sales
 
             toolBar.TotalApproved = TotalApproved;
             toolBar.TotalPending = TotalPending;
+        }
+
+        private void toolBar_btnApproveEdit_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnReApprove_Click(object sender)
+        {
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+            if (sales_invoice != null)
+            {
+                UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
+                CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
+                UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
+                CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
+
+                string Message = CheckPaymentReApprove.Check_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdatePaymentReApprove.Update_ContractChanges(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+
+                Message = CheckPaymentReApprove.Check_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdatePaymentReApprove.Update_ValueUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+
+                Message = CheckPaymentReApprove.Check_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdatePaymentReApprove.Update_ValueDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+
+                Message += CheckPaymentReApprove.Check_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdatePaymentReApprove.Update_CurrencyChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+
+                Message = CheckPaymentReApprove.Check_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdatePaymentReApprove.Update_DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+
+                Message = "";
+                Message = CheckMovementReApprove.CheckQuantityUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdateMovementReApprove.QuantityUP(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+                Message = CheckMovementReApprove.CheckQuantityDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdateMovementReApprove.QuantityDown(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+                Message = CheckMovementReApprove.CheckDateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdateMovementReApprove.DateChange(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+
+                Message = CheckMovementReApprove.CheckNewMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdateMovementReApprove.NewMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+                Message = CheckMovementReApprove.CheckDeleteMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+
+                if (Message != "")
+                {
+                    Message += "\n" + "Are You Sure Want To Change The Data..";
+                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        UpdateMovementReApprove.DeleteMovement(SalesInvoiceDB, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                    }
+                }
+            }
+            //SalesInvoiceDB.ReApprove(sales_invoice);
+            sales_invoiceViewSource.View.Refresh();
+            SalesInvoiceDB.SaveChanges();
         }
     }
 }

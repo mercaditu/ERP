@@ -774,6 +774,8 @@
 					   btnAnull_Click="toolBar_btnAnull_Click"
 					   btnCancel_Click="toolBar_btnCancel_Click"
                        btnSync_Click="SalesInvoice_Loaded"
+                       btnApproveEdit_Click="toolBar_btnApproveEdit_Click"
+                       btnReApprove_Click="toolBar_btnReApprove_Click"
 					   MultipleStyleForm="True"
 
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

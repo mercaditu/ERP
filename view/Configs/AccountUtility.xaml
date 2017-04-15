@@ -9,6 +9,7 @@
 	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
 	  lex:LocalizeDictionary.DesignCulture="en-US"
+       xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Name="this"
 	  MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
@@ -23,9 +24,12 @@
         <CollectionViewSource x:Key="app_account_detail_adjustViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="app_accountapp_account_detailViewSource" Source="{Binding app_account_detail, Source={StaticResource app_accountViewSource}}" />
         <CollectionViewSource x:Key="app_accountDestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_accountOriginViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_currencyfxdestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}" />
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}" />
         <CollectionViewSource x:Key="amount_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type cls:clsTransferAmount}, CreateList=True}" />
+        <CollectionViewSource x:Key="amount_transfercurrencyViewSource" d:DesignSource="{d:DesignInstance {x:Type cls:clsTransferAmount}, CreateList=True}" />
     </Page.Resources>
     <Grid DataContext="{StaticResource app_accountViewSource}">
         <Grid.ColumnDefinitions>
@@ -73,27 +77,49 @@
             <TabControl x:Name="tabAccount" Margin="0,128,0,0" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="{lex:Loc General}" HorizontalAlignment="Left" Width="103">
                     <Grid Background="WhiteSmoke">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="336*"/>
+                            <ColumnDefinition Width="275*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="10"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Label Content="{lex:Loc CurrentlyinAccount}" />
+                        <Label Content="{lex:Loc CurrentlyinAccount}" Grid.ColumnSpan="2" />
                         <DataGrid x:Name="app_account_detailDataGrid" AutoGenerateColumns="False" BorderThickness="1" BorderBrush="Gray"
 								  EnableRowVirtualization="True" IsReadOnly="True" Margin="10,26,10,10"
-							      RowDetailsVisibilityMode="VisibleWhenSelected">
+							      RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="payTypeColumn" Binding="{Binding payType}" Header="Payment Type" Width="*" />
                                 <DataGridTextColumn x:Name="amountColumn" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, StringFormat={}{0:N2}}" Header="Amount" Width="*" />
                                 <DataGridTextColumn x:Name="id_currencyfxColumn" Binding="{Binding cur}" Header="Currency" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <GridSplitter Grid.Row="1" Height="5" Margin="0,2" HorizontalAlignment="Stretch" />
-                        <Label Content="Last 100 Transactions" Grid.Row="2" />
-                        <DataGrid IsReadOnly="True" Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
+                        <GridSplitter Grid.Row="1" Height="5" Margin="0,2" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" />
+                        <Label Content="Last 100 Transactions" Grid.Row="2" Grid.ColumnSpan="2" />
+                        <syncfusion:SfDataGrid   Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
+									  AutoGenerateColumns="False"  Margin="10,26,10,10" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
+									  ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}"
+									 Grid.ColumnSpan="2">
+                            <syncfusion:SfDataGrid.Columns>
+                                <syncfusion:GridTextColumn MappingName="trans_date" HeaderText="Transaction Date"/>
+                                <syncfusion:GridTextColumn  MappingName="trans_date" HeaderText="comment" />
+                                <syncfusion:GridTextColumn  MappingName="debit" HeaderText="Debit"  />
+                                <syncfusion:GridTextColumn  MappingName="credit" HeaderText="{lex:Loc Cognitivo:local:Credit}"  />
+                                <syncfusion:GridTextColumn  MappingName="app_currencyfx.app_currency.name" HeaderText="currency" />
+                              
+                            </syncfusion:SfDataGrid.Columns>
+                        </syncfusion:SfDataGrid>
+                        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom"
+                                Grid.Row="2"
+                                PageCount="5"
+                                PageSize="100"
+                               Source="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}"/>
+                        <!--<DataGrid IsReadOnly="True" Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
 									  AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="10,26,10,10" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
 									  ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}"
-									  RowDetailsVisibilityMode="VisibleWhenSelected">
+									  RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="trans_dateColumn" Binding="{Binding trans_date, StringFormat=d}" Header="Transaction Date" Width="*" />
                                 <DataGridTextColumn x:Name="commentColumn" Binding="{Binding comment}" Header="comment" Width="*" />
@@ -101,7 +127,7 @@
                                 <DataGridTextColumn x:Name="creditColumn" Binding="{Binding credit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTextColumn x:Name="id_currencyfxColumn1" Binding="{Binding app_currencyfx.app_currency.name}" Header="currency" Width="*" />
                             </DataGrid.Columns>
-                        </DataGrid>
+                        </DataGrid>-->
                     </Grid>
                 </TabItem>
                 <TabItem Header="{Binding is_active, Converter={StaticResource BoolToActiveReverse}}">
@@ -141,31 +167,34 @@
                         </Grid>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="{lex:Loc Currency}" Height="39" VerticalAlignment="Top">
+                <!--<TabItem Header="{lex:Loc Currency}" Height="39" VerticalAlignment="Top">
                     <StackPanel Background="WhiteSmoke" IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">
                         <Grid Margin="5">
                             <Label Content="{lex:Loc Transfer}" />
                             <Button Content="Open Drawer" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right" />
                         </Grid>
                         <DataGrid Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
-									AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource app_account_detail_adjustViewSource}}"
+									AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource amount_transfercurrencyViewSource}}"
 									EnableRowVirtualization="True" Margin="10" Height="Auto"
 									RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Account}" Width="*"
-														ItemsSource="{Binding Source={StaticResource app_account_listViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_account"
-														SelectedValueBinding="{Binding id_account, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*"
-														ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_payment_type"
-														SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn Binding="{Binding debit, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridTextColumn Binding="{Binding credit, UpdateSourceTrigger=PropertyChanged}" Header="credit" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="*"
+                                <DataGridComboBoxColumn Header="Origin Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountOriginViewSource}}"
+                                                        TextBinding="{Binding AccountOrigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn Header="Destination Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"
+                                                        TextBinding="{Binding AccountDest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn  Header="Payment Type" Width="*" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
+														DisplayMemberPath="name" SelectedValuePath="id_payment_type" SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn Header="Currency" Width="*"
 														ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
-														DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
-														SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+													DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
+														SelectedValueBinding="{Binding id_currencyfxorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn Header="Currency" Width="*"
+														ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
+													DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
+														SelectedValueBinding="{Binding id_currencyfxdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridTextColumn  Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Margin="5">
@@ -173,10 +202,10 @@
                             <Button x:Name="btnTransferFX" Content="{lex:Loc Adjust}" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Click="btnAdjust_Click" />
                         </Grid>
                     </StackPanel>
-                </TabItem>
+                </TabItem>-->
                 <TabItem Header="{lex:Loc Transfer}">
                     <StackPanel Background="WhiteSmoke" IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">
-                        <Label Content="transfer from one account to another. will reduce in one and increase in another." Margin="5" />
+                        <!--<Label Content="transfer from one account to another. will reduce in one and increase in another." Margin="5" />
                         <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}" />
                         <Label Content="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource app_accountViewSource}}" Style="{DynamicResource input_label}" />
                         <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}" />
@@ -184,19 +213,29 @@
 								  DisplayMemberPath="name" SelectedValuePath="id_account"
 								  ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}" Grid.ColumnSpan="2" Margin="4,0,0,0" />
                         <Button Margin="8" Content="Open Drawer" Grid.Column="2" FontSize="8"
-								VerticalAlignment="Center" HorizontalAlignment="Left" />
+								VerticalAlignment="Center" HorizontalAlignment="Left" />-->
                         <DataGrid x:Name="dgTransfer" BorderThickness="1" BorderBrush="Gray"
 								  AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="8,0" Height="Auto"
 								  ItemsSource="{Binding Source={StaticResource amount_transferViewSource}}"
 								  RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
+                                <DataGridComboBoxColumn Header="Origin Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountOriginViewSource}}"
+                                                        TextBinding="{Binding AccountOrigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn Header="Destination Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"
+                                                        TextBinding="{Binding AccountDest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridComboBoxColumn x:Name="payTypeCollum" Header="Payment Type" Width="*" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
 														DisplayMemberPath="name" SelectedValuePath="id_payment_type" SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridTextColumn x:Name="amtColumn" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridComboBoxColumn x:Name="curColumn" Header="Currency" Width="*"
 														ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
 														DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
-														SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+														SelectedValueBinding="{Binding id_currencyfxorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn Header="Currency" Width="*"
+														ItemsSource="{Binding Source={StaticResource app_currencyfxdestViewSource}}"
+														DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
+														SelectedValueBinding="{Binding id_currencyfxdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Margin="5">

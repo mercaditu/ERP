@@ -282,6 +282,35 @@ namespace cntrl
         public App.Names appName { get; set; }
 
         #region "Events"
+        public event btnApproveEdit_ClickedEventHandler btnApproveEdit_Click;
+
+        public delegate void btnApproveEdit_ClickedEventHandler(object sender);
+
+        public void btnApproveEdit_MouseUp(object sender, EventArgs e)
+        {
+            if (sender != null)
+            {
+                toolIcon _toolicon = (toolIcon)sender;
+                _toolicon.Focus();
+            }
+
+            btnApproveEdit_Click?.Invoke(this);
+        }
+
+        public event btnReApprove_ClickedEventHandler btnReApprove_Click;
+
+        public delegate void btnReApprove_ClickedEventHandler(object sender);
+
+        public void btnReApprove_MouseUp(object sender, EventArgs e)
+        {
+            if (sender != null)
+            {
+                toolIcon _toolicon = (toolIcon)sender;
+                _toolicon.Focus();
+            }
+
+            btnReApprove_Click?.Invoke(this);
+        }
 
         //NEW
         public event btnNew_ClickedEventHandler btnNew_Click;

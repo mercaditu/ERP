@@ -38,7 +38,20 @@ namespace cntrl.Reports
             {
                 Directory.CreateDirectory(path + SubFolder);
             }
-            this.ReportDesignerControl.OpenReport(path + SubFolder + "/SalesAnalysis.rdlc");
+            if (File.Exists(path + SubFolder + "\\SalesAnalysis.rdlc"))
+            {
+                try
+                {
+                    this.ReportDesignerControl.OpenReport(@path + SubFolder + "\\SalesAnalysis.rdlc");
+                }
+                catch (Exception ex)
+                {
+
+                   
+                }
+               
+            }
+           
         }
     }
 }

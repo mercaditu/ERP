@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Controls="clr-namespace:cntrl.Controls"
+             xmlns:reports="clr-namespace:cntrl.Reports"
              xmlns:local="clr-namespace:cntrl"
              xmlns:reporting="clr-namespace:cntrl.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -30,6 +31,10 @@
                     <rv:ReportViewer x:Name="reportViewer" />
                 </WindowsFormsHost>
             </TabItem>
+            <TabItem Header="{lex:Loc Report}">
+                <reports:ReportDesigner/>
+            </TabItem>
+
             <TabItem Header="Data">
                 <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch"
                                        NavigationMode="Cell" HideEmptyGridViewDefinition="True" EnableDataVirtualization="True"

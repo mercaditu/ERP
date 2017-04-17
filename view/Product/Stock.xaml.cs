@@ -157,10 +157,12 @@ namespace Cognitivo.Product
                         if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
                             TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
                             TmpInventory.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                        {
                             //This code checks for Quantity after checking for name. This will cause less loops.
                             return TmpInventory.Quantity == 0 ? ShowZeros : true;
-                        else
-                            return false;
+                        }
+
+                        return false;
                     };
                 }
             }

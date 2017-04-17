@@ -105,7 +105,7 @@
                             <syncfusion:SfDataGrid.Columns>
                                 <syncfusion:GridTextColumn MappingName="trans_date" HeaderText="{lex:Loc Date}"/>
                                 <syncfusion:GridTextColumn MappingName="comment" HeaderText="{lex:Loc Comment}" />
-                                <syncfusion:GridTextColumn MappingName="debit" HeaderText="{lex:Loc Debit}"  />
+                                <syncfusion:GridTextColumn MappingName="debit"  HeaderText="{lex:Loc Debit}"  />
                                 <syncfusion:GridTextColumn MappingName="credit" HeaderText="{lex:Loc Credit}"  />
                                 <syncfusion:GridTextColumn MappingName="app_currencyfx.app_currency.name" HeaderText="{lex:Loc Currency}" />
                             </syncfusion:SfDataGrid.Columns>

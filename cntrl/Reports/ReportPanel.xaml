@@ -32,7 +32,7 @@
                 </WindowsFormsHost>
             </TabItem>
             <TabItem Header="{lex:Loc Report}">
-                <reports:ReportDesigner/>
+                <reports:ReportDesigner x:Name="ReportDesigner"/>
             </TabItem>
 
             <TabItem Header="Data">

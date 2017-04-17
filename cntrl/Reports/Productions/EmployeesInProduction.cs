@@ -2,7 +2,10 @@
 {
     public static class EmployeesInProduction
     {
-        public static string query = @" select c.name as Employee,
+        public static string query = @"
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select c.name as Employee,
 										pt.item_description as Task,
 										p.name as Project,
                                         pod.name as ProductionOrder,

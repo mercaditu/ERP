@@ -271,8 +271,20 @@ namespace cntrl
         {
             Class.Generate Generate = new Class.Generate();
             Generate.GenerateReportList();
+            
             ReportViewSource = (CollectionViewSource)FindResource("ReportViewSource");
             ReportViewSource.Source = Generate.ReportList.Where(x => x.Application == ApplicationName).ToList();
+
+            foreach (Class.Report Report in Generate.ReportList)
+            {
+                string ReportName = Report.Path.Replace("cntrl.Reports.", "");
+                ReportName = ReportName.Remove(0, ReportName.IndexOf(".") + 1);
+                string path = entity.Brillo.IO.CreateIfNotExists(Environment.SpecialFolder.MyDocuments + "\\CogntivoERP\\" + Report.Application + "\\" + ReportName);
+                if (!entity.Brillo.IO.FileExists(path))
+                {
+
+                }
+            }
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

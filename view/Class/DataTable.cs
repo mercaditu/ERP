@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 
 namespace Cognitivo.Class
@@ -14,11 +15,11 @@ namespace Cognitivo.Class
                 sqlConn.Open();
                 MySqlCommand cmd = new MySqlCommand(SQL, sqlConn);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                dt = new DataTable();
+               
                 da.Fill(dt);
                 sqlConn.Close();
             }
-            catch { }
+            catch (Exception ex) { throw ex; }
             return dt;
         }
     }

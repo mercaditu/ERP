@@ -1,17 +1,14 @@
 ﻿using Syncfusion.Windows.Reports.Designer;
 using Syncfusion.Windows.Shared;
 using System;
-using System.IO;
 using System.Windows;
 
 namespace cntrl.Reports
 {
-    /// <summary>
-    /// Interaction logic for ReportDesigner.xaml
-    /// </summary>
     public partial class ReportDesigner
     {
-        public string path { get; set; }
+        public string ReportModule { get; set; }
+        public string ReportPath { get; set; }
 
         public ReportDesigner()
         {
@@ -23,34 +20,17 @@ namespace cntrl.Reports
         private void RibbonWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.ReportDesignerControl.DesignMode = DesignMode.RDLC;
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
 
-            //If path (CognitivoERP) does not exist, create path.
-            if (Directory.Exists(path) == false)
+            if (ReportModule!="" && ReportPath!="")
             {
-                Directory.CreateDirectory(path);
-            }
-
-            string SubFolder = "\\TemplateFiles";
-
-            //If path (TemplateFiles) does not exist, create path
-            if (!Directory.Exists(path + SubFolder))
-            {
-                Directory.CreateDirectory(path + SubFolder);
-            }
-            if (File.Exists(path + SubFolder + "\\SalesAnalysis.rdlc"))
-            {
-                try
+                string path = entity.Brillo.IO.CreateIfNotExists(Environment.SpecialFolder.MyDocuments + "\\CogntivoERP\\" + ReportModule + "\\" + ReportPath);
+                if (entity.Brillo.IO.FileExists(path))
                 {
-                    this.ReportDesignerControl.OpenReport(@path + SubFolder + "\\SalesAnalysis.rdlc");
+                    this.ReportDesignerControl.OpenReport(path);
                 }
-                catch (Exception ex)
-                {
-
-                   
-                }
-               
             }
+           
+           
            
         }
     }

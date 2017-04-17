@@ -117,12 +117,8 @@
                 <StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" >
                     <metro:DropDownButton ArrowPressedBrush="Orange" ArrowMouseOverBrush="Red"
                                    ArrowBrush="LightSteelBlue"
-                                          Content="Approve"
     FontSize="16" BorderThickness="0" Orientation="Horizontal"
     VerticalAlignment="Center" >
-                        <metro:DropDownButton.Icon>
-                            <Label Content="j" FontFamily="/cntrl;component/Resources/#cognitivo"/>
-                        </metro:DropDownButton.Icon>
                         <metro:DropDownButton.Items>
                             <Button Content="Approve Edit" />
                         </metro:DropDownButton.Items>

@@ -98,36 +98,20 @@
                         </DataGrid>
                         <GridSplitter Grid.Row="1" Height="5" Margin="0,2" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" />
                         <Label Content="Last 100 Transactions" Grid.Row="2" Grid.ColumnSpan="2" />
-                        <syncfusion:SfDataGrid   Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
-									  AutoGenerateColumns="False"  Margin="10,26,10,10" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        <syncfusion:SfDataGrid BorderBrush="Transparent" Grid.Row="2" BorderThickness="1"
+									  AutoGenerateColumns="False" SelectionMode="Extended" Margin="10,26,10,10" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
 									  ItemsSource="{Binding ElementName=dataPager,Path=PagedSource}"
-									 Grid.ColumnSpan="2">
+									 Grid.ColumnSpan="2" AllowEditing="False">
                             <syncfusion:SfDataGrid.Columns>
-                                <syncfusion:GridTextColumn MappingName="trans_date" HeaderText="Transaction Date"/>
-                                <syncfusion:GridTextColumn  MappingName="trans_date" HeaderText="comment" />
-                                <syncfusion:GridTextColumn  MappingName="debit" HeaderText="Debit"  />
-                                <syncfusion:GridTextColumn  MappingName="credit" HeaderText="{lex:Loc Cognitivo:local:Credit}"  />
-                                <syncfusion:GridTextColumn  MappingName="app_currencyfx.app_currency.name" HeaderText="currency" />
-                              
+                                <syncfusion:GridTextColumn MappingName="trans_date" HeaderText="{lex:Loc Date}"/>
+                                <syncfusion:GridTextColumn MappingName="comment" HeaderText="{lex:Loc Comment}" />
+                                <syncfusion:GridTextColumn MappingName="debit" HeaderText="{lex:Loc Debit}"  />
+                                <syncfusion:GridTextColumn MappingName="credit" HeaderText="{lex:Loc Credit}"  />
+                                <syncfusion:GridTextColumn MappingName="app_currencyfx.app_currency.name" HeaderText="{lex:Loc Currency}" />
                             </syncfusion:SfDataGrid.Columns>
                         </syncfusion:SfDataGrid>
-                        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom"
-                                Grid.Row="2"
-                                PageCount="5"
-                                PageSize="100"
-                               Source="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}"/>
-                        <!--<DataGrid IsReadOnly="True" Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
-									  AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="10,26,10,10" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
-									  ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}"
-									  RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn x:Name="trans_dateColumn" Binding="{Binding trans_date, StringFormat=d}" Header="Transaction Date" Width="*" />
-                                <DataGridTextColumn x:Name="commentColumn" Binding="{Binding comment}" Header="comment" Width="*" />
-                                <DataGridTextColumn x:Name="debitColumn" Binding="{Binding debit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Debit}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridTextColumn x:Name="creditColumn" Binding="{Binding credit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridTextColumn x:Name="id_currencyfxColumn1" Binding="{Binding app_currencyfx.app_currency.name}" Header="currency" Width="*" />
-                            </DataGrid.Columns>
-                        </DataGrid>-->
+                        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="2" PageSize="100" 
+                                                UseOnDemandPaging="True" OnDemandLoading="dataPager_OnDemandLoading"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{Binding is_active, Converter={StaticResource BoolToActiveReverse}}">

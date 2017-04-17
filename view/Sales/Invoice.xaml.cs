@@ -564,6 +564,7 @@ namespace Cognitivo.Sales
         public void Link_Click(object sender)
         {
             sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
+
             foreach (sales_packing item in pnlPacking.selected_sales_packing)
             {
                 sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault();
@@ -577,7 +578,7 @@ namespace Cognitivo.Sales
                     sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
                     sales_packing_relation.sales_packing_detail = _sales_packing_detail;
                     sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
-
+                    
                     //if SalesOrder Exists, use it for Price and VAT.
                     if (sales_order_detail != null)
                     {
@@ -591,6 +592,7 @@ namespace Cognitivo.Sales
                         sales_invoice_detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;
                         sales_invoice_detail.discount = sales_order_detail.discount;
 
+                        _sales_invoice.id_sales_rep = sales_order_detail.sales_order.id_sales_rep;
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                     }
                     else

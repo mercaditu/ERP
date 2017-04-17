@@ -63,6 +63,12 @@ namespace cntrl.Controls
                     ContactID = Contact.ID;
                     Text = Contact.Name;
                     popContact.IsOpen = false;
+
+                    if (popContactInfo.IsOpen)
+                    {
+                        OpenContactCRUD(null, null);
+                    }
+
                     Select?.Invoke(this, new RoutedEventArgs());
                 }
             }
@@ -103,10 +109,12 @@ namespace cntrl.Controls
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Code");
             }
+
             if (rbtnName.IsChecked == true)
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Name");
             }
+
             if (rbtnGov_ID.IsChecked == true)
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("GovID");
@@ -275,7 +283,7 @@ namespace cntrl.Controls
             popupCustomize.Visibility = Visibility.Visible;
         }
 
-        private void popupCustomize_Closed(object sender, EventArgs e)
+        private void PopupCustomize_Closed(object sender, EventArgs e)
         {
             smartBoxContactSetting.Default.Save();
             popupCustomize.IsOpen = false;
@@ -309,53 +317,131 @@ namespace cntrl.Controls
             smartBoxContactSetting.Default.Save();
         }
 
-        private void openContactCRUD(object sender, MouseButtonEventArgs e)
+        private void OpenContactCRUD(object sender, MouseButtonEventArgs e)
         {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
-
-            if (Sec.create)
+            //Check if ContactID is Zero and user can create a new contact.
+            if (ContactID == 0 && new entity.Brillo.Security(entity.App.Names.Contact).create)
             {
-                Curd.contact contactCURD = new Curd.contact();
+                popContactInfo.IsOpen = true;
+            }
+            else if (ContactID > 0 && new entity.Brillo.Security(entity.App.Names.Contact).edit)
+            {
+                popContactInfo.IsOpen = true;
+
+                using (entity.db db = new entity.db())
+                {
+                    entity.contact contact = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
+                    if (contact != null)
+                    {
+                        tbxName.Text = contact.name;
+                        tbxGovernmentID.Text = contact.gov_code;
+                        tbxAddress.Text = contact.address;
+                        tbxTelephone.Text = contact.telephone;
+                        tbxEmail.Text = contact.email;
+                        tbxContactRole.Content = contact.contact_role != null ? contact.contact_role.name : "";
+                        tbxPriceList.Content = contact.item_price_list != null ? contact.item_price_list.name : "";
+                    }
+                }
+            }
+        }
+
+        private void SaveContact_Click(object sender, RoutedEventArgs e)
+        {
+            if (ContactID == 0)
+            {
+                entity.contact contact = new entity.contact()
+                {
+                    name = tbxName.Text,
+                    gov_code = tbxGovernmentID.Text,
+                    address = tbxAddress.Text,
+                    telephone = tbxTelephone.Text,
+                    email = tbxEmail.Text
+                };
 
                 if (Get_Customers)
-                {
-                    contactCURD.IsCustomer = true;
-                }
+                { contact.is_customer = true; }
                 else if (Get_Suppliers)
-                {
-                    contactCURD.IsSupplier = true;
-                }
+                { contact.is_supplier = true; }
                 else if (Get_Employees)
+                { contact.is_employee = true; }
+
+                using (entity.db db = new entity.db())
                 {
-                    contactCURD.IsEmployee = true;
+                    int RoleID = db.contact_role
+                        .Where(x => x.is_principal && x.id_company == entity.CurrentSession.Id_Company)
+                        .Select(x => x.id_contact_role)
+                        .FirstOrDefault();
+
+                    if (RoleID > 0)
+                    {
+                        contact.id_contact_role = RoleID;
+                    }
+                    else
+                    {
+                        entity.contact_role role = new entity.contact_role()
+                        {
+                            name = "Default Role",
+                            is_principal = true,
+                            can_transact = true
+                        };
+
+                        db.contact_role.Add(role);
+                        db.SaveChanges();
+
+                        contact.id_contact_role = role.id_contact_role;
+                    }
+
+                    int PriceListID = db.item_price_list
+                    .Where(x => x.is_default && x.id_company == entity.CurrentSession.Id_Company)
+                    .Select(x => x.id_price_list)
+                    .FirstOrDefault();
+
+                    if (PriceListID > 0)
+                    {
+                        contact.id_price_list = PriceListID;
+                    }
+                    else
+                    {
+                        entity.item_price_list list = new entity.item_price_list()
+                        {
+                            name = "Default Price List",
+                            is_default = true
+                        };
+
+                        db.item_price_list.Add(list);
+                        db.SaveChanges();
+
+                        contact.id_price_list = list.id_price_list;
+                    }
+
+                    db.SaveChanges();
                 }
-
-                //contactCURD.btnSave_Click += popCrud_Closed;
-
-                //popCrud.IsOpen = true;
-                //stackCRUD.Children.Add(contactCURD);
             }
+            else
+            {
+                using (entity.db db = new entity.db())
+                {
+                    entity.contact contact = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
+
+                    if (contact != null)
+                    {
+                        contact.name = tbxName.Text;
+                        contact.gov_code = tbxGovernmentID.Text;
+                        contact.address = tbxAddress.Text;
+                        contact.telephone = tbxTelephone.Text;
+                        contact.email = tbxEmail.Text;
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+            LoadData();
+            popContactInfo.IsOpen = false;
         }
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             LoadData();
-        }
-
-        private void SaveContact_Click(object sender, RoutedEventArgs e)
-        {
-            if (ContactID > 0)
-            {
-
-            }
-            else
-            {
-
-            }
-
-            //LoadData();
-            //ContactList.add
-            //Search_OnThread(SearchText);
         }
     }
 }

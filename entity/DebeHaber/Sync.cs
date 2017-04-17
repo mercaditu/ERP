@@ -160,7 +160,7 @@ namespace DebeHaber
 
         public void Fill_ByPurchaseReturn(purchase_return purchase_return)
         {
-            Type = TransactionTypes.SalesReturn;
+            Type = TransactionTypes.PurchaseReturn;
             TransDate = purchase_return.trans_date;
             Company = purchase_return.contact.name;
 

@@ -34,11 +34,11 @@
                 <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="W"  FontSize="9" VerticalAlignment="Center" Margin="0"
                            HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                           PreviewMouseUp="Refresh_PreviewMouseUp" Padding="4" FontWeight="Bold" />
-                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="9" VerticalAlignment="Center" Margin="0"
+                           PreviewMouseUp="Refresh_PreviewMouseUp" Padding="4"/>
+                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="11" VerticalAlignment="Center" Margin="0"
                            HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                           PreviewMouseUp="Label_PreviewMouseUp" Padding="4" FontWeight="Bold" />
-                    <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
+                           PreviewMouseUp="Label_PreviewMouseUp" Padding="4"/>
+                    <Popup x:Name="popupCustomize" IsOpen="False" Closed="PopupCustomize_Closed" StaysOpen="False"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                         <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
                             <StackPanel Orientation="Vertical" Background="White">
@@ -66,9 +66,9 @@
                     </Popup>
                 </StackPanel>
             </StackPanel>
-            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0"
+            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" FontSize="11" VerticalAlignment="Center" Margin="0"
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                   PreviewMouseUp="openContactCRUD" Padding="4" FontWeight="Bold"
+                   PreviewMouseUp="OpenContactCRUD" Padding="4"
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=this, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" />
         </StackPanel>
 
@@ -104,7 +104,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="i" VerticalAlignment="Center" Foreground="White" FontFamily="/cntrl;component/Resources/#cognitivo"/>
-                        <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="White"/>
+                        <Label Content="{lex:Loc Contact}" FontWeight="Medium" Foreground="White"/>
                     </StackPanel>
 
                     <Grid>
@@ -118,22 +118,22 @@
                         <pref:ImageViewer Width="128" ReferenceID="{Binding ContactID}"/>
                         <StackPanel Margin="8" Grid.Column="1" Width="256">
                             <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox Text="Abhishek Shah" Style="{StaticResource TextToLabelStyle}"/>
+                            <TextBox x:Name="tbxName" Background="WhiteSmoke" BorderThickness="0" />
                             <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox Text="1528628" Style="{StaticResource TextToLabelStyle}"/>
+                            <TextBox x:Name="tbxGovernmentID" Background="WhiteSmoke" BorderThickness="0"/>
                             <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox Text="CG Road. Satkar Building" Style="{StaticResource TextToLabelStyle}"/>
+                            <TextBox x:Name="tbxAddress" Background="WhiteSmoke" BorderThickness="0"/>
                             <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox Text="0981200042" Style="{StaticResource TextToLabelStyle}"/>
+                            <TextBox x:Name="tbxTelephone" Background="WhiteSmoke" BorderThickness="0"/>
                             <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox Text="abhi@cognitivo.in" Style="{StaticResource TextToLabelStyle}"/>
+                            <TextBox x:Name="tbxEmail" Background="WhiteSmoke" BorderThickness="0"/>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}" FontSize="8"/>
-                                <Label Content="Minorista" Style="{StaticResource input_label}"/>
+                                <Label x:Name="tbxPriceList" Style="{StaticResource input_label}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" FontSize="8"/>
-                                <Label Content="Contacto Principal" Style="{StaticResource input_label}"/>
+                                <Label x:Name="tbxContactRole" Style="{StaticResource input_label}"/>
                             </StackPanel>
                             <Button Click="SaveContact_Click" Content="{lex:Loc Save}" Margin="4" Width="Auto"/>
                         </StackPanel>

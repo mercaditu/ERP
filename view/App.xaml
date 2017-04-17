@@ -142,7 +142,7 @@
 											   HorizontalAlignment="Left" VerticalAlignment="Center"
 											   Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}},
 															  Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                    <TextBox x:Name="tbx2lbl" Opacity="0" Grid.ZIndex="2" IsTabStop="False"
+                                    <TextBox x:Name="tbx2lbl" Opacity="0" Grid.ZIndex="2"
 											 Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}},
 											 Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                         <TextBox.Background>

@@ -16,7 +16,7 @@ namespace entity.Brillo
             if (index > 0)
                 directory = path.Substring(0, index);
 
-            if (!Directory.Exists(directory))
+            if (Directory.Exists(directory) == false)
             {
                 DirectoryInfo di = Directory.CreateDirectory(directory);
             }

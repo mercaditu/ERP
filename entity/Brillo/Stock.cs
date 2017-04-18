@@ -10,7 +10,10 @@ namespace entity.Brillo
     {
         public List<StockList> List(int BranchID, int? LocationID, int ProductID)
         {
-            string query = @"select
+            string query = @" set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
+select
                                 loc.id_location as LocationID,
                                 loc.name as Location,
                                 parent.id_movement as MovementID,
@@ -44,7 +47,10 @@ namespace entity.Brillo
 
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {
-            string query = @"select
+            string query = @"
+ set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select
                                 loc.id_location as LocationID,
                                 loc.name as Location,
                                 parent.id_movement as MovementID,
@@ -78,7 +84,10 @@ namespace entity.Brillo
 
         public List<StockList> ScalarMovement(item_movement item_movement)
         {
-            string query = @"select
+            string query = @"
+ set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select
 
                                 parent.id_movement as MovementID,parent.id_location as LocationID,Loc.name as Location,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,

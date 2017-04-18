@@ -23,7 +23,10 @@ namespace Cognitivo.Class
     {
         public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         {
-            string query = @"select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode,
+            string query = @"
+ set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode,
                              item.name as ItemName, prod.id_item_product as ProductID,
                              (sum(mov.credit) - sum(mov.debit)) as Quantity,
                              measure.name as Measurement,
@@ -47,7 +50,10 @@ namespace Cognitivo.Class
 
         public List<StockList> ByBranchLocation(int LocationID, DateTime TransDate)
         {
-            string query = @" select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
+            string query = @" 
+ set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
                                  prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement,
                                  (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
                                  mov.code as BatchCode,

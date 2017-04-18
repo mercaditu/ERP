@@ -258,7 +258,7 @@ namespace entity
                     if (item_transfer_detail.movement_id != null)
                     {
                         Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
+                        Items_InStockLIST = stockBrillo.ScalarMovement((long)item_transfer_detail.movement_id);
                     }
                     else
                     {
@@ -297,7 +297,7 @@ namespace entity
                     if (item_transfer_detail.movement_id != null)
                     {
                         Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
+                        Items_InStockLIST = stockBrillo.ScalarMovement((long)item_transfer_detail.movement_id);
                     }
                     else
                     {

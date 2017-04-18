@@ -215,11 +215,11 @@ namespace Cognitivo.Product
                     {
                         entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
 
-                        item_movement item_movement = ProductTransferDB.item_movement
-                            .Where(x => x.id_movement == item_transfer_detail.movement_id)
-                            .FirstOrDefault();
+                        //item_movement item_movement = ProductTransferDB.item_movement
+                        //    .Where(x => x.id_movement == item_transfer_detail.movement_id)
+                        //    .FirstOrDefault();
 
-                        Items_InStockLIST = stockBrillo.ScalarMovement(item_movement);
+                        Items_InStockLIST = stockBrillo.ScalarMovement((long)item_transfer_detail.movement_id);
                     }
                 }
                 else

@@ -46,10 +46,7 @@ namespace Cognitivo.Sales
             CollectionViewSource app_measureweight = FindResource("app_measureweight") as CollectionViewSource;
             app_measurevolume.Source = PackingListDB.app_measurement.Local;
             app_measureweight.Source = PackingListDB.app_measurement.Local;
-
-            //sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
-            //sales_orderViewSource.Source = dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.status == Status.Documents_General.Approved).Include(a => a.sales_order_detail).ToList();
-
+            
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
@@ -232,28 +229,6 @@ namespace Cognitivo.Sales
             PackingListDB.Annull();
         }
 
-        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    int id_contact = sbxContact.ContactID;
-        //    if (sales_orderViewSource != null)
-        //    {
-        //        if (sales_orderViewSource.View != null)
-        //        {
-        //            if (sales_orderViewSource.View.Cast<sales_order>().Count() > 0)
-        //            {
-        //                sales_orderViewSource.View.Filter = i =>
-        //                {
-        //                    sales_order sales_order = (sales_order)i;
-        //                    if (sales_order.id_contact == id_contact)
-        //                        return true;
-        //                    else
-        //                        return false;
-        //                };
-        //            }
-        //        }
-        //    }
-        //}
-
         private void btnSalesOrder_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -356,16 +331,20 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
 
-                if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified==false).FirstOrDefault()!=null)
+                sales_packing_detail sales_packing_detail = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified == false).FirstOrDefault();
+      
+                if (sales_packing_detail != null)
                 {
-                    if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified == false).FirstOrDefault().sales_packing_relation.Count()>0)
+                    if (sales_packing_detail.sales_packing_relation.Count() > 0)
                     {
-                        sales_packing_relation PackingRelation = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified == false).FirstOrDefault().sales_packing_relation.FirstOrDefault();
-                        sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
-                        sales_packing_relation.id_sales_invoice_detail = PackingRelation.id_sales_invoice_detail;
-                        sales_packing_relation.sales_invoice_detail = PackingRelation.sales_invoice_detail;
-                        sales_packing_relation.id_sales_packing_detail = PackingRelation.id_sales_packing_detail;
-                        sales_packing_relation.sales_packing_detail = PackingRelation.sales_packing_detail;
+                        sales_packing_relation PackingRelation = sales_packing_detail.sales_packing_relation.FirstOrDefault();
+                        sales_packing_relation sales_packing_relation = new sales_packing_relation()
+                        {
+                            id_sales_invoice_detail = PackingRelation.id_sales_invoice_detail,
+                            sales_invoice_detail = PackingRelation.sales_invoice_detail,
+                            id_sales_packing_detail = PackingRelation.id_sales_packing_detail,
+                            sales_packing_detail = PackingRelation.sales_packing_detail
+                        };
                         _sales_packing_detail.sales_packing_relation.Add(sales_packing_relation);
                     }
                 }
@@ -504,9 +483,7 @@ namespace Cognitivo.Sales
                 }
             }
         }
-
-       
-
+        
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             sales_packing packing = sales_packingViewSource.View.CurrentItem as sales_packing;

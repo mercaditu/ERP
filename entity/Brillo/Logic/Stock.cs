@@ -64,7 +64,7 @@ namespace entity.Brillo.Logic
                         if (purchase_return_detail.movement_id != null && purchase_return_detail.movement_id > 0)
                         {
                             Brillo.Stock stockBrillo = new Brillo.Stock();
-                            Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(purchase_return_detail.movement_id));
+                            Items_InStockLIST = stockBrillo.ScalarMovement((long)purchase_return_detail.movement_id);
                         }
                         else
                         { // Get all Movements with Balance.
@@ -117,7 +117,7 @@ namespace entity.Brillo.Logic
                     if (packing_detail.id_movement != null && packing_detail.id_movement > 0)
                     {
                         Brillo.Stock stockBrillo = new Brillo.Stock();
-                        Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(packing_detail.id_movement));
+                        Items_InStockLIST = stockBrillo.ScalarMovement((long)packing_detail.id_movement);
                     }
                     else
                     {
@@ -132,7 +132,7 @@ namespace entity.Brillo.Logic
                                              CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                              item_product,
                                              LocationID,
-                                             packing_detail.quantity,
+                                             (int)packing_detail.verified_quantity,
                                              sales_packing.trans_date,
                                              comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
                                              ));
@@ -165,7 +165,7 @@ namespace entity.Brillo.Logic
                             if (production_execution_detail.movement_id != null && production_execution_detail.movement_id > 0)
                             {
                                 Brillo.Stock stockBrillo = new Brillo.Stock();
-                                Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(production_execution_detail.movement_id));
+                                Items_InStockLIST = stockBrillo.ScalarMovement((long)production_execution_detail.movement_id);
                             }
                             else
                             {
@@ -500,7 +500,7 @@ namespace entity.Brillo.Logic
                                 if (detail.movement_id != null && detail.movement_id > 0)
                                 {
                                     Brillo.Stock stockBrillo = new Brillo.Stock();
-                                    Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(detail.movement_id));
+                                    Items_InStockLIST = stockBrillo.ScalarMovement((long)detail.movement_id);
                                 }
                                 else
                                 {
@@ -545,7 +545,7 @@ namespace entity.Brillo.Logic
                         if (detail.movement_id != null && detail.movement_id > 0)
                         {
                             Brillo.Stock stockBrillo = new Brillo.Stock();
-                            Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(detail.movement_id));
+                            Items_InStockLIST = stockBrillo.ScalarMovement((long)detail.movement_id);
                         }
                         else
                         {
@@ -703,7 +703,7 @@ namespace entity.Brillo.Logic
                             if (item_inventory_detail.movement_id != null && item_inventory_detail.movement_id > 0)
                             {
                                 Brillo.Stock stockBrillo = new Brillo.Stock();
-                                Items_InStockLIST = stockBrillo.ScalarMovement(db.item_movement.Find(item_inventory_detail.movement_id));
+                                Items_InStockLIST = stockBrillo.ScalarMovement((long)item_inventory_detail.movement_id);
                             }
                             else
                             {

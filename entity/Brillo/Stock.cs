@@ -82,7 +82,12 @@ select
             return GenerateList(dt);
         }
 
-        public List<StockList> ScalarMovement(item_movement item_movement)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="MovementID"> Send Movement ID of Item Movement</param>
+        /// <returns></returns>
+        public List<StockList> ScalarMovement(long MovementID)
         {
             string query = @"
  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
@@ -100,7 +105,7 @@ select
                                 where parent.id_movement={0}
                                 group by parent.id_movement
                                 order by parent.trans_date";
-            query = String.Format(query, item_movement.id_movement);
+            query = String.Format(query, MovementID);
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }

@@ -54,43 +54,27 @@ namespace cntrl
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (entity.db.GetValidationErrors().Count() == 0)
             {
-                IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    entity.SaveChanges();
-                    btnCancel_Click(sender, e);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                entity.SaveChanges();
+                btnCancel_Click(sender, e);
             }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 entity.CancelChanges();
                 sales_promotionViewSource.View.Refresh();
-                Grid parentGrid = (Grid)this.Parent;
+                Grid parentGrid = (Grid)Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = Visibility.Hidden;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         private void sbxRefItem_Select(object sender, RoutedEventArgs e)
         {
             if (sbxRefItem.ItemID > 0)
             {
-                sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-                if (sales_promotion != null)
+                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
                     sales_promotion.reference = sbxRefItem.ItemID;
                 }
@@ -101,8 +85,7 @@ namespace cntrl
         {
             if (cbxparaContacttag.SelectedValue != null)
             {
-                sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-                if (sales_promotion != null)
+                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
                     if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType)
                     {
@@ -123,8 +106,7 @@ namespace cntrl
         {
             if (sbxBonusItem.ItemID > 0)
             {
-                sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-                if (sales_promotion != null)
+                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
                     sales_promotion.reference_bonus = sbxBonusItem.ItemID;
                 }
@@ -135,8 +117,7 @@ namespace cntrl
         {
             if (cbxparatag.SelectedValue != null)
             {
-                sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-                if (sales_promotion != null)
+                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
                     if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
                     {
@@ -241,7 +222,7 @@ namespace cntrl
                 Item_Parameter.Visibility = Visibility.Collapsed;
                 Item_Bonus.Visibility = Visibility.Collapsed;
                 Discount.Visibility = Visibility.Visible;
-                QuntityStep.Visibility = Visibility.Collapsed;
+                QuntityStep.Visibility = Visibility.Visible;
                 ContactTag_Parameter.Visibility = Visibility.Visible;
             }
         }

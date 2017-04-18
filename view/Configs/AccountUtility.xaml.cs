@@ -149,14 +149,14 @@ namespace Cognitivo.Configs
                     }).ToList();
                 
                 //This code will change AccountID of Current Session and Can cause Serious Problems.
-                //CurrentSession.Id_Account = app_account.id_account;
+               // CurrentSession.Id_Account = app_account.id_account;
 
                 if (frmActive.Children.Count > 0)
                 {
                     frmActive.Children.RemoveAt(0);
                 }
 
-                AccountActive AccountActive = new AccountActive()
+                AccountActive AccountActive = new AccountActive(app_account.id_account)
                 {
                     db = db,
                     app_accountViewSource = app_accountViewSource

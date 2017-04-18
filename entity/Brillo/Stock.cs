@@ -136,8 +136,8 @@ select
         private DataTable exeDT(string sql)
         {
             DataTable dt = new DataTable();
-            try
-            {
+            //try
+            //{
                 MySqlConnection sqlConn = new MySqlConnection(CurrentSession.ConnectionString);
                 sqlConn.Open();
                 MySqlCommand cmd = new MySqlCommand(sql, sqlConn);
@@ -145,11 +145,11 @@ select
                 dt = new DataTable();
                 da.Fill(dt);
                 sqlConn.Close();
-            }
-            catch
-            {
-                //MessageBox.Show("Unable to Connect to Database. Please Check your credentials.");
-            }
+            //}
+            //catch
+            //{
+            //    //MessageBox.Show("Unable to Connect to Database. Please Check your credentials.");
+            //}
             return dt;
         }
 

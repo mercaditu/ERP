@@ -27,10 +27,11 @@ namespace Cognitivo.Configs
         public db db { get; set; }
         public CollectionViewSource app_accountViewSource { get; set; }
         public bool is_active { get; set; }
-
-        public AccountActive()
+        public int id_account { get; set; }
+        public AccountActive(int _id_account)
         {
             InitializeComponent();
+            id_account = _id_account;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -40,7 +41,7 @@ namespace Cognitivo.Configs
                 db = new db();
             }
 
-            app_account app_account = db.app_account.Find(CurrentSession.Id_Account);
+            app_account app_account = db.app_account.Find(id_account);
 
             if (app_account != null)
             {

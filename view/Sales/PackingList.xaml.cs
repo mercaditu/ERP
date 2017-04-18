@@ -356,6 +356,19 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
 
+                if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified==false).FirstOrDefault()!=null)
+                {
+                    if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified == false).FirstOrDefault().sales_packing_relation.Count()>0)
+                    {
+                        sales_packing_relation PackingRelation = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified == false).FirstOrDefault().sales_packing_relation.FirstOrDefault();
+                        sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
+                        sales_packing_relation.id_sales_invoice_detail = PackingRelation.id_sales_invoice_detail;
+                        sales_packing_relation.sales_invoice_detail = PackingRelation.sales_invoice_detail;
+                        sales_packing_relation.id_sales_packing_detail = PackingRelation.id_sales_packing_detail;
+                        sales_packing_relation.sales_packing_detail = PackingRelation.sales_packing_detail;
+                        _sales_packing_detail.sales_packing_relation.Add(sales_packing_relation);
+                    }
+                }
                 if (item_movement != null)
                 {
                     _sales_packing_detail.batch_code = item_movement.code;
@@ -491,6 +504,8 @@ namespace Cognitivo.Sales
                 }
             }
         }
+
+       
 
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {

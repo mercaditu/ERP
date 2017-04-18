@@ -46,7 +46,7 @@ namespace Cognitivo.Sales
         /// </summary>
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            frmaccount.Navigate(new Configs.AccountActive());
+            frmaccount.Navigate(new Configs.AccountActive(CurrentSession.Id_Account));
             tabAccount.IsSelected = true;
             tabAccount.Focus();
         }

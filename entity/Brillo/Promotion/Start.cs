@@ -49,7 +49,6 @@ namespace entity.Brillo.Promotion
                     {
                         _sales_invoice_detail.DiscountVat = data.discountvat;
                         _sales_invoice_detail.id_sales_promotion = Best_Promotion.Promotion.id_sales_promotion;
-                        //_sales_invoice_detail.sales_promotion = Best_Promotion.Promotion;
                     }
                 }
             }
@@ -60,14 +59,15 @@ namespace entity.Brillo.Promotion
                 if (Best_Promotion != null)
                 {
                     ///Logic to add new Items from GetThat Promotions...
-                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-                    sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
-                    sales_invoice_detail.id_item = Best_Promotion.Item.id_item;
-                    sales_invoice_detail.item_description = Best_Promotion.Item.name;
-                    sales_invoice_detail.quantity = Best_Promotion.Quantity;
-                    sales_invoice_detail.unit_price = Best_Promotion.Price;
-                    sales_invoice_detail.discount = Best_Promotion.Discount;
-
+                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail()
+                    {
+                        State = System.Data.Entity.EntityState.Added,
+                        id_item = Best_Promotion.Item.id_item,
+                        item_description = Best_Promotion.Item.name,
+                        quantity = Best_Promotion.Quantity,
+                        unit_price = Best_Promotion.Price,
+                        discount = Best_Promotion.Discount
+                    };
                     SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
                 }
             }

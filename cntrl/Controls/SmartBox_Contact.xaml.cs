@@ -413,7 +413,7 @@ namespace cntrl.Controls
 
                         contact.id_price_list = list.id_price_list;
                     }
-
+                    db.contacts.Add(contact);
                     db.SaveChanges();
                 }
             }

@@ -66,7 +66,7 @@ namespace cntrl
             set { SetValue(ApplicationNameProperty, value); }
         }
 
-        private CollectionViewSource ReportViewSource;
+        private System.Windows.Data.CollectionViewSource ReportViewSource;
 
         public DateTime StartDate
         {
@@ -121,27 +121,34 @@ namespace cntrl
                 {
                     if (item.DataType == typeof(string))
                     {
-                        Label Label = new Label();
-                        Label.Name = item.ColumnName;
-                        Label.Content = entity.Brillo.Localize.StringText(item.ColumnName) != string.Empty ? entity.Brillo.Localize.StringText(item.ColumnName) : item.ColumnName;
-                        Label.Foreground = Brushes.Black;
+                        Label Label = new Label()
+                        {
+                            Name = item.ColumnName,
+                            Content = entity.Brillo.Localize.StringText(item.ColumnName) != string.Empty ? entity.Brillo.Localize.StringText(item.ColumnName) : item.ColumnName,
+                            Foreground = Brushes.Black
+                        };
+
                         Style lblStyle = Application.Current.FindResource("input_label") as Style;
                         Label.Style = lblStyle;
                         stpFilter.Children.Add(Label);
 
-                        ComboBox ComboBox = new ComboBox();
-                        Style cbxStyle = Application.Current.FindResource("input_combobox") as Style;
-                        ComboBox.Style = cbxStyle;
                         DataView view = new DataView(ReportDt);
-                        ComboBox.ItemsSource = view.ToTable(true, item.ColumnName).DefaultView;
-                        ComboBox.SelectedValuePath = item.ColumnName;
-                        ComboBox.DisplayMemberPath = item.ColumnName;
-                        ComboBox.Name = "cbx" + item.ColumnName;
-                        ComboBox.BorderBrush = Brushes.White;
-                        ComboBox.Foreground = Brushes.Black;
-                        ComboBox.IsTextSearchEnabled = true;
+                        Style cbxStyle = Application.Current.FindResource("input_combobox") as Style;
+
+                        ComboBox ComboBox = new ComboBox()
+                        {
+                            SelectedValuePath = item.ColumnName,
+                            DisplayMemberPath = item.ColumnName,
+                            Name = "cbx" + item.ColumnName,
+                            BorderBrush = Brushes.White,
+                            Foreground = Brushes.Black,
+                            IsTextSearchEnabled = true,
+                            IsEditable = true,
+                            Style = cbxStyle,
+                            ItemsSource = view.ToTable(true, item.ColumnName).DefaultView
+                        };
                         TextSearch.SetTextPath(ComboBox, item.ColumnName);
-                        ComboBox.IsEditable = true;
+                        
                         stpFilter.Children.Add(ComboBox);
                     }
                     else if (item.DataType == typeof(bool))
@@ -355,28 +362,28 @@ namespace cntrl
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            if (sfdatagrid.View != null)
-            {
-                var options = new ExcelExportingOptions();
-                options.AllowOutlining = false;
-                var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
-                var workBook = excelEngine.Excel.Workbooks[0];
-                //Add code to show save panel.
-                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-                dlg.FileName = "Excel"; // Default file name
-                dlg.DefaultExt = ".xlsx"; // Default file extension
-                dlg.Filter = "Text documents (.xlsx)|*.xlsx"; // Filter files by extension
+            //if (sfdatagrid.View != null)
+            //{
+            //    var options = new ExcelExportingOptions();
+            //    options.AllowOutlining = false;
+            //    var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
+            //    var workBook = excelEngine.Excel.Workbooks[0];
+            //    //Add code to show save panel.
+            //    Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            //    dlg.FileName = "Excel"; // Default file name
+            //    dlg.DefaultExt = ".xlsx"; // Default file extension
+            //    dlg.Filter = "Text documents (.xlsx)|*.xlsx"; // Filter files by extension
 
-                // Show save file dialog box
-                bool? result = dlg.ShowDialog();
+            //    // Show save file dialog box
+            //    bool? result = dlg.ShowDialog();
 
-                // Process save file dialog box results
-                if (result == true)
-                {
-                    // Save document
-                    workBook.SaveAs(dlg.FileName);
-                }
-            }
+            //    // Process save file dialog box results
+            //    if (result == true)
+            //    {
+            //        // Save document
+            //        workBook.SaveAs(dlg.FileName);
+            //    }
+            //}
         }
     }
 

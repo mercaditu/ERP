@@ -271,27 +271,27 @@ namespace entity
                 if (columnName == "id_contact")
                 {
                     if (id_contact == 0)
-                        return "Contact needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "id_branch" && app_branch == null)
                 {
                     if (id_branch == 0)
-                        return "Branch needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "id_condition" && app_condition == null)
                 {
                     if (id_condition == 0)
-                        return "Condition needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "id_contract" && app_contract == null)
                 {
                     if (id_contract == 0)
-                        return "Contract needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "id_currencyfx")
                 {
                     if (id_currencyfx == 0)
-                        return "Currency needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "DiscountPercentage")
                 {

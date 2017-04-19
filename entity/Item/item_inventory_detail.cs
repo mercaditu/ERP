@@ -74,7 +74,8 @@ namespace entity
                             if (value_counted != null)
                             {
                                 _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, Convert.ToDecimal(value_counted), GetDimensionValue());
-                                RaisePropertyChanged("_Quantity_Factored");
+                                RaisePropertyChanged("Quantity_Factored");
+                                RaisePropertyChanged("Delta");
                             }
                         }
                     }
@@ -83,6 +84,15 @@ namespace entity
         }
 
         private decimal? _value_counted;
+
+        [NotMapped]
+        public decimal Delta
+        {
+            get
+            {
+                return Convert.ToDecimal(value_counted) - value_system;
+            }
+        }
 
         [NotMapped]
         public decimal Quantity_Factored

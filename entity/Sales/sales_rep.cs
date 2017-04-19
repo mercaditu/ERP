@@ -92,7 +92,7 @@ namespace entity
                 if (columnName == "enum_type")
                 {
                     if (enum_type == 0)
-                        return "Type needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 return "";
             }

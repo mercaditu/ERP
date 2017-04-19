@@ -155,7 +155,7 @@ namespace entity
                 if (columnName == "name")
                 {
                     if (string.IsNullOrEmpty(name))
-                        return "Name needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 return "";
             }

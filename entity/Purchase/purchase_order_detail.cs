@@ -131,7 +131,7 @@ namespace entity
                 if (columnName == "id_cost_center")
                 {
                     if (id_cost_center == 0)
-                        return "Cost Center can not be zero";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "unit_cost")
                 {

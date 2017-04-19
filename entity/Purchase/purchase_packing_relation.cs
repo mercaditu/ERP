@@ -54,7 +54,7 @@ namespace entity
                 if (columnName == "id_sales_packinglist")
                 {
                     if (id_purchase_packing == 0)
-                        return "Packing list needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 return "";
             }

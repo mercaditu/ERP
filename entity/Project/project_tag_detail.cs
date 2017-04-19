@@ -53,7 +53,7 @@
                 if (columnName == "id_tag")
                 {
                     if (id_tag == 0)
-                        return "Contact Tag needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 return "";
             }

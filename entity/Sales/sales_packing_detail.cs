@@ -142,7 +142,7 @@ namespace entity
                 if (columnName == "id_item")
                 {
                     if (id_item == 0)
-                        return "Please select Item";
+                        return Brillo.Localize.PleaseSelect;
                 }
 
                 if (columnName == "quantity")

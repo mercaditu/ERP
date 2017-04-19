@@ -290,12 +290,12 @@ namespace entity
                 if (columnName == "id_item_type")
                 {
                     if (id_item_type == 0)
-                        return "Item type needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "id_vat_group")
                 {
                     if (id_vat_group == 0)
-                        return "Default Vat  needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 return "";
             }

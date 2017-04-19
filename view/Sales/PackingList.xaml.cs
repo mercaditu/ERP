@@ -348,7 +348,7 @@ namespace Cognitivo.Sales
                         };
                         _sales_packing_detail.sales_packing_relation.Add(sales_packing_relation);
                     }
-                    _sales_packing_detail.id_sales_order_detail = packingdetail.id_sales_order_detail;
+                    _sales_packing_detail.id_sales_order_detail = sales_packing_detail.id_sales_order_detail;
                 }
 
                 if (item_movement != null)

@@ -30,7 +30,7 @@ namespace Cognitivo.Configs
         private CollectionViewSource app_accountViewSource
             , app_account_listViewSource
             , app_accountOriginViewSource
-            , app_currencyfxdestViewSource
+            , app_currencydestViewSource
             , app_account_detail_adjustViewSource
             , app_accountapp_account_detailViewSource
             , app_account_detailViewSource
@@ -97,11 +97,11 @@ namespace Cognitivo.Configs
             payment_typeViewSource.Source = db.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToList();
 
             //CurrencyFx
-            CollectionViewSource app_currencyfxViewSource = this.FindResource("app_currencyfxViewSource") as CollectionViewSource;
-            CollectionViewSource app_currencyfxdestViewSource = this.FindResource("app_currencyfxdestViewSource") as CollectionViewSource;
-            await db.app_currencyfx.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Include(x => x.app_currency).LoadAsync();
-            app_currencyfxViewSource.Source = db.app_currencyfx.Local;
-            app_currencyfxdestViewSource.Source = db.app_currencyfx.Local;
+            CollectionViewSource app_currencyViewSource = this.FindResource("app_currencyViewSource") as CollectionViewSource;
+            CollectionViewSource app_currencydestViewSource = this.FindResource("app_currencydestViewSource") as CollectionViewSource;
+            await db.app_currency.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            app_currencyViewSource.Source = db.app_currencyfx.Local;
+            app_currencydestViewSource.Source = db.app_currencyfx.Local;
 
             //List of 100 Latest Transactions.
             dataPager.OnDemandLoading += dataPager_OnDemandLoading;
@@ -210,24 +210,23 @@ namespace Cognitivo.Configs
                     {
                         Origin_AccountTransaction.id_session = SessionID_Origin;
                     }
-                    app_currencyfx DestinationCurrencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == Transfer.id_currencyfxdest).FirstOrDefault();
 
                     int DestinationRate = 0;
-                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == DestinationCurrencyfx.id_currency).FirstOrDefault().id_currency;
+                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxorigin).FirstOrDefault().id_currency;
 
-                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == DestinationCurrencyfx.id_currency).FirstOrDefault();
+                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxdest).FirstOrDefault();
                     if (app_currencyfx.sell_value != Transfer.FXRate)
                     {
                         using (db _db = new db())
                         {
-                          
+                            
                             app_currencyfx fx = new app_currencyfx()
                             {
                                 sell_value = Transfer.FXRate,
                                 buy_value = Transfer.FXRate,
                                 id_company = CurrentSession.Id_Company,
                                 is_active = false,
-                                id_currency = DestinationCurrencyfx.id_currency
+                                id_currency = Transfer.id_currencyfxdest
                             };
                             _db.app_currencyfx.Add(fx);
 

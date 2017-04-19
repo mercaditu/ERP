@@ -347,6 +347,8 @@ namespace cntrl.Controls
 
         private void SaveContact_Click(object sender, RoutedEventArgs e)
         {
+            string Name = string.Empty;
+            
             if (ContactID == 0)
             {
                 entity.contact contact = new entity.contact()
@@ -431,11 +433,15 @@ namespace cntrl.Controls
                         contact.telephone = tbxTelephone.Text;
                         contact.email = tbxEmail.Text;
                         db.SaveChanges();
+
+                        Name = contact.name;
                     }
                 }
             }
 
             LoadData();
+            tbxSearch.Text = Name;
+
             popContactInfo.IsOpen = false;
         }
 

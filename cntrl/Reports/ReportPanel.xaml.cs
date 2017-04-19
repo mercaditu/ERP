@@ -1,6 +1,7 @@
 ﻿using entity;
 using entity.BrilloQuery;
 using Microsoft.Reporting.WinForms;
+using Syncfusion.UI.Xaml.Grid.Converter;
 using System;
 using System.Data;
 using System.IO;
@@ -354,28 +355,28 @@ namespace cntrl
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            //if (sfdatagrid.View != null)
-            //{
-            //    var options = new ExcelExportingOptions();
-            //    options.AllowOutlining = false;
-            //    var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
-            //    var workBook = excelEngine.Excel.Workbooks[0];
-            //    //Add code to show save panel.
-            //    Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            //    dlg.FileName = "Excel"; // Default file name
-            //    dlg.DefaultExt = ".xlsx"; // Default file extension
-            //    dlg.Filter = "Text documents (.xlsx)|*.xlsx"; // Filter files by extension
+            if (sfdatagrid.View != null)
+            {
+                var options = new ExcelExportingOptions();
+                options.AllowOutlining = false;
+                var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
+                var workBook = excelEngine.Excel.Workbooks[0];
+                //Add code to show save panel.
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = "Excel"; // Default file name
+                dlg.DefaultExt = ".xlsx"; // Default file extension
+                dlg.Filter = "Text documents (.xlsx)|*.xlsx"; // Filter files by extension
 
-            //    // Show save file dialog box
-            //    bool? result = dlg.ShowDialog();
+                // Show save file dialog box
+                bool? result = dlg.ShowDialog();
 
-            //    // Process save file dialog box results
-            //    if (result == true)
-            //    {
-            //        // Save document
-            //        workBook.SaveAs(dlg.FileName);
-            //    }
-            //}
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    workBook.SaveAs(dlg.FileName);
+                }
+            }
         }
     }
 

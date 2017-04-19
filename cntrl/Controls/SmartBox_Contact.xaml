@@ -27,6 +27,7 @@
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.SelectAllOnFocus="True"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}"
+                 VerticalContentAlignment="Center"
                  KeyUp="StartSearch" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">

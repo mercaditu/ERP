@@ -74,11 +74,8 @@ namespace Cognitivo.Product
 
         private void BindItemMovement()
         {
-            item_inventory item_inventory = null;
-            app_location app_location = null;
-
-            item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
-            app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
+            app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
 
             if (app_location != null && item_inventory != null)
             {
@@ -86,54 +83,65 @@ namespace Cognitivo.Product
                 {
                     List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).Include(y => y.item).ToList(); //.Select(x=>x.id_item_product).ToList();
                     Class.StockCalculations Stock = new Class.StockCalculations();
-                    List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
 
+                    List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
+                    List<Class.StockList> BatchList = Stock.ByLocation_BatchCode(app_location.id_location, item_inventory.trans_date).Where(x => x.Quantity > 0).ToList();
+
+                    ///List through the entire product list.
                     foreach (item_product item_product in item_productLIST.OrderBy(x => x.item.name))
                     {
                         int i = item_product.id_item_product;
-
-                        if (item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).Any())
+                        
+                        //If Product Can Expire property is set to true, then we should loop through each Batch Code with a positive Balance.
+                        if (item_product.can_expire && BatchList.Where(x => x.ProductID == i).Count() > 0)
                         {
-                            item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i).FirstOrDefault();
-                            if (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null)
+                            foreach (var Batch in BatchList.Where(x => x.ProductID == i).OrderBy(x => x.ExpiryDate))
                             {
-                                item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity;
-                                item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost;
-                            }
-                            else
-                            {
-                                item_inventory_detail.value_system = 0;
-                                item_inventory_detail.unit_value = 0;
+                                item_inventory_detail item_inventory_detail = new item_inventory_detail()
+                                {
+                                    value_system = Batch.Quantity,
+                                    unit_value = Batch.Cost,
+                                    batch_code = Batch.BatchCode,
+                                    expire_date = Batch.ExpiryDate,
+                                    movement_id = Batch.MovementID, // batch.movementid
+                                    State = EntityState.Added,
+                                    item_product = item_product,
+                                    id_item_product = i,
+                                    app_location = app_location,
+                                    id_location = app_location.id_location,
+                                    timestamp = DateTime.Now,
+                                };
+
+                                item_inventory.item_inventory_detail.Add(item_inventory_detail);
                             }
                         }
                         else
                         {
                             item_inventory_detail item_inventory_detail = new item_inventory_detail();
-                            item_inventory_detail.State = EntityState.Added;
-                            item_inventory_detail.item_product = item_product;
-                            item_inventory_detail.id_item_product = i;
-                            item_inventory_detail.app_location = app_location;
-                            item_inventory_detail.id_location = app_location.id_location;
-                            item_inventory_detail.timestamp = DateTime.Now;
 
-                            if (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null)
+                            item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
+                            item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0;
+                            
+                            if (item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).Any())
                             {
-                                item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity;
-                                item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost;
+                                item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i).FirstOrDefault();
                             }
                             else
                             {
-                                item_inventory_detail.value_system = 0;
-                                item_inventory_detail.unit_value = 0;
-                            }
+                                item_inventory_detail.State = EntityState.Added;
+                                item_inventory_detail.item_product = item_product;
+                                item_inventory_detail.id_item_product = i;
+                                item_inventory_detail.app_location = app_location;
+                                item_inventory_detail.id_location = app_location.id_location;
+                                item_inventory_detail.timestamp = DateTime.Now;
 
-                            if (CurrentSession.Get_Currency_Default_Rate() != null)
-                            {
-                                item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+                                if (CurrentSession.Get_Currency_Default_Rate() != null)
+                                { item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx; }
+
+                                item_inventory_detail.item_inventory = item_inventory;
+                                item_inventory_detail.id_inventory = item_inventory.id_inventory;
+                                item_inventory.item_inventory_detail.Add(item_inventory_detail);
                             }
-                            item_inventory_detail.item_inventory = item_inventory;
-                            item_inventory_detail.id_inventory = item_inventory.id_inventory;
-                            item_inventory.item_inventory_detail.Add(item_inventory_detail);
                         }
                     }
                 }
@@ -195,9 +203,6 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
-            item_inventory.id_branch = (int)cbxBranch.SelectedValue;
-
             if (InventoryDB.Approve())
             {
                 toolBar.msgApproved(InventoryDB.NumberOfRecords);

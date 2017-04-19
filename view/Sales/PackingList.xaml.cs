@@ -258,6 +258,7 @@ namespace Cognitivo.Sales
                         sales_packing_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
                         sales_packing_detail.id_item = sales_order_detail.id_item;
                         sales_packing_detail.app_location = PackingListDB.app_location.Where(x => x.id_branch == sales_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
+                        sales_packing_detail.id_location = PackingListDB.app_location.Where(x => x.id_branch == sales_packing.id_branch && x.is_active && x.is_default).FirstOrDefault().id_location;
                         sales_packing_detail.item = sales_order_detail.item;
                         sales_packing_detail.user_verified = false;
                         sales_packing_detail.id_movement = sales_order_detail.movement_id;
@@ -347,7 +348,9 @@ namespace Cognitivo.Sales
                         };
                         _sales_packing_detail.sales_packing_relation.Add(sales_packing_relation);
                     }
+                    _sales_packing_detail.id_sales_order_detail = packingdetail.id_sales_order_detail;
                 }
+
                 if (item_movement != null)
                 {
                     _sales_packing_detail.batch_code = item_movement.code;

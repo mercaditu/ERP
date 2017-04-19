@@ -119,7 +119,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Adjust}" Height="39" VerticalAlignment="Top">
-                    <StackPanel Background="WhiteSmoke" IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">
+                    <StackPanel Background="WhiteSmoke"> <!--IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">-->
                         <Grid Margin="5">
                             <Label Content="{lex:Loc Adjust}" />
                             <Button Content="Open Drawer" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right" />

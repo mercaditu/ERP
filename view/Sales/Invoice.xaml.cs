@@ -579,6 +579,11 @@ namespace Cognitivo.Sales
                     sales_packing_relation.sales_packing_detail = _sales_packing_detail;
                     sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
                     sales_invoice_detail.id_location = _sales_packing_detail.id_location;
+                    if (_sales_packing_detail.expire_date != null || !string.IsNullOrEmpty(_sales_packing_detail.batch_code))
+                    {
+                        sales_invoice_detail.expire_date = _sales_packing_detail.expire_date;
+                        sales_invoice_detail.batch_code = _sales_packing_detail.batch_code;
+                    }
                     //if SalesOrder Exists, use it for Price and VAT.
                     if (sales_order_detail != null)
                     {
@@ -586,7 +591,7 @@ namespace Cognitivo.Sales
                         sales_invoice_detail.Contact = SalesInvoiceDB.contacts.Find(sbxContact.ContactID);// sbxContact.Contact;
                         sales_invoice_detail.item = _sales_packing_detail.item;
                         sales_invoice_detail.id_item = _sales_packing_detail.id_item;
-                        sales_invoice_detail.quantity = _sales_packing_detail.quantity;
+                        sales_invoice_detail.quantity = Convert.ToDecimal(_sales_packing_detail.verified_quantity);
                         sales_invoice_detail.id_vat_group = sales_order_detail.id_vat_group;
                         sales_invoice_detail.State = EntityState.Added;
                         sales_invoice_detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;

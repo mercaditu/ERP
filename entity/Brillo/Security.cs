@@ -62,7 +62,7 @@
                         {
                             if (CurrentSession.Security_role_privilageList.Where(x => x.id_privilage == privilage.id_privilage).FirstOrDefault() != null)
                             {
-                                return CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage).FirstOrDefault().has_privilage;
+                                return CurrentSession.Security_role_privilageList.Where(x => x.id_privilage == privilage.id_privilage).FirstOrDefault().has_privilage;
                             }
 
                         }

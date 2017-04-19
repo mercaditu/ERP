@@ -43,7 +43,7 @@
                     <DataGridTextColumn Binding="{Binding amount, StringFormat={}{0:N2}}" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True" />
                     <DataGridTextColumn Binding="{Binding amountCounted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                         ElementStyle="{StaticResource RightAlignStyle}" Header="Counted Amount" Width="*" />
-                    <DataGridTextColumn Binding="{Binding Currencyfxname}" Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding Currencyfxnameorigin}" Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Margin="5">

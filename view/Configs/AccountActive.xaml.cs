@@ -158,7 +158,7 @@ namespace Cognitivo.Configs
                                     && x.id_payment_type == payment_type.id_payment_type)
                                 .Sum(x => x.credit - x.debit),
                                 Currencyfxnameorigin = app_currency.name,
-                                id_currencyfxorigin = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx
+                                id_currencyfxorigin = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault()!=null? db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx:0
                             };
                             listOpenAmt.Add(clsTransferAmount);
                         }

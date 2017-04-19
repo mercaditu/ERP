@@ -13,7 +13,7 @@
                   SelectedValuePath="id_currency" DisplayMemberPath="name"
                   SelectedValue="{Binding id_currency, ElementName=ucCurrency,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=False,ValidatesOnNotifyDataErrors=False, ValidatesOnDataErrors=False}" SelectionChanged="cbCurrency_SelectionChanged" />
         <TextBox Name="lblExchangeValue" Style="{StaticResource TextToLabelStyle}"
-                 VerticalAlignment="Center" LostFocus="lblExchangeValue_LostFocus" Margin="0,0,26,0"
+                 HorizontalAlignment="Right" VerticalAlignment="Center" LostFocus="lblExchangeValue_LostFocus" Margin="0,0,26,0"
                  Text="{Binding Rate_Current, ElementName=ucCurrency, Mode=TwoWay,
                                 UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" />
     </Grid>

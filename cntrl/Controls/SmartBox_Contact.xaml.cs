@@ -443,5 +443,10 @@ namespace cntrl.Controls
         {
             LoadData();
         }
+
+        private void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
+            popContactInfo.IsOpen = false;
+        }
     }
 }

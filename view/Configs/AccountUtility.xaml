@@ -203,14 +203,14 @@
 								  ItemsSource="{Binding Source={StaticResource amount_transferViewSource}}"
 								  RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
-                                <DataGridComboBoxColumn Header="Origin Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountOriginViewSource}}"
+                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Origin}" Width="*" ItemsSource="{Binding Source={StaticResource app_accountOriginViewSource}}"
                                                         TextBinding="{Binding AccountOrigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridComboBoxColumn x:Name="curColumn" Header="Currency" Width="*"
 														ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
 														DisplayMemberPath="name" SelectedValuePath="id_currency"
 														SelectedValueBinding="{Binding id_currencyorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridComboBoxColumn Header="Destination Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"
+                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Destination}" Width="*" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"
                                                         TextBinding="{Binding AccountDest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridComboBoxColumn Header="Currency" Width="*"

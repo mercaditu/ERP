@@ -102,11 +102,15 @@
         <Popup x:Name="popContactInfo" IsOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="Gold" BorderThickness="2">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="i" VerticalAlignment="Center" Foreground="White" FontFamily="/cntrl;component/Resources/#cognitivo"/>
-                        <Label Content="{lex:Loc Contact}" FontWeight="Medium" Foreground="White"/>
-                    </StackPanel>
-
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="i" VerticalAlignment="Center" Foreground="White" FontFamily="/cntrl;component/Resources/#cognitivo"/>
+                            <Label Content="{lex:Loc Contact}" FontWeight="Medium" Foreground="White"/>
+                        </StackPanel>
+                        <Label Content="c" VerticalAlignment="Center" Margin="5"
+					           HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
+					           FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                    </Grid>
                     <Grid>
                         <Grid.Background>
                             <SolidColorBrush Color="White" Opacity="0.90"/>
@@ -116,24 +120,31 @@
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
                         <pref:ImageViewer Width="128" ReferenceID="{Binding ContactID}"/>
-                        <StackPanel Margin="8" Grid.Column="1" Width="256">
-                            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox x:Name="tbxName" Background="WhiteSmoke" BorderThickness="0" />
-                            <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox x:Name="tbxGovernmentID" Background="WhiteSmoke" BorderThickness="0"/>
-                            <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox x:Name="tbxAddress" Background="WhiteSmoke" BorderThickness="0"/>
-                            <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox x:Name="tbxTelephone" Background="WhiteSmoke" BorderThickness="0"/>
-                            <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}" FontSize="8"/>
-                            <TextBox x:Name="tbxEmail" Background="WhiteSmoke" BorderThickness="0"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}" FontSize="8"/>
-                                <Label x:Name="tbxPriceList" Style="{StaticResource input_label}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" FontSize="8"/>
-                                <Label x:Name="tbxContactRole" Style="{StaticResource input_label}"/>
+                        <StackPanel Margin="8" Grid.Column="1">
+                            <TextBox x:Name="tbxName" 
+                                         metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Name}" 
+                                         Background="WhiteSmoke" BorderThickness="0" Width="200" Margin="4"/>
+                            <TextBox x:Name="tbxGovernmentID" 
+                                         metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc GovernmentID}" 
+                                         Background="WhiteSmoke" BorderThickness="0" Width="200" Margin="4"/>
+                            <TextBox x:Name="tbxAddress" 
+                                         metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Address}" 
+                                         Background="WhiteSmoke" BorderThickness="0" Width="200" Margin="4"/>
+                            <TextBox x:Name="tbxTelephone" 
+                                         metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Telephone}" 
+                                         Background="WhiteSmoke" BorderThickness="0" Width="200" Margin="4"/>
+                            <TextBox x:Name="tbxEmail"
+                                         metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Email}" 
+                                         Background="WhiteSmoke" BorderThickness="0" Width="200" Margin="4"/>
+                            <StackPanel Margin="4,0" Orientation="Horizontal">
+                                <StackPanel>
+                                    <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}" FontSize="8"/>
+                                    <Label x:Name="tbxPriceList" Style="{StaticResource input_label}"/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" FontSize="8"/>
+                                    <Label x:Name="tbxContactRole" Style="{StaticResource input_label}"/>
+                                </StackPanel>
                             </StackPanel>
                             <Button Click="SaveContact_Click" Content="{lex:Loc Save}" Margin="4" Width="Auto"/>
                         </StackPanel>

@@ -17,7 +17,6 @@
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
 	  Title="{lex:Loc PointOfSale}" Loaded="Page_Loaded" KeyDown="Page_KeyDown">
     <Page.Resources>
-
         <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
@@ -130,34 +129,12 @@
 							                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" />
                             <Label Content="{lex:Loc Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White" />
                         </StackPanel>
-                        <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="64">
+                        <Viewbox StretchDirection="Both" Stretch="Uniform" Width="256">
                             <cntrl:SmartBox_Contact x:Name="sbxContact" can_New="True"
 							                                HorizontalAlignment="Center"
 							                                Get_Customers="True"
-							                                Select="sbxContact_Select" />
+							                                Select="sbxContact_Select"/>
                         </Viewbox>
-                        
-                        <!--<Viewbox Margin="16" VerticalAlignment="Top" HorizontalAlignment="Center" StretchDirection="Both" Stretch="Uniform" Height="45">
-                            <Grid Cursor="Hand" MouseDown="btnNewCustomer_MouseDown" TouchDown="btnNewCustomer_MouseDown" ToolTip="{lex:Loc New}">
-                                <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                    <Border.Background>
-                                        <SolidColorBrush Color="#FF004867" Opacity="0.32" />
-                                    </Border.Background>
-                                    <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                                        <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke"><Run Text="{lex:Loc Create}" /><Run Text=" " /><Run Text="{lex:Loc Customer}" /></TextBlock>
-                                    </StackPanel>
-                                </Border>
-                                <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
-								                BorderBrush="White" BorderThickness="1">
-                                    <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-									                VerticalAlignment="Center" HorizontalAlignment="Center"
-									                Foreground="White" />
-                                </Border>
-                            </Grid>
-                        </Viewbox>
-                        <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Mouse" Visibility="Visible">
-                            <StackPanel x:Name="stackCustomer" />
-                        </Popup>-->
                     </StackPanel>
                 </TabItem>
                 <!-- SALES -->

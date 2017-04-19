@@ -12,6 +12,7 @@ namespace Cognitivo.Class
         public string Brand { get; set; }
         public int ProductID { get; set; }
         public int LocationID { get; set; }
+        public int? MovementID { get; set; }
         public decimal Quantity { get; set; }
         public decimal Cost { get; set; }
         public string Measurement { get; set; }
@@ -33,7 +34,8 @@ select loc.id_location as LocationID, loc.name as Location, item.code as ItemCod
                              (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
                              brand.name as Brand,
                                  mov.code as BatchCode,
-                                 mov.expire_date as ExpiryDate
+                                 mov.expire_date as ExpiryDate,
+mov.id_movement as MovementID
                              from item_movement as mov
                              inner join app_location as loc on mov.id_location = loc.id_location
                              inner join app_branch as branch on loc.id_branch = branch.id_branch
@@ -48,16 +50,51 @@ select loc.id_location as LocationID, loc.name as Location, item.code as ItemCod
             return GenerateList(Generate.DataTable(query));
         }
 
+        public List<StockList> ByLocation_BatchCode(int LocationID, DateTime TransDate)
+        {
+            string query = @" 
+                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                select 
+                                ip.id_item_product as ProductID,
+                                i.name as ItemName, 
+                                i.code ItemCode,
+                                im.id_location as LocationID,
+                                l.name as Location,
+                                im.trans_date as Date,
+                                im.code as BatchCode,
+                                im.expire_date as ExpiryDate,
+                                im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
+                                measure.name as Measurement,
+im.id_movement as MovementID,
+                                sum(imv.unit_value) as Cost
+
+                                from item_movement as im
+
+                                inner join item_product as ip on im.id_item_product = ip.id_item_product
+                                inner join item_movement_value as imv on im.id_movement = imv.id_movement
+                                inner join items as i on ip.id_item = i.id_item
+                                inner join app_location as l on im.id_location = l.id_location
+                                left join app_measurement as measure on i.id_measurement = measure.id_measurement
+                                left join item_movement as imc on im.id_movement = imc.parent_id_movement
+                                where im.id_company = {0} and im.id_location = {1} and im.trans_date <= '{2}' and ip.can_expire
+                                group by im.id_movement
+                                order by i.name";
+
+            query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
+            return GenerateList(Generate.DataTable(query));
+        }
+
         public List<StockList> ByBranchLocation(int LocationID, DateTime TransDate)
         {
             string query = @" 
- set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
+                                 set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                 select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
                                  prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement,
                                  (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
                                  mov.code as BatchCode,
-                                 mov.expire_date as ExpiryDate
+                                 mov.expire_date as ExpiryDate,
+mov.id_movement as MovementID
                                  from item_movement as mov
                                  inner join app_location as loc on mov.id_location = loc.id_location
                                  inner join app_branch as branch on loc.id_branch = branch.id_branch
@@ -77,36 +114,27 @@ select loc.id_location as LocationID, loc.name as Location, item.code as ItemCod
             List<StockList> StockList = new List<StockList>();
             foreach (DataRow DataRow in dt.Rows)
             {
-                StockList Stock = new StockList();
-                Stock.ItemCode = DataRow["ItemCode"].ToString();
-                Stock.ItemName = DataRow["ItemName"].ToString();
-                Stock.Location = DataRow["Location"].ToString();
-                Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
-                Stock.Measurement = DataRow["Measurement"].ToString();
-                Stock.ProductID = Convert.ToInt16(DataRow["ProductID"]);
-                Stock.BatchCode = DataRow["BatchCode"].ToString();
+                StockList Stock = new StockList()
+                {
+                    ItemCode = DataRow["ItemCode"].ToString(),
+                    ItemName = DataRow["ItemName"].ToString(),
+                    Location = DataRow["Location"].ToString(),
+                    LocationID = Convert.ToInt16(DataRow["LocationID"]),
+                    Measurement = DataRow["Measurement"].ToString(),
+                    ProductID = Convert.ToInt16(DataRow["ProductID"]),
+                    BatchCode = DataRow["BatchCode"].ToString(),
+                    Quantity = !DataRow.IsNull("Quantity") ? Convert.ToDecimal(DataRow["Quantity"]) : 0,
+                    Cost = !DataRow.IsNull("Cost") ? Convert.ToDecimal(DataRow["Cost"]) : 0
+                };
 
                 if (!DataRow.IsNull("ExpiryDate"))
                 {
                     Stock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"]);
                 }
 
-                if (!DataRow.IsNull("Quantity"))
+                if (!DataRow.IsNull("MovementID"))
                 {
-                    Stock.Quantity = Convert.ToDecimal(DataRow["Quantity"]);
-                }
-                else
-                {
-                    Stock.Quantity = 0;
-                }
-
-                if (!DataRow.IsNull("Cost"))
-                {
-                    Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
-                }
-                else
-                {
-                    Stock.Cost = 0;
+                    Stock.MovementID = Convert.ToInt16(DataRow["MovementID"]);
                 }
 
                 StockList.Add(Stock);

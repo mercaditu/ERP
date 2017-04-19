@@ -21,8 +21,8 @@ namespace Cognitivo.Security
             security_roleViewSource,
             security_rolesecurity_role_privilageViewSource;
 
-        private entity.CurrentSession.Versions CurrentVersion;
-        private entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+        private CurrentSession.Versions CurrentVersion;
+        private Licence Licence = new Licence();
 
         public UserRole()
         {
@@ -33,16 +33,17 @@ namespace Cognitivo.Security
         {
             security_roleViewSource = (CollectionViewSource)this.FindResource("security_roleViewSource");
 
-            await UserRoleDB.security_role.Where(a =>
-                                            a.id_company == CurrentSession.Id_Company)
-                                            .OrderBy(a => a.name).Include(y => y.app_department).Include(y => y.security_role_privilage)
+            await UserRoleDB.security_role.Where(a => a.id_company == CurrentSession.Id_Company)
+                                            .OrderBy(a => a.name)
+                                            .Include(y => y.app_department)
+                                            .Include(y => y.security_role_privilage)
                                             .LoadAsync();
             security_roleViewSource.Source = UserRoleDB.security_role.Local;
 
-            security_rolesecurity_curdViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_curdViewSource");
-            security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
+            security_rolesecurity_curdViewSource = FindResource("security_rolesecurity_curdViewSource") as CollectionViewSource;
+            security_rolesecurity_role_privilageViewSource = FindResource("security_rolesecurity_role_privilageViewSource") as CollectionViewSource;
 
-            CollectionViewSource app_departmentViewSource = (CollectionViewSource)this.FindResource("app_departmentViewSource");
+            CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
             app_departmentViewSource.Source = await UserRoleDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
 
             add_Privallge();
@@ -62,31 +63,22 @@ namespace Cognitivo.Security
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
-            try
+            if (!string.IsNullOrEmpty(query))
             {
-                if (!string.IsNullOrEmpty(query))
+                security_roleViewSource.View.Filter = i =>
                 {
-                    security_roleViewSource.View.Filter = i =>
+                    security_role security_role = i as security_role;
+                    if (security_role.name.ToLower().Contains(query.ToLower()))
                     {
-                        security_role security_role = i as security_role;
-                        if (security_role.name.ToLower().Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    security_roleViewSource.View.Filter = null;
-                }
+                        return true;
+                    }
+
+                    return false;
+                };
             }
-            catch (Exception ex)
+            else
             {
-                toolBar.msgWarning(ex.Message);
+                security_roleViewSource.View.Filter = null;
             }
         }
 
@@ -100,7 +92,7 @@ namespace Cognitivo.Security
                     CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
                     security_role.Version = Version;
 
-                    List<security_role> security_roleList = UserRoleDB.security_role.ToList();
+                    List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
                     int UserCount = 0;
                     UserCount = security_roleList.Where(x => x.Version == Version).Sum(x => x.security_user.Count);
@@ -118,7 +110,7 @@ namespace Cognitivo.Security
                             { //No space Avaiable
                                 MessageBox.Show("You have surpassed your User Limit of " + UserLimit + " for " + security_role.Version.ToString() + " Plan. /n" +
                                     "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
-                                    , "Cognitivo");
+                                    , "Cognitivo ERP");
                                 security_role.Version = CurrentSession.Versions.Lite;
                             }
                         }
@@ -130,7 +122,7 @@ namespace Cognitivo.Security
                             {
                                 MessageBox.Show("Done. Since you do not have this plan set up, we have gone ahead and registered the " + security_role.Version.ToString() + " Plan on your behalf. /n" +
                                            "You will have 15 days trial period, once finished, you will be diverted to the free account."
-                                           , "Cognitivo");
+                                           , "Cognitivo ERP");
                             }
                         }
                     }
@@ -147,16 +139,16 @@ namespace Cognitivo.Security
             }
         }
 
-        private void toolBar_btnDelete_Click(object sender)
-        {
-        }
-
         private void toolBar_btnCancel_Click(object sender)
         {
-            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
-            security_role.IsSelected = false;
-            security_role.State = EntityState.Unchanged;
-            UserRoleDB.Entry(security_role).State = EntityState.Unchanged;
+            foreach (security_user security_role in UserRoleDB.security_user.Local.Where(x => x.IsSelected))
+            {
+                security_role.IsSelected = false;
+                security_role.State = EntityState.Unchanged;
+                UserRoleDB.Entry(security_role).State = EntityState.Unchanged;
+            }
+
+            UserRoleDB.SaveChanges();
         }
 
         private void New_Click(object sender)
@@ -190,7 +182,7 @@ namespace Cognitivo.Security
             }
             else
             {
-                toolBar.msgWarning("Please Select a record");
+                toolBar.msgWarning(Localize.PleaseSelect);
             }
         }
 
@@ -198,7 +190,7 @@ namespace Cognitivo.Security
         {
             List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<Privilage.Privilages> Privilages = Enum.GetValues(typeof(Privilage.Privilages)).Cast<Privilage.Privilages>().ToList();
-            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+            security_role security_role = security_roleDataGrid.SelectedItem as security_role;
 
             foreach (entity.App.Names Names in Application)
             {
@@ -210,16 +202,21 @@ namespace Cognitivo.Security
                         {
                             if ((int)Privilage >= 3)
                             {
-                                security_privilage security_privilage = new security_privilage();
-                                security_privilage.id_application = entity.App.Names.ProductionExecution;
-                                security_privilage.name = Privilage;
+                                security_privilage security_privilage = new security_privilage()
+                                {
+                                    id_application = entity.App.Names.ProductionExecution,
+                                    name = Privilage
+                                };
+
                                 UserRoleDB.security_privilage.Add(security_privilage);
                             }
                             else
                             {
-                                security_privilage security_privilage = new security_privilage();
-                                security_privilage.id_application = Names;
-                                security_privilage.name = Privilage;
+                                security_privilage security_privilage = new security_privilage()
+                                {
+                                    id_application = Names,
+                                    name = Privilage
+                                };
                                 UserRoleDB.security_privilage.Add(security_privilage);
                             }
                         }
@@ -237,12 +234,13 @@ namespace Cognitivo.Security
                 {
                     if (UserRoleDB.security_role_privilage.Where(x => x.id_privilage == security_privilage.id_privilage && x.id_role == security_role.id_role).Count() == 0)
                     {
-                        security_role_privilage _security_role_privilage = new security_role_privilage();
-                        _security_role_privilage.id_privilage = security_privilage.id_privilage;
-                        _security_role_privilage.security_privilage = security_privilage;
-                        _security_role_privilage.id_role = security_role.id_role;
-                        _security_role_privilage.security_role = security_role;
-
+                        security_role_privilage _security_role_privilage = new security_role_privilage()
+                        {
+                            id_privilage = security_privilage.id_privilage,
+                            security_privilage = security_privilage,
+                            id_role = security_role.id_role,
+                            security_role = security_role
+                        };
                         UserRoleDB.security_role_privilage.Add(_security_role_privilage);
                     }
                 }
@@ -251,11 +249,9 @@ namespace Cognitivo.Security
 
         private void btnChange(object sender, RoutedEventArgs e)
         {
-            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
-
-            if (security_role != null)
+            if ((security_role)security_roleDataGrid.SelectedItem != null)
             {
-                add_MissingRecords(security_role);
+                add_MissingRecords((security_role)security_roleDataGrid.SelectedItem);
             }
         }
 
@@ -270,14 +266,16 @@ namespace Cognitivo.Security
                 List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
                 foreach (entity.App.Names AppName in Application)
                 {
-                    security_crud _security_curd = new security_crud();
-                    _security_curd.id_application = AppName;
-                    _security_curd.can_update = false;
-                    _security_curd.can_read = false;
-                    _security_curd.can_delete = false;
-                    _security_curd.can_create = false;
-                    _security_curd.can_approve = false;
-                    _security_curd.can_annul = false;
+                    security_crud _security_curd = new security_crud()
+                    {
+                        id_application = AppName,
+                        can_update = false,
+                        can_read = false,
+                        can_delete = false,
+                        can_create = false,
+                        can_approve = false,
+                        can_annul = false
+                    };
                     security_role.security_curd.Add(_security_curd);
                 }
             }
@@ -320,14 +318,16 @@ namespace Cognitivo.Security
                         security_crud _rolesecurity_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
                         if (_rolesecurity_curd == null)
                         {
-                            security_crud _security_curd = new security_crud();
-                            _security_curd.id_application = AppName;
-                            _security_curd.can_update = false;
-                            _security_curd.can_read = false;
-                            _security_curd.can_delete = false;
-                            _security_curd.can_create = false;
-                            _security_curd.can_approve = false;
-                            _security_curd.can_annul = false;
+                            security_crud _security_curd = new security_crud()
+                            {
+                                id_application = AppName,
+                                can_update = false,
+                                can_read = false,
+                                can_delete = false,
+                                can_create = false,
+                                can_approve = false,
+                                can_annul = false
+                            };
                             security_role.security_curd.Add(_security_curd);
                         }
                     }
@@ -365,9 +365,7 @@ namespace Cognitivo.Security
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            security_role security_role = security_roleViewSource.View.CurrentItem as security_role;
-
-            if (security_role != null)
+            if (security_roleViewSource.View.CurrentItem is security_role security_role)
             {
                 if (security_rolesecurity_curdViewSource != null)
                 {
@@ -390,8 +388,7 @@ namespace Cognitivo.Security
 
         private void security_roleDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            security_role security_role = security_roleViewSource.View.CurrentItem as security_role;
-            if (security_role != null)
+            if (security_roleViewSource.View.CurrentItem is security_role security_role)
             {
                 cbxVersion.SelectedItem = security_role.Version;
                 CurrentVersion = security_role.Version;
@@ -402,7 +399,8 @@ namespace Cognitivo.Security
                     versions versions = Licence.CompanyLicence.versions.Where(x => x.version == security_role.Version).FirstOrDefault();
 
                     if (versions != null)
-                    { //Exists = Yes.
+                    {
+                        //Exists = Yes.
                         lblVersionInternet.Content = versions.web_user_count;
                     }
                 }

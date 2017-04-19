@@ -174,7 +174,6 @@
 					   btnSearch_Click="toolBar_btnSearch_Click"
 					   btnNew_Click="New_Click"
 					   btnSave_Click="Save_Click"
-					   btnDelete_Click="toolBar_btnDelete_Click"
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
 					   State="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

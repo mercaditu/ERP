@@ -198,7 +198,7 @@ namespace Cognitivo.Configs
                     app_account_detail Origin_AccountTransaction = new app_account_detail()
                     {
                         id_account = (int)Transfer.id_accountorigin,
-                        id_currencyfx = Transfer.Originfx,
+                        id_currencyfx = Originfx,
                         id_payment_type = Transfer.id_payment_type,
                         credit = 0,
                         debit = Transfer.amount,

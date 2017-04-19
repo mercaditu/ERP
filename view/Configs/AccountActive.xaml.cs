@@ -76,7 +76,6 @@ namespace Cognitivo.Configs
                      .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
                      .Select(s => new
                      {
-                         id_currency = s.Max(ad => ad.app_currencyfx.id_currency),
                          id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
                          id_paymenttype = s.Max(ad => ad.id_payment_type),
                          cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
@@ -86,7 +85,6 @@ namespace Cognitivo.Configs
 
                 var app_account_detailFinalList = app_account_detailList.GroupBy(ad => new { ad.cur, ad.payType }).Select(s => new
                 {
-                    id_currency = s.Max(x => x.id_currency),
                     id_currencyfx = s.Max(x => x.id_currencyfx),
                     id_paymenttype = s.Max(x => x.id_paymenttype),
                     cur = s.Max(ad => ad.cur),
@@ -105,13 +103,13 @@ namespace Cognitivo.Configs
                         clsTransferAmount.amount = item.amount;
                         clsTransferAmount.Currencyfxnameorigin = item.cur;
                         clsTransferAmount.id_payment_type = item.id_paymenttype;
-                        clsTransferAmount.id_currencyorigin = item.id_currency;
+                        clsTransferAmount.id_currencyfxorigin = item.id_currencyfx;
                         listOpenAmt.Add(clsTransferAmount);
                     }
 
                     foreach (app_currencyfx app_currencyfx in db.app_currencyfx.Where(x => x.is_active).ToList())
                     {
-                        if (listOpenAmt.Where(x => x.id_currencydest == app_currencyfx.id_currency).FirstOrDefault() == null)
+                        if (listOpenAmt.Where(x => x.id_currencyfxdest == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
                         {
                             foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
                             {
@@ -120,7 +118,7 @@ namespace Cognitivo.Configs
                                 clsTransferAmount.amount = 0;
                                 clsTransferAmount.Currencyfxnameorigin = app_currencyfx.app_currency.name;
                                 clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-                                clsTransferAmount.id_currencyorigin = app_currencyfx.id_currency;
+                                clsTransferAmount.id_currencyfxorigin = app_currencyfx.id_currencyfx;
                                 listOpenAmt.Add(clsTransferAmount);
                             }
                         }
@@ -128,14 +126,14 @@ namespace Cognitivo.Configs
                         {
                             foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
                             {
-                                if (listOpenAmt.Where(x => x.id_payment_type == payment_type.id_payment_type && x.id_currencyorigin == app_currencyfx.id_currency).FirstOrDefault() == null)
+                                if (listOpenAmt.Where(x => x.id_payment_type == payment_type.id_payment_type && x.id_currencyfxorigin == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
                                 {
                                     Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
                                     clsTransferAmount.PaymentTypeName = payment_type.name;
                                     clsTransferAmount.amount = 0;
                                     clsTransferAmount.Currencyfxnameorigin = app_currencyfx.app_currency.name;
                                     clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-                                    clsTransferAmount.id_currencyorigin = app_currencyfx.id_currencyfx;
+                                    clsTransferAmount.id_currencyfxorigin = app_currencyfx.id_currencyfx;
                                     listOpenAmt.Add(clsTransferAmount);
                                 }
                             }
@@ -160,7 +158,7 @@ namespace Cognitivo.Configs
                                     && x.id_payment_type == payment_type.id_payment_type)
                                 .Sum(x => x.credit - x.debit),
                                 Currencyfxnameorigin = app_currency.name,
-                                id_currencyorigin = app_currency.id_currency
+                                id_currencyfxorigin = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault() != null ? db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx : 0
                             };
                             listOpenAmt.Add(clsTransferAmount);
                         }
@@ -193,15 +191,13 @@ namespace Cognitivo.Configs
                     ///- Keep Account Active. (Previously we used to close Account, now Session handles that.)
 
                     //Loop through each account and create an Account Detail for the Opening Balance.
-                   
                     foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
                     {
-                        int currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == counted_account_detail.id_currencyorigin).FirstOrDefault().id_currencyfx;
                         app_account_detail app_account_detail = new app_account_detail()
                         {
                             id_session = app_account_session.id_session,
                             id_account = app_account_session.id_account,
-                            id_currencyfx = currencyfx,
+                            id_currencyfx = counted_account_detail.id_currencyfxorigin,
                             id_payment_type = counted_account_detail.id_payment_type,
                             debit = counted_account_detail.amountCounted,
                             comment = "Closing Balance",
@@ -249,10 +245,9 @@ namespace Cognitivo.Configs
                     //Loop through each account and create an Account Detail for the Closing Balance.
                     foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
                     {
-                        int currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == counted_account_detail.id_currencyorigin).FirstOrDefault().id_currencyfx;
                         app_account_detail app_account_detail = new global::entity.app_account_detail();
                         app_account_detail.id_account = app_account.id_account;
-                        app_account_detail.id_currencyfx = currencyfx;
+                        app_account_detail.id_currencyfx = counted_account_detail.id_currencyfxorigin;
                         app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
                         app_account_detail.credit = counted_account_detail.amountCounted;
                         app_account_detail.comment = "Opening Balance";

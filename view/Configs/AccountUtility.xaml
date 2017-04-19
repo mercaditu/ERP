@@ -140,8 +140,8 @@
                                 <DataGridTextColumn Binding="{Binding debit, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTextColumn Binding="{Binding credit, UpdateSourceTrigger=PropertyChanged}" Header="credit" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="*"
-														ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
-														DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
+														ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
+														DisplayMemberPath="name" SelectedValuePath="id_currencyfx"
 														SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             </DataGrid.Columns>
                         </DataGrid>

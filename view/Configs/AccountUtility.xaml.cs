@@ -210,22 +210,24 @@ namespace Cognitivo.Configs
                     {
                         Origin_AccountTransaction.id_session = SessionID_Origin;
                     }
+                    app_currencyfx DestinationCurrencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == Transfer.id_currencyfxdest).FirstOrDefault();
 
                     int DestinationRate = 0;
-                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxorigin).FirstOrDefault().id_currency;
+                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == DestinationCurrencyfx.id_currency).FirstOrDefault().id_currency;
 
-                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxdest).FirstOrDefault();
+                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == DestinationCurrencyfx.id_currency).FirstOrDefault();
                     if (app_currencyfx.sell_value != Transfer.FXRate)
                     {
                         using (db _db = new db())
                         {
+                          
                             app_currencyfx fx = new app_currencyfx()
                             {
                                 sell_value = Transfer.FXRate,
                                 buy_value = Transfer.FXRate,
                                 id_company = CurrentSession.Id_Company,
                                 is_active = false,
-                                id_currency = Transfer.id_currencyfxdest
+                                id_currency = DestinationCurrencyfx.id_currency
                             };
                             _db.app_currencyfx.Add(fx);
 

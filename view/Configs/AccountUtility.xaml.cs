@@ -193,11 +193,12 @@ namespace Cognitivo.Configs
 
                 if (Transfer.id_accountorigin != null && Transfer.id_accountdest != null && payment_type != null)
                 {
+                    int Originfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currencyfx;
                     //Set up Origin Data.
                     app_account_detail Origin_AccountTransaction = new app_account_detail()
                     {
                         id_account = (int)Transfer.id_accountorigin,
-                        id_currencyfx = Transfer.id_currencyfxorigin,
+                        id_currencyfx = Transfer.Originfx,
                         id_payment_type = Transfer.id_payment_type,
                         credit = 0,
                         debit = Transfer.amount,
@@ -212,9 +213,10 @@ namespace Cognitivo.Configs
                     }
 
                     int DestinationRate = 0;
-                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxorigin).FirstOrDefault().id_currency;
+                    int DestinationFx;
+                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currency;
 
-                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxdest).FirstOrDefault();
+                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencydest).FirstOrDefault();
                     if (app_currencyfx.sell_value != Transfer.FXRate)
                     {
                         using (db _db = new db())
@@ -226,16 +228,17 @@ namespace Cognitivo.Configs
                                 buy_value = Transfer.FXRate,
                                 id_company = CurrentSession.Id_Company,
                                 is_active = false,
-                                id_currency = Transfer.id_currencyfxdest
+                                id_currency = Transfer.id_currencydest
                             };
                             _db.app_currencyfx.Add(fx);
-
+                            DestinationFx = fx.id_currencyfx;
                             DestinationRate = fx.id_currency;
                         }
                     }
                     else
                     {
                         DestinationRate = app_currencyfx.id_currency;
+                        DestinationFx = app_currencyfx.id_currencyfx;
                     }
 
 
@@ -244,7 +247,7 @@ namespace Cognitivo.Configs
                     app_account_detail Destination_AccountTransaction = new app_account_detail()
                     {
                         id_account = (int)Transfer.id_accountdest,
-                        id_currencyfx = Transfer.id_currencyfxdest,
+                        id_currencyfx = DestinationFx,
                         id_payment_type = Transfer.id_payment_type,
                         credit = Amount_AfterFXExchange,
                         debit = 0,

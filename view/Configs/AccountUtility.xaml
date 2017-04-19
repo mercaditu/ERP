@@ -206,20 +206,21 @@
                                 <DataGridComboBoxColumn Header="Origin Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountOriginViewSource}}"
                                                         TextBinding="{Binding AccountOrigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridComboBoxColumn Header="Destination Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"
-                                                        TextBinding="{Binding AccountDest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridComboBoxColumn x:Name="payTypeCollum" Header="Payment Type" Width="*" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_payment_type" SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn x:Name="amtColumn" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridComboBoxColumn x:Name="curColumn" Header="Currency" Width="*"
 														ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
 														DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
 														SelectedValueBinding="{Binding id_currencyfxorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn Header="Destination Account" Width="*" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"
+                                                        TextBinding="{Binding AccountDest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridComboBoxColumn Header="Currency" Width="*"
 														ItemsSource="{Binding Source={StaticResource app_currencyfxdestViewSource}}"
 														DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
 														SelectedValueBinding="{Binding id_currencyfxdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridComboBoxColumn x:Name="payTypeCollum" Header="Payment Type" Width="*" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
+														DisplayMemberPath="name" SelectedValuePath="id_payment_type" SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridTextColumn x:Name="amtColumn" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Rate}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding FXRate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Margin="5">

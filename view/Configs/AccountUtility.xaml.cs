@@ -28,10 +28,12 @@ namespace Cognitivo.Configs
         #endregion NotifyPropertyChange
 
         private CollectionViewSource app_accountViewSource
-            , app_account_listViewSource,
-            app_accountOriginViewSource, app_currencyfxdestViewSource
+            , app_account_listViewSource
+            , app_accountOriginViewSource
+            , app_currencyfxdestViewSource
             , app_account_detail_adjustViewSource
-            , app_accountapp_account_detailViewSource, app_account_detailViewSource
+            , app_accountapp_account_detailViewSource
+            , app_account_detailViewSource
             , amount_transferViewSource = null;
 
         private List<Class.clsTransferAmount> listTransferAmt = null;
@@ -184,54 +186,91 @@ namespace Cognitivo.Configs
 
         private void btnTransfer_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Class.clsTransferAmount TransferAmount in listTransferAmt)
+            //Run through all Transfer in list.
+            foreach (Class.clsTransferAmount Transfer in listTransferAmt)
             {
-                payment_type payment_type = db.payment_type.Where(x => x.id_payment_type == TransferAmount.id_payment_type).FirstOrDefault();
+                payment_type payment_type = db.payment_type.Where(x => x.id_payment_type == Transfer.id_payment_type).FirstOrDefault();
 
-                if (TransferAmount.id_accountorigin != null && TransferAmount.id_accountdest != null && payment_type != null)
+                if (Transfer.id_accountorigin != null && Transfer.id_accountdest != null && payment_type != null)
                 {
-                    app_account_detail objOriginAcDetail = new app_account_detail();
-                    if (db.app_account_session.Where(x => x.id_account == TransferAmount.id_accountorigin && x.is_active).Any())
+                    //Set up Origin Data.
+                    app_account_detail Origin_AccountTransaction = new app_account_detail()
                     {
-                        objOriginAcDetail.id_session = db.app_account_session.Where(x => x.id_account == TransferAmount.id_accountorigin && x.is_active).Select(y => y.id_session).FirstOrDefault();
+                        id_account = (int)Transfer.id_accountorigin,
+                        id_currencyfx = Transfer.id_currencyfxorigin,
+                        id_payment_type = Transfer.id_payment_type,
+                        credit = 0,
+                        debit = Transfer.amount,
+                        comment = "Transfered to " + Transfer.AccountDest,
+                        trans_date = DateTime.Now
+                    };
+
+                    int SessionID_Origin = db.app_account_session.Where(x => x.id_account == Transfer.id_accountorigin && x.is_active).Select(y => y.id_session).FirstOrDefault();
+                    if (SessionID_Origin > 0)
+                    {
+                        Origin_AccountTransaction.id_session = SessionID_Origin;
                     }
 
-                    objOriginAcDetail.id_account = (int)TransferAmount.id_accountorigin;
-                    objOriginAcDetail.id_currencyfx = TransferAmount.id_currencyfxorigin;
-                    objOriginAcDetail.id_payment_type = TransferAmount.id_payment_type;
-                    objOriginAcDetail.credit = 0;
-                    objOriginAcDetail.debit = TransferAmount.amount;
-                    objOriginAcDetail.comment = "Transfered to " + TransferAmount. AccountDest + ".";
-                    objOriginAcDetail.trans_date = DateTime.Now;
+                    int DestinationRate = 0;
+                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxorigin).FirstOrDefault().id_currency;
 
-                    app_account_detail objDestinationAcDetail = new app_account_detail();
-                    if (db.app_account_session.Where(x => x.id_account == TransferAmount.id_accountdest && x.is_active).Any())
+                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyfxdest).FirstOrDefault();
+                    if (app_currencyfx.sell_value != Transfer.FXRate)
                     {
-                        objDestinationAcDetail.id_session = db.app_account_session.Where(x => x.id_account == TransferAmount.id_accountdest && x.is_active).Select(y => y.id_session).FirstOrDefault();
-                    }
+                        using (db _db = new db())
+                        {
+                            app_currencyfx fx = new app_currencyfx()
+                            {
+                                sell_value = Transfer.FXRate,
+                                buy_value = Transfer.FXRate,
+                                id_company = CurrentSession.Id_Company,
+                                is_active = false,
+                                id_currency = Transfer.id_currencyfxdest
+                            };
+                            _db.app_currencyfx.Add(fx);
 
-                    objDestinationAcDetail.id_account = (int)TransferAmount.id_accountdest;
-                    objDestinationAcDetail.id_currencyfx = TransferAmount.id_currencyfxdest;
-                    objDestinationAcDetail.id_payment_type = TransferAmount.id_payment_type;
-                    objDestinationAcDetail.credit = TransferAmount.amount;
-                    objDestinationAcDetail.debit = 0;
-                    objDestinationAcDetail.comment = "Transfered from " + TransferAmount.AccountOrigin + ".";
-                    objDestinationAcDetail.trans_date = DateTime.Now;
-
-                    bool is_direct = payment_type.is_direct;
-                    if (is_direct)
-                    {
-                        objOriginAcDetail.status = Status.Documents_General.Approved;
-                        objDestinationAcDetail.status = Status.Documents_General.Approved;
+                            DestinationRate = fx.id_currency;
+                        }
                     }
                     else
                     {
-                        objOriginAcDetail.status = Status.Documents_General.Pending;
-                        objDestinationAcDetail.status = Status.Documents_General.Pending;
+                        DestinationRate = app_currencyfx.id_currency;
                     }
 
-                    db.app_account_detail.Add(objOriginAcDetail);
-                    db.app_account_detail.Add(objDestinationAcDetail);
+
+                    decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate, DestinationRate, entity.App.Modules.Sales);
+
+                    app_account_detail Destination_AccountTransaction = new app_account_detail()
+                    {
+                        id_account = (int)Transfer.id_accountdest,
+                        id_currencyfx = Transfer.id_currencyfxdest,
+                        id_payment_type = Transfer.id_payment_type,
+                        credit = Amount_AfterFXExchange,
+                        debit = 0,
+                        comment = "Transfered from " + Transfer.AccountOrigin,
+                        trans_date = DateTime.Now
+                    };
+
+                    int SessionID_Destination = db.app_account_session.Where(x => x.id_account == Transfer.id_accountdest && x.is_active).Select(y => y.id_session).FirstOrDefault();
+                    if (SessionID_Destination > 0)
+                    {
+                        Destination_AccountTransaction.id_session = SessionID_Destination;
+                    }
+
+
+                    if (payment_type.is_direct)
+                    {
+                        Origin_AccountTransaction.status = Status.Documents_General.Approved;
+                        Destination_AccountTransaction.status = Status.Documents_General.Approved;
+                    }
+                    else
+                    {
+                        Origin_AccountTransaction.status = Status.Documents_General.Pending;
+                        Destination_AccountTransaction.status = Status.Documents_General.Pending;
+                    }
+
+                    db.app_account_detail.Add(Origin_AccountTransaction);
+                    db.app_account_detail.Add(Destination_AccountTransaction);
                     db.SaveChanges();
                 }
             }
@@ -240,7 +279,7 @@ namespace Cognitivo.Configs
             amount_transferViewSource.View.Refresh();
             app_accountViewSource.View.Refresh();
             app_accountapp_account_detailViewSource.View.Refresh();
-            app_account_detail_adjustViewSource.View.Refresh();
+            //app_account_detail_adjustViewSource.View.Refresh();
             toolBar.msgSaved(1);
         }
 

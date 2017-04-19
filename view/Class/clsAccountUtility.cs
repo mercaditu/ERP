@@ -17,5 +17,6 @@ namespace Cognitivo.Class
         public String Currencyfxnameorigin { get; set; }
         public decimal amount { get; set; }
         public decimal amountCounted { get; set; }
+        public decimal FXRate { get; set; }
     }
 }

@@ -48,6 +48,8 @@
                                        Foreground="{StaticResource Label_ImportantColor}" VerticalAlignment="Center" />
                                     <Label Style="{StaticResource input_label}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc Search}" />
                                 </StackPanel>
+                                <CheckBox x:Name="rbtnEmailRequire" Style="{StaticResource input_checkbox}" Content="{lex:Loc EmailRequire}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=EmailNecessary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox x:Name="rbtnExactCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=ExactSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}"

@@ -333,24 +333,25 @@ namespace entity
                 Security_CurdList = cntx.security_curd.Where(x => x.id_role == User.id_role).ToList();
 
                 //Privilage
-                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role && x.security_privilage != null).ToList();
-
+                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role ).ToList();
+                Security_role_privilageList = Security_role_privilageList.Where(x => x.security_privilage != null).ToList();
                 try
                 {
                     Allow_UpdateSalesDetail = Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice &&
-                        x.has_privilage).Count() > 0 ? true : false;
+                        x.has_privilage).FirstOrDefault() !=null ? true : false;
 
                     Allow_BarCodeSearchOnly = Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.ItemBarcodeSearchOnly &&
-                        x.has_privilage).Count() > 0 ? true : false;
+                        x.has_privilage).FirstOrDefault() != null ? true : false;
 
                     Show_InStockProductsOnly = Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.InStockSearchOnly &&
-                        x.has_privilage).Count() > 0 ? true : false;
+                        x.has_privilage).FirstOrDefault() != null ? true : false;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    throw ex;
                 }
             }
         }

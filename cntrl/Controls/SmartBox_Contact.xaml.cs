@@ -436,8 +436,7 @@ namespace cntrl.Controls
                     {
                         if (string.IsNullOrEmpty(contact.email))
                         {
-                            tbxEmail.Background.brush
-                            return;
+                             return;
                         }
                     }
                     db.contacts.Add(contact);

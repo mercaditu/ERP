@@ -104,7 +104,7 @@ namespace Cognitivo.Configs
             app_currencydestViewSource.Source = CurrentSession.Currencies;
 
             //List of 100 Latest Transactions.
-            //dataPager.OnDemandLoading += dataPager_OnDemandLoading;
+            dataPager.OnDemandLoading += dataPager_OnDemandLoading;
 
             //Transfer
             listTransferAmt = new List<Class.clsTransferAmount>();

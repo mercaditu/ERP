@@ -144,12 +144,12 @@
 										SelectedDate="{Binding trans_date, Source={StaticResource paymentpayment_detailViewSource}, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
                             </StackPanel>
                             <StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Introvert}">
-                                <Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}" />
+                                <!--<Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}" />
                                 <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
 										 metro:TextBoxHelper.SelectAllOnFocus="True"
 										 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 										 metro:ControlsHelper.MouseOverBorderBrush="Silver"
-										 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+										 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
                             </StackPanel>
                             <StackPanel x:Name="stpaccount">
                                 <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}" />

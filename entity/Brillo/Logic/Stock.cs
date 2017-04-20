@@ -270,7 +270,9 @@ namespace entity.Brillo.Logic
             //that are not linked to Sales Invoice. If linked with Sales Invoice, the stock will get discounted there forcefully.
             foreach (sales_packing_detail packing_detail in
                 sales_packing.sales_packing_detail
-                .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0 && x.user_verified))
+                .Where(x => x.item.item_product.Count() > 0 
+                && x.sales_packing_relation.Count() == 0 
+                && x.user_verified))
             {
                 item_product item_product = FindNFix_ItemProduct(packing_detail.item);
 

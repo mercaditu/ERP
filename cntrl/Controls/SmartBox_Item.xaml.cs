@@ -290,7 +290,7 @@ namespace cntrl.Controls
 
             }
         
-            if (smartBoxItemSetting.Default.ExactSearch)
+            if (_ExactSearch)
             {
                 predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) && (x.Code == SearchText));
             }

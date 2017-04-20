@@ -127,7 +127,7 @@
                         <StackPanel Orientation="Horizontal" Margin="3,2,0,5">
                             <Label Content="A" Style="{StaticResource btn_Label}"
 							   FontFamily="/Cognitivo;component/Resources/#cognitivo" />
-                            <TextBlock x:Name="tbCustomize" VerticalAlignment="Center"
+                            <TextBlock x:Name="tbCustomize" VerticalAlignment="Center" MouseUp="TbCustomize_MouseUp"
 								       Margin="5,0"><Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}" /></Hyperlink></TextBlock>
                             <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
 							   PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">

@@ -134,7 +134,7 @@
                                     </StackPanel>
                                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Content="{lex:Loc CostCenter}" Style="{StaticResource input_label}" VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding project_cost_center, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}" />
+                                        <TextBlock Text="{Binding project.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}" />
                                     </StackPanel>
                                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
                                     <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />

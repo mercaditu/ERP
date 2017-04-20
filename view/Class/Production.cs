@@ -81,7 +81,7 @@ namespace Cognitivo.Class
             foreach (DataRow DataRow in dt.Rows)
             {
                 Logistics Logistics = new Logistics();
-                if ((DataRow["ItemID"] is DBNull))
+                if (!(DataRow["ItemID"] is DBNull))
                 {
                     Logistics.ItemID = Convert.ToInt16(DataRow["ItemID"]);
                 }

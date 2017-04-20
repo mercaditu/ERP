@@ -822,6 +822,7 @@ namespace Cognitivo.Purchase
 
                 purchase_invoice.app_contract = purchase_order.app_contract;
                 purchase_invoice.id_contract = purchase_order.id_contract;
+                purchase_invoice.is_impex = purchase_order.is_impex;
 
                 if (purchase_order.id_project != null)
                 {
@@ -1076,5 +1077,7 @@ namespace Cognitivo.Purchase
                 }
             }
         }
+
+        
     }
 }

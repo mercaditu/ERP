@@ -59,7 +59,8 @@
                                         Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" MinWidth="128" IsReadOnly="True" />
                         <DataGridTextColumn Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True" />
-
+                        <DataGridTextColumn Binding="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
+                                        Header="{lex:Loc Cognitivo:local:Number}" Width="auto" IsReadOnly="True" />
                         <DataGridTextColumn Binding="{Binding  GrandTotalDetailValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True"
                                         ElementStyle="{StaticResource RightAlignStyle}" />

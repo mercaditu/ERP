@@ -1,4 +1,5 @@
-﻿using entity;
+﻿
+using entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -59,7 +60,7 @@ namespace Cognitivo.Configs
             app_account app_account = app_accountDataGrid.SelectedItem as app_account;
             if (app_account != null)
             {
-                dataPager.LoadDynamicItems(e.StartIndex, 
+                dataPager.LoadDynamicItems(e.StartIndex,
                     db.app_account_detail
                     .Where(x => x.id_account == app_account.id_account)
                     .Include(y => y.app_currencyfx.app_currency)
@@ -99,12 +100,11 @@ namespace Cognitivo.Configs
             //CurrencyFx
             CollectionViewSource app_currencyViewSource = this.FindResource("app_currencyViewSource") as CollectionViewSource;
             CollectionViewSource app_currencydestViewSource = this.FindResource("app_currencydestViewSource") as CollectionViewSource;
-            await db.app_currency.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
-            app_currencyViewSource.Source = db.app_currencyfx.Local;
-            app_currencydestViewSource.Source = db.app_currencyfx.Local;
+            app_currencyViewSource.Source = CurrentSession.Currencies;
+            app_currencydestViewSource.Source = CurrentSession.Currencies;
 
             //List of 100 Latest Transactions.
-            dataPager.OnDemandLoading += dataPager_OnDemandLoading;
+            //dataPager.OnDemandLoading += dataPager_OnDemandLoading;
 
             //Transfer
             listTransferAmt = new List<Class.clsTransferAmount>();
@@ -149,9 +149,9 @@ namespace Cognitivo.Configs
                         payType = s.Max(ad => ad.payment_type.name),
                         amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                     }).ToList();
-                
+
                 //This code will change AccountID of Current Session and Can cause Serious Problems.
-               // CurrentSession.Id_Account = app_account.id_account;
+                // CurrentSession.Id_Account = app_account.id_account;
 
                 if (frmActive.Children.Count > 0)
                 {
@@ -193,14 +193,46 @@ namespace Cognitivo.Configs
 
                 if (Transfer.id_accountorigin != null && Transfer.id_accountdest != null && payment_type != null)
                 {
-                    int Originfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currencyfx;
+                    int DestinationRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencydest).FirstOrDefault().id_currencyfx;
+                    int OriginRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currencyfx;
+
+                    app_currencyfx app_currencyfx =
+                        CurrentSession
+                        .CurrencyFX_ActiveRates
+                        .Where(x => x.id_currency == DestinationRate_ID).FirstOrDefault();
+
+                    if (app_currencyfx.sell_value != Transfer.FXRate)
+                    {
+                        using (db _db = new db())
+                        {
+                            app_currencyfx fx = new app_currencyfx()
+                            {
+                                sell_value = Transfer.FXRate,
+                                buy_value = Transfer.FXRate,
+                                id_company = CurrentSession.Id_Company,
+                                is_active = false,
+                                id_currency = Transfer.id_currencydest
+                            };
+
+                            _db.app_currencyfx.Add(fx);
+                            _db.SaveChanges();
+
+                            DestinationRate_ID = fx.id_currency;
+                        }
+                    }
+                    else
+                    {
+                        DestinationRate_ID = app_currencyfx.id_currency;
+                    }
+
                     //Set up Origin Data.
                     app_account_detail Origin_AccountTransaction = new app_account_detail()
                     {
                         id_account = (int)Transfer.id_accountorigin,
-                        id_currencyfx = Originfx,
+                        id_currencyfx = OriginRate_ID,
                         id_payment_type = Transfer.id_payment_type,
                         credit = 0,
+                        tran_type = app_account_detail.tran_types.Transaction,
                         debit = Transfer.amount,
                         comment = "Transfered to " + Transfer.AccountDest,
                         trans_date = DateTime.Now
@@ -212,43 +244,14 @@ namespace Cognitivo.Configs
                         Origin_AccountTransaction.id_session = SessionID_Origin;
                     }
 
-                    int DestinationRate = 0;
-                    int DestinationFx;
-                    int OriginRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currency;
-
-                    app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencydest).FirstOrDefault();
-                    if (app_currencyfx.sell_value != Transfer.FXRate)
-                    {
-                        using (db _db = new db())
-                        {
-                            
-                            app_currencyfx fx = new app_currencyfx()
-                            {
-                                sell_value = Transfer.FXRate,
-                                buy_value = Transfer.FXRate,
-                                id_company = CurrentSession.Id_Company,
-                                is_active = false,
-                                id_currency = Transfer.id_currencydest
-                            };
-                            _db.app_currencyfx.Add(fx);
-                            DestinationFx = fx.id_currencyfx;
-                            DestinationRate = fx.id_currency;
-                        }
-                    }
-                    else
-                    {
-                        DestinationRate = app_currencyfx.id_currency;
-                        DestinationFx = app_currencyfx.id_currencyfx;
-                    }
-
-
-                    decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate, DestinationRate, entity.App.Modules.Sales);
+                    decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate_ID, DestinationRate_ID, entity.App.Modules.Sales);
 
                     app_account_detail Destination_AccountTransaction = new app_account_detail()
                     {
                         id_account = (int)Transfer.id_accountdest,
-                        id_currencyfx = DestinationFx,
+                        id_currencyfx = DestinationRate_ID,
                         id_payment_type = Transfer.id_payment_type,
+                        tran_type = app_account_detail.tran_types.Transaction,
                         credit = Amount_AfterFXExchange,
                         debit = 0,
                         comment = "Transfered from " + Transfer.AccountOrigin,
@@ -260,7 +263,6 @@ namespace Cognitivo.Configs
                     {
                         Destination_AccountTransaction.id_session = SessionID_Destination;
                     }
-
 
                     if (payment_type.is_direct)
                     {
@@ -276,15 +278,17 @@ namespace Cognitivo.Configs
                     db.app_account_detail.Add(Origin_AccountTransaction);
                     db.app_account_detail.Add(Destination_AccountTransaction);
                     db.SaveChanges();
+
                 }
             }
+
+            toolBar.msgSaved(listTransferAmt.Count());
 
             listTransferAmt.Clear();
             amount_transferViewSource.View.Refresh();
             app_accountViewSource.View.Refresh();
             app_accountapp_account_detailViewSource.View.Refresh();
             //app_account_detail_adjustViewSource.View.Refresh();
-            toolBar.msgSaved(1);
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

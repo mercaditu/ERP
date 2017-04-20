@@ -349,7 +349,7 @@ namespace entity.Brillo.Logic
                             (decimal)packing_detail.verified_quantity,
                             purchase_packing.trans_date,
                             packing_detail.purchase_order_detail.unit_cost,
-                            comment_Generator(App.Names.PurchasePacking, purchase_packing.number != null ? purchase_packing.number : "", purchase_packing.contact.name), null,
+                            comment_Generator(App.Names.PurchasePacking, purchase_packing.number ?? "", purchase_packing.contact.name), null,
                             packing_detail.expire_date, packing_detail.batch_code
                     ));
             }
@@ -396,9 +396,11 @@ namespace entity.Brillo.Logic
                     item_movement_dimensionLIST = new List<item_movement_dimension>();
                     foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
                     {
-                        item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                        item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
-                        item_movement_dimension.value = purchase_invoice_dimension.value;
+                        item_movement_dimension item_movement_dimension = new item_movement_dimension()
+                        {
+                            id_dimension = purchase_invoice_dimension.id_dimension,
+                            value = purchase_invoice_dimension.value
+                        };
                         item_movement_dimensionLIST.Add(item_movement_dimension);
                     }
                 }
@@ -418,7 +420,7 @@ namespace entity.Brillo.Logic
                         purchase_invoice_detail.quantity,
                         purchase_invoice.trans_date,
                         purchase_invoice_detail.unit_cost,
-                        comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), item_movement_dimensionLIST,
+                        comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number ?? "", purchase_invoice.contact.name), item_movement_dimensionLIST,
                         purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code
                 ));
                 }
@@ -642,9 +644,11 @@ namespace entity.Brillo.Logic
                         item_movement_dimensionLIST = new List<item_movement_dimension>();
                         foreach (item_inventory_dimension item_inventory_dimension in item_inventory_detail.item_inventory_dimension)
                         {
-                            item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                            item_movement_dimension.id_dimension = item_inventory_dimension.id_dimension;
-                            item_movement_dimension.value = item_inventory_dimension.value;
+                            item_movement_dimension item_movement_dimension = new item_movement_dimension()
+                            {
+                                id_dimension = item_inventory_dimension.id_dimension,
+                                value = item_inventory_dimension.value
+                            };
                             item_movement_dimensionLIST.Add(item_movement_dimension);
                         }
                     }
@@ -774,8 +778,7 @@ namespace entity.Brillo.Logic
 
             if (Application_ID == App.Names.Transfer)
             {
-                item_transfer item_transfer = Transcation as item_transfer;
-                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
+                foreach (item_transfer_detail item_transfer_detail in (Transcation as item_transfer).item_transfer_detail)
                 {
                     // item_movement.transaction_id = TransactionID;
                     item_movementList.AddRange(db.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer).ToList());
@@ -1017,9 +1020,12 @@ namespace entity.Brillo.Logic
 
                     foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
                     {
-                        item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                        _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                        _item_movement_dimension.value = item_movement_dimension.value;
+                        item_movement_dimension _item_movement_dimension = new item_movement_dimension()
+                        {
+                            id_dimension = item_movement_dimension.id_dimension,
+                            value = item_movement_dimension.value
+                        };
+
                         item_movement.item_movement_dimension.Add(_item_movement_dimension);
                     }
 
@@ -1033,15 +1039,17 @@ namespace entity.Brillo.Logic
             if (Quantity > 0)
             {
                 id_movement = 0;
-                item_movement item_movement = new item_movement();
-                item_movement.comment = Comment;
-                item_movement.id_item_product = item_product.id_item_product;
-                item_movement.debit = Quantity;
-                item_movement.credit = 0;
-                item_movement.status = Status;
-                //Check for Better Code.
-                item_movement.id_location = LocationID;
-                item_movement.parent = null;
+                item_movement item_movement = new item_movement()
+                {
+                    comment = Comment,
+                    id_item_product = item_product.id_item_product,
+                    debit = Quantity,
+                    credit = 0,
+                    status = Status,
+                    //Check for Better Code.
+                    id_location = LocationID,
+                    parent = null
+                };
 
                 if (ApplicationID == App.Names.Transfer)
                 {
@@ -1056,9 +1064,12 @@ namespace entity.Brillo.Logic
                     {
                         foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
                         {
-                            item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                            _item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
-                            _item_movement_dimension.value = production_execution_dimension.value;
+                            item_movement_dimension _item_movement_dimension = new item_movement_dimension()
+                            {
+                                id_dimension = production_execution_dimension.id_dimension,
+                                value = production_execution_dimension.value
+                            };
+
                             item_movement.item_movement_dimension.Add(_item_movement_dimension);
                         }
                     }
@@ -1123,13 +1134,15 @@ namespace entity.Brillo.Logic
             int id_movement = 0;
             if (Quantity > 0)
             {
-                item_movement item_movement = new item_movement();
-                item_movement.comment = Comment;
-                item_movement.id_item_product = ProductID;
-                item_movement.debit = 0;
-                item_movement.credit = Quantity;
-                item_movement.status = Status;
-                item_movement.id_location = LocationID;
+                item_movement item_movement = new item_movement()
+                {
+                    comment = Comment,
+                    id_item_product = ProductID,
+                    debit = 0,
+                    credit = Quantity,
+                    status = Status,
+                    id_location = LocationID
+                };
 
                 //Product Expiry Date...
                 if (ExpiryDate != null)
@@ -1166,9 +1179,12 @@ namespace entity.Brillo.Logic
                             {
                                 foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
                                 {
-                                    item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                                    _item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
-                                    _item_movement_dimension.value = production_execution_dimension.value;
+                                    item_movement_dimension _item_movement_dimension = new item_movement_dimension()
+                                    {
+                                        id_dimension = production_execution_dimension.id_dimension,
+                                        value = production_execution_dimension.value
+                                    };
+
                                     item_movement.item_movement_dimension.Add(_item_movement_dimension);
                                 }
                             }

@@ -387,33 +387,33 @@ namespace entity.Brillo.Promotion
         {
             if (Promo.type == sales_promotion.salesPromotion.Discount_onGrandTotal)
             {
-                Invoice Invoice = new Invoice()
-                {
-                    Contact = SalesInvoice.contact,
-                    Date = SalesInvoice.trans_date,
-                    GrandTotal = SalesInvoice.GrandTotal
-                };
+                //Invoice Invoice = new Invoice()
+                //{
+                //    Contact = SalesInvoice.contact,
+                //    Date = SalesInvoice.trans_date,
+                //    GrandTotal = SalesInvoice.GrandTotal
+                //};
 
-                foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
-                {
-                    Detail Detail = new Detail()
-                    {
-                        sales_invoice_detail = _Detail,
-                        DetailID = _Detail.id_sales_invoice_detail,
-                        Item = _Detail.item,
-                        Quantity = _Detail.quantity,
-                        Price = _Detail.unit_price,
-                        PriceVAT = _Detail.UnitPrice_Vat,
-                        SubTotal = _Detail.SubTotal,
-                        SubTotalVAT = _Detail.SubTotal_Vat,
-                        is_promo = _Detail.IsPromo
-                    };
-                    Invoice.Details.Add(Detail);
-                }
+                //foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
+                //{
+                //    Detail Detail = new Detail()
+                //    {
+                //        sales_invoice_detail = _Detail,
+                //        DetailID = _Detail.id_sales_invoice_detail,
+                //        Item = _Detail.item,
+                //        Quantity = _Detail.quantity,
+                //        Price = _Detail.unit_price,
+                //        PriceVAT = _Detail.UnitPrice_Vat,
+                //        SubTotal = _Detail.SubTotal,
+                //        SubTotalVAT = _Detail.SubTotal_Vat,
+                //        is_promo = _Detail.IsPromo
+                //    };
+                //    Invoice.Details.Add(Detail);
+                //}
 
                 if (Promo.reference == SalesInvoice.app_currencyfx.id_currency)
                 {
-                    if (Promo.quantity_step <= Invoice.GrandTotal)
+                    if (Promo.quantity_step <= SalesInvoice.GrandTotal)
                     {
                         SalesInvoice.DiscountPercentage = Promo.result_value;
 
@@ -448,29 +448,29 @@ namespace entity.Brillo.Promotion
             {
                 if (SalesInvoice.contact != null)
                 {
-                    Invoice Invoice = new Invoice()
-                    {
-                        Contact = SalesInvoice.contact,
-                        Date = SalesInvoice.trans_date,
-                        GrandTotal = SalesInvoice.GrandTotal
-                    };
+                    //Invoice Invoice = new Invoice()
+                    //{
+                    //    Contact = SalesInvoice.contact,
+                    //    Date = SalesInvoice.trans_date,
+                    //    GrandTotal = SalesInvoice.GrandTotal
+                    //};
 
-                    foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
-                    {
-                        Detail Detail = new Detail()
-                        {
-                            sales_invoice_detail = _Detail,
-                            DetailID = _Detail.id_sales_invoice_detail,
-                            Item = _Detail.item,
-                            Quantity = _Detail.quantity,
-                            Price = _Detail.unit_price,
-                            PriceVAT = _Detail.UnitPrice_Vat,
-                            SubTotal = _Detail.SubTotal,
-                            SubTotalVAT = _Detail.SubTotal_Vat,
-                            is_promo = _Detail.IsPromo
-                        };
-                        Invoice.Details.Add(Detail);
-                    }
+                    //foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
+                    //{
+                    //    Detail Detail = new Detail()
+                    //    {
+                    //        sales_invoice_detail = _Detail,
+                    //        DetailID = _Detail.id_sales_invoice_detail,
+                    //        Item = _Detail.item,
+                    //        Quantity = _Detail.quantity,
+                    //        Price = _Detail.unit_price,
+                    //        PriceVAT = _Detail.UnitPrice_Vat,
+                    //        SubTotal = _Detail.SubTotal,
+                    //        SubTotalVAT = _Detail.SubTotal_Vat,
+                    //        is_promo = _Detail.IsPromo
+                    //    };
+                    //    Invoice.Details.Add(Detail);
+                    //}
                     
                     if (SalesInvoice.contact.contact_tag_detail.Where(x => x.id_tag == Promo.reference).Count() > 0)
                     {

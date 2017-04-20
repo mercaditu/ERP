@@ -31,9 +31,9 @@
                     <rv:ReportViewer x:Name="reportViewer" />
                 </WindowsFormsHost>
             </TabItem>
-            <TabItem Header="{lex:Loc Report}">
+            <!--<TabItem Header="{lex:Loc Report}">
                 <reports:ReportDesigner x:Name="ReportDesigner"/>
-            </TabItem>
+            </TabItem>-->
 
             <TabItem Header="Data">
                 <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch"

@@ -21,14 +21,14 @@ namespace cntrl.Reports
         {
             this.ReportDesignerControl.DesignMode = DesignMode.RDLC;
 
-            if (ReportModule!="" && ReportPath!="")
-            {
-                string path = entity.Brillo.IO.CreateIfNotExists(Environment.SpecialFolder.MyDocuments + "\\CogntivoERP\\" + ReportModule + "\\" + ReportPath);
-                if (entity.Brillo.IO.FileExists(path))
-                {
-                    this.ReportDesignerControl.OpenReport(path);
-                }
-            }
+            //if (ReportModule!="" && ReportPath!="")
+            //{
+            //    string path = entity.Brillo.IO.CreateIfNotExists(Environment.SpecialFolder.MyDocuments + "\\CogntivoERP\\" + ReportModule + "\\" + ReportPath);
+            //    if (entity.Brillo.IO.FileExists(path))
+            //    {
+            //        this.ReportDesignerControl.OpenReport(path);
+            //    }
+            //}
            
            
            

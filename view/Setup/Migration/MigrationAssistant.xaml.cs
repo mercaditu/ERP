@@ -1,4 +1,5 @@
 ﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -14,6 +15,13 @@ namespace Cognitivo.Setup.Migration
     public partial class MigrationAssistant : Page
     {
         public entity.db dbContext { get; set; }
+
+        public bool SalesInvoice;
+        public bool SalesReturn;
+        public bool PurchaseInvoice;
+
+        public DateTime StartDate;
+
         public int id_company { get; set; }
         public int id_user { get; set; }
         public int id_branch { get; set; }
@@ -41,33 +49,37 @@ namespace Cognitivo.Setup.Migration
             InitializeComponent();
             dbContext = new db();
             id_company = CurrentSession.Id_Company;
+
+            //Sets the DatePicker to the first day of current year.
+            int year = DateTime.Now.Year;
+            dtpStartDate.SelectedDate = new DateTime(year, 1, 1);
+
             if (CurrentSession.Id_User == 0)
             {
                 if (dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault() != null)
                 {
                     id_user = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
-
                     CurrentSession.Id_User = id_user;
                 }
             }
 
-            //dbContext.Configuration.AutoDetectChangesEnabled = false;
             _cogent_State = false;
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            // dbContext db = new dbContext();
-            //string sql = " select ' truncate table ' + table_name "
-            //           + " from information_schema.tables where TAble_schema='"+ "astilleronew" +"'";
-
-            //  db.Truncates();
-            //Check Connection.
             if (_cogent_State == false)
             {
                 popConnBuilder.IsOpen = true;
                 return;
             }
+
+            SalesInvoice = (bool)chbxSalesInvoice.IsChecked;
+            SalesReturn = (bool)chbxSalesReturns.IsChecked;
+            PurchaseInvoice = (bool)chbxPurchaseInvoice.IsChecked;
+
+            StartDate = (DateTime)dtpStartDate.SelectedDate;
+
             Task basic_Task = Task.Factory.StartNew(() => start());
         }
 

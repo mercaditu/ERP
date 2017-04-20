@@ -1,5 +1,6 @@
 ﻿
 using entity;
+using Syncfusion.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,8 +31,6 @@ namespace Cognitivo.Configs
 
         private CollectionViewSource app_accountViewSource
             , app_account_listViewSource
-            , app_accountOriginViewSource
-            , app_currencydestViewSource
             , app_account_detail_adjustViewSource
             , app_accountapp_account_detailViewSource
             , app_account_detailViewSource
@@ -57,16 +56,23 @@ namespace Cognitivo.Configs
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
+            OnDemandLoading(e.StartIndex, e.PageSize);
+        }
+
+        private async void OnDemandLoading(int StartIndex, int PageSize)
+        {
             app_account app_account = app_accountDataGrid.SelectedItem as app_account;
             if (app_account != null)
             {
-                dataPager.LoadDynamicItems(e.StartIndex,
-                    db.app_account_detail
+                List<app_account_detail> ListDetails = await db.app_account_detail
                     .Where(x => x.id_account == app_account.id_account)
                     .Include(y => y.app_currencyfx.app_currency)
                     .OrderByDescending(y => y.trans_date)
-                    .Skip(e.StartIndex)
-                    .Take(e.PageSize).ToList());
+                    .Skip(StartIndex)
+                    .Take(PageSize).ToListAsync();
+
+                dataPager.LoadDynamicItems(StartIndex, ListDetails);
+                (dataPager.PagedSource as PagedCollectionView).ResetCache();
             }
         }
 
@@ -121,7 +127,6 @@ namespace Cognitivo.Configs
             {
                 //Get the Very Last Session of this Account.
                 app_account_session app_account_session = app_account.app_account_session.LastOrDefault();
-                int SessionID = 0;
 
                 ///Gets the Current
                 if (app_account_session != null)
@@ -129,18 +134,14 @@ namespace Cognitivo.Configs
                     IsActive = app_account_session.is_active;
                     LastUsed = app_account_session.app_account_detail.Select(x => x.trans_date).LastOrDefault();
 
+                    int SessionID = 0;
                     //Sets the SessionID.
                     if (app_account_session.is_active)
                     {
                         SessionID = app_account.app_account_session.Where(y => y.is_active).Select(x => x.id_session).FirstOrDefault();
                     }
-                }
-                else
-                {
-                    IsActive = false;
-                }
 
-                app_account_detailDataGrid.ItemsSource = app_account.app_account_detail
+                    app_account_detailDataGrid.ItemsSource = app_account.app_account_detail
                     .Where(x => x.id_session == SessionID)
                     .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
                     .Select(s => new
@@ -149,9 +150,16 @@ namespace Cognitivo.Configs
                         payType = s.Max(ad => ad.payment_type.name),
                         amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                     }).ToList();
+                }
+                else
+                {
+                    IsActive = false;
 
-                //This code will change AccountID of Current Session and Can cause Serious Problems.
-                // CurrentSession.Id_Account = app_account.id_account;
+                    app_account_detailDataGrid.ItemsSource = null;
+                }
+                
+               //This code will change AccountID of Current Session and Can cause Serious Problems.
+               // CurrentSession.Id_Account = app_account.id_account;
 
                 if (frmActive.Children.Count > 0)
                 {
@@ -166,7 +174,8 @@ namespace Cognitivo.Configs
 
                 frmActive.Children.Add(AccountActive);
 
-                dataPager.PageCount = app_account.app_account_detail.Count() / 100;
+                dataPager.PageCount = app_account.app_account_detail.Count() / dataPager.PageSize;
+                OnDemandLoading(0, dataPager.PageSize);
             }
         }
 

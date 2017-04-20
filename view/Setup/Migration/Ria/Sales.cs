@@ -105,16 +105,17 @@ namespace Cognitivo.Setup.Migration
 
                         foreach (DataRow InnerRow in dt_sales.Select("CODVENTA > " + i + " AND CODVENTA < " + j + ""))
                         {
-                            sales_invoice sales_invoice = new entity.sales_invoice();
-                            sales_invoice.State = EntityState.Added;
-                            sales_invoice.status = Status.Documents_General.Pending;
-                            sales_invoice.IsSelected = true;
-                            sales_invoice.trans_type = Status.TransactionTypes.Normal;
-                            sales_invoice.trans_date = DateTime.Now.AddDays(0);
-                            sales_invoice.timestamp = DateTime.Now;
-                            sales_invoice.id_company = id_company;
-                            sales_invoice.number = (InnerRow["NUMVENTA"] is DBNull) ? null : InnerRow["NUMVENTA"].ToString();
-
+                            sales_invoice sales_invoice = new entity.sales_invoice()
+                            {
+                                State = EntityState.Added,
+                                status = Status.Documents_General.Pending,
+                                IsSelected = true,
+                                trans_type = Status.TransactionTypes.Normal,
+                                trans_date = DateTime.Now.AddDays(0),
+                                timestamp = DateTime.Now,
+                                id_company = id_company,
+                                number = (InnerRow["NUMVENTA"] is DBNull) ? null : InnerRow["NUMVENTA"].ToString()
+                            };
                             sales_invoice.trans_date = (InnerRow["FECHAVENTA"] is DBNull) ? DateTime.Now : Convert.ToDateTime(InnerRow["FECHAVENTA"]);
 
                             //Customer
@@ -319,7 +320,7 @@ namespace Cognitivo.Setup.Migration
 
                             if (sales_invoice.Error == null)
                             {
-                                sales_invoice.State = System.Data.Entity.EntityState.Added;
+                                sales_invoice.State = EntityState.Added;
                                 sales_invoice.IsSelected = true;
                                 db.sales_invoice.Add(sales_invoice);
 
@@ -360,14 +361,11 @@ namespace Cognitivo.Setup.Migration
                                 //Add code to include error contacts into
                                 SalesInvoice_ErrorList.Add(sales_invoice);
                             }
-                            // }
                             value += 1;
                             Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                             Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
                         }
                         FloorValue = RoofValue;
-                        //    RoofValue += 1000;
-                        //}
                     }
                 }
             }
@@ -431,16 +429,18 @@ namespace Cognitivo.Setup.Migration
 
                                 payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
 
-                                payment_schedual _payment_schedual = new payment_schedual();
-                                _payment_schedual.credit = invoice_total;
-                                _payment_schedual.parent = payment_schedual;
-                                _payment_schedual.expire_date = payment_schedual.expire_date;
-                                _payment_schedual.status = payment_schedual.status;
-                                _payment_schedual.id_contact = payment_schedual.id_contact;
-                                _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
-                                _payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
-                                _payment_schedual.trans_date = payment_schedual.trans_date;
-                                _payment_schedual.AccountReceivableBalance = invoice_total;
+                                payment_schedual _payment_schedual = new payment_schedual()
+                                {
+                                    credit = invoice_total,
+                                    parent = payment_schedual,
+                                    expire_date = payment_schedual.expire_date,
+                                    status = payment_schedual.status,
+                                    id_contact = payment_schedual.id_contact,
+                                    id_currencyfx = payment_schedual.id_currencyfx,
+                                    id_sales_invoice = payment_schedual.id_sales_invoice,
+                                    trans_date = payment_schedual.trans_date,
+                                    AccountReceivableBalance = invoice_total
+                                };
 
                                 payment_detail.payment_schedual.Add(_payment_schedual);
                                 payment.payment_detail.Add(payment_detail);

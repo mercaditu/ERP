@@ -88,58 +88,6 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
-            ///SALES PACKING
-            else if (obj_entity.GetType().BaseType == typeof(sales_packing) || obj_entity.GetType() == typeof(sales_packing))
-            {
-                sales_packing sales_packing = (sales_packing)obj_entity;
-
-                //Just bring Sales Packing that has Item Product and No relation to Sales Invoice. This will help discount stock only for thse
-                //that are not linked to Sales Invoice. If linked with Sales Invoice, the stock will get discounted there forcefully.
-                foreach (sales_packing_detail packing_detail in
-                    sales_packing.sales_packing_detail
-                    .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0 && x.user_verified))
-                {
-                    item_product item_product = FindNFix_ItemProduct(packing_detail.item);
-
-                    int LocationID = 0;
-                    if (packing_detail.id_location == null)
-                    {
-                        LocationID = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
-                        packing_detail.app_location = db.app_location.Find(LocationID);
-                    }
-                    else
-                    {
-                        packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
-                        LocationID = (int)packing_detail.id_location;
-                    }
-
-                    List<StockList> Items_InStockLIST = null;
-                    if (packing_detail.id_movement != null && packing_detail.id_movement > 0)
-                    {
-                        Brillo.Stock stockBrillo = new Brillo.Stock();
-                        Items_InStockLIST = stockBrillo.ScalarMovement((long)packing_detail.id_movement);
-                    }
-                    else
-                    {
-                        Brillo.Stock stock = new Brillo.Stock();
-                        Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, LocationID, item_product.id_item_product);
-                    }
-
-                    item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
-                                             App.Names.PackingList,
-                                             packing_detail.id_sales_packing,
-                                             packing_detail.id_sales_packing_detail,
-                                             CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                             item_product,
-                                             LocationID,
-                                             (int)packing_detail.verified_quantity,
-                                             sales_packing.trans_date,
-                                             comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
-                                             ));
-                }
-                //Return List so we can save into context.
-                return item_movementList;
-            }
             //PRODUCTION EXECUTION
             else if (obj_entity.GetType().BaseType == typeof(production_execution_detail) || obj_entity.GetType() == typeof(production_execution_detail))
             {
@@ -312,6 +260,58 @@ namespace entity.Brillo.Logic
                 return item_movementList;
             }
             return null;
+        }
+
+        public List<item_movement> SalesPacking_Approve(db db, sales_packing sales_packing)
+        {
+            List<item_movement> item_movementList = new List<item_movement>();
+
+            //Just bring Sales Packing that has Item Product and No relation to Sales Invoice. This will help discount stock only for thse
+            //that are not linked to Sales Invoice. If linked with Sales Invoice, the stock will get discounted there forcefully.
+            foreach (sales_packing_detail packing_detail in
+                sales_packing.sales_packing_detail
+                .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() == 0 && x.user_verified))
+            {
+                item_product item_product = FindNFix_ItemProduct(packing_detail.item);
+
+                int LocationID = 0;
+                if (packing_detail.id_location == null)
+                {
+                    LocationID = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
+                    packing_detail.app_location = db.app_location.Find(LocationID);
+                }
+                else
+                {
+                    packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+                    LocationID = (int)packing_detail.id_location;
+                }
+
+                List<StockList> Items_InStockLIST = null;
+                if (packing_detail.id_movement != null && packing_detail.id_movement > 0)
+                {
+                    Brillo.Stock stockBrillo = new Brillo.Stock();
+                    Items_InStockLIST = stockBrillo.ScalarMovement((long)packing_detail.id_movement);
+                }
+                else
+                {
+                    Brillo.Stock stock = new Brillo.Stock();
+                    Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, LocationID, item_product.id_item_product);
+                }
+
+                item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                         App.Names.PackingList,
+                                         packing_detail.id_sales_packing,
+                                         packing_detail.id_sales_packing_detail,
+                                         CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                         item_product,
+                                         LocationID,
+                                         (int)packing_detail.verified_quantity,
+                                         sales_packing.trans_date,
+                                         comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
+                                         ));
+            }
+            //Return List so we can save into context.
+            return item_movementList;
         }
 
         public List<item_movement> PurchasePacking_Approve(db db, purchase_packing purchase_packing)

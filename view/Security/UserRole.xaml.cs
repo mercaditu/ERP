@@ -36,7 +36,7 @@ namespace Cognitivo.Security
             await UserRoleDB.security_role.Where(a => a.id_company == CurrentSession.Id_Company)
                                             .OrderBy(a => a.name)
                                             .Include(y => y.app_department)
-                                            .Include(y => y.security_role_privilage)
+                                            //.Include(y => y.security_role_privilage)
                                             .LoadAsync();
             security_roleViewSource.Source = UserRoleDB.security_role.Local;
 
@@ -84,8 +84,6 @@ namespace Cognitivo.Security
 
         private void Save_Click(object sender)
         {
-            try
-            {
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
                 if (security_role != null)
                 {
@@ -132,11 +130,6 @@ namespace Cognitivo.Security
                     CurrentSession.Load_Security();
                     security_roleViewSource.View.Refresh();
                 }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
         }
 
         private void toolBar_btnCancel_Click(object sender)

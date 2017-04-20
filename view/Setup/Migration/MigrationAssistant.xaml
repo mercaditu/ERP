@@ -31,6 +31,10 @@
                    Source="/Cognitivo;component/Images/Application/128/Beta.png" />
             <Label Content="Migration" HorizontalAlignment="Center"
                    Style="{StaticResource H1}" />
+
+            <Label Style="{StaticResource input_label}" HorizontalAlignment="Center" Content="{lex:Loc StartDate}"/>
+            <DatePicker x:Name="dtpStartDate" HorizontalAlignment="Center" Style="{StaticResource input_datepicker}"/>
+
             <Button Content="Start" Margin="15"
                     Style="{StaticResource btn_green}" Click="btnStart_Click" />
             <TextBlock Text="Migrate your COGENT or RIA data over to Cognitivo ERP."
@@ -93,8 +97,8 @@
                     Width="256" MinHeight="64" Margin="16">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
-                        <Image Source="/Cognitivo;component/Images/Application/128/Product.png" Height="32" />
-                        <Label Content="{lex:Loc Item}" Style="{StaticResource H3}" />
+                        <Image Source="/Cognitivo;component/Images/Application/128/Item.png" Height="32" />
+                        <Label Content="{lex:Loc Items}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
                         <Run x:Name="itemValue" />
@@ -151,6 +155,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Menu/modSales.png" Height="32" />
+                        <CheckBox x:Name="chbxSalesInvoice" Style="{StaticResource input_checkbox}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc SalesInvoice}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -170,6 +175,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Menu/modSales.png" Height="32" />
+                        <CheckBox x:Name="chbxSalesReturns" Style="{StaticResource input_checkbox}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc SalesReturn}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -189,6 +195,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Menu/modPurchase.png" Height="32" />
+                        <CheckBox x:Name="chbxPurchaseInvoice" Style="{StaticResource input_checkbox}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">

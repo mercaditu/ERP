@@ -308,12 +308,20 @@ namespace entity.Brillo.Document
             {
                 foreach (sales_packing_relation _sales_packing_relation in sales_packing_relation)
                 {
-                    if (!PackingList.Contains(_sales_packing_relation.sales_packing_detail.sales_packing.number))
+                    if (_sales_packing_relation.sales_packing_detail.sales_packing.number!=null)
                     {
-                        PackingList = PackingList + ", " + _sales_packing_relation.sales_packing_detail.sales_packing.number;
+                        if (!PackingList.Contains(_sales_packing_relation.sales_packing_detail.sales_packing.number))
+                        {
+                            PackingList = PackingList + ", " + _sales_packing_relation.sales_packing_detail.sales_packing.number;
+                        }
                     }
+                   
                 }
-                return PackingList.Remove(0, 1);
+                if (PackingList!="")
+                {
+                    return PackingList.Remove(0, 1);
+                }
+               
             }
 
             return PackingList;

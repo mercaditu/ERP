@@ -102,7 +102,7 @@ namespace entity
                     {
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(this, sales_packing);
+                        item_movementList = _Stock.SalesPacking_Approve(this, sales_packing);
 
                         if (item_movementList != null && item_movementList.Count > 0)
                         {

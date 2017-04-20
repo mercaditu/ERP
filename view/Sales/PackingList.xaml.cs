@@ -332,7 +332,7 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
 
-                sales_packing_detail sales_packing_detail = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified == false).FirstOrDefault();
+                sales_packing_detail sales_packing_detail = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.user_verified == false).FirstOrDefault();
       
                 if (sales_packing_detail != null)
                 {

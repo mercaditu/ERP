@@ -577,6 +577,8 @@ namespace Cognitivo.Sales
                     sales_packing_relation sales_packing_relation = new sales_packing_relation();
                     sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
                     sales_packing_relation.sales_packing_detail = _sales_packing_detail;
+                    sales_packing_relation.id_sales_invoice_detail = sales_invoice_detail.id_sales_invoice_detail;
+                    sales_packing_relation.sales_invoice_detail = sales_invoice_detail;
                     sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
                     sales_invoice_detail.id_location = _sales_packing_detail.id_location;
                     if (_sales_packing_detail.expire_date != null || !string.IsNullOrEmpty(_sales_packing_detail.batch_code))

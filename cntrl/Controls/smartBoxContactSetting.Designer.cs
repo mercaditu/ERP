@@ -12,7 +12,7 @@ namespace cntrl.Controls {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
     public sealed partial class smartBoxContactSetting : global::System.Configuration.ApplicationSettingsBase {
         
         private static smartBoxContactSetting defaultInstance = ((smartBoxContactSetting)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new smartBoxContactSetting())));
@@ -58,6 +58,18 @@ namespace cntrl.Controls {
             }
             set {
                 this["ExactSearch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EmailNecessary {
+            get {
+                return ((bool)(this["EmailNecessary"]));
+            }
+            set {
+                this["EmailNecessary"] = value;
             }
         }
     }

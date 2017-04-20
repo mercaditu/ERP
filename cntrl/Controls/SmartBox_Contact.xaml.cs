@@ -40,9 +40,21 @@ namespace cntrl.Controls
 
         private bool _can_new;
 
+        public bool AutoShow
+        {
+            get { return _AutoShow; }
+            set
+            {
+                _AutoShow = value;
+            }
+        }
+
+        private bool _AutoShow;
+  
+
         public bool can_Edit
         {
-            get { return _can_new; }
+            get { return _can_edit; }
             set
             {
                 _can_edit = new entity.Brillo.Security(entity.App.Names.Items).edit ? value : false;
@@ -62,7 +74,11 @@ namespace cntrl.Controls
                 {
                     ContactID = Contact.ID;
                     Text = Contact.Name;
-                    popContact.IsOpen = false;
+                    if (AutoShow==false)
+                    {
+                        popContact.IsOpen = false;
+                    }
+                  
 
                     if (popContactInfo.IsOpen)
                     {
@@ -123,6 +139,7 @@ namespace cntrl.Controls
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
+         
         }
 
         public void LoadData()
@@ -415,6 +432,14 @@ namespace cntrl.Controls
 
                         contact.id_price_list = list.id_price_list;
                     }
+                    if (smartBoxContactSetting.Default.EmailNecessary==true)
+                    {
+                        if (string.IsNullOrEmpty(contact.email))
+                        {
+                            tbxEmail.Background.brush
+                            return;
+                        }
+                    }
                     db.contacts.Add(contact);
                     db.SaveChanges();
                 }
@@ -432,6 +457,13 @@ namespace cntrl.Controls
                         contact.address = tbxAddress.Text;
                         contact.telephone = tbxTelephone.Text;
                         contact.email = tbxEmail.Text;
+                        if (smartBoxContactSetting.Default.EmailNecessary == true)
+                        {
+                            if (string.IsNullOrEmpty(contact.email))
+                            {
+                                return;
+                            }
+                        }
                         db.SaveChanges();
 
                         Name = contact.name;
@@ -452,6 +484,7 @@ namespace cntrl.Controls
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
+            
             popContactInfo.IsOpen = false;
         }
     }

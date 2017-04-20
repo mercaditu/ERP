@@ -28,6 +28,7 @@ namespace entity.Brillo.Promotion
             {
                 _Detail.discount = 0;
             }
+
             foreach (var Promo in SalesPromotionLIST)
             {
                 Discount_onCustomerType(Promo, SalesInvoice);
@@ -36,8 +37,10 @@ namespace entity.Brillo.Promotion
                 Discount_onTag(Promo, SalesInvoice);
                 Discount_onGrandTotal(Promo, SalesInvoice);
             }
+
             var Discountlist = DetailLIST.GroupBy(x => x.sales_invoice_detail).Select(x => new { sales_invoice_detail = x.Key, discountvat = x.Max(y => y.DiscountVAT) });
             var list = DetailLIST.Where(x => x.is_promo).GroupBy(x => x.PromotionID).Select(x => new { Detail = x.Max(z => z), discountvat = x.Max(y => y.DiscountVAT) });
+
             foreach (var data in Discountlist)
             {
                 sales_invoice_detail _sales_invoice_detail = data.sales_invoice_detail;
@@ -52,6 +55,7 @@ namespace entity.Brillo.Promotion
                     }
                 }
             }
+
             foreach (var data in list)
             {
                 Detail Best_Promotion = data.Detail;
@@ -155,6 +159,7 @@ namespace entity.Brillo.Promotion
                     Date = SalesInvoice.trans_date,
                     GrandTotal = SalesInvoice.GrandTotal
                 };
+
                 foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
                 {
                     Detail Detail = new Detail()
@@ -415,10 +420,15 @@ namespace entity.Brillo.Promotion
                 {
                     if (Promo.quantity_step <= SalesInvoice.GrandTotal)
                     {
-                        SalesInvoice.DiscountPercentage = Promo.result_value;
+                        //SalesInvoice.DiscountPercentage = Promo.result_value;
+
+                        decimal Fixed_GrandTotal = SalesInvoice.GrandTotal;
+                        decimal Discounted_GrandTotalValue = SalesInvoice.GrandTotal * Promo.result_value;
 
                         foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
                         {
+                            decimal WeightedAvg = _Detail.SubTotal_Vat / Fixed_GrandTotal;
+
                             Detail Detail = new Detail()
                             {
                                 DetailID = _Detail.id_sales_invoice_detail,
@@ -427,7 +437,7 @@ namespace entity.Brillo.Promotion
                                 Price = _Detail.unit_price,
                                 PriceVAT = _Detail.UnitPrice_Vat,
                                 Discount = _Detail.discount,
-                                DiscountVAT = _Detail.DiscountVat,
+                                DiscountVAT = (WeightedAvg * Discounted_GrandTotalValue) / _Detail.quantity,
                                 SubTotal = _Detail.SubTotal,
                                 SubTotalVAT = _Detail.SubTotal_Vat,
                                 is_promo = false,
@@ -476,10 +486,13 @@ namespace entity.Brillo.Promotion
                     {
                         if (SalesInvoice.GrandTotal > Promo.quantity_step)
                         {
-                            SalesInvoice.DiscountPercentage = Promo.result_value;
+                            decimal Fixed_GrandTotal = SalesInvoice.GrandTotal;
+                            decimal Discounted_GrandTotalValue = SalesInvoice.GrandTotal * Promo.result_value;
 
                             foreach (sales_invoice_detail _Detail in SalesInvoice.sales_invoice_detail)
                             {
+                                decimal WeightedAvg = _Detail.SubTotal_Vat / Fixed_GrandTotal;
+
                                 Detail Detail = new Detail()
                                 {
                                     DetailID = _Detail.id_sales_invoice_detail,
@@ -488,7 +501,7 @@ namespace entity.Brillo.Promotion
                                     Price = _Detail.unit_price,
                                     PriceVAT = _Detail.UnitPrice_Vat,
                                     Discount = _Detail.discount,
-                                    DiscountVAT = _Detail.DiscountVat,
+                                    DiscountVAT = (WeightedAvg * Discounted_GrandTotalValue) / _Detail.quantity,
                                     SubTotal = _Detail.SubTotal,
                                     SubTotalVAT = _Detail.SubTotal_Vat,
                                     is_promo = false,

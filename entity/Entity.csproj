@@ -375,6 +375,10 @@
     <Compile Include="Migrations\201703311224125_ProjectUpdate.Designer.cs">
       <DependentUpon>201703311224125_ProjectUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704201323120_ContractPositionFix.cs" />
+    <Compile Include="Migrations\201704201323120_ContractPositionFix.Designer.cs">
+      <DependentUpon>201704201323120_ContractPositionFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
@@ -837,6 +841,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703311224125_ProjectUpdate.resx">
       <DependentUpon>201703311224125_ProjectUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704201323120_ContractPositionFix.resx">
+      <DependentUpon>201704201323120_ContractPositionFix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

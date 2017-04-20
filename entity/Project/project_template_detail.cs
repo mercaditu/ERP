@@ -52,6 +52,8 @@ namespace entity
         private string _code;
         public string logic { get; set; }
 
+        public decimal quantity { get; set; }
+
         //Heirarchy Nav Property
         public virtual project_template_detail parent { get; set; }
 

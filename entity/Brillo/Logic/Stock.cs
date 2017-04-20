@@ -681,7 +681,7 @@ namespace entity.Brillo.Logic
                         //More Stock
                         if (item_inventory_detail.Delta > 0)
                         {
-                            parent_movement.credit = item_inventory_detail.Delta;
+                            parent_movement.credit += item_inventory_detail.Delta;
                             parent_movement.comment += " | Updated " + Localize.StringText("Inventory") + ": " + "Increased by " + String.Format("{0:0.00}", item_inventory_detail.Delta) + " | " + item_inventory_detail.comment;
                             parent_movement.timestamp = DateTime.Now;
                         }
@@ -1311,6 +1311,8 @@ namespace entity.Brillo.Logic
                         item_movement.item_movement_value.Add(item_movement_value);
                     }
                 }
+
+                item_movement.barcode = Barcode.RandomGenerator();
 
                 if (DimensionList != null)
                 {

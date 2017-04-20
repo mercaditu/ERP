@@ -79,6 +79,9 @@
 
         public string codigo { get { return _codigo; } set { _codigo = value; RaisePropertyChanged("codigo"); } }
         private string _codigo;
+
+        public int? id_position { get; set; }
+
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public DateTime end_trial_period { get; set; }
@@ -88,6 +91,7 @@
         [Required]
         public bool is_active { get; set; }
 
+        public virtual hr_position hr_position { get; set; }
         public virtual contact contact { get; set; }
         public virtual app_branch app_branch { get; set; }
         public virtual app_department app_department { get; set; }

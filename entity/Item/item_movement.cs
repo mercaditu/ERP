@@ -155,6 +155,8 @@ namespace entity
 
         private decimal _avlquantity;
 
+        public string barcode { get; set; }
+
         //Heirarchy For Movement
         public virtual ICollection<item_movement> child { get; set; }
 

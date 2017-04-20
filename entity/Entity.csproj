@@ -257,6 +257,7 @@
     <Compile Include="BrilloQuery\SalesReturn.cs" />
     <Compile Include="Brillo\Activation.cs" />
     <Compile Include="Brillo\Attachment.cs" />
+    <Compile Include="Brillo\Barcode.cs" />
     <Compile Include="Brillo\Byte2FileConverter.cs" />
     <Compile Include="Brillo\ConversionFactor.cs" />
     <Compile Include="Brillo\Currency.cs" />

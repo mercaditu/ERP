@@ -12,6 +12,8 @@
             id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
+
+            hr_contract = new List<hr_contract>();
         }
 
         [Key]
@@ -29,8 +31,10 @@
 
         //Heirarchy Nav Properties
         public virtual hr_position parent { get; set; }
-
         public virtual ICollection<hr_position> child { get; set; }
+
+        public virtual ICollection<hr_contract> hr_contract { get; set; }
+
         public virtual contact contact { get; set; }
 
         //Nav Properties

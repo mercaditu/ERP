@@ -134,7 +134,7 @@ mov.id_movement as MovementID
 
                 if (!DataRow.IsNull("MovementID"))
                 {
-                    Stock.MovementID = Convert.ToInt16(DataRow["MovementID"]);
+                    Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
                 }
 
                 StockList.Add(Stock);

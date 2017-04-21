@@ -327,10 +327,16 @@ namespace Cognitivo.Sales
                     if (sales_invoice != null)
                     {
                         sales_invoice.sales_invoice_detail.Remove(sales_invoice_detail);
-                        sales_invoiceViewSource.View.Refresh();
+                        //sales_invoiceViewSource.View.Refresh();
 
                         CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                        if (sales_invoicesales_invoice_detailViewSource != null)
+                        {
+                            if (sales_invoicesales_invoice_detailViewSource.View != null)
+                            {
+                                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                            }
+                        }
                     }
                 }
                 else if (payment_detail != null)

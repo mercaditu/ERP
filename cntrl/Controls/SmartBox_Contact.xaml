@@ -111,9 +111,14 @@
                                        Foreground="Gainsboro" FontFamily="/cntrl;component/Resources/#cognitivo"/>
                             <Label Content="{lex:Loc Contact}" FontWeight="Medium" Foreground="White"/>
                         </StackPanel>
-                        <Label Content="c" VerticalAlignment="Center"
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Label Content="+" VerticalAlignment="Center"
+					           HorizontalAlignment="Right" MouseUp="btnNew_Click" Foreground="White"
+					           FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                            <Label Content="c" VerticalAlignment="Center"
 					           HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
 					           FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                        </StackPanel>
                     </Grid>
                     <Grid>
                         <Grid.Background>

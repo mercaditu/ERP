@@ -236,6 +236,7 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
+            ContactID = 0;
             SearchText = SearchText.ToUpper();
             var predicate = PredicateBuilder.True<entity.BrilloQuery.Contact>();
 
@@ -349,6 +350,10 @@ namespace cntrl.Controls
 
                 tbxGovernmentID.Text = tbxSearch.Text.All(char.IsDigit) ? tbxSearch.Text : "";
                 tbxName.Text = Regex.IsMatch(tbxSearch.Text, @"[a-zA-Z]+") ? tbxSearch.Text : "";
+                tbxEmail.Text = "";
+                tbxAddress.Text = "";
+                tbxTag.Text = "";
+                tbxTelephone.Text = "";
 
                 tbxName.Focus();
             }
@@ -371,7 +376,7 @@ namespace cntrl.Controls
                 }
             }
         }
-
+        
         private void SaveContact_Click(object sender, RoutedEventArgs e)
         {
             string Name = string.Empty;
@@ -394,7 +399,7 @@ namespace cntrl.Controls
                 else if (Get_Employees)
                 { contact.is_employee = true; }
 
-                using (entity.db db = new entity.db())
+                using (db db = new db())
                 {
                     int RoleID = db.contact_role
                         .Where(x => x.is_principal && x.id_company == entity.CurrentSession.Id_Company)
@@ -450,18 +455,19 @@ namespace cntrl.Controls
                         }
                     }
                    
-
                     db.contacts.Add(contact);
                     db.SaveChanges();
                     AddTag(contact);
+
                     Name = contact.name;
+                    ContactID = contact.id_contact;
                 }
             }
             else
             {
-                using (entity.db db = new entity.db())
+                using (db db = new db())
                 {
-                    entity.contact contact = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
+                    contact contact = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
 
                     if (contact != null)
                     {
@@ -490,11 +496,18 @@ namespace cntrl.Controls
             LoadData();
 
             //Once data is loaded, put name and set focus on search box to make things easier.
-            tbxSearch.Text = Name;
             tbxSearch.Focus();
+            //tbxSearch.Text = Name;
+            var key = Key.A;                    // Key to send
+            var routedEvent = Keyboard.KeyUpEvent; // Event to send
+            tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, key) { RoutedEvent = routedEvent });
 
+            var _enter = Key.Enter;                    // Key to send
+            tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
+            
             popContactInfo.IsOpen = false;
         }
+
         public void AddTag(contact _contact)
         {
             string[] tagsArray = tbxTag.Text.Split(',');
@@ -502,7 +515,7 @@ namespace cntrl.Controls
             {
                 if (strTag != "")
                 {
-                    using (entity.db db = new entity.db())
+                    using (db db = new db())
                     {
                         contact_tag tag = db.contact_tag.Where(x => x.name == strTag).FirstOrDefault();
                         if (tag == null)
@@ -512,7 +525,8 @@ namespace cntrl.Controls
                             db.contact_tag.Add(tag);
                             db.SaveChanges();
                         }
-                         contact_tag_detail tag_detail = db.contact_tag_detail.Where(x => x.id_tag == tag.id_tag && x.id_contact == _contact.id_contact).FirstOrDefault();
+                        contact_tag_detail tag_detail = db.contact_tag_detail.Where(x => x.id_tag == tag.id_tag && x.id_contact == _contact.id_contact).FirstOrDefault();
+
                         if (tag_detail == null)
                         {
                             tag_detail = new contact_tag_detail();
@@ -523,9 +537,6 @@ namespace cntrl.Controls
                         }
                     }
                 }
-
-
-
             }
         }
 
@@ -537,6 +548,13 @@ namespace cntrl.Controls
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             popContactInfo.IsOpen = false;
+        }
+
+        private void btnNew_Click(object sender, MouseButtonEventArgs e)
+        {
+            ContactID = 0;
+            tbxSearch.Text = "";
+            OpenContactCRUD(null, null);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 ProductTransferDB.item_transfer.Remove((item_transfer)item_transferDataGrid.SelectedItem);
@@ -72,7 +72,7 @@ namespace Cognitivo.Product
             }
             else
             {
-                toolBar.msgWarning("Please Select a record");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -86,7 +86,7 @@ namespace Cognitivo.Product
             }
             else
             {
-                toolBar.msgWarning("Please Select a record");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -214,11 +214,6 @@ namespace Cognitivo.Product
                     if (item_transfer_detail.movement_id > 0)
                     {
                         entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
-
-                        //item_movement item_movement = ProductTransferDB.item_movement
-                        //    .Where(x => x.id_movement == item_transfer_detail.movement_id)
-                        //    .FirstOrDefault();
-
                         Items_InStockLIST = stockBrillo.ScalarMovement((long)item_transfer_detail.movement_id);
                     }
                 }
@@ -269,7 +264,10 @@ namespace Cognitivo.Product
                                     stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                                     DimensionList, null, null
                                     );
+
                     item_movement_dest.parent = item_movement.parent;
+                    item_movement.barcode = item_movement.parent != null ? item_movement.parent.barcode : entity.Brillo.Barcode.RandomGenerator();
+
                     ProductTransferDB.item_movement.Add(item_movement_dest);
 
                     item_transfer.status = Status.Transfer.Approved;
@@ -281,16 +279,9 @@ namespace Cognitivo.Product
                 entity.Brillo.Document.Start.Automatic(item_transfer, item_transfer.app_document_range);
             }
 
-            try
+            if (ProductTransferDB.SaveChanges() > 0)
             {
-                if (ProductTransferDB.SaveChanges() > 0)
-                {
-                    toolBar.msgSaved(ProductTransferDB.NumberOfRecords);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                toolBar.msgSaved(ProductTransferDB.NumberOfRecords);
             }
         }
 

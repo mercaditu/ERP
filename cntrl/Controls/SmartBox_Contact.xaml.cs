@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -74,18 +75,18 @@ namespace cntrl.Controls
                 {
                     ContactID = Contact.ID;
                     Text = Contact.Name;
-                    if (AutoShow==false)
-                    {
-                        popContact.IsOpen = false;
-                    }
-                  
 
-                    if (popContactInfo.IsOpen)
+                    if (AutoShow)
                     {
                         OpenContactCRUD(null, null);
                     }
 
                     Select?.Invoke(this, new RoutedEventArgs());
+                }
+                else
+                {
+                    //This will allow user to create a new Contact with pressing enter.
+                    OpenContactCRUD(null, null);
                 }
             }
         }
@@ -340,6 +341,11 @@ namespace cntrl.Controls
             if (ContactID == 0 && new entity.Brillo.Security(entity.App.Names.Contact).create)
             {
                 popContactInfo.IsOpen = true;
+
+                tbxGovernmentID.Text = tbxSearch.Text.All(char.IsDigit) ? tbxSearch.Text : "";
+                tbxName.Text = Regex.IsMatch(tbxSearch.Text, @"[a-zA-Z]+") ? tbxSearch.Text : "";
+
+                tbxName.Focus();
             }
             else if (ContactID > 0 && new entity.Brillo.Security(entity.App.Names.Contact).edit)
             {
@@ -347,16 +353,15 @@ namespace cntrl.Controls
 
                 using (entity.db db = new entity.db())
                 {
-                    entity.contact contact = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
-                    if (contact != null)
+                    if (db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault() != null)
                     {
-                        tbxName.Text = contact.name;
-                        tbxGovernmentID.Text = contact.gov_code;
-                        tbxAddress.Text = contact.address;
-                        tbxTelephone.Text = contact.telephone;
-                        tbxEmail.Text = contact.email;
-                        tbxContactRole.Content = contact.contact_role != null ? contact.contact_role.name : "";
-                        tbxPriceList.Content = contact.item_price_list != null ? contact.item_price_list.name : "";
+                        tbxName.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().name;
+                        tbxGovernmentID.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().gov_code;
+                        tbxAddress.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().address;
+                        tbxTelephone.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().telephone;
+                        tbxEmail.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().email;
+                        tbxContactRole.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role.name : "";
+                        tbxPriceList.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list.name : "";
                     }
                 }
             }
@@ -439,8 +444,11 @@ namespace cntrl.Controls
                              return;
                         }
                     }
+
                     db.contacts.Add(contact);
                     db.SaveChanges();
+
+                    Name = contact.name;
                 }
             }
             else
@@ -456,6 +464,7 @@ namespace cntrl.Controls
                         contact.address = tbxAddress.Text;
                         contact.telephone = tbxTelephone.Text;
                         contact.email = tbxEmail.Text;
+
                         if (smartBoxContactSetting.Default.EmailNecessary == true)
                         {
                             if (string.IsNullOrEmpty(contact.email))
@@ -463,6 +472,7 @@ namespace cntrl.Controls
                                 return;
                             }
                         }
+
                         db.SaveChanges();
 
                         Name = contact.name;
@@ -471,7 +481,10 @@ namespace cntrl.Controls
             }
 
             LoadData();
+
+            //Once data is loaded, put name and set focus on search box to make things easier.
             tbxSearch.Text = Name;
+            tbxSearch.Focus();
 
             popContactInfo.IsOpen = false;
         }
@@ -483,7 +496,6 @@ namespace cntrl.Controls
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
-            
             popContactInfo.IsOpen = false;
         }
     }

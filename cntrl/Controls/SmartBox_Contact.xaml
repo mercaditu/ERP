@@ -107,10 +107,11 @@
                 <StackPanel>
                     <Grid>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="i" VerticalAlignment="Center" Foreground="White" FontFamily="/cntrl;component/Resources/#cognitivo"/>
+                            <Label Content="i" VerticalAlignment="Center"
+                                       Foreground="Gainsboro" FontFamily="/cntrl;component/Resources/#cognitivo"/>
                             <Label Content="{lex:Loc Contact}" FontWeight="Medium" Foreground="White"/>
                         </StackPanel>
-                        <Label Content="c" VerticalAlignment="Center" Margin="5"
+                        <Label Content="c" VerticalAlignment="Center"
 					           HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
 					           FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
                     </Grid>
@@ -120,9 +121,9 @@
                         </Grid.Background>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
-                        <pref:ImageViewer Width="128" ReferenceID="{Binding ContactID}"/>
+                        <pref:ImageViewer MaxWidth="128" ReferenceID="{Binding ContactID}"/>
                         <StackPanel Margin="8" Grid.Column="1">
                             <TextBox x:Name="tbxName" 
                                          metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Name}" 

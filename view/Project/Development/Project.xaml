@@ -6,13 +6,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:pref="clr-namespace:Cognitivo.Sales"
-      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
-      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
           xmlns:lex="http://wpflocalizeextension.codeplex.com"
           lex:LocalizeDictionary.DesignCulture="en-US"
           lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -54,65 +51,68 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Background="White" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <StackPanel HorizontalAlignment="left" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Height="544" Margin="0,45,0,0">
-                <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}" />
-                <control:SmartBox_Contact x:Name="contactComboBox" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Get_Customers="True" Select="contactComboBox_Select" />
-                <Label Content="{lex:Loc Template}" Style="{StaticResource input_label}" />
-                <Label Content="{Binding project_template.name, Mode=OneWay}" Style="{StaticResource generic_Label}" />
+        <ScrollViewer Grid.Column="1" Background="White">
+            <Grid>
+                <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Height="544" Margin="0,45,0,0">
+                    <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}" />
+                    <control:SmartBox_Contact x:Name="contactComboBox" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Get_Customers="True" Select="contactComboBox_Select" />
+                    <Label Content="{lex:Loc Template}" Style="{StaticResource input_label}" />
+                    <Label Content="{Binding project_template.name, Mode=OneWay}" Style="{StaticResource generic_Label}" />
 
-                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
-                <TextBox Text="{Binding name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
-                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="64" />
-                <Label Content="{lex:Loc Template}" Style="{StaticResource input_label}" />
-                <ComboBox x:Name="cbxTemplate" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource project_templateViewSource}}"
+                    <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="64" />
+                    <Label Content="{lex:Loc Template}" Style="{StaticResource input_label}" />
+                    <ComboBox x:Name="cbxTemplate" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource project_templateViewSource}}"
                           DisplayMemberPath="name" SelectedValuePath="id_project_template"
                           SelectedValue="{Binding id_project_template, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-                <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
-                <ComboBox Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource branchViewSource}}"
+                    <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
+                    <ComboBox Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource branchViewSource}}"
                           DisplayMemberPath="name" SelectedValuePath="id_branch"
                           SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-                <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
-                <DatePicker  Style="{StaticResource input_datepicker}"
+                    <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
+                    <DatePicker  Style="{StaticResource input_datepicker}"
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 					            SelectedDate="{Binding est_start_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
-                <DatePicker Style="{StaticResource input_datepicker}"
+                    <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
+                    <DatePicker Style="{StaticResource input_datepicker}"
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 					            SelectedDate="{Binding est_end_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
-                <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center"
+                    <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
+                    <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center"
                                                  CollectionViewSource="{StaticResource project_tagViewSource}"
                                                  focusGrid="True" Height="27" Width="256"
                                                  KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-                    <cntrl:SearchableTextbox.Columns>
-                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
+                        <cntrl:SearchableTextbox.Columns>
+                            <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
                                                           Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
-                    </cntrl:SearchableTextbox.Columns>
-                </cntrl:SearchableTextbox>
-                <DataGrid x:Name="project_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                        </cntrl:SearchableTextbox.Columns>
+                    </cntrl:SearchableTextbox>
+                    <DataGrid x:Name="project_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
                                       HeadersVisibility="None"
                                       ItemsSource="{Binding Source={StaticResource Projectproject_tag_detail}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding project_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
-                        <DataGridTemplateColumn Width="Auto" Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="customcmd:CustomCommands.Delete"
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding project_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete"
                                                     Style="{StaticResource btnDeleteChildStyle}"
                                                     CommandParameter="{Binding}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
         </ScrollViewer>
+        
         <cntrl:toolBar x:Name="toolBar" appName="Project"
 			           btnNew_Click="btnNew_Click"
 			           btnDelete_Click="btnDelete_Click"

@@ -903,6 +903,7 @@ namespace entity.Brillo.Logic
                     item_movement.code = parent_Movement.code;
 
                     item_movement.parent = db.item_movement.Find(parent_Movement.MovementID);
+                    item_movement.barcode = item_movement.parent != null ? item_movement.parent.barcode : Barcode.RandomGenerator();
 
                     if (ApplicationID == App.Names.Transfer)
                     {
@@ -1312,6 +1313,7 @@ namespace entity.Brillo.Logic
                     }
                 }
 
+                //Generate a barcode for datetime tick to prevent duplication.
                 item_movement.barcode = Barcode.RandomGenerator();
 
                 if (DimensionList != null)

@@ -701,7 +701,8 @@ namespace entity.Brillo.Document
                     lot_number = g.code,
                     trans_date = g.trans_date,
                     exp_date = g.expire_date,
-                    quantity = g.credit - g.debit
+                    quantity = g.credit - g.debit,
+                    ean18 = g.barcode
                 }).ToList();
 
             return reportDataSource;

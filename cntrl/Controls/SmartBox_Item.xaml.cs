@@ -188,6 +188,7 @@ namespace cntrl.Controls
         private void LoadData()
         {
             progBar.Visibility = Visibility.Visible;
+            tbxSearch.IsEnabled = false;
             Task task = Task.Factory.StartNew(() => LoadData_Thread());
         }
 
@@ -199,7 +200,11 @@ namespace cntrl.Controls
                 Items = Execute.Items.AsQueryable();
             }
 
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () { progBar.Visibility = Visibility.Collapsed; }));
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () 
+            {
+                tbxSearch.IsEnabled = true;
+                progBar.Visibility = Visibility.Collapsed;
+            }));
         }
 
         private void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

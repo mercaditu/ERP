@@ -105,6 +105,7 @@ namespace entity
                     item_transfer_detail.RaisePropertyChanged("status");
                 }
             }
+
             if (item_transfer.item_transfer_detail.Count() == item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Approved).Count())
             {
                 item_transfer.status = Status.Transfer.Approved;
@@ -152,11 +153,8 @@ namespace entity
                 item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                 item_transfer.RaisePropertyChanged("number");
             }
-
-            // }
-
+            
             base.SaveChanges();
-
             return NumberOfRecords;
         }
 
@@ -234,6 +232,8 @@ namespace entity
                     item_movement_dest.parent = item_movement.parent;
                     item_movement_dest.code = item_movement.code;
                     item_movement_dest.expire_date = item_movement.expire_date;
+                    item_movement_dest.barcode = item_movement.parent != null ? item_movement.parent.barcode : "";
+
                     base.item_movement.Add(item_movement_dest);
                 }
             }

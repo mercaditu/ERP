@@ -494,9 +494,11 @@ namespace Cognitivo.Sales
             cntrl.PanelAdv.pnlSalesBudget pnlSalesBudget = new cntrl.PanelAdv.pnlSalesBudget();
 
             crud_modal.Visibility = Visibility.Visible;
-            if (sbxContact.ContactID > 0)
+
+            sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
+            if (sales_order != null)
             {
-                contact contact = SalesOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = SalesOrderDB.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefault();
                 pnlSalesBudget._contact = contact;
             }
             pnlSalesBudget.SalesBudget_Click += SalesBudget_Click;
@@ -626,5 +628,7 @@ namespace Cognitivo.Sales
                 }
             }
         }
+
+      
     }
 }

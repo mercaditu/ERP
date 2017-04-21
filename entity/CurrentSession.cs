@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -333,13 +334,13 @@ namespace entity
                 Security_CurdList = cntx.security_curd.Where(x => x.id_role == User.id_role).ToList();
 
                 //Privilage
-                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role ).ToList();
+                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role ).Include(x=>x.security_privilage).ToList();
                 Security_role_privilageList = Security_role_privilageList.Where(x => x.security_privilage != null).ToList();
                 try
                 {
-                    Allow_UpdateSalesDetail = Security_role_privilageList
+                    Allow_UpdateSalesDetail = !(Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice &&
-                        x.has_privilage).FirstOrDefault() !=null ? true : false;
+                        x.has_privilage).FirstOrDefault() !=null ? true : false);
 
                     Allow_BarCodeSearchOnly = Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.ItemBarcodeSearchOnly &&

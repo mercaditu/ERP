@@ -702,7 +702,7 @@ namespace entity.Brillo.Document
                     trans_date = g.trans_date,
                     exp_date = g.expire_date,
                     quantity = g.credit - g.debit,
-                    ean18 = g.barcode
+                    barcode = g.barcode
                 }).ToList();
 
             return reportDataSource;

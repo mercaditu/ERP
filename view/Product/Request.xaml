@@ -232,7 +232,7 @@
                         		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="{lex:Loc Cognitivo:local:Dimension}" Width="256" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Dimension}" Width="100" FontWeight="Bold" />
                                                 <DataGridTextColumn Binding="{Binding value, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
                                                 <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

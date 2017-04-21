@@ -383,7 +383,7 @@ namespace cntrl.Controls
             
             if (ContactID == 0)
             {
-                entity.contact contact = new entity.contact()
+                contact contact = new contact()
                 {
                     name = tbxName.Text,
                     gov_code = tbxGovernmentID.Text,
@@ -412,7 +412,7 @@ namespace cntrl.Controls
                     }
                     else
                     {
-                        entity.contact_role role = new entity.contact_role()
+                        contact_role role = new contact_role()
                         {
                             name = "Default Role",
                             is_principal = true,
@@ -436,7 +436,7 @@ namespace cntrl.Controls
                     }
                     else
                     {
-                        entity.item_price_list list = new entity.item_price_list()
+                        item_price_list list = new item_price_list()
                         {
                             name = "Default Price List",
                             is_default = true

@@ -36,7 +36,7 @@ namespace Cognitivo.Sales
                 await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
 
-            sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));
+            sales_budgetViewSource = FindResource("sales_budgetViewSource") as CollectionViewSource;
             sales_budgetViewSource.Source = SalesBudgetDB.sales_budget.Local;
             sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
@@ -236,15 +236,18 @@ namespace Cognitivo.Sales
 
             if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item && a.movement_id == id_movement).FirstOrDefault() == null || AllowDuplicateItem)
             {
-                sales_budget_detail _sales_budget_detail = new sales_budget_detail();
-                _sales_budget_detail.State = EntityState.Added;
-                _sales_budget_detail.sales_budget = sales_budget;
-                _sales_budget_detail.Quantity_InStock = QuantityInStock;
-                _sales_budget_detail.Contact = sales_budget.contact;
-                _sales_budget_detail.quantity = quantity;
-                _sales_budget_detail.item_description = item.description;
-                _sales_budget_detail.item = item;
-                _sales_budget_detail.id_item = item.id_item;
+                sales_budget_detail _sales_budget_detail = new sales_budget_detail()
+                {
+                    State = EntityState.Added,
+                    sales_budget = sales_budget,
+                    Quantity_InStock = QuantityInStock,
+                    Contact = sales_budget.contact,
+                    quantity = quantity,
+                    item_description = item.description,
+                    item = item,
+                    id_item = item.id_item
+                };
+
                 if (item_movement != null)
                 {
                     _sales_budget_detail.batch_code = item_movement.code;
@@ -269,30 +272,28 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
-            try
+            if (!string.IsNullOrEmpty(query))
             {
-                if (!string.IsNullOrEmpty(query))
+                sales_budgetViewSource.View.Filter = i =>
                 {
-                    sales_budgetViewSource.View.Filter = i =>
+                    sales_budget sales_budget = i as sales_budget;
+                    string name = sales_budget.contact != null ? sales_budget.contact.name : "";
+                    string number = sales_budget.number != null ? sales_budget.number : "";
+
+                    if (name.ToLower().Contains(query.ToLower()) && number.ToLower().Contains(query.ToLower()))
                     {
-                        sales_budget sales_budget = i as sales_budget;
-                        if (sales_budget.contact.name.ToLower().Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    sales_budgetViewSource.View.Filter = null;
-                }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
-            catch (Exception)
-            { }
+            else
+            {
+                sales_budgetViewSource.View.Filter = null;
+            }
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -307,10 +308,9 @@ namespace Cognitivo.Sales
         {
             try
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    //sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
                     sales_budget_detailDataGrid.CancelEdit();
                     SalesBudgetDB.sales_budget_detail.Remove(e.Parameter as sales_budget_detail);
                     sales_budgetsales_budget_detailViewSource.View.Refresh();
@@ -328,10 +328,14 @@ namespace Cognitivo.Sales
             {
                 contact contact = await SalesBudgetDB.contacts.FindAsync(sbxContact.ContactID);
                 sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
-                sales_budget.id_contact = contact.id_contact;
-                sales_budget.contact = contact;
-                contact.Check_CreditAvailability();
-                Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+
+                if (contact != null && sales_budget != null)
+                {
+                    sales_budget.id_contact = contact.id_contact;
+                    sales_budget.contact = contact;
+                    contact.Check_CreditAvailability();
+                    Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                }
             }
         }
 
@@ -394,10 +398,11 @@ namespace Cognitivo.Sales
         {
             if (sales_budgetViewSource != null)
             {
-                sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-                sales_budget.app_currencyfx = SalesBudgetDB.app_currencyfx.Find(sales_budget.id_currencyfx);
-                Class.CreditLimit Limit = new Class.CreditLimit();
-                Limit.Check_CreditAvailability(sales_budget);
+                if (sales_budgetViewSource.View.CurrentItem is sales_budget sales_budget)
+                {
+                    sales_budget.app_currencyfx = SalesBudgetDB.app_currencyfx.Find(sales_budget.id_currencyfx);
+                    new Class.CreditLimit().Check_CreditAvailability(sales_budget);
+                }
             }
         }
 
@@ -407,53 +412,66 @@ namespace Cognitivo.Sales
 
             if (sales_budget != null && sales_budget.status == Status.Documents_General.Approved)
             {
-                sales_order sales_order = new sales_order();
-                sales_order.barcode = sales_budget.barcode;
-                sales_order.code = sales_budget.code;
-                sales_order.trans_date = DateTime.Now;
-                sales_order.comment = sales_budget.comment;
-                sales_order.delivery_date = sales_budget.delivery_date;
-                sales_order.id_condition = sales_budget.id_condition;
-                sales_order.id_contact = sales_budget.id_contact;
-                sales_order.contact = sales_budget.contact;
-                sales_order.id_contract = sales_budget.id_contract;
-                sales_order.id_currencyfx = sales_budget.id_currencyfx;
-                sales_order.id_project = sales_budget.id_project;
-                sales_order.id_sales_rep = sales_budget.id_sales_rep;
-                sales_order.id_weather = sales_budget.id_weather;
-                sales_order.is_impex = sales_budget.is_impex;
-                sales_order.sales_budget = sales_budget;
+                sales_order sales_order = new sales_order()
+                {
+                    barcode = sales_budget.barcode,
+                    code = sales_budget.code,
+                    trans_date = DateTime.Now,
+                    comment = sales_budget.comment,
+                    delivery_date = sales_budget.delivery_date,
+                    id_condition = sales_budget.id_condition,
+                    id_contact = sales_budget.id_contact,
+                    contact = sales_budget.contact,
+                    id_contract = sales_budget.id_contract,
+                    id_currencyfx = sales_budget.id_currencyfx,
+                    id_project = sales_budget.id_project,
+                    id_sales_rep = sales_budget.id_sales_rep,
+                    id_weather = sales_budget.id_weather,
+                    is_impex = sales_budget.is_impex,
+                    sales_budget = sales_budget
+                };
 
                 foreach (sales_budget_detail sales_budget_detail in sales_budget.sales_budget_detail)
                 {
-                    sales_order_detail sales_order_detail = new sales_order_detail();
-                    sales_order_detail.comment = sales_budget_detail.comment;
-                    sales_order_detail.discount = sales_budget_detail.discount;
-                    sales_order_detail.id_item = sales_budget_detail.id_item;
-                    sales_order_detail.item_description = sales_budget_detail.item_description;
-                    sales_order_detail.id_location = sales_budget_detail.id_location;
-                    sales_order_detail.id_project_task = sales_budget_detail.id_project_task;
-                    sales_order_detail.id_sales_budget_detail = sales_budget_detail.id_sales_budget_detail;
-                    sales_order_detail.id_vat_group = sales_budget_detail.id_vat_group;
-                    sales_order_detail.quantity = sales_budget_detail.quantity - sales_budget_detail.sales_order_detail.Sum(x => x.quantity);
-                    sales_order_detail.unit_cost = sales_budget_detail.unit_cost;
-                    sales_order_detail.unit_price = sales_budget_detail.unit_price;
-                    sales_order_detail.movement_id = sales_budget_detail.movement_id;
-
-                    if (sales_budget_detail.expire_date != null || !string.IsNullOrEmpty(sales_budget_detail.batch_code))
+                    sales_order_detail sales_order_detail = new sales_order_detail()
                     {
-                        sales_order_detail.expire_date = sales_budget_detail.expire_date;
-                        sales_order_detail.batch_code = sales_budget_detail.batch_code;
-                    }
+                        comment = sales_budget_detail.comment,
+                        discount = sales_budget_detail.discount,
+                        id_item = sales_budget_detail.id_item,
+                        item_description = sales_budget_detail.item_description,
+                        id_location = sales_budget_detail.id_location,
+                        id_project_task = sales_budget_detail.id_project_task,
+                        id_sales_budget_detail = sales_budget_detail.id_sales_budget_detail,
+                        id_vat_group = sales_budget_detail.id_vat_group,
+                        quantity = sales_budget_detail.quantity - sales_budget_detail.sales_order_detail
+                                                                    .Where(x => x.sales_order.status != Status.Documents_General.Annulled)
+                                                                    .Sum(x => x.quantity),
+                        unit_cost = sales_budget_detail.unit_cost,
+                        unit_price = sales_budget_detail.unit_price,
+                        movement_id = sales_budget_detail.movement_id,
+                        expire_date = sales_budget_detail.expire_date,
+                        batch_code = sales_budget_detail.batch_code
+                    };
 
-                    sales_order.sales_order_detail.Add(sales_order_detail);
+                    ///Prevent adding 0 Quantity items. In the code above, 
+                    ///We check Budget.Quantity - Order.Quantity where Order is not annulled.
+                    ///If there are pending or approved Orders, those quantities will be included inthe minus, and if those
+                    ///values cause the Current Sales Order Detail to have 0 or negative quantities, then we cannot push it
+                    ///into a new sales order.
+                    
+                    if (sales_order_detail.quantity > 0)
+                    {
+                        sales_order.sales_order_detail.Add(sales_order_detail);
+                    }
                 }
 
                 SalesBudgetDB.sales_order.Add(sales_order);
                 crm_opportunity crm_opportunity = sales_budget.crm_opportunity;
                 crm_opportunity.sales_order.Add(sales_order);
                 SalesBudgetDB.SaveChanges();
-                MessageBox.Show("Order Created Successfully..");
+
+                //toolBar.
+                MessageBox.Show(entity.Brillo.Localize.StringText("Done"));
             }
             else
             {

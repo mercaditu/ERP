@@ -77,10 +77,14 @@ namespace cntrl.Controls
                     ContactID = Contact.ID;
                     Text = Contact.Name;
 
+                    //If Autoshow is true, then the contact information will show automatically.
                     if (AutoShow)
                     {
                         OpenContactCRUD(null, null);
                     }
+
+                    //This helps close the popup to make way for other data.
+                    popContact.IsOpen = false;
 
                     Select?.Invoke(this, new RoutedEventArgs());
                 }

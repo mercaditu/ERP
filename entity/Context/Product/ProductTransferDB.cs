@@ -229,6 +229,9 @@ namespace entity
                               stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                               null, null, null
                               );
+
+                    ///TODO: Using the parent movement of the debit seems wrong. Because the parent will have 
+                    ///one debit and one credit, which will leave it at the same level.
                     item_movement_dest.parent = item_movement.parent;
                     item_movement_dest.code = item_movement.code;
                     item_movement_dest.expire_date = item_movement.expire_date;

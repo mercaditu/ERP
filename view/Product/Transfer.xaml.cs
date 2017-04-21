@@ -26,26 +26,27 @@ namespace Cognitivo.Product
 
         private void toolBar_btnNew_Click(object sender)
         {
-            item_transfer item_transfer = new item_transfer();
-            item_transfer.State = EntityState.Added;
-            item_transfer.transfer_type = entity.item_transfer.Transfer_Types.Transfer;
-            item_transfer.IsSelected = true;
-            item_transfer.status = Status.Transfer.Pending;
-            item_transfer.app_branch_origin = ProductTransferDB.app_branch.Find(CurrentSession.Id_Branch);
-            ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
+            item_transfer item_transfer = new item_transfer()
+            {
+                State = EntityState.Added,
+                transfer_type = entity.item_transfer.Transfer_Types.Transfer,
+                IsSelected = true,
+                status = Status.Transfer.Pending,
+                app_branch_origin = ProductTransferDB.app_branch.Find(CurrentSession.Id_Branch)
+            };
 
-            item_transferViewSource.View.MoveCurrentToLast();
+            ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
+            item_transferViewSource.View.MoveCurrentTo(item_transfer);
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-            item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
-            if (item_transfer != null)
+            if ((item_transfer)item_transferViewSource.View.CurrentItem != null)
             {
-                item_transfer.app_branch_destination = (id_branch_destinComboBox.SelectedItem as app_branch);
-                item_transfer.app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
-                item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
-                item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
+                ((item_transfer)item_transferViewSource.View.CurrentItem).app_branch_destination = (id_branch_destinComboBox.SelectedItem as app_branch);
+                ((item_transfer)item_transferViewSource.View.CurrentItem).app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
+                ((item_transfer)item_transferViewSource.View.CurrentItem).app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
+                ((item_transfer)item_transferViewSource.View.CurrentItem).app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
             }
 
             ProductTransferDB.SaveChanges();
@@ -96,7 +97,7 @@ namespace Cognitivo.Product
             await ProductTransferDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
             security_userViewSource.Source = ProductTransferDB.security_user.Local;
 
-            ProductTransferDB.app_measurement.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+            await ProductTransferDB.app_measurement.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
             CollectionViewSource app_measurevolume = FindResource("app_measurevolume") as CollectionViewSource;
             CollectionViewSource app_measureweight = FindResource("app_measureweight") as CollectionViewSource;
             app_measurevolume.Source = ProductTransferDB.app_measurement.Local;
@@ -209,7 +210,7 @@ namespace Cognitivo.Product
             }
             else
             {
-                toolBar.msgWarning("Please select");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -223,21 +224,14 @@ namespace Cognitivo.Product
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
+            if (MessageBox.Show(entity.Brillo.Localize.PleaseSelect, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-                    //DeleteDetailGridRow
-                    item_transfer_detailDataGrid.CancelEdit();
-                    ProductTransferDB.item_transfer_detail.Remove(e.Parameter as item_transfer_detail);
-                    item_transferitem_transfer_detailViewSource.View.Refresh();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+                
+                //DeleteDetailGridRow
+                item_transfer_detailDataGrid.CancelEdit();
+                ProductTransferDB.item_transfer_detail.Remove(e.Parameter as item_transfer_detail);
+                item_transferitem_transfer_detailViewSource.View.Refresh();
             }
         }
 
@@ -303,32 +297,36 @@ namespace Cognitivo.Product
                           item.id_item_type != item.item_type.Service &&
                           item.id_item_type != item.item_type.ServiceContract)
                 {
-                    item_transfer_detail item_transfer_detail = new item_transfer_detail();
+                    item_transfer_detail item_transfer_detail = new item_transfer_detail()
+                    {
+                        status = Status.Documents_General.Pending,
+                        quantity_origin = 1,
+                        timestamp = DateTime.Now,
+                        item_product = item.item_product.FirstOrDefault(),
+                        Quantity_InStock = sbxItem.QuantityInStock
+                    };
 
-                    item_transfer_detail.status = Status.Documents_General.Pending;
-                    item_transfer_detail.quantity_origin = 1;
-
-                    item_transfer_detail.timestamp = DateTime.Now;
-
-                    item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
-                    item_transfer_detail.Quantity_InStock = sbxItem.QuantityInStock; //(decimal)StockCalculations.Count_ByBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now);
                     item_transfer_detail.RaisePropertyChanged("item_product");
 
                     if (itemMovement.item_movement != null)
                     {
                         item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
+
                         foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                         {
-                            item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
-                            item_transfer_dimension.item_transfer_detail = item_transfer_detail;
-                            item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
-                            if (ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
+                            item_transfer_dimension item_transfer_dimension = new item_transfer_dimension()
                             {
-                                item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
-                            }
+                                item_transfer_detail = item_transfer_detail,
+                                id_dimension = item_movement_dimension.id_dimension,
+                                value = item_movement_dimension.value
+                            };
 
-                            item_transfer_dimension.value = item_movement_dimension.value;
+                            if (ProductTransferDB.app_dimension.Find(item_movement_dimension.id_dimension) != null)
+                            {
+                                item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Find(item_movement_dimension.id_dimension);
+                            }
+                            
                             item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                         }
                     }

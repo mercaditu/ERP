@@ -287,16 +287,19 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
+
             payment_detail payment_detail = e.NewItem as payment_detail;
+            if (payment_detail != null && payment != null && sales_invoice != null)
+            {
+                payment_detail.State = EntityState.Added;
+                payment_detail.IsSelected = true;
+                payment_detail.Default_id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+                payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+                payment_detail.id_currency = CurrentSession.Currency_Default.id_currency;
 
-            payment_detail.State = EntityState.Added;
-            payment_detail.IsSelected = true;
-            payment_detail.Default_id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
-            payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
-            payment_detail.id_currency = CurrentSession.Currency_Default.id_currency;
-
-            payment_detail.id_payment = payment.id_payment;
-            payment_detail.payment = payment;
+                payment_detail.id_payment = payment.id_payment;
+                payment_detail.payment = payment;
+            }
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -316,30 +319,32 @@ namespace Cognitivo.Sales
             if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 sales_invoice_detail sales_invoice_detail = e.Parameter as sales_invoice_detail;
+                payment_detail payment_detail = e.Parameter as payment_detail;
+
                 if (sales_invoice_detail != null)
                 {
-                    //DeleteDetailGridRow
-                    dgvSalesDetail.CancelEdit();
-
                     sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                    if (sales_invoice != null)
+                    {
+                        sales_invoice.sales_invoice_detail.Remove(sales_invoice_detail);
+                        sales_invoiceViewSource.View.Refresh();
 
-                    sales_invoice.sales_invoice_detail.Remove(sales_invoice_detail);
-                    sales_invoiceViewSource.View.Refresh();
-                    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-
-                    // btnPromotion_Click(sender, e);
+                        CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                    }
                 }
-                else if (e.Parameter as payment_detail != null)
+                else if (payment_detail != null)
                 {
                     payment payment = paymentViewSource.View.CurrentItem as payment;
-                    //DeleteDetailGridRow
-                    dgvPaymentDetail.CancelEdit();
-                    payment.payment_detail.Remove(e.Parameter as payment_detail);
 
-                    paymentViewSource.View.Refresh();
-                    CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
-                    paymentpayment_detailViewSource.View.Refresh();
+                    if (payment != null)
+                    {
+                        payment.payment_detail.Remove(payment_detail);
+                        paymentViewSource.View.Refresh();
+
+                        CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
+                        paymentpayment_detailViewSource.View.Refresh();
+                    }
                 }
             }
         }

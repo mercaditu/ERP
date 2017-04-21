@@ -97,7 +97,7 @@ namespace Cognitivo.Product
                         {
                             foreach (var Batch in BatchList.Where(x => x.ProductID == i).OrderBy(x => x.ExpiryDate))
                             {
-                                item_inventory_detail item_inventory_detail = new item_inventory_detail()
+                                item_inventory.item_inventory_detail.Add(new item_inventory_detail()
                                 {
                                     value_system = Batch.Quantity,
                                     unit_value = Batch.Cost,
@@ -110,9 +110,7 @@ namespace Cognitivo.Product
                                     app_location = app_location,
                                     id_location = app_location.id_location,
                                     timestamp = DateTime.Now,
-                                };
-
-                                item_inventory.item_inventory_detail.Add(item_inventory_detail);
+                                });
                             }
                         }
                         else
@@ -159,31 +157,46 @@ namespace Cognitivo.Product
             app_branch app_branch = app_branchViewSource.View.CurrentItem as app_branch;
             if (app_branch != null)
             {
-                item_inventory item_inventory = new item_inventory();
-                item_inventory.IsSelected = true;
-                item_inventory.id_branch = app_branch.id_branch;
-                item_inventory.trans_date = DateTime.Now;
+                item_inventory item_inventory = new item_inventory()
+                {
+                    IsSelected = true,
+                    id_branch = app_branch.id_branch,
+                    trans_date = DateTime.Now,
+                    State = EntityState.Added
+                };
+
                 InventoryDB.Entry(item_inventory).State = EntityState.Added;
-                item_inventory.State = EntityState.Added;
                 app_branchViewSource.View.MoveCurrentToFirst();
                 app_branchapp_locationViewSource.View.MoveCurrentToFirst();
                 item_inventoryViewSource.View.Refresh();
-                item_inventoryViewSource.View.MoveCurrentToLast();
+                item_inventoryViewSource.View.MoveCurrentTo(item_inventory);
             }
         }
 
         private void toolBar_btnEdit_Click(object sender)
         {
-            if (item_inventoryDataGrid.SelectedItem != null)
+            if (InventoryDB.item_inventory.Local.Where(x => x.IsSelected).Count() > 0)
             {
-                item_inventory item_inventory_old = (item_inventory)item_inventoryDataGrid.SelectedItem;
-                item_inventory_old.IsSelected = true;
-                item_inventory_old.State = EntityState.Modified;
-                InventoryDB.Entry(item_inventory_old).State = EntityState.Modified;
+                foreach (item_inventory existing_inv in InventoryDB.item_inventory.Local.Where(x => x.IsSelected))
+                {
+                    existing_inv.IsSelected = true;
+                    existing_inv.State = EntityState.Modified;
+                    InventoryDB.Entry(existing_inv).State = EntityState.Modified;
+                }
+            }
+            else if (item_inventoryViewSource.View.CurrentItem != null)
+            {
+                if (item_inventoryViewSource.View.CurrentItem is item_inventory item_inventory)
+                {
+                    item_inventory selected_inv = (item_inventory)item_inventoryDataGrid.SelectedItem;
+                    selected_inv.IsSelected = true;
+                    selected_inv.State = EntityState.Modified;
+                    InventoryDB.Entry(selected_inv).State = EntityState.Modified;
+                }
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 

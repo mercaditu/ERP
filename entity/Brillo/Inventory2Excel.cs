@@ -19,7 +19,6 @@ namespace entity.Brillo
                 {
                     InventoryDetail Detail = new InventoryDetail()
                     {
-
                         //Hidden Columns
                         DetailID = inv_detail.id_inventory_detail,
                         LocationID = inv_detail.id_location,
@@ -30,7 +29,7 @@ namespace entity.Brillo
                         Brand = inv_detail.item_product.item.item_brand != null ? inv_detail.item_product.item.item_brand.name : "",
                         Code = inv_detail.item_product.item.code,
                         //Probably Trim item name if it is too long
-                        Product = inv_detail.item_product.item.name.Substring(0, 254),
+                        Product = inv_detail.item_product.item.name, //.Substring(0, 254),
 
                         ExpiryDate = inv_detail.expire_date,
                         BatchCode = inv_detail.batch_code,

@@ -145,11 +145,11 @@
                                     <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}" FontSize="8"/>
                                     <Label x:Name="tbxPriceList" Style="{StaticResource input_label}"/>
                                 </StackPanel>
-                                <StackPanel>
-                                    <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" FontSize="8"/>
-                                    <Label x:Name="tbxContactRole" Style="{StaticResource input_label}"/>
-                                </StackPanel>
+                              
+
                             </StackPanel>
+                            <TextBox x:Name="tbxTag" Text="{Binding TagList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Tag}" 
+                                         Background="WhiteSmoke" BorderThickness="0" Width="200" Margin="4"/>
                             <Button Click="SaveContact_Click" Content="{lex:Loc Save}" Margin="4" Width="Auto"/>
                         </StackPanel>
                     </Grid>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -360,7 +361,7 @@ namespace cntrl.Controls
                         tbxAddress.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().address;
                         tbxTelephone.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().telephone;
                         tbxEmail.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().email;
-                        tbxContactRole.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role.name : "";
+                       // tbxContactRole.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role.name : "";
                         tbxPriceList.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list.name : "";
                     }
                 }
@@ -444,10 +445,11 @@ namespace cntrl.Controls
                              return;
                         }
                     }
+                   
 
                     db.contacts.Add(contact);
                     db.SaveChanges();
-
+                    AddTag(contact);
                     Name = contact.name;
                 }
             }
@@ -474,6 +476,7 @@ namespace cntrl.Controls
                         }
 
                         db.SaveChanges();
+                        AddTag(contact);
 
                         Name = contact.name;
                     }
@@ -487,6 +490,39 @@ namespace cntrl.Controls
             tbxSearch.Focus();
 
             popContactInfo.IsOpen = false;
+        }
+        public void AddTag(contact _contact)
+        {
+            string[] tagsArray = tbxTag.Text.Split(',');
+            foreach (string strTag in tagsArray)
+            {
+                if (strTag != "")
+                {
+                    using (entity.db db = new entity.db())
+                    {
+                        contact_tag tag = db.contact_tag.Where(x => x.name == strTag).FirstOrDefault();
+                        if (tag == null)
+                        {
+                            tag = new contact_tag();
+                            tag.name = strTag;
+                            db.contact_tag.Add(tag);
+                            db.SaveChanges();
+                        }
+                         contact_tag_detail tag_detail = db.contact_tag_detail.Where(x => x.id_tag == tag.id_tag && x.id_contact == _contact.id_contact).FirstOrDefault();
+                        if (tag_detail == null)
+                        {
+                            tag_detail = new contact_tag_detail();
+                            tag_detail.id_contact = _contact.id_contact;
+                            tag_detail.id_tag = tag.id_tag;
+                            db.contact_tag_detail.Add(tag_detail);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+
+
+
+            }
         }
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)

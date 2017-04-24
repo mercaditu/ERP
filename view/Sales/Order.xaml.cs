@@ -177,7 +177,7 @@ namespace Cognitivo.Sales
                 sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
                 sales_order.id_contact = contact.id_contact;
                 sales_order.contact = contact;
-                contact.Check_CreditAvailability();
+                new Class.CreditLimit().Check_CreditAvailability(sales_order);
                 Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
             }
         }

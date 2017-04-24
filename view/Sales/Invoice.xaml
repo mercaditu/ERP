@@ -7,6 +7,8 @@
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:controller="entity."
+      xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -22,6 +24,8 @@
 						Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        
+        <Salescontroller:SalesInvoice x:Key="SalesInvoice"/>
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:Status2Enable x:Key="Status2Enable" />

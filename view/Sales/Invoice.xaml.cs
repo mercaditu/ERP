@@ -56,7 +56,7 @@ namespace Cognitivo.Sales
             InitializeComponent();
 
             //Load DB into Controller.
-            SalesDB = FindResource("sales_invoicesales_invoice_detailViewSource") as entity.Controller.Sales.SalesInvoice;
+            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.SalesInvoice;
             SalesDB.db = db;
         }
 
@@ -512,7 +512,7 @@ namespace Cognitivo.Sales
 
                 pnlPacking = new cntrl.PanelAdv.pnlPacking()
                 {
-                    _entity = db,
+                    _entity =db,
                     _contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault() //sbxContact.Contact as contact;
                 };
 

@@ -17,7 +17,7 @@ namespace cntrl.PanelAdv
         public List<sales_packing> selected_sales_packing { get { return _selected_sales_packing; } set { _selected_sales_packing = value; } }
 
         public contact _contact { get; set; }
-        public SalesInvoiceDB _entity { get; set; }
+        public db _entity { get; set; }
         public sales_invoice _sales_invoice;
 
         public pnlPacking()

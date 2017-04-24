@@ -138,19 +138,23 @@ namespace Cognitivo.Sales
 
         private void Delete_Click(object sender)
         {
-            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-            if (sales_invoice != null && sales_invoice.State != EntityState.Added)
+            foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected ))
             {
-                sales_invoice.is_archived = true;
-                sales_invoice.State = EntityState.Modified;
-                db.SaveChanges();
+                if (invoice != null && invoice.State != EntityState.Added)
+                {
+                    invoice.is_archived = true;
+                    // sales_invoice.State = EntityState.Modified;
+                    
+                }
+               
+            }
+            db.SaveChanges();
 
-                Load_PrimaryDataThread(null, null);
-            }
-            else if (sales_invoice != null && sales_invoice.State == EntityState.Added)
-            {
-                Cancel_Click(sender);
-            }
+            db = new db();
+            SalesDB.db = db;
+
+            Load_PrimaryDataThread(null, null);
+
         }
 
         private void Save_Click(object sender)
@@ -389,7 +393,7 @@ namespace Cognitivo.Sales
                         }
                         else
                         {
-                            sales_invoice_detail _sales_invoice_detail = 
+                            sales_invoice_detail _sales_invoice_detail =
                                 SalesDB.Create_Detail(ref sales_invoice, item, null,
                                 SalesSettings.AllowDuplicateItem,
                                 sbxItem.QuantityInStock,
@@ -516,7 +520,7 @@ namespace Cognitivo.Sales
 
                 pnlPacking = new cntrl.PanelAdv.pnlPacking()
                 {
-                    _entity =db,
+                    _entity = db,
                     _contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault() //sbxContact.Contact as contact;
                 };
 
@@ -582,11 +586,11 @@ namespace Cognitivo.Sales
                     else
                     {
                         //If Sales Order does not exist, use Price and VAT From standard of the company.
-                        SalesDB.Create_Detail(ref _sales_invoice, 
-                            _sales_packing_detail.item, 
-                            null, 
-                            false, 
-                            0, 
+                        SalesDB.Create_Detail(ref _sales_invoice,
+                            _sales_packing_detail.item,
+                            null,
+                            false,
+                            0,
                             (decimal)_sales_packing_detail.verified_quantity);
                     }
                 }
@@ -740,7 +744,7 @@ namespace Cognitivo.Sales
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
             }
-            
+
         }
 
         private void RecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -813,8 +817,8 @@ namespace Cognitivo.Sales
 
         private void Return_Click(object sender, MouseButtonEventArgs e)
         {
-            if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice && 
-                sales_invoice.status == Status.Documents_General.Approved && 
+            if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice &&
+                sales_invoice.status == Status.Documents_General.Approved &&
                 sales_invoice.sales_return.Count() == 0)
             {
                 sales_return sales_return = new sales_return()

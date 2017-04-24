@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:cntrl="clr-namespace:cntrl.Controls;assembly=cntrl"
+       xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
@@ -24,6 +25,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Salescontroller:SalesInvoice x:Key="SalesInvoice"/>
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />

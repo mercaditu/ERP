@@ -260,7 +260,7 @@ namespace entity.Controller.Sales
             {
                 if (invoice.id_sales_invoice == 0 && invoice.id_contact > 0)
                 {
-                    db.SaveChanges();
+                    SaveChanges_and_Validate();
                 }
 
                 invoice.app_condition = db.app_condition.Find(invoice.id_condition);

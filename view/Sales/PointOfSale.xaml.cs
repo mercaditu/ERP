@@ -14,8 +14,8 @@ namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
-        private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
-
+        //private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
+        private db db = new db();
         private PaymentDB PaymentDB; // = new PaymentDB();
         private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
 
@@ -23,12 +23,15 @@ namespace Cognitivo.Sales
         /// CollectionViewSource
         /// </summary>
         private CollectionViewSource sales_invoiceViewSource;
-
+        private entity.Controller.Sales.SalesInvoice SalesDB;
         private CollectionViewSource paymentViewSource;
-
+        Settings SalesSettings = new Settings();
         public PointOfSale()
         {
             InitializeComponent();
+            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.SalesInvoice;
+            SalesDB.db = db;
+          
         }
 
         #region ActionButtons
@@ -102,7 +105,7 @@ namespace Cognitivo.Sales
                 ///Approve Sales Invoice.
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
-                SalesInvoiceDB.Approve();
+                SalesDB.Approve();
 
                 List<payment_schedual> payment_schedualList = PaymentDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
                 PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
@@ -116,13 +119,14 @@ namespace Cognitivo.Sales
         {
             ///Creating new SALES INVOICE for upcomming sale.
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-            sales_invoice sales_invoice = SalesInvoiceDB.New(0, false);
-            SalesInvoiceDB.sales_invoice.Add(sales_invoice);
+           
+            sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
+            db.sales_invoice.Add(sales_invoice);
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-                sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
+                sales_invoiceViewSource.Source = db.sales_invoice.Local;
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }));
 
@@ -151,7 +155,7 @@ namespace Cognitivo.Sales
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = await SalesInvoiceDB.contacts.FindAsync(sbxContact.ContactID);
+                contact contact = await db.contacts.FindAsync(sbxContact.ContactID);
                 if (contact != null)
                 {
                     sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
@@ -171,7 +175,7 @@ namespace Cognitivo.Sales
 
                 if (sales_invoice != null)
                 {
-                    item item = await SalesInvoiceDB.items.FindAsync(sbxItem.ItemID);
+                    item item = await db.items.FindAsync(sbxItem.ItemID);
                     item_product item_product = item.item_product.FirstOrDefault();
 
                     if (item_product != null && item_product.can_expire)
@@ -183,7 +187,11 @@ namespace Cognitivo.Sales
                     else
                     {
                         decimal QuantityInStock = sbxItem.QuantityInStock;
-                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, null, sbxItem.Quantity);
+                        sales_invoice_detail _sales_invoice_detail =
+                              SalesDB.Create_Detail(ref sales_invoice, item, null,
+                                SalesSettings.AllowDuplicateItem,
+                                sbxItem.QuantityInStock,
+                                sbxItem.Quantity);
                     }
 
                     sales_invoiceViewSource.View.Refresh();
@@ -213,9 +221,9 @@ namespace Cognitivo.Sales
             New_Sale_Payment();
 
             //PAYMENT TYPE
-            await SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
+            await db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-            payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
+            payment_typeViewSource.Source = db.payment_type.Local;
 
             cbxSalesRep.ItemsSource = CurrentSession.SalesReps; //await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
 
@@ -223,7 +231,7 @@ namespace Cognitivo.Sales
             app_currencyViewSource.Source = CurrentSession.Currencies;
 
             int Id_Account = CurrentSession.Id_Account;
-            app_account app_account = await SalesInvoiceDB.app_account.FindAsync(CurrentSession.Id_Account);
+            app_account app_account = await db.app_account.FindAsync(CurrentSession.Id_Account);
 
             if (app_account != null)
             {
@@ -261,7 +269,7 @@ namespace Cognitivo.Sales
 
         private void Cancel_MouseDown(object sender, EventArgs e)
         {
-            SalesInvoiceDB.CancelAllChanges();
+            SalesDB.CancelAllChanges();
             PaymentDB.CancelAllChanges();
 
             New_Sale_Payment();
@@ -405,7 +413,7 @@ namespace Cognitivo.Sales
                 {
                     if (sales_invoice_detail.id_sales_invoice_detail != sales_invoice_detail.PromoID)
                     {
-                        SalesInvoiceDB.sales_invoice_detail.Remove(sales_invoice_detail);
+                        db.sales_invoice_detail.Remove(sales_invoice_detail);
                     }
                 }
             }
@@ -417,13 +425,13 @@ namespace Cognitivo.Sales
                 //Gets the Item into view.
                 if (sales_invoice_detail.item == null)
                 {
-                    sales_invoice_detail.item = await SalesInvoiceDB.items.FindAsync(sales_invoice_detail.id_item);
+                    sales_invoice_detail.item = await db.items.FindAsync(sales_invoice_detail.id_item);
                 }
 
                 //Gets the Promotion into view.
                 if (sales_invoice_detail.id_sales_promotion > 0 && sales_invoice_detail.sales_promotion == null)
                 {
-                    sales_invoice_detail.sales_promotion = await SalesInvoiceDB.sales_promotion.FindAsync(sales_invoice_detail.id_sales_promotion);
+                    sales_invoice_detail.sales_promotion = await db.sales_promotion.FindAsync(sales_invoice_detail.id_sales_promotion);
                 }
             }
 
@@ -437,7 +445,7 @@ namespace Cognitivo.Sales
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                item item = SalesInvoiceDB.items.Find(sbxItem.ItemID);
+                item item = db.items.Find(sbxItem.ItemID);
 
                 cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
 
@@ -447,10 +455,14 @@ namespace Cognitivo.Sales
 
                     if (pnl_ItemMovementExpiry.MovementID > 0)
                     {
-                        item_movement item_movement = SalesInvoiceDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                        item_movement item_movement = db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                         decimal QuantityInStock = sbxItem.QuantityInStock;
 
-                        sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, QuantityInStock, false, item_movement, sbxItem.Quantity);
+                        sales_invoice_detail _sales_invoice_detail =
+                              SalesDB.Create_Detail(ref sales_invoice, item, null,
+                                SalesSettings.AllowDuplicateItem,
+                                sbxItem.QuantityInStock,
+                                sbxItem.Quantity);
                         (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
                     }
                 }

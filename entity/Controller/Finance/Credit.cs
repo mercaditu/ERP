@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 
 namespace entity.Controller.Finance
 {
@@ -31,14 +32,26 @@ namespace entity.Controller.Finance
                         {
                             using (db db = new db())
                             {
-                                var BalanceList = db.payment_schedual
-                                        .Where(x => x.id_contact == Customer.id_contact)
-                                        .GroupBy(ps => new { ps.app_currencyfx.id_currency })
-                                        .Select(s => new
-                                        {
-                                            CurrencyID = s.Max(ps => ps.app_currencyfx.id_currency),
-                                            Balance = s.Sum(ps => ps.debit - ps.credit)
-                                        }).ToList();
+                                var BalanceList =
+                                    from ps in db.payment_schedual
+                                    join ac in db.app_currencyfx on ps.id_currencyfx equals ac.id_currencyfx
+                                    where ps.id_contact == Customer.id_contact
+                                    group ac by ac.id_currency into grouped
+                                    select new
+                                    {
+                                        CurrencyID = grouped.Key,
+                                        Balance = ps.Sum(debit) - Sum(ps.credit)
+                                    };
+
+                                //db.payment_schedual
+                                //        .Where(x => x.id_contact == Customer.id_contact)
+                                //        .Include(q => q.app_currencyfx)
+                                //        .GroupBy(ps => new { ps.app_currencyfx.id_currency })
+                                //        .Select(s => new
+                                //        {
+                                //            CurrencyID = s.Max(ps => ps.app_currencyfx.id_currency),
+                                //            Balance = s.Sum(ps => ps.debit - ps.credit)
+                                //        }).ToList();
 
                                 decimal BalanceInDefault = 0;
 

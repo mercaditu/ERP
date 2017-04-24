@@ -5,9 +5,7 @@ using System.Windows.Media.Animation;
 
 namespace cntrl.Controls
 {
-    /// <summary>
-    /// Interaction logic for Totals.xaml
-    /// </summary>
+
     public partial class Totals : UserControl
     {
         public static readonly DependencyProperty Has_RoundingProperty = DependencyProperty.Register("Has_Rounding", typeof(bool), typeof(Totals), new PropertyMetadata(false));
@@ -83,12 +81,9 @@ namespace cntrl.Controls
             set { SetValue(AppNameProperty, value); }
         }
 
-        public bool CanOpen { get; set; }
-
         public Totals()
         {
             InitializeComponent();
-            CanOpen = true;
         }
 
         private void lblTotal_TargetUpdated(object sender, DataTransferEventArgs e)
@@ -99,15 +94,7 @@ namespace cntrl.Controls
 
         private void btnInformation_Click(object sender, RoutedEventArgs e)
         {
-            if (CanOpen)
-            {
-                popup.IsOpen = true;
-            }
-        }
-
-        public void btnClean_btnClick(object sender, RoutedEventArgs e)
-        {
-            //Do nothing. Just for Lost Focus.
+            popup.IsOpen = true;
         }
     }
 }

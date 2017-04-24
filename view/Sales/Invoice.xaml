@@ -7,7 +7,7 @@
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-	  xmlns:converter="clr-namespace:Cognitivo.Converters"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 		  xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -32,7 +32,6 @@
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}" />
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailsales_packinglist_relationViewSource" Source="{Binding sales_packinglist_relation, Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" />
     </Page.Resources>
-
     <Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="67*" />
@@ -54,13 +53,7 @@
                     <StackPanel Background="WhiteSmoke" Grid.Column="0">
                         <StackPanel HorizontalAlignment="Center">
                             <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />
-
                             <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
-                            <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" />
-
-                            <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
-                            <Controls:SmartBox_Geography x:Name="grid_sbxGeography" />
-
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="4,0">
                                     <Label Style="{StaticResource input_label}">
@@ -85,7 +78,7 @@
                             </StackPanel>
 
                             <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo"
-									Style="{DynamicResource MetroCircleButtonStyle}" Click="btnGridSearch"
+									Style="{DynamicResource MetroCircleButtonStyle}" Click="GridSearch"
 									VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue" />
                         </StackPanel>
                     </StackPanel>
@@ -169,7 +162,7 @@
                                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
 										 Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
                                 <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-									   HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" Foreground="White"
+									   HorizontalAlignment="Right" MouseDown="Cancel_MouseDown" Foreground="White"
 									   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
                             </Grid>
                             <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True"
@@ -191,7 +184,7 @@
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}"
-							 ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="sales_invoiceDataGrid_SelectionChanged">
+							 ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="Invoice_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
@@ -227,8 +220,7 @@
                                         <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}" />
                                     </Grid>
                                     <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False"
-															   Select="set_ContactPref" can_Edit="True" can_New="True"
-															   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+															   Select="Set_ContactPref" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     <StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
                                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
@@ -250,7 +242,7 @@
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True,
 											  Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											  SelectedValuePath="id_condition" Grid.Row="1" SelectionChanged="cbxCondition_SelectionChanged">
+											  SelectedValuePath="id_condition" Grid.Row="1" SelectionChanged="Condition_SelectionChanged">
                                         <ComboBox.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <VirtualizingStackPanel />
@@ -272,7 +264,7 @@
                                     <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}" />
                                     <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesInvoice"
 										  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-										  LostFocus="cbxCurrency_LostFocus" />
+										  LostFocus="Currency_LostFocus" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
@@ -376,7 +368,7 @@
 													IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource Status2Enable}}">
                                             <Label Content="$" Style="{StaticResource btn_Label}" />
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
-												<Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp">
+												<Hyperlink PreviewMouseUp="RecivePayment_PreviewMouseUp">
 													<Run Text="{lex:Loc Payment}" />
 												</Hyperlink>
                                             </TextBlock>
@@ -385,7 +377,7 @@
 													IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
                                             <Label Content="$" Style="{StaticResource btn_Label}" />
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
-												<Hyperlink PreviewMouseUp="btnAccountsRecievable_PreviewMouseUp">
+												<Hyperlink PreviewMouseUp="AccountsRecievable_PreviewMouseUp">
 													<Run Text="{lex:Loc AccountsReceivable}" />
 												</Hyperlink>
                                             </TextBlock>
@@ -401,12 +393,12 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="" Style="{StaticResource btn_Label}" />
-                                            <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click"><Run Text="{lex:Loc Document}" /></Hyperlink></TextBlock>
+                                            <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="Print_Click"><Run Text="{lex:Loc Document}" /></Hyperlink></TextBlock>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="" Style="{StaticResource btn_Label}" />
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
-										<Hyperlink PreviewMouseUp="toolBar_btnReturn_Click">
+										<Hyperlink PreviewMouseUp="Return_Click">
 											<Run Text="{lex:Loc SalesReturn}" />
 										</Hyperlink>
                                             </TextBlock>
@@ -415,7 +407,7 @@
 													Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                             <Label Content="O" Style="{StaticResource btn_Label}" />
                                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
-									<Hyperlink PreviewMouseUp="btnSalesOrder_Click">
+									<Hyperlink PreviewMouseUp="SalesOrder_Click">
 										<Run Text="{lex:Loc SalesOrder}" />
 									</Hyperlink>
                                             </TextBlock>
@@ -448,7 +440,7 @@
 													Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=AvailableCredit, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                             <Label Content="X" Style="{StaticResource ico_Label}" />
                                             <TextBlock Text="{lex:Loc AvailableCredit}" Style="{StaticResource text_Label}" />
-                                            <TextBlock><Hyperlink Click="lblCheckCredit">Check</Hyperlink></TextBlock>
+                                            <TextBlock><Hyperlink Click="CheckCredit">Check</Hyperlink></TextBlock>
                                             <TextBlock Text="{Binding contact.credit_availability, Mode=TwoWay,
 													   UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{StaticResource text_Data}" />
                                         </StackPanel>
@@ -515,7 +507,7 @@
 
                                             <Label Content="O" Style="{StaticResource ico_Label}" HorizontalContentAlignment="Center" />
                                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
-												<Hyperlink PreviewMouseUp="btnPackingList_Click">
+												<Hyperlink PreviewMouseUp="PackingList_Click">
 													<Run Text="{lex:Loc PackingList}" />
 												</Hyperlink>
                                             </TextBlock>
@@ -554,7 +546,7 @@
                                             <ComboBox Width="Auto" Margin="0" x:Name="cbxBranch" Style="{StaticResource ComboToLabelStyle}"
 													  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Branches}}"
 													  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-													  DisplayMemberPath="name" SelectedValuePath="id_branch"  SelectionChanged="cbxBranch_SelectionChanged"
+													  DisplayMemberPath="name" SelectedValuePath="id_branch"  SelectionChanged="Branch_SelectionChanged"
 													  SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                                 <ComboBox.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -584,21 +576,6 @@
                                         <Label Content="Y" Style="{StaticResource ico_Label}" />
                                         <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}" />
                                         <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
-                                        <!--<ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
-												  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-												  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-												  DisplayMemberPath="name" Width="Auto"
-												  SelectedValuePath="id_project"
-												  SelectedValue="{Binding id_project, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-											-->
-                                        <!--ItemsSource="{Binding Source={StaticResource projectViewSource}}"-->
-                                        <!--
-											<ComboBox.ItemsPanel>
-												<ItemsPanelTemplate>
-													<VirtualizingStackPanel />
-												</ItemsPanelTemplate>
-											</ComboBox.ItemsPanel>
-										</ComboBox>-->
                                     </StackPanel>
                                     <StackPanel VerticalAlignment="Center" Margin="2">
                                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
@@ -618,13 +595,13 @@
                             <StackPanel VerticalAlignment="Top" Margin="8,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
 										Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                                 <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" Margin="0,0,444,0" />
-                                <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" can_New="True"
+                                <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select"
 														QuantityIntegration="True"
                                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                             </StackPanel>
 
-                            <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}"
-                                             Has_Rounding="{Binding ElementName=cbxCurrency,Path=HasRounding,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}"
+                                             Has_Rounding="{Binding ElementName=cbxCurrency, Path=HasRounding, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											 Currency="{Binding app_currencyfx.app_currency.code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											 DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
 											 DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -651,9 +628,9 @@
 														   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
 									  CanUserAddRows="False"
 									  ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
-									  InitializingNewItem="sales_invoice_detailDataGrid_InitializingNewItem"
-									  RowEditEnding="sales_invoice_detailDataGrid_RowEditEnding"
-									  CellEditEnding="sales_invoice_detailDataGrid_CellEditEnding">
+									  InitializingNewItem="Detail_InitializingNewItem"
+									  RowEditEnding="Detail_RowEditEnding"
+									  CellEditEnding="Detail_CellEditEnding">
                                 <DataGrid.RowStyle>
                                     <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">
                                         <Setter Property="Foreground" Value="{Binding InStock, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Color}}" />
@@ -765,17 +742,17 @@
         </TabControl>
 
         <cntrl:toolBar x:Name="toolBar" appName="SalesInvoice"
-					   btnNew_Click="btnNew_Click"
-					   btnDelete_Click="btnDelete_Click"
-					   btnSave_Click="btnSave_Click"
-					   btnEdit_Click="toolBar_btnEdit_Click"
-					   btnSearch_Click="toolBar_btnSearch_Click"
-					   btnApprove_Click="btnApprove_Click"
-					   btnAnull_Click="toolBar_btnAnull_Click"
-					   btnCancel_Click="toolBar_btnCancel_Click"
+					   btnNew_Click="New_Click"
+					   btnDelete_Click="Delete_Click"
+					   btnSave_Click="Save_Click"
+					   btnEdit_Click="Edit_Click"
+					   btnSearch_Click="Search_Click"
+					   btnApprove_Click="Approve_Click"
+					   btnAnull_Click="Anull_Click"
+					   btnCancel_Click="Cancel_Click"
                        btnSync_Click="SalesInvoice_Loaded"
-                       btnApproveEdit_Click="toolBar_btnApproveEdit_Click"
-                       btnReApprove_Click="toolBar_btnReApprove_Click"
+                       btnApproveEdit_Click="ApproveEdit_Click"
+                       btnReApprove_Click="ReApprove_Click"
 					   MultipleStyleForm="True"
 
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

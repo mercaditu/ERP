@@ -36,7 +36,6 @@ namespace entity
         public override int SaveChanges()
         {
             validate_Invoice();
-
             return base.SaveChanges();
         }
 
@@ -444,24 +443,28 @@ namespace entity
         /// <returns></returns>
         public bool Check_CreditLimit(sales_invoice sales_invoice)
         {
-            //If Contact Credit Limit is none, we will assume that Credit Limit is not enforced.
-            if (sales_invoice.contact.credit_limit != null)
+            if (sales_invoice.contact != null)
             {
-                //If Sales Contract is Cash. Credit Limit is not enforced.
-                if (sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval) > 0)
+                //If Contact Credit Limit is none, we will assume that Credit Limit is not enforced.
+                if (sales_invoice.contact.credit_limit != null)
                 {
-                    //Script that checks Contacts Credit Availability.
-                    sales_invoice.contact.Check_CreditAvailability();
-
-                    //Check if Availability is greater than 0.
-                    if (sales_invoice.contact.credit_availability > 0)
+                    //If Sales Contract is Cash. Credit Limit is not enforced.
+                    if (sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval) > 0)
                     {
-                        decimal TotalSales = sales_invoice.GrandTotal;
-                        decimal CreditAvailability = (decimal)sales_invoice.contact.credit_availability;
+                        //Script that checks Contacts Credit Availability.
+                        Controller.Finance.Credit Credit = new Controller.Finance.Credit();
+                        Credit.CheckLimit_InSales(sales_invoice.GrandTotal, sales_invoice.app_currencyfx, sales_invoice.contact, sales_invoice.app_contract);
 
-                        if (CreditAvailability < TotalSales)
+                        //Check if Availability is greater than 0.
+                        if (sales_invoice.contact.credit_availability > 0)
                         {
-                            return false;
+                            decimal TotalSales = sales_invoice.GrandTotal;
+                            decimal CreditAvailability = (decimal)sales_invoice.contact.credit_availability;
+
+                            if (CreditAvailability < TotalSales)
+                            {
+                                return false;
+                            }
                         }
                     }
                 }

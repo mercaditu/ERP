@@ -278,6 +278,7 @@
     <Compile Include="Brillo\Logic\Range.cs" />
     <Compile Include="Brillo\Document\Reciept.cs" />
     <Compile Include="Brillo\Parent.cs" />
+    <Compile Include="Brillo\PrecateBuilder.cs" />
     <Compile Include="Brillo\ProductCost.cs" />
     <Compile Include="Brillo\Promotion\PromotionProduct.xaml.cs">
       <DependentUpon>PromotionProduct.xaml</DependentUpon>
@@ -326,6 +327,9 @@
     <Compile Include="Context\Project\ProjectDB.cs" />
     <Compile Include="Context\Project\ProjectTemplateDB.cs" />
     <Compile Include="Context\Purchase\PurchasePackingListDB.cs" />
+    <Compile Include="Controller\Finance\Credit.cs" />
+    <Compile Include="Controller\Finance\Payment.cs" />
+    <Compile Include="Controller\Sales\SalesInvoice.cs" />
     <Compile Include="Crm\crm_schedual.cs" />
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="DebeHaber\Sync.cs" />

@@ -15,12 +15,12 @@ namespace cntrl.Controls
     {
         public SmartBox_Geography()
         {
+            InitializeComponent();
+
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
             }
-
-            InitializeComponent();
 
             continentViewSource = ((CollectionViewSource)(FindResource("continentViewSource")));
             countryViewSource = ((CollectionViewSource)(FindResource("countryViewSource")));
@@ -29,7 +29,7 @@ namespace cntrl.Controls
             areaViewSource = ((CollectionViewSource)(FindResource("areaViewSource")));
         }
 
-        private entity.db db = new entity.db();
+        private db db = new db();
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Geography));
 
@@ -56,17 +56,14 @@ namespace cntrl.Controls
 
             if (GeoDGV.SelectedItem != null)
             {
-                entity.app_geography Geography = GeoDGV.SelectedItem as entity.app_geography;
-
-                if (Geography != null)
+                if (GeoDGV.SelectedItem is app_geography Geography)
                 {
                     GeographyID = Geography.id_geography;
                     Text = Geography.name;
 
                     ContactPopUp.IsOpen = false;
 
-                    if (Select != null)
-                    { Select(this, new RoutedEventArgs()); }
+                    Select?.Invoke(this, new RoutedEventArgs());
                 }
             }
         }
@@ -124,7 +121,7 @@ namespace cntrl.Controls
             FocusNavigationDirection focusDirecction = new FocusNavigationDirection();
 
             DataGrid DataGrid = (DataGrid)sender;
-            entity.app_geography app_geography = (entity.app_geography)DataGrid.SelectedItem;
+            app_geography app_geography = (app_geography)DataGrid.SelectedItem;
 
             if (e.Key == Key.Right)
             {
@@ -136,7 +133,7 @@ namespace cntrl.Controls
             {
                 focusDirecction = FocusNavigationDirection.Previous;
                 // Bring all Children from Two Levels Up ->
-                entity.Status.geo_types geo_types = (entity.Status.geo_types)(Convert.ToInt32(app_geography.type) - 2);
+                Status.geo_types geo_types = (Status.geo_types)(Convert.ToInt32(app_geography.type) - 2);
                 taskSearch = Task.Factory.StartNew(() => Search_ChildElements(app_geography.parent, focusDirecction));
             }
             else if (e.Key == Key.Up || e.Key == Key.Down)
@@ -146,9 +143,9 @@ namespace cntrl.Controls
             }
         }
 
-        private void Search_ChildElements(entity.app_geography app_geography, FocusNavigationDirection focusDirecction)
+        private void Search_ChildElements(app_geography app_geography, FocusNavigationDirection focusDirecction)
         {
-            List<entity.app_geography> results = new List<entity.app_geography>();
+            List<app_geography> results = new List<app_geography>();
 
             results = db.app_geography.Where
                                     (y =>
@@ -158,25 +155,20 @@ namespace cntrl.Controls
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                continentViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.Continent).ToList();
-                DgContinent.Visibility = System.Windows.Visibility.Visible;
-                //ShowHideDGV(DgContinent, results.Where(x => x.type == entity.Status.geo_types.Continent).Count());
+                continentViewSource.Source = results.Where(x => x.type == Status.geo_types.Continent).ToList();
+                DgContinent.Visibility = Visibility.Visible;
 
-                countryViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.Country).ToList();
-                DgCountry.Visibility = System.Windows.Visibility.Visible;
-                //ShowHideDGV(DgCountry, results.Where(x => x.type == entity.Status.geo_types.Country).Count());
+                countryViewSource.Source = results.Where(x => x.type == Status.geo_types.Country).ToList();
+                DgCountry.Visibility = Visibility.Visible;
 
-                stateViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.State).ToList();
-                DgState.Visibility = System.Windows.Visibility.Visible;
-                //ShowHideDGV(DgState, results.Where(x => x.type == entity.Status.geo_types.State).Count());
+                stateViewSource.Source = results.Where(x => x.type == Status.geo_types.State).ToList();
+                DgState.Visibility = Visibility.Visible;
 
-                cityViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.City).ToList();
-                DgCity.Visibility = System.Windows.Visibility.Visible;
-                //ShowHideDGV(DgCity, results.Where(x => x.type == entity.Status.geo_types.City).Count());
+                cityViewSource.Source = results.Where(x => x.type == Status.geo_types.City).ToList();
+                DgCity.Visibility = Visibility.Visible;
 
-                areaViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.Zone).ToList();
-                DgArea.Visibility = System.Windows.Visibility.Visible;
-                //ShowHideDGV(DgArea, results.Where(x => x.type == entity.Status.geo_types.Zone).Count());
+                areaViewSource.Source = results.Where(x => x.type == Status.geo_types.Zone).ToList();
+                DgArea.Visibility = Visibility.Visible;
 
                 if (focusDirecction == FocusNavigationDirection.Right || focusDirecction == FocusNavigationDirection.Right)
                 {
@@ -191,7 +183,7 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
-            List<entity.app_geography> results = new List<entity.app_geography>();
+            List<app_geography> results = new List<app_geography>();
 
             results.AddRange(db.app_geography
             .Where(x =>
@@ -211,20 +203,20 @@ namespace cntrl.Controls
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                continentViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.Continent).ToList();
-                ShowHideDGV(DgContinent, results.Where(x => x.type == entity.Status.geo_types.Continent).Count());
+                continentViewSource.Source = results.Where(x => x.type == Status.geo_types.Continent).ToList();
+                ShowHideDGV(DgContinent, results.Where(x => x.type == Status.geo_types.Continent).Count());
 
-                countryViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.Country).ToList();
-                ShowHideDGV(DgCountry, results.Where(x => x.type == entity.Status.geo_types.Country).Count());
+                countryViewSource.Source = results.Where(x => x.type == Status.geo_types.Country).ToList();
+                ShowHideDGV(DgCountry, results.Where(x => x.type == Status.geo_types.Country).Count());
 
-                stateViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.State).ToList();
-                ShowHideDGV(DgState, results.Where(x => x.type == entity.Status.geo_types.State).Count());
+                stateViewSource.Source = results.Where(x => x.type == Status.geo_types.State).ToList();
+                ShowHideDGV(DgState, results.Where(x => x.type == Status.geo_types.State).Count());
 
-                cityViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.City).ToList();
-                ShowHideDGV(DgCity, results.Where(x => x.type == entity.Status.geo_types.City).Count());
+                cityViewSource.Source = results.Where(x => x.type == Status.geo_types.City).ToList();
+                ShowHideDGV(DgCity, results.Where(x => x.type == Status.geo_types.City).Count());
 
-                areaViewSource.Source = results.Where(x => x.type == entity.Status.geo_types.Zone).ToList();
-                ShowHideDGV(DgArea, results.Where(x => x.type == entity.Status.geo_types.Zone).Count());
+                areaViewSource.Source = results.Where(x => x.type == Status.geo_types.Zone).ToList();
+                ShowHideDGV(DgArea, results.Where(x => x.type == Status.geo_types.Zone).Count());
 
                 ContactPopUp.IsOpen = true;
                 progBar.IsActive = false;
@@ -233,16 +225,7 @@ namespace cntrl.Controls
 
         private void ShowHideDGV(DataGrid DataGrid, int Count)
         {
-            if (Count > 0)
-            {
-                //DataGrid.Visibility = System.Windows.Visibility.Visible;
-                DataGrid.Opacity = 1;
-            }
-            else
-            {
-                //DataGrid.Visibility = System.Windows.Visibility.Collapsed;
-                DataGrid.Opacity = 0.32;
-            }
+            DataGrid.Opacity = Count > 0 ? 1 : 0.32;
         }
     }
 }

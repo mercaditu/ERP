@@ -264,9 +264,9 @@
                 </StackPanel>
                 <Controls:Totals Grid.Row="1" Grid.Column="1"
                                   Has_Rounding="{Binding ElementName=cbxCurrency,Path=HasRounding,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-					GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_returnViewSource}, StringFormat={}{0:N}}"
-											 Currency="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-											 VerticalAlignment="Top" HorizontalAlignment="Right" CanOpen="False" />
+					GrandTotal="{Binding GrandTotal, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_returnViewSource}, StringFormat={}{0:N}}"
+											 Currency="{Binding app_currencyfx.app_currency.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+											 VerticalAlignment="Top" HorizontalAlignment="Right" />
 
                 <Grid Grid.ColumnSpan="2" Grid.Row="1">
                     <StackPanel  MinHeight="100" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">

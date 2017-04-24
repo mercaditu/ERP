@@ -108,58 +108,7 @@ namespace cntrl.PanelAdv
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            foreach (payment_schedual payment_schedual in PaymentSchedualList)
-            {
-                if (payment_schedual.Action == payment_schedual.Actions.Delete)
-                {
-                    entity.Brillo.Logic.Payment _Payment = new entity.Brillo.Logic.Payment();
-                    _Payment.DeletePaymentSchedual(db, payment_schedual.id_payment_schedual);
-                }
-            }
 
-            ///Since the above Foreach will run through a mix of payment scheduals, we have no way of knowing if we will have
-            ///payment headers. So we run this code to clean.
-            List<payment> EmptyPayments = db.payments.Where(x => x.payment_detail.Count() == 0).ToList();
-            if (EmptyPayments.Count() > 0)
-            {
-                db.payments.RemoveRange(EmptyPayments);
-            }
-
-            foreach (item_movement item_movement in item_movementList)
-            {
-                if (item_movement.Action == item_movement.Actions.Delete)
-                {
-                    entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
-                    db.item_movement.Remove(item_movement);
-                }
-                else if (item_movement.Action == item_movement.Actions.ReApprove)
-                {
-                    foreach (var item in item_movement.child)
-                    {
-                        List<item_movement> item_movementList = db.item_movement.Where(x => 
-                        x.id_item_product == item_movement.id_item_product && 
-                        x.id_movement != item_movement.id_movement && 
-                        x.credit > 0).ToList();
-                        foreach (item_movement _item_movement in item_movementList)
-                        {
-                            if (_item_movement.avlquantity > item.credit)
-                            {
-                                item.parent = _item_movement;
-                            }
-                            else
-                            {
-                                item.parent = null;
-                            }
-                        }
-                    }
-                    db.item_movement.Remove(item_movement);
-                }
-            }
-
-            db.SaveChanges();
-            Grid parentGrid = (Grid)this.Parent;
-            parentGrid.Children.Clear();
-            parentGrid.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -398,15 +398,10 @@ namespace entity
                     if (String.IsNullOrEmpty(name))
                         return "Name needs to be filled";
                 }
-                //if (columnName == "gov_code")
-                //{
-                //    if (String.IsNullOrEmpty(gov_code))
-                //        return "Gov Code needs to be filled";
-                //}
                 if (columnName == "id_contact_role")
                 {
                     if (id_contact_role == 0)
-                        return "Contact role needs to be selected";
+                        return Brillo.Localize.PleaseSelect + " " + Brillo.Localize.StringText("ContactRole");
                 }
 
                 if (columnName == "code")
@@ -430,23 +425,5 @@ namespace entity
         }
 
         #endregion Validation
-
-        public void Check_CreditAvailability()
-        {
-            if (credit_limit != null)
-            {
-                if (credit_limit > 0 && id_contact != 0)
-                {
-                    using (db db = new db())
-                    {
-                        decimal pending = db.payment_schedual
-                                            .Where(x => x.id_contact == id_contact)
-                                            .Sum(x => (decimal?)(x.debit - x.credit)) ?? 0;
-                        credit_availability = credit_limit - pending;
-                        RaisePropertyChanged("credit_availability");
-                    }
-                }
-            }
-        }
     }
 }

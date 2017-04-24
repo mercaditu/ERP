@@ -6,8 +6,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:cntrl="clr-namespace:cntrl.Controls;assembly=cntrl"
-       xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
-          xmlns:Financecontroller="clr-namespace:entity.Controller.Finance;assembly=entity"
+      xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
+      xmlns:Financecontroller="clr-namespace:entity.Controller.Finance;assembly=entity"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
@@ -17,7 +17,8 @@
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
-	  Title="{lex:Loc PointOfSale}" Loaded="Page_Loaded" KeyDown="Page_KeyDown">
+	  Title="{lex:Loc PointOfSale}" 
+      Loaded="Page_Loaded" KeyDown="Page_KeyDown">
     <Page.Resources>
         <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
             <Style.Triggers>
@@ -376,6 +377,18 @@
                 <TextBlock Text=" -min" VerticalAlignment="Center" />
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal" DataContext="{Binding Source={StaticResource sales_invoiceViewSource}}"
+                        VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
+                       Content="{Binding NumberWatermark, Mode=OneWay}"/>
+                <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Content="|" Foreground="DimGray" />
+                <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
+                       Content="{Binding app_branch.name, Mode=OneWay}"/>
+                <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Content="|" Foreground="DimGray" />
+                <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
+                       Content="{Binding app_terminal.name, Mode=OneWay}"/>
+            </StackPanel>
+            
             <!-- SalesMan -->
             <StackPanel x:Name="stackLeft" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,40" RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
@@ -409,10 +422,10 @@
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
-					BorderBrush="White" BorderThickness="1">
-                        <Label Content="S" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-						VerticalAlignment="Center" HorizontalAlignment="Center"
-						Foreground="White" />
+					        BorderBrush="White" BorderThickness="1">
+                        <Label Content="S" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
+                               FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"
+						       Foreground="White" />
                     </Border>
                 </Grid>
             </StackPanel>

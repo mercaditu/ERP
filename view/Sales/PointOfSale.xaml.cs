@@ -16,7 +16,7 @@ namespace Cognitivo.Sales
     {
         //private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         private db db = new db();
-        private PaymentDB PaymentDB; // = new PaymentDB();
+      //  private PaymentDB PaymentDB; // = new PaymentDB();
         private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
 
         /// <summary>
@@ -24,13 +24,16 @@ namespace Cognitivo.Sales
         /// </summary>
         private CollectionViewSource sales_invoiceViewSource;
         private entity.Controller.Sales.SalesInvoice SalesDB;
+        private entity.Controller.Finance.Payment PaymentDB;
         private CollectionViewSource paymentViewSource;
         Settings SalesSettings = new Settings();
         public PointOfSale()
         {
             InitializeComponent();
-            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.SalesInvoice;
+            SalesDB = FindResource("SalesDB") as entity.Controller.Sales.SalesInvoice;
             SalesDB.db = db;
+          PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
+            PaymentDB.db = db;
           
         }
 
@@ -107,7 +110,7 @@ namespace Cognitivo.Sales
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesDB.Approve();
 
-                List<payment_schedual> payment_schedualList = PaymentDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+                List<payment_schedual> payment_schedualList = db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
                 PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
 
                 //Start New Sale
@@ -130,16 +133,16 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }));
 
-            PaymentDB = new PaymentDB();
+           
             ///Creating new PAYMENT for upcomming sale.
             payment payment = PaymentDB.New(true);
             payment.id_currencyfx = sales_invoice.id_currencyfx;
-            PaymentDB.payments.Add(payment);
+            db.payments.Add(payment);
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
-                paymentViewSource.Source = PaymentDB.payments.Local;
+                paymentViewSource.Source = db.payments.Local;
                 paymentViewSource.View.MoveCurrentTo(payment);
 
                 tabContact.Focus();
@@ -288,7 +291,7 @@ namespace Cognitivo.Sales
 
         private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            sales_invoiceViewSource.View.Refresh();
+          //  sales_invoiceViewSource.View.Refresh();
         }
 
         private void dgvPaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)

@@ -7,7 +7,7 @@
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-      xmlns:controller="entity."
+      xmlns:controller="clr-namespace:entity.Controller;assembly=entity"
       xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
@@ -24,7 +24,7 @@
 						Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
-        
+        <controller:DataFilter x:Key="DataFilter"/>
         <Salescontroller:SalesInvoice x:Key="SalesInvoice"/>
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />

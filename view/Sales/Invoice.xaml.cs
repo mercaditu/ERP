@@ -25,6 +25,7 @@ namespace Cognitivo.Sales
 
         private db db = new db();
         private entity.Controller.Sales.SalesInvoice SalesDB;
+        private entity.Controller.DataFilter DataFilter;
 
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
@@ -57,7 +58,10 @@ namespace Cognitivo.Sales
 
             //Load DB into Controller.
             SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.SalesInvoice;
+            DataFilter = FindResource("DataFilter") as entity.Controller.DataFilter;
             SalesDB.db = db;
+            SalesDB.Start_Range = SalesDB.Start_Range;
+            SalesDB.End_Range = SalesDB.End_Range;
         }
 
         #region DataLoad

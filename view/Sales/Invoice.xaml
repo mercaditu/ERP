@@ -24,7 +24,7 @@
 						Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
-        <controller:DataFilter x:Key="DataFilter"/>
+        <controller:WindowProperty x:Key="WindowProperty"/>
         <Salescontroller:SalesInvoice x:Key="SalesInvoice"/>
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
@@ -67,7 +67,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateStart" Width="124"
-												SelectedDate="{Binding ElementName=this, Path=Start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+												SelectedDate="{Binding Start_Range,Source={StaticResource WindowProperty},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
                                     <Label Style="{StaticResource input_label}">
@@ -77,7 +77,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateEnd" Width="124"
-												SelectedDate="{Binding ElementName=this, Path=End_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+												SelectedDate="{Binding End_Range,Source={StaticResource WindowProperty},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </StackPanel>
 

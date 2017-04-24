@@ -25,7 +25,7 @@ namespace Cognitivo.Sales
 
         private db db = new db();
         private entity.Controller.Sales.SalesInvoice SalesDB;
-        private entity.Controller.DataFilter DataFilter;
+        private entity.Controller.WindowProperty WindowProperty;
 
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
@@ -58,10 +58,10 @@ namespace Cognitivo.Sales
 
             //Load DB into Controller.
             SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.SalesInvoice;
-            DataFilter = FindResource("DataFilter") as entity.Controller.DataFilter;
+            WindowProperty = FindResource("WindowProperty") as entity.Controller.WindowProperty;
             SalesDB.db = db;
-            SalesDB.Start_Range = SalesDB.Start_Range;
-            SalesDB.End_Range = SalesDB.End_Range;
+            SalesDB.Start_Range = WindowProperty.Start_Range;
+            SalesDB.End_Range = WindowProperty.End_Range;
         }
 
         #region DataLoad
@@ -779,6 +779,8 @@ namespace Cognitivo.Sales
 
         private void GridSearch(object sender, RoutedEventArgs e)
         {
+            SalesDB.Start_Range = WindowProperty.Start_Range;
+            SalesDB.End_Range = WindowProperty.End_Range;
             Load_PrimaryDataThread(null, null);
         }
 

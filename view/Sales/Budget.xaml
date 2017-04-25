@@ -49,7 +49,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="sales_budgetDataGrid" Style="{StaticResource nav_List}"
-				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="sales_budgetDataGrid_SelectionChanged"
+				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="Sales_BudgetDataGrid_SelectionChanged"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}"
 				 ItemsSource="{Binding}" Grid.Row="1">
             <ListBox.ItemTemplate>
@@ -82,7 +82,7 @@
 							SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true,
 								UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
                             <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}" />
-                            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="Set_ContactPref"
 												can_Edit="True" can_New="True" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
                             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
@@ -124,7 +124,7 @@
                             <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesBudget"
 											  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True,
 																	  UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											  LostFocus="cbxCurrency_LostFocus" />
+											  LostFocus="Currency_LostFocus" />
 
                             <!--<Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}" />
 							<TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
@@ -135,9 +135,9 @@
                                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
                                 <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" Margin="3,2,0,5">
                                     <Label Content="A" Style="{StaticResource btn_Label}" />
-                                    <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
+                                    <TextBlock MouseUp="Customize_MouseUp" VerticalAlignment="Center">
 									<Hyperlink x:Name="hrefCustomize"><Run Text="@Customize" /></Hyperlink></TextBlock>
-                                    <Popup x:Name="popupCustomize" IsOpen="False" StaysOpen="False" Closed="popupCustomize_Closed"
+                                    <Popup x:Name="popupCustomize" IsOpen="False" StaysOpen="False" Closed="Customize_Closed"
 										PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                                         <Border BorderThickness="1" BorderBrush="Gray">
                                             <StackPanel Background="WhiteSmoke" Width="180">
@@ -193,7 +193,7 @@
                                 <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                                     <Label Content="" Style="{StaticResource btn_Label}" />
                                     <TextBlock Margin="5,0" VerticalAlignment="Center">
-										<Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+										<Hyperlink PreviewMouseUp="Print_Click">
 											<Run Text="{lex:Loc Document}" />
 										</Hyperlink>
                                     </TextBlock>
@@ -201,7 +201,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="" Style="{StaticResource btn_Label}" />
                                     <TextBlock Margin="5,0" VerticalAlignment="Center">
-										<Hyperlink PreviewMouseUp="toolBar_btnOrder_Click">
+										<Hyperlink PreviewMouseUp="Order_Click">
 											<Run Text="{lex:Loc SalesOrder}" />
 										</Hyperlink>
                                     </TextBlock>
@@ -331,15 +331,15 @@
                 </StackPanel>
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" Width="250" HorizontalAlignment="Left" />
-                    <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
+                    <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select"
 									  can_New="True" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                 </StackPanel>
                 <DataGrid x:Name="sales_budget_detailDataGrid" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 						  UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
 						  ItemsSource="{Binding Source={StaticResource sales_budgetsales_budget_detailViewSource}}"
-						  RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="sales_budget_detailDataGrid_RowEditEnding"
-						  CellEditEnding="sales_budget_detailDataGrid_CellEditEnding" Grid.ColumnSpan="2">
+						  RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="Sales_Budget_detailDataGrid_RowEditEnding"
+						  CellEditEnding="Sales_Budget_detailDataGrid_CellEditEnding" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding id_sales_budget_detail, UpdateSourceTrigger=PropertyChanged}"
 											Header="ID" Width="100" IsReadOnly="True"
@@ -423,14 +423,14 @@
             </Grid>
         </Grid>
 
-        <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" btnSearch_Click="toolBar_btnSearch_Click"
+        <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" btnSearch_Click="Search_Click"
 					   btnNew_Click="New_Click" appName="SalesBudget"
 					   btnSave_Click="Save_Click"
-					   btnDelete_Click="toolBar_btnDelete_Click"
-					   btnCancel_Click="toolBar_btnCancel_Click"
-					   btnEdit_Click="toolBar_btnEdit_Click"
-					   btnApprove_Click="toolBar_btnApprove_Click"
-					   btnAnull_Click="toolBar_btnAnull_Click"
+					   btnDelete_Click="Delete_Click"
+					   btnCancel_Click="Cancel_Click"
+					   btnEdit_Click="Edit_Click"
+					   btnApprove_Click="Approve_Click"
+					   btnAnull_Click="Anull_Click"
                        btnSync_Click="Page_Loaded"
 					   Grid.ColumnSpan="2"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

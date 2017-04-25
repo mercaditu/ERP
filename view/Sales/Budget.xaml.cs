@@ -44,7 +44,7 @@ namespace Cognitivo.Sales
             app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
 
-        private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
+        private void Print_Click(object sender, MouseButtonEventArgs e)
         {
             if (sales_budgetDataGrid.SelectedItem is sales_budget sales_budget)
             {
@@ -67,7 +67,7 @@ namespace Cognitivo.Sales
             sales_budgetViewSource.View.MoveCurrentTo(sales_budget);
         }
 
-        private void toolBar_btnEdit_Click(object sender)
+        private void Edit_Click(object sender)
         {
             if (sales_budgetDataGrid.SelectedItem != null)
             {
@@ -92,7 +92,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void toolBar_btnDelete_Click(object sender)
+        private void Delete_Click(object sender)
         {
             MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
@@ -103,7 +103,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void toolBar_btnCancel_Click(object sender)
+        private void Cancel_Click(object sender)
         {
             sales_budget_detailDataGrid.CancelEdit();
             sales_budgetViewSource.View.MoveCurrentToFirst();
@@ -138,14 +138,14 @@ namespace Cognitivo.Sales
 
         #endregion Filter Data
 
-        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Customize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
 
-        private void popupCustomize_Closed(object sender, EventArgs e)
+        private void Customize_Closed(object sender, EventArgs e)
         {
             Settings SalesSettings = new Settings();
 
@@ -155,7 +155,7 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = false;
         }
 
-        private void calculate_vat(object sender, EventArgs e)
+        private void Calculate_Vat(object sender, EventArgs e)
         {
             sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
             if (sales_budget != null)
@@ -175,22 +175,21 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void sales_budgetDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Sales_BudgetDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
-
             if (sales_budget != null)
             {
-                calculate_vat(sender, e);
+                Calculate_Vat(sender, e);
             }
         }
 
-        private void sales_budget_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void Sales_Budget_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            calculate_vat(sender, e);
+            Calculate_Vat(sender, e);
         }
 
-        private void toolBar_btnApprove_Click(object sender)
+        private void Approve_Click(object sender)
         {
             if (SalesBudgetDB.Approve())
             {
@@ -200,7 +199,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void toolBar_btnAnull_Click(object sender)
+        private void Anull_Click(object sender)
         {
             if (SalesBudgetDB.Anull())
             {
@@ -208,7 +207,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private async void item_Select(object sender, EventArgs e)
+        private async void Item_Select(object sender, EventArgs e)
         {
             if (sbxItem.ItemID > 0)
             {
@@ -222,7 +221,7 @@ namespace Cognitivo.Sales
                         item_product item_product = item.item_product.FirstOrDefault();
 
                         Settings SalesSettings = new Settings();
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
+                        Task Thread = Task.Factory.StartNew(() => Select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
                     }
 
                     sales_budget.RaisePropertyChanged("GrandTotal");
@@ -230,7 +229,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement, decimal quantity)
+        private void Select_Item(sales_budget sales_budget, item item, decimal QuantityInStock, bool AllowDuplicateItem, item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
 
@@ -266,28 +265,26 @@ namespace Cognitivo.Sales
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 sales_budgetsales_budget_detailViewSource.View.Refresh();
-                calculate_vat(null, null);
+                Calculate_Vat(null, null);
             }));
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
+        private void Search_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query))
             {
                 sales_budgetViewSource.View.Filter = i =>
                 {
-                    sales_budget sales_budget = i as sales_budget;
-                    string name = sales_budget.contact != null ? sales_budget.contact.name : "";
-                    string number = sales_budget.number != null ? sales_budget.number : "";
+                    sales_budget Budget = i as sales_budget;
+                    string Name = Budget.contact != null ? Budget.contact.name : "";
+                    string Number = Budget.number != null ? Budget.number : "";
 
-                    if (name.ToLower().Contains(query.ToLower()) && number.ToLower().Contains(query.ToLower()))
+                    if (Name.ToLower().Contains(query.ToLower()) && Number.ToLower().Contains(query.ToLower()))
                     {
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return false;
                 };
             }
             else
@@ -322,7 +319,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private async void set_ContactPref(object sender, EventArgs e)
+        private async void Set_ContactPref(object sender, EventArgs e)
         {
             if (sbxContact.ContactID > 0)
             {
@@ -337,12 +334,12 @@ namespace Cognitivo.Sales
                     //Checks Credit upcon Selection of Contact..
                     CheckCredit(null, null);
 
-                    Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                    Task thread_SecondaryData = Task.Factory.StartNew(() => Set_ContactPref_Thread(contact));
                 }
             }
         }
 
-        private async void set_ContactPref_Thread(contact objContact)
+        private async void Set_ContactPref_Thread(contact objContact)
         {
             if (objContact != null)
             {
@@ -352,27 +349,31 @@ namespace Cognitivo.Sales
 
                     //Condition
                     if (objContact.app_contract != null)
+                    {
                         cbxCondition.SelectedValue = objContact.app_contract.id_condition;
+                    }
 
                     //Contract
                     if (objContact.id_contract != null)
+                    {
                         cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
+                    }
 
                     //Currency
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
 
                     //SalesMan
                     if (objContact.sales_rep != null)
+                    {
                         cbxSalesRep.SelectedValue = objContact.id_sales_rep;
+                    }
                 }));
             }
         }
 
-        private async void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
+        private async void Currency_LostFocus(object sender, RoutedEventArgs e)
         {
-            sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-
-            if (sales_budget != null)
+            if (sales_budgetViewSource.View.CurrentItem is sales_budget sales_budget)
             {
                 if (sales_budget.id_currencyfx > 0)
                 {
@@ -384,17 +385,17 @@ namespace Cognitivo.Sales
                     }
                 }
             }
-            calculate_vat(sender, e);
+            Calculate_Vat(sender, e);
         }
 
-        private void sales_budget_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        private void Sales_Budget_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            calculate_vat(sender, e);
+            Calculate_Vat(sender, e);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            calculate_vat(sender, e);
+            Calculate_Vat(sender, e);
         }
 
         private void CheckCredit(object sender, RoutedEventArgs e)
@@ -416,7 +417,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void toolBar_btnOrder_Click(object sender, MouseButtonEventArgs e)
+        private void Order_Click(object sender, MouseButtonEventArgs e)
         {
             sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
 

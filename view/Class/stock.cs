@@ -65,7 +65,7 @@ mov.id_movement as MovementID
                                 im.expire_date as ExpiryDate,
                                 im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
                                 measure.name as Measurement,
-im.id_movement as MovementID,
+                                im.id_movement as MovementID,
                                 sum(imv.unit_value) as Cost
 
                                 from item_movement as im

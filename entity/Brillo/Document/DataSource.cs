@@ -332,6 +332,7 @@ namespace entity.Brillo.Document
             reportDataSource.Name = "DataSet1";
             List<sales_packing_detail> sales_packing_detail = sales_packing.sales_packing_detail.ToList();
             reportDataSource.Value = sales_packing_detail
+                          .Where(x => x.user_verified)
                           .Select(g => new
                           {
                               contact_name = g.sales_packing.contact != null ? g.sales_packing.contact.name != null ? g.sales_packing.contact.name : "" : "",
@@ -363,7 +364,9 @@ namespace entity.Brillo.Document
                               etd = g.sales_packing.etd != null ? g.sales_packing.etd.ToString() : "",
                               driver = g.sales_packing.driver != null ? g.sales_packing.driver.ToString() : "",
                               licence = g.sales_packing.licence_no != null ? g.sales_packing.licence_no.ToString() : "",
-                              distance = g.sales_packing.avg_distance != null ? g.sales_packing.avg_distance.ToString() : "",
+                              distance = g.sales_packing.avg_distance != null ? g.sales_packing.avg_distance : "",
+                              FixedAsset = g.sales_packing.item_asset != null ? g.sales_packing.item_asset.item.name : "",
+                              FixedAssetBrand = g.sales_packing.item_asset != null ? g.sales_packing.item_asset.item.item_brand != null ? g.sales_packing.item_asset.item.item_brand.name : "" : "",
                           }).ToList();
 
             return reportDataSource;

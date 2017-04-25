@@ -461,6 +461,7 @@ namespace cntrl.Controls
 
                         contact.id_price_list = list.id_price_list;
                     }
+
                     if (smartBoxContactSetting.Default.EmailNecessary == true)
                     {
                         if (string.IsNullOrEmpty(contact.email))
@@ -469,6 +470,7 @@ namespace cntrl.Controls
                             return;
                         }
                     }
+
                     foreach (contact_tag_detail contact_tag_detail in contact_tagList)
                     {
                         contact_tag contact_tag = db.contact_tag.Where(x => x.id_tag == contact_tag_detail.id_tag).FirstOrDefault();
@@ -477,8 +479,8 @@ namespace cntrl.Controls
                             contact_tag_detail.contact_tag = contact_tag;
                             contact.contact_tag_detail.Add(contact_tag_detail);
                         }
-                      
                     }
+
                     db.contacts.Add(contact);
                     db.SaveChanges();
                     

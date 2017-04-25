@@ -103,7 +103,7 @@ namespace Cognitivo.Product
                                     unit_value = Batch.Cost,
                                     batch_code = Batch.BatchCode,
                                     expire_date = Batch.ExpiryDate,
-                                    movement_id = Batch.MovementID, // batch.movementid
+                                    movement_id = Batch.MovementID,
                                     State = EntityState.Added,
                                     item_product = item_product,
                                     id_item_product = i,

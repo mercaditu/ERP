@@ -177,7 +177,6 @@ namespace Cognitivo.Sales
                 sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
                 sales_order.id_contact = contact.id_contact;
                 sales_order.contact = contact;
-                new Class.CreditLimit().Check_CreditAvailability(sales_order);
                 Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
             }
         }
@@ -545,10 +544,17 @@ namespace Cognitivo.Sales
         {
             if (sales_orderViewSource != null)
             {
-                sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-                sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Find(sales_order.id_currencyfx);
-                Class.CreditLimit Limit = new Class.CreditLimit();
-                Limit.Check_CreditAvailability(sales_order);
+                if (sales_orderViewSource.View.CurrentItem is sales_order sales_order)
+                {
+                    sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Find(sales_order.id_currencyfx);
+
+                    entity.Controller.Finance.Credit Credit = new entity.Controller.Finance.Credit();
+                    Credit.CheckLimit_InSales(0, sales_order.app_currencyfx, sales_order.contact, sales_order.app_contract);
+
+                    //sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Find(sales_order.id_currencyfx);
+                    //Class.CreditLimit Limit = new Class.CreditLimit();
+                    //Limit.Check_CreditAvailability(sales_order);
+                }
             }
         }
 

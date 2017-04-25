@@ -1,12 +1,15 @@
 ﻿<UserControl x:Class="cntrl.Controls.SmartBox_Contact" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:entity="clr-namespace:entity;assembly=entity"
+              xmlns:cntrl="clr-namespace:cntrl"
+               xmlns:customcmd="clr-namespace:Cognitivo.Class"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:pref="clr-namespace:cntrl.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Converter="clr-namespace:cntrl.Converters"
-                xmlns:entity="clr-namespace:entity.BrilloQuery;assembly=entity"
+                xmlns:entitybrillo="clr-namespace:entity.BrilloQuery;assembly=entity"
                 xmlns:lex="http://wpflocalizeextension.codeplex.com"
                 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
                 lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -16,8 +19,13 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <Converter:sbxContact_CheckType x:Key="sbxContact_CheckType" />
-        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Contact}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entitybrillo:Contact}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}" />
+        <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}" />
     </UserControl.Resources>
+    <!--<UserControl.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
+    </UserControl.CommandBindings>-->
     <Grid Width="256">
 
         <!-- TextBox for Searching -->
@@ -72,7 +80,7 @@
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" FontSize="11" VerticalAlignment="Center" Margin="0"
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="OpenContactCRUD" Padding="4"
-                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=this, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" />
+                  />
         </StackPanel>
 
         <!-- Progress Ring -->
@@ -153,8 +161,25 @@
                               
 
                             </StackPanel>
-                            <TextBox x:Name="tbxTag" Text="{Binding TagList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Tag}" 
-                                         Background="WhiteSmoke" BorderThickness="0" Width="200" Margin="4"/>
+                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
+                            <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
+												 CollectionViewSource="{StaticResource contact_tagViewSource}"
+												 focusGrid="True" Width="256"
+												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                                <cntrl:SearchableTextbox.Columns>
+                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
+														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
+                                </cntrl:SearchableTextbox.Columns>
+                            </cntrl:SearchableTextbox>
+                            <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+									  HeadersVisibility="None"
+									  ItemsSource="{Binding ElementName=this,Path=contact_tagList}" RowDetailsVisibilityMode="Collapsed">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+													IsReadOnly="True" Width="120" />
+                                
+                                </DataGrid.Columns>
+                            </DataGrid>
                             <Button Click="SaveContact_Click" Content="{lex:Loc Save}" Margin="4" Width="Auto"/>
                         </StackPanel>
                     </Grid>

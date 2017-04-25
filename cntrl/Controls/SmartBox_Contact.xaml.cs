@@ -1,6 +1,8 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -23,6 +25,7 @@ namespace cntrl.Controls
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+        public List<contact_tag_detail> contact_tagList { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -53,7 +56,7 @@ namespace cntrl.Controls
         }
 
         private bool _AutoShow;
-  
+
 
         public bool can_Edit
         {
@@ -116,6 +119,7 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
+            contact_tagList = new List<contact_tag_detail>();
             ///Exists code if in design view.
             if (DesignerProperties.GetIsInDesignMode(this))
             {
@@ -123,6 +127,14 @@ namespace cntrl.Controls
             }
 
             contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
+            using (db db = new db())
+            {
+                db.contact_tag
+                .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
+                .OrderBy(x => x.name).Load();
+                CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
+                contact_tagViewSource.Source = db.contact_tag.Local;
+            }
 
             LoadData();
 
@@ -146,7 +158,7 @@ namespace cntrl.Controls
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
-         
+
         }
 
         public void LoadData()
@@ -353,7 +365,7 @@ namespace cntrl.Controls
                 tbxName.Text = Regex.IsMatch(tbxSearch.Text, @"[a-zA-Z]+") ? tbxSearch.Text : "";
                 tbxEmail.Text = "";
                 tbxAddress.Text = "";
-                tbxTag.Text = "";
+
                 tbxTelephone.Text = "";
 
                 tbxName.Focus();
@@ -371,17 +383,17 @@ namespace cntrl.Controls
                         tbxAddress.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().address;
                         tbxTelephone.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().telephone;
                         tbxEmail.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().email;
-                       // tbxContactRole.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role.name : "";
+                        // tbxContactRole.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role.name : "";
                         tbxPriceList.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list.name : "";
                     }
                 }
             }
         }
-        
+
         private void SaveContact_Click(object sender, RoutedEventArgs e)
         {
             string Name = string.Empty;
-            
+
             if (ContactID == 0)
             {
                 contact contact = new contact()
@@ -390,7 +402,8 @@ namespace cntrl.Controls
                     gov_code = tbxGovernmentID.Text,
                     address = tbxAddress.Text,
                     telephone = tbxTelephone.Text,
-                    email = tbxEmail.Text
+                    email = tbxEmail.Text,
+                    credit_limit = 0
                 };
 
                 if (Get_Customers)
@@ -448,7 +461,7 @@ namespace cntrl.Controls
 
                         contact.id_price_list = list.id_price_list;
                     }
-                    if (smartBoxContactSetting.Default.EmailNecessary==true)
+                    if (smartBoxContactSetting.Default.EmailNecessary == true)
                     {
                         if (string.IsNullOrEmpty(contact.email))
                         {
@@ -456,10 +469,19 @@ namespace cntrl.Controls
                             return;
                         }
                     }
-                   
+                    foreach (contact_tag_detail contact_tag_detail in contact_tagList)
+                    {
+                        contact_tag contact_tag = db.contact_tag.Where(x => x.id_tag == contact_tag_detail.id_tag).FirstOrDefault();
+                        if (contact_tag!=null)
+                        {
+                            contact_tag_detail.contact_tag = contact_tag;
+                            contact.contact_tag_detail.Add(contact_tag_detail);
+                        }
+                      
+                    }
                     db.contacts.Add(contact);
                     db.SaveChanges();
-                    AddTag(contact);
+                    
 
                     Name = contact.name;
                     ContactID = contact.id_contact;
@@ -486,14 +508,25 @@ namespace cntrl.Controls
                                 return;
                             }
                         }
+                        foreach (contact_tag_detail contact_tag_detail in contact_tagList)
+                        {
+                            contact_tag contact_tag = db.contact_tag.Where(x => x.id_tag == contact_tag_detail.id_tag).FirstOrDefault();
+                            if (contact_tag != null)
+                            {
+                                contact_tag_detail.contact_tag = contact_tag;
+                                contact.contact_tag_detail.Add(contact_tag_detail);
+                            }
 
+                        }
                         db.SaveChanges();
-                        AddTag(contact);
+
 
                         Name = contact.name;
                     }
                 }
             }
+
+
 
             LoadData();
 
@@ -506,41 +539,44 @@ namespace cntrl.Controls
 
             var _enter = Key.Enter;                    // Key to send
             tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
-            
+
             popContactInfo.IsOpen = false;
         }
 
-        public void AddTag(contact _contact)
+        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
         {
-            string[] tagsArray = tbxTag.Text.Split(',');
-            foreach (string strTag in tagsArray)
+            if (e.Key == Key.Enter)
             {
-                if (strTag != "")
-                {
-                    using (db db = new db())
-                    {
-                        contact_tag tag = db.contact_tag.Where(x => x.name == strTag).FirstOrDefault();
-                        if (tag == null)
-                        {
-                            tag = new contact_tag();
-                            tag.name = strTag;
-                            db.contact_tag.Add(tag);
-                            db.SaveChanges();
-                        }
-                        contact_tag_detail tag_detail = db.contact_tag_detail.Where(x => x.id_tag == tag.id_tag && x.id_contact == _contact.id_contact).FirstOrDefault();
+                Add_Tag();
+            }
+        }
 
-                        if (tag_detail == null)
-                        {
-                            tag_detail = new contact_tag_detail();
-                            tag_detail.id_contact = _contact.id_contact;
-                            tag_detail.id_tag = tag.id_tag;
-                            db.contact_tag_detail.Add(tag_detail);
-                            db.SaveChanges();
-                        }
-                    }
+        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Add_Tag();
+        }
+
+        private void Add_Tag()
+        {
+            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+            if (cbxTag.Data != null)
+            {
+                int id = Convert.ToInt32(((contact_tag)cbxTag.Data).id_tag);
+                if (id > 0)
+                {
+
+
+                    contact_tag_detail contact_tag_detail = new contact_tag_detail();
+                    contact_tag_detail.id_tag = ((contact_tag)cbxTag.Data).id_tag;
+                    contact_tag_detail.contact_tag = ((contact_tag)cbxTag.Data);
+                    contact_tagList.Add(contact_tag_detail);
+                    RaisePropertyChanged("contact_tagList");
+
                 }
             }
         }
+
+
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {

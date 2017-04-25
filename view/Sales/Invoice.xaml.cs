@@ -805,11 +805,19 @@ namespace Cognitivo.Sales
         {
             if (sales_invoiceViewSource != null)
             {
-                if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
+                if (sales_invoiceViewSource.View.CurrentItem is sales_invoice o)
                 {
-                    sales_invoice.app_currencyfx = db.app_currencyfx.Find(sales_invoice.id_currencyfx);
-                    Class.CreditLimit Limit = new Class.CreditLimit();
-                    Limit.Check_CreditAvailability(sales_invoice);
+                    o.app_currencyfx = db.app_currencyfx.Find(o.id_currencyfx);
+                    o.contact = db.contacts.Find(o.id_contact);
+                    o.app_contract = db.app_contract.Find(o.id_contract);
+
+                    if (o.app_currencyfx != null && o.contact != null && o.app_contract != null)
+                    {
+                        entity.Controller.Finance.Credit Credit = new entity.Controller.Finance.Credit();
+                        Credit.CheckLimit_InSales(0, o.app_currencyfx, o.contact, o.app_contract);
+                    }
+
+
                 }
             }
         }

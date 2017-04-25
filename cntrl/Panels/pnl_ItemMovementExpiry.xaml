@@ -1,11 +1,8 @@
 ﻿<UserControl x:Class="cntrl.Panels.pnl_ItemMovementExpiry"
-            xmlns:cntrl="clr-namespace:cntrl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
-
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -37,23 +34,33 @@
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
             </Grid>
             <StackPanel x:Name="stpDisplay" DataContext="{StaticResource ExpiryInStockViewSource}">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" />
-                        <Label Content="{Binding Code, FallbackValue=Code}" />
-                        <Label Content="{Binding Items, FallbackValue=Name}" />
+                <Grid>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" />
+                            <Label Content="{Binding Code, FallbackValue=Code}" />
+                            <Label Content="{Binding Items, FallbackValue=Name}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}" />
+                            <Label Content="{Binding Location, FallbackValue=/}" />
+                            <Label Content="{Binding Branch, FallbackValue=Branch}" />
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}" />
-                        <Label Content="{Binding Location, FallbackValue=/}" />
-                        <Label Content="{Binding Branch, FallbackValue=Branch}" />
-                    </StackPanel>
+                    <Grid HorizontalAlignment="Right">
+                        <TextBox Width="155" x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" />
+                        <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Margin="7,0" Foreground="Silver" />
+                    </Grid>
+                </Grid>    
                     <DataGrid x:Name="item_inventory_detailDataGrid" MaxHeight="256" CanUserAddRows="False"
                               AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource ExpiryInStockViewSource}}"
                               EnableRowVirtualization="True" CanUserDeleteRows="False"
                               Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}"
-                                                Header="{lex:Loc Cognitivo:local:Code}" MinWidth="256" IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding BarCode, UpdateSourceTrigger=PropertyChanged}"
+                                                Header="Barcode" Width="128" IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding BatchCode, UpdateSourceTrigger=PropertyChanged}"
+                                                Header="{lex:Loc Cognitivo:local:Code}" MinWidth="128" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding ExpiryDate, StringFormat=d, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="128" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding Balance, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" CellStyle="{StaticResource Number_CellStyle}"

@@ -20,7 +20,6 @@ namespace cntrl.Panels
         {
             InitializeComponent();
             UserControl_Loaded(BranchID, LocationID, ProductID);
-            btnSave.Focus();
         }
 
         private void UserControl_Loaded(int? BranchID, int? LocationID, int ProductID)
@@ -39,7 +38,7 @@ namespace cntrl.Panels
             }
 
             string query = @"select * from(select im.id_movement as MovementID, l.name as Location, b.name as Branch, i.code as Code, i.name as Items,
-                                im.code as BatchCode, im.expire_date as ExpiryDate,
+                                im.code as BatchCode, im.expire_date as ExpiryDate, im.barcode as BarCode,
                                 (im.credit - sum(IFNULL(child.debit,0))) as Balance
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
@@ -57,6 +56,8 @@ namespace cntrl.Panels
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
             query = query.Replace("@ProductID", ProductID.ToString());
             ExpiryInStockViewSource.Source = BatchCodeLoader(QueryExecutor.DT(query));
+
+            txtsearch.Focus();
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
@@ -76,7 +77,6 @@ namespace cntrl.Panels
                 MovementID = ExpiryInStock.MovementID;
             }
            
-
             Grid parentGrid = (Grid)Parent;
             parentGrid.Visibility = Visibility.Hidden;
             parentGrid.Children.Clear();
@@ -88,20 +88,47 @@ namespace cntrl.Panels
 
             foreach (DataRow DataRow in dt.Rows)
             {
-                ExpiryInStock ExpiryInStock = new ExpiryInStock();
-                ExpiryInStock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
-                ExpiryInStock.Location = Convert.ToString(DataRow["Location"]);
-                ExpiryInStock.Branch = Convert.ToString(DataRow["Branch"]);
-                ExpiryInStock.Code = Convert.ToString(DataRow["Code"]);
-                ExpiryInStock.Items = Convert.ToString(DataRow["Items"]);
-                ExpiryInStock.BatchCode = Convert.ToString(DataRow["BatchCode"]);
-                ExpiryInStock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"] is DBNull ? null : DataRow["ExpiryDate"]);
-                ExpiryInStock.Balance = Convert.ToDecimal(DataRow["Balance"] is DBNull ? 0 : DataRow["Balance"]);
+                ExpiryInStock ExpiryInStock = new ExpiryInStock()
+                {
+                    MovementID = Convert.ToInt32(DataRow["MovementID"]),
+                    BarCode = Convert.ToString(DataRow["BarCode"]),
+                    Location = Convert.ToString(DataRow["Location"]),
+                    Branch = Convert.ToString(DataRow["Branch"]),
+                    Code = Convert.ToString(DataRow["Code"]),
+                    Items = Convert.ToString(DataRow["Items"]),
+                    BatchCode = Convert.ToString(DataRow["BatchCode"]),
+                    ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"] is DBNull ? null : DataRow["ExpiryDate"]),
+                    Balance = Convert.ToDecimal(DataRow["Balance"] is DBNull ? 0 : DataRow["Balance"])
+                };
 
                 ListOfStock.Add(ExpiryInStock);
             }
 
             return ListOfStock;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ExpiryInStockViewSource != null)
+            {
+                if (ExpiryInStockViewSource.View != null)
+                {
+                    ExpiryInStockViewSource.View.Filter = i =>
+                    {
+                        dynamic ExpiryInStock = (ExpiryInStock)i;
+
+                        if (ExpiryInStock.BarCode.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                            ExpiryInStock.Code.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                            ExpiryInStock.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                        {
+                            //This code checks for Quantity after checking for name. This will cause less loops.
+                            return true;
+                        }
+
+                        return false;
+                    };
+                }
+            }
         }
     }
 
@@ -112,6 +139,7 @@ namespace cntrl.Panels
         public string Branch { get; set; }
         public string Code { get; set; }
         public string Items { get; set; }
+        public string BarCode { get; set; }
         public string BatchCode { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public decimal Balance { get; set; }

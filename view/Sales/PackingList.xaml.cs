@@ -289,7 +289,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void item_Select(object sender, EventArgs e)
+        private void Item_Select(object sender, EventArgs e)
         {
             app_branch app_branch = null;
             if (sbxItem.ItemID > 0)

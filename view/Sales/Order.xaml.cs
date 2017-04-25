@@ -544,12 +544,17 @@ namespace Cognitivo.Sales
         {
             if (sales_orderViewSource != null)
             {
-                if (sales_orderViewSource.View.CurrentItem is sales_order sales_order)
+                if (sales_orderViewSource.View.CurrentItem is sales_order o)
                 {
-                    sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Find(sales_order.id_currencyfx);
+                    o.app_currencyfx = SalesOrderDB.app_currencyfx.Find(o.id_currencyfx);
+                    o.contact = SalesOrderDB.contacts.Find(o.id_contact);
+                    o.app_contract = SalesOrderDB.app_contract.Find(o.id_contract);
 
-                    entity.Controller.Finance.Credit Credit = new entity.Controller.Finance.Credit();
-                    Credit.CheckLimit_InSales(0, sales_order.app_currencyfx, sales_order.contact, sales_order.app_contract);
+                    if (o.app_currencyfx != null && o.contact != null && o.app_contract != null)
+                    {
+                        entity.Controller.Finance.Credit Credit = new entity.Controller.Finance.Credit();
+                        Credit.CheckLimit_InSales(0, o.app_currencyfx, o.contact, o.app_contract);
+                    }
 
                     //sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Find(sales_order.id_currencyfx);
                     //Class.CreditLimit Limit = new Class.CreditLimit();

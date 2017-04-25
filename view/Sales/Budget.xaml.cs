@@ -333,7 +333,7 @@ namespace Cognitivo.Sales
                 {
                     sales_budget.id_contact = contact.id_contact;
                     sales_budget.contact = contact;
-                    new Class.CreditLimit().Check_CreditAvailability(sales_budget);
+                    //new Class.CreditLimit().Check_CreditAvailability(sales_budget);
                     Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
                 }
             }

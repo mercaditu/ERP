@@ -110,7 +110,6 @@
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
-                                    Print_Click
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>

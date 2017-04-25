@@ -137,6 +137,8 @@
                             <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
                         <pref:ImageViewer MaxWidth="128" ReferenceID="{Binding ContactID}"/>
+                        <Button Click="SaveContact_Click" Content="{lex:Loc Save}" VerticalAlignment="Top" Margin="4" Width="Auto"/>
+
                         <StackPanel Margin="8" Grid.Column="1">
                             <TextBox x:Name="tbxName" 
                                          metro:TextBoxHelper.UseFloatingWatermark="True" metro:TextBoxHelper.Watermark="{lex:Loc Name}" 
@@ -158,29 +160,28 @@
                                     <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}" FontSize="8"/>
                                     <Label x:Name="tbxPriceList" Style="{StaticResource input_label}"/>
                                 </StackPanel>
-                              
-
                             </StackPanel>
-                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
-                            <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
+                            <StackPanel Margin="4,0">
+                                <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" FontSize="8"/>
+                                <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
 												 CollectionViewSource="{StaticResource contact_tagViewSource}"
 												 focusGrid="True" Width="256"
 												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-                                <cntrl:SearchableTextbox.Columns>
-                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
+                                    <cntrl:SearchableTextbox.Columns>
+                                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
 														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
-                                </cntrl:SearchableTextbox.Columns>
-                            </cntrl:SearchableTextbox>
-                            <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
-									  HeadersVisibility="None"
+                                    </cntrl:SearchableTextbox.Columns>
+                                </cntrl:SearchableTextbox>
+                                <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+									  HeadersVisibility="None" CanUserAddRows="False" CanUserDeleteRows="False"
 									  ItemsSource="{Binding ElementName=this,Path=contact_tagList}" RowDetailsVisibilityMode="Collapsed">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-													IsReadOnly="True" Width="120" />
-                                
-                                </DataGrid.Columns>
-                            </DataGrid>
-                            <Button Click="SaveContact_Click" Content="{lex:Loc Save}" Margin="4" Width="Auto"/>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+													    IsReadOnly="True" Width="120"/>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </StackPanel>

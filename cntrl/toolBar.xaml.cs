@@ -389,8 +389,7 @@ namespace cntrl
 
         private void btnApprove_MouseUp(object sender, EventArgs e)
         {
-            toolIcon _toolicon = (toolIcon)sender;
-            _toolicon.Focus();
+            ((toolIcon)sender).Focus();
             btnApprove_Click?.Invoke(this);
         }
 
@@ -401,8 +400,7 @@ namespace cntrl
 
         private void btnAnull_MouseUp(object sender, EventArgs e)
         {
-            toolIcon _toolicon = (toolIcon)sender;
-            _toolicon.Focus();
+            ((toolIcon)sender).Focus();
             btnAnull_Click?.Invoke(this);
         }
 
@@ -442,11 +440,11 @@ namespace cntrl
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
-                get_Icons(toolBarIcons.Basic.ToString(), ref security);
+                Get_Icons(toolBarIcons.Basic.ToString(), ref security);
             }
         }
 
-        private void get_Icons(string mod_name, ref entity.Brillo.Security security)
+        private void Get_Icons(string mod_name, ref entity.Brillo.Security security)
         {
             toolBarData t = new toolBarData();
             foreach (DataRow row in t.dtIconList_property.Select("modIcon = '" + mod_name + "'"))

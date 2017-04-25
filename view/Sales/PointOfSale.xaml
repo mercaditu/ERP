@@ -68,7 +68,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,-6, 4, 0">
                     <Label x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"
-					                TargetUpdated="lblGrandTotalsales_DataContextChanged" ContentStringFormat="N2"
+					                TargetUpdated="GrandTotalsales_DataContextChanged" ContentStringFormat="N2"
 					                Content="{Binding GrandTotal, Mode=OneWay, NotifyOnTargetUpdated=True, Source={StaticResource sales_invoiceViewSource}, StringFormat=\{0:N2\}, UpdateSourceTrigger=PropertyChanged}">
                         <Label.Effect>
                             <DropShadowEffect Color="White" ShadowDepth="0" />
@@ -84,38 +84,38 @@
             </Grid>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,64,0,0">
-                <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64"
+                <Border CornerRadius="32" Background="RoyalBlue" Width="64" Height="64"
 				                Cursor="Hand" MouseDown="btnClient_Click" TouchDown="btnClient_Click"
-				                BorderBrush="White" BorderThickness="4" ToolTip="F1">
+				                BorderBrush="WhiteSmoke" BorderThickness="4" ToolTip="F1">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" ShadowDepth="0" />
                     </Border.Effect>
                     <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32"
 					                VerticalAlignment="Center" HorizontalAlignment="Center"
-					                Foreground="Black" />
+					                Foreground="White" />
                 </Border>
 
                 <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32" />
 
-                <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64"
-				                Cursor="Hand" MouseDown="btnSales_Click" TouchDown="btnSales_Click"
-				                BorderBrush="White" BorderThickness="4" ToolTip="F2">
+                <Border CornerRadius="32" Background="RoyalBlue" Width="64" Height="64"
+				                Cursor="Hand" MouseDown="Sales_Click" TouchDown="Sales_Click"
+				                BorderBrush="WhiteSmoke" BorderThickness="4" ToolTip="F2">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" ShadowDepth="0" />
                     </Border.Effect>
                     <Label Content="&#xE8C7;" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32"
-					                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" />
+					                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" />
                 </Border>
 
                 <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32" />
 
-                <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64"
-				                Cursor="Hand" MouseDown="btnPayment_Click" TouchDown="btnPayment_Click"
-				                BorderBrush="White" BorderThickness="4" ToolTip="F3">
+                <Border CornerRadius="32" Background="RoyalBlue" Width="64" Height="64"
+				                Cursor="Hand" MouseDown="Payment_Click" TouchDown="Payment_Click"
+				                BorderBrush="WhiteSmoke" BorderThickness="4" ToolTip="F3">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" ShadowDepth="0" />
                     </Border.Effect>
-                    <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" Foreground="Black"
+                    <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" Foreground="White"
 					                VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Border>
             </StackPanel>
@@ -139,7 +139,7 @@
                             <cntrl:SmartBox_Contact x:Name="sbxContact" can_New="True" AutoShow="True"
 							                                HorizontalAlignment="Center"
 							                                Get_Customers="True"
-							                                Select="sbxContact_Select"/>
+							                                Select="Contact_Select"/>
                         </Viewbox>
                     </StackPanel>
                 </TabItem>
@@ -155,14 +155,14 @@
                             <Label Content="{lex:LocTextUpper Sales}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White" />
                         </StackPanel>
                         <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60" VerticalAlignment="Top" Margin="0,80,0,0">
-                            <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="sbxItem_Select"
+                            <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="Item_Select"
                                                  QuantityIntegration="{Binding QuantityIntegration, Source={x:Static pref:Settings.Default}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                         </Viewbox>
                         <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
 						                    Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
 						                    ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
                                             Foreground="Black" CellStyle="{StaticResource DataGridCellStyle}"
-						                    RowEditEnding="dgvSalesDetail_RowEditEnding">
+						                    RowEditEnding="SalesDetail_RowEditEnding">
                             <DataGrid.RowStyle>
                                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                                     <Setter Property="Foreground" Value="{Binding InStock, Converter={StaticResource Bool2Color}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -283,7 +283,7 @@
 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
 
-                                <!-- PRINT PAYMENT -->
+                                <!-- PRINT PAYMENT --><!--
                                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Center" ToolTip="{lex:Loc Print}"
 								MouseUp="NewPayment_MouseUp">
                                     <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -300,7 +300,7 @@
 										VerticalAlignment="Center" HorizontalAlignment="Center"
 										Foreground="White" />
                                     </Border>
-                                </Grid>
+                                </Grid>-->
 
                                 <!-- PRINT PAYMENT -->
                                 <Grid Margin="8" ToolTip="{lex:Loc Print}">
@@ -324,7 +324,7 @@
                             </StackPanel>
 
                             <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16"
-							ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="dgvPaymentDetail_InitializingNewItem">
+							ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="PaymentDetail_InitializingNewItem">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"
 									ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
@@ -387,6 +387,8 @@
                        Content="{Binding NumberWatermark, Mode=OneWay}" FontWeight="Bold"/>
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" FontWeight="Bold" Content="|" Foreground="Silver" />
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
+                       Content="G" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontWeight="Bold"/>
+                    <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
                        Content="{Binding app_branch.name, Mode=OneWay}" FontWeight="Bold"/>
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Content="|" Foreground="Silver" />
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
@@ -436,17 +438,18 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel x:Name="stackRight" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40" RenderTransformOrigin="0.5,0.5">
+            <StackPanel x:Name="stackRight" VerticalAlignment="Top" HorizontalAlignment="Right" 
+                        Margin="8,40">
 
                 <!-- Cancel -->
                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
-				Cursor="Hand" MouseDown="Cancel_MouseDown" TouchDown="Cancel_MouseDown" ToolTip="{lex:Loc Cancel}">
+				      Cursor="Hand" MouseDown="Cancel_MouseDown" TouchDown="Cancel_MouseDown" ToolTip="{lex:Loc Cancel}">
                     <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <Border.Background>
-                            <SolidColorBrush Color="Crimson" Opacity="0.64" />
+                            <SolidColorBrush Color="White" Opacity="0.64" />
                         </Border.Background>
                         <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                            <Label Content="{lex:LocTextUpper Cancel}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" />
+                            <Label Content="{lex:LocTextUpper Cancel}" Style="{StaticResource input_label}" Foreground="Black" />
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="32" Background="Crimson" Width="32" Height="32" VerticalAlignment="Top" 
@@ -458,16 +461,16 @@
                 </Grid>
                 
                 <!-- Approve -->
-                <Viewbox Margin="8" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <Grid Cursor="Hand" MouseDown="btnSave_Click" TouchDown="btnSave_Click" ToolTip="{lex:Loc Approve}">
+                <Viewbox Margin="0" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Grid Cursor="Hand" MouseDown="Save_Click" TouchDown="Save_Click" ToolTip="{lex:Loc Approve}">
                         <Border CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="Left"
                                 BorderBrush="White" BorderThickness="1" Margin="4,0,5,0">
                             <Border.Background>
-                                <SolidColorBrush Color="RoyalBlue" Opacity="0.64" />
+                                <SolidColorBrush Color="White" Opacity="0.64" />
                             </Border.Background>
                             <StackPanel Orientation="Horizontal" Margin="2,0,24,0">
                                 <TextBlock Style="{StaticResource text_Label}" Margin="4" FontSize="10" 
-                                           FontWeight="Medium" Foreground="White">
+                                           FontWeight="Medium" Foreground="Black">
                                     <Run Text="{lex:LocTextUpper Save}" />
                                     <Run Text="&amp;" />
                                     <Run Text="{lex:LocTextUpper Approve}" />
@@ -486,14 +489,15 @@
 
                 <!-- Account Utility -->
                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
-				Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
+				Cursor="Hand" MouseDown="Account_Click" TouchDown="Account_Click"
 				ToolTip="{lex:Loc AccountUtility}">
                     <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <Border.Background>
-                            <SolidColorBrush Color="#FF004867" Opacity="0.64" />
+                            <SolidColorBrush Color="White" Opacity="0.64" />
                         </Border.Background>
                         <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                            <Label Content="{lex:LocTextUpper AccountUtility}" Foreground="White" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:LocTextUpper AccountUtility}" 
+                                   Foreground="Black" Style="{StaticResource input_label}" />
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32"

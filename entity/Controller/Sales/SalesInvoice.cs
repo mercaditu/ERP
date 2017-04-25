@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Windows;
 
 namespace entity.Controller.Sales
 {
@@ -227,7 +228,33 @@ namespace entity.Controller.Sales
 
         public bool CancelAllChanges()
         {
-            return false;
+            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                foreach (var entry in db.ChangeTracker.Entries())
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            {
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
+                        case EntityState.Deleted:
+                            {
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
+                        case EntityState.Added:
+                            {
+                                entry.State = EntityState.Detached;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            return true;
         }
 
         #endregion

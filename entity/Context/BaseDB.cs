@@ -25,8 +25,7 @@ namespace entity
         /// </summary>
         public void CancelAllChanges()
         {
-            string str = LocExtension.GetLocalizedValue<string>("Cognitivo:local:" + "Question_Cancel");
-            if (MessageBox.Show(str, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(Brillo.Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 foreach (var entry in ChangeTracker.Entries())
                 {

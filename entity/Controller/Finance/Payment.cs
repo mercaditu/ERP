@@ -253,26 +253,19 @@ namespace entity.Controller.Finance
                 ///Code to specify Accounts.
                 ///
                 payment_type _payment_type = await db.payment_type.FindAsync(payment_detail.id_payment_type);
-                if (_payment_type.payment_behavior == entity.payment_type.payment_behaviours.Normal)
+                if (_payment_type.payment_behavior == payment_type.payment_behaviours.Normal)
                 {
                     ///Creates new Account Detail for each Payment Detail.
-                    app_account_detail app_account_detail = new app_account_detail();
-
-                    app_account_detail.id_account = (int)payment_detail.id_account;
-                    app_account_detail.app_account = payment_detail.app_account;
-                    app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
-                    app_account_detail.id_payment_type = payment_detail.id_payment_type;
-                    app_account_detail.payment_detail = payment_detail;
-                    app_account_detail.trans_date = payment_detail.payment.trans_date;
-
-                    if (_payment_type.is_direct)
+                    app_account_detail app_account_detail = new app_account_detail()
                     {
-                        app_account_detail.status = Status.Documents_General.Approved;
-                    }
-                    else
-                    {
-                        app_account_detail.status = Status.Documents_General.Pending;
-                    }
+                        id_account = (int)payment_detail.id_account,
+                        app_account = payment_detail.app_account,
+                        id_currencyfx = payment_detail.id_currencyfx,
+                        id_payment_type = payment_detail.id_payment_type,
+                        payment_detail = payment_detail,
+                        trans_date = payment_detail.payment.trans_date,
+                        status = _payment_type.is_direct ? Status.Documents_General.Approved : Status.Documents_General.Pending
+                    };
 
                     if (payment_detail.id_range > 0)
                     {
@@ -340,22 +333,41 @@ namespace entity.Controller.Finance
                 payment.RaisePropertyChanged("number");
             }
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            db.SaveChanges();
+
             if (is_print)
             {
                 Brillo.Document.Start.Automatic(payment, app_document_range);
             }
         }
-        public bool CancelAllChanges()
+
+        public void CancelAllChanges()
         {
-            return false;
+            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                foreach (var entry in db.ChangeTracker.Entries())
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            {
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
+                        case EntityState.Deleted:
+                            {
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
+                        case EntityState.Added:
+                            {
+                                entry.State = EntityState.Detached;
+                                break;
+                            }
+                    }
+                }
+            }
         }
     }
 }

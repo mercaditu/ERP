@@ -32,26 +32,17 @@ namespace entity.Controller.Finance
                         {
                             using (db db = new db())
                             {
+
                                 var BalanceList =
-                                    from ps in db.payment_schedual
-                                    join ac in db.app_currencyfx on ps.id_currencyfx equals ac.id_currencyfx
-                                    where ps.id_contact == Customer.id_contact
-                                    group ac by ac.id_currency into grouped
+                                    from c in db.app_currency
+                                    join fx in db.app_currencyfx on c.id_currency equals fx.id_currency
+                                    join ps in db.payment_schedual on fx.id_currencyfx equals ps.id_currencyfx
+                                    group ps by new { fx.id_currency } into g
                                     select new
                                     {
-                                        CurrencyID = grouped.Key,
-                                        Balance = ps.Sum(debit) - Sum(ps.credit)
+                                        CurrencyID = g.Max(x => x.app_currencyfx.id_currency),
+                                        Balance = g.Sum(s => s.debit - s.credit)
                                     };
-
-                                //db.payment_schedual
-                                //        .Where(x => x.id_contact == Customer.id_contact)
-                                //        .Include(q => q.app_currencyfx)
-                                //        .GroupBy(ps => new { ps.app_currencyfx.id_currency })
-                                //        .Select(s => new
-                                //        {
-                                //            CurrencyID = s.Max(ps => ps.app_currencyfx.id_currency),
-                                //            Balance = s.Sum(ps => ps.debit - ps.credit)
-                                //        }).ToList();
 
                                 decimal BalanceInDefault = 0;
 
@@ -106,15 +97,16 @@ namespace entity.Controller.Finance
                     {
                         using (db db = new db())
                         {
-                            var BalanceList = 
-                                    db.payment_schedual
-                                    .Where(x => x.id_contact == Supplier.id_contact)
-                                    .GroupBy(ps => new { ps.app_currencyfx.id_currency })
-                                    .Select(s => new
-                                    {
-                                        CurrencyID = s.Max(ps => ps.app_currencyfx.id_currency),
-                                        Balance = s.Sum(ps => ps.credit - ps.debit)
-                                    }).ToList();
+                            var BalanceList =
+                                from c in db.app_currency
+                                join fx in db.app_currencyfx on c.id_currency equals fx.id_currency
+                                join ps in db.payment_schedual on fx.id_currencyfx equals ps.id_currencyfx
+                                group ps by new { fx.id_currency } into g
+                                select new
+                                {
+                                    CurrencyID = g.Max(x => x.app_currencyfx.id_currency),
+                                    Balance = g.Sum(s => s.credit - s.debit)
+                                };
 
                             decimal BalanceInDefault = 0;
 

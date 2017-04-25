@@ -14,27 +14,26 @@ namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
-        //private SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         private db db = new db();
-      //  private PaymentDB PaymentDB; // = new PaymentDB();
         private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
 
-        /// <summary>
-        /// CollectionViewSource
-        /// </summary>
         private CollectionViewSource sales_invoiceViewSource;
+        private CollectionViewSource paymentViewSource;
+
         private entity.Controller.Sales.SalesInvoice SalesDB;
         private entity.Controller.Finance.Payment PaymentDB;
-        private CollectionViewSource paymentViewSource;
+
         Settings SalesSettings = new Settings();
+
         public PointOfSale()
         {
             InitializeComponent();
+
             SalesDB = FindResource("SalesDB") as entity.Controller.Sales.SalesInvoice;
             SalesDB.db = db;
-          PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
+
+            PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
             PaymentDB.db = db;
-          
         }
 
         #region ActionButtons
@@ -50,28 +49,29 @@ namespace Cognitivo.Sales
         /// <summary>
         /// Navigates to ACCOUNT UTILITY Tab
         /// </summary>
-        private void btnAccount_Click(object sender, EventArgs e)
+        private void Account_Click(object sender, EventArgs e)
         {
             frmaccount.Navigate(new Configs.AccountActive(CurrentSession.Id_Account));
             tabAccount.IsSelected = true;
             tabAccount.Focus();
         }
 
-        private void btnSales_Click(object sender, EventArgs e)
+        private void Sales_Click(object sender, EventArgs e)
         {
             tabSales.IsSelected = true;
         }
 
-        private void btnPayment_Click(object sender, EventArgs e)
+        private void Payment_Click(object sender, EventArgs e)
         {
             tabPayment.IsSelected = true;
             btnPromotion_Click(sender, e);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
+            
             /// VALIDATIONS...
             ///
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
@@ -89,13 +89,12 @@ namespace Cognitivo.Sales
             }
 
             /// Validate Payment <= Sales.GrandTotal
-            //if (payment.GrandTotal >= payment.GrandTotal_Detail)
-            //{
             if (payment.GrandTotalDetail < Math.Round(sales_invoice.GrandTotal, 2))
             {
                 tabPayment.Focus();
                 return;
             }
+
             if (payment.GrandTotalDetail > Math.Round(sales_invoice.GrandTotal, 2))
             {
                 tabPayment.Focus();
@@ -154,7 +153,7 @@ namespace Cognitivo.Sales
 
         #region SmartBox Selection
 
-        private async void sbxContact_Select(object sender, RoutedEventArgs e)
+        private async void Contact_Select(object sender, RoutedEventArgs e)
         {
             if (sbxContact.ContactID > 0)
             {
@@ -170,13 +169,11 @@ namespace Cognitivo.Sales
             }
         }
 
-        private async void sbxItem_Select(object sender, RoutedEventArgs e)
+        private async void Item_Select(object sender, RoutedEventArgs e)
         {
             if (sbxItem.ItemID > 0)
             {
-                sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-
-                if (sales_invoice != null)
+                if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
                 {
                     item item = await db.items.FindAsync(sbxItem.ItemID);
                     item_product item_product = item.item_product.FirstOrDefault();
@@ -241,7 +238,7 @@ namespace Cognitivo.Sales
                 //If Account Session has 1 cl_date as null, means Account is still open. If False, means account is closed.
                 if (app_account.app_account_session.Where(x => x.cl_date == null).Any() == false)
                 {
-                    btnAccount_Click(null, null);
+                    Account_Click(null, null);
                 }
             }
         }
@@ -262,12 +259,8 @@ namespace Cognitivo.Sales
             }
             else if (e.Key == Key.F12)
             {
-                btnSave_Click(sender, e);
+                Save_Click(sender, e);
             }
-            //else if (e.Key == Key.F5)
-            //{
-            //    boderdiscount_MouseDown(sender, e);
-            //}
         }
 
         private void Cancel_MouseDown(object sender, EventArgs e)
@@ -281,7 +274,7 @@ namespace Cognitivo.Sales
             sbxContact.Text = "";
             sbxContact.ContactID = 0;
 
-            sbxItem.Text = string.Empty;
+            sbxItem.Text = "";
             sbxItem.ItemID = 0;
 
             tabContact.IsSelected = true;
@@ -289,12 +282,12 @@ namespace Cognitivo.Sales
 
         #region Details
 
-        private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void SalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
           //  sales_invoiceViewSource.View.Refresh();
         }
 
-        private void dgvPaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        private void PaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
@@ -368,7 +361,7 @@ namespace Cognitivo.Sales
 
         #endregion Details
 
-        private void lblGrandTotalsales_DataContextChanged(object sender, EventArgs e)
+        private void GrandTotalsales_DataContextChanged(object sender, EventArgs e)
         {
             if (sales_invoiceViewSource != null && paymentViewSource != null)
             {
@@ -380,11 +373,6 @@ namespace Cognitivo.Sales
                     }
                 }
             }
-        }
-
-        private void NewPayment_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            (paymentViewSource.View.CurrentItem as payment).payment_detail.Add(new payment_detail());
         }
 
         private void Clear_MouseDown(object sender, EventArgs e)
@@ -409,7 +397,7 @@ namespace Cognitivo.Sales
         private async void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-
+            
             if (sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList().Count() > 0)
             {
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList())

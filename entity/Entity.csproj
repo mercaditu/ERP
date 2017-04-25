@@ -249,7 +249,6 @@
     <Compile Include="Application\app_configuration.cs" />
     <Compile Include="Application\app_name_template_detail.cs" />
     <Compile Include="Application\app_name_template.cs" />
-    <Compile Include="BrilloQuery\Finance.cs" />
     <Compile Include="BrilloQuery\GetContacts.cs" />
     <Compile Include="BrilloQuery\GetItem.cs" />
     <Compile Include="BrilloQuery\QueryExecutor.cs" />

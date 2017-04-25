@@ -344,7 +344,6 @@
     <Compile Include="Class\ErrorLog.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\Production.cs" />
-    <Compile Include="Class\CreditLimit.cs" />
     <Compile Include="Class\Stock.cs" />
     <Compile Include="Commercial\AccountsPayable.xaml.cs">
       <DependentUpon>AccountsPayable.xaml</DependentUpon>

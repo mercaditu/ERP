@@ -177,6 +177,9 @@ namespace Cognitivo.Sales
                 sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
                 sales_order.id_contact = contact.id_contact;
                 sales_order.contact = contact;
+
+                //Check Credit Rating.
+                CheckCredit(null, null);
                 Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
             }
         }
@@ -196,13 +199,9 @@ namespace Cognitivo.Sales
                     //Contract
                     if (objContact.id_contract != null)
                         cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
-
-                    //Currency
-                    app_currencyfx app_currencyfx = null;
-                    if (objContact.app_currency != null && objContact.app_currency.app_currencyfx.Any(a => a.is_active) && objContact.app_currency.app_currencyfx.Count > 0)
-                        app_currencyfx = objContact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
-                    if (app_currencyfx != null)
-                        cbxCurrency.SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
+                    
+                    //Currency Selection
+                    cbxCurrency.get_ActiveRateXContact(ref objContact);
 
                     //SalesMan
                     if (objContact.sales_rep != null)
@@ -540,7 +539,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void lblCheckCredit(object sender, RoutedEventArgs e)
+        private void CheckCredit(object sender, RoutedEventArgs e)
         {
             if (sales_orderViewSource != null)
             {
@@ -555,10 +554,6 @@ namespace Cognitivo.Sales
                         entity.Controller.Finance.Credit Credit = new entity.Controller.Finance.Credit();
                         Credit.CheckLimit_InSales(0, o.app_currencyfx, o.contact, o.app_contract);
                     }
-
-                    //sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Find(sales_order.id_currencyfx);
-                    //Class.CreditLimit Limit = new Class.CreditLimit();
-                    //Limit.Check_CreditAvailability(sales_order);
                 }
             }
         }

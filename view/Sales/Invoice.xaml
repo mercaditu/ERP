@@ -223,7 +223,7 @@
                                     <Grid>
                                         <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}" />
                                     </Grid>
-                                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False"
+                                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" can_New="True"
 															   Select="Set_ContactPref" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     <StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
@@ -443,9 +443,12 @@
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
 													Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=AvailableCredit, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                             <Label Content="X" Style="{StaticResource ico_Label}" />
-                                            <TextBlock Text="{lex:Loc AvailableCredit}" Style="{StaticResource text_Label}" />
-                                            <TextBlock><Hyperlink Click="CheckCredit">Check</Hyperlink></TextBlock>
-                                            <TextBlock Text="{Binding contact.credit_availability, Mode=TwoWay,
+                                            <TextBlock Style="{StaticResource text_Label}" >
+                                                <Hyperlink Click="CheckCredit">
+                                                    <Run Text="{lex:Loc AvailableCredit}"/>
+                                                </Hyperlink>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding contact.credit_availability, Mode=OneWay,
 													   UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{StaticResource text_Data}" />
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">

@@ -333,7 +333,10 @@ namespace Cognitivo.Sales
                 {
                     sales_budget.id_contact = contact.id_contact;
                     sales_budget.contact = contact;
-                    //new Class.CreditLimit().Check_CreditAvailability(sales_budget);
+
+                    //Checks Credit upcon Selection of Contact..
+                    CheckCredit(null, null);
+
                     Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
                 }
             }
@@ -394,7 +397,7 @@ namespace Cognitivo.Sales
             calculate_vat(sender, e);
         }
 
-        private void lblCheckCredit(object sender, RoutedEventArgs e)
+        private void CheckCredit(object sender, RoutedEventArgs e)
         {
             if (sales_budgetViewSource != null)
             {
@@ -409,8 +412,6 @@ namespace Cognitivo.Sales
                         entity.Controller.Finance.Credit Credit = new entity.Controller.Finance.Credit();
                         Credit.CheckLimit_InSales(0, o.app_currencyfx, o.contact, o.app_contract);
                     }
-
-                   
                 }
             }
         }

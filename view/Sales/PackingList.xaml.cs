@@ -471,7 +471,7 @@ namespace Cognitivo.Sales
             }
             else
             {
-                toolBar.msgWarning("Please select");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -512,11 +512,14 @@ namespace Cognitivo.Sales
                             unit_price = PackingDetail.sales_order_detail.unit_price + PackingDetail.sales_order_detail.discount
                            
                     };
-                        sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
-                        sales_packing_relation.id_sales_invoice_detail = detail.id_sales_invoice_detail;
-                        sales_packing_relation.sales_invoice_detail = detail;
-                        sales_packing_relation.id_sales_packing_detail = PackingDetail.id_sales_packing_detail;
-                        sales_packing_relation.sales_packing_detail = PackingDetail;
+                        sales_packing_relation sales_packing_relation = new sales_packing_relation()
+                        {
+                            id_sales_invoice_detail = detail.id_sales_invoice_detail,
+                            sales_invoice_detail = detail,
+                            id_sales_packing_detail = PackingDetail.id_sales_packing_detail,
+                            sales_packing_detail = PackingDetail
+                        };
+
                         PackingListDB.sales_packing_relation.Add(sales_packing_relation);
                         DetailList.Add(detail);
                     }
@@ -564,16 +567,19 @@ namespace Cognitivo.Sales
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
-                sales_packing sales_packing = sales_packingDataGrid.SelectedItem as sales_packing;
-                item item = await PackingListDB.items.FindAsync(sbxItem.ItemID);
-                app_branch app_branch = null;
-                if (item != null && item.id_item > 0 && sales_packing != null)
+                if (sales_packingDataGrid.SelectedItem is sales_packing sales_packing)
                 {
-                    if (cbxBranch.SelectedItem != null)
-                    { app_branch = cbxBranch.SelectedItem as app_branch; }
+                    item item = await PackingListDB.items.FindAsync(sbxItem.ItemID);
+                    app_branch app_branch = null;
 
-                    item_movement item_movement = PackingListDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-                    Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, item_movement, sbxItem.Quantity));
+                    if (item != null && item.id_item > 0 && sales_packing != null)
+                    {
+                        if (cbxBranch.SelectedItem != null)
+                        { app_branch = cbxBranch.SelectedItem as app_branch; }
+
+                        item_movement item_movement = PackingListDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, item_movement, sbxItem.Quantity));
+                    }
                 }
             }
         }

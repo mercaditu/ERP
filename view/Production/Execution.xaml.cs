@@ -52,8 +52,8 @@ namespace Cognitivo.Production
 
             cmbcoefficient.SelectedIndex = -1;
 
-            dtpstarttime.Text = DateTime.Now.ToString();
-            dtpendtime.Text = DateTime.Now.ToString();
+            dtpstarttime.Value = DateTime.Now.ToString();
+            dtpendtime.Value = DateTime.Now.ToString();
 
             filter_task();
         }
@@ -137,16 +137,16 @@ namespace Cognitivo.Production
 
                             if (production_order_detail.item.id_item_type == item.item_type.Service)
                             {
-                                string start_date = string.Format("{0} {1}", dtpstartdate.Text, dtpstarttime.Text);
+                                string start_date = string.Format("{0} {1}", dtpstartdate.Text, Convert.ToDateTime(dtpstarttime.Value).ToShortTimeString());
                                 _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                                string end_date = string.Format("{0} {1}", dtpenddate.Text, dtpendtime.Text);
+                                string end_date = string.Format("{0} {1}", dtpenddate.Text, Convert.ToDateTime(dtpendtime.Value).ToShortTimeString());
                                 _production_execution_detail.end_date = Convert.ToDateTime(end_date);
                             }
                             else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                             {
-                                string start_date = string.Format("{0} {1}", dtpscstartdate.Text, dtpscstarttime.Text);
+                                string start_date = string.Format("{0} {1}", dtpscstartdate.Text, Convert.ToDateTime(dtpscstarttime.Value).ToShortTimeString());
                                 _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                                string end_date = string.Format("{0} {1}", dtpscenddate.Text, dtpscendtime.Text);
+                                string end_date = string.Format("{0} {1}", dtpscenddate.Text, Convert.ToDateTime(dtpscendtime.Value).ToShortTimeString());
                                 _production_execution_detail.end_date = Convert.ToDateTime(end_date);
                             }
 

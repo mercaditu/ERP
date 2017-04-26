@@ -164,22 +164,23 @@ namespace cntrl.Controls
                 return;
             }
 
+            smartBoxItemSetting Settings = new smartBoxItemSetting();
             if (entity.CurrentSession.Show_InStockProductsOnly)
             {
-                Exclude_OutOfStock = true;
+                Settings.Exclude_OutOfStock = true;
             }
             else if (item_types == entity.item.item_type.Product || item_types == entity.item.item_type.RawMaterial)
             {
-                Exclude_OutOfStock = true;
+                Settings.Exclude_OutOfStock = true;
             }
 
             if (entity.CurrentSession.Allow_BarCodeSearchOnly)
             {
-                smartBoxItemSetting Settings = new smartBoxItemSetting();
+               
                 Settings.ExactSearch = true;
-                smartBoxItemSetting.Default.Save();
+                
             }
-
+            smartBoxItemSetting.Default.Save();
             LoadData();
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));

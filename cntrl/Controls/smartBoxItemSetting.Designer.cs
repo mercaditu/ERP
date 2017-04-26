@@ -70,5 +70,17 @@ namespace cntrl.Controls {
                 this["Tag"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Exclude_OutOfStock {
+            get {
+                return ((bool)(this["Exclude_OutOfStock"]));
+            }
+            set {
+                this["Exclude_OutOfStock"] = value;
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@
 	xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
 	xmlns:data="clr-namespace:entity;assembly=entity"
 	xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	  xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	xmlns:converter="clr-namespace:Cognitivo.Converters"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -269,12 +270,14 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
                                     <DatePicker x:Name="dtpstartdate"  Width="150" Height="27" />
-                                    <toolkit:TimePicker x:Name="dtpstarttime" Width="85" Format="Custom" FormatString="HH:mm" CurrentDateTimePart="Hour24" />
+                                    <syncfusion:SfTimePicker  x:Name="dtpstarttime" Width="85"  FormatString="HH:mm:ss" />
+                                 
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
                                     <DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
-                                    <toolkit:TimePicker x:Name="dtpendtime" Width="85" Format="Custom" FormatString="HH:mm" CurrentDateTimePart="Hour24" />
+                                    <syncfusion:SfTimePicker  x:Name="dtpendtime" Width="85"  FormatString="HH:mm:ss" />
+                                    
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -370,12 +373,14 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
                                         <DatePicker x:Name="dtpscstartdate"  Width="150" Height="27" />
-                                        <toolkit:TimePicker x:Name="dtpscstarttime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                                        <syncfusion:SfTimePicker  x:Name="dtpscstarttime" Width="85"  FormatString="HH:mm:ss" />
+                                      
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
                                         <DatePicker x:Name="dtpscenddate"  Width="150" Height="27" />
-                                        <toolkit:TimePicker x:Name="dtpscendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                                        <syncfusion:SfTimePicker  x:Name="dtpscendtime" Width="85"  FormatString="HH:mm:ss"/>
+                                       
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">

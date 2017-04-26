@@ -351,7 +351,7 @@ namespace entity.Brillo.Document
                               item_code = g.item != null ? g.item.code != null ? g.item.code : "" : "",
                               item_description = g.item != null ? g.item.name != null ? g.item.name : "" : "",
                               item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name != null ? g.item.item_brand.name : "" : "" : "",
-                              quantity = g.quantity,
+                              quantity = g.verified_quantity,
                               BatchCode = g.batch_code,
                               ExpirationDate = g.expire_date,
                               ItemMeasurement = g.item != null ? g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",

@@ -446,35 +446,35 @@ namespace Cognitivo.Product
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                if (e.Parameter as item_price != null)
                 {
-                    if (e.Parameter as item_price != null)
-                    {
-                        item_priceDataGrid.CancelEdit();
-                        ItemDB.item_price.Remove(e.Parameter as item_price);
-                        itemitem_priceViewSource.View.Refresh();
-                    }
-                    if (e.Parameter as item_dimension != null)
-                    {
-                        item_dimentionDataGrid.CancelEdit();
-                        ItemDB.item_dimension.Remove(e.Parameter as item_dimension);
-                        itemitem_dimentionViewSource.View.Refresh();
-                    }
-
-                    if (e.Parameter as item_tag_detail != null)
-                    {
-                        item_tag_detailDataGrid.CancelEdit();
-                        ItemDB.item_tag_detail.Remove(e.Parameter as item_tag_detail);
-                        itemitem_tagdetailViewSource.View.Refresh();
-                    }
-                    if (e.Parameter as item_conversion_factor != null)
-                    {
-                        item_conversion_factorDataGrid.CancelEdit();
-                        ItemDB.item_conversion_factor.Remove(e.Parameter as item_conversion_factor);
-                        itemitem_conversion_factorViewSource.View.Refresh();
-                    }
+                    item_priceDataGrid.CancelEdit();
+                    ItemDB.item_price.Remove(e.Parameter as item_price);
+                    itemitem_priceViewSource.View.Refresh();
                 }
+                if (e.Parameter as item_dimension != null)
+                {
+                    item_dimentionDataGrid.CancelEdit();
+                    ItemDB.item_dimension.Remove(e.Parameter as item_dimension);
+                    itemitem_dimentionViewSource.View.Refresh();
+                }
+
+                if (e.Parameter as item_tag_detail != null)
+                {
+                    item_tag_detailDataGrid.CancelEdit();
+                    ItemDB.item_tag_detail.Remove(e.Parameter as item_tag_detail);
+                    itemitem_tagdetailViewSource.View.Refresh();
+                }
+                if (e.Parameter as item_conversion_factor != null)
+                {
+                    item_conversion_factorDataGrid.CancelEdit();
+                    ItemDB.item_conversion_factor.Remove(e.Parameter as item_conversion_factor);
+                    itemitem_conversion_factorViewSource.View.Refresh();
+                }
+            }
         }
 
         private void hrefCost_Click(object sender, RoutedEventArgs e)

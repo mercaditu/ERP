@@ -207,16 +207,6 @@ namespace Cognitivo.Sales
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ApplicationWindow myWindow = Window.GetWindow(this) as ApplicationWindow;
-            //This code helps protect wrong Terminal and Branch PC from making same invoice.
-            if (CurrentSession.Id_Branch > 0 || CurrentSession.Id_Terminal > 0 || CurrentSession.Id_Account > 0)
-            {
-                app_branch Branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-                app_terminal Terminal = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
-
-                string BranchName = Branch != null ? Branch.name : "Falta Sucursal";
-                string TerminalName = Terminal != null ? Terminal.name : "Falta Terminal";
-                myWindow.Title = myWindow.Title; // + " | " + BranchName + " | " + TerminalName;
-            }
 
             New_Sale_Payment();
 

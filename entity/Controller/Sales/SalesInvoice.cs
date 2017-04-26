@@ -97,7 +97,8 @@ namespace entity.Controller.Sales
 
                 //Navigation Properties
                 app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx),
-                app_branch = db.app_branch.Find(CurrentSession.Id_Branch)
+                app_branch = db.app_branch.Find(CurrentSession.Id_Branch),
+                app_terminal = db.app_terminal.Find(CurrentSession.Id_Terminal)
             };
 
             //This is to skip query code in case of Migration. Helps speed up migrations.

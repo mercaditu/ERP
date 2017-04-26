@@ -51,12 +51,15 @@ namespace entity.Brillo
         }
         CurrentSession.Versions? _version;
         public DateTime date_expiry { get; set; }
-      
     }
 
     public class Licence
     {
-        public licence CompanyLicence;
+        /// <summary>
+        /// Stores the License Info and Version Lists.
+        /// </summary>
+        public licence CompanyLicence { get; set; }
+
 
         public string CreateLicence(string FirstName, string LastName, string CompanyName, string Email, int version)
         {

@@ -38,14 +38,14 @@
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentColor_Brush}"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.RowSpan="2"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-				 ItemsSource="{Binding Source={StaticResource security_roleViewSource}}" SelectionChanged="security_roleDataGrid_SelectionChanged">
+				 ItemsSource="{Binding Source={StaticResource security_roleViewSource}}" SelectionChanged="Security_roleDataGrid_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordSecondaryName="{Binding is_master}"
 						recordCode="{Binding app_department.name, Mode=OneWay}"
-								   recordName="{Binding name, Mode=OneWay}"
-								   State="{Binding State}"
-								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+						recordName="{Binding name, Mode=OneWay}"
+						State="{Binding State}"
+						IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -67,23 +67,21 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <Label Style="{StaticResource input_label}" Content="{lex:Loc Version}" />
                 <StackPanel Orientation="Horizontal" Height="101">
                     <DataGrid x:Name="VersionGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
 							 CanUserAddRows="False" IsReadOnly="True" 
 							  RowDetailsVisibilityMode="VisibleWhenSelected" Width="284">
                         <DataGrid.Columns>
-
-                            <DataGridTextColumn Header="Version" Width="*" 
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Version}" Width="*" 
 												Binding="{Binding version,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="WebUser" Width="*" 
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:License}" Width="*" 
 												Binding="{Binding web_user_count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="LocalUser" Width="*" 
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:User}" Width="*" 
 												Binding="{Binding local_user_count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                   <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" Width="180" />
-                    <Button Content="Change" Click="btnChange" HorizontalAlignment="Center" Padding="16,0" VerticalAlignment="Top" />
+                    <ComboBox x:Name="cbxVersion" Style="{StaticResource input_combobox}" Width="180" />
+                    <Button Content="Change" Click="ChangePlan" HorizontalAlignment="Center" Padding="16,0" VerticalAlignment="Top" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Margin="8" Grid.Column="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
@@ -171,11 +169,11 @@
         </Grid>
 
         <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" appName="UserRole"
-					   btnSearch_Click="toolBar_btnSearch_Click"
+					   btnSearch_Click="Search_Click"
 					   btnNew_Click="New_Click"
 					   btnSave_Click="Save_Click"
-					   btnCancel_Click="toolBar_btnCancel_Click"
-					   btnEdit_Click="toolBar_btnEdit_Click"
+					   btnCancel_Click="Cancel_Click"
+					   btnEdit_Click="Edit_Click"
 					   State="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 					   Grid.ColumnSpan="2" />
     </Grid>

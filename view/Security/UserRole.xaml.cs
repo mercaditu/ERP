@@ -46,22 +46,22 @@ namespace Cognitivo.Security
             CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
             app_departmentViewSource.Source = await UserRoleDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
 
-            add_Privallge();
+            Add_Privallge();
             cbxVersion.ItemsSource = Enum.GetValues(typeof(CurrentSession.Versions));
 
             app_company app_company = UserRoleDB.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
             if (app_company != null)
             {
                 Licence.VerifyCompanyLicence(app_company.version);
-                if (Licence.CompanyLicence!=null)
+                if (Licence.CompanyLicence != null)
                 {
                     VersionGrid.ItemsSource = Licence.CompanyLicence.versions;
                 }
-                
+
             }
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
+        private void Search_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query))
             {
@@ -84,55 +84,65 @@ namespace Cognitivo.Security
 
         private void Save_Click(object sender)
         {
-                security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
-                if (security_role != null)
+            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+            if (security_role != null)
+            {
+                CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                security_role.Version = Version;
+
+                List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+
+                int UserCount = 0;
+                UserCount = security_roleList.Where(x => x.Version == Version).Sum(x => x.security_user.Count);
+
+                int UserLimit = 0;
+
+                //Reload the Version Information.
+                Licence.VerifyCompanyLicence(
+                    UserRoleDB
+                    .app_company
+                    .Where(x => x.id_company == CurrentSession.Id_Company)
+                    .Select(y => y.version)
+                    .FirstOrDefault());
+
+                if (Licence.CompanyLicence != null)
                 {
-                    CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-                    security_role.Version = Version;
+                    versions versions = Licence.CompanyLicence.versions.Where(x => x.version == Version).FirstOrDefault();
 
-                    List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                    if (versions != null)
+                    { //Exists = Yes.
+                        UserLimit = versions.web_user_count;
 
-                    int UserCount = 0;
-                    UserCount = security_roleList.Where(x => x.Version == Version).Sum(x => x.security_user.Count);
+                        if (UserLimit < UserCount)
+                        { //No space Avaiable
+                            MessageBox.Show("You have surpassed your User Limit of " + UserLimit + " for " + security_role.Version.ToString() + " Plan. /n" +
+                                "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
+                                , "Cognitivo ERP");
 
-                    int UserLimit = 0;
-                    if (Licence.CompanyLicence != null)
-                    {
-                        versions versions = Licence.CompanyLicence.versions.Where(x => x.version == Version).FirstOrDefault();
-
-                        if (versions != null)
-                        { //Exists = Yes.
-                            UserLimit = versions.web_user_count;
-
-                            if (UserLimit < UserCount)
-                            { //No space Avaiable
-                                MessageBox.Show("You have surpassed your User Limit of " + UserLimit + " for " + security_role.Version.ToString() + " Plan. /n" +
-                                    "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
-                                    , "Cognitivo ERP");
-                                security_role.Version = CurrentSession.Versions.Lite;
-                            }
-                        }
-                        else
-                        {
-                            string key = Licence.CreateLicenceVersion(Licence.CompanyLicence.license_key, (int)CurrentSession.Versions.Full);
-                            //write code for trial 15 days for this plan.
-                            if (key == Licence.CompanyLicence.license_key && security_role.Version != CurrentSession.Versions.Lite)
-                            {
-                                MessageBox.Show("Done. Since you do not have this plan set up, we have gone ahead and registered the " + security_role.Version.ToString() + " Plan on your behalf. /n" +
-                                           "You will have 15 days trial period, once finished, you will be diverted to the free account."
-                                           , "Cognitivo ERP");
-                            }
+                            security_role.Version = CurrentSession.Versions.Lite;
                         }
                     }
-
-                    UserRoleDB.SaveChanges();
-
-                    CurrentSession.Load_Security();
-                    security_roleViewSource.View.Refresh();
+                    else
+                    {
+                        string key = Licence.CreateLicenceVersion(Licence.CompanyLicence.license_key, (int)security_role.Version);
+                        //write code for trial 15 days for this plan.
+                        if (key == Licence.CompanyLicence.license_key && security_role.Version != CurrentSession.Versions.Lite)
+                        {
+                            MessageBox.Show("Done. Since you do not have this plan set up, we have gone ahead and registered the " + security_role.Version.ToString() + " Plan on your behalf. /n" +
+                                       "You will have 15 days trial period, once finished, you will be diverted to the free account."
+                                       , "Cognitivo ERP");
+                        }
+                    }
                 }
+
+                UserRoleDB.SaveChanges();
+
+                CurrentSession.Load_Security();
+                security_roleViewSource.View.Refresh();
+            }
         }
 
-        private void toolBar_btnCancel_Click(object sender)
+        private void Cancel_Click(object sender)
         {
             foreach (security_user security_role in UserRoleDB.security_user.Local.Where(x => x.IsSelected))
             {
@@ -149,8 +159,8 @@ namespace Cognitivo.Security
             security_role security_role = new security_role();
             if (security_role != null)
             {
-                add_Privallge();
-                add_MissingRecords(security_role);
+                Add_Privallge();
+                Add_MissingRecords(security_role);
                 security_role.State = EntityState.Added;
                 security_role.Version = CurrentSession.Versions.Lite;
 
@@ -162,13 +172,13 @@ namespace Cognitivo.Security
             }
         }
 
-        private void toolBar_btnEdit_Click(object sender)
+        private void Edit_Click(object sender)
         {
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             if (security_role != null)
             {
-                add_Privallge();
-                add_MissingRecords(security_role);
+                Add_Privallge();
+                Add_MissingRecords(security_role);
                 security_role.IsSelected = true;
                 security_role.State = EntityState.Modified;
                 UserRoleDB.Entry(security_role).State = EntityState.Modified;
@@ -179,7 +189,7 @@ namespace Cognitivo.Security
             }
         }
 
-        private void add_Privallge()
+        private void Add_Privallge()
         {
             List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<Privilage.Privilages> Privilages = Enum.GetValues(typeof(Privilage.Privilages)).Cast<Privilage.Privilages>().ToList();
@@ -240,18 +250,17 @@ namespace Cognitivo.Security
             }
         }
 
-        private void btnChange(object sender, RoutedEventArgs e)
+        private void ChangePlan(object sender, RoutedEventArgs e)
         {
             if ((security_role)security_roleDataGrid.SelectedItem != null)
             {
-                add_MissingRecords((security_role)security_roleDataGrid.SelectedItem);
+                Add_MissingRecords((security_role)security_roleDataGrid.SelectedItem);
             }
         }
 
-        private void add_MissingRecords(security_role security_role)
+        private void Add_MissingRecords(security_role security_role)
         {
             AppList appList = new AppList();
-
             List<security_crud> security_curd = security_rolesecurity_curdViewSource.View.OfType<security_crud>().ToList().Where(x => x.id_role == security_role.id_role).ToList();
 
             if (security_curd.Count() == 0)
@@ -274,12 +283,15 @@ namespace Cognitivo.Security
             }
             else
             {
-                CurrentSession.Versions NewVersion = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                CurrentSession.Versions NewVersion =
+                    (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions),
+                    Convert.ToString(cbxVersion.Text));
 
                 if (CurrentVersion < NewVersion)
                 {
                     List<entity.App.Names> dtApplication = new List<entity.App.Names>();
                     string condition = "";
+
                     if (NewVersion == CurrentSession.Versions.Full)
                     {
                         condition = "1=1";
@@ -379,7 +391,7 @@ namespace Cognitivo.Security
             }
         }
 
-        private void security_roleDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Security_roleDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (security_roleViewSource.View.CurrentItem is security_role security_role)
             {

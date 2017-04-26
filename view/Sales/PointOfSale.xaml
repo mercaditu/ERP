@@ -383,16 +383,16 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" DataContext="{Binding Source={StaticResource sales_invoiceViewSource}}" HorizontalAlignment="Right">
-                    <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
+                    <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Foreground="WhiteSmoke" 
                        Content="{Binding NumberWatermark, Mode=OneWay}" FontWeight="Bold"/>
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" FontWeight="Bold" Content="|" Foreground="Silver" />
-                    <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
+                    <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Foreground="Silver" 
                        Content="G" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontWeight="Bold"/>
-                    <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
+                    <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Foreground="WhiteSmoke" 
                        Content="{Binding app_branch.name, Mode=OneWay}" FontWeight="Bold"/>
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Content="|" Foreground="Silver" />
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
-                       Content="{Binding app_terminal.name, Mode=OneWay}"/>
+                       Content="{Binding app_terminal.name, Mode=OneWay}" Foreground="WhiteSmoke" />
                 </StackPanel>
 
             </Grid>

@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
               xmlns:entity="clr-namespace:entity;assembly=entity"
               xmlns:cntrl="clr-namespace:cntrl"
-               xmlns:customcmd="clr-namespace:Cognitivo.Class"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -23,9 +22,6 @@
         <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}" />
         <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}" />
     </UserControl.Resources>
-    <!--<UserControl.CommandBindings>
-        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
-    </UserControl.CommandBindings>-->
     <Grid Width="256">
 
         <!-- TextBox for Searching -->

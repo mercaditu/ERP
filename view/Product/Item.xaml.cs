@@ -58,14 +58,14 @@ namespace Cognitivo.Product
             itemitem_conversion_factorViewSource = FindResource("itemitem_conversion_factorViewSource") as CollectionViewSource;
         }
 
-        private void load_PrimaryData(object sender, EventArgs e)
+        private void Load_PrimaryData(object sender, EventArgs e)
         {
             ItemDB = new ItemDB();
-            load_PrimaryDataThread();
-            load_SecondaryDataThread();
+            Load_PrimaryDataThread();
+            Load_SecondaryDataThread();
         }
 
-        private async void load_PrimaryDataThread()
+        private async void Load_PrimaryDataThread()
         {
             var predicate = PredicateBuilder.True<item>();
             predicate = (x => (x.id_company == CurrentSession.Id_Company || x.id_company == null));
@@ -114,7 +114,7 @@ namespace Cognitivo.Product
             }));
         }
 
-        private async void load_SecondaryDataThread()
+        private async void Load_SecondaryDataThread()
         {
             await ItemDB.app_measurement
                     .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
@@ -205,7 +205,7 @@ namespace Cognitivo.Product
         private void Item_Loaded(object sender, RoutedEventArgs e)
         {
             //Loads Primary and Secondary Data
-            load_PrimaryData(null, null);
+            Load_PrimaryData(null, null);
 
             cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type)).OfType<item.item_type>().Where(x => x != item.item_type.FixedAssets).ToList();
         }
@@ -235,10 +235,6 @@ namespace Cognitivo.Product
                 else if (savechnages == MessageBoxResult.No)
                 {
                     return true;
-                }
-                else if (savechnages == MessageBoxResult.Cancel)
-                {
-                    return false;
                 }
                 else
                 {
@@ -486,6 +482,18 @@ namespace Cognitivo.Product
             //TODO WRITE CODE HERE...
         }
 
+        private void ItemTag_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            item item = itemViewSource.View.CurrentItem as item;
+            if (item != null)
+            {
+                foreach (item_tag_detail TagDetial in item.item_tag_detail)
+                {
+
+                }
+            }
+        }
+
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
@@ -502,7 +510,7 @@ namespace Cognitivo.Product
             _pref_Product = ProductSettings.Default;
             popupCustomize.IsOpen = false;
 
-            load_PrimaryDataThread();
+            Load_PrimaryDataThread();
 
             toolBar.msgWarning("Close and Open Window to see Changes");
         }

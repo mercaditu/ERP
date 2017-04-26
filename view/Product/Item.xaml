@@ -204,7 +204,9 @@
                             </cntrl:SearchableTextbox>
                             <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
 									  HeadersVisibility="None" CanUserAddRows="False" CanUserDeleteRows="True" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-									  ItemsSource="{Binding Source={StaticResource itemitem_tagdetailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
+									  ItemsSource="{Binding Source={StaticResource itemitem_tagdetailViewSource}}"  
+                                      RowEditEnding="ItemTag_RowEditEnding"
+                                      RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Binding="{Binding is_default, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
@@ -459,7 +461,7 @@
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
 					   btnNew_Click="toolBar_btnNew_Click"
-                       btnSync_Click="load_PrimaryData"
+                       btnSync_Click="Load_PrimaryData"
 					   btnSearch_Click="toolBar_btnSearch_Click" IsEnabled="False"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

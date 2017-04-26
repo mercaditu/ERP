@@ -543,7 +543,8 @@ namespace entity.Controller.Sales
 
                     foreach (sales_invoice_detail detail in Invoice.sales_invoice_detail)
                     {
-                        foreach (item_movement item_movement in detail.item_movement)
+                        List<item_movement> ItemMovementList = detail.item_movement.ToList();
+                        foreach (item_movement item_movement in ItemMovementList)
                         {
                             if (item_movement.Action == item_movement.Actions.Delete)
                             {

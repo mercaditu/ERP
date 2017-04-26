@@ -620,8 +620,10 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
+                
                 project_task_output.CalcSalePrice_TimerTaks();
             }
+
         }
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)

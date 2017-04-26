@@ -19,14 +19,16 @@ namespace Cognitivo.Purchase
     {
         private CollectionViewSource purchase_invoiceViewSource;
         private CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
-
-        private PurchaseInvoiceDB PurchaseInvoiceDB = new PurchaseInvoiceDB();
-
+        private db db = new db();
+       // private PurchaseInvoiceDB PurchaseInvoiceDB = new PurchaseInvoiceDB();
+        private entity.Controller.Purcahse.PurchaseInvoice PurchaseDB;
         private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder = new cntrl.PanelAdv.pnlPurchaseOrder();
 
         public Invoice()
         {
             InitializeComponent();
+            PurchaseDB = FindResource("PurchaseInvoice") as entity.Controller.Purcahse.PurchaseInvoice;
+            PurchaseDB.db = db;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -45,49 +47,42 @@ namespace Cognitivo.Purchase
         private async void load_PrimaryDataThread()
         {
             InvoiceSetting InvoiceSetting = new InvoiceSetting();
-            if (InvoiceSetting.filterbyBranch)
-            {
-                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch && a.is_archived == false).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
-            }
-            else
-            {
-                await PurchaseInvoiceDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.is_archived == false).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
-            }
-
+            PurchaseDB.Load(InvoiceSetting.filterbyBranch);
+          
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));
-                purchase_invoiceViewSource.Source = PurchaseInvoiceDB.purchase_invoice.Local;
+                purchase_invoiceViewSource.Source = db.purchase_invoice.Local;
             }));
         }
 
         private async void load_SecondaryDataThread()
         {
-            await PurchaseInvoiceDB.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
+            await db.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDepartment.ItemsSource = PurchaseInvoiceDB.app_department.Local;
+                cbxDepartment.ItemsSource = db.app_department.Local;
             }));
 
-            await PurchaseInvoiceDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-                app_dimensionViewSource.Source = PurchaseInvoiceDB.app_dimension.Local;
+                app_dimensionViewSource.Source = db.app_dimension.Local;
             }));
 
-            await PurchaseInvoiceDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            await db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-                app_measurementViewSource.Source = PurchaseInvoiceDB.app_measurement.Local;
+                app_measurementViewSource.Source = db.app_measurement.Local;
             }));
 
-            await PurchaseInvoiceDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
+            await db.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
-                app_cost_centerViewSource.Source = PurchaseInvoiceDB.app_cost_center.Local;
+                app_cost_centerViewSource.Source = db.app_cost_center.Local;
             }));
         }
 
@@ -109,8 +104,8 @@ namespace Cognitivo.Purchase
         private void toolBar_btnNew_Click(object sender)
         {
             InvoiceSetting _pref_PurchaseInvoice = new InvoiceSetting();
-            purchase_invoice purchase_invoice = PurchaseInvoiceDB.New(_pref_PurchaseInvoice.TransDate_OffSet);
-
+            purchase_invoice purchase_invoice = PurchaseDB.Create(_pref_PurchaseInvoice.TransDate_OffSet);
+            db.purchase_invoice.Add(purchase_invoice);
             sbxContact.Text = "";
             sbxItem.Text = "";
 
@@ -126,7 +121,7 @@ namespace Cognitivo.Purchase
                 //{
                 purchase_invoice.IsSelected = true;
                 purchase_invoice.State = EntityState.Modified;
-                PurchaseInvoiceDB.Entry(purchase_invoice).State = EntityState.Modified;
+                db.Entry(purchase_invoice).State = EntityState.Modified;
                 //  }
             }
             else
@@ -158,144 +153,18 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSave_Click(object sender)
         {
-            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+          
 
-            if (purchase_invoice.status == Status.Documents_General.Approved)
+            if (PurchaseDB.SaveChanges_and_Validate() > 0)
             {
-                if (purchase_invoice != null)
-                {
-                    UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
-                    CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
-                    UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
-                    CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
-
-                    string Message = CheckPaymentReApprove.Check_ContractChanges(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_ContractChanges(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-                    Message = CheckPaymentReApprove.Check_ValueUP(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_ValueUP(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-                    Message = CheckPaymentReApprove.Check_ValueDown(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_ValueDown(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-                    Message += CheckPaymentReApprove.Check_CurrencyChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_CurrencyChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-                    Message = CheckPaymentReApprove.Check_DateChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdatePaymentReApprove.Update_DateChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-
-                    Message = "";
-                    Message = CheckMovementReApprove.CheckValueChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.ValueChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-                    Message = CheckMovementReApprove.CheckQuantityUP(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.QuantityUP(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-                    Message = CheckMovementReApprove.CheckQuantityDown(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.QuantityDown(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-                    }
-                    Message = CheckMovementReApprove.CheckDateChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-
-                    if (Message != "")
-                    {
-                        Message += "\n" + "Are You Sure Want To Change The Data..";
-                        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                        {
-                            UpdateMovementReApprove.DateChange(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                        }
-
-                        Message = CheckMovementReApprove.CheckNewMovement(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-
-                        if (Message != "")
-                        {
-                            Message += "\n" + "Are You Sure Want To Change The Data..";
-                            if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                            {
-                                UpdateMovementReApprove.NewMovement(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                            }
-                        }
-
-                        Message = CheckMovementReApprove.CheckDeleteMovement(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-
-                        if (Message != "")
-                        {
-                            Message += "\n" + "Are You Sure Want To Change The Data..";
-                            if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                            {
-                                UpdateMovementReApprove.DeleteMovement(PurchaseInvoiceDB, purchase_invoice.id_purchase_invoice, entity.App.Names.PurchaseInvoice);
-                            }
-                        }
-                    }
-                    purchase_invoiceViewSource.View.Refresh();
-                    PurchaseInvoiceDB.SaveChanges();
-                }
-            }
-            else
-            {
-                if (PurchaseInvoiceDB.SaveChanges() > 0)
-                {
-                    purchase_invoiceViewSource.View.Refresh();
-                    toolBar.msgSaved(PurchaseInvoiceDB.NumberOfRecords);
-                }
+                purchase_invoiceViewSource.View.Refresh();
+                toolBar.msgSaved(PurchaseDB.NumberOfRecords);
             }
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            PurchaseInvoiceDB.CancelAllChanges();
+            PurchaseDB.CancelAllChanges();
 
             purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
             if (purchase_invoice != null)
@@ -306,22 +175,18 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            PurchaseInvoiceDB.Approve();
+            PurchaseDB.Approve();
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
-            if (purchase_invoice != null)
-            {
-                purchase_invoice.status = Status.Documents_General.Annulled;
-                crud_modalAnull.Visibility = Visibility.Visible;
-                cntrl.PanelAdv.ActionPanelAnull ActionPanelAnull = new cntrl.PanelAdv.ActionPanelAnull();
-                ActionPanelAnull.ID = purchase_invoice.id_purchase_invoice;
-                ActionPanelAnull.Application = entity.App.Names.PurchaseInvoice;
-                ActionPanelAnull.db = PurchaseInvoiceDB;
-                crud_modalAnull.Children.Add(ActionPanelAnull);
-            }
+            
+                MessageBoxResult result = MessageBox.Show("Anull?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    PurchaseDB.Annull();
+                }
+            
         }
 
         #endregion Toolbar events
@@ -332,7 +197,7 @@ namespace Cognitivo.Purchase
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
 
                 if (contact != null && purchase_invoice != null)
@@ -385,7 +250,7 @@ namespace Cognitivo.Purchase
 
                 if (app_condition != null)
                 {
-                    cbxContract.ItemsSource = PurchaseInvoiceDB.app_contract.Where(a => a.is_active == true
+                    cbxContract.ItemsSource = db.app_contract.Where(a => a.is_active == true
                                                         && a.id_company == CurrentSession.Id_Company
                                                         && a.id_condition == app_condition.id_condition).ToList();
                     //Selects first Item
@@ -417,7 +282,7 @@ namespace Cognitivo.Purchase
 
                 List<purchase_invoice_detail> purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.ToList();
                 dgvvat.ItemsSource = purchase_invoice_detail
-                        .Join(PurchaseInvoiceDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                        .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                             , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
                             .GroupBy(a => new { a.name, a.id_vat, a.ad })
                     .Select(g => new
@@ -489,12 +354,12 @@ namespace Cognitivo.Purchase
 
                 if (sbxItem.ItemID > 0)
                 {
-                    item = PurchaseInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                    item = db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 }
 
                 if (purchase_invoice.id_contact > 0 || sbxContact.ContactID > 0)
                 {
-                    contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 }
 
                 InvoiceSetting InvoiceSetting = new InvoiceSetting();
@@ -528,7 +393,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.quantity = quantity;
 
                     //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.
-                    purchase_invoice_detail old_PurchaseInvoice = PurchaseInvoiceDB.purchase_invoice_detail
+                    purchase_invoice_detail old_PurchaseInvoice = db.purchase_invoice_detail
                         .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_invoice.id_contact)
                         .OrderByDescending(y => y.purchase_invoice.trans_date)
                         .FirstOrDefault();
@@ -566,7 +431,7 @@ namespace Cognitivo.Purchase
                 //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, bring Administrative
                 if (item.item_product.Count() > 0)
                 {
-                    int CostCenter = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+                    int CostCenter = db.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
 
                     if (CostCenter > 0)
                     {
@@ -577,14 +442,14 @@ namespace Cognitivo.Purchase
                         app_cost_center cost_center = new app_cost_center();
                         cost_center.name = entity.Brillo.Localize.StringText("Product");
                         cost_center.is_product = true;
-                        PurchaseInvoiceDB.app_cost_center.Add(cost_center);
+                        db.app_cost_center.Add(cost_center);
 
                         purchase_invoice_detail.app_cost_center = cost_center;
                     }
                 }
                 else if (item.item_asset.Count() > 0)
                 {
-                    int CostCenter = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+                    int CostCenter = db.app_cost_center.Where(a => a.is_fixedasset && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
 
                     if (CostCenter > 0)
                     {
@@ -595,7 +460,7 @@ namespace Cognitivo.Purchase
                         app_cost_center cost_center = new app_cost_center();
                         cost_center.name = entity.Brillo.Localize.StringText("FixedAsset");
                         cost_center.is_fixedasset = true;
-                        PurchaseInvoiceDB.app_cost_center.Add(cost_center);
+                        db.app_cost_center.Add(cost_center);
 
                         purchase_invoice_detail.app_cost_center = cost_center;
                     }
@@ -609,7 +474,7 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    int id_cost_center = PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+                    int id_cost_center = db.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
                     if (id_cost_center > 0)
                     {
                         purchase_invoice_detail.id_cost_center = id_cost_center;
@@ -619,7 +484,7 @@ namespace Cognitivo.Purchase
                         app_cost_center cost_center = new app_cost_center();
                         cost_center.name = entity.Brillo.Localize.StringText("Expense");
                         cost_center.is_administrative = true;
-                        PurchaseInvoiceDB.app_cost_center.Add(cost_center);
+                        db.app_cost_center.Add(cost_center);
 
                         purchase_invoice_detail.app_cost_center = cost_center;
                     }
@@ -634,9 +499,9 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.id_vat_group = item.id_vat_group;
                 }
             }
-            else if (PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).Any())
+            else if (db.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).Any())
             {
-                purchase_invoice_detail.id_vat_group = PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
+                purchase_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
             }
 
             Dispatcher.BeginInvoke((Action)(() =>
@@ -693,7 +558,7 @@ namespace Cognitivo.Purchase
                 purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
                 if (purchase_invoice != null)
                 {
-                    if (PurchaseInvoiceDB.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
+                    if (db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
                     {
                         MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
@@ -701,7 +566,7 @@ namespace Cognitivo.Purchase
                             //DeleteDetailGridRow
                             dgvPurchaseDetail.CancelEdit();
 
-                            PurchaseInvoiceDB.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
+                            db.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
                             purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
                         }
                     }
@@ -721,9 +586,9 @@ namespace Cognitivo.Purchase
             {
                 if (purchase_invoice.id_currencyfx > 0)
                 {
-                    if (PurchaseInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault() != null)
+                    if (db.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault() != null)
                     {
-                        purchase_invoice.app_currencyfx = PurchaseInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault();
+                        purchase_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault();
                     }
                 }
             }
@@ -786,11 +651,11 @@ namespace Cognitivo.Purchase
         private void btnPurchaseOreder_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
-            pnlPurchaseOrder._entity = PurchaseInvoiceDB;
+            pnlPurchaseOrder._entity = db;
 
             if (sbxContact.ContactID > 0)
             {
-                contact contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 if (contact != null)
                 {
                     pnlPurchaseOrder._contact = contact;
@@ -845,7 +710,7 @@ namespace Cognitivo.Purchase
                         purchase_invoice_detail.item = _purchase_order_detail.item;
                         purchase_invoice_detail.id_item = _purchase_order_detail.id_item;
                         purchase_invoice_detail.item_description = _purchase_order_detail.item_description;
-                        purchase_invoice_detail.quantity = _purchase_order_detail.quantity - PurchaseInvoiceDB.purchase_invoice_detail
+                        purchase_invoice_detail.quantity = _purchase_order_detail.quantity - db.purchase_invoice_detail
                                                                     .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
                                                                     .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
                         purchase_invoice_detail.unit_cost = _purchase_order_detail.unit_cost;
@@ -867,7 +732,7 @@ namespace Cognitivo.Purchase
                 }
             }
 
-            PurchaseInvoiceDB.Entry(purchase_invoice).Entity.State = EntityState.Added;
+            db.Entry(purchase_invoice).Entity.State = EntityState.Added;
             purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
             calculate_vat(sender, null);
             crud_modal.Children.Clear();
@@ -924,11 +789,11 @@ namespace Cognitivo.Purchase
 
         protected virtual void Dispose(bool disposing)
         {
-            if (PurchaseInvoiceDB != null)
+            if (db != null)
             {
                 if (disposing)
                 {
-                    PurchaseInvoiceDB.Dispose();
+                    db.Dispose();
                     // Dispose other managed resources.
                 }
                 //release unmanaged resources.
@@ -1048,8 +913,8 @@ namespace Cognitivo.Purchase
                     purchase_return.purchase_return_detail.Add(purchase_return_detail);
                 }
 
-                PurchaseInvoiceDB.purchase_return.Add(purchase_return);
-                PurchaseInvoiceDB.SaveChanges();
+                db.purchase_return.Add(purchase_return);
+                db.SaveChanges();
                 MessageBox.Show("Return Created Successfully..");
             }
             else

@@ -54,6 +54,25 @@
 
         public Urgencies urgency { get; set; }
 
+        [NotMapped]
+        public string DimensionString
+        {
+            get
+            {
+                string s = string.Empty;
+
+                foreach (item_request_dimension dimensionList in item_request_dimension)
+                {
+                    if (dimensionList.app_dimension != null && dimensionList.app_measurement != null)
+                    {
+                        s = s + dimensionList.app_dimension.name + ": " + dimensionList.value + " x " + dimensionList.app_measurement.name;
+                    }
+                }
+
+                return s;
+            }
+        }
+
         public virtual ICollection<item_request_decision> item_request_decision { get; set; }
         public virtual ICollection<item_request_dimension> item_request_dimension { get; set; }
         public virtual item_request item_request { get; set; }

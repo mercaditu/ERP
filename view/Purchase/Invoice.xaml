@@ -5,9 +5,9 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:entity="clr-namespace:entity;assembly=entity"
 		xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-		xmlns:customcmd="clr-namespace:Cognitivo.Class"
-		xmlns:pref="clr-namespace:Cognitivo.Purchase"
+	    xmlns:pref="clr-namespace:Cognitivo.Purchase"
 		xmlns:Class="clr-namespace:Cognitivo.Class"
+       xmlns:Purchasecontroller="clr-namespace:entity.Controller.Purcahse;assembly=entity"
 		xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 		xmlns:converter="clr-namespace:Cognitivo.Converters"
 		xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -21,6 +21,7 @@
 						CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <Purchasecontroller:PurchaseInvoice x:Key="PurchaseInvoice"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Status2Enable x:Key="Status2Enable" />
@@ -471,7 +472,7 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}" />
+                                <Button Command="Class:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

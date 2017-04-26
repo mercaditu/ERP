@@ -28,7 +28,10 @@
         <CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}" />
     </UserControl.Resources>
-
+    <UserControl.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
+    </UserControl.CommandBindings>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
@@ -76,10 +79,36 @@
                 <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}" />
                 <control:SmartBox_Contact x:Name="contactComboBox" HorizontalAlignment="Left"
                                           Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Get_Customers="True" Select="contactComboBox_Select" />
-                <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
+                <!--<Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
                 <TextBox x:Name="tbxTag" Text="{Binding TagList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                 <CheckBox IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                    Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}" />
+                    Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}" />-->
+                <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}" />
+                <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Left"
+                                                 CollectionViewSource="{StaticResource project_tagViewSource}"
+                                                 focusGrid="True" Height="27" Width="256"
+                                                 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                    <cntrl:SearchableTextbox.Columns>
+                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
+                                                          Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
+                    </cntrl:SearchableTextbox.Columns>
+                </cntrl:SearchableTextbox>
+                <DataGrid x:Name="project_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                      HeadersVisibility="None"
+                                      ItemsSource="{Binding Source={StaticResource Projectproject_tag_detail}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding project_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
+                        <DataGridTemplateColumn Width="Auto" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
+                                                    CommandParameter="{Binding}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
 
                 <Rectangle Fill="Silver" Height="1" Margin="8" />
 

@@ -324,7 +324,8 @@ namespace Cognitivo.Sales
             {
                 sales_invoice_detail sales_invoice_detail = e.Parameter as sales_invoice_detail;
                 payment_detail payment_detail = e.Parameter as payment_detail;
-
+                dgvSalesDetail.CommitEdit();
+                dgvPaymentDetail.CommitEdit();
                 if (sales_invoice_detail != null)
                 {
                     sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
@@ -353,7 +354,16 @@ namespace Cognitivo.Sales
                         paymentViewSource.View.Refresh();
 
                         CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
-                        paymentpayment_detailViewSource.View.Refresh();
+                        if (paymentpayment_detailViewSource != null)
+                        {
+                            if (paymentpayment_detailViewSource.View != null)
+                            {
+                                paymentpayment_detailViewSource.View.Refresh();
+                            }
+                        }
+
+                        
+                        
                     }
                 }
             }

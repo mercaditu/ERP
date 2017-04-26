@@ -75,12 +75,12 @@ namespace entity
                     _end_date = value;
                     TimeSpan time = end_date.Subtract(start_date);
 
-                    _hour = (decimal)time.TotalMinutes / 60;
+                    _hour = time.Hours + (Convert.ToDecimal(time.Minutes) / 100);
                     RaisePropertyChanged("hours");
 
                     if (id_time_coefficient > 0 && quantity == 0)
                     {
-                        quantity = Convert.ToDecimal(time.TotalHours);
+                        quantity = Convert.ToDecimal(time.Hours + (Convert.ToDecimal(time.Minutes) / 100));
                         RaisePropertyChanged("quantity");
                     }
 

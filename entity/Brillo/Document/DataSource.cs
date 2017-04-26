@@ -683,6 +683,8 @@ namespace entity.Brillo.Document
                     item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
                     quantity = g.quantity,
+                    DimensionString = g.DimensionString,
+                    Measurement = g.item != null ?  g.item.app_measurement != null ? g.item.app_measurement.name : "" : "" : "",
                     request_date = g.item_request.request_date,
                     trans_date = g.item_request.timestamp
                 }).ToList();

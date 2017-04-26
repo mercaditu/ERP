@@ -105,10 +105,10 @@ namespace cntrl.PanelAdv
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
         }
-
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
     }
 }

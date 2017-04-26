@@ -97,32 +97,57 @@ namespace Cognitivo.Product
                         {
                             foreach (var Batch in BatchList.Where(x => x.ProductID == i).OrderBy(x => x.ExpiryDate))
                             {
-                                item_inventory.item_inventory_detail.Add(new item_inventory_detail()
+                                if (item_inventory.item_inventory_detail.Where(x => x.movement_id == Batch.MovementID).Any())
                                 {
-                                    value_system = Batch.Quantity,
-                                    unit_value = Batch.Cost,
-                                    batch_code = Batch.BatchCode,
-                                    expire_date = Batch.ExpiryDate,
-                                    movement_id = Batch.MovementID,
-                                    State = EntityState.Added,
-                                    item_product = item_product,
-                                    id_item_product = i,
-                                    app_location = app_location,
-                                    id_location = app_location.id_location,
-                                    timestamp = DateTime.Now,
-                                });
+                                    item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).FirstOrDefault();
+
+                                    ///Since this item already exists in Inventory, we should update the values. The following code
+                                    ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
+                                    decimal Quantity_Original = item_inventory_detail.value_system;
+                                    decimal Quantity_Updated = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
+                                    decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
+
+                                    item_inventory_detail.value_system = Quantity_Updated;
+                                    item_inventory_detail.value_counted += Quantity_Difference;
+                                    item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0;
+                                }
+                                else
+                                {
+                                    item_inventory.item_inventory_detail.Add(new item_inventory_detail()
+                                    {
+                                        value_system = Batch.Quantity,
+                                        unit_value = Batch.Cost,
+                                        batch_code = Batch.BatchCode,
+                                        expire_date = Batch.ExpiryDate,
+                                        movement_id = Batch.MovementID,
+                                        State = EntityState.Added,
+                                        item_product = item_product,
+                                        id_item_product = i,
+                                        app_location = app_location,
+                                        id_location = app_location.id_location,
+                                        timestamp = DateTime.Now,
+                                    });
+                                }
                             }
                         }
                         else
+                        ///Normal Use. Not for Batch Code.
                         {
                             item_inventory_detail item_inventory_detail = new item_inventory_detail();
 
-                            item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
-                            item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0;
-                            
                             if (item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).Any())
                             {
-                                item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i).FirstOrDefault();
+                                ///Since this item already exists in Inventory, we should update the values. The following code
+                                ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
+                                item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).FirstOrDefault();
+                                
+                                decimal Quantity_Original = item_inventory_detail.value_system;
+                                decimal Quantity_Updated = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
+                                decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
+
+                                item_inventory_detail.value_system = Quantity_Updated;
+                                item_inventory_detail.value_counted += Quantity_Difference;
+                                item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0;
                             }
                             else
                             {
@@ -132,6 +157,8 @@ namespace Cognitivo.Product
                                 item_inventory_detail.app_location = app_location;
                                 item_inventory_detail.id_location = app_location.id_location;
                                 item_inventory_detail.timestamp = DateTime.Now;
+                                item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
+                                item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0;
 
                                 if (CurrentSession.Get_Currency_Default_Rate() != null)
                                 { item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx; }

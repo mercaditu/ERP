@@ -25,9 +25,9 @@ namespace Cognitivo.Class
         public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         {
             string query = @"
- set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                            set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode,
+                            select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode,
                              item.name as ItemName, prod.id_item_product as ProductID,
                              (sum(mov.credit) - sum(mov.debit)) as Quantity,
                              measure.name as Measurement,
@@ -35,7 +35,7 @@ select loc.id_location as LocationID, loc.name as Location, item.code as ItemCod
                              brand.name as Brand,
                                  mov.code as BatchCode,
                                  mov.expire_date as ExpiryDate,
-mov.id_movement as MovementID
+                                mov.id_movement as MovementID
                              from item_movement as mov
                              inner join app_location as loc on mov.id_location = loc.id_location
                              inner join app_branch as branch on loc.id_branch = branch.id_branch
@@ -66,12 +66,11 @@ mov.id_movement as MovementID
                                 im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
                                 measure.name as Measurement,
                                 im.id_movement as MovementID,
-                                sum(imv.unit_value) as Cost
+                                (select sum(unit_value) from item_movement_value where id_movement = im.id_movement) as Cost
 
                                 from item_movement as im
 
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
-                                inner join item_movement_value as imv on im.id_movement = imv.id_movement
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
@@ -94,8 +93,10 @@ mov.id_movement as MovementID
                                  (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
                                  mov.code as BatchCode,
                                  mov.expire_date as ExpiryDate,
-mov.id_movement as MovementID
+                                 mov.id_movement as MovementID
+
                                  from item_movement as mov
+
                                  inner join app_location as loc on mov.id_location = loc.id_location
                                  inner join app_branch as branch on loc.id_branch = branch.id_branch
                                  inner join item_product as prod on mov.id_item_product = prod.id_item_product

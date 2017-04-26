@@ -365,26 +365,33 @@ namespace cntrl.Controls
                 tbxName.Text = Regex.IsMatch(tbxSearch.Text, @"[a-zA-Z]+") ? tbxSearch.Text : "";
                 tbxEmail.Text = "";
                 tbxAddress.Text = "";
-
                 tbxTelephone.Text = "";
+
+
 
                 tbxName.Focus();
             }
+            ///Edit Existing Contact
             else if (ContactID > 0 && new entity.Brillo.Security(entity.App.Names.Contact).edit)
             {
                 popContactInfo.IsOpen = true;
 
-                using (entity.db db = new entity.db())
+                using (db db = new db())
                 {
-                    if (db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault() != null)
+                    contact contact = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
+                    if (contact != null)
                     {
-                        tbxName.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().name;
-                        tbxGovernmentID.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().gov_code;
-                        tbxAddress.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().address;
-                        tbxTelephone.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().telephone;
-                        tbxEmail.Text = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().email;
-                        // tbxContactRole.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().contact_role.name : "";
-                        tbxPriceList.Content = db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list != null ? db.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault().item_price_list.name : "";
+                        tbxName.Text = contact.name;
+                        tbxGovernmentID.Text = contact.gov_code;
+                        tbxAddress.Text = contact.address;
+                        tbxTelephone.Text = contact.telephone;
+                        tbxEmail.Text = contact.email;
+                        tbxPriceList.Content = contact.item_price_list != null ? contact.item_price_list.name : "";
+
+                        foreach (contact_tag_detail contact_tag_detail in contact.contact_tag_detail)
+                        {
+                            contact_tagList.Add(contact_tag_detail);
+                        }
                     }
                 }
             }
@@ -416,7 +423,7 @@ namespace cntrl.Controls
                 using (db db = new db())
                 {
                     int RoleID = db.contact_role
-                        .Where(x => x.is_principal && x.id_company == entity.CurrentSession.Id_Company)
+                        .Where(x => x.is_principal && x.id_company == CurrentSession.Id_Company)
                         .Select(x => x.id_contact_role)
                         .FirstOrDefault();
 
@@ -440,7 +447,7 @@ namespace cntrl.Controls
                     }
 
                     int PriceListID = db.item_price_list
-                    .Where(x => x.is_default && x.id_company == entity.CurrentSession.Id_Company)
+                    .Where(x => x.is_default && x.id_company == CurrentSession.Id_Company)
                     .Select(x => x.id_price_list)
                     .FirstOrDefault();
 
@@ -484,7 +491,6 @@ namespace cntrl.Controls
                     db.contacts.Add(contact);
                     db.SaveChanges();
                     
-
                     Name = contact.name;
                     ContactID = contact.id_contact;
                 }
@@ -510,6 +516,7 @@ namespace cntrl.Controls
                                 return;
                             }
                         }
+
                         foreach (contact_tag_detail contact_tag_detail in contact_tagList)
                         {
                             contact_tag contact_tag = db.contact_tag.Where(x => x.id_tag == contact_tag_detail.id_tag).FirstOrDefault();
@@ -518,28 +525,23 @@ namespace cntrl.Controls
                                 contact_tag_detail.contact_tag = contact_tag;
                                 contact.contact_tag_detail.Add(contact_tag_detail);
                             }
-
                         }
+
                         db.SaveChanges();
-
-
                         Name = contact.name;
                     }
                 }
             }
-
-
-
+            
             LoadData();
 
             //Once data is loaded, put name and set focus on search box to make things easier.
             tbxSearch.Focus();
-            //tbxSearch.Text = Name;
-            var key = Key.A;                    // Key to send
+            var key = Key.A;                       // Key to send
             var routedEvent = Keyboard.KeyUpEvent; // Event to send
             tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, key) { RoutedEvent = routedEvent });
 
-            var _enter = Key.Enter;                    // Key to send
+            var _enter = Key.Enter;                // Key to send
             tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
 
             popContactInfo.IsOpen = false;

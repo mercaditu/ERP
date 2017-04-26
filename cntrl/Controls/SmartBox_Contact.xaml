@@ -164,17 +164,14 @@
 												 focusGrid="True" Width="256"
 												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
                                     <cntrl:SearchableTextbox.Columns>
-                                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name"
-														  Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
+                                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
                                     </cntrl:SearchableTextbox.Columns>
                                 </cntrl:SearchableTextbox>
                                 <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
 									  HeadersVisibility="None" CanUserAddRows="False" CanUserDeleteRows="False"
 									  ItemsSource="{Binding ElementName=this,Path=contact_tagList}" RowDetailsVisibilityMode="Collapsed">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-													    IsReadOnly="True" Width="120"/>
-
+                                        <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="120"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>

@@ -261,9 +261,7 @@ namespace Cognitivo.Product
 
             if (item != null)
             {
-                // item_vatDataGrid.CancelEdit();
                 item_priceDataGrid.CancelEdit();
-                //item_dimentionDataGrid.CancelEdit();
                 itemViewSource.View.MoveCurrentToFirst();
 
                 if (item.State == EntityState.Added)
@@ -287,7 +285,6 @@ namespace Cognitivo.Product
             {
                 item item = (item)itemDataGrid.SelectedItem;
                 item.is_active = false;
-                //mycntrl._item =item;
                 itemViewSource.View.Filter = i =>
                 {
                     item objitem = (item)i;
@@ -486,42 +483,7 @@ namespace Cognitivo.Product
 
         private void hrefCost_Click(object sender, RoutedEventArgs e)
         {
-            foreach (item item in ItemDB.items.Where(x => x.item_product.Count() > 0))
-            {
-                int ProductID = item.item_product.Select(x => x.id_item_product).FirstOrDefault();
-
-                if (ProductID > 0)
-                {
-                    /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
-                    item_movement item_movement;
-
-                    using (db db = new db())
-                    {
-                        //var cost = from im in db.item_movement
-                        //           join imv in db.item_movement_value on imv.id_movement equals im.id_movement
-                        //           where im.id_item_product = ProductID
-                        //           select new
-                        //           {
-                        //               unit_cost = 
-                        //           }
-
-                        //item_movement = db.item_movement
-                        //.Where(x =>
-                        //    x.id_item_product == &&
-                        //    (x.credit - x.child.Sum(y => y.debit)) > 0 &&
-                        //    x.item_movement_value.Sum(y => y.unit_value) > 0)
-                        //.OrderByDescending(x => x.trans_date)
-                        //.Include(x => x.item_movement_value).FirstOrDefault();
-
-                        //if (cost != null)
-                        //{
-                        //    item.unit_cost = cost.unit_value;
-                        //}
-                    }
-                }
-            }
-
-            ItemDB.SaveChangesAsync();
+            //TODO WRITE CODE HERE...
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
@@ -561,13 +523,15 @@ namespace Cognitivo.Product
         private void AddBrand_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.item_brand item_brand = new cntrl.Curd.item_brand();
-            item_brand.item_brandViewSource = item_brandViewSource;
-            item_brand.MainViewSource = itemViewSource;
-            item_brand.curObject = itemViewSource.View.CurrentItem;
-            //item_brand._entity = dbContext;
-            item_brand.operationMode = cntrl.Class.clsCommon.Mode.Add;
-            item_brand.isExternalCall = true;
+            cntrl.Curd.item_brand item_brand = new cntrl.Curd.item_brand()
+            {
+                item_brandViewSource = item_brandViewSource,
+                MainViewSource = itemViewSource,
+                curObject = itemViewSource.View.CurrentItem,
+                operationMode = cntrl.Class.clsCommon.Mode.Add,
+                isExternalCall = true
+            };
+
             crud_modal.Children.Add(item_brand);
         }
 
@@ -577,14 +541,16 @@ namespace Cognitivo.Product
             if (_item_brand != null)
             {
                 crud_modal.Visibility = Visibility.Visible;
-                cntrl.Curd.item_brand item_brand = new cntrl.Curd.item_brand();
-                item_brand.item_brandViewSource = item_brandViewSource;
-                item_brand.MainViewSource = itemViewSource;
-                item_brand.curObject = itemViewSource.View.CurrentItem;
-                //item_brand._entity = dbContext;
-                item_brand.item_brandobject = _item_brand;
-                item_brand.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-                item_brand.isExternalCall = true;
+                cntrl.Curd.item_brand item_brand = new cntrl.Curd.item_brand()
+                {
+                    item_brandViewSource = item_brandViewSource,
+                    MainViewSource = itemViewSource,
+                    curObject = itemViewSource.View.CurrentItem,
+                    item_brandobject = _item_brand,
+                    operationMode = cntrl.Class.clsCommon.Mode.Edit,
+                    isExternalCall = true
+                };
+
                 crud_modal.Children.Add(item_brand);
             }
         }
@@ -611,12 +577,13 @@ namespace Cognitivo.Product
                 int id = Convert.ToInt32(((item_tag)cbxTag.Data).id_tag);
                 if (id > 0)
                 {
-                    item item = itemViewSource.View.CurrentItem as item;
-                    if (item != null)
+                    if (itemViewSource.View.CurrentItem is item item)
                     {
-                        item_tag_detail item_tag_detail = new item_tag_detail();
-                        item_tag_detail.id_tag = ((item_tag)cbxTag.Data).id_tag;
-                        item_tag_detail.item_tag = ((item_tag)cbxTag.Data);
+                        item_tag_detail item_tag_detail = new item_tag_detail()
+                        {
+                            id_tag = ((item_tag)cbxTag.Data).id_tag,
+                            item_tag = ((item_tag)cbxTag.Data)
+                        };
                         item.item_tag_detail.Add(item_tag_detail);
                         itemitem_tagdetailViewSource.View.Refresh();
                     }
@@ -629,9 +596,12 @@ namespace Cognitivo.Product
             item item = (item)itemViewSource.View.CurrentItem;
             if (item != null)
             {
-                item_service item_service = new item_service();
-                item_service.hr_talent = (hr_talent)cmbtalent.SelectionBoxItem;
-                item_service.id_talent = (int)cmbtalent.SelectedValue;
+                item_service item_service = new item_service()
+                {
+                    hr_talent = (hr_talent)cmbtalent.SelectionBoxItem,
+                    id_talent = (int)cmbtalent.SelectedValue
+                };
+
                 item.item_service.Add(item_service);
                 itemitem_serviceViewSource.View.Refresh();
                 itemitem_serviceViewSource.View.MoveCurrentToLast();
@@ -656,9 +626,7 @@ namespace Cognitivo.Product
 
         private void popupName_Closed(object sender, EventArgs e)
         {
-            item_template item_template = item_templateViewSource.View.CurrentItem as item_template;
-
-            if (item_template != null)
+            if (item_templateViewSource.View.CurrentItem is item_template item_template)
             {
                 item item = itemViewSource.View.CurrentItem as item;
                 foreach (item_template_detail item_template_detail in item_template.item_template_detail)

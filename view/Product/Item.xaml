@@ -203,9 +203,10 @@
                                 </cntrl:SearchableTextbox.Columns>
                             </cntrl:SearchableTextbox>
                             <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
-									  HeadersVisibility="None" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+									  HeadersVisibility="None" CanUserAddRows="False" CanUserDeleteRows="True" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
 									  ItemsSource="{Binding Source={StaticResource itemitem_tagdetailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn Binding="{Binding is_default, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />
                                     <DataGridTemplateColumn Width="Auto" Header="">
                                         <DataGridTemplateColumn.CellTemplate>

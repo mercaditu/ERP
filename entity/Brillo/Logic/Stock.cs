@@ -675,17 +675,17 @@ namespace entity.Brillo.Logic
                 ///If Inventory has MovementID (used with Batch Code)
                 else if (item_inventory_detail.movement_id > 0)
                 {
-                    item_movement parent_movement = db.item_movement.Find(item_inventory_detail.movement_id);
-                    if (parent_movement != null)
+                    item_movement item_movement = db.item_movement.Find(item_inventory_detail.movement_id);
+                    if (item_movement != null)
                     {
-                        //More Stock
+                        //Positive Delta creates an Increase Stock
                         if (item_inventory_detail.Delta > 0)
                         {
-                            parent_movement.credit += item_inventory_detail.Delta;
-                            parent_movement.comment += " | Updated " + Localize.StringText("Inventory") + ": " + "Increased by " + String.Format("{0:0.00}", item_inventory_detail.Delta) + " | " + item_inventory_detail.comment;
-                            parent_movement.timestamp = DateTime.Now;
+                            item_movement.credit += item_inventory_detail.Delta;
+                            item_movement.comment += " | " + Localize.StringText("Inventory") + ": " + "Increased by " + String.Format("{0:0.00}", item_inventory_detail.Delta) + " | " + item_inventory_detail.comment;
+                            item_movement.timestamp = DateTime.Now;
                         }
-                        //Less Stock
+                        //Negative Delta creates an Decrease Stock
                         else if (item_inventory_detail.Delta < 0)
                         {
                             item_movement im = new item_movement()
@@ -695,13 +695,13 @@ namespace entity.Brillo.Logic
                                 credit = 0,
                                 debit = Math.Abs(item_inventory_detail.Delta),
                                 status = Status.Stock.InStock,
-                                code = parent_movement.code,
-                                expire_date = parent_movement.expire_date,
+                                code = item_movement.code,
+                                expire_date = item_movement.expire_date,
                                 id_inventory_detail = item_inventory_detail.id_inventory_detail,
                                 trans_date = item_inventory_detail.item_inventory.trans_date,
                                 timestamp = DateTime.Now,
                                 comment = Localize.StringText("Inventory") + ": " + item_inventory_detail.comment,
-                                parent = parent_movement
+                                parent = item_movement
                             };
 
                             item_movementList.Add(im);

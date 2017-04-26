@@ -38,7 +38,8 @@ namespace entity.Brillo
                         Real_Quantity = inv_detail.value_counted,
 
                         Cost = inv_detail.unit_value,
-                        Comments = inv_detail.comment
+                        Comments = inv_detail.comment,
+                        MovementID = inv_detail.movement_id
                     };
 
                     DetailList.Add(Detail);
@@ -91,7 +92,6 @@ namespace entity.Brillo
                 XLWorkbook workbook = new XLWorkbook(Path);
                 foreach (var ws in workbook.Worksheets)
                 {
-
                     List<item_brand> Brands = new List<item_brand>();
                     using (db db = new db())
                     {
@@ -103,10 +103,11 @@ namespace entity.Brillo
                     {
                         int LocationID = row.Cell(2).GetValue<int>();
                         int ProductID = row.Cell(3).GetValue<int>();
+                        int InvDetailID = row.Cell(1).GetValue<int>();
 
                         //Reuse or Create the Detail.
-                        item_inventory_detail detail = item_inventory.item_inventory_detail.Where(x => x.id_location == LocationID && x.id_item_product == ProductID).FirstOrDefault();
-
+                        item_inventory_detail detail = item_inventory.item_inventory_detail.Where(x => x.id_inventory_detail == InvDetailID).FirstOrDefault();
+                        
                         //Allow you to create new rows into Excel and load that into the System.
                         if (detail == null)
                         {
@@ -193,7 +194,7 @@ namespace entity.Brillo
         public int DetailID { get; set; } //1
         public int LocationID { get; set; }
         public int ProductID { get; set; }
-
+        
         public string Location { get; set; } //4
 
         public string Tag { get; set; }
@@ -211,5 +212,6 @@ namespace entity.Brillo
         public decimal Cost { get; set; } //13
 
         public string Comments { get; set; } //14
+        public int? MovementID { get; set; } //15
     }
 }

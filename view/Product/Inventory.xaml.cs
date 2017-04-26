@@ -307,10 +307,15 @@ namespace Cognitivo.Product
             item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
             entity.Brillo.Inventory2Excel Inv2Excel = new entity.Brillo.Inventory2Excel();
 
+            item_inventory.IsSelected = true;
+            InventoryDB.SaveChanges();
+
             if (Inv2Excel.Create(item_inventory))
             {
                 toolBar.msgSaved(1);
             }
+
+            toolBar_btnEdit_Click(null);
         }
 
         private void item_Select(object sender, RoutedEventArgs e)

@@ -49,7 +49,7 @@
 
     <Grid DataContext="{StaticResource sales_invoiceViewSource}">
         <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
-			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged" />
+			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="Expire_IsVisibleChanged" />
         <Grid>
             <Grid Style="{StaticResource ThemeBackGround}" />
             <Grid x:Name="gridBottom" VerticalAlignment="Top" Height="40">
@@ -85,7 +85,7 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,64,0,0">
                 <Border CornerRadius="32" Background="RoyalBlue" Width="64" Height="64"
-				                Cursor="Hand" MouseDown="btnClient_Click" TouchDown="btnClient_Click"
+				                Cursor="Hand" MouseDown="Client_Click" TouchDown="Client_Click"
 				                BorderBrush="WhiteSmoke" BorderThickness="4" ToolTip="F1">
                     <Border.Effect>
                         <DropShadowEffect Color="Black" ShadowDepth="0" />
@@ -161,8 +161,7 @@
                         <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
 						                    Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
 						                    ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
-                                            Foreground="Black" CellStyle="{StaticResource DataGridCellStyle}"
-						                    RowEditEnding="SalesDetail_RowEditEnding">
+                                            Foreground="Black" CellStyle="{StaticResource DataGridCellStyle}">
                             <DataGrid.RowStyle>
                                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                                     <Setter Property="Foreground" Value="{Binding InStock, Converter={StaticResource Bool2Color}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -249,7 +248,7 @@
                             </DataGrid.RowDetailsTemplate>
                         </DataGrid>
                         <Grid Margin="8" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-						Cursor="Hand" MouseDown="btnPromotion_Click" TouchDown="btnPromotion_Click"
+						Cursor="Hand" MouseDown="Promotion_Click" TouchDown="Promotion_Click"
 						ToolTip="{lex:Loc Promotion}">
                             <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                                 <Border.Background>

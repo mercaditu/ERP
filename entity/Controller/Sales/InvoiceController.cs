@@ -16,6 +16,7 @@ namespace entity.Controller.Sales
         /// </summary>
         public db db { get; set; }
         public Brillo.Promotion.Start Promotions { get; set; }
+
         #region Properties
 
         public DateTime Start_Range
@@ -60,7 +61,8 @@ namespace entity.Controller.Sales
             //Initialize DB for Sales Invoice.
             db = new db();
 
-            //Initialize Promotions List.
+            ///Initialize Promotions List. Inside is a Boolean value to Load or not. 
+            ///This will help when trying to load Controller remotely without UI
             Promotions = new Brillo.Promotion.Start(true);
         }
 
@@ -549,7 +551,7 @@ namespace entity.Controller.Sales
         /// 
         /// </summary>
         /// <param name="sender"></param>
-        private void ReApprove_Click(sales_invoice invoice)
+        public void ReApprove_Click(sales_invoice invoice)
         {
             //if (invoice != null)
             //{
@@ -820,7 +822,7 @@ namespace entity.Controller.Sales
 
                 ///Promotions Code
                 Promotions.Calculate_SalesInvoice(ref Invoice);
-
+                Invoice.RaisePropertyChanged("GrandTotal");
 
                 //Fixup Code.
                 foreach (sales_invoice_detail sales_invoice_detail in Invoice.sales_invoice_detail)

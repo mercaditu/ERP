@@ -886,10 +886,9 @@ namespace Cognitivo.Sales
 
         private void ReApprove_Click(object sender)
         {
-            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-            if (sales_invoice != null)
+            if (sales_invoiceDataGrid.SelectedItem is sales_invoice Invoice)
             {
-
+                SalesDB.ReApprove_Click(Invoice);
             }
 
             sales_invoiceViewSource.View.Refresh();

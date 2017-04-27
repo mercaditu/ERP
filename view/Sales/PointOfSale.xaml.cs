@@ -14,8 +14,6 @@ namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
-        //private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
-
         private CollectionViewSource sales_invoiceViewSource;
         private CollectionViewSource paymentViewSource;
 
@@ -37,7 +35,7 @@ namespace Cognitivo.Sales
         /// <summary>
         /// Navigates to CLIENT Tab
         /// </summary>
-        private void btnClient_Click(object sender, EventArgs e)
+        private void Client_Click(object sender, EventArgs e)
         {
             tabContact.IsSelected = true;
         }
@@ -60,7 +58,7 @@ namespace Cognitivo.Sales
         private void Payment_Click(object sender, EventArgs e)
         {
             tabPayment.IsSelected = true;
-            btnPromotion_Click(sender, e);
+            Promotion_Click(sender, e);
         }
 
         private void Save_Click(object sender, EventArgs e)
@@ -157,8 +155,8 @@ namespace Cognitivo.Sales
                 contact contact = await SalesDB.db.contacts.FindAsync(sbxContact.ContactID);
                 if (contact != null)
                 {
-                    sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                    payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
+                    sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                    payment payment = paymentViewSource.View.CurrentItem as payment;
                     sales_invoice.id_contact = contact.id_contact;
                     sales_invoice.contact = contact;
                     payment.id_contact = contact.id_contact;
@@ -183,12 +181,10 @@ namespace Cognitivo.Sales
                     }
                     else
                     {
-                        Settings SalesSettings = new Settings();
-
                         decimal QuantityInStock = sbxItem.QuantityInStock;
                         sales_invoice_detail _sales_invoice_detail =
                               SalesDB.Create_Detail(ref sales_invoice, item, null,
-                                SalesSettings.AllowDuplicateItem,
+                                new Settings().AllowDuplicateItem,
                                 sbxItem.QuantityInStock,
                                 sbxItem.Quantity);
                     }
@@ -211,12 +207,12 @@ namespace Cognitivo.Sales
 
             //PAYMENT TYPE
             await SalesDB.db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
-            CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
+            CollectionViewSource payment_typeViewSource = FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = SalesDB.db.payment_type.Local;
 
             cbxSalesRep.ItemsSource = CurrentSession.SalesReps; //await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
 
-            CollectionViewSource app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
+            CollectionViewSource app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
             app_currencyViewSource.Source = CurrentSession.Currencies;
 
             int Id_Account = CurrentSession.Id_Account;
@@ -271,18 +267,12 @@ namespace Cognitivo.Sales
 
         #region Details
 
-        private void SalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-          //  sales_invoiceViewSource.View.Refresh();
-        }
-
         private void PaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
-            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
 
             payment_detail payment_detail = e.NewItem as payment_detail;
-            if (payment_detail != null && payment != null && sales_invoice != null)
+            if (payment_detail != null && payment != null && sales_invoiceViewSource.View.CurrentItem as sales_invoice != null)
             {
                 payment_detail.State = EntityState.Added;
                 payment_detail.IsSelected = true;
@@ -313,18 +303,17 @@ namespace Cognitivo.Sales
             {
                 sales_invoice_detail sales_invoice_detail = e.Parameter as sales_invoice_detail;
                 payment_detail payment_detail = e.Parameter as payment_detail;
+
                 dgvSalesDetail.CommitEdit();
                 dgvPaymentDetail.CommitEdit();
+
                 if (sales_invoice_detail != null)
                 {
-                    sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                    if (sales_invoice != null)
+                    if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
                     {
                         sales_invoice.sales_invoice_detail.Remove(sales_invoice_detail);
-                        //sales_invoiceViewSource.View.Refresh();
 
-                        CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                        if (sales_invoicesales_invoice_detailViewSource != null)
+                        if (FindResource("sales_invoicesales_invoice_detailViewSource") is CollectionViewSource sales_invoicesales_invoice_detailViewSource)
                         {
                             if (sales_invoicesales_invoice_detailViewSource.View != null)
                             {
@@ -335,24 +324,18 @@ namespace Cognitivo.Sales
                 }
                 else if (payment_detail != null)
                 {
-                    payment payment = paymentViewSource.View.CurrentItem as payment;
-
-                    if (payment != null)
+                    if (paymentViewSource.View.CurrentItem is payment payment)
                     {
                         payment.payment_detail.Remove(payment_detail);
                         paymentViewSource.View.Refresh();
 
-                        CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
-                        if (paymentpayment_detailViewSource != null)
+                        if (FindResource("paymentpayment_detailViewSource") is CollectionViewSource paymentpayment_detailViewSource)
                         {
                             if (paymentpayment_detailViewSource.View != null)
                             {
                                 paymentpayment_detailViewSource.View.Refresh();
                             }
                         }
-
-                        
-                        
                     }
                 }
             }
@@ -393,7 +376,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void btnPromotion_Click(object sender, EventArgs e)
+        private void Promotion_Click(object sender, EventArgs e)
         {
             sales_invoice Invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
@@ -401,10 +384,10 @@ namespace Cognitivo.Sales
 
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
             sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+            Invoice.RaisePropertyChanged("GrandTotal");
         }
 
-        private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void Expire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {

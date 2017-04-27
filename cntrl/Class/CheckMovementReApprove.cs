@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace cntrl.Class
 {
-    public class CheckMovementReApprove
+    public class Approve_Check
     {
         public enum Messagess
         {
@@ -16,6 +16,13 @@ namespace cntrl.Class
             DateChanged
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="ID"></param>
+        /// <param name="Application"></param>
+        /// <returns></returns>
         public string CheckValueChange(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
@@ -96,61 +103,37 @@ namespace cntrl.Class
         /// <param name="ID">Transaction ID of Header</param>
         /// <param name="Application">Application Name</param>
         /// <returns></returns>
-        public bool CheckQuantityUP(db db, int ID, entity.App.Names Application)
+        public bool QuantityUP(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
             {
-                using (db temp = new db())
-                {
-                    sales_invoice OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
 
-                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                foreach (var detail in sales_invoice.sales_invoice_detail)
+                {
+                    decimal CurrentQuantity = db.Entry(detail).Property(u => u.quantity).CurrentValue;
+                    decimal OriginalQuantity = db.Entry(detail).Property(u => u.quantity).OriginalValue;
+                    decimal Difference = OriginalQuantity - CurrentQuantity;
+                    //Current - Original if it's 
+                    if (Difference > 0)
                     {
-                        sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-                        if (Oldsales_invoice_detail != null)
-                        {
-                            if (sales_invoice_detail.quantity > Oldsales_invoice_detail.quantity)
-                            {
-                                decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
-                                if (Diff > 0)
-                                {
-                                    foreach (item_movement item_movement in sales_invoice_detail.item_movement)
-                                    {
-                                        return true;
-                                        //movmessage += item_movement.debit + "-->" + sales_invoice_detail.quantity;
-                                    }
-                                }
-                            }
-                        }
+                        return true;
                     }
                 }
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
-                using (db temp = new db())
-                {
-                    purchase_invoice OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-                    purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
+                purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
 
-                    foreach (purchase_invoice_detail purchase_invoice_detail in Local_PurchaseInvoice.purchase_invoice_detail)
+                foreach (var detail in purchase_invoice.purchase_invoice_detail)
+                {
+                    decimal CurrentQuantity = db.Entry(detail).Property(u => u.quantity).CurrentValue;
+                    decimal OriginalQuantity = db.Entry(detail).Property(u => u.quantity).OriginalValue;
+                    decimal Difference = OriginalQuantity - CurrentQuantity;
+                    //Current - Original if it's 
+                    if (Difference > 0)
                     {
-                        purchase_invoice_detail Oldpurchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
-                        if (Oldpurchase_invoice_detail != null)
-                        {
-                            if (purchase_invoice_detail.quantity > Oldpurchase_invoice_detail.quantity)
-                            {
-                                decimal Diff = purchase_invoice_detail.quantity - Oldpurchase_invoice_detail.quantity;
-                                if (Diff > 0)
-                                {
-                                    foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
-                                    {
-                                        return true;
-                                        //movmessage += item_movement.credit + "-->" + purchase_invoice_detail.quantity;
-                                    }
-                                }
-                            }
-                        }
+                        return true;
                     }
                 }
             }
@@ -165,60 +148,37 @@ namespace cntrl.Class
         /// <param name="ID">Transaction ID of Header</param>
         /// <param name="Application">Application Name</param>
         /// <returns></returns>
-        public bool CheckQuantityDown(db db, int ID, App.Names Application)
+        public bool QuantityDown(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
             {
-                using (db temp = new db())
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+
+                foreach (var detail in sales_invoice.sales_invoice_detail)
                 {
-                    sales_invoice OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-
-                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                    decimal CurrentQuantity = db.Entry(detail).Property(u => u.quantity).CurrentValue;
+                    decimal OriginalQuantity = db.Entry(detail).Property(u => u.quantity).OriginalValue;
+                    decimal Difference = OriginalQuantity - CurrentQuantity;
+                    //Current - Original if it's 
+                    if (Difference < 0)
                     {
-                        sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-
-                        if (Oldsales_invoice_detail != null)
-                        {
-                            if (sales_invoice_detail.quantity < Oldsales_invoice_detail.quantity)
-                            {
-                                decimal Diff = sales_invoice_detail.quantity - Oldsales_invoice_detail.quantity;
-                                if (Diff < 0)
-                                {
-                                    return true;
-                                }
-                            }
-                        }
+                        return true;
                     }
                 }
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
-                purchase_invoice OriginalPurchaseInvoice;
+                purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
 
-                using (db temp = new db())
+                foreach (var detail in purchase_invoice.purchase_invoice_detail)
                 {
-                    OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-
-                    purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
-                    foreach (purchase_invoice_detail purchase_invoice_detail in Local_PurchaseInvoice.purchase_invoice_detail)
+                    decimal CurrentQuantity = db.Entry(detail).Property(u => u.quantity).CurrentValue;
+                    decimal OriginalQuantity = db.Entry(detail).Property(u => u.quantity).OriginalValue;
+                    decimal Difference = OriginalQuantity - CurrentQuantity;
+                    //Current - Original if it's 
+                    if (Difference < 0)
                     {
-                        purchase_invoice_detail Oldid_purchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
-
-                        if (Oldid_purchase_invoice_detail != null)
-                        {
-                            if (purchase_invoice_detail.quantity < Oldid_purchase_invoice_detail.quantity)
-                            {
-                                decimal Diff = purchase_invoice_detail.quantity - Oldid_purchase_invoice_detail.quantity;
-                                if (Diff < 0)
-                                {
-                                    foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
+                        return true;
                     }
                 }
             }
@@ -234,61 +194,42 @@ namespace cntrl.Class
         /// <param name="ID">Transaction ID of Header</param>
         /// <param name="Application">Application Name</param>
         /// <returns></returns>
-        public bool CheckDateChange(db db, int ID, App.Names Application)
+        public bool DateChange(db db, int ID, App.Names Application)
         {
-            //string movmessage = "";
             if (Application == App.Names.SalesInvoice)
             {
-                sales_invoice OriginalSalesInvoice;
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
+                DateTime CurrentDate = db.Entry(sales_invoice).Property(u => u.trans_date).CurrentValue;
+                DateTime OriginalDate = db.Entry(sales_invoice).Property(u => u.trans_date).OriginalValue;
 
-                using (db temp = new db())
+                if (CurrentDate.Date != OriginalDate.Date)
                 {
-                    OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-
-                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-                    if (OriginalSalesInvoice.trans_date != Local_SalesInvoice.trans_date)
-                    {
-                        return true;
-                        //movmessage += OriginalSalesInvoice.trans_date + "-->" + Local_SalesInvoice.trans_date;
-                    }
-
-                    //if (movmessage != "")
-                    //{
-                    //    String Message = "You Have Changed The Date So Following Changes Required..\n";
-                    //    Message += "This Movement Will be Changed..\n" + movmessage;
-                    //    return Message;
-                    //}
+                    return true;
                 }
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
-                purchase_invoice OriginalPurchaseInvoice;
+                purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
+                DateTime CurrentDate = db.Entry(purchase_invoice).Property(u => u.trans_date).CurrentValue;
+                DateTime OriginalDate = db.Entry(purchase_invoice).Property(u => u.trans_date).OriginalValue;
 
-                using (db temp = new db())
+                if (CurrentDate.Date != OriginalDate.Date)
                 {
-                    OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-
-                    purchase_invoice Local_PurchaseInvoice = db.purchase_invoice.Find(ID);
-                    if (OriginalPurchaseInvoice.trans_date != Local_PurchaseInvoice.trans_date)
-                    {
-                        return true;
-                        //movmessage += OriginalPurchaseInvoice.trans_date + "-->" + Local_PurchaseInvoice.trans_date;
-                    }
-
-                    //if (movmessage != "")
-                    //{
-                    //    String Message = "You Have Changed The Date So Following Changes Required..\n";
-                    //    Message += "This Movement Will be Changed..\n" + movmessage;
-                    //    return Message;
-                    //}
+                    return true;
                 }
             }
 
             return false;
         }
 
-
-        public bool CheckNewMovement(db db, int ID, entity.App.Names Application)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="ID"></param>
+        /// <param name="Application"></param>
+        /// <returns></returns>
+        public bool CreateDetail(db db, int ID, App.Names Application)
         {
             DbChangeTracker Tracker = db.ChangeTracker;
             var entries = Tracker.Entries<sales_invoice_detail>().Where(x => x.Entity.id_sales_invoice == ID);
@@ -311,7 +252,7 @@ namespace cntrl.Class
         /// <param name="ID">Transaction ID of Header</param>
         /// <param name="Application">Application Name</param>
         /// <returns></returns>
-        public bool CheckDeleteMovement(db db, int ID, entity.App.Names Application)
+        public bool RemovedDetail(db db, int ID, App.Names Application)
         {
             DbChangeTracker Tracker = db.ChangeTracker;
             var entries = Tracker.Entries<sales_invoice_detail>().Where(x => x.Entity.id_sales_invoice == ID);
@@ -319,29 +260,6 @@ namespace cntrl.Class
             foreach (var entity in entries)
             {
                 if (entity.State == System.Data.Entity.EntityState.Deleted)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="db">Context</param>
-        /// <param name="ID">Transaction ID of Header</param>
-        /// <param name="Application">Application Name</param>
-        /// <returns></returns>
-        public bool CheckDateMovement(db db, int ID, App.Names Application)
-        {
-            using (db temp = new db())
-            {
-                sales_invoice Oldsales_invoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
-
-                if (sales_invoice.id_branch != Oldsales_invoice.id_branch)
                 {
                     return true;
                 }

@@ -35,7 +35,7 @@ namespace cntrl.Class
                 }
             }
         }
-
+        
         public void QuantityUP(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)

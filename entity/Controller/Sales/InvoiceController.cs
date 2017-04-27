@@ -15,6 +15,8 @@ namespace entity.Controller.Sales
         /// Database Context. Already Initialized.
         /// </summary>
         public db db { get; set; }
+        public Brillo.Promotion.Start Promotions { get; set; }
+        #region Properties
 
         public DateTime Start_Range
         {
@@ -51,10 +53,15 @@ namespace entity.Controller.Sales
 
         public List<Messages> Msg { get; set; }
 
+        #endregion
+
         public InvoiceController()
         {
             //Initialize DB for Sales Invoice.
             db = new db();
+
+            //Initialize Promotions List.
+            Promotions = new Brillo.Promotion.Start(true);
         }
 
         #region Load
@@ -165,6 +172,9 @@ namespace entity.Controller.Sales
             
             Invoice.sales_invoice_detail.Add(sales_invoice_detail);
 
+            //Check for Promotions after each insert.
+            Check_Promotions(Invoice);
+
             return sales_invoice_detail;
         }
 
@@ -195,12 +205,18 @@ namespace entity.Controller.Sales
                         invoice.State = EntityState.Unchanged;
                         db.Entry(invoice).State = EntityState.Added;
                         Add_CRM(invoice);
+
+                        //Check Promotions before Saving.
+                        Check_Promotions(invoice);
                     }
                     else if (invoice.State == EntityState.Modified)
                     {
                         invoice.timestamp = DateTime.Now;
                         invoice.State = EntityState.Unchanged;
                         db.Entry(invoice).State = EntityState.Modified;
+
+                        //Check Promotions before Saving.
+                        Check_Promotions(invoice);
                     }
                     else if (invoice.State == EntityState.Deleted)
                     {
@@ -782,6 +798,48 @@ namespace entity.Controller.Sales
 
             return true;
         }
+        #endregion
+
+        #region Promotions
+
+        public async void Check_Promotions(sales_invoice Invoice)
+        {
+            if (Invoice != null)
+            {
+                //Cleanup Code
+                if (Invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList().Count() > 0)
+                {
+                    foreach (sales_invoice_detail sales_invoice_detail in Invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList())
+                    {
+                        if (sales_invoice_detail.id_sales_invoice_detail != sales_invoice_detail.PromoID)
+                        {
+                            db.sales_invoice_detail.Remove(sales_invoice_detail);
+                        }
+                    }
+                }
+
+                ///Promotions Code
+                Promotions.Calculate_SalesInvoice(ref Invoice);
+
+
+                //Fixup Code.
+                foreach (sales_invoice_detail sales_invoice_detail in Invoice.sales_invoice_detail)
+                {
+                    //Gets the Item into Context.
+                    if (sales_invoice_detail.item == null)
+                    {
+                        sales_invoice_detail.item = await db.items.FindAsync(sales_invoice_detail.id_item);
+                    }
+
+                    //Gets the Promotion into Context.
+                    if (sales_invoice_detail.id_sales_promotion > 0 && sales_invoice_detail.sales_promotion == null)
+                    {
+                        sales_invoice_detail.sales_promotion = await db.sales_promotion.FindAsync(sales_invoice_detail.id_sales_promotion);
+                    }
+                }
+            }
+        }
+
         #endregion
     }
 }

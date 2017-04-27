@@ -14,7 +14,7 @@ namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
-        private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
+        //private entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
 
         private CollectionViewSource sales_invoiceViewSource;
         private CollectionViewSource paymentViewSource;
@@ -393,37 +393,11 @@ namespace Cognitivo.Sales
             }
         }
 
-        private async void btnPromotion_Click(object sender, EventArgs e)
+        private void btnPromotion_Click(object sender, EventArgs e)
         {
-            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            
-            if (sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList().Count() > 0)
-            {
-                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList())
-                {
-                    if (sales_invoice_detail.id_sales_invoice_detail != sales_invoice_detail.PromoID)
-                    {
-                        SalesDB.db.sales_invoice_detail.Remove(sales_invoice_detail);
-                    }
-                }
-            }
+            sales_invoice Invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
-            StartPromo.Calculate_SalesInvoice(ref sales_invoice);
-
-            foreach (sales_invoice_detail sales_invoice_detail in (sales_invoiceViewSource.View.CurrentItem as sales_invoice).sales_invoice_detail)
-            {
-                //Gets the Item into view.
-                if (sales_invoice_detail.item == null)
-                {
-                    sales_invoice_detail.item = await SalesDB.db.items.FindAsync(sales_invoice_detail.id_item);
-                }
-
-                //Gets the Promotion into view.
-                if (sales_invoice_detail.id_sales_promotion > 0 && sales_invoice_detail.sales_promotion == null)
-                {
-                    sales_invoice_detail.sales_promotion = await SalesDB.db.sales_promotion.FindAsync(sales_invoice_detail.id_sales_promotion);
-                }
-            }
+            SalesDB.Check_Promotions(Invoice);
 
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
             sales_invoicesales_invoice_detailViewSource.View.Refresh();

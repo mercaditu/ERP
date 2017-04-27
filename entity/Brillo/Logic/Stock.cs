@@ -681,6 +681,7 @@ namespace entity.Brillo.Logic
                         //Positive Delta creates an Increase Stock
                         if (item_inventory_detail.Delta > 0)
                         {
+                            //Increase Delta ontop of Credit.
                             item_movement.credit += item_inventory_detail.Delta;
                             item_movement.comment += " | " + Localize.StringText("Inventory") + ": " + "Increased by " + String.Format("{0:0.00}", item_inventory_detail.Delta) + " | " + item_inventory_detail.comment;
                             item_movement.timestamp = DateTime.Now;

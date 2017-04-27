@@ -1062,16 +1062,11 @@ namespace Cognitivo.Sales
                 {
                     UpdateMovementReApprove.NewMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                 }
-
-                 CheckMovementReApprove.CheckDeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-
-                if (Message != "")
+                
+                //Check if Item has been Removed
+                if (CheckMovementReApprove.RemovedDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
                 {
-                    Message += "\n" + "Are You Sure Want To Change The Data..";
-                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                    {
-                        UpdateMovementReApprove.DeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    }
+                    UpdateMovementReApprove.DeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                 }
             }
             //SalesInvoiceDB.ReApprove(sales_invoice);

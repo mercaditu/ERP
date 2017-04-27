@@ -121,6 +121,25 @@ namespace entity
         public string batch { get; set; }
         public DateTime? expiry_date { get; set; }
 
+        [NotMapped]
+        public string DimensionString
+        {
+            get
+            {
+                string s = string.Empty;
+
+                foreach (production_execution_dimension dimensionList in production_execution_dimension)
+                {
+                    if (dimensionList.app_dimension != null && dimensionList.app_measurement != null)
+                    {
+                        s = s + dimensionList.app_dimension.name + ": " + dimensionList.value + " x " + dimensionList.app_measurement.name;
+                    }
+                }
+
+                return s;
+            }
+        }
+
         //Heirarchy
         public virtual production_execution_detail parent { get; set; }
 

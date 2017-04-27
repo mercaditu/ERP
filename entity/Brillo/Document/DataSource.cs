@@ -105,6 +105,11 @@ namespace entity.Brillo.Document
                 item_request item_request = (item_request)Document;
                 return ItemRequest(item_request);
             }
+            else if (AppName == typeof(production_execution_detail).ToString() || BaseName == typeof(production_execution_detail).ToString())
+            {
+                production_execution_detail production_execution_detail = (production_execution_detail)Document;
+                return ProductionExecutionDetail(production_execution_detail);
+            }
 
             return null;
         }
@@ -308,20 +313,20 @@ namespace entity.Brillo.Document
             {
                 foreach (sales_packing_relation _sales_packing_relation in sales_packing_relation)
                 {
-                    if (_sales_packing_relation.sales_packing_detail.sales_packing.number!=null)
+                    if (_sales_packing_relation.sales_packing_detail.sales_packing.number != null)
                     {
                         if (!PackingList.Contains(_sales_packing_relation.sales_packing_detail.sales_packing.number))
                         {
                             PackingList = PackingList + ", " + _sales_packing_relation.sales_packing_detail.sales_packing.number;
                         }
                     }
-                   
+
                 }
-                if (PackingList!="")
+                if (PackingList != "")
                 {
                     return PackingList.Remove(0, 1);
                 }
-               
+
             }
 
             return PackingList;
@@ -683,11 +688,40 @@ namespace entity.Brillo.Document
                     item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
                     quantity = g.quantity,
-                    Available=g.Balance,
+                    Available = g.Balance,
                     DimensionString = g.DimensionString,
-                    Measurement = g.item != null ?  g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",
+                    Measurement = g.item != null ? g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",
                     request_date = g.item_request.request_date,
                     trans_date = g.item_request.timestamp
+                }).ToList();
+
+            return reportDataSource;
+        }
+        public ReportDataSource ProductionExecutionDetail(production_execution_detail production_execution_detail)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<production_execution_detail> Listproduction_execution_detail = new List<entity.production_execution_detail>();
+            Listproduction_execution_detail.Add(production_execution_detail);
+            reportDataSource.Value = Listproduction_execution_detail
+                .Select(g => new
+                {
+                    ProjectName = g.project_task != null ? g.project_task.project != null ? g.project_task.project.name : "" : "",
+                    Number = g.production_order_detail != null?g.production_order_detail.production_order != null ? g.production_order_detail.production_order.work_number : "":"",
+                    Name = g.name,
+                    Line = g.production_order_detail != null ? g.production_order_detail.production_order != null ? g.production_order_detail.production_order.production_line != null ? g.production_order_detail.production_order.production_line.name : "" : "" : "",
+                    StartDate = g.start_date != null ? g.start_date.ToString() : "",
+                    EndDate = g.end_date != null ? g.end_date.ToString() : "",
+                    item_input = g.parent != null ? g.parent.item != null ? g.parent.item.name : "" : "",
+                    item_input_quantity = g.quantity ,
+                    DimensionStringInput = g.parent != null ? g.parent.DimensionString:"",
+                    item_code = g.item != null ? g.item.code : "",
+                    item_name = g.item != null ? g.item.name : "",
+                    quantity = g.quantity,
+                    DimensionString = g.DimensionString,
+                    trans_date = g.trans_date,
+                    EmpName=g.contact!=null?g.contact.name:"",
+                    Hours=g.hours
+
                 }).ToList();
 
             return reportDataSource;

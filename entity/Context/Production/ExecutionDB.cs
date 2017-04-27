@@ -118,6 +118,14 @@ namespace entity
                             }
                         }
 
+                        if (Type==entity.production_order.ProductionOrderTypes.Fraction)
+                        {
+                            if (production_execution_detail!=null && production_execution_detail.production_order_detail!=null && production_execution_detail.production_order_detail.production_order!=null && production_execution_detail.production_order_detail.production_order.app_document_range!=null)
+                            {
+                                Brillo.Document.Start.Automatic(production_execution_detail, production_execution_detail.production_order_detail.production_order.app_document_range);
+                            }
+                          
+                        }
                         NumberOfRecords += 1;
                     }
                 }

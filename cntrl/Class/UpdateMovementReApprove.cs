@@ -88,7 +88,7 @@ namespace cntrl.Class
                                                                                     (int)LocalDetail.id_location,
                                                                                     Diff,
                                                                                     LocalCopy.trans_date,
-                                                                                 "Sales Invoice Fix"
+                                                                                    "Sales Invoice Fix"
                                                                                     ));
                                             Diff = 0;
                                         }

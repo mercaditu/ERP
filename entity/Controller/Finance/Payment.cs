@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace entity.Controller.Finance
@@ -13,15 +11,18 @@ namespace entity.Controller.Finance
     {
         public int NumberOfRecords;
         public db db { get; set; }
+
         public payment New(bool Is_PaymentRecievable)
         {
-            payment payment = new payment();
-            payment.status = Status.Documents_General.Pending;
-            payment.State = EntityState.Added;
+            payment payment = new payment()
+            {
+                status = Status.Documents_General.Pending,
+                State = EntityState.Added
+            };
 
             if (Is_PaymentRecievable)
             {
-                payment.app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.PointOfSale, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+                payment.app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.AccountsReceivable, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
             }
 
             payment.IsSelected = true;
@@ -45,8 +46,6 @@ namespace entity.Controller.Finance
                 {
                     SaveChanges_and_Validate();
                 }
-
-                //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
                 MakePayment(payment_schedualList, payment, IsRecievable, is_print);
@@ -97,10 +96,6 @@ namespace entity.Controller.Finance
             string number = string.Empty;
             foreach (payment_detail payment_detail in payment.payment_detail.ToList())
             {
-                //if (payment_detail.id_payment_schedual > 0)
-                //{
-                //    Parent_Schedual = base.payment_schedual.Find(payment_detail.id_payment_schedual);
-                //}
 
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
@@ -108,7 +103,6 @@ namespace entity.Controller.Finance
                 payment_schedual Parent_Schedual = new payment_schedual();
 
                 //Assigns appCurrencyFX ID & Entity
-
                 if (payment_detail.id_currencyfx == 0)
                 {
                     payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -140,9 +134,8 @@ namespace entity.Controller.Finance
                 ///
                 if (IsRecievable == false)
                 {
-                    ///If PaymentDetail Value is Negative.
-                    ///
 
+                    ///If PaymentDetail Value is Negative.
                     decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {

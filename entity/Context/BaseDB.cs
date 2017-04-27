@@ -57,10 +57,10 @@ namespace entity
             var source = obj;
             var clone = Activator.CreateInstance(a);
 
-            base.Entry(clone).State = EntityState.Added;
+            Entry(clone).State = EntityState.Added;
 
             var sourceValues = base.Entry(source).CurrentValues;
-            base.Entry(clone).CurrentValues.SetValues(sourceValues);
+            Entry(clone).CurrentValues.SetValues(sourceValues);
             return clone;
         }
     }

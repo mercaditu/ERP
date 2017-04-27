@@ -159,21 +159,25 @@
                             </StackPanel>
                             <StackPanel Margin="4,0">
                                 <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" FontSize="8"/>
-                                <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
+                                <WrapPanel x:Name="wrapTag" Orientation="Horizontal" MaxWidth="256">
+
+                                </WrapPanel>
+                                
+                                <!--<cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
 												 CollectionViewSource="{StaticResource contact_tagViewSource}"
 												 focusGrid="True" Width="256"
 												 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
                                     <cntrl:SearchableTextbox.Columns>
                                         <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True" />
                                     </cntrl:SearchableTextbox.Columns>
-                                </cntrl:SearchableTextbox>
-                                <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                </cntrl:SearchableTextbox>-->
+                                <!--<DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
 									  HeadersVisibility="None" CanUserAddRows="False" CanUserDeleteRows="False"
 									  ItemsSource="{Binding ElementName=this,Path=contact_tagList}" RowDetailsVisibilityMode="Collapsed">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="120"/>
                                     </DataGrid.Columns>
-                                </DataGrid>
+                                </DataGrid>-->
                             </StackPanel>
                         </StackPanel>
                     </Grid>

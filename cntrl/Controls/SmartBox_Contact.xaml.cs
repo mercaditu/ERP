@@ -25,7 +25,8 @@ namespace cntrl.Controls
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-        public List<contact_tag_detail> contact_tagList { get; set; }
+
+        //public List<contact_tag_detail> contact_tagList { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -56,8 +57,7 @@ namespace cntrl.Controls
         }
 
         private bool _AutoShow;
-
-
+        
         public bool can_Edit
         {
             get { return _can_edit; }
@@ -119,7 +119,6 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
-            contact_tagList = new List<contact_tag_detail>();
             ///Exists code if in design view.
             if (DesignerProperties.GetIsInDesignMode(this))
             {
@@ -132,8 +131,18 @@ namespace cntrl.Controls
                 db.contact_tag
                 .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
                 .OrderBy(x => x.name).Load();
-                CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
-                contact_tagViewSource.Source = db.contact_tag.Local;
+
+                foreach (contact_tag tag in db.contact_tag.Local)
+                {
+                    CheckBox cb = new CheckBox()
+                    {
+                        Content = tag.name,
+                        Tag = tag.id_tag,
+                        Margin = new Thickness(4)
+                    };
+
+                    wrapTag.Children.Add(cb);
+                }
             }
 
             LoadData();
@@ -159,6 +168,16 @@ namespace cntrl.Controls
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
 
+        }
+
+        private void Cb_Unchecked(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Cb_Checked(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void LoadData()
@@ -354,8 +373,21 @@ namespace cntrl.Controls
             smartBoxContactSetting.Default.Save();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenContactCRUD(object sender, MouseButtonEventArgs e)
         {
+            //Always clean no matter what.
+            foreach (CheckBox box in wrapTag.Children)
+            {
+                box.IsChecked = false;
+            }
+
+            tbxEmail.Background = Brushes.White;
+
             //Check if ContactID is Zero and user can create a new contact.
             if (ContactID == 0 && new entity.Brillo.Security(entity.App.Names.Contact).create)
             {
@@ -366,11 +398,9 @@ namespace cntrl.Controls
                 tbxEmail.Text = "";
                 tbxAddress.Text = "";
                 tbxTelephone.Text = "";
-
-
-
                 tbxName.Focus();
             }
+
             ///Edit Existing Contact
             else if (ContactID > 0 && new entity.Brillo.Security(entity.App.Names.Contact).edit)
             {
@@ -390,7 +420,13 @@ namespace cntrl.Controls
 
                         foreach (contact_tag_detail contact_tag_detail in contact.contact_tag_detail)
                         {
-                            contact_tagList.Add(contact_tag_detail);
+                            foreach (CheckBox checkbox in wrapTag.Children)
+                            {
+                                if ((int)checkbox.Tag == contact_tag_detail.id_tag)
+                                {
+                                    checkbox.IsChecked = true;
+                                }
+                            }
                         }
                     }
                 }
@@ -477,14 +513,20 @@ namespace cntrl.Controls
                             return;
                         }
                     }
-
-                    foreach (contact_tag_detail contact_tag_detail in contact_tagList)
+                    
+                    //New Contact, so just create the tags.
+                    foreach (CheckBox checkbox in wrapTag.Children)
                     {
-                        contact_tag contact_tag = db.contact_tag.Where(x => x.id_tag == contact_tag_detail.id_tag).FirstOrDefault();
-                        if (contact_tag!=null)
+                        if (checkbox.IsChecked == true)
                         {
-                            contact_tag_detail.contact_tag = contact_tag;
-                            contact.contact_tag_detail.Add(contact_tag_detail);
+                            contact_tag tag = db.contact_tag.Find((int)checkbox.Tag);
+                            if (tag != null)
+                            {
+                                contact_tag_detail contact_tag_detail = new contact_tag_detail();
+                                contact_tag_detail.contact_tag = tag;
+                                contact.contact_tag_detail.Add(contact_tag_detail);
+                                checkbox.IsChecked = true;
+                            }
                         }
                     }
 
@@ -512,18 +554,40 @@ namespace cntrl.Controls
                         if (smartBoxContactSetting.Default.EmailNecessary == true)
                         {
                             if (string.IsNullOrEmpty(contact.email))
-                            {
-                                return;
-                            }
+                            { tbxEmail.Background = Brushes.Pink; return; }
                         }
 
-                        foreach (contact_tag_detail contact_tag_detail in contact_tagList)
+                        //New Contact, so just create the tags.
+                        foreach (CheckBox checkbox in wrapTag.Children)
                         {
-                            contact_tag contact_tag = db.contact_tag.Where(x => x.id_tag == contact_tag_detail.id_tag).FirstOrDefault();
-                            if (contact_tag != null)
+                            if (contact.contact_tag_detail.Where(x => x.id_tag == (int)checkbox.Tag).Any())
                             {
-                                contact_tag_detail.contact_tag = contact_tag;
-                                contact.contact_tag_detail.Add(contact_tag_detail);
+                                if (checkbox.IsChecked == true)
+                                {
+                                    //Do Nothing. Already exists so why add again??
+                                }
+                                else
+                                {
+                                    //Remove because it exists, but not checked.
+                                    
+                                    //Stopped for now because of Foreign Key error.
+                                    //contact_tag_detail contact_tag_detail = contact.contact_tag_detail.Where(x => x.id_tag == (int)checkbox.Tag).FirstOrDefault();
+                                    //contact.contact_tag_detail.Remove(contact_tag_detail);
+                                }
+                            }
+                            else
+                            {
+                                if (checkbox.IsChecked == true)
+                                {
+                                    //Add because it doesnt exists, but checked.
+                                    contact_tag_detail contact_tag_detail = new contact_tag_detail();
+                                    contact_tag tag = db.contact_tag.Find((int)checkbox.Tag);
+                                    if (tag != null)
+                                    {
+                                        contact_tag_detail.contact_tag = tag;
+                                        contact.contact_tag_detail.Add(contact_tag_detail);
+                                    }
+                                }
                             }
                         }
 
@@ -547,40 +611,35 @@ namespace cntrl.Controls
             popContactInfo.IsOpen = false;
         }
 
-        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                Add_Tag();
-            }
-        }
+        //private void cbxTag_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        Add_Tag();
+        //    }
+        //}
 
-        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Add_Tag();
-        }
+        //private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    Add_Tag();
+        //}
 
-        private void Add_Tag()
-        {
-            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
-            if (cbxTag.Data != null)
-            {
-                int id = Convert.ToInt32(((contact_tag)cbxTag.Data).id_tag);
-                if (id > 0)
-                {
-
-
-                    contact_tag_detail contact_tag_detail = new contact_tag_detail();
-                    contact_tag_detail.id_tag = ((contact_tag)cbxTag.Data).id_tag;
-                    contact_tag_detail.contact_tag = ((contact_tag)cbxTag.Data);
-                    contact_tagList.Add(contact_tag_detail);
-                    RaisePropertyChanged("contact_tagList");
-
-                }
-            }
-        }
-
-
+        //private void Add_Tag()
+        //{
+        //    // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+        //    if (cbxTag.Data != null)
+        //    {
+        //        int id = Convert.ToInt32(((contact_tag)cbxTag.Data).id_tag);
+        //        if (id > 0)
+        //        {
+        //            contact_tag_detail contact_tag_detail = new contact_tag_detail();
+        //            contact_tag_detail.id_tag = ((contact_tag)cbxTag.Data).id_tag;
+        //            contact_tag_detail.contact_tag = ((contact_tag)cbxTag.Data);
+        //            //contact_tagList.Add(contact_tag_detail);
+        //            RaisePropertyChanged("contact_tagList");
+        //        }
+        //    }
+        //}
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {

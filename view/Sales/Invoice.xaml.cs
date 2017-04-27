@@ -22,43 +22,21 @@ namespace Cognitivo.Sales
         private CollectionViewSource sales_invoicesales_invoice_detailViewSource;
         private CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
 
-        private db db = new db();
-        private entity.Controller.Sales.SalesInvoice SalesDB;
+        //private db db = new db();
+        private entity.Controller.Sales.InvoiceController SalesDB;
         private entity.Controller.WindowProperty WindowProperty;
 
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
-        #region Dispose
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (db != null)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                    // Dispose other managed resources.
-                }
-                //release unmanaged resources.
-            }
-        }
-        #endregion
-
         public Invoice()
         {
             InitializeComponent();
 
-            //Load DB into Controller.
-            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.SalesInvoice;
+            //Load Controller.
+            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
             WindowProperty = FindResource("WindowProperty") as entity.Controller.WindowProperty;
-            SalesDB.db = db;
+
             SalesDB.Start_Range = WindowProperty.Start_Range;
             SalesDB.End_Range = WindowProperty.End_Range;
         }
@@ -67,7 +45,7 @@ namespace Cognitivo.Sales
 
         private void SalesInvoice_Loaded(object sender, EventArgs e)
         {
-            sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = (CollectionViewSource)FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource");
+            sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
             sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
 
             Load_PrimaryDataThread(null, null);
@@ -79,10 +57,10 @@ namespace Cognitivo.Sales
             Settings Settings = new Settings();
             SalesDB.Load(Settings.FilterByBranch);
 
-            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-            sales_invoiceViewSource.Source = db.sales_invoice.Local;
+            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+            sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
-            if (db.sales_invoice.Local.Count() > 0)
+            if (SalesDB.db.sales_invoice.Local.Count() > 0)
             {
                 if (sales_invoicesales_invoice_detailViewSource.View != null)
                 {
@@ -95,7 +73,7 @@ namespace Cognitivo.Sales
         {
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(db, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesDB.db, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));
@@ -107,10 +85,10 @@ namespace Cognitivo.Sales
 
         private void New_Click(object sender)
         {
-            Settings SalesSettings = new Settings();
-            sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
+            sales_invoice sales_invoice = SalesDB.Create(new Settings().TransDate_Offset, false);
             cbxCurrency.get_DefaultCurrencyActiveRate();
-            db.sales_invoice.Add(sales_invoice);
+
+            SalesDB.db.sales_invoice.Add(sales_invoice);
 
             sales_invoiceViewSource.View.MoveCurrentToLast();
             sbxContact.Text = "";
@@ -121,13 +99,8 @@ namespace Cognitivo.Sales
         {
             if (sales_invoiceDataGrid.SelectedItem != null)
             {
-                sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-                if (sales_invoice != null)
-                {
-                    sales_invoice.IsSelected = true;
-                    sales_invoice.State = EntityState.Modified;
-                    db.Entry(sales_invoice).State = EntityState.Modified;
-                }
+                sales_invoice Invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+                SalesDB.Edit(Invoice);
             }
             else
             {
@@ -137,37 +110,30 @@ namespace Cognitivo.Sales
 
         private void Delete_Click(object sender)
         {
-            foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected ))
+            foreach (sales_invoice invoice in SalesDB.db.sales_invoice.Local.Where(x => x.IsSelected ))
             {
                 if (invoice != null && invoice.State != EntityState.Added)
                 {
                     invoice.is_archived = true;
-                    // sales_invoice.State = EntityState.Modified;
-                    
                 }
-               
             }
-            db.SaveChanges();
 
-            db = new db();
-            SalesDB.db = db;
-
+            SalesDB.db.SaveChanges();
             Load_PrimaryDataThread(null, null);
-
         }
 
         private void Save_Click(object sender)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
 
-            if (cbxDocument.SelectedItem is app_document_range app_document_range)
-            {
-                if (app_document_range.range_current > app_document_range.range_end)
-                {
-                    toolBar.msgWarning("Document Range is finished");
-                    return;
-                }
-            }
+            //if (cbxDocument.SelectedItem is app_document_range app_document_range)
+            //{
+            //    if (app_document_range.range_current > app_document_range.range_end)
+            //    {
+            //        toolBar.msgWarning("Document Range is finished");
+            //        return;
+            //    }
+            //}
 
             if (SalesDB.SaveChanges_and_Validate() > 0)
             {
@@ -192,7 +158,7 @@ namespace Cognitivo.Sales
         {
             if (SalesDB.Approve())
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(db, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesDB.db, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;
             }
             else
@@ -225,17 +191,17 @@ namespace Cognitivo.Sales
             {
                 sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
 
-                if (db.contacts.Find(sbxContact.ContactID) != null && sales_invoice != null)
+                if (SalesDB.db.contacts.Find(sbxContact.ContactID) != null && sales_invoice != null)
                 {
                     //This code blocks incase a Sales Invoice already has an Associated Sales Order
                     if (sales_invoice.sales_order == null)
                     {
                         //Empty so that memory does not bring incorrect currency calculation
-                        sales_invoice.contact = db.contacts.Find(sbxContact.ContactID);
-                        sales_invoice.id_contact = db.contacts.Find(sbxContact.ContactID).id_contact;
+                        sales_invoice.contact = SalesDB.db.contacts.Find(sbxContact.ContactID);
+                        sales_invoice.id_contact = SalesDB.db.contacts.Find(sbxContact.ContactID).id_contact;
 
                         ///Start Thread to get Data.
-                        Task thread_SecondaryData = Task.Factory.StartNew(() => ContactPref_Thread(db.contacts.Find(sbxContact.ContactID)));
+                        Task thread_SecondaryData = Task.Factory.StartNew(() => ContactPref_Thread(SalesDB.db.contacts.Find(sbxContact.ContactID)));
                     }
                 }
             }
@@ -247,7 +213,7 @@ namespace Cognitivo.Sales
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    cbxContactRelation.ItemsSource = db.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+                    cbxContactRelation.ItemsSource = SalesDB.db.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
                     if (objContact.id_sales_rep != null)
                     {
@@ -295,38 +261,38 @@ namespace Cognitivo.Sales
 
         #endregion Filter Data
 
-        private void calculate_vat(object sender, EventArgs e)
-        {
-            if ((sales_invoice)sales_invoiceDataGrid.SelectedItem != null)
-            {
-                ((sales_invoice)sales_invoiceDataGrid.SelectedItem).RaisePropertyChanged("GrandTotal");
-                List<sales_invoice_detail> sales_invoice_detail = ((sales_invoice)sales_invoiceDataGrid.SelectedItem).sales_invoice_detail.ToList();
-                if (sales_invoice_detail.Count > 0)
-                {
-                    var listvat = sales_invoice_detail
-                           .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                               , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
-                               .GroupBy(a => new { a.name, a.id_vat, a.ad })
-                       .Select(g => new
-                       {
-                           id_vat = g.Key.id_vat,
-                           name = g.Key.name,
-                           value = g.Sum(a => a.value * a.ad.quantity)
-                       }).ToList();
+        //private void calculate_vat(object sender, EventArgs e)
+        //{
+        //    if ((sales_invoice)sales_invoiceDataGrid.SelectedItem != null)
+        //    {
+        //        ((sales_invoice)sales_invoiceDataGrid.SelectedItem).RaisePropertyChanged("GrandTotal");
+        //        List<sales_invoice_detail> sales_invoice_detail = ((sales_invoice)sales_invoiceDataGrid.SelectedItem).sales_invoice_detail.ToList();
+        //        if (sales_invoice_detail.Count > 0)
+        //        {
+        //            var listvat = sales_invoice_detail
+        //                   .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+        //                       , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
+        //                       .GroupBy(a => new { a.name, a.id_vat, a.ad })
+        //               .Select(g => new
+        //               {
+        //                   id_vat = g.Key.id_vat,
+        //                   name = g.Key.name,
+        //                   value = g.Sum(a => a.value * a.ad.quantity)
+        //               }).ToList();
 
-                    dgvVAT.ItemsSource = listvat.GroupBy(x => x.id_vat).Select(g => new
-                    {
-                        id_vat = g.Max(y => y.id_vat),
-                        name = g.Max(y => y.name),
-                        value = g.Sum(a => a.value)
-                    }).ToList();
-                }
-            }
-        }
+        //            dgvVAT.ItemsSource = listvat.GroupBy(x => x.id_vat).Select(g => new
+        //            {
+        //                id_vat = g.Max(y => y.id_vat),
+        //                name = g.Max(y => y.name),
+        //                value = g.Sum(a => a.value)
+        //            }).ToList();
+        //        }
+        //    }
+        //}
 
         private void Detail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            calculate_vat(sender, e);
+            //calculate_vat(sender, e);
         }
 
         #region PrefSettings
@@ -365,7 +331,7 @@ namespace Cognitivo.Sales
                     int LineLimit = 0;
                     if (sales_invoice.id_range > 0)
                     {
-                        app_document_range app_document_range = db.app_document_range.Find(sales_invoice.id_range);
+                        app_document_range app_document_range = SalesDB.db.app_document_range.Find(sales_invoice.id_range);
                         if (app_document_range.app_document.line_limit != null)
                         {
                             LineLimit = (int)app_document_range.app_document.line_limit;
@@ -379,9 +345,7 @@ namespace Cognitivo.Sales
                     }
                     else
                     {
-                        //int BranchID = (int)cbxBranch.SelectedValue;
-
-                        item item = db.items.Find(sbxItem.ItemID);
+                        item item = SalesDB.db.items.Find(sbxItem.ItemID);
                         item_product item_product = item.item_product.FirstOrDefault();
 
                         if (item_product != null && item_product.can_expire)
@@ -477,7 +441,7 @@ namespace Cognitivo.Sales
                 {
                     sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                     dgvSalesDetail.CancelEdit();
-                    db.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
+                    SalesDB.db.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 }
             }
@@ -494,19 +458,19 @@ namespace Cognitivo.Sales
             {
                 if (sales_invoice.id_currencyfx > 0)
                 {
-                    app_currencyfx app_currencyfx = db.app_currencyfx.Find(sales_invoice.id_currencyfx);
+                    app_currencyfx app_currencyfx = SalesDB.db.app_currencyfx.Find(sales_invoice.id_currencyfx);
                     if (app_currencyfx != null)
                     {
                         sales_invoice.app_currencyfx = app_currencyfx;
                     }
                 }
             }
-            calculate_vat(sender, e);
+            //calculate_vat(sender, e);
         }
 
         private void Detail_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            calculate_vat(sender, e);
+            //calculate_vat(sender, e);
         }
 
         private void PackingList_Click(object sender, RoutedEventArgs e)
@@ -519,8 +483,8 @@ namespace Cognitivo.Sales
 
                 pnlPacking = new cntrl.PanelAdv.pnlPacking()
                 {
-                    _entity = db,
-                    _contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault() //sbxContact.Contact as contact;
+                    _entity = SalesDB.db,
+                    _contact = SalesDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault() //sbxContact.Contact as contact;
                 };
 
                 pnlPacking.Link_Click += Link_Click;
@@ -535,75 +499,24 @@ namespace Cognitivo.Sales
 
         public void Link_Click(object sender)
         {
-            sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
+            sales_invoice Invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
 
-            foreach (sales_packing item in pnlPacking.selected_sales_packing)
+            foreach (sales_packing Packing in pnlPacking.selected_sales_packing)
             {
-                sales_packing sales_packing = db.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault();
-
-                foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail.Where(x => x.user_verified))
+                //Creates or updates row based on Packing Information. If all is ok, then Refresh.
+                if (SalesDB.Link_PackingList(Invoice, Packing.id_sales_packing))
                 {
-                    sales_order_detail sales_order_detail = _sales_packing_detail.sales_order_detail;
-
-                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail()
-                    {
-                        id_location = _sales_packing_detail.id_location
-                    };
-
-                    sales_packing_relation sales_packing_relation = new sales_packing_relation()
-                    {
-                        id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail,
-                        sales_packing_detail = _sales_packing_detail,
-                        id_sales_invoice_detail = sales_invoice_detail.id_sales_invoice_detail,
-                        sales_invoice_detail = sales_invoice_detail
-                    };
-
-                    sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
-
-                    if (_sales_packing_detail.expire_date != null || !string.IsNullOrEmpty(_sales_packing_detail.batch_code))
-                    {
-                        sales_invoice_detail.expire_date = _sales_packing_detail.expire_date;
-                        sales_invoice_detail.batch_code = _sales_packing_detail.batch_code;
-                    }
-
-                    //if SalesOrder Exists, use it for Price and VAT.
-                    if (sales_order_detail != null)
-                    {
-                        sales_invoice_detail.sales_invoice = _sales_invoice;
-                        sales_invoice_detail.Contact = db.contacts.Find(sbxContact.ContactID);// sbxContact.Contact;
-                        sales_invoice_detail.item = _sales_packing_detail.item;
-                        sales_invoice_detail.id_item = _sales_packing_detail.id_item;
-                        sales_invoice_detail.quantity = Convert.ToDecimal(_sales_packing_detail.verified_quantity);
-                        sales_invoice_detail.id_vat_group = sales_order_detail.id_vat_group;
-                        sales_invoice_detail.State = EntityState.Added;
-                        sales_invoice_detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;
-                        sales_invoice_detail.discount = sales_order_detail.discount;
-
-                        _sales_invoice.id_sales_rep = sales_order_detail.sales_order.id_sales_rep;
-                        _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
-                    }
-                    else
-                    {
-                        //If Sales Order does not exist, use Price and VAT From standard of the company.
-                        SalesDB.Create_Detail(ref _sales_invoice,
-                            _sales_packing_detail.item,
-                            null,
-                            false,
-                            0,
-                            (decimal)_sales_packing_detail.verified_quantity);
-                    }
+                    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                    sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
                 }
-
-                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
             }
 
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
 
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
             {
-                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = db.sales_packing_relation.Local.Where(x => x.sales_invoice_detail.id_sales_invoice == _sales_invoice.id_sales_invoice).ToList();
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesDB.db.sales_packing_relation.Local.Where(x => x.sales_invoice_detail.id_sales_invoice == Invoice.id_sales_invoice).ToList();
             }
             else
             {
@@ -612,7 +525,7 @@ namespace Cognitivo.Sales
 
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Collapsed;
-            _sales_invoice.RaisePropertyChanged("GrandTotal");
+            Invoice.RaisePropertyChanged("GrandTotal");
         }
 
         private void SalesOrder_Click(object sender, RoutedEventArgs e)
@@ -620,8 +533,8 @@ namespace Cognitivo.Sales
             crud_modal.Visibility = Visibility.Visible;
             pnlSalesOrder = new cntrl.PanelAdv.pnlSalesOrder()
             {
-                db = db,
-                _contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(), // sbxContact.Contact;
+                db = SalesDB.db,
+                _contact = SalesDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(), // sbxContact.Contact;
                 mode = cntrl.PanelAdv.pnlSalesOrder.module.sales_invoice
             };
             pnlSalesOrder.SalesOrder_Click += SalesOrder_Save;
@@ -639,7 +552,7 @@ namespace Cognitivo.Sales
                     Invoice.State = EntityState.Modified;
                     Invoice.contact = sales_order.contact;
 
-                    cbxContactRelation.ItemsSource = db.contacts.Where(x => x.parent.id_contact == sales_order.contact.id_contact).ToList();
+                    cbxContactRelation.ItemsSource = SalesDB.db.contacts.Where(x => x.parent.id_contact == sales_order.contact.id_contact).ToList();
 
                     Invoice.id_contact = sales_order.contact.id_contact;
                     Invoice.id_condition = sales_order.id_condition;
@@ -665,7 +578,7 @@ namespace Cognitivo.Sales
                             sales_invoice = Invoice,
                             item = _sales_order_detail.item,
                             id_item = _sales_order_detail.id_item,
-                            quantity = _sales_order_detail.quantity - db.sales_invoice_detail
+                            quantity = _sales_order_detail.quantity - SalesDB.db.sales_invoice_detail
                                                                                      .Where(x => x.id_sales_order_detail == _sales_order_detail.id_sales_order_detail)
                                                                                      .GroupBy(x => x.id_sales_order_detail)
                                                                                      .Select(x => x.Sum(y => y.quantity))
@@ -686,7 +599,7 @@ namespace Cognitivo.Sales
                         }
                     }
 
-                    db.Entry(Invoice).Entity.State = EntityState.Added;
+                    SalesDB.db.Entry(Invoice).Entity.State = EntityState.Added;
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
                     sales_invoiceViewSource.View.Refresh();
@@ -727,7 +640,6 @@ namespace Cognitivo.Sales
 
         private void Invoice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
 
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
@@ -736,7 +648,7 @@ namespace Cognitivo.Sales
                 {
                     (sales_invoiceDataGrid.SelectedItem as sales_invoice).RaisePropertyChanged("GrandTotal");
                     int id_sales_invoice = (sales_invoiceDataGrid.SelectedItem as sales_invoice).id_sales_invoice;
-                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = db.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == id_sales_invoice).ToList();
+                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesDB.db.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == id_sales_invoice).ToList();
                 }
             }
             else
@@ -769,7 +681,7 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             if (sales_invoice != null)
             {
-                List<payment_schedual> payment_schedualList = await db.payment_schedual
+                List<payment_schedual> payment_schedualList = await SalesDB.db.payment_schedual
                                      .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company && x.id_contact == sales_invoice.id_contact
                                          && (x.id_sales_invoice > 0 || x.id_sales_order > 0) && x.id_note == null
                                          && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
@@ -807,17 +719,15 @@ namespace Cognitivo.Sales
             {
                 if (sales_invoiceViewSource.View.CurrentItem is sales_invoice o)
                 {
-                    o.app_currencyfx = db.app_currencyfx.Find(o.id_currencyfx);
-                    o.contact = db.contacts.Find(o.id_contact);
-                    o.app_contract = db.app_contract.Find(o.id_contract);
+                    o.app_currencyfx = SalesDB.db.app_currencyfx.Find(o.id_currencyfx);
+                    o.contact = SalesDB.db.contacts.Find(o.id_contact);
+                    o.app_contract = SalesDB.db.app_contract.Find(o.id_contract);
 
                     if (o.app_currencyfx != null && o.contact != null && o.app_contract != null)
                     {
                         entity.Controller.Finance.Credit Credit = new entity.Controller.Finance.Credit();
                         Credit.CheckLimit_InSales(0, o.app_currencyfx, o.contact, o.app_contract);
                     }
-
-
                 }
             }
         }
@@ -873,10 +783,10 @@ namespace Cognitivo.Sales
                     sales_return.sales_return_detail.Add(sales_return_detail);
                 }
 
-                db.sales_return.Add(sales_return);
+                SalesDB.db.sales_return.Add(sales_return);
                 crm_opportunity crm_opportunity = sales_invoice.crm_opportunity;
                 crm_opportunity.sales_return.Add(sales_return);
-                db.SaveChanges();
+                SalesDB.db.SaveChanges();
                 MessageBox.Show("Return Created Successfully ..");
             }
             else
@@ -909,7 +819,7 @@ namespace Cognitivo.Sales
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-                item item = db.items.Find(sbxItem.ItemID);
+                item item = SalesDB.db.items.Find(sbxItem.ItemID);
 
                 cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
 
@@ -917,7 +827,7 @@ namespace Cognitivo.Sales
                 {
                     if (pnl_ItemMovementExpiry.MovementID > 0)
                     {
-                        item_movement item_movement = db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                        item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
                         Settings SalesSettings = new Settings();
                         SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
@@ -953,17 +863,15 @@ namespace Cognitivo.Sales
             int TotalPending = 0;
             int TotalApproved = 0;
 
-            foreach (sales_invoice item in db.sales_invoice.Local.Where(x => x.IsSelected))
+            foreach (sales_invoice item in SalesDB.db.sales_invoice.Local.Where(x => x.IsSelected))
             {
                 if (item.status == Status.Documents_General.Pending)
                 {
                     TotalPending += 1;
-                    //RaisePropertyChanged("TotalPending");
                 }
                 else if (item.status == Status.Documents_General.Approved)
                 {
                     TotalApproved += 1;
-                    //RaisePropertyChanged("TotalApproved");
                 }
             }
 
@@ -981,97 +889,11 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
             if (sales_invoice != null)
             {
-                //Movement
-                Approve_Check CheckMovementReApprove = new Approve_Check();
-                UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
 
-                //Finance
-                CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
-                UpdatePaymentReApprove UpdatePaymentReApprove = new UpdatePaymentReApprove();
-
-                string Message = CheckPaymentReApprove.Check_ContractChanges(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                if (Message != "")
-                {
-                    Message += "\n" + "Are You Sure Want To Change The Data..";
-                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                    {
-                        UpdatePaymentReApprove.Update_ContractChanges(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    }
-                }
-
-                Message = CheckPaymentReApprove.Check_ValueUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                if (Message != "")
-                {
-                    Message += "\n" + "Are You Sure Want To Change The Data..";
-                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                    {
-                        UpdatePaymentReApprove.Update_ValueUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    }
-                }
-
-                Message = CheckPaymentReApprove.Check_ValueDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                if (Message != "")
-                {
-                    Message += "\n" + "Are You Sure Want To Change The Data..";
-                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                    {
-                        UpdatePaymentReApprove.Update_ValueDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    }
-                }
-
-                Message += CheckPaymentReApprove.Check_CurrencyChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                if (Message != "")
-                {
-                    Message += "\n" + "Are You Sure Want To Change The Data..";
-                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                    {
-                        UpdatePaymentReApprove.Update_CurrencyChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    }
-                }
-
-                Message = CheckPaymentReApprove.Check_DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                if (Message != "")
-                {
-                    Message += "\n" + "Are You Sure Want To Change The Data..";
-                    if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                    {
-                        UpdatePaymentReApprove.Update_DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                    }
-                }
-
-                //Check for Quantity Up
-                if (CheckMovementReApprove.QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
-                {
-                    UpdateMovementReApprove.QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice); 
-                }
-                
-                //Check for Quantity Down
-                if (CheckMovementReApprove.QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
-                {
-                    UpdateMovementReApprove.QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                }
-                
-                //Checks for Date Changes
-                if (CheckMovementReApprove.DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
-                {
-                    UpdateMovementReApprove.DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                }
-
-                //Checks for New Detail Insertions
-                if (CheckMovementReApprove.CreateDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
-                {
-                    UpdateMovementReApprove.NewMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                }
-                
-                //Check if Item has been Removed
-                if (CheckMovementReApprove.RemovedDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
-                {
-                    UpdateMovementReApprove.DeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
-                }
             }
-            //SalesInvoiceDB.ReApprove(sales_invoice);
+
             sales_invoiceViewSource.View.Refresh();
-            db.SaveChanges();
+            SalesDB.db.SaveChanges();
         }
     }
 }

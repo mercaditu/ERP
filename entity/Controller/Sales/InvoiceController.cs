@@ -7,9 +7,13 @@ using System.Windows;
 
 namespace entity.Controller.Sales
 {
-    public class SalesInvoice
+    public class InvoiceController
     {
         public int NumberOfRecords;
+
+        /// <summary>
+        /// Database Context. Already Initialized.
+        /// </summary>
         public db db { get; set; }
 
         public DateTime Start_Range
@@ -47,10 +51,13 @@ namespace entity.Controller.Sales
 
         public List<Messages> Msg { get; set; }
 
-        public SalesInvoice()
+        public InvoiceController()
         {
-
+            //Initialize DB for Sales Invoice.
+            db = new db();
         }
+
+        #region Load
 
         public async void Load(bool FilterByTerminal)
         {
@@ -81,6 +88,8 @@ namespace entity.Controller.Sales
                     .ThenBy(x => x.number)
                     .LoadAsync();
         }
+        
+        #endregion
 
         #region Create
 
@@ -159,7 +168,16 @@ namespace entity.Controller.Sales
             return sales_invoice_detail;
         }
 
-
+        public void Edit(sales_invoice Invoice)
+        {
+            if (Invoice != null)
+            {
+                Invoice.IsSelected = true;
+                Invoice.State = EntityState.Modified;
+                db.Entry(Invoice).State = EntityState.Modified;
+            }
+        }
+        
         #endregion
 
         #region Save
@@ -511,6 +529,105 @@ namespace entity.Controller.Sales
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        private void ReApprove_Click(sales_invoice invoice)
+        {
+            //if (invoice != null)
+            //{
+            //    //Finance
+            //    CheckPaymentReApprove CheckPaymentReApprove = new CheckPaymentReApprove();
+
+            //    string Message = CheckPaymentReApprove.Check_ContractChanges(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    if (Message != "")
+            //    {
+            //        Message += "\n" + "Are You Sure Want To Change The Data..";
+            //        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            //        {
+            //            new UpdatePaymentReApprove().Update_ContractChanges(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //        }
+            //    }
+
+            //    Message = CheckPaymentReApprove.Check_ValueUP(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    if (Message != "")
+            //    {
+            //        Message += "\n" + "Are You Sure Want To Change The Data..";
+            //        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            //        {
+            //            new UpdatePaymentReApprove().Update_ValueUP(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //        }
+            //    }
+
+            //    Message = CheckPaymentReApprove.Check_ValueDown(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    if (Message != "")
+            //    {
+            //        Message += "\n" + "Are You Sure Want To Change The Data..";
+            //        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            //        {
+            //            new UpdatePaymentReApprove().Update_ValueDown(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //        }
+            //    }
+
+            //    Message += CheckPaymentReApprove.Check_CurrencyChange(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    if (Message != "")
+            //    {
+            //        Message += "\n" + "Are You Sure Want To Change The Data..";
+            //        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            //        {
+            //            new UpdatePaymentReApprove().Update_CurrencyChange(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //        }
+            //    }
+
+            //    Message = CheckPaymentReApprove.Check_DateChange(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    if (Message != "")
+            //    {
+            //        Message += "\n" + "Are You Sure Want To Change The Data..";
+            //        if (MessageBox.Show(Message, "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            //        {
+            //            new UpdatePaymentReApprove().Update_DateChange(db, invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //        }
+            //    }
+
+            //    //Movement
+            //    Approve_Check CheckMovementReApprove = new Approve_Check();
+
+            //    //Check for Quantity Up
+            //    if (CheckMovementReApprove.QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //    {
+            //        new UpdateMovementReApprove().QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    }
+
+            //    //Check for Quantity Down
+            //    if (CheckMovementReApprove.QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //    {
+            //        new UpdateMovementReApprove().QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    }
+
+            //    //Checks for Date Changes
+            //    if (CheckMovementReApprove.DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //    {
+            //        new UpdateMovementReApprove().DateChange(SalesDB.db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    }
+
+            //    //Checks for New Detail Insertions
+            //    if (CheckMovementReApprove.CreateDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //    {
+            //        new UpdateMovementReApprove().NewMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    }
+
+            //    //Check if Item has been Removed
+            //    if (CheckMovementReApprove.RemovedDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //    {
+            //        new UpdateMovementReApprove().DeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //    }
+            //}
+            ////SalesInvoiceDB.ReApprove(sales_invoice);
+            //sales_invoiceViewSource.View.Refresh();
+            //SalesDB.db.SaveChanges();
+        }
+
         #endregion
 
         #region Annul
@@ -588,6 +705,83 @@ namespace entity.Controller.Sales
             db.SaveChanges();
         }
 
+        #endregion
+
+        #region Integrations
+
+        /// <summary>
+        /// Links a Sales Packing and brings items into Sales Invoice.
+        /// </summary>
+        /// <param name="Invoice">Sales Invoice</param>
+        /// <param name="PackingID">Sales Packing ID</param>
+        /// <returns>True if Correct. False if Error or Unfinsihed</returns>
+        /// 
+        public bool Link_PackingList(sales_invoice Invoice, int PackingID)
+        {
+            //Bring into Context.
+            sales_packing Packing = db.sales_packing.Find(PackingID);
+
+            foreach (sales_packing_detail _sales_packing_detail in Packing.sales_packing_detail.Where(x => x.user_verified))
+            {
+                sales_order_detail sales_order_detail = _sales_packing_detail.sales_order_detail;
+
+                sales_invoice_detail Detail = new sales_invoice_detail()
+                {
+                    id_location = _sales_packing_detail.id_location
+                };
+
+                sales_packing_relation sales_packing_relation = new sales_packing_relation()
+                {
+                    id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail,
+                    sales_packing_detail = _sales_packing_detail,
+                    id_sales_invoice_detail = Detail.id_sales_invoice_detail,
+                    sales_invoice_detail = Detail
+                };
+
+                Detail.sales_packing_relation.Add(sales_packing_relation);
+
+                if (_sales_packing_detail.expire_date != null || !string.IsNullOrEmpty(_sales_packing_detail.batch_code))
+                {
+                    Detail.expire_date = _sales_packing_detail.expire_date;
+                    Detail.batch_code = _sales_packing_detail.batch_code;
+                }
+
+                //if SalesOrder Exists, use it for Price and VAT.
+                if (sales_order_detail != null)
+                {
+                    Detail.sales_invoice = Invoice;
+                    Detail.Contact = db.contacts.Find(Invoice.id_contact);// sbxContact.Contact;
+                    Detail.item = _sales_packing_detail.item;
+                    Detail.id_item = _sales_packing_detail.id_item;
+                    Detail.quantity = Convert.ToDecimal(_sales_packing_detail.verified_quantity);
+                    Detail.id_vat_group = sales_order_detail.id_vat_group;
+                    Detail.State = EntityState.Added;
+                    Detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;
+                    Detail.discount = sales_order_detail.discount;
+
+                    Invoice.id_sales_rep = sales_order_detail.sales_order.id_sales_rep;
+                    Invoice.sales_invoice_detail.Add(Detail);
+                }
+                else
+                {
+                    //If Sales Order does not exist, use Price and VAT From standard of the company.
+                    Create_Detail(ref Invoice,
+                        _sales_packing_detail.item,
+                        null,
+                        false,
+                        0,
+                        (decimal)_sales_packing_detail.verified_quantity);
+                }
+            }
+
+            return true;
+        }
+
+        public bool Link_Order(sales_invoice Invoice, int OrderID)
+        {
+
+            return true;
+        }
         #endregion
     }
 }

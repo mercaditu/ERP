@@ -13,7 +13,7 @@ namespace cntrl.Class
         /// <param name="db"></param>
         /// <param name="ID"></param>
         /// <param name="Application"></param>
-        public void ValueChange(db db, int ID, App.Names Application)
+        public void CheckPriceChange(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.PurchaseInvoice)
             {

@@ -27,7 +27,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Salescontroller:SalesInvoice x:Key="SalesDB"/>
+        <Salescontroller:InvoiceController x:Key="SalesDB"/>
         <Financecontroller:Payment x:Key="PaymentDB"/>
         
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />

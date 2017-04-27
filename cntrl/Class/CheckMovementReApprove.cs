@@ -16,6 +16,42 @@ namespace cntrl.Class
             DateChanged
         }
 
+        public Approve_Check()
+        {
+            //Movement
+           // Approve_Check CheckMovementReApprove = new Approve_Check();
+
+            //Check for Quantity Up
+            //if (QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //{
+            //    new UpdateMovementReApprove().QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //}
+
+            ////Check for Quantity Down
+            //if (QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //{
+            //    new UpdateMovementReApprove().QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //}
+
+            ////Checks for Date Changes
+            //if (DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //{
+            //    new UpdateMovementReApprove().DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //}
+
+            ////Checks for New Detail Insertions
+            //if (CreateDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //{
+            //    new UpdateMovementReApprove().NewMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //}
+
+            ////Check if Item has been Removed
+            //if (RemovedDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+            //{
+            //    new UpdateMovementReApprove().DeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+            //}
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -23,77 +59,42 @@ namespace cntrl.Class
         /// <param name="ID"></param>
         /// <param name="Application"></param>
         /// <returns></returns>
-        public string CheckValueChange(db db, int ID, App.Names Application)
+        public bool CheckPriceChange(db db, int ID, App.Names Application)
         {
             if (Application == App.Names.SalesInvoice)
             {
-                sales_invoice OriginalSalesInvoice;
-                string movmessage = "";
+                sales_invoice sales_invoice = db.sales_invoice.Find(ID);
 
-                using (db temp = new db())
+                foreach (var detail in sales_invoice.sales_invoice_detail)
                 {
-                    OriginalSalesInvoice = temp.sales_invoice.Where(x => x.id_sales_invoice == ID).FirstOrDefault();
-
-                    sales_invoice Local_SalesInvoice = db.sales_invoice.Find(ID);
-                    foreach (sales_invoice_detail sales_invoice_detail in Local_SalesInvoice.sales_invoice_detail)
+                    decimal CurrentPrice = db.Entry(detail).Property(u => u.unit_price).CurrentValue;
+                    decimal OriginalPrice = db.Entry(detail).Property(u => u.unit_price).OriginalValue;
+                    decimal Difference = OriginalPrice - CurrentPrice;
+                    //Current - Original if it's 
+                    if (Difference != 0)
                     {
-                        sales_invoice_detail Oldsales_invoice_detail = OriginalSalesInvoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-                        if (sales_invoice_detail.unit_price != Oldsales_invoice_detail.unit_price)
-                        {
-                            foreach (item_movement item_movement in sales_invoice_detail.item_movement)
-                            {
-                                item_movement_value item_movement_value = item_movement.item_movement_value.FirstOrDefault();
-                                if (item_movement_value != null)
-                                {
-                                    movmessage += item_movement_value.unit_value + "-->" + sales_invoice_detail.unit_price;
-                                }
-                            }
-                        }
+                        return true;
                     }
-                }
-
-                if (movmessage != "")
-                {
-                    String Message = "You Have Changed The Date So Following Changes Required..\n";
-                    Message += "This Movement Will be Changed..\n" + movmessage;
-                    return movmessage;
                 }
             }
             else if (Application == App.Names.PurchaseInvoice)
             {
-                purchase_invoice OriginalPurchaseInvoice;
-                string movmessage = "";
-                using (db temp = new db())
+                purchase_invoice purchase_invoice = db.purchase_invoice.Find(ID);
+
+                foreach (var detail in purchase_invoice.purchase_invoice_detail)
                 {
-                    OriginalPurchaseInvoice = temp.purchase_invoice.Where(x => x.id_purchase_invoice == ID).FirstOrDefault();
-
-                    purchase_invoice Local_PurcahseInvoice = db.purchase_invoice.Find(ID);
-
-                    foreach (purchase_invoice_detail purchase_invoice_detail in Local_PurcahseInvoice.purchase_invoice_detail)
+                    decimal CurrentPrice = db.Entry(detail).Property(u => u.quantity).CurrentValue;
+                    decimal OriginalPrice = db.Entry(detail).Property(u => u.quantity).OriginalValue;
+                    decimal Difference = OriginalPrice - CurrentPrice;
+                    //Current - Original if it's 
+                    if (Difference != 0)
                     {
-                        purchase_invoice_detail Oldpurchase_invoice_detail = OriginalPurchaseInvoice.purchase_invoice_detail.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
-                        if (purchase_invoice_detail.unit_cost != Oldpurchase_invoice_detail.unit_cost)
-                        {
-                            foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
-                            {
-                                item_movement_value item_movement_value = item_movement.item_movement_value.FirstOrDefault();
-                                if (item_movement_value != null)
-                                {
-                                    movmessage += item_movement_value.unit_value + "-->" + purchase_invoice_detail.unit_cost;
-                                }
-                            }
-                        }
+                        return true;
                     }
-                }
-                if (movmessage != "")
-                {
-                    String Message = "You Have Changed The Date So Following Changes Required..\n";
-                    Message += "This Movement Will be Changed..\n" + movmessage;
-                    return movmessage;
                 }
             }
 
-            return "";
+            return false;
         }
 
         /// <summary>

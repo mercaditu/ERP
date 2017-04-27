@@ -329,7 +329,7 @@
     <Compile Include="Controller\WindowProperty.cs" />
     <Compile Include="Controller\Finance\Credit.cs" />
     <Compile Include="Controller\Finance\Payment.cs" />
-    <Compile Include="Controller\Sales\SalesInvoice.cs" />
+    <Compile Include="Controller\Sales\InvoiceController.cs" />
     <Compile Include="Crm\crm_schedual.cs" />
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="DebeHaber\Sync.cs" />

@@ -1063,7 +1063,7 @@ namespace Cognitivo.Sales
                     UpdateMovementReApprove.NewMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                 }
 
-                Message = CheckMovementReApprove.CheckDeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
+                 CheckMovementReApprove.CheckDeleteMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
 
                 if (Message != "")
                 {

@@ -982,7 +982,7 @@ namespace Cognitivo.Sales
             if (sales_invoice != null)
             {
                 //Movement
-                CheckMovementReApprove CheckMovementReApprove = new CheckMovementReApprove();
+                Approve_Check CheckMovementReApprove = new Approve_Check();
                 UpdateMovementReApprove UpdateMovementReApprove = new UpdateMovementReApprove();
 
                 //Finance
@@ -1040,25 +1040,25 @@ namespace Cognitivo.Sales
                 }
 
                 //Check for Quantity Up
-                if (CheckMovementReApprove.CheckQuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+                if (CheckMovementReApprove.QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
                 {
                     UpdateMovementReApprove.QuantityUP(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice); 
                 }
                 
                 //Check for Quantity Down
-                if (CheckMovementReApprove.CheckQuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+                if (CheckMovementReApprove.QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
                 {
                     UpdateMovementReApprove.QuantityDown(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                 }
                 
                 //Checks for Date Changes
-                if (CheckMovementReApprove.CheckDateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+                if (CheckMovementReApprove.DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
                 {
                     UpdateMovementReApprove.DateChange(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                 }
 
                 //Checks for New Detail Insertions
-                if (CheckMovementReApprove.CheckNewMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
+                if (CheckMovementReApprove.CreateDetail(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice))
                 {
                     UpdateMovementReApprove.NewMovement(db, sales_invoice.id_sales_invoice, entity.App.Names.SalesInvoice);
                 }

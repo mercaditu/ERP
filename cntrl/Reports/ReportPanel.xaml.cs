@@ -19,6 +19,7 @@ namespace cntrl
 {
     public partial class ReportPanel : UserControl
     {
+
         private bool RefreshPanel = true;
 
         public bool ShowDateRange
@@ -204,7 +205,8 @@ namespace cntrl
 
             ReportDataSource reportDataSource1 = new ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
-
+            ReportDesigner.ReportModule = Report.Application.ToString();
+            ReportDesigner.ReportPath = Report.Path.ToString();
             if (Report.Parameters.Where(x => x == Class.Report.Types.Project).Count() > 0)
             {
                 ShowProject = true;

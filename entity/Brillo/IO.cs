@@ -26,9 +26,8 @@ namespace entity.Brillo
 
         public static bool FileExists(string path)
         {
-            if (!Directory.Exists(path))
-                return true;
-            return false;
+            return File.Exists(path);
+            
         }
     }
 }

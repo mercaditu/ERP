@@ -267,7 +267,7 @@ namespace cntrl
             reportStream = RdlcReportHelper.TranslateReport(reportStream);
 
             reportViewer.LoadReport(reportStream);
-
+          
             Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter();
             ParametersCost.Name = "ParameterCost";
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());

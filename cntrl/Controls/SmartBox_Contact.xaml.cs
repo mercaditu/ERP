@@ -1,6 +1,5 @@
 ﻿using entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -16,7 +15,7 @@ using System.Windows.Threading;
 
 namespace cntrl.Controls
 {
-    public partial class SmartBox_Contact : UserControl, INotifyPropertyChanged
+    public partial class SmartBox_Contact : UserControl
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Contact));
 
@@ -26,26 +25,38 @@ namespace cntrl.Controls
             set { SetValue(TextProperty, value); }
         }
 
-        //public List<contact_tag_detail> contact_tagList { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void RaisePropertyChanged(string prop)
+        private bool _CanCreate;
+        public bool CanCreate
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
-        public bool can_New
-        {
-            get { return _can_new; }
+            get { return _CanCreate; }
             set
             {
-                _can_new = new entity.Brillo.Security(App.Names.Items).create ? value : false;
-                RaisePropertyChanged("can_New");
+                if (_CanCreate != value)
+                {
+                    _CanCreate = new entity.Brillo.Security(App.Names.Contact).create ? value : false;
+                }
             }
         }
 
-        private bool _can_new;
+        private bool _CanModify;
+        public bool CanModify
+        {
+            get { return _CanModify; }
+            set
+            {
+                if (_CanModify != value)
+                {
+                    _CanModify = new entity.Brillo.Security(App.Names.Contact).edit ? value : false;
+                }
+            }
+        }
+        
+        public int ContactID { get; set; }
+        public bool Get_Customers { get; set; }
+        public bool Get_Suppliers { get; set; }
+        public bool Get_Employees { get; set; }
+        public bool Get_Users { get; set; }
+        public bool ExactSearch { get; set; }
 
         public bool AutoShow
         {
@@ -57,18 +68,6 @@ namespace cntrl.Controls
         }
 
         private bool _AutoShow;
-        
-        public bool can_Edit
-        {
-            get { return _can_edit; }
-            set
-            {
-                _can_edit = new entity.Brillo.Security(entity.App.Names.Items).edit ? value : false;
-                RaisePropertyChanged("can_Edit");
-            }
-        }
-
-        private bool _can_edit;
 
         public event RoutedEventHandler Select;
 
@@ -100,14 +99,7 @@ namespace cntrl.Controls
             }
         }
 
-        public int ContactID { get; set; }
         public IQueryable<entity.BrilloQuery.Contact> ContactList { get; set; }
-
-        public bool Get_Customers { get; set; }
-        public bool Get_Suppliers { get; set; }
-        public bool Get_Employees { get; set; }
-        public bool Get_Users { get; set; }
-        public bool ExactSearch { get; set; }
 
         private Task taskSearch;
         private CancellationTokenSource tokenSource;
@@ -610,36 +602,6 @@ namespace cntrl.Controls
 
             popContactInfo.IsOpen = false;
         }
-
-        //private void cbxTag_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        Add_Tag();
-        //    }
-        //}
-
-        //private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    Add_Tag();
-        //}
-
-        //private void Add_Tag()
-        //{
-        //    // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
-        //    if (cbxTag.Data != null)
-        //    {
-        //        int id = Convert.ToInt32(((contact_tag)cbxTag.Data).id_tag);
-        //        if (id > 0)
-        //        {
-        //            contact_tag_detail contact_tag_detail = new contact_tag_detail();
-        //            contact_tag_detail.id_tag = ((contact_tag)cbxTag.Data).id_tag;
-        //            contact_tag_detail.contact_tag = ((contact_tag)cbxTag.Data);
-        //            //contact_tagList.Add(contact_tag_detail);
-        //            RaisePropertyChanged("contact_tagList");
-        //        }
-        //    }
-        //}
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {

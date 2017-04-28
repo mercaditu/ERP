@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace Cognitivo.Product
 {
-    public enum state
+    public enum State
     {
         Added, Modified
     }
@@ -32,35 +32,43 @@ namespace Cognitivo.Product
         public string branch { get; set; }
         public decimal avlqty { get; set; }
         public decimal Quantity { get; set; }
-        public state State { get; set; }
+        public State State { get; set; }
     }
 
     public partial class Request : Page
     {
-        private item_requestDB RequestDB = new item_requestDB();
         private CollectionViewSource item_requestViewSource;
         private CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
+
+        public entity.Controller.Product.RequestController RequestController;
 
         public Request()
         {
             InitializeComponent();
+
+            RequestController = FindResource("RequestController") as entity.Controller.Product.RequestController;
+            if (DesignerProperties.GetIsInDesignMode(this) == false)
+            {
+                //Load Controller.
+                RequestController.Initialize();
+            }
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
-            app_departmentViewSource.Source = await RequestDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
-            cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
-
+            CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
             CollectionViewSource itemsViewSource = FindResource("itemsViewSource") as CollectionViewSource;
-            
-            await RequestDB.items.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
-            itemsViewSource.Source = RequestDB.items.Local;
-            await RequestDB.app_dimension.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
-            await RequestDB.app_measurement.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+            CollectionViewSource security_userViewSource = FindResource("security_userViewSource") as CollectionViewSource;
+            item_requestViewSource = FindResource("item_requestViewSource") as CollectionViewSource;
 
+            RequestController.Load();
 
-            Load();
+            item_requestViewSource.Source = RequestController.db.item_request.Local.Where(x => x.is_archived == false);
+            app_departmentViewSource.Source = RequestController.db.app_department.Local;
+            itemsViewSource.Source = RequestController.db.items.Local;
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(RequestController.db, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            security_userViewSource.Source = RequestController.db.security_user.Local;
+            cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
 
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detailitem_request_decisionViewSource = ((CollectionViewSource)(FindResource("item_request_detailitem_request_decisionViewSource")));
@@ -71,48 +79,23 @@ namespace Cognitivo.Product
             CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
             app_currencyViewSource.Source = CurrentSession.Currencies;
 
-            CollectionViewSource security_userViewSource = ((CollectionViewSource)(FindResource("security_userViewSource")));
-            await RequestDB.security_user.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).LoadAsync();
-            security_userViewSource.Source = RequestDB.security_user.Local;
-
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(RequestDB, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
-
             cbxLocation.ItemsSource = CurrentSession.Locations.ToList();
         }
 
-        private async void Load()
+        private void Approve_Click(object sender)
         {
-            await RequestDB.item_request
-                .Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false)
-                .Include(x => x.production_order)
-                .Include(x => x.sales_order)
-                .Include(x => x.project)
-                .Include(x => x.security_user)
-                .OrderByDescending(x => x.request_date)
-                .LoadAsync();
-
-            item_requestViewSource = FindResource("item_requestViewSource") as CollectionViewSource;
-            item_requestViewSource.Source = RequestDB.item_request.Local.Where(x => x.is_archived == false);
-        }
-
-        private void toolBar_btnApprove_Click(object sender)
-        {
-            RequestDB.Approve();
-        }
-
-        private void toolBar_btnDelete_Click(object sender)
-        {
-            int i = 0;
-
-            foreach (item_request item_request in RequestDB.item_request.Local.Where(x => x.IsSelected))
+            if (RequestController.Approve())
             {
-                item_request.is_archived = true;
-                i += 1;
+                toolBar.msgSaved(1);
             }
+        }
 
-            toolBar.msgSaved(i);
-            RequestDB.SaveChangesAsync();
-            Load();
+        private void Delete_Click(object sender)
+        {
+            if (RequestController.Archive())
+            {
+                toolBar.msgSaved(1);
+            }
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -127,16 +110,13 @@ namespace Cognitivo.Product
         {
             try
             {
-                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
-
-                    if (item_request_detail != null)
+                    if (item_requestitem_request_detailViewSource.View.CurrentItem is item_request_detail item_request_detail)
                     {
                         //DeleteDetailGridRow
                         item_request_detailDataGrid.CancelEdit();
-                        RequestDB.item_request_decision.Remove(e.Parameter as item_request_decision);
+                        RequestController.db.item_request_decision.Remove(e.Parameter as item_request_decision);
                         item_requestitem_request_detailViewSource.View.Refresh();
                         item_request_detailitem_request_decisionViewSource.View.Refresh();
 
@@ -155,15 +135,13 @@ namespace Cognitivo.Product
         {
             CollectionViewSource item_requestitem_request_detailViewSource = FindResource("item_requestitem_request_detailViewSource") as CollectionViewSource;
 
-            if (item_requestitem_request_detailViewSource.View!=null)
+            if (item_requestitem_request_detailViewSource.View != null)
             {
-
-                item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
-                if (item_request_detail != null)
+                if (item_requestitem_request_detailViewSource.View.CurrentItem is item_request_detail item_request_detail)
                 {
-                    item _item = RequestDB.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
+                    item _item = RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
                     var movements =
-                            (from items in RequestDB.item_movement
+                            (from items in RequestController.db.item_movement
                              where items.status == Status.Stock.InStock
                              && items.item_product.id_item == item_request_detail.id_item
                              && items.app_location.id_branch == CurrentSession.Id_Branch
@@ -180,20 +158,21 @@ namespace Cognitivo.Product
 
                     foreach (dynamic movement in movements)
                     {
-                        Decision desion = new Decision();
-                        desion.id_item = _item.id_item;
-                        desion.id_location = movement.id_location;
-                        desion.location = movement.Location;
-                        desion.name = _item.name;
-                        desion.avlqty = movement.Quantity;
-                        desion.Quantity = 0;
-                        desion.State = state.Added;
-                        list_desion.Add(desion);
+                        list_desion.Add(new Decision()
+                        {
+                            id_item = _item.id_item,
+                            id_location = movement.id_location,
+                            location = movement.Location,
+                            name = _item.name,
+                            avlqty = movement.Quantity,
+                            Quantity = 0,
+                            State = State.Added
+                        });
                     }
                     item_request_decisionmovementDataGrid.ItemsSource = list_desion;
 
                     var transfer =
-                    (from items in RequestDB.item_movement
+                    (from items in RequestController.db.item_movement
                      where items.status == Status.Stock.InStock
                      && items.item_product.id_item == item_request_detail.id_item
 
@@ -209,47 +188,52 @@ namespace Cognitivo.Product
                     List<Decision> list_desion_transfer = new List<Decision>();
                     foreach (dynamic item in transfer)
                     {
-                        Decision desion = new Decision();
-                        desion.branch = item.branch;
-                        desion.id_location = item.id_location;
-                        desion.id_item = _item.id_item;
-                        desion.name = _item.name;
-                        desion.avlqty = item.quntitiy;
-                        desion.Quantity = 0;
-                        desion.State = state.Added;
-                        list_desion_transfer.Add(desion);
+                        list_desion_transfer.Add(new Decision()
+                        {
+                            branch = item.branch,
+                            id_location = item.id_location,
+                            id_item = _item.id_item,
+                            name = _item.name,
+                            avlqty = item.quntitiy,
+                            Quantity = 0,
+                            State = State.Added
+                        });
                     }
 
                     item_request_decisiontransferDataGrid.ItemsSource = list_desion_transfer;
 
                     List<Decision> list_desion_purchase = new List<Decision>();
-                    Decision PurchaseDecision = new Decision();
-                    PurchaseDecision.State = state.Added;
-                    PurchaseDecision.Quantity = 0;
-                    list_desion_purchase.Add(PurchaseDecision);
+                    list_desion_purchase.Add(new Decision()
+                    {
+                        State = State.Added,
+                        Quantity = 0
+                    });
                     item_request_decisionpurchaseDataGrid.ItemsSource = list_desion_purchase;
 
                     List<Decision> list_desion_internal = new List<Decision>();
-                    Decision InternalDecision = new Decision();
-                    InternalDecision.State = state.Added;
-                    InternalDecision.Quantity = 0;
+                    Decision InternalDecision = new Decision()
+                    {
+                        State = State.Added,
+                        Quantity = 0
+                    };
+
                     list_desion_internal.Add(InternalDecision);
                     item_request_decisioninternalDataGrid.ItemsSource = list_desion_internal;
 
                     List<Decision> list_desion_production = new List<Decision>();
-                    Decision ProductionDecision = new Decision();
-                    ProductionDecision.name = item_request_detail.item.name;
+                    Decision ProductionDecision = new Decision()
+                    {
+                        name = item_request_detail.item.name,
+                        Quantity = 0,
+                        State = State.Added
+                    };
+
                     ProductionDecision.RaisePropertyChanged("name");
-                    ProductionDecision.Quantity = 0;
-                    ProductionDecision.State = state.Added;
+
                     list_desion_production.Add(ProductionDecision);
                     item_request_decisionproductionDataGrid.ItemsSource = list_desion_production;
                 }
-
             }
-            
-
-
         }
 
         private void item_request_decisionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -265,18 +249,20 @@ namespace Cognitivo.Product
                     return;
                 }
 
-                if (desion.State == state.Added)
+                if (desion.State == State.Added)
                 {
-                    if (RequestDB.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
+                    if (RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
                     {
                         crud_modal.Children.Clear();
-                        Configs.itemMovement itemMovement = new Configs.itemMovement();
-                        itemMovement.id_item = item_request_detail.id_item;
-                        itemMovement.id_location = desion.id_location;
-                        itemMovement.Quantity = desion.Quantity;
-                        itemMovement.db = RequestDB;
-                      
-                        itemMovement.Decision = item_request_decision.Decisions.Movement;
+                        Configs.itemMovement itemMovement = new Configs.itemMovement()
+                        {
+                            id_item = item_request_detail.id_item,
+                            id_location = desion.id_location,
+                            Quantity = desion.Quantity,
+                            db = RequestController.db,
+                            Decision = item_request_decision.Decisions.Movement
+                        };
+
                         itemMovement.Save += pnlMovement_SaveChanges;
 
                         crud_modal.Visibility = Visibility.Visible;
@@ -284,52 +270,39 @@ namespace Cognitivo.Product
                     }
                     else
                     {
-                        desion.State = state.Modified;
-                        item_request_decision item_request_decision = new item_request_decision();
-                        item_request_decision.IsSelected = true;
-                        item_request_decision.id_location = desion.id_location;
-                        item_request_decision.quantity = desion.Quantity;
-                        item_request_decision.decision = item_request_decision.Decisions.Movement;
-                        item_request_detail.item_request_decision.Add(item_request_decision);
+                        desion.State = State.Modified;
+
+                        item_request_detail.item_request_decision.Add(new item_request_decision()
+                        {
+                            IsSelected = true,
+                            id_location = desion.id_location,
+                            quantity = desion.Quantity,
+                            decision = item_request_decision.Decisions.Movement
+                        });
                     }
                 }
             }
 
             item_request_detail.item_request.GetTotalDecision();
             item_request_detail.RaisePropertyChanged("Balance");
-            RequestDB.SaveChanges();
-            item_requestViewSource.View.MoveCurrentToLast();
+            RequestController.db.SaveChanges();
+
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
             item_request_detailitem_request_decisionViewSource.View.Refresh();
-            toolBar_btnEdit_Click(sender);
+            Edit_Click(sender);
         }
 
-        private void toolBar_btnNew_Click(object sender)
+        private void New_Click(object sender)
         {
-            item_request item_request = new item_request();
-
-            item_request.IsSelected = true;
-
-            app_document_range app_document_range = entity.Brillo.Logic.Range.List_Range(RequestDB, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-            if (app_document_range != null)
-            {
-                //Gets List of Ranges avaiable for this Document.
-                item_request.id_range = app_document_range.id_range;
-            }
-
-            RequestDB.Entry(item_request).State = EntityState.Added;
-            item_request.State = EntityState.Added;
-            item_requestViewSource.View.MoveCurrentToLast();
+            item_request item_request = RequestController.Create();
+            item_requestViewSource.View.MoveCurrentTo(item_request);
         }
 
-        private void toolBar_btnEdit_Click(object sender)
+        private void Edit_Click(object sender)
         {
             if (item_requestDataGrid.SelectedItem != null)
             {
-                item_request item_request_old = (item_request)item_requestDataGrid.SelectedItem;
-                item_request_old.IsSelected = true;
-                item_request_old.State = EntityState.Modified;
-                RequestDB.Entry(item_request_old).State = EntityState.Modified;
+                RequestController.Edit(item_requestDataGrid.SelectedItem as item_request);
             }
             else
             {
@@ -337,17 +310,16 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnSave_Click(object sender)
+        private void Save_Click(object sender)
         {
-            if (RequestDB.SaveChanges() > 0)
+            if (RequestController.db.SaveChanges() > 0)
             {
-              
-                //item_requestViewSource.View.Refresh();
-                toolBar.msgSaved(RequestDB.NumberOfRecords);
+                item_requestViewSource.View.Refresh();
+                toolBar.msgSaved(1);
             }
         }
 
-        private void item_request_decisiontransferDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void TransferDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             if (item_requestitem_request_detailViewSource.View!=null)
@@ -365,17 +337,20 @@ namespace Cognitivo.Product
                     toolBar.msgWarning("Quantity is greater than Available");
                     return;
                 }
-                if (desion.State == state.Added)
+                if (desion.State == State.Added)
                 {
-                    if (RequestDB.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
+                    if (RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
                     {
                         crud_modal.Children.Clear();
-                        Configs.itemMovement itemMovement = new Configs.itemMovement();
-                        itemMovement.id_item = item_request_detail.id_item;
-                        itemMovement.id_location = desion.id_location;
-                        itemMovement.Quantity = desion.Quantity;
-                        itemMovement.db = RequestDB;
-                        itemMovement.Decision = item_request_decision.Decisions.Transfer;
+                        Configs.itemMovement itemMovement = new Configs.itemMovement()
+                        {
+                            id_item = item_request_detail.id_item,
+                            id_location = desion.id_location,
+                            Quantity = desion.Quantity,
+                            db = RequestController.db,
+                            Decision = item_request_decision.Decisions.Transfer
+                        };
+
                         itemMovement.Save += pnlMovement_SaveChanges;
 
                         crud_modal.Visibility = Visibility.Visible;
@@ -383,12 +358,14 @@ namespace Cognitivo.Product
                     }
                     else
                     {
-                        desion.State = state.Modified;
-                        item_request_decision item_request_decision = new item_request_decision();
-                        item_request_decision.IsSelected = true;
-                        item_request_decision.id_location = desion.id_location;
-                        item_request_decision.quantity = desion.Quantity;
-                        item_request_decision.decision = entity.item_request_decision.Decisions.Transfer;
+                        desion.State = State.Modified;
+                        item_request_decision item_request_decision = new item_request_decision()
+                        {
+                            IsSelected = true,
+                            id_location = desion.id_location,
+                            quantity = desion.Quantity,
+                            decision = entity.item_request_decision.Decisions.Transfer
+                        };
                         item_request_detail.item_request_decision.Add(item_request_decision);
                     }
                 }
@@ -396,15 +373,14 @@ namespace Cognitivo.Product
 
             item_request_detail.item_request.GetTotalDecision();
             item_request_detail.RaisePropertyChanged("Balance");
-            RequestDB.SaveChangesAsync();
+            RequestController.db.SaveChangesAsync();
 
-            item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
             item_request_detailitem_request_decisionViewSource.View.Refresh();
-            toolBar_btnEdit_Click(sender);
+            Edit_Click(sender);
         }
 
-        private void item_request_decisionpurchaseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void PurchaseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
@@ -413,12 +389,15 @@ namespace Cognitivo.Product
             {
                 Decision desion = item_request_decisionpurchaseDataGrid.SelectedItem as Decision;
 
-                if (desion.State == state.Added)
+                if (desion.State == State.Added)
                 {
-                    desion.State = state.Modified;
-                    item_request_decision item_request_decision = new item_request_decision();
-                    item_request_decision.IsSelected = true;
-                    item_request_decision.quantity = desion.Quantity;
+                    desion.State = State.Modified;
+                    item_request_decision item_request_decision = new item_request_decision()
+                    {
+                        IsSelected = true,
+                        quantity = desion.Quantity
+                    };
+
                     item_request_decision.decision = item_request_decision.Decisions.Purchase;
                     item_request_detail.item_request_decision.Add(item_request_decision);
                 }
@@ -426,12 +405,12 @@ namespace Cognitivo.Product
 
             item_request_detail.item_request.GetTotalDecision();
             item_request_detail.RaisePropertyChanged("Balance");
-            RequestDB.SaveChangesAsync();
+            RequestController.db.SaveChangesAsync();
 
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
             item_request_detailitem_request_decisionViewSource.View.Refresh();
-            toolBar_btnEdit_Click(sender);
+            Edit_Click(sender);
         }
 
         private void item_request_detailMovementDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
@@ -443,12 +422,12 @@ namespace Cognitivo.Product
             {
                 if (item_request_detail.id_project_task > 0)
                 {
-                    project_task_dimensionViewSource.Source = RequestDB.project_task_dimension.Where(x => x.id_project_task == item_request_detail.id_project_task).ToList();
+                    project_task_dimensionViewSource.Source = RequestController.db.project_task_dimension.Where(x => x.id_project_task == item_request_detail.id_project_task).ToList();
                 }
             }
         }
 
-        private void item_request_decisionproductionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void ProductionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = FindResource("item_requestitem_request_detailViewSource") as CollectionViewSource;
             item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
@@ -457,34 +436,36 @@ namespace Cognitivo.Product
             {
                 Decision desion = (Decision)item_request_decisionproductionDataGrid.SelectedItem;
 
-                if (desion.State == state.Added)
+                if (desion.State == State.Added)
                 {
-                    desion.State = state.Modified;
-                    item_request_decision item_request_decision = new item_request_decision();
-                    item_request_decision.IsSelected = true;
-                    item_request_decision.quantity = desion.Quantity;
-                    item_request_decision.decision = entity.item_request_decision.Decisions.Production;
+                    desion.State = State.Modified;
+                    item_request_decision item_request_decision = new item_request_decision()
+                    {
+                        IsSelected = true,
+                        quantity = desion.Quantity,
+                        decision = entity.item_request_decision.Decisions.Production
+                    };
                     item_request_detail.item_request_decision.Add(item_request_decision);
                 }
             }
 
             item_request_detail.item_request.GetTotalDecision();
             item_request_detail.RaisePropertyChanged("Balance");
-            RequestDB.SaveChanges();
-            item_requestViewSource.View.MoveCurrentToLast();
+            RequestController.db.SaveChanges();
+
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
             item_request_detailitem_request_decisionViewSource.View.Refresh();
-            toolBar_btnEdit_Click(sender);
+            Edit_Click(sender);
         }
 
-        private void toolBar_btnCancel_Click(object sender)
+        private void Cancel_Click(object sender)
         {
             if (item_requestDataGrid.SelectedItem != null)
             {
                 item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
 
                 item_request.State = EntityState.Unchanged;
-                RequestDB.Entry(item_request).State = EntityState.Unchanged;
+                RequestController.db.Entry(item_request).State = EntityState.Unchanged;
             }
             else
             {
@@ -500,29 +481,31 @@ namespace Cognitivo.Product
             if (item_request_detail != null && itemMovement != null)
             {
                 Decision Decision = item_request_decisionmovementDataGrid.SelectedItem as Decision;
-                Decision.State = state.Modified;
+                Decision.State = State.Modified;
 
-                item_request_decision item_request_decision = new item_request_decision();
-                item_request_decision.movement_id = (int)itemMovement.item_movement.id_movement;
-                item_request_decision.IsSelected = true;
-                item_request_decision.id_location = Decision.id_location;
-                item_request_decision.quantity =Convert.ToDecimal( itemMovement.Quantity);
-                item_request_decision.decision = itemMovement.Decision;
+                item_request_decision item_request_decision = new item_request_decision()
+                {
+                    movement_id = (int)itemMovement.item_movement.id_movement,
+                    IsSelected = true,
+                    id_location = Decision.id_location,
+                    quantity = Convert.ToDecimal(itemMovement.Quantity),
+                    decision = itemMovement.Decision
+                };
+
                 item_request_detail.item_request_decision.Add(item_request_decision);
-
                 item_request_detail.item_request.GetTotalDecision();
                 item_request_detail.RaisePropertyChanged("Balance");
 
-                RequestDB.SaveChangesAsync();
+                RequestController.db.SaveChangesAsync();
 
                 item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
                 item_request_detailitem_request_decisionViewSource.View.Refresh();
 
-                toolBar_btnEdit_Click(null);
+                Edit_Click(null);
             }
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
+        private void Search_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query) && item_requestViewSource != null)
             {
@@ -546,15 +529,9 @@ namespace Cognitivo.Product
                             {
                                 return true;
                             }
-                            else
-                            {
-                                return false;
-                            }
                         }
-                        else
-                        {
-                            return false;
-                        }
+
+                        return false;
                     };
                 }
                 catch { }
@@ -565,7 +542,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
+        private void Print_Click(object sender, MouseButtonEventArgs e)
         {
             item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
             if (item_request != null)
@@ -574,17 +551,21 @@ namespace Cognitivo.Product
 
                 if (item_request.id_range != null)
                 {
-                    app_document_range = RequestDB.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
+                    app_document_range = RequestController.db.app_document_range.Where(x => x.id_range == item_request.id_range).FirstOrDefault();
                 }
                 else
                 {
-                    app_document app_document = new entity.app_document();
-                    app_document.id_application = entity.App.Names.RequestManagement;
-                    app_document.name = entity.Brillo.Localize.StringText("RequestManagement");
+                    app_document app_document = new app_document()
+                    {
+                        id_application = entity.App.Names.RequestManagement,
+                        name = entity.Brillo.Localize.StringText("RequestManagement")
+                    };
 
-                    app_document_range = new app_document_range();
-                    app_document_range.use_default_printer = false;
-                    app_document_range.app_document = app_document;
+                    app_document_range = new app_document_range()
+                    {
+                        use_default_printer = false,
+                        app_document = app_document
+                    };
                 }
 
                 entity.Brillo.Document.Start.Manual(item_request, app_document_range);
@@ -595,39 +576,39 @@ namespace Cognitivo.Product
             }
         }
 
-        private void item_request_decisioninternalDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        private void InternalDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
 
             if (item_request_decisioninternalDataGrid.SelectedItem != null)
             {
-                Decision desion = (Decision)item_request_decisioninternalDataGrid.SelectedItem;
-
-                if (desion.State == state.Added)
+                Decision desion = item_request_decisioninternalDataGrid.SelectedItem as Decision;
+                if (desion.State == State.Added)
                 {
-                    desion.State = state.Modified;
-                    item_request_decision item_request_decision = new global::entity.item_request_decision();
-                    item_request_decision.IsSelected = true;
-                    item_request_decision.quantity = desion.Quantity;
-                    item_request_decision.decision = global::entity.item_request_decision.Decisions.Internal;
+                    desion.State = State.Modified;
+                    item_request_decision item_request_decision = new item_request_decision()
+                    {
+                        IsSelected = true,
+                        quantity = desion.Quantity,
+                        decision = entity.item_request_decision.Decisions.Internal
+                    };
                     item_request_detail.item_request_decision.Add(item_request_decision);
                 }
             }
 
             item_request_detail.item_request.GetTotalDecision();
             item_request_detail.RaisePropertyChanged("Balance");
-            RequestDB.SaveChanges();
-            item_requestViewSource.View.MoveCurrentToLast();
+            RequestController.db.SaveChanges();
+
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
             item_request_detailitem_request_decisionViewSource.View.Refresh();
-            toolBar_btnEdit_Click(sender);
+            Edit_Click(sender);
         }
 
-        private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)
+        private void RowDetail_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox chbx = sender as CheckBox;
-            if (chbx != null)
+            if (sender is CheckBox chbx)
             {
                 item_request_detailMovementDataGrid.RowDetailsVisibilityMode = (bool)chbx.IsChecked ? DataGridRowDetailsVisibilityMode.VisibleWhenSelected : DataGridRowDetailsVisibilityMode.Collapsed;
             }

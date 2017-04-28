@@ -1,5 +1,4 @@
-﻿using Cognitivo.Menu;
-using entity;
+﻿using entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,8 +25,11 @@ namespace Cognitivo.Sales
 
             SalesDB = FindResource("SalesDB") as entity.Controller.Sales.InvoiceController;
             PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
+
+            //Initialize DB Manually.
+            SalesDB.Initialize();
             //Share DB to increase efficiency.
-            PaymentDB.db = SalesDB.db;
+            PaymentDB.db = SalesDB.DB;
         }
 
         #region ActionButtons
@@ -103,7 +105,7 @@ namespace Cognitivo.Sales
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesDB.Approve();
 
-                List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+                List<payment_schedual> payment_schedualList = SalesDB.DB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
                 PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
 
                 //Start New Sale
@@ -115,15 +117,13 @@ namespace Cognitivo.Sales
         {
             ///Creating new SALES INVOICE for upcomming sale.
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-            Settings SalesSettings = new Settings();
-
-            sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
-            SalesDB.db.sales_invoice.Add(sales_invoice);
+            sales_invoice sales_invoice = SalesDB.Create(new Settings().TransDate_Offset, false);
+            SalesDB.DB.sales_invoice.Add(sales_invoice);
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-                sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
+                sales_invoiceViewSource.Source = SalesDB.DB.sales_invoice.Local;
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }));
 
@@ -131,12 +131,12 @@ namespace Cognitivo.Sales
             ///Creating new PAYMENT for upcomming sale.
             payment payment = PaymentDB.New(true);
             payment.id_currencyfx = sales_invoice.id_currencyfx;
-            SalesDB.db.payments.Add(payment);
+            SalesDB.DB.payments.Add(payment);
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
-                paymentViewSource.Source = SalesDB.db.payments.Local;
+                paymentViewSource.Source = SalesDB.DB.payments.Local;
                 paymentViewSource.View.MoveCurrentTo(payment);
 
                 tabContact.Focus();
@@ -152,7 +152,7 @@ namespace Cognitivo.Sales
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = await SalesDB.db.contacts.FindAsync(sbxContact.ContactID);
+                contact contact = await SalesDB.DB.contacts.FindAsync(sbxContact.ContactID);
                 if (contact != null)
                 {
                     sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
@@ -170,7 +170,7 @@ namespace Cognitivo.Sales
             {
                 if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
                 {
-                    item item = await SalesDB.db.items.FindAsync(sbxItem.ItemID);
+                    item item = await SalesDB.DB.items.FindAsync(sbxItem.ItemID);
                     item_product item_product = item.item_product.FirstOrDefault();
 
                     if (item_product != null && item_product.can_expire)
@@ -201,14 +201,14 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ApplicationWindow myWindow = Window.GetWindow(this) as ApplicationWindow;
+
 
             New_Sale_Payment();
 
             //PAYMENT TYPE
-            await SalesDB.db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
+            await SalesDB.DB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
             CollectionViewSource payment_typeViewSource = FindResource("payment_typeViewSource") as CollectionViewSource;
-            payment_typeViewSource.Source = SalesDB.db.payment_type.Local;
+            payment_typeViewSource.Source = SalesDB.DB.payment_type.Local;
 
             cbxSalesRep.ItemsSource = CurrentSession.SalesReps; //await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
 
@@ -216,7 +216,7 @@ namespace Cognitivo.Sales
             app_currencyViewSource.Source = CurrentSession.Currencies;
 
             int Id_Account = CurrentSession.Id_Account;
-            app_account app_account = await SalesDB.db.app_account.FindAsync(CurrentSession.Id_Account);
+            app_account app_account = await SalesDB.DB.app_account.FindAsync(CurrentSession.Id_Account);
 
             if (app_account != null)
             {
@@ -392,7 +392,7 @@ namespace Cognitivo.Sales
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                item item = SalesDB.db.items.Find(sbxItem.ItemID);
+                item item = SalesDB.DB.items.Find(sbxItem.ItemID);
 
                 cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
 
@@ -403,7 +403,7 @@ namespace Cognitivo.Sales
                     {
                         Settings SalesSettings = new Settings();
 
-                        item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                        item_movement item_movement = SalesDB.DB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                         decimal QuantityInStock = sbxItem.QuantityInStock;
 
                         sales_invoice_detail _sales_invoice_detail =

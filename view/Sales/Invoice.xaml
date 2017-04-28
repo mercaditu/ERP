@@ -7,8 +7,7 @@
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-      xmlns:controller="clr-namespace:entity.Controller;assembly=entity"
-      xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
+      xmlns:Controller="clr-namespace:entity.Controller.Sales;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -24,8 +23,7 @@
 						Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
-        <controller:WindowProperty x:Key="WindowProperty"/>
-        <Salescontroller:InvoiceController x:Key="SalesInvoice"/>
+        <Controller:InvoiceController x:Key="SalesInvoice"/>
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:Status2Enable x:Key="Status2Enable" />
@@ -67,7 +65,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateStart" Width="124"
-												SelectedDate="{Binding Start_Range,Source={StaticResource WindowProperty},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+												SelectedDate="{Binding Start_Range,Source={StaticResource SalesInvoice},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
                                     <Label Style="{StaticResource input_label}">
@@ -77,7 +75,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateEnd" Width="124"
-												SelectedDate="{Binding End_Range,Source={StaticResource WindowProperty},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+												SelectedDate="{Binding End_Range,Source={StaticResource SalesInvoice},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </StackPanel>
 
@@ -223,7 +221,7 @@
                                     <Grid>
                                         <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}" />
                                     </Grid>
-                                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" can_New="True"
+                                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" CanCreate="True"
 															   Select="Set_ContactPref" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     <StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />

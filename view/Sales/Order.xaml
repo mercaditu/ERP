@@ -78,7 +78,7 @@
                         <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}" />
                         <StackPanel>
                             <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="Set_ContactPref"
-												 can_Edit="True" can_New="True" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+												       Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"

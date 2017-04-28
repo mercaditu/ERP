@@ -136,7 +136,7 @@
                             <Label Content="{lex:LocTextUpper Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White" />
                         </StackPanel>
                         <Viewbox StretchDirection="Both" Stretch="Uniform" Width="256">
-                            <cntrl:SmartBox_Contact x:Name="sbxContact" can_New="True" AutoShow="True"
+                            <cntrl:SmartBox_Contact x:Name="sbxContact" AutoShow="True"
 							                                HorizontalAlignment="Center"
 							                                Get_Customers="True"
 							                                Select="Contact_Select"/>

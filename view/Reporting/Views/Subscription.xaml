@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False"
-									   Select="set_ContactPref" can_Edit="False" can_New="False"
+									   Select="set_ContactPref" CanModify="False" CanCreate="False"
 									   HorizontalAlignment="Center" Margin="2"
 									   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>

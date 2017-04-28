@@ -14,7 +14,7 @@ namespace entity.Controller.Sales
         /// <summary>
         /// Database Context. Already Initialized.
         /// </summary>
-        public db db { get; set; }
+        public db DB { get; set; }
         public Brillo.Promotion.Start Promotions { get; set; }
 
         #region Properties
@@ -56,10 +56,10 @@ namespace entity.Controller.Sales
 
         #endregion
 
-        public InvoiceController()
+        public void Initialize()
         {
             //Initialize DB for Sales Invoice.
-            db = new db();
+            DB = new db();
 
             ///Initialize Promotions List. Inside is a Boolean value to Load or not. 
             ///This will help when trying to load Controller remotely without UI
@@ -92,7 +92,7 @@ namespace entity.Controller.Sales
                 predicate = predicate.And(x => x.trans_date <= End_Range.Date);
             }
 
-            await db.sales_invoice.Where(predicate)
+            await DB.sales_invoice.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
                     .ThenBy(x => x.number)
                     .LoadAsync();
@@ -114,15 +114,15 @@ namespace entity.Controller.Sales
                 timestamp = DateTime.Now,
 
                 //Navigation Properties
-                app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx),
-                app_branch = db.app_branch.Find(CurrentSession.Id_Branch),
-                app_terminal = db.app_terminal.Find(CurrentSession.Id_Terminal)
+                app_currencyfx = DB.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx),
+                app_branch = DB.app_branch.Find(CurrentSession.Id_Branch),
+                app_terminal = DB.app_terminal.Find(CurrentSession.Id_Terminal)
             };
 
             //This is to skip query code in case of Migration. Helps speed up migrations.
             if (IsMigration == false)
             {
-                sales_invoice.app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+                sales_invoice.app_document_range = Brillo.Logic.Range.List_Range(DB, App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
                 sales_invoice.id_condition = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_condition).FirstOrDefault();
                 sales_invoice.id_contract = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_contract).FirstOrDefault();
             }
@@ -156,11 +156,11 @@ namespace entity.Controller.Sales
             };
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
-            sales_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
+            sales_invoice_detail.app_vat_group = DB.app_vat_group.Find(VatGroupID);
 
             if (Invoice.app_contract == null && Invoice.id_contract > 0)
             {
-                Invoice.app_contract = db.app_contract.Find(Invoice.id_contract);
+                Invoice.app_contract = DB.app_contract.Find(Invoice.id_contract);
             }
 
             if (Invoice.app_contract != null)
@@ -186,7 +186,7 @@ namespace entity.Controller.Sales
             {
                 Invoice.IsSelected = true;
                 Invoice.State = EntityState.Modified;
-                db.Entry(Invoice).State = EntityState.Modified;
+                DB.Entry(Invoice).State = EntityState.Modified;
             }
         }
         
@@ -197,7 +197,7 @@ namespace entity.Controller.Sales
         public int SaveChanges_and_Validate()
         {
             NumberOfRecords = 0;
-            foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            foreach (sales_invoice invoice in DB.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
             {
                 if (invoice.Error == null)
                 {
@@ -205,7 +205,7 @@ namespace entity.Controller.Sales
                     {
                         invoice.timestamp = DateTime.Now;
                         invoice.State = EntityState.Unchanged;
-                        db.Entry(invoice).State = EntityState.Added;
+                        DB.Entry(invoice).State = EntityState.Added;
                         Add_CRM(invoice);
 
                         //Check Promotions before Saving.
@@ -215,7 +215,7 @@ namespace entity.Controller.Sales
                     {
                         invoice.timestamp = DateTime.Now;
                         invoice.State = EntityState.Unchanged;
-                        db.Entry(invoice).State = EntityState.Modified;
+                        DB.Entry(invoice).State = EntityState.Modified;
 
                         //Check Promotions before Saving.
                         Check_Promotions(invoice);
@@ -225,7 +225,7 @@ namespace entity.Controller.Sales
                         invoice.timestamp = DateTime.Now;
                         invoice.is_head = false;
                         invoice.State = EntityState.Deleted;
-                        db.Entry(invoice).State = EntityState.Modified;
+                        DB.Entry(invoice).State = EntityState.Modified;
                     }
                     NumberOfRecords += 1;
                 }
@@ -233,12 +233,12 @@ namespace entity.Controller.Sales
                 {
                     if (invoice.State != EntityState.Unchanged)
                     {
-                        db.Entry(invoice).State = EntityState.Unchanged;
+                        DB.Entry(invoice).State = EntityState.Unchanged;
                     }
                 }
             }
 
-            return db.SaveChanges();
+            return DB.SaveChanges();
         }
 
         private void Add_CRM(sales_invoice invoice)
@@ -253,13 +253,13 @@ namespace entity.Controller.Sales
                 };
 
                 crm_opportunity.sales_invoice.Add(invoice);
-                db.crm_opportunity.Add(crm_opportunity);
+                DB.crm_opportunity.Add(crm_opportunity);
             }
             else
             {
-                crm_opportunity crm_opportunity = db.sales_order.Find(invoice.id_sales_order).crm_opportunity;
+                crm_opportunity crm_opportunity = DB.sales_order.Find(invoice.id_sales_order).crm_opportunity;
                 crm_opportunity.sales_invoice.Add(invoice);
-                db.crm_opportunity.Attach(crm_opportunity);
+                DB.crm_opportunity.Attach(crm_opportunity);
             }
         }
 
@@ -267,7 +267,7 @@ namespace entity.Controller.Sales
         {
             if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                foreach (var entry in db.ChangeTracker.Entries())
+                foreach (var entry in DB.ChangeTracker.Entries())
                 {
                     switch (entry.State)
                     {
@@ -310,7 +310,7 @@ namespace entity.Controller.Sales
             NumberOfRecords = 0;
 
 
-            List<sales_invoice> SalesInvoiceList = db.sales_invoice.Local.Where(x =>
+            List<sales_invoice> SalesInvoiceList = DB.sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null).ToList();
             foreach (sales_invoice invoice in SalesInvoiceList)
@@ -318,7 +318,7 @@ namespace entity.Controller.Sales
                 SpiltInvoice(invoice);
             }
 
-            foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x =>
+            foreach (sales_invoice invoice in DB.sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved && x.is_head
                                                         && x.IsSelected && x.Error == null && x.id_contact > 0))
             {
@@ -327,9 +327,9 @@ namespace entity.Controller.Sales
                     SaveChanges_and_Validate();
                 }
 
-                invoice.app_condition = db.app_condition.Find(invoice.id_condition);
-                invoice.app_contract = db.app_contract.Find(invoice.id_contract);
-                invoice.app_currencyfx = db.app_currencyfx.Find(invoice.id_currencyfx);
+                invoice.app_condition = DB.app_condition.Find(invoice.id_condition);
+                invoice.app_contract = DB.app_contract.Find(invoice.id_contract);
+                invoice.app_currencyfx = DB.app_currencyfx.Find(invoice.id_currencyfx);
 
                 Finance.Credit Credit = new Finance.Credit();
 
@@ -347,13 +347,13 @@ namespace entity.Controller.Sales
                     //Save Promisory Note first, because it is referenced in Payment Schedual
                     if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
                     {
-                        db.payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
+                        DB.payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
                     }
 
                     //Payment Schedual
                     if (payment_schedualList != null && payment_schedualList.Count > 0)
                     {
-                        db.payment_schedual.AddRange(payment_schedualList);
+                        DB.payment_schedual.AddRange(payment_schedualList);
                     }
 
                     //Item Movement
@@ -370,7 +370,7 @@ namespace entity.Controller.Sales
                             Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
                         }
 
-                        app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
+                        app_document_range app_document_range = DB.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
 
                         if (app_document_range != null)
                         {
@@ -384,7 +384,7 @@ namespace entity.Controller.Sales
                         invoice.timestamp = DateTime.Now;
 
                         //Save Changes before Printing, so that all fields show up.
-                        db.SaveChanges();
+                        DB.SaveChanges();
 
                         Brillo.Document.Start.Automatic(invoice, app_document_range);
                     }
@@ -395,7 +395,7 @@ namespace entity.Controller.Sales
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
 
-                        db.SaveChanges();
+                        DB.SaveChanges();
                     }
 
                     NumberOfRecords += 1;
@@ -506,13 +506,13 @@ namespace entity.Controller.Sales
                             _invoice.sales_invoice_detail.Add(sales_invoice_detail);
                             position += 1;
                         }
-                        db.sales_invoice.Add(_invoice);
+                        DB.sales_invoice.Add(_invoice);
                     }
 
                     invoice.is_head = false;
                     invoice.status = Status.Documents_General.Approved;
 
-                    db.SaveChanges();
+                    DB.SaveChanges();
                 }
             }
         }
@@ -526,11 +526,11 @@ namespace entity.Controller.Sales
             List<item_movement> item_movementList = new List<item_movement>();
 
             Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-            item_movementList = _Stock.SalesInvoice_Approve(db, invoice);
+            item_movementList = _Stock.SalesInvoice_Approve(DB, invoice);
 
             if (item_movementList.Count() > 0)
             {
-                db.item_movement.AddRange(item_movementList);
+                DB.item_movement.AddRange(item_movementList);
 
                 foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
                 {
@@ -653,7 +653,7 @@ namespace entity.Controller.Sales
         public void Annull()
         {
             ///Only run through Invoices that have been approved.
-            foreach (sales_invoice Invoice in db.sales_invoice.Local
+            foreach (sales_invoice Invoice in DB.sales_invoice.Local
                 .Where(x => x.IsSelected && x.status == Status.Documents_General.Approved))
             {
                 //Block any annull if user is not Master.
@@ -665,16 +665,16 @@ namespace entity.Controller.Sales
                         if (payment_schedual.Action == payment_schedual.Actions.Delete)
                         {
                             Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                            _Payment.DeletePaymentSchedual(db, payment_schedual.id_payment_schedual);
+                            _Payment.DeletePaymentSchedual(DB, payment_schedual.id_payment_schedual);
                         }
                     }
 
                     ///Since the above Foreach will run through a mix of payment scheduals, we have no way of knowing if we will have
                     ///payment headers. So we run this code to clean.
-                    List<payment> EmptyPayments = db.payments.Where(x => x.payment_detail.Count() == 0).ToList();
+                    List<payment> EmptyPayments = DB.payments.Where(x => x.payment_detail.Count() == 0).ToList();
                     if (EmptyPayments.Count() > 0)
                     {
-                        db.payments.RemoveRange(EmptyPayments);
+                        DB.payments.RemoveRange(EmptyPayments);
                     }
 
                     foreach (sales_invoice_detail detail in Invoice.sales_invoice_detail)
@@ -685,13 +685,13 @@ namespace entity.Controller.Sales
                             if (item_movement.Action == item_movement.Actions.Delete)
                             {
                                 Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                                db.item_movement.Remove(item_movement);
+                                DB.item_movement.Remove(item_movement);
                             }
                             else if (item_movement.Action == item_movement.Actions.ReApprove)
                             {
                                 foreach (var item in item_movement.child)
                                 {
-                                    List<item_movement> item_movementList = db.item_movement.Where(x =>
+                                    List<item_movement> item_movementList = DB.item_movement.Where(x =>
                                     x.id_item_product == item_movement.id_item_product &&
                                     x.id_movement != item_movement.id_movement &&
                                     x.credit > 0).ToList();
@@ -707,7 +707,7 @@ namespace entity.Controller.Sales
                                         }
                                     }
                                 }
-                                db.item_movement.Remove(item_movement);
+                                DB.item_movement.Remove(item_movement);
                             }
                         }
                     }
@@ -720,7 +720,7 @@ namespace entity.Controller.Sales
                 Invoice.RaisePropertyChanged("status");
             }
 
-            db.SaveChanges();
+            DB.SaveChanges();
         }
 
         #endregion
@@ -737,7 +737,7 @@ namespace entity.Controller.Sales
         public bool Link_PackingList(sales_invoice Invoice, int PackingID)
         {
             //Bring into Context.
-            sales_packing Packing = db.sales_packing.Find(PackingID);
+            sales_packing Packing = DB.sales_packing.Find(PackingID);
 
             foreach (sales_packing_detail _sales_packing_detail in Packing.sales_packing_detail.Where(x => x.user_verified))
             {
@@ -768,7 +768,7 @@ namespace entity.Controller.Sales
                 if (sales_order_detail != null)
                 {
                     Detail.sales_invoice = Invoice;
-                    Detail.Contact = db.contacts.Find(Invoice.id_contact);// sbxContact.Contact;
+                    Detail.Contact = DB.contacts.Find(Invoice.id_contact);// sbxContact.Contact;
                     Detail.item = _sales_packing_detail.item;
                     Detail.id_item = _sales_packing_detail.id_item;
                     Detail.quantity = Convert.ToDecimal(_sales_packing_detail.verified_quantity);
@@ -815,7 +815,7 @@ namespace entity.Controller.Sales
                     {
                         if (sales_invoice_detail.id_sales_invoice_detail != sales_invoice_detail.PromoID)
                         {
-                            db.sales_invoice_detail.Remove(sales_invoice_detail);
+                            DB.sales_invoice_detail.Remove(sales_invoice_detail);
                         }
                     }
                 }
@@ -830,13 +830,13 @@ namespace entity.Controller.Sales
                     //Gets the Item into Context.
                     if (sales_invoice_detail.item == null)
                     {
-                        sales_invoice_detail.item = await db.items.FindAsync(sales_invoice_detail.id_item);
+                        sales_invoice_detail.item = await DB.items.FindAsync(sales_invoice_detail.id_item);
                     }
 
                     //Gets the Promotion into Context.
                     if (sales_invoice_detail.id_sales_promotion > 0 && sales_invoice_detail.sales_promotion == null)
                     {
-                        sales_invoice_detail.sales_promotion = await db.sales_promotion.FindAsync(sales_invoice_detail.id_sales_promotion);
+                        sales_invoice_detail.sales_promotion = await DB.sales_promotion.FindAsync(sales_invoice_detail.id_sales_promotion);
                     }
                 }
             }

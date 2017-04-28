@@ -1,6 +1,7 @@
 ﻿using entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace Cognitivo.Sales
             InitializeComponent();
 
             SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
+            if (DesignerProperties.GetIsInDesignMode(this) == false)
+            {
+                //Load Controller.
+                SalesDB.Initialize();
+            }
         }
 
         #region DataLoad

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="cntrl.Controls.Totals" x:Name="_Total"
+﻿<UserControl x:Class="cntrl.Controls.Totals" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -38,7 +38,7 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label Content="{Binding Currency, FallbackValue=Currency, ElementName=_Total, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+        <Label Content="{Binding Currency, FallbackValue=Currency, ElementName=this, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                Style="{StaticResource H3}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />
         <Button Style="{StaticResource btnDeleteChildStyle}" Content="i" Click="btnInformation_Click" />
         <Popup x:Name="popup" StaysOpen="False" Placement="Top" HorizontalOffset="56">
@@ -50,9 +50,9 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Discount}" Foreground="White" HorizontalAlignment="Center" />
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{lex:Loc Discount}" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
-                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total, Path=DiscountPercentage, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=this, Path=DiscountPercentage, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                             <TextBox.IsReadOnly>
-                                <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                <Binding Path="AppName" ElementName="this" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
                                          Converter="{StaticResource SecurityConverter}">
                                     <Binding.ConverterParameter>
                                         <sys:Int32>1</sys:Int32>
@@ -64,9 +64,9 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{lex:Loc Discount}" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
-                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=this,Path=DiscountValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}">
                             <TextBox.IsReadOnly>
-                                <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                <Binding Path="AppName" ElementName="this" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
                                          Converter="{StaticResource SecurityConverter}">
                                     <Binding.ConverterParameter>
                                         <sys:Int32>2</sys:Int32>

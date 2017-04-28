@@ -59,18 +59,12 @@ namespace entity.Controller.Sales
 
         public OrderController()
         {
-            //Initialize DB for Sales Order.
-            try
-            {
-                db = new db();
-            }
-            catch
-            { 
 
-            }
+        }
 
-            ///Initialize Promotions List. Inside is a Boolean value to Load or not. 
-            ///This will help when trying to load Controller remotely without UI
+        public void Initialize()
+        {
+            db = new db();
             Promotions = new Brillo.Promotion.Start(true);
         }
 

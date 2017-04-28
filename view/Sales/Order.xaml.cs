@@ -16,36 +16,39 @@ namespace Cognitivo.Sales
     public partial class Order : Page
     {
         private CollectionViewSource sales_orderViewSource;
-        private SalesOrderDB SalesOrderDB = new SalesOrderDB();
+
+        //private db db = new db();
+        private entity.Controller.Sales.OrderController SalesDB;
+
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
 
         public Order()
         {
             InitializeComponent();
+
+            SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
         }
 
         #region DataLoad
 
         private async void Load_PrimaryDataThread()
         {
-            Settings SalesSettings = new Settings();
-            if (SalesSettings.FilterByBranch)
-            {
-                await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
-                                            && (
-                                             a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).ToListAsync();
-            }
-            else
-            {
-                await SalesOrderDB.sales_order.Where(a => a.id_company == CurrentSession.Id_Company
-                                            && (
-                                             a.is_head == true)).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).ToListAsync();
-            }
+            //Load Base Class
+            SalesDB.Load(new Settings().FilterByBranch);
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                sales_orderViewSource = ((CollectionViewSource)(FindResource("sales_orderViewSource")));
-                sales_orderViewSource.Source = SalesOrderDB.sales_order.Local;
+                sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
+                sales_orderViewSource.Source = SalesDB.db.sales_order.Local;
+
+                CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
+                if (SalesDB.db.sales_invoice.Local.Count() > 0)
+                {
+                    if (sales_ordersales_order_detailViewSource.View != null)
+                    {
+                        sales_ordersales_order_detailViewSource.View.Refresh();
+                    }
+                }
             }));
         }
 
@@ -53,7 +56,7 @@ namespace Cognitivo.Sales
         {
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesOrderDB, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesDB.db, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
         }
 
@@ -71,12 +74,10 @@ namespace Cognitivo.Sales
         {
             Settings SalesSettings = new Settings();
 
-            sales_order sales_order = SalesOrderDB.New();
-            sales_order.trans_date = DateTime.Now.AddDays(SalesSettings.TransDate_Offset);
+            sales_order sales_order = SalesDB.Create(new Settings().TransDate_Offset, false);
+            sales_orderViewSource.View.MoveCurrentTo(sales_order);
 
             cbxCurrency.get_DefaultCurrencyActiveRate();
-            SalesOrderDB.sales_order.Add(sales_order);
-            sales_orderViewSource.View.MoveCurrentTo(sales_order);
         }
 
         private void Edit_Click(object sender)
@@ -85,9 +86,7 @@ namespace Cognitivo.Sales
             {
                 if (sales_orderDataGrid.SelectedItem is sales_order Order)
                 {
-                    Order.IsSelected = true;
-                    Order.State = EntityState.Modified;
-                    SalesOrderDB.Entry(Order).State = EntityState.Modified;
+                    SalesDB.Edit(Order);
                 }
             }
             else
@@ -100,18 +99,15 @@ namespace Cognitivo.Sales
         {
             if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
-                sales_order.is_head = false;
-                sales_order.State = EntityState.Deleted;
-                sales_order.IsSelected = true;
+                SalesDB.Archive();
             }
         }
 
         private void Save_Click(object sender)
         {
-            if (SalesOrderDB.SaveChanges() > 0)
+            if (SalesDB.SaveChanges_and_Validate() > 0)
             {
-                toolBar.msgSaved(SalesOrderDB.NumberOfRecords);
+                toolBar.msgSaved(SalesDB.NumberOfRecords);
                 sales_orderViewSource.View.Refresh();
                 sbxContact.Text = "";
             }
@@ -120,27 +116,29 @@ namespace Cognitivo.Sales
         private void Cancel_Click(object sender)
         {
             sales_orderViewSource.View.MoveCurrentToFirst();
-            SalesOrderDB.CancelAllChanges();
+            SalesDB.CancelAllChanges();
 
             if (sales_orderViewSource.View != null)
+            {
                 sales_orderViewSource.View.Refresh();
+            }
         }
 
         private void Approve_Click(object sender)
         {
-            if (SalesOrderDB.Approve())
+            if (SalesDB.Approve())
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesOrderDB, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesDB.db, entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;
-                toolBar.msgApproved(SalesOrderDB.NumberOfRecords);
+                toolBar.msgApproved(SalesDB.NumberOfRecords);
             }
         }
 
         private void Anull_Click(object sender)
         {
-            if (SalesOrderDB.Annull())
+            if (SalesDB.Annull())
             {
-                toolBar.msgAnnulled(SalesOrderDB.NumberOfRecords);
+                toolBar.msgAnnulled(SalesDB.NumberOfRecords);
             }
         }
 
@@ -152,7 +150,7 @@ namespace Cognitivo.Sales
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = SalesOrderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = SalesDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
                 sales_order.id_contact = contact.id_contact;
                 sales_order.contact = contact;
@@ -169,7 +167,7 @@ namespace Cognitivo.Sales
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    cbxContactRelation.ItemsSource = SalesOrderDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+                    cbxContactRelation.ItemsSource = SalesDB.db.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
                     //Condition
                     if (objContact.app_contract != null)
@@ -223,7 +221,7 @@ namespace Cognitivo.Sales
                 if (sales_order_detail.Count > 0)
                 {
                     dgvvat.ItemsSource = sales_order_detail
-                        .Join(SalesOrderDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                        .Join(SalesDB.db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                             , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
                             .GroupBy(a => new { a.name, a.id_vat, a.ad })
                     .Select(g => new
@@ -287,7 +285,7 @@ namespace Cognitivo.Sales
             if (sbxItem.ItemID > 0)
             {
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-                item item = await SalesOrderDB.items.FindAsync(sbxItem.ItemID);
+                item item = await SalesDB.db.items.FindAsync(sbxItem.ItemID);
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
@@ -392,7 +390,7 @@ namespace Cognitivo.Sales
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
                 //DeleteDetailGridRow
                 dgvSalesDetail.CancelEdit();
-                SalesOrderDB.sales_order_detail.Remove(e.Parameter as sales_order_detail);
+                SalesDB.db.sales_order_detail.Remove(e.Parameter as sales_order_detail);
                 CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
                 sales_ordersales_order_detailViewSource.View.Refresh();
             }
@@ -405,9 +403,9 @@ namespace Cognitivo.Sales
             {
                 if (sales_order.id_currencyfx > 0)
                 {
-                    if (SalesOrderDB.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault() != null)
+                    if (SalesDB.db.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault() != null)
                     {
-                        sales_order.app_currencyfx = SalesOrderDB.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault();
+                        sales_order.app_currencyfx = SalesDB.db.app_currencyfx.Where(x => x.id_currencyfx == sales_order.id_currencyfx).FirstOrDefault();
                     }
                 }
             }
@@ -441,14 +439,14 @@ namespace Cognitivo.Sales
             sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
             if (sales_order != null)
             {
-                contact contact = SalesOrderDB.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefault();
+                contact contact = SalesDB.db.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefault();
                 pnlSalesBudget._contact = contact;
             }
             pnlSalesBudget.SalesBudget_Click += Budget_Click;
 
             sales_order _sales_order = (sales_order)sales_orderViewSource.View.CurrentItem;
             pnlSalesBudget.sales_order = _sales_order;
-            pnlSalesBudget.db = SalesOrderDB;
+            pnlSalesBudget.db = SalesDB.db;
             crud_modal.Children.Add(pnlSalesBudget);
         }
 
@@ -458,17 +456,17 @@ namespace Cognitivo.Sales
 
             if (sales_order != null)
             {
-                sales_order.contact = await SalesOrderDB.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefaultAsync();
-                sales_order.app_contract = await SalesOrderDB.app_contract.Where(x => x.id_contract == sales_order.id_contract).FirstOrDefaultAsync();
+                sales_order.contact = await SalesDB.db.contacts.Where(x => x.id_contact == sales_order.id_contact).FirstOrDefaultAsync();
+                sales_order.app_contract = await SalesDB.db.app_contract.Where(x => x.id_contract == sales_order.id_contract).FirstOrDefaultAsync();
 
                 foreach (sales_order_detail detail in sales_order.sales_order_detail)
                 {
                     detail.CurrencyFX_ID = sales_order.id_currencyfx;
-                    detail.item = await SalesOrderDB.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
-                    detail.app_vat_group = await SalesOrderDB.app_vat_group.Where(x => x.id_vat_group == detail.id_vat_group).FirstOrDefaultAsync();
+                    detail.item = await SalesDB.db.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
+                    detail.app_vat_group = await SalesDB.db.app_vat_group.Where(x => x.id_vat_group == detail.id_vat_group).FirstOrDefaultAsync();
                 }
 
-                cbxContactRelation.ItemsSource = SalesOrderDB.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();
+                cbxContactRelation.ItemsSource = SalesDB.db.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();
 
                 CollectionViewSource sales_ordersales_order_detailViewSource = ((CollectionViewSource)(FindResource("sales_ordersales_order_detailViewSource")));
                 sales_orderViewSource.View.Refresh();
@@ -494,9 +492,9 @@ namespace Cognitivo.Sales
             {
                 if (sales_orderViewSource.View.CurrentItem is sales_order o)
                 {
-                    o.app_currencyfx = SalesOrderDB.app_currencyfx.Find(o.id_currencyfx);
-                    o.contact = SalesOrderDB.contacts.Find(o.id_contact);
-                    o.app_contract = SalesOrderDB.app_contract.Find(o.id_contract);
+                    o.app_currencyfx = SalesDB.db.app_currencyfx.Find(o.id_currencyfx);
+                    o.contact = SalesDB.db.contacts.Find(o.id_contact);
+                    o.app_contract = SalesDB.db.app_contract.Find(o.id_contract);
 
                     if (o.app_currencyfx != null && o.contact != null && o.app_contract != null)
                     {
@@ -559,10 +557,10 @@ namespace Cognitivo.Sales
                     sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                 }
 
-                SalesOrderDB.sales_invoice.Add(sales_invoice);
+                SalesDB.db.sales_invoice.Add(sales_invoice);
                 crm_opportunity crm_opportunity = sales_order.crm_opportunity;
                 crm_opportunity.sales_invoice.Add(sales_invoice);
-                SalesOrderDB.SaveChanges();
+                SalesDB.db.SaveChanges();
 
                 MessageBox.Show("Invoice Created Successfully..");
             }
@@ -577,11 +575,11 @@ namespace Cognitivo.Sales
             if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
             {
                 sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-                item item = await SalesOrderDB.items.FindAsync(sbxItem.ItemID);
+                item item = await SalesDB.db.items.FindAsync(sbxItem.ItemID);
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
-                    item_movement item_movement = SalesOrderDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                    item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                     if (item_movement != null)
                     {
                         Settings SalesSettings = new Settings();

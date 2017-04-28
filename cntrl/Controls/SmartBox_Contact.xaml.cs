@@ -40,7 +40,7 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                _can_new = new entity.Brillo.Security(entity.App.Names.Items).create ? value : false;
+                _can_new = new entity.Brillo.Security(App.Names.Items).create ? value : false;
                 RaisePropertyChanged("can_New");
             }
         }

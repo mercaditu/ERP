@@ -60,7 +60,7 @@ namespace entity
                         sales_order.timestamp = DateTime.Now;
                         sales_order.State = EntityState.Unchanged;
                         Entry(sales_order).State = EntityState.Added;
-                        add_CRM(sales_order);
+                        Add_CRM(sales_order);
                     }
                     else if (sales_order.State == EntityState.Modified)
                     {
@@ -88,7 +88,7 @@ namespace entity
             }
         }
 
-        private void add_CRM(sales_order order)
+        private void Add_CRM(sales_order order)
         {
             if (order.id_sales_budget == 0 || order.id_sales_budget == null)
             {

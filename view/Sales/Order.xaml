@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Sales.Order" x:Name="SalesOrder" Title="{lex:Loc SalesOrder}"
+﻿<Page x:Class="Cognitivo.Sales.Order" Title="{lex:Loc SalesOrder}"
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,6 +6,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:Controller="clr-namespace:entity.Controller.Sales;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
@@ -16,11 +17,11 @@
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
 	  Loaded="Page_Loaded">
-
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <Controller:OrderController x:Key="SalesOrder"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />

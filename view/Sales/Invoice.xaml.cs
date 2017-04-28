@@ -1,5 +1,4 @@
-﻿using cntrl.Class;
-using entity;
+﻿using entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,9 +15,8 @@ namespace Cognitivo.Sales
 {
     public partial class Invoice
     {
-        //Global Variables
+        //Collection View Source
         private CollectionViewSource sales_invoiceViewSource;
-
         private CollectionViewSource sales_invoicesales_invoice_detailViewSource;
         private CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
 
@@ -54,8 +52,7 @@ namespace Cognitivo.Sales
 
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
-            Settings Settings = new Settings();
-            SalesDB.Load(Settings.FilterByBranch);
+            SalesDB.Load(new Settings().FilterByBranch);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
             sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;

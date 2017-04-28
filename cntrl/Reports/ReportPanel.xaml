@@ -27,9 +27,10 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <TabItem Header="{lex:Loc Reports}">
-                <WindowsFormsHost>
+                <syncfusion:ReportViewer  x:Name="reportViewer"/>
+                <!--<WindowsFormsHost>
                     <rv:ReportViewer x:Name="reportViewer" />
-                </WindowsFormsHost>
+                </WindowsFormsHost>-->
             </TabItem>
             <TabItem Header="{lex:Loc Report}">
                 <reports:ReportDesigner x:Name="ReportDesigner"/>

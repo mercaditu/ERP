@@ -325,6 +325,8 @@
     <Compile Include="Context\Project\ProjectDB.cs" />
     <Compile Include="Context\Project\ProjectTemplateDB.cs" />
     <Compile Include="Context\Purchase\PurchasePackingListDB.cs" />
+    <Compile Include="Controller\Production\ExecutionController.cs" />
+    <Compile Include="Controller\Production\OrderController.cs" />
     <Compile Include="Controller\Product\RequestController.cs" />
     <Compile Include="Controller\Purchase\PurchaseInvoice.cs" />
     <Compile Include="Controller\Sales\OrderController.cs" />

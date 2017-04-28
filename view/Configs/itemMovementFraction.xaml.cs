@@ -15,7 +15,7 @@ namespace Cognitivo.Configs
     public partial class itemMovementFraction : UserControl
     {
         private CollectionViewSource item_movementViewSource;
-        public ExecutionDB ExecutionDB { get; set; }
+        public db ExecutionDB { get; set; }
         public int id_item { get; set; }
         public long id_movement { get; set; }
         public item_movement item_movement { get; set; }

@@ -124,7 +124,7 @@ namespace Cognitivo.Product
 
         #region Toolbar Events
 
-        private void toolBar_btnCancel_Click(object sender)
+        private void Cancel_Click(object sender)
         {
             item item = itemDataGrid.SelectedItem as item;
 
@@ -147,7 +147,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnDelete_Click(object sender)
+        private void Delete_Click(object sender)
         {
             MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
@@ -165,7 +165,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnEdit_Click(object sender)
+        private void Edit_Click(object sender)
         {
             if (itemDataGrid.SelectedItem != null)
             {
@@ -179,7 +179,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnNew_Click(object sender)
+        private void New_Click(object sender)
         {
             item item = ItemDB.Create();
             ItemDB.db.items.Add(item);
@@ -242,7 +242,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnSave_Click(object sender)
+        private void Save_Click(object sender)
         {
             IEnumerable<DbEntityValidationResult> validationresult = ItemDB.db.GetValidationErrors();
             if (validationresult.Count() == 0)
@@ -268,7 +268,7 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
+        private void Search_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query))
             {

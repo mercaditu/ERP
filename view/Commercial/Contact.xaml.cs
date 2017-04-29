@@ -1,7 +1,6 @@
 ﻿using entity;
 using Microsoft.Maps.MapControl.WPF;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -30,6 +29,7 @@ namespace Cognitivo.Commercial
         public Contact()
         {
             InitializeComponent();
+
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 ContactDB = FindResource("ContactController") as entity.Controller.Commercial.ContactController;
@@ -38,7 +38,7 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private async void Page_Loaded(object sender, EventArgs e)
+        private void Page_Loaded(object sender, EventArgs e)
         {
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
             contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
@@ -46,9 +46,16 @@ namespace Cognitivo.Commercial
             contactcontact_field_valuephoneViewSource = (CollectionViewSource)FindResource("contactcontact_field_valuephoneViewSource");
 
             Window Win = Window.GetWindow(this) as Window;
-            ContactDB.Load(Win);
-          
 
+            if (Win.Title == entity.Brillo.Localize.StringText("Customer"))
+            {
+                ContactDB.LoadCustomers();
+            }
+            else if (Win.Title == entity.Brillo.Localize.StringText("Suppliers"))
+            {
+                ContactDB.LoadSuppliers();
+            }
+          
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.db.contacts.Local;
 
@@ -57,56 +64,51 @@ namespace Cognitivo.Commercial
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
-            contactRoleViewSource.Source = ContactDB.db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            contactRoleViewSource.Source = ContactDB.db.contact_role.Local;
 
             //AppContract
-            CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
+            CollectionViewSource appContractViewSource = FindResource("appContractViewSource") as CollectionViewSource;
             appContractViewSource.Source = CurrentSession.Contracts.OrderBy(x => x.name);
 
             //AppCostCenter
-            CollectionViewSource appCostCenterViewSource = (CollectionViewSource)FindResource("appCostCenterViewSource");
-            appCostCenterViewSource.Source = ContactDB.db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            CollectionViewSource appCostCenterViewSource = FindResource("appCostCenterViewSource") as CollectionViewSource;
+            appCostCenterViewSource.Source = ContactDB.db.app_cost_center.Local;
 
             //ItemPriceList
-            CollectionViewSource itemPriceListViewSource = (CollectionViewSource)FindResource("itemPriceListViewSource");
-            itemPriceListViewSource.Source = CurrentSession.PriceLists; //ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            CollectionViewSource itemPriceListViewSource = FindResource("itemPriceListViewSource") as CollectionViewSource;
+            itemPriceListViewSource.Source = CurrentSession.PriceLists.OrderBy(a => a.name);
 
-            CollectionViewSource salesRepViewSource = (CollectionViewSource)FindResource("salesRepViewSource");
+            CollectionViewSource salesRepViewSource = FindResource("salesRepViewSource") as CollectionViewSource;
             salesRepViewSource.Source = CurrentSession.SalesReps.OrderBy(a => a.name);
 
-            CollectionViewSource salesRepViewSourceCollector = (CollectionViewSource)FindResource("salesRepViewSourceCollector");
+            CollectionViewSource salesRepViewSourceCollector = FindResource("salesRepViewSourceCollector") as CollectionViewSource;
             salesRepViewSourceCollector.Source = CurrentSession.SalesReps.OrderBy(a => a.name);
 
             //AppCurrency
-            CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = CurrentSession.Currencies.OrderBy(a => a.name); //ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            CollectionViewSource app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
+            app_currencyViewSource.Source = CurrentSession.Currencies.OrderBy(a => a.name);
 
             //AppBank
-            CollectionViewSource bankViewSource = (CollectionViewSource)FindResource("bankViewSource");
-            bankViewSource.Source = ContactDB.db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            CollectionViewSource bankViewSource = FindResource("bankViewSource") as CollectionViewSource;
+            bankViewSource.Source = ContactDB.db.app_bank.Local;
 
-            app_fieldemailViewSource = (CollectionViewSource)FindResource("app_fieldemailViewSource");
-            app_fieldphoneViewSource = (CollectionViewSource)FindResource("app_fieldphoneViewSource");
-            app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
-            ContactDB.db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            app_fieldemailViewSource = FindResource("app_fieldemailViewSource") as CollectionViewSource;
+            app_fieldphoneViewSource = FindResource("app_fieldphoneViewSource") as CollectionViewSource;
+            app_fieldViewSource = FindResource("app_fieldViewSource") as CollectionViewSource;
 
-            List<app_field> ListOfFields = await ContactDB.db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
-
-            app_fieldemailViewSource.Source = ListOfFields.Where(x => x.field_type == app_field.field_types.Email).ToList();
-            app_fieldphoneViewSource.Source = ListOfFields.Where(x => x.field_type == app_field.field_types.Telephone).ToList();
-            app_fieldViewSource.Source = ListOfFields.Where(x => x.field_type == app_field.field_types.Account).ToList();
+            app_fieldemailViewSource.Source = ContactDB.db.app_field.Local.Where(x => x.field_type == app_field.field_types.Email).ToList();
+            app_fieldphoneViewSource.Source = ContactDB.db.app_field.Local.Where(x => x.field_type == app_field.field_types.Telephone).ToList();
+            app_fieldViewSource.Source = ContactDB.db.app_field.Local.Where(x => x.field_type == app_field.field_types.Account).ToList();
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
-            await ContactDB.db.contact_tag
-             .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
-             .OrderBy(x => x.name).LoadAsync();
             CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
             contact_tagViewSource.Source = ContactDB.db.contact_tag.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = CurrentSession.VAT_Groups.OrderBy(a => a.name);
+
             Filter();
         }
 
@@ -117,7 +119,6 @@ namespace Cognitivo.Commercial
         private void toolBar_btnNew_Click(object sender)
         {
             contact contact = ContactDB.Create();
-
             
             ContactDB.db.contacts.Add(contact);
             contactViewSource.View.Refresh();
@@ -128,9 +129,9 @@ namespace Cognitivo.Commercial
         {
             try
             {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    contact contact = (contact)listContacts.SelectedItem;
+                    contact contact = listContacts.SelectedItem as contact;
                     contact.is_head = false;
                     contact.State = EntityState.Deleted;
                     contact.IsSelected = true;
@@ -147,11 +148,11 @@ namespace Cognitivo.Commercial
             if (listContacts.SelectedItem != null)
             {
                 contact contact = (contact)listContacts.SelectedItem;
-                ContactDB.Edit(contact);
+                ContactDB.Edit(ref contact);
             }
             else
             {
-                toolBar.msgWarning("Please Select a Contact");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 

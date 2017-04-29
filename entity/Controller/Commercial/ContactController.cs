@@ -2,31 +2,39 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace entity.Controller.Commercial
 {
     public class ContactController:Base
     {
-       
 
-        public async void Load(Window Win)
+        public async void LoadCustomers()
         {
-            if (Win.Title == entity.Brillo.Localize.StringText("Customer"))
-            {
-                await db.contacts.Where(a => (a.is_supplier == false || a.is_customer == true) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
-            }
-            else if (Win.Title == entity.Brillo.Localize.StringText("Supplier"))
-            {
-                await db.contacts.Where(a => (a.is_supplier == true || a.is_customer == false) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
-            }
-            else
-            {
-                await db.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
-            }
+            await db.contacts.Where(a => (a.is_supplier == false || a.is_customer == true) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            LoadSecondary();
+        }
 
+        public async void LoadSuppliers()
+        {
+            await db.contacts.Where(a => (a.is_supplier == true || a.is_customer == false) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            LoadSecondary();
+        }
+
+        public async void Load()
+        {
+            await db.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
+            LoadSecondary();
+        }
+
+        private async void LoadSecondary()
+        {
+            await db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
+            await db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+            await db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
+            await db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
+
+            await db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).LoadAsync();
         }
 
         public contact Create()
@@ -41,6 +49,7 @@ namespace entity.Controller.Commercial
                 hr_contract = new List<hr_contract>(),
                 hr_family = new List<hr_family>(),
                 hr_talent_detail = new List<hr_talent_detail>(),
+
                 id_company = CurrentSession.Id_Company,
                 id_user = CurrentSession.Id_User,
                 is_head = true,
@@ -48,6 +57,7 @@ namespace entity.Controller.Commercial
                 lead_time = 0,
                 is_employee = false
             };
+
             if (db.contact_role.Where(c => c.is_principal == true && c.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
             {
                 int _id_contact_role = Convert.ToInt32(db.contact_role.Where(c => c.is_principal == true && c.id_company == CurrentSession.Id_Company).FirstOrDefault().id_contact_role);
@@ -56,13 +66,11 @@ namespace entity.Controller.Commercial
                     contact.id_contact_role = _id_contact_role;
                 }
             }
-
-
-
+            
             return contact;
         }
 
-        public bool Edit(contact contact)
+        public bool Edit(ref contact contact)
         {
             contact.IsSelected = true;
             contact.State = EntityState.Modified;
@@ -73,6 +81,7 @@ namespace entity.Controller.Commercial
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
+
             foreach (contact contact in db.contacts.Local)
             {
                 if (contact.IsSelected)
@@ -89,12 +98,7 @@ namespace entity.Controller.Commercial
                         contact.State = EntityState.Unchanged;
                         db.Entry(contact).State = EntityState.Modified;
                     }
-                    else if (contact.State == EntityState.Deleted)
-                    {
-                        contact.timestamp = DateTime.Now;
-                        contact.State = EntityState.Unchanged;
-                        db.contacts.Remove(contact);
-                    }
+
                     NumberOfRecords += 1;
                 }
                 else if (contact.State > 0)
@@ -105,11 +109,9 @@ namespace entity.Controller.Commercial
                     }
                 }
             }
+
+            db.SaveChanges();
             return true;
         }
-
-        
-
-      
     }
 }

@@ -1,8 +1,6 @@
-﻿using cntrl.Class;
-using entity;
+﻿using entity;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -19,70 +17,49 @@ namespace Cognitivo.Purchase
     {
         private CollectionViewSource purchase_invoiceViewSource;
         private CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
-        private db db = new db();
-       // private PurchaseInvoiceDB PurchaseInvoiceDB = new PurchaseInvoiceDB();
-        private entity.Controller.Purcahse.PurchaseInvoice PurchaseDB;
+
+        private entity.Controller.Purchase.InvoiceController PurchaseDB;
         private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder = new cntrl.PanelAdv.pnlPurchaseOrder();
 
         public Invoice()
         {
             InitializeComponent();
-            PurchaseDB = FindResource("PurchaseInvoice") as entity.Controller.Purcahse.PurchaseInvoice;
-            PurchaseDB.db = db;
-        }
+            PurchaseDB = FindResource("PurchaseInvoice") as entity.Controller.Purchase.InvoiceController;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (true)
+            {
+                PurchaseDB.Initialize();
+            }
         }
 
         private void load_PrimaryData()
         {
-            load_PrimaryDataThread();
-            load_SecondaryDataThread();
+            Load_PrimaryDataThread();
+            Load_SecondaryDataThread();
         }
 
-        private async void load_PrimaryDataThread()
+        private async void Load_PrimaryDataThread()
         {
-            InvoiceSetting InvoiceSetting = new InvoiceSetting();
             PurchaseDB.Load();
           
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));
-                purchase_invoiceViewSource.Source = db.purchase_invoice.Local;
+                purchase_invoiceViewSource.Source = PurchaseDB.db.purchase_invoice.Local;
             }));
         }
 
-        private async void load_SecondaryDataThread()
+        private async void Load_SecondaryDataThread()
         {
-            await db.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDepartment.ItemsSource = db.app_department.Local;
-            }));
-
-            await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+                cbxDepartment.ItemsSource = PurchaseDB.db.app_department.Local;
                 CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-                app_dimensionViewSource.Source = db.app_dimension.Local;
-            }));
-
-            await db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+                app_dimensionViewSource.Source = PurchaseDB.db.app_dimension.Local;
                 CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-                app_measurementViewSource.Source = db.app_measurement.Local;
-            }));
-
-            await db.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+                app_measurementViewSource.Source = PurchaseDB.db.app_measurement.Local;
                 CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
-                app_cost_centerViewSource.Source = db.app_cost_center.Local;
+                app_cost_centerViewSource.Source = PurchaseDB.db.app_cost_center.Local;
             }));
         }
 
@@ -101,60 +78,37 @@ namespace Cognitivo.Purchase
 
         #region Toolbar events
 
-        private void toolBar_btnNew_Click(object sender)
+        private void New_Click(object sender)
         {
-            InvoiceSetting _pref_PurchaseInvoice = new InvoiceSetting();
-            purchase_invoice purchase_invoice = PurchaseDB.Create(_pref_PurchaseInvoice.TransDate_OffSet);
-            db.purchase_invoice.Add(purchase_invoice);
             sbxContact.Text = "";
             sbxItem.Text = "";
 
+            purchase_invoice purchase_invoice = PurchaseDB.Create(new InvoiceSetting().TransDate_OffSet);
             purchase_invoiceViewSource.View.MoveCurrentTo(purchase_invoice);
         }
 
-        private void toolBar_btnEdit_Click(object sender)
+        private void Edit_Click(object sender)
         {
             if (purchase_invoiceDataGrid.SelectedItem != null)
             {
-                purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-                //if (PurchaseInvoiceDB.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
-                //{
-                purchase_invoice.IsSelected = true;
-                purchase_invoice.State = EntityState.Modified;
-                db.Entry(purchase_invoice).State = EntityState.Modified;
-                //  }
+                PurchaseDB.Edit(purchase_invoiceDataGrid.SelectedItem as purchase_invoice);
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
-        private void toolBar_btnDelete_Click(object sender)
+        private void Delete_Click(object sender)
         {
-            try
+            if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-                    if (purchase_invoice != null)
-                    {
-                        purchase_invoice.is_head = false;
-                        purchase_invoice.State = EntityState.Deleted;
-                        purchase_invoice.IsSelected = true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                PurchaseDB.Archived();
             }
         }
 
-        private void toolBar_btnSave_Click(object sender)
+        private void Save_Click(object sender)
         {
-          
-
             if (PurchaseDB.SaveChanges_and_Validate() > 0)
             {
                 purchase_invoiceViewSource.View.Refresh();
@@ -162,31 +116,22 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void toolBar_btnCancel_Click(object sender)
+        private void Cancel_Click(object sender)
         {
             PurchaseDB.CancelAllChanges();
-
-            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-            if (purchase_invoice != null)
-            {
-                purchase_invoice.State = EntityState.Unchanged;
-            }
         }
 
-        private void toolBar_btnApprove_Click(object sender)
+        private void Approve_Click(object sender)
         {
             PurchaseDB.Approve();
         }
 
-        private void toolBar_btnAnull_Click(object sender)
+        private void Anull_Click(object sender)
         {
-            
-                MessageBoxResult result = MessageBox.Show("Anull?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    PurchaseDB.Annull();
-                }
-            
+            if (MessageBox.Show("Anull?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                PurchaseDB.Annull();
+            }
         }
 
         #endregion Toolbar events
@@ -197,7 +142,7 @@ namespace Cognitivo.Purchase
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = PurchaseDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
 
                 if (contact != null && purchase_invoice != null)
@@ -250,7 +195,7 @@ namespace Cognitivo.Purchase
 
                 if (app_condition != null)
                 {
-                    cbxContract.ItemsSource = db.app_contract.Where(a => a.is_active == true
+                    cbxContract.ItemsSource = PurchaseDB.db.app_contract.Where(a => a.is_active == true
                                                         && a.id_company == CurrentSession.Id_Company
                                                         && a.id_condition == app_condition.id_condition).ToList();
                     //Selects first Item
@@ -282,7 +227,7 @@ namespace Cognitivo.Purchase
 
                 List<purchase_invoice_detail> purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.ToList();
                 dgvvat.ItemsSource = purchase_invoice_detail
-                        .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                        .Join(PurchaseDB.db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                             , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
                             .GroupBy(a => new { a.name, a.id_vat, a.ad })
                     .Select(g => new
@@ -354,12 +299,12 @@ namespace Cognitivo.Purchase
 
                 if (sbxItem.ItemID > 0)
                 {
-                    item = db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                    item = PurchaseDB.db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 }
 
                 if (purchase_invoice.id_contact > 0 || sbxContact.ContactID > 0)
                 {
-                    contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    contact = PurchaseDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 }
 
                 InvoiceSetting InvoiceSetting = new InvoiceSetting();
@@ -393,7 +338,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.quantity = quantity;
 
                     //If Item Exists in previous purchase... then get Last Cost. Problem, will get in stored value, in future we will need to add logic to convert into current currency.
-                    purchase_invoice_detail old_PurchaseInvoice = db.purchase_invoice_detail
+                    purchase_invoice_detail old_PurchaseInvoice = PurchaseDB.db.purchase_invoice_detail
                         .Where(x => x.id_item == item.id_item && x.purchase_invoice.id_contact == purchase_invoice.id_contact)
                         .OrderByDescending(y => y.purchase_invoice.trans_date)
                         .FirstOrDefault();
@@ -407,13 +352,15 @@ namespace Cognitivo.Purchase
 
                 foreach (item_dimension item_dimension in item.item_dimension)
                 {
-                    purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
-                    purchase_invoice_dimension.id_dimension = item_dimension.id_app_dimension;
-                    purchase_invoice_dimension.app_dimension = item_dimension.app_dimension;
-                    purchase_invoice_dimension.id_measurement = item_dimension.id_measurement;
-                    purchase_invoice_dimension.app_measurement = item_dimension.app_measurement;
-                    purchase_invoice_dimension.purchase_invoice_detail = purchase_invoice_detail;
-                    purchase_invoice_dimension.value = item_dimension.value;
+                    purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension()
+                    {
+                        id_dimension = item_dimension.id_app_dimension,
+                        app_dimension = item_dimension.app_dimension,
+                        id_measurement = item_dimension.id_measurement,
+                        app_measurement = item_dimension.app_measurement,
+                        purchase_invoice_detail = purchase_invoice_detail,
+                        value = item_dimension.value
+                    };
                     purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
                 }
             }
@@ -431,7 +378,7 @@ namespace Cognitivo.Purchase
                 //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, bring Administrative
                 if (item.item_product.Count() > 0)
                 {
-                    int CostCenter = db.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+                    int CostCenter = PurchaseDB.db.app_cost_center.Where(a => a.is_product && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
 
                     if (CostCenter > 0)
                     {
@@ -442,14 +389,14 @@ namespace Cognitivo.Purchase
                         app_cost_center cost_center = new app_cost_center();
                         cost_center.name = entity.Brillo.Localize.StringText("Product");
                         cost_center.is_product = true;
-                        db.app_cost_center.Add(cost_center);
+                        PurchaseDB.db.app_cost_center.Add(cost_center);
 
                         purchase_invoice_detail.app_cost_center = cost_center;
                     }
                 }
                 else if (item.item_asset.Count() > 0)
                 {
-                    int CostCenter = db.app_cost_center.Where(a => a.is_fixedasset && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+                    int CostCenter = PurchaseDB.db.app_cost_center.Where(a => a.is_fixedasset && a.is_active && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
 
                     if (CostCenter > 0)
                     {
@@ -460,7 +407,7 @@ namespace Cognitivo.Purchase
                         app_cost_center cost_center = new app_cost_center();
                         cost_center.name = entity.Brillo.Localize.StringText("FixedAsset");
                         cost_center.is_fixedasset = true;
-                        db.app_cost_center.Add(cost_center);
+                        PurchaseDB.db.app_cost_center.Add(cost_center);
 
                         purchase_invoice_detail.app_cost_center = cost_center;
                     }
@@ -474,7 +421,7 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    int id_cost_center = db.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
+                    int id_cost_center = PurchaseDB.db.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).Select(y => y.id_cost_center).FirstOrDefault();
                     if (id_cost_center > 0)
                     {
                         purchase_invoice_detail.id_cost_center = id_cost_center;
@@ -484,7 +431,7 @@ namespace Cognitivo.Purchase
                         app_cost_center cost_center = new app_cost_center();
                         cost_center.name = entity.Brillo.Localize.StringText("Expense");
                         cost_center.is_administrative = true;
-                        db.app_cost_center.Add(cost_center);
+                        PurchaseDB.db.app_cost_center.Add(cost_center);
 
                         purchase_invoice_detail.app_cost_center = cost_center;
                     }
@@ -499,9 +446,9 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.id_vat_group = item.id_vat_group;
                 }
             }
-            else if (db.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).Any())
+            else if (PurchaseDB.db.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).Any())
             {
-                purchase_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
+                purchase_invoice_detail.id_vat_group = PurchaseDB.db.app_vat_group.Where(x => x.is_active && x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
             }
 
             Dispatcher.BeginInvoke((Action)(() =>
@@ -512,10 +459,8 @@ namespace Cognitivo.Purchase
             }));
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
+        private void Search_Click(object sender, string query)
         {
-            try
-            {
                 if (!string.IsNullOrEmpty(query) && purchase_invoiceViewSource != null)
                 {
                     purchase_invoiceViewSource.View.Filter = i =>
@@ -538,9 +483,6 @@ namespace Cognitivo.Purchase
                 {
                     purchase_invoiceViewSource.View.Filter = null;
                 }
-            }
-            catch (Exception)
-            { }
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -558,15 +500,15 @@ namespace Cognitivo.Purchase
                 purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
                 if (purchase_invoice != null)
                 {
-                    if (db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
+                    if (PurchaseDB.db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
                     {
-                        MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
                         {
                             //DeleteDetailGridRow
                             dgvPurchaseDetail.CancelEdit();
 
-                            db.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
+                            PurchaseDB.db.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
                             purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
                         }
                     }
@@ -586,9 +528,10 @@ namespace Cognitivo.Purchase
             {
                 if (purchase_invoice.id_currencyfx > 0)
                 {
-                    if (db.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault() != null)
+                    app_currencyfx app_currencyfx = PurchaseDB.db.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault();
+                    if (app_currencyfx != null)
                     {
-                        purchase_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault();
+                        purchase_invoice.app_currencyfx = app_currencyfx;
                     }
                 }
             }
@@ -643,6 +586,7 @@ namespace Cognitivo.Purchase
 
         private void btnBurnInvoice_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+
         }
 
         /// <summary>
@@ -651,11 +595,11 @@ namespace Cognitivo.Purchase
         private void btnPurchaseOreder_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
-            pnlPurchaseOrder._entity = db;
+            pnlPurchaseOrder._entity = PurchaseDB.db;
 
             if (sbxContact.ContactID > 0)
             {
-                contact contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = PurchaseDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 if (contact != null)
                 {
                     pnlPurchaseOrder._contact = contact;
@@ -710,7 +654,7 @@ namespace Cognitivo.Purchase
                         purchase_invoice_detail.item = _purchase_order_detail.item;
                         purchase_invoice_detail.id_item = _purchase_order_detail.id_item;
                         purchase_invoice_detail.item_description = _purchase_order_detail.item_description;
-                        purchase_invoice_detail.quantity = _purchase_order_detail.quantity - db.purchase_invoice_detail
+                        purchase_invoice_detail.quantity = _purchase_order_detail.quantity - PurchaseDB.db.purchase_invoice_detail
                                                                     .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
                                                                     .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
                         purchase_invoice_detail.unit_cost = _purchase_order_detail.unit_cost;
@@ -732,7 +676,7 @@ namespace Cognitivo.Purchase
                 }
             }
 
-            db.Entry(purchase_invoice).Entity.State = EntityState.Added;
+            PurchaseDB.db.Entry(purchase_invoice).Entity.State = EntityState.Added;
             purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
             calculate_vat(sender, null);
             crud_modal.Children.Clear();
@@ -789,11 +733,11 @@ namespace Cognitivo.Purchase
 
         protected virtual void Dispose(bool disposing)
         {
-            if (db != null)
+            if (PurchaseDB.db != null)
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    PurchaseDB.db.Dispose();
                     // Dispose other managed resources.
                 }
                 //release unmanaged resources.
@@ -913,8 +857,8 @@ namespace Cognitivo.Purchase
                     purchase_return.purchase_return_detail.Add(purchase_return_detail);
                 }
 
-                db.purchase_return.Add(purchase_return);
-                db.SaveChanges();
+                PurchaseDB.db.purchase_return.Add(purchase_return);
+                PurchaseDB.db.SaveChanges();
                 MessageBox.Show("Return Created Successfully..");
             }
             else

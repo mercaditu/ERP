@@ -18,9 +18,8 @@ namespace entity
 
             if (item != null && item.State > 0)
             {
-                Brillo.General general = new Brillo.General();
                 id_currency = CurrentSession.Currency_Default.id_currency;
-                id_price_list = general.get_price_list(CurrentSession.Id_Company);
+                id_price_list = CurrentSession.PriceLists.Where(x => x.is_default).FirstOrDefault().id_price_list;
             }
         }
 

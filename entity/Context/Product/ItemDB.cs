@@ -22,18 +22,9 @@ namespace entity
                     item.id_vat_group = 0;
             }
 
-            item.item_price.Add(New_ItemPrice(item));
+            //item.item_price.Add(New_ItemPrice(item));
 
             return item;
-        }
-
-        public item_price New_ItemPrice(item item)
-        {
-            item_price item_price = new item_price();
-            Brillo.General general = new Brillo.General();
-            item_price.id_currency = general.Get_Currency(CurrentSession.Id_Company);
-            item_price.id_price_list = general.get_price_list(CurrentSession.Id_Company);
-            return item_price;
         }
 
         public override int SaveChanges()

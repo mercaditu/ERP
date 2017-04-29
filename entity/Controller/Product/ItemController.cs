@@ -1,10 +1,7 @@
 ﻿using entity.Brillo;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.Controller.Product
 {
@@ -95,17 +92,37 @@ namespace entity.Controller.Product
                 item.id_vat_group = 0;
             }
 
-            item_price_list price_list = CurrentSession.PriceLists.Where(x => x.is_default).FirstOrDefault();
-            if (price_list != null && CurrentSession.Currency_Default != null)
+            if (New_ItemPrice(item) != null)
             {
-                item.item_price.Add(new item_price()
-                {
-                    id_currency = CurrentSession.Currency_Default.id_currency,
-                    id_price_list = price_list.id_price_list
-                });
+                item.item_price.Add(New_ItemPrice(item));
             }
 
             return item;
+        }
+
+        public item_price New_ItemPrice(item item)
+        {
+
+            if (CurrentSession.Currency_Default == null)
+            {
+                if (db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).Any())
+                {
+                    CurrentSession.Currency_Default = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                }
+            }
+
+            if (CurrentSession.PriceLists.Where(x => x.is_default).FirstOrDefault() != null)
+            {
+                CurrentSession.PriceLists.FirstOrDefault().is_default = true;
+            }
+
+            item_price item_price = new item_price()
+            {
+                id_currency = CurrentSession.Currency_Default.id_currency,
+                id_price_list = CurrentSession.PriceLists.Where(x => x.is_default).FirstOrDefault().id_price_list
+            };
+
+            return item_price;
         }
 
         public bool Edit(item item)
@@ -113,6 +130,7 @@ namespace entity.Controller.Product
             item.IsSelected = true;
             item.State = EntityState.Modified;
             db.Entry(item).State = EntityState.Modified;
+
             return true;
         }
 
@@ -148,6 +166,8 @@ namespace entity.Controller.Product
                     }
                 }
             }
+
+            db.SaveChanges();
             return true;
         }
     }

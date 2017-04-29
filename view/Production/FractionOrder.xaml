@@ -6,7 +6,8 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
 	  xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-	  mc:Ignorable="d"
+	  xmlns:Controller="clr-namespace:entity.Controller.Production;assembly=entity"
+      mc:Ignorable="d"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns:data="clr-namespace:entity;assembly=entity"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
@@ -36,9 +37,12 @@
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool" />
         <converter:NotConverter x:Key="NotConverter" />
         <converter:Bool2Collapsed x:Key="Bool2Collapsed" />
+
+        <Controller:OrderController x:Key="OrderDB"/>
+        <Controller:ExecutionController x:Key="ExecutionDB"/>
+
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}" />
-
         <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}" />
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}" />
         <CollectionViewSource x:Key="production_orderproduction_order_detailViewSource" Source="{Binding production_order_detail, Source={StaticResource production_orderViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}" />
@@ -709,14 +713,14 @@
         </Grid>
 
         <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar"
-					   btnNew_Click="toolBar_btnNew_Click"
-					   btnDelete_Click="toolBar_btnDelete_Click"
-					   btnEdit_Click="toolBar_btnEdit_Click"
-					   btnSave_Click="toolBar_btnSave_Click"
-					   btnCancel_Click="toolBar_btnCancel_Click"
-					   btnApprove_Click="toolBar_btnApprove_Click"
-					   btnAnull_Click="toolBar_btnAnull_Click"
-					   btnSearch_Click="toolBar_btnSearch_Click"
+					   btnNew_Click="New_Click"
+					   btnDelete_Click="Delete_Click"
+					   btnEdit_Click="Edit_Click"
+					   btnSave_Click="Save_Click"
+					   btnCancel_Click="Cancel_Click"
+					   btnApprove_Click="Approve_Click"
+					   btnAnull_Click="Anull_Click"
+					   btnSearch_Click="Search_Click"
 					   appName="ProductionbyFraction"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					  Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

@@ -6,7 +6,7 @@ namespace entity.Controller.Production
 {
     public class ExecutionController
     {
-        db db { get; set; }
+        public db db { get; set; }
 
         int NumberOfRecords = 0;
 
@@ -55,9 +55,9 @@ namespace entity.Controller.Production
 
                         production_order_detail.status = Status.Production.Executed;
                         production_order_detail.RaisePropertyChanged("status");
-                        production_order_detail.State = db.EntityState.Modified;
+                        production_order_detail.State = System.Data.Entity.EntityState.Modified;
 
-                        production_execution_detail.State = db.EntityState.Modified;
+                        production_execution_detail.State = System.Data.Entity.EntityState.Modified;
                         production_execution_detail.status = Status.Production.Executed;
 
                         if (production_execution_detail.project_task != null)

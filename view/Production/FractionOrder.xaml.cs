@@ -16,7 +16,6 @@ namespace Cognitivo.Production
 
         private CollectionViewSource
             project_task_dimensionViewSource,
-            projectViewSource,
             production_orderViewSource,
             production_lineViewSource,
             production_orderproduction_order_detailViewSource,
@@ -44,8 +43,11 @@ namespace Cognitivo.Production
         {
             InitializeComponent();
 
-            OrderDB = FindResource("") as entity.Controller.Production.OrderController;
+            OrderDB = FindResource("OrderDB") as entity.Controller.Production.OrderController;
+            ExecutionDB = FindResource("ExecutionDB") as entity.Controller.Production.ExecutionController;
+
             OrderDB.Initialize();
+            ExecutionDB.db = OrderDB.db;
         }
 
         private void New_Click(object sender)
@@ -183,7 +185,7 @@ namespace Cognitivo.Production
         {
             Save_Click(sender);
 
-            if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Fraction) > 0)
+            if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Fraction))
             {
                 toolBar.msgApproved(1);
             }

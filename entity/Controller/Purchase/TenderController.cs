@@ -70,7 +70,7 @@ namespace entity.Controller.Purchase
                 }
             }
 
-            return NumberOfRecords;
+            return db.SaveChanges(); 
         }
 
         public void Archive()

@@ -40,6 +40,7 @@ namespace Cognitivo.Sales
             {
                 //Load Controller.
                 SalesDB.Initialize();
+                SalesDB.LoadPromotion();
             }
           
             

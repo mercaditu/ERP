@@ -27,7 +27,6 @@
         <converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
-
         <CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_ordersales_order_detailViewSource" Source="{Binding sales_order_detail, Source={StaticResource sales_orderViewSource}}" />
         <CollectionViewSource x:Key="sales_ordersales_order_detailGroupViewSource"  Source="{Binding sales_order_detail, Source={StaticResource sales_orderViewSource}}" />

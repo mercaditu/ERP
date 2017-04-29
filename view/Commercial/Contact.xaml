@@ -13,6 +13,7 @@
 		  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 		  xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
 		  xmlns:customcmd="clr-namespace:Cognitivo.Class"
+           xmlns:Controller="clr-namespace:entity.Controller.Commercial;assembly=entity"
 		  xmlns:Controls="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
 		  xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
 		  xmlns:converter="clr-namespace:Cognitivo.Converters"
@@ -21,6 +22,8 @@
 		  Loaded="Page_Loaded">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <Controller:ContactController x:Key="ContactController"/>
+
         <CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}" />
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}" />
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />

@@ -27,7 +27,7 @@ namespace Cognitivo.Sales
         {
             InitializeComponent();
 
-            SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
+           SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.

@@ -56,7 +56,7 @@ namespace entity.Controller.Sales
 
         #endregion
 
-        public void Initialize()
+        public InvoiceController()
         {
             //Initialize DB for Sales Invoice.
             DB = new db();

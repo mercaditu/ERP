@@ -54,28 +54,27 @@ namespace entity.Controller.Product
             );
 
             await db.items.Where(predicate).OrderBy(x => x.name).LoadAsync();
-
+            
             await db.app_measurement
-                    .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).LoadAsync();
+                  .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
+                  .OrderBy(a => a.name).LoadAsync();
             await db.app_dimension
-                .Where(a => a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).LoadAsync();
-            await db.app_property
-           .OrderBy(a => a.name).LoadAsync();
-            await db.item_tag
-               .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-               .OrderBy(x => x.name).LoadAsync();
-            await db.item_template
-            .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-            .OrderBy(x => x.name).LoadAsync();
-            await db.hr_talent
-              .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-              .OrderBy(a => a.name).LoadAsync();
-            await db.item_brand
-              .Where(a => a.id_company == CurrentSession.Id_Company)
-              .OrderBy(a => a.name).LoadAsync();
+                  .Where(a => a.id_company == CurrentSession.Id_Company)
+                  .OrderBy(a => a.name).LoadAsync();
 
+            await db.app_property.OrderBy(a => a.name).LoadAsync();
+            await db.item_tag
+                  .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
+                  .OrderBy(x => x.name).LoadAsync();
+            await db.item_template
+                  .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
+                  .OrderBy(x => x.name).LoadAsync();
+            await db.hr_talent
+                  .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
+                  .OrderBy(a => a.name).LoadAsync();
+            await db.item_brand
+                  .Where(a => a.id_company == CurrentSession.Id_Company)
+                  .OrderBy(a => a.name).LoadAsync();
         }
 
         public item Create()
@@ -87,27 +86,26 @@ namespace entity.Controller.Product
                 unit_cost = 0
             };
 
-
-
-
             if (db.app_vat_group.Where(x => x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+            {
                 item.id_vat_group = db.app_vat_group.Where(x => x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
+            }
             else
+            {
                 item.id_vat_group = 0;
+            }
 
-
-            item.item_price.Add(CreateItemPrice(item));
+            item_price_list price_list = CurrentSession.PriceLists.Where(x => x.is_default).FirstOrDefault();
+            if (price_list != null && CurrentSession.Currency_Default != null)
+            {
+                item.item_price.Add(new item_price()
+                {
+                    id_currency = CurrentSession.Currency_Default.id_currency,
+                    id_price_list = price_list.id_price_list
+                });
+            }
 
             return item;
-
-        }
-        public item_price CreateItemPrice(item item)
-        {
-            item_price item_price = new item_price();
-            Brillo.General general = new Brillo.General();
-            item_price.id_currency = general.Get_Currency(CurrentSession.Id_Company);
-            item_price.id_price_list = general.get_price_list(CurrentSession.Id_Company);
-            return item_price;
         }
 
         public bool Edit(item item)

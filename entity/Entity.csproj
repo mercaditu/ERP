@@ -522,7 +522,6 @@
     <Compile Include="Application\app_vat_group.cs" />
     <Compile Include="Application\app_vat_group_details.cs" />
     <Compile Include="Application\app_weather.cs" />
-    <Compile Include="Brillo\General.cs" />
     <Compile Include="Brillo\Location.cs" />
     <Compile Include="Brillo\Logic\Document.cs" />
     <Compile Include="Brillo\Logic\Stock.cs" />

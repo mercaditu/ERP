@@ -1,5 +1,4 @@
-﻿using cntrl.Controls;
-using entity;
+﻿using entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +13,8 @@ using System.Windows.Input;
 
 namespace Cognitivo.Product
 {
-    public partial class Item : Page, Menu.ApplicationWindow.ICanClose, IDisposable
+    public partial class Item : Page, IDisposable
     {
-      
-
         private entity.Controller.Product.ItemController ItemDB;
         private CollectionViewSource itemViewSource,
             itemitem_priceViewSource,
@@ -98,63 +95,21 @@ namespace Cognitivo.Product
                 app_measurementViewSourceconvert.Source = ItemDB.db.app_measurement.Local;
                 app_measurementViewSourcenew.Source = ItemDB.db.app_measurement.Local;
             }));
-
-            
+           
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_dimentionViewSource.Source = ItemDB.db.app_dimension.Local;
-            }));
-
-           
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
                 app_propertyViewSource.Source = ItemDB.db.app_property.Local;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups; //ItemDB.app_vat_group.Local;
-            }));
-
-           
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+                app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
+                CollectionViewSource item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
                 item_tagViewSource.Source = ItemDB.db.item_tag.Local;
-            }));
-
-           
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
                 item_templateViewSource = ((CollectionViewSource)(FindResource("item_templateViewSource")));
                 item_templateViewSource.Source = ItemDB.db.item_template.Local;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
                 CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
                 app_currencyViewSource.Source = CurrentSession.Currencies; //ItemDB.app_currency.Local;
-            }));
-
-          
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
                 hr_talentViewSource.Source = ItemDB.db.hr_talent.Local;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
                 item_price_listViewSource.Source = CurrentSession.PriceLists;
-            }));
-
-          
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
                 item_brandViewSource.Source = ItemDB.db.item_brand.Local;
-            }));
-
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
                 toolBar.IsEnabled = true;
             }));
         }
@@ -166,45 +121,6 @@ namespace Cognitivo.Product
 
             cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type)).OfType<item.item_type>().Where(x => x != item.item_type.FixedAssets).ToList();
         }
-
-        #region Implementing Interface For CanClose
-
-        public bool CanClose()
-        {
-            if (ItemDB.db.ChangeTracker.HasChanges())
-            {
-                MessageBoxResult savechnages = MessageBox.Show("Do you want to save changes?", "Cognitivo ERP", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                if (savechnages == MessageBoxResult.Yes)
-                {
-                    IEnumerable<DbEntityValidationResult> validationresult = ItemDB.db.GetValidationErrors();
-                    if (validationresult.Count() == 0)
-                    {
-                        ItemDB.db.item_tag.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
-                        ItemDB.db.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Some values are missing. Please fillup all the fields and try again.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-                        return false;
-                    }
-                }
-                else if (savechnages == MessageBoxResult.No)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        #endregion Implementing Interface For CanClose
 
         #region Toolbar Events
 

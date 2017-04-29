@@ -19,7 +19,7 @@ namespace Cognitivo.Purchase
         private CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
 
         private entity.Controller.Purchase.InvoiceController PurchaseDB;
-        private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder = new cntrl.PanelAdv.pnlPurchaseOrder();
+        private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
 
         public Invoice()
         {
@@ -38,36 +38,31 @@ namespace Cognitivo.Purchase
             Load_SecondaryDataThread();
         }
 
-        private async void Load_PrimaryDataThread()
+        private void Load_PrimaryDataThread()
         {
             PurchaseDB.Load();
-          
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));
-                purchase_invoiceViewSource.Source = PurchaseDB.db.purchase_invoice.Local;
-            }));
+
+            purchase_invoicepurchase_invoice_detailViewSource = FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource;
+            purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
+
+            purchase_invoiceViewSource.Source = PurchaseDB.db.purchase_invoice.Local;
         }
 
-        private async void Load_SecondaryDataThread()
+        private void Load_SecondaryDataThread()
         {
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxDepartment.ItemsSource = PurchaseDB.db.app_department.Local;
-                CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-                app_dimensionViewSource.Source = PurchaseDB.db.app_dimension.Local;
-                CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-                app_measurementViewSource.Source = PurchaseDB.db.app_measurement.Local;
-                CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
-                app_cost_centerViewSource.Source = PurchaseDB.db.app_cost_center.Local;
-            }));
+            cbxDepartment.ItemsSource = PurchaseDB.db.app_department.Local;
+            CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
+            app_dimensionViewSource.Source = PurchaseDB.db.app_dimension.Local;
+            CollectionViewSource app_measurementViewSource = FindResource("app_measurementViewSource") as CollectionViewSource;
+            app_measurementViewSource.Source = PurchaseDB.db.app_measurement.Local;
+            CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
+            app_cost_centerViewSource.Source = PurchaseDB.db.app_cost_center.Local;
         }
 
         private void pageInvoice_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                purchase_invoicepurchase_invoice_detailViewSource = ((CollectionViewSource)(FindResource("purchase_invoicepurchase_invoice_detailViewSource")));
                 load_PrimaryData();
             }
             catch (Exception ex)
@@ -595,6 +590,7 @@ namespace Cognitivo.Purchase
         private void btnPurchaseOreder_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
+            pnlPurchaseOrder = new cntrl.PanelAdv.pnlPurchaseOrder();
             pnlPurchaseOrder._entity = PurchaseDB.db;
 
             if (sbxContact.ContactID > 0)

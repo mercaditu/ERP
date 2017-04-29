@@ -7,7 +7,7 @@
 		xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	    xmlns:pref="clr-namespace:Cognitivo.Purchase"
 		xmlns:Class="clr-namespace:Cognitivo.Class"
-       xmlns:Purchasecontroller="clr-namespace:entity.Controller.Purcahse;assembly=entity"
+       xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
 		xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 		xmlns:converter="clr-namespace:Cognitivo.Converters"
 		xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -21,7 +21,7 @@
 						CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
-        <Purchasecontroller:PurchaseInvoice x:Key="PurchaseInvoice"/>
+        <Controller:InvoiceController x:Key="PurchaseInvoice"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Status2Enable x:Key="Status2Enable" />
@@ -524,14 +524,14 @@
         </Grid>
 
         <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="Auto" IsEnabled="True"
-					   btnCancel_Click="toolBar_btnCancel_Click" appName="PurchaseInvoice"
-					   btnDelete_Click="toolBar_btnDelete_Click"
-					   btnEdit_Click="toolBar_btnEdit_Click"
-					   btnNew_Click="toolBar_btnNew_Click"
-					   btnSearch_Click="toolBar_btnSearch_Click"
-					   btnSave_Click="toolBar_btnSave_Click"
-					   btnApprove_Click="toolBar_btnApprove_Click"
-					   btnAnull_Click="toolBar_btnAnull_Click"
+					   btnCancel_Click="Cancel_Click" appName="PurchaseInvoice"
+					   btnDelete_Click="Delete_Click"
+					   btnEdit_Click="Edit_Click"
+					   btnNew_Click="New_Click"
+					   btnSearch_Click="Search_Click"
+					   btnSave_Click="Save_Click"
+					   btnApprove_Click="Approve_Click"
+					   btnAnull_Click="Anull_Click"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Grid.ColumnSpan="2" />

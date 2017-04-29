@@ -1,13 +1,11 @@
-﻿using entity.Brillo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Windows;
 
-namespace entity.Controller.Purcahse
+namespace entity.Controller.Purchase
 {
-    public class PurchaseInvoice: Base
+    public class InvoiceController: Base
     {
         public async void Load()
         {
@@ -15,9 +13,15 @@ namespace entity.Controller.Purcahse
                 .Include(x => x.contact)
                 .OrderByDescending(x => x.trans_date)
                 .LoadAsync();
+
+            await db.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
+            await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            await db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            await db.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
+
         }
 
-        #region Create
+        #region CRUD
 
         public purchase_invoice Create(int TransDate_OffSet)
         {
@@ -34,14 +38,32 @@ namespace entity.Controller.Purcahse
                 app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx),
                 app_branch = db.app_branch.Find(CurrentSession.Id_Branch)
             };
-
+            db.purchase_invoice.Add(purchase_invoice);
             return purchase_invoice;
         }
+        
+        public purchase_invoice Edit(purchase_invoice Invoice)
+        {
+            Invoice.IsSelected = true;
+            Invoice.State = EntityState.Modified;
+            db.Entry(Invoice).State = EntityState.Modified;
 
+            return Invoice;
+        }
 
+        public void Archived()
+        {
+            foreach (purchase_invoice Invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
+            {
+                Invoice.is_archived = Invoice.is_archived ? false : true;
+                Invoice.IsSelected = false;
+            }
+
+            db.SaveChanges();
+        }
 
         #endregion
-        
+
         #region Save
 
         public int SaveChanges_and_Validate()

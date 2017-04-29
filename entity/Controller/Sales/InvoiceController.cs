@@ -101,9 +101,7 @@ namespace entity.Controller.Sales
         }
 
         public sales_invoice_detail Create_Detail(
-            ref sales_invoice Invoice, 
-            item Item,
-            item_movement ItemMovement,
+            ref sales_invoice Invoice, item Item, item_movement ItemMovement,
             bool AllowDouble,
             decimal QuantityInStock, 
             decimal Quantity)
@@ -241,37 +239,6 @@ namespace entity.Controller.Sales
                 crm_opportunity.sales_invoice.Add(invoice);
                 db.crm_opportunity.Attach(crm_opportunity);
             }
-        }
-
-        public bool CancelAllChanges()
-        {
-            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                foreach (var entry in db.ChangeTracker.Entries())
-                {
-                    switch (entry.State)
-                    {
-                        case EntityState.Modified:
-                            {
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Deleted:
-                            {
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Added:
-                            {
-                                entry.State = EntityState.Detached;
-                                break;
-                            }
-                    }
-                }
-            }
-
-            return true;
         }
 
         #endregion

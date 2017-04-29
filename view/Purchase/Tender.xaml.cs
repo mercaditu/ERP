@@ -12,7 +12,9 @@ namespace Cognitivo.Purchase
 {
     public partial class Tender : Page
     {
-        private PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
+        //private PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
+
+        private entity.Controller.Purchase.TenderController TenderDB;
 
         private CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource,
             purchase_tenderpurchase_tender_itemViewSource,
@@ -24,60 +26,37 @@ namespace Cognitivo.Purchase
         public Tender()
         {
             InitializeComponent();
+
+            TenderDB = FindResource("TenderDB") as entity.Controller.Purchase.TenderController;
+            TenderDB.Initialize();
         }
 
-        private void toolBar_btnApprove_Click(object sender)
+        private void Approve_Click(object sender)
         {
-            if (PurchaseTenderDB.SaveChanges() > 0)
-            {
-                PurchaseTenderDB.Approve();
-            }
-
-            foreach (purchase_tender tender in PurchaseTenderDB.purchase_tender.Local.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
-            {
-                tender.status = Status.Documents_General.Approved;
-            }
-
-            PurchaseTenderDB.SaveChanges();
             purchase_tenderViewSource.View.Refresh();
         }
 
-        private void toolBar_btnCancel_Click(object sender)
+        private void Cancel_Click(object sender)
         {
-            PurchaseTenderDB.CancelAllChanges();
-
-            purchase_tender purchase_tender_old = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
-            if (purchase_tender_old != null)
-            {
-                purchase_tender_old.State = EntityState.Unchanged;
-            }
+            TenderDB.CancelAllChanges();
         }
 
-        private void toolBar_btnAnull_Click(object sender)
+        private void Anull_Click(object sender)
         {
-            PurchaseTenderDB.Anull();
+            TenderDB.Annull();
         }
 
-        private void toolBar_btnNew_Click(object sender)
+        private void New_Click(object sender)
         {
-            TenderSetting _pref_PurchaseTender = new TenderSetting();
-            purchase_tender purchase_tender = new purchase_tender();
-            purchase_tender.State = EntityState.Added;
-            purchase_tender.IsSelected = true;
-            purchase_tender.trans_date = DateTime.Now.AddDays(_pref_PurchaseTender.TransDate_OffSet);
-            PurchaseTenderDB.Entry(purchase_tender).State = EntityState.Added;
-
-            purchase_tenderViewSource.View.MoveCurrentToLast();
+            purchase_tender purchase_tender = TenderDB.Create(new TenderSetting().TransDate_OffSet);
+            purchase_tenderViewSource.View.MoveCurrentTo(purchase_tender);
         }
 
-        private void toolBar_btnEdit_Click(object sender)
+        private void Edit_Click(object sender)
         {
             if (purchase_tenderDataGrid.SelectedItem != null)
             {
-                purchase_tender purchase_tender_old = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
-                purchase_tender_old.IsSelected = true;
-                purchase_tender_old.State = EntityState.Modified;
-                PurchaseTenderDB.Entry(purchase_tender_old).State = EntityState.Modified;
+                TenderDB.Edit(purchase_tenderDataGrid.SelectedItem as purchase_tender);
             }
             else
             {
@@ -85,29 +64,22 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void toolBar_btnDelete_Click(object sender)
+        private void Delete_Click(object sender)
         {
-            try
+            if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    purchase_tender purchase_tender = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
-                    purchase_tender.is_head = false;
-                    purchase_tender.State = EntityState.Deleted;
-                    purchase_tender.IsSelected = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                TenderDB.Archive();
+                //purchase_tender purchase_tender = purchase_tenderDataGrid.SelectedItem as purchase_tender;
+                //purchase_tender.is_head = false;
+                //purchase_tender.State = EntityState.Deleted;
+                //purchase_tender.IsSelected = true;
             }
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await PurchaseTenderDB.purchase_tender.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).LoadAsync();
             purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
-            purchase_tenderViewSource.Source = PurchaseTenderDB.purchase_tender.Local;
+            purchase_tenderViewSource.Source = TenderDB.db.purchase_tender.Local;
 
             purchase_tenderpurchase_tender_contact_detailViewSource = FindResource("purchase_tenderpurchase_tender_contact_detailViewSource") as CollectionViewSource;
             purchase_tenderpurchase_tender_itemViewSource = FindResource("purchase_tenderpurchase_tender_itemViewSource") as CollectionViewSource;
@@ -115,10 +87,9 @@ namespace Cognitivo.Purchase
 
             cbxBranch.ItemsSource = CurrentSession.Branches; //PurchaseTenderDB.app_branch.Local;
 
-            await PurchaseTenderDB.app_department.Where(b => b.is_active && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
-            cbxDepartment.ItemsSource = PurchaseTenderDB.app_department.Local;
+            cbxDepartment.ItemsSource = TenderDB.db.app_department.Local;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseTenderDB, entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(TenderDB.db, entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             CollectionViewSource app_conditionViewSource = FindResource("app_conditionViewSource") as CollectionViewSource;
             app_conditionViewSource.Source = CurrentSession.Conditions;
@@ -126,29 +97,24 @@ namespace Cognitivo.Purchase
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
             app_contractViewSource.Source = CurrentSession.Contracts;
 
-            await PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToListAsync();
             CollectionViewSource app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
-            app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
+            app_currencyfxViewSource.Source = TenderDB.db.app_currencyfx.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
 
             app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
-            await PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
-            app_dimensionViewSource.Source = PurchaseTenderDB.app_dimension.Local;
+            app_dimensionViewSource.Source = TenderDB.db.app_dimension.Local;
 
             app_measurementViewSource = FindResource("app_measurementViewSource") as CollectionViewSource;
-            await PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
-            app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
+            app_measurementViewSource.Source = TenderDB.db.app_measurement.Local;
         }
 
         public void Item_Select(object sender, EventArgs e)
         {
-            purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
-
-            if (purchase_tender != null)
+            if (purchase_tenderViewSource.View.CurrentItem is purchase_tender purchase_tender)
             {
-                item item = PurchaseTenderDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = TenderDB.db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 if (item != null)
                 {
                     //Checks if product exists.
@@ -162,18 +128,20 @@ namespace Cognitivo.Purchase
 
                         foreach (item_dimension item_dimension in item.item_dimension)
                         {
-                            purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
-                            purchase_tender_dimension.purchase_tender_item = purchase_tender_item;
-                            purchase_tender_dimension.id_dimension = item_dimension.id_app_dimension;
-                            purchase_tender_dimension.id_measurement = item_dimension.id_measurement;
-
-                            if (PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault() != null)
+                            purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension()
                             {
-                                purchase_tender_dimension.app_dimension = PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();
-                            }
+                                purchase_tender_item = purchase_tender_item,
+                                id_dimension = item_dimension.id_app_dimension,
+                                id_measurement = item_dimension.id_measurement,
+                                app_measurement = item_dimension.app_measurement,
+                                value = item_dimension.value
+                            };
 
-                            purchase_tender_dimension.app_measurement = item_dimension.app_measurement;
-                            purchase_tender_dimension.value = item_dimension.value;
+                            if (TenderDB.db.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault() != null)
+                            {
+                                purchase_tender_dimension.app_dimension = TenderDB.db.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();
+                            }
+                            
                             purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
                         }
 
@@ -188,9 +156,11 @@ namespace Cognitivo.Purchase
                 {
                     if (sbxItem.Text != string.Empty)
                     {
-                        purchase_tender_item purchase_tender_item = new purchase_tender_item();
-                        purchase_tender_item.item_description = sbxItem.Text;
-                        purchase_tender_item.quantity = sbxItem.Quantity;
+                        purchase_tender_item purchase_tender_item = new purchase_tender_item()
+                        {
+                            item_description = sbxItem.Text,
+                            quantity = sbxItem.Quantity
+                        };
                         purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                     }
                 }
@@ -213,7 +183,7 @@ namespace Cognitivo.Purchase
             if (sbxContact.ContactID > 0)
             {
                 //Get Contact from SmartBox.
-                contact contact = PurchaseTenderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = TenderDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
                 if (contact == null)
                 {
@@ -222,7 +192,7 @@ namespace Cognitivo.Purchase
                 }
 
                 //This is required to generate the ID needed for the Item-Detail relationship.
-                PurchaseTenderDB.SaveChanges();
+                TenderDB.SaveChanges_Validate();
 
                 if (purchase_tenderViewSource.View != null)
                 {
@@ -234,16 +204,16 @@ namespace Cognitivo.Purchase
                         purchase_tender_contact.id_contract = (cbxContract.SelectedItem as app_contract).id_contract;
                         purchase_tender_contact.id_condition = (cbxCondition.SelectedItem as app_condition).id_condition;
 
-                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Find(purchase_tender_contact.id_contract);
-                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Find(purchase_tender_contact.id_condition);
+                        purchase_tender_contact.app_contract = TenderDB.db.app_contract.Find(purchase_tender_contact.id_contract);
+                        purchase_tender_contact.app_condition = TenderDB.db.app_condition.Find(purchase_tender_contact.id_condition);
                     }
                     else if (contact.app_contract != null)
                     {
                         purchase_tender_contact.id_contract = (int)contact.id_contract;
                         purchase_tender_contact.id_condition = contact.app_contract.id_condition;
 
-                        purchase_tender_contact.app_contract = PurchaseTenderDB.app_contract.Find(purchase_tender_contact.id_contract);
-                        purchase_tender_contact.app_condition = PurchaseTenderDB.app_condition.Find(purchase_tender_contact.id_condition);
+                        purchase_tender_contact.app_contract = TenderDB.db.app_contract.Find(purchase_tender_contact.id_contract);
+                        purchase_tender_contact.app_condition = TenderDB.db.app_condition.Find(purchase_tender_contact.id_condition);
                     }
                     else
                     {
@@ -265,7 +235,7 @@ namespace Cognitivo.Purchase
                     else
                     {
                         //Contact has Currency, take FX Rate of Currency.
-                        app_currencyfx app_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.id_currency == purchase_tender_contact.contact.id_currency && x.is_active).FirstOrDefault();
+                        app_currencyfx app_currencyfx = TenderDB.db.app_currencyfx.Where(x => x.app_currency.id_currency == purchase_tender_contact.contact.id_currency && x.is_active).FirstOrDefault();
                         if (app_currencyfx != null)
                         {
                             purchase_tender_contact.id_currencyfx = app_currencyfx.id_currencyfx;
@@ -286,24 +256,27 @@ namespace Cognitivo.Purchase
                             {
                                 if (purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).Count() == 0)
                                 {
-                                    purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
-
-                                    purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
-                                    purchase_tender_detail.purchase_tender_item = purchase_tender_item;
-
-                                    purchase_tender_detail.quantity = purchase_tender_item.quantity;
-                                    purchase_tender_detail.unit_cost = 0;
-                                    purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+                                    purchase_tender_detail purchase_tender_detail = new purchase_tender_detail()
+                                    {
+                                        id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item,
+                                        purchase_tender_item = purchase_tender_item,
+                                        quantity = purchase_tender_item.quantity,
+                                        unit_cost = 0,
+                                        id_vat_group = TenderDB.db.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group
+                                    };
 
                                     foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_item.purchase_tender_dimension)
                                     {
-                                        purchase_tender_detail_dimension purchase_tender_detail_dimension = new purchase_tender_detail_dimension();
-                                        purchase_tender_detail_dimension.purchase_tender_detail = purchase_tender_detail;
-                                        purchase_tender_detail_dimension.id_dimension = purchase_tender_dimension.id_dimension;
-                                        purchase_tender_detail_dimension.app_dimension = purchase_tender_dimension.app_dimension;
-                                        purchase_tender_detail_dimension.id_measurement = purchase_tender_dimension.id_measurement;
-                                        purchase_tender_detail_dimension.app_measurement = purchase_tender_dimension.app_measurement;
-                                        purchase_tender_detail_dimension.value = purchase_tender_dimension.value;
+                                        purchase_tender_detail_dimension purchase_tender_detail_dimension = new purchase_tender_detail_dimension()
+                                        {
+                                            purchase_tender_detail = purchase_tender_detail,
+                                            id_dimension = purchase_tender_dimension.id_dimension,
+                                            app_dimension = purchase_tender_dimension.app_dimension,
+                                            id_measurement = purchase_tender_dimension.id_measurement,
+                                            app_measurement = purchase_tender_dimension.app_measurement,
+                                            value = purchase_tender_dimension.value
+                                        };
+
                                         purchase_tender_detail.purchase_tender_detail_dimension.Add(purchase_tender_detail_dimension);
                                     }
 
@@ -318,21 +291,21 @@ namespace Cognitivo.Purchase
                             }
                             else
                             {
-                                if (PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item) == null)
+                                if (TenderDB.db.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item) == null)
                                 {
                                     purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
 
                                     purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
                                     purchase_tender_detail.purchase_tender_item = purchase_tender_item;
                                     purchase_tender_detail.quantity = 1;
-                                    purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+                                    purchase_tender_detail.id_vat_group = TenderDB.db.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
 
                                     purchase_tender_detail.unit_cost = 0;
                                     purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                                 }
                                 else
                                 {
-                                    purchase_tender_detail purchase_tender_detail = PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).FirstOrDefault();
+                                    purchase_tender_detail purchase_tender_detail = TenderDB.db.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).FirstOrDefault();
                                     purchase_tender_detail.quantity += purchase_tender_detail.quantity;
                                 }
                             }
@@ -348,12 +321,12 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void toolBar_btnSave_Click(object sender)
+        private void Save_Click(object sender)
         {
-            if (PurchaseTenderDB.SaveChanges() > 0)
+            if (TenderDB.SaveChanges_Validate() > 0)
             {
                 purchase_tenderViewSource.View.Refresh();
-                toolBar.msgSaved(PurchaseTenderDB.NumberOfRecords);
+                toolBar.msgSaved(TenderDB.NumberOfRecords);
             }
         }
 
@@ -388,8 +361,7 @@ namespace Cognitivo.Purchase
             try
             {
                 DataGrid dg = (DataGrid)e.Source;
-                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     if (dg.Name == "purchase_tender_contact_detailDataGrid")
                     {
@@ -398,7 +370,7 @@ namespace Cognitivo.Purchase
 
                         if (purchase_tender_contact != null)
                         {
-                            PurchaseTenderDB.purchase_tender_contact_detail.Remove(purchase_tender_contact);
+                            TenderDB.db.purchase_tender_contact_detail.Remove(purchase_tender_contact);
                             purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
                         }
                         else
@@ -409,14 +381,14 @@ namespace Cognitivo.Purchase
                     else if (dg.Name == "purchase_tender_itemDataGrid")
                     {
                         purchase_tender_itemDataGrid.CancelEdit();
-                        PurchaseTenderDB.purchase_tender_item_detail.Remove(e.Parameter as purchase_tender_item);
+                        TenderDB.db.purchase_tender_item_detail.Remove(e.Parameter as purchase_tender_item);
                         purchase_tenderpurchase_tender_itemViewSource.View.Refresh();
                     }
                     else
                     {
                         //DeleteDetailGridRow
                         purchase_tender_item_detailDataGrid.CancelEdit();
-                        PurchaseTenderDB.purchase_tender_detail.Remove(e.Parameter as purchase_tender_detail);
+                        TenderDB.db.purchase_tender_detail.Remove(e.Parameter as purchase_tender_detail);
                         purchase_tenderpurchase_tender_item_detailViewSource.View.Refresh();
                     }
                 }
@@ -513,43 +485,36 @@ namespace Cognitivo.Purchase
                     {
                         if (purchase_tender_item.id_purchase_tender_item > 0)
                         {
-                            purchase_tender_dimensionViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).ToList();
+                            purchase_tender_dimensionViewSource.Source = TenderDB.db.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).ToList();
                         }
                     }
                 }
             }
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
+        private void Search_Click(object sender, string query)
         {
-            try
+            if (!string.IsNullOrEmpty(query) && purchase_tenderViewSource != null)
             {
-                if (!string.IsNullOrEmpty(query) && purchase_tenderViewSource != null)
+                purchase_tenderViewSource.View.Filter = i =>
                 {
-                    purchase_tenderViewSource.View.Filter = i =>
+                    purchase_tender purchase_tender = i as purchase_tender;
+                    string number = purchase_tender.number != null ? purchase_tender.number : "";
+                    if (purchase_tender.name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
                     {
-                        purchase_tender purchase_tender = i as purchase_tender;
-                        string number = purchase_tender.number != null ? purchase_tender.number : "";
-                        if (purchase_tender.name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    purchase_tenderViewSource.View.Filter = null;
-                }
+                        return true;
+                    }
+
+                    return false;
+                };
             }
-            catch (Exception)
-            { }
+            else
+            {
+                purchase_tenderViewSource.View.Filter = null;
+            }
         }
 
-        private void toolBar_Mini_btnApprove_Click(object sender)
+        private void Mini_Approve_Click(object sender)
         {
             decimal Count = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().Where(x => x.unit_cost == 0).Count();
             if (Count > 0)
@@ -560,10 +525,7 @@ namespace Cognitivo.Purchase
                 }
             }
 
-            if (PurchaseTenderDB.SaveChanges() > 0)
-            {
-                PurchaseTenderDB.Approve();
-            }
+            TenderDB.Approve();
         }
 
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -573,9 +535,9 @@ namespace Cognitivo.Purchase
             {
                 if (_TabItem.Header.ToString() == "Purchase Tender")
                 {
-                    if (PurchaseTenderDB.app_condition.Where(x => x.is_active).FirstOrDefault() != null)
+                    if (TenderDB.db.app_condition.Where(x => x.is_active).FirstOrDefault() != null)
                     {
-                        cbxCondition.SelectedItem = PurchaseTenderDB.app_condition.Where(x => x.is_active).FirstOrDefault();
+                        cbxCondition.SelectedItem = TenderDB.db.app_condition.Where(x => x.is_active).FirstOrDefault();
                         cbxCondition_SelectionChanged(null, null);
                     }
                 }

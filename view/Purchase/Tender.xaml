@@ -8,6 +8,7 @@
         mc:Ignorable="d" d:DesignHeight="650" d:DesignWidth="800"
         xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
         xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+      xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
           xmlns:pref="clr-namespace:Cognitivo.Purchase"
         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
         xmlns:converter="clr-namespace:Cognitivo.Converters"
@@ -25,6 +26,7 @@
                         Executed="EditCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <Controller:TenderController x:Key="TenderDB"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visi" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
@@ -319,7 +321,7 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <cntrl:toolBar_Mini btnApprove_Click="toolBar_Mini_btnApprove_Click" Status="{Binding status,Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <cntrl:toolBar_Mini btnApprove_Click="Mini_Approve_Click" Status="{Binding status,Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         <DataGrid x:Name="purchase_tender_item_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="1"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4"
                                   RowEditEnding="purchase_tender_item_detailDataGrid_RowEditEnding"
@@ -406,9 +408,9 @@
                 </TabItem>
             </TabControl>
         </Grid>
-        <cntrl:toolBar x:Name="toolBar" appName="PurchaseTender" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" btnSearch_Click="toolBar_btnSearch_Click"
-                       btnNew_Click="toolBar_btnNew_Click" btnApprove_Click="toolBar_btnApprove_Click" btnEdit_Click="toolBar_btnEdit_Click" btnSave_Click="toolBar_btnSave_Click"
-                       btnCancel_Click="toolBar_btnCancel_Click" btnDelete_Click="toolBar_btnDelete_Click" btnAnull_Click="toolBar_btnAnull_Click"
+        <cntrl:toolBar x:Name="toolBar" appName="PurchaseTender" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" btnSearch_Click="Search_Click"
+                       btnNew_Click="New_Click" btnApprove_Click="Approve_Click" btnEdit_Click="Edit_Click" btnSave_Click="Save_Click"
+                       btnCancel_Click="Cancel_Click" btnDelete_Click="Delete_Click" btnAnull_Click="Anull_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

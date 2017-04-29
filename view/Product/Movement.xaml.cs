@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Cognitivo.Product
 {
@@ -41,6 +42,40 @@ namespace Cognitivo.Product
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as item_transfer_detail != null)
+            {
+                e.CanExecute = true;
+            }
+
+        }
+
+        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    //DeleteDetailGridRow
+                    if (e.Parameter as item_transfer_detail != null)
+                    {
+                        //ontact_field_valueDataGrid.CancelEdit();
+                        ProductTransferDB.item_transfer_detail.Remove(e.Parameter as item_transfer_detail);
+                        CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
+                        item_transferitem_transfer_detailViewSource.View.Refresh();
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+        }
+
 
         private void toolBar_btnSave_Click(object sender)
         {

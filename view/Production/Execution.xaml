@@ -41,7 +41,7 @@
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}" />
         <CollectionViewSource x:Key="production_order_detailViewSource" Source="{Binding production_order_detail, Source={StaticResource production_orderViewSource}}" />
         <CollectionViewSource x:Key="employeeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
-         <CollectionViewSource x:Key="production_execution_detailViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detailViewSource}}" />
+        <CollectionViewSource x:Key="production_execution_detailViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_order_detailViewSource}}" />
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
         <CollectionViewSource x:Key="hr_time_coefficientViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_time_coefficient}, CreateList=True}" />
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}" />
@@ -270,14 +270,14 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
                                     <DatePicker x:Name="dtpstartdate"  Width="150" Height="27" />
-                                    <syncfusion:SfTimePicker  x:Name="dtpstarttime" Width="85"  FormatString="HH:mm:ss" />
-                                 
+                                    <syncfusion:SfTimePicker  x:Name="dtpstarttime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm" />
+
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
                                     <DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
-                                    <syncfusion:SfTimePicker  x:Name="dtpendtime" Width="85"  FormatString="HH:mm:ss" />
-                                    
+                                    <syncfusion:SfTimePicker  x:Name="dtpendtime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm"  />
+
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -373,14 +373,14 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
                                         <DatePicker x:Name="dtpscstartdate"  Width="150" Height="27" />
-                                        <syncfusion:SfTimePicker  x:Name="dtpscstarttime" Width="85"  FormatString="HH:mm:ss" />
-                                      
+                                        <syncfusion:SfTimePicker  x:Name="dtpscstarttime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm" />
+
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
                                         <DatePicker x:Name="dtpscenddate"  Width="150" Height="27" />
-                                        <syncfusion:SfTimePicker  x:Name="dtpscendtime" Width="85"  FormatString="HH:mm:ss"/>
-                                       
+                                        <syncfusion:SfTimePicker  x:Name="dtpscendtime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm"/>
+
                                     </StackPanel>
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">

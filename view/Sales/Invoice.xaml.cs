@@ -1,7 +1,7 @@
-﻿using entity;
+﻿using cntrl.Class;
+using entity;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -16,12 +16,15 @@ namespace Cognitivo.Sales
 {
     public partial class Invoice
     {
-        //Collection View Source
+        //Global Variables
         private CollectionViewSource sales_invoiceViewSource;
+
         private CollectionViewSource sales_invoicesales_invoice_detailViewSource;
         private CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
 
+        //private db db = new db();
         private entity.Controller.Sales.InvoiceController SalesDB;
+        private entity.Controller.WindowProperty WindowProperty;
 
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
@@ -29,13 +32,13 @@ namespace Cognitivo.Sales
         public Invoice()
         {
             InitializeComponent();
-            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
 
-            if (DesignerProperties.GetIsInDesignMode(this) == false)
-            {
-                //Load Controller.
-                SalesDB.Initialize();
-            }
+            //Load Controller.
+            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
+            WindowProperty = FindResource("WindowProperty") as entity.Controller.WindowProperty;
+
+            SalesDB.Start_Range = WindowProperty.Start_Range;
+            SalesDB.End_Range = WindowProperty.End_Range;
         }
 
         #region DataLoad
@@ -51,7 +54,8 @@ namespace Cognitivo.Sales
 
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
-            SalesDB.Load(new Settings().FilterByBranch);
+            Settings Settings = new Settings();
+            SalesDB.Load(Settings.FilterByBranch);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
             sales_invoiceViewSource.Source = SalesDB.DB.sales_invoice.Local;
@@ -106,7 +110,7 @@ namespace Cognitivo.Sales
 
         private void Delete_Click(object sender)
         {
-            foreach (sales_invoice invoice in SalesDB.DB.sales_invoice.Local.Where(x => x.IsSelected ))
+            foreach (sales_invoice invoice in SalesDB.DB.sales_invoice.Local.Where(x => x.IsSelected))
             {
                 if (invoice != null && invoice.State != EntityState.Added)
                 {
@@ -189,13 +193,12 @@ namespace Cognitivo.Sales
 
                 if (SalesDB.DB.contacts.Find(sbxContact.ContactID) != null && sales_invoice != null)
                 {
-                    contact contact = SalesDB.DB.contacts.Find(sbxContact.ContactID);
                     //This code blocks incase a Sales Invoice already has an Associated Sales Order
-                    if (contact != null && sales_invoice.sales_order == null)
+                    if (sales_invoice.sales_order == null)
                     {
                         //Empty so that memory does not bring incorrect currency calculation
-                        sales_invoice.contact = contact;
-                        sales_invoice.id_contact = contact.id_contact;
+                        sales_invoice.contact = SalesDB.DB.contacts.Find(sbxContact.ContactID);
+                        sales_invoice.id_contact = SalesDB.DB.contacts.Find(sbxContact.ContactID).id_contact;
 
                         ///Start Thread to get Data.
                         Task thread_SecondaryData = Task.Factory.StartNew(() => ContactPref_Thread(SalesDB.DB.contacts.Find(sbxContact.ContactID)));
@@ -691,6 +694,8 @@ namespace Cognitivo.Sales
 
         private void GridSearch(object sender, RoutedEventArgs e)
         {
+            SalesDB.Start_Range = WindowProperty.Start_Range;
+            SalesDB.End_Range = WindowProperty.End_Range;
             Load_PrimaryDataThread(null, null);
         }
 

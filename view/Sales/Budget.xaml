@@ -83,7 +83,7 @@
 								UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
                             <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}" />
                             <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="Set_ContactPref"
-												       Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+												CanModify="True" CanCreate="True" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
                             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
                             <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"

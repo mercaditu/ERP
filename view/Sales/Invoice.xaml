@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Sales.Invoice" Title="{lex:Loc SalesInvoice}"
+﻿<Page x:Class="Cognitivo.Sales.Invoice" Title="{lex:Loc SalesInvoice}" x:Name="this"
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,7 +7,8 @@
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-      xmlns:Controller="clr-namespace:entity.Controller.Sales;assembly=entity"
+      xmlns:controller="clr-namespace:entity.Controller;assembly=entity"
+      xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -23,7 +24,8 @@
 						Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
-        <Controller:InvoiceController x:Key="SalesInvoice"/>
+        <controller:WindowProperty x:Key="WindowProperty"/>
+        <Salescontroller:InvoiceController x:Key="SalesInvoice"/>
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:Status2Enable x:Key="Status2Enable" />
@@ -65,7 +67,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateStart" Width="124"
-												SelectedDate="{Binding Start_Range,Source={StaticResource SalesInvoice},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+												SelectedDate="{Binding Start_Range,Source={StaticResource WindowProperty},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                                 <StackPanel Margin="2,0">
                                     <Label Style="{StaticResource input_label}">
@@ -75,7 +77,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateEnd" Width="124"
-												SelectedDate="{Binding End_Range,Source={StaticResource SalesInvoice},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+												SelectedDate="{Binding End_Range,Source={StaticResource WindowProperty},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </StackPanel>
 
@@ -231,14 +233,14 @@
 											  Style="{StaticResource input_combobox}"  SelectedItem="{Binding app_document_range, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 											  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                                     </StackPanel>
-                                    
+
                                     <Label Content="{lex:Loc InvoiceNumber}" Style="{StaticResource input_label}" />
                                     <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
 											 metro:TextBoxHelper.SelectAllOnFocus="True"
 											 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                    
+
                                     <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}" />
                                     <ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name"
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -253,7 +255,7 @@
                                             </ItemsPanelTemplate>
                                         </ComboBox.ItemsPanel>
                                     </ComboBox>
-                                    
+
                                     <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
                                     <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name"
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={x:Static entity:CurrentSession.Contracts}}"
@@ -266,7 +268,7 @@
                                             </ItemsPanelTemplate>
                                         </ComboBox.ItemsPanel>
                                     </ComboBox>
-                                    
+
                                     <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}" />
                                     <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesInvoice"
 										  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

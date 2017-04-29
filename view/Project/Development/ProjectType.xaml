@@ -69,7 +69,7 @@
                                                 Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
                                                 IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                 Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                                TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                TaskName="{Binding item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                         </HierarchicalDataTemplate>
                     </Grid.Resources>
                     <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"

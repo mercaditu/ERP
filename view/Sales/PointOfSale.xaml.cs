@@ -1,4 +1,5 @@
-﻿using entity;
+﻿using Cognitivo.Menu;
+using entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,9 +26,6 @@ namespace Cognitivo.Sales
 
             SalesDB = FindResource("SalesDB") as entity.Controller.Sales.InvoiceController;
             PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
-
-            //Initialize DB Manually.
-            SalesDB.Initialize();
             //Share DB to increase efficiency.
             PaymentDB.db = SalesDB.DB;
         }
@@ -67,7 +65,7 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            
+
             /// VALIDATIONS...
             ///
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
@@ -117,7 +115,9 @@ namespace Cognitivo.Sales
         {
             ///Creating new SALES INVOICE for upcomming sale.
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-            sales_invoice sales_invoice = SalesDB.Create(new Settings().TransDate_Offset, false);
+            Settings SalesSettings = new Settings();
+
+            sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
             SalesDB.DB.sales_invoice.Add(sales_invoice);
 
             Dispatcher.BeginInvoke((Action)(() =>
@@ -127,7 +127,7 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }));
 
-           
+
             ///Creating new PAYMENT for upcomming sale.
             payment payment = PaymentDB.New(true);
             payment.id_currencyfx = sales_invoice.id_currencyfx;
@@ -201,7 +201,7 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            ApplicationWindow myWindow = Window.GetWindow(this) as ApplicationWindow;
 
             New_Sale_Payment();
 

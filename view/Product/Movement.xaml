@@ -7,6 +7,7 @@
 	xmlns:entity="clr-namespace:entity;assembly=entity"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+       xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	mc:Ignorable="d"
 	xmlns:converter="clr-namespace:Cognitivo.Converters"
 	xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -33,7 +34,9 @@
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
     </Page.Resources>
-
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
+    </Page.CommandBindings>
     <Grid DataContext="{StaticResource item_transferViewSource}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -204,6 +207,15 @@
                             <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 												Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="64" />
+                            <DataGridTemplateColumn Width="26" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete"
+													Style="{StaticResource btnDeleteChildStyle}"
+													CommandParameter="{Binding}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>

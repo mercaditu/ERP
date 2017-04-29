@@ -88,7 +88,7 @@ namespace Cognitivo.Production
                 {
                     contactViewSource.Source = null;
                 }
-                
+
             }
         }
 
@@ -105,11 +105,11 @@ namespace Cognitivo.Production
                     if (ParentAccount.purchase_order_detail.purchase_order != null)
                     {
                         purchase_order order = ParentAccount.purchase_order_detail.purchase_order;
-                        
+
                         if (Order_List.Contains(ParentAccount.purchase_order_detail.purchase_order) == false)
                         {
                             Order_List.Add(ParentAccount.purchase_order_detail.purchase_order);
-                            
+
                             if (order != null)
                             {
                                 purchase_invoice invoice = new purchase_invoice();
@@ -157,6 +157,9 @@ namespace Cognitivo.Production
                         detail.id_purchase_order_detail = ParentAccount.id_purchase_order_detail;
                         detail.quantity = ParentAccount.child.Where(x => x.purchase_invoice_detail == null).Sum(x => x.debit);
                         detail.unit_cost = purchase_order_detail.unit_cost;
+                        detail.UnitCost_Vat = purchase_order_detail.UnitCost_Vat;
+                        detail.SubTotal = purchase_order_detail.SubTotal;
+                        detail.SubTotal_Vat = purchase_order_detail.SubTotal_Vat;
 
                         if (ParentAccount.purchase_order_detail != null)
                         {
@@ -166,6 +169,7 @@ namespace Cognitivo.Production
                                 {
                                     purchase_invoice invoice = Invoice_List.Where(x => x.id_purchase_order == ParentAccount.purchase_order_detail.id_purchase_order).FirstOrDefault();
                                     invoice.purchase_invoice_detail.Add(detail);
+                                    invoice.RaisePropertyChanged("GrandTotal");
                                 }
                             }
                         }

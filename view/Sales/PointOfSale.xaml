@@ -29,7 +29,7 @@
         </Style>
         <Salescontroller:InvoiceController x:Key="SalesDB"/>
         <Financecontroller:Payment x:Key="PaymentDB"/>
-        
+
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
@@ -136,7 +136,7 @@
                             <Label Content="{lex:LocTextUpper Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White" />
                         </StackPanel>
                         <Viewbox StretchDirection="Both" Stretch="Uniform" Width="256">
-                            <cntrl:SmartBox_Contact x:Name="sbxContact" AutoShow="True"
+                            <cntrl:SmartBox_Contact x:Name="sbxContact" CanCreate="True" AutoShow="True"
 							                                HorizontalAlignment="Center"
 							                                Get_Customers="True"
 							                                Select="Contact_Select"/>
@@ -282,7 +282,8 @@
 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
 
-                                <!-- PRINT PAYMENT --><!--
+                                <!-- PRINT PAYMENT -->
+                                <!--
                                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Center" ToolTip="{lex:Loc Print}"
 								MouseUp="NewPayment_MouseUp">
                                     <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -374,7 +375,7 @@
                 <Grid.Background>
                     <SolidColorBrush Color="Black" Opacity="0.32"/>
                 </Grid.Background>
-                
+
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                     <Label Style="{StaticResource input_label}" Content="Average Speed" />
                     <TextBlock Text="100" VerticalAlignment="Center" />
@@ -460,7 +461,7 @@
 						       Foreground="White" />
                     </Border>
                 </Grid>
-                
+
                 <!-- Approve -->
                 <Viewbox Margin="0" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Grid Cursor="Hand" MouseDown="Save_Click" TouchDown="Save_Click" ToolTip="{lex:Loc Approve}">

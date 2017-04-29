@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace entity.Controller.Purcahse
 {
-    public class PurchaseInvoice
+    public class PurchaseInvoice: Base
     {
         public int NumberOfRecords;
         public db db { get; set; }
@@ -58,6 +58,7 @@ namespace entity.Controller.Purcahse
             }
 
         }
+
         #region Create
 
         public purchase_invoice Create(int TransDate_OffSet)
@@ -85,6 +86,7 @@ namespace entity.Controller.Purcahse
 
 
         #endregion
+        
         #region Save
 
         public int SaveChanges_and_Validate()
@@ -176,6 +178,7 @@ namespace entity.Controller.Purcahse
         }
 
         #endregion
+        
         #region Approve
         public void Approve()
         {

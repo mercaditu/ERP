@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace entity.Controller.Finance
 {
-    public class Credit
+    public class Credit 
     {
         #region Finance
 

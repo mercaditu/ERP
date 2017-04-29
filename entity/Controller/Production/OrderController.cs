@@ -6,17 +6,9 @@ using System.Windows;
 
 namespace entity.Controller.Production
 {
-    public class OrderController
+    public class OrderController : Base
     {
-        public db db { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Initialize()
-        {
-            db = new db();
-        }
+       
 
         public async void Load()
         {

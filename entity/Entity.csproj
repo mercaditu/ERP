@@ -329,6 +329,7 @@
     <Compile Include="Controller\Commercial\ContactController.cs" />
     <Compile Include="Controller\Production\ExecutionController.cs" />
     <Compile Include="Controller\Production\OrderController.cs" />
+    <Compile Include="Controller\Product\ItemController.cs" />
     <Compile Include="Controller\Product\RequestController.cs" />
     <Compile Include="Controller\Purchase\PurchaseInvoice.cs" />
     <Compile Include="Controller\Sales\BudgetController.cs" />

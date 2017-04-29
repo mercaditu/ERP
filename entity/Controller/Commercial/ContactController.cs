@@ -8,16 +8,9 @@ using System.Windows;
 
 namespace entity.Controller.Commercial
 {
-    public class ContactController
+    public class ContactController:Base
     {
-        public int NumberOfRecords;
-        public db db { get; set; }
-
-        public void Initialize()
-        {
-            //Start Context
-            db = new db();
-        }
+       
 
         public async void Load(Window Win)
         {
@@ -115,11 +108,7 @@ namespace entity.Controller.Commercial
             return true;
         }
 
-        public bool CancelChanges()
-        {
-
-            return true;
-        }
+        
 
       
     }

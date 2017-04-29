@@ -8,6 +8,7 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+         xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
@@ -22,6 +23,7 @@
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <Salescontroller:BudgetController x:Key="SalesBudget"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />

@@ -4,6 +4,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=Entity"
+      xmlns:Controller="clr-namespace:entity.Controller.Product;assembly=entity"
 	  xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -28,6 +29,7 @@
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem" />
         <convert:ItemProduct2VisibilityConverter x:Key="ItemProduct2VisibilityConverter" />
         <convert:NumberFormat x:Key="Numberformatting" />
+        <Controller:ItemController x:Key="ItemDB"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSourcenew" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />

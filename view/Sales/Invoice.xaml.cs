@@ -2,6 +2,7 @@
 using entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Cognitivo.Sales
 
         //private db db = new db();
         private entity.Controller.Sales.InvoiceController SalesDB;
-        private entity.Controller.WindowProperty WindowProperty;
+       
 
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
@@ -35,10 +36,15 @@ namespace Cognitivo.Sales
 
             //Load Controller.
             SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
-            WindowProperty = FindResource("WindowProperty") as entity.Controller.WindowProperty;
+            if (DesignerProperties.GetIsInDesignMode(this) == false)
+            {
+                //Load Controller.
+                SalesDB.Initialize();
+            }
+          
+            
 
-            SalesDB.Start_Range = WindowProperty.Start_Range;
-            SalesDB.End_Range = WindowProperty.End_Range;
+          
         }
 
         #region DataLoad
@@ -694,8 +700,7 @@ namespace Cognitivo.Sales
 
         private void GridSearch(object sender, RoutedEventArgs e)
         {
-            SalesDB.Start_Range = WindowProperty.Start_Range;
-            SalesDB.End_Range = WindowProperty.End_Range;
+            
             Load_PrimaryDataThread(null, null);
         }
 

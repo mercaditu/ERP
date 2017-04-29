@@ -8,64 +8,20 @@ using System.Windows;
 
 namespace entity.Controller.Sales
 {
-   public class BudgetController
+   public class BudgetController : Base
     {
 
-        public int NumberOfRecords;
+     
 
-        /// <summary>
-        /// Database Context. Already Initialized.
-        /// </summary>
-        public db db { get; set; }
+      
         public Brillo.Promotion.Start Promotions { get; set; }
-        #region Properties
-
-        public DateTime Start_Range
-        {
-            get { return _start_Range; }
-            set
-            {
-                if (_start_Range != value)
-                {
-                    _start_Range = value;
-                }
-            }
-        }
-        private DateTime _start_Range = DateTime.Now.AddDays(-7);
-
-        public DateTime End_Range
-        {
-            get { return _end_Range; }
-            set
-            {
-                if (_end_Range != value)
-                {
-                    _end_Range = value;
-                }
-            }
-        }
-        private DateTime _end_Range = DateTime.Now.AddDays(+1);
-
-        public enum Messages
-        {
-            None,
-            CreditLimit_Exceeded,
-            DocumentRange_Finished
-        }
-
-        public List<Messages> Msg { get; set; }
-
-        #endregion
+     
 
         public BudgetController()
         {
 
         }
-        public void Initialize()
-        {
-            db = new db();
-            Promotions = new Brillo.Promotion.Start(true);
-        }
+       
         #region Load
 
         public async void Load(bool FilterByTerminal)
@@ -275,36 +231,7 @@ namespace entity.Controller.Sales
            
         }
 
-        public bool CancelAllChanges()
-        {
-            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                foreach (var entry in db.ChangeTracker.Entries())
-                {
-                    switch (entry.State)
-                    {
-                        case EntityState.Modified:
-                            {
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Deleted:
-                            {
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Added:
-                            {
-                                entry.State = EntityState.Detached;
-                                break;
-                            }
-                    }
-                }
-            }
-
-            return true;
-        }
+      
 
         #endregion
 

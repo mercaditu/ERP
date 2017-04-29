@@ -166,7 +166,7 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            ContactDB.CancelChanges();
+            ContactDB.CancelAllChanges();
             contact contact = contactViewSource.View.CurrentItem as contact;
             contact.State = EntityState.Unchanged;
         }

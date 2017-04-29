@@ -6,16 +6,9 @@ using System.Linq;
 
 namespace entity.Controller.Product
 {
-    public class RequestController
+    public class RequestController:Base
     {
-        public db db { get; set; }
-
-        public void Initialize()
-        {
-            //Start Context
-            db = new db();
-        }
-
+      
         public async void Load()
         {
             await db.item_request

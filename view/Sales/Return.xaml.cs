@@ -1,5 +1,6 @@
 ﻿using entity;
 using System;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Cognitivo.Sales
 {
     public partial class Return : Page
     {
-        private SalesReturnDB SalesReturnDB = new SalesReturnDB();
+        private entity.Controller.Sales.ReturnController SalesReturnDB;
 
         private CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
         private cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
@@ -21,14 +22,20 @@ namespace Cognitivo.Sales
         public Return()
         {
             InitializeComponent();
+            //Load Controller.
+            SalesReturnDB = FindResource("SalesReturnDB") as entity.Controller.Sales.ReturnController;
+            if (DesignerProperties.GetIsInDesignMode(this) == false)
+            {
+                //Load Controller.
+                SalesReturnDB.Initialize();
+            }
         }
 
-        private async void load_PrimaryDataThread()
+        private void load_PrimaryDataThread()
         {
-            SalesReturnDB = new SalesReturnDB();
+           
             salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-            await SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company && a.is_head == true).Include(x => x.contact).OrderByDescending(x => x.trans_date).LoadAsync();
-            salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
+            salesReturnViewSource.Source = SalesReturnDB.db.sales_return.Local;
         }
 
         private void load_SecondaryDataThread()
@@ -39,7 +46,7 @@ namespace Cognitivo.Sales
             app_vat_groupViewSource.Source = CurrentSession.VAT_Groups;
 
             cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB.db, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
             CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
             app_branchViewSource.Source = CurrentSession.Branches;
@@ -74,7 +81,7 @@ namespace Cognitivo.Sales
                 MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (res == MessageBoxResult.Yes)
                 {
-                    SalesReturnDB.sales_return.Remove((sales_return)sales_returnDataGrid.SelectedItem);
+                    SalesReturnDB.db.sales_return.Remove((sales_return)sales_returnDataGrid.SelectedItem);
                     salesReturnViewSource.View.MoveCurrentToFirst();
                     toolBar_btnSave_Click(sender);
                     sbxContact.Text = "";
@@ -93,7 +100,7 @@ namespace Cognitivo.Sales
                 sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
                 sales_return.IsSelected = true;
                 sales_return.State = System.Data.Entity.EntityState.Modified;
-                SalesReturnDB.Entry(sales_return).State = EntityState.Modified;
+                SalesReturnDB.db.Entry(sales_return).State = EntityState.Modified;
             }
             else
             {
@@ -104,15 +111,15 @@ namespace Cognitivo.Sales
         private void toolBar_btnNew_Click(object sender)
         {
             ReturnSetting _pref_SalesReturn = new ReturnSetting();
-            sales_return objSalRtn = SalesReturnDB.New();
+            sales_return objSalRtn = SalesReturnDB.Create(_pref_SalesReturn.TransDate_OffSet,false);
             objSalRtn.trans_date = DateTime.Now.AddDays(_pref_SalesReturn.TransDate_OffSet);
-            SalesReturnDB.sales_return.Add(objSalRtn);
+            SalesReturnDB.db.sales_return.Add(objSalRtn);
             salesReturnViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-            SalesReturnDB.SaveChanges();
+            SalesReturnDB.SaveChanges_and_Validate();
         }
 
         #endregion Toolbar
@@ -183,7 +190,7 @@ namespace Cognitivo.Sales
                     sales_return sales_return = salesReturnViewSource.View.CurrentItem as sales_return;
                     //DeleteDetailGridRow
                     sales_return_detailDataGrid.CancelEdit();
-                    SalesReturnDB.sales_return_detail.Remove(e.Parameter as sales_return_detail);
+                    SalesReturnDB.db.sales_return_detail.Remove(e.Parameter as sales_return_detail);
                     sales_returnsales_return_detailViewSource.View.Refresh();
                     calculate_vat(null, null);
                 }
@@ -200,7 +207,7 @@ namespace Cognitivo.Sales
             {
                 if (sbxContact.ContactID > 0)
                 {
-                    contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    contact contact = SalesReturnDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                     sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
                     sales_return.id_contact = contact.id_contact;
                     sales_return.contact = contact;
@@ -232,7 +239,7 @@ namespace Cognitivo.Sales
             {
                 Settings SalesSettings = new Settings();
                 sales_return sales_return = salesReturnViewSource.View.CurrentItem as sales_return;
-                item item = SalesReturnDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = SalesReturnDB.db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
                 if (item != null && item.id_item > 0 && sales_return != null)
                 {
@@ -240,7 +247,7 @@ namespace Cognitivo.Sales
 
                     if (sales_return.id_range > 0)
                     {
-                        app_document_range app_document_range = SalesReturnDB.app_document_range.Find(sales_return.id_range);
+                        app_document_range app_document_range = SalesReturnDB.db.app_document_range.Find(sales_return.id_range);
                         if (app_document_range.app_document.line_limit != null)
                         {
                             LineLimit = (int)app_document_range.app_document.line_limit;
@@ -312,7 +319,7 @@ namespace Cognitivo.Sales
         private void toolBar_btnApprove_Click(object sender)
         {
             SalesReturnDB.Approve();
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB.db, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             cbxDocument.SelectedIndex = 0;
 
             load_PrimaryDataThread();
@@ -321,7 +328,7 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            SalesReturnDB.Anull();
+            SalesReturnDB.Annull();
             foreach (sales_return sales_return in salesReturnViewSource.View.Cast<sales_return>().ToList())
             {
                 sales_return.IsSelected = false;
@@ -345,7 +352,7 @@ namespace Cognitivo.Sales
 
                 if (sbxContact.ContactID > 0)
                 {
-                    contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    contact contact = SalesReturnDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                     pnlSalesInvoice._contact = contact;
                 }
 
@@ -369,7 +376,7 @@ namespace Cognitivo.Sales
                     _sales_return.id_currencyfx = sales_invoice.id_currencyfx;
                     _sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
 
-                    contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sales_invoice.id_contact).FirstOrDefault();
+                    contact contact = SalesReturnDB.db.contacts.Where(x => x.id_contact == sales_invoice.id_contact).FirstOrDefault();
                     _sales_return.id_contact = contact.id_contact;
                     _sales_return.contact = contact;
                     sbxContact.Text = contact.name;
@@ -377,16 +384,16 @@ namespace Cognitivo.Sales
                     foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.Balance > 0))
                     {
                         sales_return_detail sales_return_detail = new sales_return_detail();
-                        if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
+                        if (SalesReturnDB.db.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
                         {
-                            sales_return_detail.sales_invoice_detail = SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                            sales_return_detail.sales_invoice_detail = SalesReturnDB.db.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
                         }
 
                         sales_return_detail.sales_return = _sales_return;
 
-                        if (SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
+                        if (SalesReturnDB.db.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
                         {
-                            sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
+                            sales_return_detail.item = SalesReturnDB.db.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
                             sales_return_detail.item_description = _sales_invoice_detail.item_description;
                             sales_return_detail.movement_id = _sales_invoice_detail.movement_id;
                             sales_return_detail.batch_code = _sales_invoice_detail.batch_code;
@@ -406,7 +413,7 @@ namespace Cognitivo.Sales
                         sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
                         _sales_return.sales_return_detail.Add(sales_return_detail);
 
-                        SalesReturnDB.Entry(_sales_return).Entity.State = EntityState.Added;
+                        SalesReturnDB.db.Entry(_sales_return).Entity.State = EntityState.Added;
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
                         salesReturnViewSource.View.Refresh();

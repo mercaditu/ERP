@@ -8,14 +8,9 @@ using System.Windows;
 
 namespace entity.Controller.Sales
 {
-    public class OrderController
+    public class OrderController : Base
     {
-        public int NumberOfRecords;
-
-        /// <summary>
-        /// Database Context. Already Initialized.
-        /// </summary>
-        public db db { get; set; }
+     
         public Brillo.Promotion.Start Promotions { get; set; }
 
         #region Properties
@@ -62,11 +57,7 @@ namespace entity.Controller.Sales
 
         }
 
-        public void Initialize()
-        {
-            db = new db();
-            Promotions = new Brillo.Promotion.Start(true);
-        }
+     
 
         #region Load
 
@@ -284,36 +275,7 @@ namespace entity.Controller.Sales
             }
         }
 
-        public bool CancelAllChanges()
-        {
-            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                foreach (var entry in db.ChangeTracker.Entries())
-                {
-                    switch (entry.State)
-                    {
-                        case EntityState.Modified:
-                            {
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Deleted:
-                            {
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Added:
-                            {
-                                entry.State = EntityState.Detached;
-                                break;
-                            }
-                    }
-                }
-            }
-
-            return true;
-        }
+    
 
         #endregion
 

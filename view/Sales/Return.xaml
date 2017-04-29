@@ -15,6 +15,7 @@
 	lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	lex:ResxLocalizationProvider.DefaultDictionary="local"
 	xmlns:pref="clr-namespace:Cognitivo.Sales"
+         xmlns:controller="clr-namespace:entity.Controller.Sales;assembly=entity"
 	lex:LocalizeDictionary.DesignCulture="en-US"
 	d:DesignHeight="450" d:DesignWidth="750" Loaded="Page_Loaded"
 	Title="Sales Return">
@@ -22,6 +23,7 @@
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <controller:ReturnController x:Key="SalesReturnDB"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <Converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <Converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />

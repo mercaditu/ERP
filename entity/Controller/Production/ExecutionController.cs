@@ -4,19 +4,9 @@ using System.Linq;
 
 namespace entity.Controller.Production
 {
-    public class ExecutionController
+    public class ExecutionController : Base
     {
-        public db db { get; set; }
-
-        int NumberOfRecords = 0;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Initialize()
-        {
-            db = new db();
-        }
+     
 
         public bool Create()
         {

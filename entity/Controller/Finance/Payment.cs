@@ -7,11 +7,9 @@ using System.Windows;
 
 namespace entity.Controller.Finance
 {
-    public class Payment
+    public class Payment : Base
     {
-        public int NumberOfRecords;
-        public db db { get; set; }
-
+      
         public payment New(bool Is_PaymentRecievable)
         {
             payment payment = new payment()
@@ -334,33 +332,6 @@ namespace entity.Controller.Finance
             }
         }
 
-        public void CancelAllChanges()
-        {
-            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                foreach (var entry in db.ChangeTracker.Entries())
-                {
-                    switch (entry.State)
-                    {
-                        case EntityState.Modified:
-                            {
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Deleted:
-                            {
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Added:
-                            {
-                                entry.State = EntityState.Detached;
-                                break;
-                            }
-                    }
-                }
-            }
-        }
+       
     }
 }

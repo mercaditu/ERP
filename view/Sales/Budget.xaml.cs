@@ -1,6 +1,7 @@
 ﻿using entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -14,13 +15,20 @@ namespace Cognitivo.Sales
 {
     public partial class Budget : Page
     {
-        private SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
+        //private SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
+        private entity.Controller.Sales.BudgetController SalesBudgetDB;
         private CollectionViewSource sales_budgetViewSource, sales_budgetsales_budget_detailViewSource;
 
         public Budget()
         {
             InitializeComponent();
+            SalesBudgetDB = FindResource("SalesBudget") as entity.Controller.Sales.BudgetController;
+            if (DesignerProperties.GetIsInDesignMode(this) == false)
+            {
+                //Load Controller.
+                SalesBudgetDB.Initialize();
+            }
         }
 
         private async void Page_Loaded(object sender, EventArgs e)
@@ -29,19 +37,19 @@ namespace Cognitivo.Sales
 
             if (SalesSettings.FilterByBranch)
             {
-                await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
+                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
             else
             {
-                await SalesBudgetDB.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
+                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
             }
 
             sales_budgetViewSource = FindResource("sales_budgetViewSource") as CollectionViewSource;
-            sales_budgetViewSource.Source = SalesBudgetDB.sales_budget.Local;
+            sales_budgetViewSource.Source = SalesBudgetDB.db.sales_budget.Local;
             sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-            app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB.db, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
 
         private void Print_Click(object sender, MouseButtonEventArgs e)
@@ -60,10 +68,10 @@ namespace Cognitivo.Sales
 
         private void New_Click(object sender)
         {
-            sales_budget sales_budget = SalesBudgetDB.New();
+            sales_budget sales_budget = SalesBudgetDB.Create(new Settings().TransDate_Offset,false);
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
-            SalesBudgetDB.sales_budget.Add(sales_budget);
+            SalesBudgetDB.db.sales_budget.Add(sales_budget);
             sales_budgetViewSource.View.MoveCurrentTo(sales_budget);
         }
 
@@ -74,7 +82,7 @@ namespace Cognitivo.Sales
                 sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
                 sales_budget.IsSelected = true;
                 sales_budget.State = EntityState.Modified;
-                SalesBudgetDB.Entry(sales_budget).State = EntityState.Modified;
+                SalesBudgetDB.db.Entry(sales_budget).State = EntityState.Modified;
             }
             else
             {
@@ -84,7 +92,7 @@ namespace Cognitivo.Sales
 
         private void Save_Click(object sender)
         {
-            if (SalesBudgetDB.SaveChanges() > 0)
+            if (SalesBudgetDB.db.SaveChanges() > 0)
             {
                 sales_budgetViewSource.View.Refresh();
                 toolBar.msgSaved(SalesBudgetDB.NumberOfRecords);
@@ -97,7 +105,7 @@ namespace Cognitivo.Sales
             MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                SalesBudgetDB.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);
+                SalesBudgetDB.db.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);
                 sales_budgetViewSource.View.MoveCurrentToFirst();
                 Save_Click(sender);
             }
@@ -163,7 +171,7 @@ namespace Cognitivo.Sales
                 sales_budget.RaisePropertyChanged("GrandTotal");
                 List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
                 dgvvat.ItemsSource = sales_budget_detail
-                     .Join(SalesBudgetDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                     .Join(SalesBudgetDB.db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                           , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
                           .GroupBy(a => new { a.name, a.id_vat, a.ad })
                    .Select(g => new
@@ -193,7 +201,7 @@ namespace Cognitivo.Sales
         {
             if (SalesBudgetDB.Approve())
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB.db, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;
                 toolBar.msgApproved(SalesBudgetDB.NumberOfRecords);
             }
@@ -201,7 +209,7 @@ namespace Cognitivo.Sales
 
         private void Anull_Click(object sender)
         {
-            if (SalesBudgetDB.Anull())
+            if (SalesBudgetDB.Annull())
             {
                 toolBar.msgAnnulled(SalesBudgetDB.NumberOfRecords);
             }
@@ -212,7 +220,7 @@ namespace Cognitivo.Sales
             if (sbxItem.ItemID > 0)
             {
                 sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-                item item = await SalesBudgetDB.items.FindAsync(sbxItem.ItemID);
+                item item = await SalesBudgetDB.db.items.FindAsync(sbxItem.ItemID);
 
                 if (sales_budget != null && item != null)
                 {
@@ -309,7 +317,7 @@ namespace Cognitivo.Sales
                 if (result == MessageBoxResult.Yes)
                 {
                     sales_budget_detailDataGrid.CancelEdit();
-                    SalesBudgetDB.sales_budget_detail.Remove(e.Parameter as sales_budget_detail);
+                    SalesBudgetDB.db.sales_budget_detail.Remove(e.Parameter as sales_budget_detail);
                     sales_budgetsales_budget_detailViewSource.View.Refresh();
                 }
             }
@@ -323,7 +331,7 @@ namespace Cognitivo.Sales
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = await SalesBudgetDB.contacts.FindAsync(sbxContact.ContactID);
+                contact contact = await SalesBudgetDB.db.contacts.FindAsync(sbxContact.ContactID);
                 sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
 
                 if (contact != null && sales_budget != null)
@@ -345,7 +353,7 @@ namespace Cognitivo.Sales
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    cbxContactRelation.ItemsSource = SalesBudgetDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+                    cbxContactRelation.ItemsSource = SalesBudgetDB.db.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
                     //Condition
                     if (objContact.app_contract != null)
@@ -377,7 +385,7 @@ namespace Cognitivo.Sales
             {
                 if (sales_budget.id_currencyfx > 0)
                 {
-                    app_currencyfx app_currencyfx = await SalesBudgetDB.app_currencyfx.FindAsync(sales_budget.id_currencyfx);
+                    app_currencyfx app_currencyfx = await SalesBudgetDB.db.app_currencyfx.FindAsync(sales_budget.id_currencyfx);
 
                     if (app_currencyfx != null)
                     {
@@ -404,9 +412,9 @@ namespace Cognitivo.Sales
             {
                 if (sales_budgetViewSource.View.CurrentItem is sales_budget o)
                 {
-                    o.app_currencyfx = SalesBudgetDB.app_currencyfx.Find(o.id_currencyfx);
-                    o.contact = SalesBudgetDB.contacts.Find(o.id_contact);
-                    o.app_contract = SalesBudgetDB.app_contract.Find(o.id_contract);
+                    o.app_currencyfx = SalesBudgetDB.db.app_currencyfx.Find(o.id_currencyfx);
+                    o.contact = SalesBudgetDB.db.contacts.Find(o.id_contact);
+                    o.app_contract = SalesBudgetDB.db.app_contract.Find(o.id_contract);
 
                     if (o.app_currencyfx != null && o.contact != null && o.app_contract != null)
                     {
@@ -476,10 +484,10 @@ namespace Cognitivo.Sales
                     }
                 }
 
-                SalesBudgetDB.sales_order.Add(sales_order);
+                SalesBudgetDB.db.sales_order.Add(sales_order);
                 crm_opportunity crm_opportunity = sales_budget.crm_opportunity;
                 crm_opportunity.sales_order.Add(sales_order);
-                SalesBudgetDB.SaveChanges();
+                SalesBudgetDB.db.SaveChanges();
 
                 //toolBar.
                 MessageBox.Show(entity.Brillo.Localize.StringText("Done"));

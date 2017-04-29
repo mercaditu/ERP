@@ -47,7 +47,7 @@ namespace Cognitivo.Purchase
         private async void load_PrimaryDataThread()
         {
             InvoiceSetting InvoiceSetting = new InvoiceSetting();
-            PurchaseDB.Load(InvoiceSetting.filterbyBranch);
+            PurchaseDB.Load();
           
             await Dispatcher.InvokeAsync(new Action(() =>
             {

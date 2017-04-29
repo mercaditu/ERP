@@ -1,4 +1,7 @@
-﻿using System;
+﻿using entity.Brillo;
+using System;
+using System.Data.Entity;
+using System.Windows;
 
 namespace entity.Controller
 {
@@ -34,9 +37,47 @@ namespace entity.Controller
         }
         private DateTime _end_Range = DateTime.Now.AddDays(+1);
 
+        /// <summary>
+        /// Initilize the Context.
+        /// </summary>
         public void Initialize()
         {
             db = new db();
+        }
+
+        /// <summary>
+        /// Cancel Changes by Asking Question First.
+        /// </summary>
+        /// <returns></returns>
+        public bool CancelAllChanges()
+        {
+            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                foreach (var entry in db.ChangeTracker.Entries())
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            {
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
+                        case EntityState.Deleted:
+                            {
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            }
+                        case EntityState.Added:
+                            {
+                                entry.State = EntityState.Detached;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

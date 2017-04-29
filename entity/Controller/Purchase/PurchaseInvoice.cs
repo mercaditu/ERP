@@ -9,54 +9,12 @@ namespace entity.Controller.Purcahse
 {
     public class PurchaseInvoice: Base
     {
-        public int NumberOfRecords;
-        public db db { get; set; }
-
-        public DateTime Start_Range
+        public async void Load()
         {
-            get { return _start_Range; }
-            set
-            {
-                if (_start_Range != value)
-                {
-                    _start_Range = value;
-                }
-            }
-        }
-        private DateTime _start_Range = DateTime.Now.AddDays(-7);
-
-        public DateTime End_Range
-        {
-            get { return _end_Range; }
-            set
-            {
-                if (_end_Range != value)
-                {
-                    _end_Range = value;
-                }
-            }
-        }
-        private DateTime _end_Range = DateTime.Now.AddDays(+1);
-
-       
-
-        public PurchaseInvoice()
-        {
-
-        }
-
-        public async void Load(bool filterbyBranch)
-        {
-           
-            if (filterbyBranch)
-            {
-                await db.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch && a.is_archived == false).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
-            }
-            else
-            {
-                await db.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.is_archived == false).Include(x => x.contact).OrderByDescending(x => x.trans_date).ToListAsync();
-            }
-
+            await db.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch && a.is_archived == false)
+                .Include(x => x.contact)
+                .OrderByDescending(x => x.trans_date)
+                .LoadAsync();
         }
 
         #region Create
@@ -76,9 +34,6 @@ namespace entity.Controller.Purcahse
                 app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx),
                 app_branch = db.app_branch.Find(CurrentSession.Id_Branch)
             };
-
-            //This is to skip query code in case of Migration. Helps speed up migrations.
-          
 
             return purchase_invoice;
         }
@@ -141,40 +96,8 @@ namespace entity.Controller.Purcahse
                     }
                 }
             }
+
             return db.SaveChanges();
-        }
-
-        
-
-        public bool CancelAllChanges()
-        {
-            if (MessageBox.Show(Localize.Question_Cancel, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                foreach (var entry in db.ChangeTracker.Entries())
-                {
-                    switch (entry.State)
-                    {
-                        case EntityState.Modified:
-                            {
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Deleted:
-                            {
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
-                        case EntityState.Added:
-                            {
-                                entry.State = EntityState.Detached;
-                                break;
-                            }
-                    }
-                }
-            }
-
-            return true;
         }
 
         #endregion

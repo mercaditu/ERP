@@ -332,6 +332,7 @@
     <Compile Include="Controller\Product\ItemController.cs" />
     <Compile Include="Controller\Product\RequestController.cs" />
     <Compile Include="Controller\Purchase\PurchaseInvoice.cs" />
+    <Compile Include="Controller\Purchase\PurchaseReturn.cs" />
     <Compile Include="Controller\Purchase\TenderController.cs" />
     <Compile Include="Controller\Sales\BudgetController.cs" />
     <Compile Include="Controller\Sales\OrderController.cs" />

@@ -6,6 +6,7 @@
 	xmlns:entity="clr-namespace:entity;assembly=entity" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
       x:Class="Cognitivo.Purchase.Return"
+         xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
 	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	xmlns:pref="clr-namespace:Cognitivo.Purchase"
@@ -22,6 +23,7 @@
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <Controller:ReturnController x:Key="PurchaseReturn"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />

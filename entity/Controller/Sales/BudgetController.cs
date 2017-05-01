@@ -8,20 +8,20 @@ using System.Windows;
 
 namespace entity.Controller.Sales
 {
-   public class BudgetController : Base
+    public class BudgetController : Base
     {
 
-     
 
-      
+
+
         public Brillo.Promotion.Start Promotions { get; set; }
-     
+
 
         public BudgetController()
         {
 
         }
-       
+
         #region Load
 
         public async void Load(bool FilterByTerminal)
@@ -169,69 +169,92 @@ namespace entity.Controller.Sales
 
         #region Save
 
-        public int SaveChanges_and_Validate()
-        {
-            NumberOfRecords = 0;
-            foreach (sales_budget budget in db.sales_budget.Local.Where(x => x.IsSelected && x.id_contact > 0))
-            {
-                if (budget.Error == null)
-                {
-                    if (budget.State == EntityState.Added)
-                    {
-                        budget.timestamp = DateTime.Now;
-                        budget.State = EntityState.Unchanged;
-                        db.Entry(budget).State = EntityState.Added;
-                        Add_CRM(budget);
+        //public int SaveChanges_and_Validate()
+        //{
+        //    NumberOfRecords = 0;
+        //    foreach (sales_budget budget in db.sales_budget.Local.Where(x => x.IsSelected && x.id_contact > 0))
+        //    {
+        //        if (budget.Error == null)
+        //        {
+        //            if (budget.State == EntityState.Added)
+        //            {
+        //                budget.timestamp = DateTime.Now;
+        //                budget.State = EntityState.Unchanged;
+        //                db.Entry(budget).State = EntityState.Added;
+        //                Add_CRM(budget);
 
-                        //Check Promotions before Saving.
-                        Check_Promotions(budget);
-                    }
-                    else if (budget.State == EntityState.Modified)
-                    {
-                        budget.timestamp = DateTime.Now;
-                        budget.State = EntityState.Unchanged;
-                        db.Entry(budget).State = EntityState.Modified;
+        //                //Check Promotions before Saving.
+        //                Check_Promotions(budget);
+        //            }
+        //            else if (budget.State == EntityState.Modified)
+        //            {
+        //                budget.timestamp = DateTime.Now;
+        //                budget.State = EntityState.Unchanged;
+        //                db.Entry(budget).State = EntityState.Modified;
 
-                        //Check Promotions before Saving.
-                        Check_Promotions(budget);
-                    }
-                    else if (budget.State == EntityState.Deleted)
-                    {
-                        budget.timestamp = DateTime.Now;
-                        budget.is_head = false;
-                        budget.State = EntityState.Deleted;
-                        db.Entry(budget).State = EntityState.Modified;
-                    }
-                    NumberOfRecords += 1;
-                }
-                if (budget.State > 0)
-                {
-                    if (budget.State != EntityState.Unchanged)
-                    {
-                        db.Entry(budget).State = EntityState.Unchanged;
-                    }
-                }
-            }
+        //                //Check Promotions before Saving.
+        //                Check_Promotions(budget);
+        //            }
+        //            else if (budget.State == EntityState.Deleted)
+        //            {
+        //                budget.timestamp = DateTime.Now;
+        //                budget.is_head = false;
+        //                budget.State = EntityState.Deleted;
+        //                db.Entry(budget).State = EntityState.Modified;
+        //            }
+        //            NumberOfRecords += 1;
+        //        }
+        //        if (budget.State > 0)
+        //        {
+        //            if (budget.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(budget).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
 
-            return db.SaveChanges();
-        }
+        //    return db.SaveChanges();
+        //}
 
         private void Add_CRM(sales_budget budget)
         {
-          
-                crm_opportunity crm_opportunity = new crm_opportunity()
-                {
-                    id_contact = budget.id_contact,
-                    id_currency = budget.id_currencyfx,
-                    value = budget.sales_budget_detail.Sum(x => x.SubTotal_Vat)
-                };
 
-                crm_opportunity.sales_budget.Add(budget);
-                db.crm_opportunity.Add(crm_opportunity);
-           
+            crm_opportunity crm_opportunity = new crm_opportunity()
+            {
+                id_contact = budget.id_contact,
+                id_currency = budget.id_currencyfx,
+                value = budget.sales_budget_detail.Sum(x => x.SubTotal_Vat)
+            };
+
+            crm_opportunity.sales_budget.Add(budget);
+            db.crm_opportunity.Add(crm_opportunity);
+
         }
 
-      
+        public bool SaveChanges_WithValidation()
+        {
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+            foreach (sales_budget budget in db.sales_budget.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
+
+               
+                if (db.Entry(budget).State==EntityState.Added)
+                {
+
+                    Add_CRM(budget);
+
+
+                }
+                budget.State = EntityState.Unchanged;
+            }
+
+
+            db.SaveChanges();
+            return true;
+        }
 
         #endregion
 
@@ -252,7 +275,7 @@ namespace entity.Controller.Sales
                 {
                     if (sales_budget.id_sales_budget == 0)
                     {
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
                     }
 
                     sales_budget.app_condition = db.app_condition.Find(sales_budget.id_condition);
@@ -274,14 +297,14 @@ namespace entity.Controller.Sales
                             //Save Changes before Printing, so that all fields show up.
                             sales_budget.status = Status.Documents_General.Approved;
                             sales_budget.timestamp = DateTime.Now;
-                            SaveChanges_and_Validate();
+                            SaveChanges_WithValidation();
                         }
                         else
                         {
                             sales_budget.is_issued = false;
                             sales_budget.status = Status.Documents_General.Approved;
                             sales_budget.timestamp = DateTime.Now;
-                            SaveChanges_and_Validate();
+                            SaveChanges_WithValidation();
                         }
                     }
 
@@ -313,7 +336,7 @@ namespace entity.Controller.Sales
                     if (budget.sales_order == null || budget.sales_order.Count() == 0)
                     {
                         budget.status = Status.Documents_General.Annulled;
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
                     }
 
                     NumberOfRecords += 1;

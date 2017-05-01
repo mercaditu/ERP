@@ -104,7 +104,7 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
-            if (PurchaseDB.SaveChanges_and_Validate() > 0)
+            if (PurchaseDB.SaveChanges_WithValidation() )
             {
                 purchase_invoiceViewSource.View.Refresh();
                 toolBar.msgSaved(PurchaseDB.NumberOfRecords);

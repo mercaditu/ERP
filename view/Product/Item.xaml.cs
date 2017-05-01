@@ -65,7 +65,7 @@ namespace Cognitivo.Product
 
         private void Load_PrimaryData(object sender, EventArgs e)
         {
-          
+
             Load_PrimaryDataThread();
             Load_SecondaryDataThread();
         }
@@ -74,7 +74,7 @@ namespace Cognitivo.Product
         {
             ItemDB.Load(ProductSettings.Default.Product, ProductSettings.Default.RawMaterial, ProductSettings.Default.Supplies,
                          ProductSettings.Default.Task, ProductSettings.Default.Service, ProductSettings.Default.ServiceContract);
-          
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 itemViewSource.Source = ItemDB.db.items.Local;
@@ -83,7 +83,7 @@ namespace Cognitivo.Product
 
         private async void Load_SecondaryDataThread()
         {
-            
+
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -95,7 +95,7 @@ namespace Cognitivo.Product
                 app_measurementViewSourceconvert.Source = ItemDB.db.app_measurement.Local;
                 app_measurementViewSourcenew.Source = ItemDB.db.app_measurement.Local;
             }));
-           
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_dimentionViewSource.Source = ItemDB.db.app_dimension.Local;
@@ -244,27 +244,26 @@ namespace Cognitivo.Product
 
         private void Save_Click(object sender)
         {
-            if (ItemDB.db.GetValidationErrors().Count() == 0)
+
+            //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
+            item item = itemViewSource.View.CurrentItem as item;
+
+            if (item != null)
             {
-                //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
-                item item = itemViewSource.View.CurrentItem as item;
-
-                if (item != null)
+                if (ItemDB.db.items.Any(x => x.name == item.name && x.id_item != item.id_item))
                 {
-                    if (ItemDB.db.items.Any(x => x.name == item.name && x.id_item != item.id_item))
-                    {
-                        toolBar.msgWarning("Product: " + item.name + " Already Exists..");
-                        return;
-                    }
+                    toolBar.msgWarning("Product: " + item.name + " Already Exists..");
+                    return;
+                }
 
-                    if (ItemDB.SaveChanges_WithValidation())
-                    {
-                        // Save Changes
-                        itemViewSource.View.Refresh();
-                        toolBar.msgSaved(ItemDB.NumberOfRecords);
-                    }
+                if (ItemDB.SaveChanges_WithValidation())
+                {
+                    // Save Changes
+                    itemViewSource.View.Refresh();
+                    toolBar.msgSaved(ItemDB.NumberOfRecords);
                 }
             }
+
         }
 
         private void Search_Click(object sender, string query)

@@ -55,41 +55,41 @@ namespace entity.Controller.Product
             return true;
         }
 
-        public bool SaveChanges_WithValidation()
-        {
-            foreach (item_request item_request in db.item_request.Local)
-            {
-                if (item_request.IsSelected)
-                {
-                    if (item_request.State == EntityState.Added)
-                    {
-                        item_request.timestamp = DateTime.Now;
-                        item_request.State = EntityState.Unchanged;
-                        db.Entry(item_request).State = EntityState.Added;
-                    }
-                    else if (item_request.State == EntityState.Modified)
-                    {
-                        item_request.timestamp = DateTime.Now;
-                        item_request.State = EntityState.Unchanged;
-                        db.Entry(item_request).State = EntityState.Modified;
-                    }
-                    else if (item_request.State == EntityState.Deleted)
-                    {
-                        item_request.timestamp = DateTime.Now;
-                        item_request.State = EntityState.Unchanged;
-                        db.item_request.Remove(item_request);
-                    }
-                }
-                else if (item_request.State > 0)
-                {
-                    if (item_request.State != EntityState.Unchanged)
-                    {
-                        db.Entry(item_request).State = EntityState.Unchanged;
-                    }
-                }
-            }
-            return true;
-        }
+        //public bool SaveChanges_WithValidation()
+        //{
+        //    foreach (item_request item_request in db.item_request.Local)
+        //    {
+        //        if (item_request.IsSelected)
+        //        {
+        //            if (item_request.State == EntityState.Added)
+        //            {
+        //                item_request.timestamp = DateTime.Now;
+        //                item_request.State = EntityState.Unchanged;
+        //                db.Entry(item_request).State = EntityState.Added;
+        //            }
+        //            else if (item_request.State == EntityState.Modified)
+        //            {
+        //                item_request.timestamp = DateTime.Now;
+        //                item_request.State = EntityState.Unchanged;
+        //                db.Entry(item_request).State = EntityState.Modified;
+        //            }
+        //            else if (item_request.State == EntityState.Deleted)
+        //            {
+        //                item_request.timestamp = DateTime.Now;
+        //                item_request.State = EntityState.Unchanged;
+        //                db.item_request.Remove(item_request);
+        //            }
+        //        }
+        //        else if (item_request.State > 0)
+        //        {
+        //            if (item_request.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(item_request).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
+        //    return true;
+        //}
 
         public bool CancelChanges()
         {
@@ -451,6 +451,23 @@ namespace entity.Controller.Product
         public bool Annull()
         {
 
+            return true;
+        }
+        public bool SaveChanges_WithValidation()
+        {
+            NumberOfRecords = 0;
+
+
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+
+            db.SaveChanges();
+            foreach (item_request item_request in db.item_request.Local)
+            {
+                item_request.State = EntityState.Unchanged;
+            }
             return true;
         }
     }

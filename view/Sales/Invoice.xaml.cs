@@ -142,7 +142,7 @@ namespace Cognitivo.Sales
             //    }
             //}
 
-            if (SalesDB.SaveChanges_and_Validate() > 0)
+            if (SalesDB.SaveChanges_WithValidation())
             {
                 sales_invoiceViewSource.View.Refresh();
                 toolBar.msgSaved(SalesDB.NumberOfRecords);

@@ -1,6 +1,7 @@
 ﻿using entity.Brillo;
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 
 namespace entity.Controller
@@ -44,6 +45,7 @@ namespace entity.Controller
         {
             db = new db();
         }
+       
 
         /// <summary>
         /// Cancel Changes by Asking Question First.

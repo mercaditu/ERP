@@ -38,40 +38,40 @@ namespace entity.Controller.Purchase
             return Tender;
         }
 
-        public int SaveChanges_Validate()
-        {
-            NumberOfRecords = 0;
+        //public int SaveChanges_Validate()
+        //{
+        //    NumberOfRecords = 0;
 
-            foreach (purchase_tender purchase_tender in db.purchase_tender.Local.Where(x => x.IsSelected))
-            {
-                if (purchase_tender.IsSelected)
-                {
-                    if (purchase_tender.State == EntityState.Added)
-                    {
-                        purchase_tender.timestamp = DateTime.Now;
-                        purchase_tender.State = EntityState.Unchanged;
-                        db.Entry(purchase_tender).State = EntityState.Added;
-                    }
-                    else if (purchase_tender.State == EntityState.Modified)
-                    {
-                        purchase_tender.timestamp = DateTime.Now;
-                        purchase_tender.State = EntityState.Unchanged;
-                        db.Entry(purchase_tender).State = EntityState.Modified;
-                    }
+        //    foreach (purchase_tender purchase_tender in db.purchase_tender.Local.Where(x => x.IsSelected))
+        //    {
+        //        if (purchase_tender.IsSelected)
+        //        {
+        //            if (purchase_tender.State == EntityState.Added)
+        //            {
+        //                purchase_tender.timestamp = DateTime.Now;
+        //                purchase_tender.State = EntityState.Unchanged;
+        //                db.Entry(purchase_tender).State = EntityState.Added;
+        //            }
+        //            else if (purchase_tender.State == EntityState.Modified)
+        //            {
+        //                purchase_tender.timestamp = DateTime.Now;
+        //                purchase_tender.State = EntityState.Unchanged;
+        //                db.Entry(purchase_tender).State = EntityState.Modified;
+        //            }
 
-                    NumberOfRecords += 1;
-                }
-                else if (purchase_tender.State > 0)
-                {
-                    if (purchase_tender.State != EntityState.Unchanged)
-                    {
-                        db.Entry(purchase_tender).State = EntityState.Unchanged;
-                    }
-                }
-            }
+        //            NumberOfRecords += 1;
+        //        }
+        //        else if (purchase_tender.State > 0)
+        //        {
+        //            if (purchase_tender.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(purchase_tender).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
 
-            return db.SaveChanges(); 
-        }
+        //    return db.SaveChanges(); 
+        //}
 
         public void Archive()
         {
@@ -86,7 +86,7 @@ namespace entity.Controller.Purchase
             {
                 if (purchase_tender.id_purchase_tender == 0)
                 {
-                    SaveChanges_Validate();
+                    SaveChanges_WithValidation();
                 }
 
                 if (purchase_tender.status != Status.Documents_General.Approved)
@@ -236,7 +236,7 @@ namespace entity.Controller.Purchase
                     //Block this.
                     //purchase_tender.status = Status.Documents_General.Approved;
 
-                    SaveChanges_Validate();
+                    SaveChanges_WithValidation();
 
                     purchase_tender.IsSelected = false;
                 }
@@ -290,7 +290,25 @@ namespace entity.Controller.Purchase
                 }
             }
 
-            SaveChanges_Validate();
+            SaveChanges_WithValidation();
+        }
+
+        public bool SaveChanges_WithValidation()
+        {
+            NumberOfRecords = 0;
+
+
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+
+            db.SaveChanges();
+            foreach (purchase_tender purchase_tender in db.purchase_tender.Local)
+            {
+                purchase_tender.State = EntityState.Unchanged;
+            }
+            return true;
         }
     }
 }

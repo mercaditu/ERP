@@ -66,61 +66,61 @@ namespace entity.Controller.Purchase
 
         #region Save
 
-        public int SaveChanges_and_Validate()
-        {
-            NumberOfRecords = 0;
+        //public int SaveChanges_and_Validate()
+        //{
+        //    NumberOfRecords = 0;
 
-            foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local)
-            {
-                if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
-                {
-                    //Data Loading Code. If data is not set, then Cognitivo ERP should try to fill up.
-                    if (purchase_invoice.contact.id_contract == 0)
-                    {
-                        purchase_invoice.contact.id_contract = purchase_invoice.id_contract;
-                    }
+        //    foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local)
+        //    {
+        //        if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
+        //        {
+        //            //Data Loading Code. If data is not set, then Cognitivo ERP should try to fill up.
+        //            if (purchase_invoice.contact.id_contract == 0)
+        //            {
+        //                purchase_invoice.contact.id_contract = purchase_invoice.id_contract;
+        //            }
 
-                    if (purchase_invoice.contact.id_currency == 0)
-                    {
-                        purchase_invoice.contact.id_currency = purchase_invoice.app_currencyfx.id_currency;
-                    }
+        //            if (purchase_invoice.contact.id_currency == 0)
+        //            {
+        //                purchase_invoice.contact.id_currency = purchase_invoice.app_currencyfx.id_currency;
+        //            }
 
-                    if (purchase_invoice.contact.id_cost_center == 0 && purchase_invoice.purchase_invoice_detail.FirstOrDefault() != null)
-                    {
-                        purchase_invoice.contact.id_cost_center = purchase_invoice.purchase_invoice_detail.FirstOrDefault().id_cost_center;
-                    }
+        //            if (purchase_invoice.contact.id_cost_center == 0 && purchase_invoice.purchase_invoice_detail.FirstOrDefault() != null)
+        //            {
+        //                purchase_invoice.contact.id_cost_center = purchase_invoice.purchase_invoice_detail.FirstOrDefault().id_cost_center;
+        //            }
 
-                    if (purchase_invoice.State == EntityState.Added)
-                    {
-                        purchase_invoice.timestamp = DateTime.Now;
-                        purchase_invoice.State = EntityState.Unchanged;
-                        db.Entry(purchase_invoice).State = EntityState.Added;
-                    }
-                    else if (purchase_invoice.State == EntityState.Modified)
-                    {
-                        purchase_invoice.timestamp = DateTime.Now;
-                        purchase_invoice.State = EntityState.Unchanged;
-                        db.Entry(purchase_invoice).State = EntityState.Modified;
-                    }
-                    else if (purchase_invoice.State == EntityState.Deleted)
-                    {
-                        purchase_invoice.timestamp = DateTime.Now;
-                        purchase_invoice.State = EntityState.Unchanged;
-                        db.purchase_invoice.Remove(purchase_invoice);
-                    }
-                    NumberOfRecords += 1;
-                }
-                else if (purchase_invoice.State > 0)
-                {
-                    if (purchase_invoice.State != EntityState.Unchanged)
-                    {
-                        db.Entry(purchase_invoice).State = EntityState.Unchanged;
-                    }
-                }
-            }
+        //            if (purchase_invoice.State == EntityState.Added)
+        //            {
+        //                purchase_invoice.timestamp = DateTime.Now;
+        //                purchase_invoice.State = EntityState.Unchanged;
+        //                db.Entry(purchase_invoice).State = EntityState.Added;
+        //            }
+        //            else if (purchase_invoice.State == EntityState.Modified)
+        //            {
+        //                purchase_invoice.timestamp = DateTime.Now;
+        //                purchase_invoice.State = EntityState.Unchanged;
+        //                db.Entry(purchase_invoice).State = EntityState.Modified;
+        //            }
+        //            else if (purchase_invoice.State == EntityState.Deleted)
+        //            {
+        //                purchase_invoice.timestamp = DateTime.Now;
+        //                purchase_invoice.State = EntityState.Unchanged;
+        //                db.purchase_invoice.Remove(purchase_invoice);
+        //            }
+        //            NumberOfRecords += 1;
+        //        }
+        //        else if (purchase_invoice.State > 0)
+        //        {
+        //            if (purchase_invoice.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(purchase_invoice).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
 
-            return db.SaveChanges();
-        }
+        //    return db.SaveChanges();
+        //}
 
         #endregion
         
@@ -133,7 +133,7 @@ namespace entity.Controller.Purchase
                 {
                     if (invoice.id_purchase_invoice == 0)
                     {
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
                     }
 
                     invoice.app_condition = db.app_condition.Find(invoice.id_condition);
@@ -157,7 +157,7 @@ namespace entity.Controller.Purchase
                         }
 
                         invoice.status = Status.Documents_General.Approved;
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
                     }
                 }
                 else if (invoice.Error != null)
@@ -233,7 +233,7 @@ namespace entity.Controller.Purchase
                         invoice.trans_date, purchase_invoice_detail.unit_cost, "Purchase Invoice Fix", null, purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code));
                 }
             }
-            SaveChanges_and_Validate();
+            SaveChanges_WithValidation();
         }
         #endregion
 
@@ -313,5 +313,23 @@ namespace entity.Controller.Purchase
         }
 
         #endregion
+
+        public bool SaveChanges_WithValidation()
+        {
+            NumberOfRecords = 0;
+
+
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+
+            db.SaveChanges();
+            foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local)
+            {
+                purchase_invoice.State = EntityState.Unchanged;
+            }
+            return true;
+        }
     }
 }

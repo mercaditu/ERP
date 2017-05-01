@@ -192,7 +192,7 @@ namespace Cognitivo.Purchase
                 }
 
                 //This is required to generate the ID needed for the Item-Detail relationship.
-                TenderDB.SaveChanges_Validate();
+                TenderDB.SaveChanges_WithValidation();
 
                 if (purchase_tenderViewSource.View != null)
                 {
@@ -323,7 +323,7 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
-            if (TenderDB.SaveChanges_Validate() > 0)
+            if (TenderDB.SaveChanges_WithValidation())
             {
                 purchase_tenderViewSource.View.Refresh();
                 toolBar.msgSaved(TenderDB.NumberOfRecords);

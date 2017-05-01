@@ -172,52 +172,52 @@ namespace entity.Controller.Sales
 
         #region Save
 
-        public int SaveChanges_and_Validate()
-        {
-            NumberOfRecords = 0;
-            foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
-            {
-                if (invoice.Error == null)
-                {
-                    if (invoice.State == EntityState.Added)
-                    {
-                        invoice.timestamp = DateTime.Now;
-                        invoice.State = EntityState.Unchanged;
-                        db.Entry(invoice).State = EntityState.Added;
-                        Add_CRM(invoice);
+        //public int SaveChanges_and_Validate()
+        //{
+        //    NumberOfRecords = 0;
+        //    foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
+        //    {
+        //        if (invoice.Error == null)
+        //        {
+        //            if (invoice.State == EntityState.Added)
+        //            {
+        //                invoice.timestamp = DateTime.Now;
+        //                invoice.State = EntityState.Unchanged;
+        //                db.Entry(invoice).State = EntityState.Added;
+        //                Add_CRM(invoice);
 
-                        //Check Promotions before Saving.
-                        Check_Promotions(invoice);
-                    }
-                    else if (invoice.State == EntityState.Modified)
-                    {
-                        invoice.timestamp = DateTime.Now;
-                        invoice.State = EntityState.Unchanged;
-                        db.Entry(invoice).State = EntityState.Modified;
+        //                //Check Promotions before Saving.
+        //                Check_Promotions(invoice);
+        //            }
+        //            else if (invoice.State == EntityState.Modified)
+        //            {
+        //                invoice.timestamp = DateTime.Now;
+        //                invoice.State = EntityState.Unchanged;
+        //                db.Entry(invoice).State = EntityState.Modified;
 
-                        //Check Promotions before Saving.
-                        Check_Promotions(invoice);
-                    }
-                    else if (invoice.State == EntityState.Deleted)
-                    {
-                        invoice.timestamp = DateTime.Now;
-                        invoice.is_head = false;
-                        invoice.State = EntityState.Deleted;
-                        db.Entry(invoice).State = EntityState.Modified;
-                    }
-                    NumberOfRecords += 1;
-                }
-                if (invoice.State > 0)
-                {
-                    if (invoice.State != EntityState.Unchanged)
-                    {
-                        db.Entry(invoice).State = EntityState.Unchanged;
-                    }
-                }
-            }
+        //                //Check Promotions before Saving.
+        //                Check_Promotions(invoice);
+        //            }
+        //            else if (invoice.State == EntityState.Deleted)
+        //            {
+        //                invoice.timestamp = DateTime.Now;
+        //                invoice.is_head = false;
+        //                invoice.State = EntityState.Deleted;
+        //                db.Entry(invoice).State = EntityState.Modified;
+        //            }
+        //            NumberOfRecords += 1;
+        //        }
+        //        if (invoice.State > 0)
+        //        {
+        //            if (invoice.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(invoice).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
 
-            return db.SaveChanges();
-        }
+        //    return db.SaveChanges();
+        //}
 
         private void Add_CRM(sales_invoice invoice)
         {
@@ -240,6 +240,32 @@ namespace entity.Controller.Sales
                 db.crm_opportunity.Attach(crm_opportunity);
             }
         }
+        public  bool SaveChanges_WithValidation()
+        {
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+            foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
+               
+                if (db.Entry(invoice).State == EntityState.Added)
+                {
+
+                    Add_CRM(invoice);
+
+
+                }
+                invoice.State = EntityState.Unchanged;
+            }
+
+
+            db.SaveChanges();
+
+            return true;
+        }
+
+
 
         #endregion
 
@@ -271,7 +297,7 @@ namespace entity.Controller.Sales
             {
                 if (invoice.id_sales_invoice == 0 && invoice.id_contact > 0)
                 {
-                    SaveChanges_and_Validate();
+                    SaveChanges_WithValidation();
                 }
 
                 invoice.app_condition = db.app_condition.Find(invoice.id_condition);

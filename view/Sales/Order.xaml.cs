@@ -111,7 +111,7 @@ namespace Cognitivo.Sales
 
         private void Save_Click(object sender)
         {
-            if (SalesDB.SaveChanges_and_Validate() > 0)
+            if (SalesDB.SaveChanges_WithValidation())
             {
                 toolBar.msgSaved(SalesDB.NumberOfRecords);
                 sales_orderViewSource.View.Refresh();

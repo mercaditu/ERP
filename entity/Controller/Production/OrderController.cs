@@ -77,5 +77,22 @@ namespace entity.Controller.Production
         {
 
         }
+        public bool SaveChanges_WithValidation()
+        {
+            NumberOfRecords = 0;
+
+
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+
+            db.SaveChanges();
+            foreach (production_order production_order in db.production_order.Local)
+            {
+                production_order.State = EntityState.Unchanged;
+            }
+            return true;
+        }
     }
 }

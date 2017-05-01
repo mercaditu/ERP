@@ -67,6 +67,23 @@ namespace entity.Controller.Commercial
             
             return contact;
         }
+        public bool SaveChanges_WithValidation()
+        {
+            NumberOfRecords = 0;
+
+            
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+
+            db.SaveChanges();
+            foreach (contact contact in db.contacts.Local)
+            {
+                contact.State = EntityState.Unchanged;
+            }
+            return true;
+        }
 
         public bool Edit(contact contact)
         {
@@ -76,43 +93,6 @@ namespace entity.Controller.Commercial
             return true;
         }
 
-        public bool SaveChanges_WithValidation()
-        {
-            NumberOfRecords = 0;
-
-            //foreach (contact contact in db.contacts.Local)
-            //{
-            //    if (contact.IsSelected && contact.Error == null)
-            //    {
-            //        //non validated data is getting here. check
-            //        if (contact.State == EntityState.Added)
-            //        {
-            //            contact.timestamp = DateTime.Now;
-            //            contact.State = EntityState.Unchanged;
-            //            db.Entry(contact).State = EntityState.Added;
-            //        }
-            //        else if (contact.State == EntityState.Modified)
-            //        {
-            //            contact.timestamp = DateTime.Now;
-            //            contact.State = EntityState.Unchanged;
-            //            db.Entry(contact).State = EntityState.Modified;
-            //        }
-
-            //        NumberOfRecords += 1;
-            //    }
-            //    else if (contact.State > 0)
-            //    {
-            //        contact.State = EntityState.Unchanged;
-            //    }
-            //}
-
-            foreach (var error in db.GetValidationErrors())
-            {
-                db.Entry(error.Entry.Entity).State = EntityState.Detached;
-            }
-
-            db.SaveChanges();
-            return true;
-        }
+       
     }
 }

@@ -119,7 +119,7 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnSave_Click(object sender)
         {
-            SalesReturnDB.SaveChanges_and_Validate();
+            SalesReturnDB.SaveChanges_WithValidation();
         }
 
         #endregion Toolbar

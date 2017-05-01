@@ -42,51 +42,68 @@ namespace entity.Controller.Finance
             {
                 if (payment.id_payment == 0)
                 {
-                    SaveChanges_and_Validate();
+                    SaveChanges_WithValidation();
                 }
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
                 MakePayment(payment_schedualList, payment, IsRecievable, is_print);
             }
         }
-        public int SaveChanges_and_Validate()
+        //public int SaveChanges_and_Validate()
+        //{
+        //    NumberOfRecords = 0;
+        //    foreach (payment payment in db.payments.Local.Where(x => x.IsSelected))
+        //    {
+
+        //        if (payment.State == EntityState.Added)
+        //        {
+        //            payment.timestamp = DateTime.Now;
+        //            payment.State = EntityState.Unchanged;
+        //            db.Entry(payment).State = EntityState.Added;
+
+        //        }
+        //        else if (payment.State == EntityState.Modified)
+        //        {
+        //            payment.timestamp = DateTime.Now;
+        //            payment.State = EntityState.Unchanged;
+        //            db.Entry(payment).State = EntityState.Modified;
+        //        }
+        //        else if (payment.State == EntityState.Deleted)
+        //        {
+        //            payment.timestamp = DateTime.Now;
+        //            payment.is_head = false;
+        //            payment.State = EntityState.Deleted;
+        //            db.Entry(payment).State = EntityState.Modified;
+        //        }
+        //        NumberOfRecords += 1;
+
+        //        if (payment.State > 0)
+        //        {
+        //            if (payment.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(payment).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
+
+        //    return db.SaveChanges();
+        //}
+        public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
-            foreach (payment payment in db.payments.Local.Where(x => x.IsSelected))
+
+
+            foreach (var error in db.GetValidationErrors())
             {
-
-                if (payment.State == EntityState.Added)
-                {
-                    payment.timestamp = DateTime.Now;
-                    payment.State = EntityState.Unchanged;
-                    db.Entry(payment).State = EntityState.Added;
-
-                }
-                else if (payment.State == EntityState.Modified)
-                {
-                    payment.timestamp = DateTime.Now;
-                    payment.State = EntityState.Unchanged;
-                    db.Entry(payment).State = EntityState.Modified;
-                }
-                else if (payment.State == EntityState.Deleted)
-                {
-                    payment.timestamp = DateTime.Now;
-                    payment.is_head = false;
-                    payment.State = EntityState.Deleted;
-                    db.Entry(payment).State = EntityState.Modified;
-                }
-                NumberOfRecords += 1;
-
-                if (payment.State > 0)
-                {
-                    if (payment.State != EntityState.Unchanged)
-                    {
-                        db.Entry(payment).State = EntityState.Unchanged;
-                    }
-                }
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            return db.SaveChanges();
+            db.SaveChanges();
+            foreach (payment payment in db.payments.Local)
+            {
+                payment.State = EntityState.Unchanged;
+            }
+            return true;
         }
         public async void MakePayment(List<payment_schedual> payment_schedualList, payment payment, bool IsRecievable, bool is_print)
         {

@@ -168,52 +168,52 @@ namespace entity.Controller.Sales
 
         #region Save
 
-        public int SaveChanges_and_Validate()
-        {
-            NumberOfRecords = 0;
-            foreach (sales_return Return in db.sales_return.Local.Where(x => x.IsSelected && x.id_contact > 0))
-            {
-                if (Return.Error == null)
-                {
-                    if (Return.State == EntityState.Added)
-                    {
-                        Return.timestamp = DateTime.Now;
-                        Return.State = EntityState.Unchanged;
-                        db.Entry(Return).State = EntityState.Added;
-                        Add_CRM(Return);
+        //public int SaveChanges_and_Validate()
+        //{
+        //    NumberOfRecords = 0;
+        //    foreach (sales_return Return in db.sales_return.Local.Where(x => x.IsSelected && x.id_contact > 0))
+        //    {
+        //        if (Return.Error == null)
+        //        {
+        //            if (Return.State == EntityState.Added)
+        //            {
+        //                Return.timestamp = DateTime.Now;
+        //                Return.State = EntityState.Unchanged;
+        //                db.Entry(Return).State = EntityState.Added;
+        //                Add_CRM(Return);
 
-                        //Check Promotions before Saving.
-                        //Check_Promotions(Return);
-                    }
-                    else if (Return.State == EntityState.Modified)
-                    {
-                        Return.timestamp = DateTime.Now;
-                        Return.State = EntityState.Unchanged;
-                        db.Entry(Return).State = EntityState.Modified;
+        //                //Check Promotions before Saving.
+        //                //Check_Promotions(Return);
+        //            }
+        //            else if (Return.State == EntityState.Modified)
+        //            {
+        //                Return.timestamp = DateTime.Now;
+        //                Return.State = EntityState.Unchanged;
+        //                db.Entry(Return).State = EntityState.Modified;
 
-                        //Check Promotions before Saving.
-                        //Check_Promotions(Return);
-                    }
-                    else if (Return.State == EntityState.Deleted)
-                    {
-                        Return.timestamp = DateTime.Now;
-                        Return.is_head = false;
-                        Return.State = EntityState.Deleted;
-                        db.Entry(Return).State = EntityState.Modified;
-                    }
-                    NumberOfRecords += 1;
-                }
-                if (Return.State > 0)
-                {
-                    if (Return.State != EntityState.Unchanged)
-                    {
-                        db.Entry(Return).State = EntityState.Unchanged;
-                    }
-                }
-            }
+        //                //Check Promotions before Saving.
+        //                //Check_Promotions(Return);
+        //            }
+        //            else if (Return.State == EntityState.Deleted)
+        //            {
+        //                Return.timestamp = DateTime.Now;
+        //                Return.is_head = false;
+        //                Return.State = EntityState.Deleted;
+        //                db.Entry(Return).State = EntityState.Modified;
+        //            }
+        //            NumberOfRecords += 1;
+        //        }
+        //        if (Return.State > 0)
+        //        {
+        //            if (Return.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(Return).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
 
-            return db.SaveChanges();
-        }
+        //    return db.SaveChanges();
+        //}
 
         private void Add_CRM(sales_return Return)
         {
@@ -235,8 +235,31 @@ namespace entity.Controller.Sales
                 db.crm_opportunity.Attach(crm_opportunity);
             }
         }
+        public bool SaveChanges_WithValidation()
+        {
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+            foreach (sales_return Return in db.sales_return.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
 
-   
+                if (db.Entry(Return).State == EntityState.Added)
+                {
+
+                    Add_CRM(Return);
+
+
+                }
+                Return.State = EntityState.Unchanged;
+            }
+
+
+            db.SaveChanges();
+            return true;
+        }
+
+
 
         #endregion
 
@@ -264,7 +287,7 @@ namespace entity.Controller.Sales
                 {
                     if (sales_return.id_sales_return == 0)
                     {
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
                     }
 
                     sales_return.app_condition = db.app_condition.Find(sales_return.id_condition);
@@ -285,7 +308,7 @@ namespace entity.Controller.Sales
                             sales_return.is_issued = true;
 
                             //Save values before printing.
-                            SaveChanges_and_Validate();
+                            SaveChanges_WithValidation();
 
                             Brillo.Document.Start.Automatic(sales_return, app_document_range);
                         }
@@ -329,14 +352,14 @@ namespace entity.Controller.Sales
                             db.item_movement.AddRange(item_movementList);
                         }
 
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
 
                         //Automatically Link Return & Sales
                         Linked2Sales(sales_return);
 
                         sales_return.IsSelected = false;
                         sales_return.status = Status.Documents_General.Approved;
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
                     }
                     else if (sales_return.Error != null)
                     {
@@ -513,7 +536,7 @@ namespace entity.Controller.Sales
                     sales_return.is_head = false;
                     sales_return.status = Status.Documents_General.Approved;
 
-                    SaveChanges_and_Validate();
+                    SaveChanges_WithValidation();
                 }
             }
         }
@@ -552,7 +575,7 @@ namespace entity.Controller.Sales
                 }
 
                 sales_return.status = Status.Documents_General.Annulled;
-                SaveChanges_and_Validate();
+                SaveChanges_WithValidation();
             }
 
             return true;

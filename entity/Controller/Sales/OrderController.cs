@@ -10,7 +10,7 @@ namespace entity.Controller.Sales
 {
     public class OrderController : Base
     {
-     
+
         public Brillo.Promotion.Start Promotions { get; set; }
 
         #region Properties
@@ -57,7 +57,7 @@ namespace entity.Controller.Sales
 
         }
 
-     
+
 
         #region Load
 
@@ -201,57 +201,59 @@ namespace entity.Controller.Sales
             db.SaveChanges();
             return true;
         }
-        
+
         #endregion
 
         #region Save
 
-        public int SaveChanges_and_Validate()
-        {
-            NumberOfRecords = 0;
-            foreach (sales_order order in db.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0))
-            {
-                if (order.Error == null)
-                {
-                    if (order.State == EntityState.Added)
-                    {
-                        order.timestamp = DateTime.Now;
-                        order.State = EntityState.Unchanged;
-                        db.Entry(order).State = EntityState.Added;
-                        Add_CRM(order);
+        //public int SaveChanges_and_Validate()
+        //{
+        //    NumberOfRecords = 0;
+        //    foreach (sales_order order in db.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0))
+        //    {
+        //        if (order.Error == null)
+        //        {
+        //            if (order.State == EntityState.Added)
+        //            {
+        //                order.timestamp = DateTime.Now;
+        //                order.State = EntityState.Unchanged;
+        //                db.Entry(order).State = EntityState.Added;
+        //                Add_CRM(order);
 
-                        //Check Promotions before Saving.
-                        Check_Promotions(order);
-                    }
-                    else if (order.State == EntityState.Modified)
-                    {
-                        order.timestamp = DateTime.Now;
-                        order.State = EntityState.Unchanged;
-                        db.Entry(order).State = EntityState.Modified;
+        //                //Check Promotions before Saving.
+        //                Check_Promotions(order);
+        //            }
+        //            else if (order.State == EntityState.Modified)
+        //            {
+        //                order.timestamp = DateTime.Now;
+        //                order.State = EntityState.Unchanged;
+        //                db.Entry(order).State = EntityState.Modified;
 
-                        //Check Promotions before Saving.
-                        Check_Promotions(order);
-                    }
-                    else if (order.State == EntityState.Deleted)
-                    {
-                        order.timestamp = DateTime.Now;
-                        order.is_head = false;
-                        order.State = EntityState.Deleted;
-                        db.Entry(order).State = EntityState.Modified;
-                    }
-                    NumberOfRecords += 1;
-                }
-                if (order.State > 0)
-                {
-                    if (order.State != EntityState.Unchanged)
-                    {
-                        db.Entry(order).State = EntityState.Unchanged;
-                    }
-                }
-            }
+        //                //Check Promotions before Saving.
+        //                Check_Promotions(order);
+        //            }
+        //            else if (order.State == EntityState.Deleted)
+        //            {
+        //                order.timestamp = DateTime.Now;
+        //                order.is_head = false;
+        //                order.State = EntityState.Deleted;
+        //                db.Entry(order).State = EntityState.Modified;
+        //            }
+        //            NumberOfRecords += 1;
+        //        }
+        //        if (order.State > 0)
+        //        {
+        //            if (order.State != EntityState.Unchanged)
+        //            {
+        //                db.Entry(order).State = EntityState.Unchanged;
+        //            }
+        //        }
+        //    }
 
-            return db.SaveChanges();
-        }
+        //    return db.SaveChanges();
+        //}
+
+
 
         private void Add_CRM(sales_order order)
         {
@@ -274,8 +276,30 @@ namespace entity.Controller.Sales
                 db.crm_opportunity.Attach(crm_opportunity);
             }
         }
+        public  bool SaveChanges_WithValidation()
+        {
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+            foreach (sales_order order in db.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
+               
+                if (db.Entry(order).State == EntityState.Added)
+                {
 
-    
+                    Add_CRM(order);
+
+
+                }
+                order.State = EntityState.Unchanged;
+            }
+
+
+            db.SaveChanges();
+            return true;
+        }
+
 
         #endregion
 
@@ -297,7 +321,7 @@ namespace entity.Controller.Sales
                 {
                     if (sales_order.id_sales_order == 0 && sales_order.id_contact > 0)
                     {
-                        SaveChanges_and_Validate();
+                        SaveChanges_WithValidation();
                     }
 
                     sales_order.app_condition = db.app_condition.Find(sales_order.id_condition);

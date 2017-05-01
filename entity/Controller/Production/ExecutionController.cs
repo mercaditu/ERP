@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace entity.Controller.Production
@@ -80,6 +81,24 @@ namespace entity.Controller.Production
             }
 
             db.SaveChanges();
+            return true;
+        }
+
+        public bool SaveChanges_WithValidation()
+        {
+            NumberOfRecords = 0;
+
+
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+
+            db.SaveChanges();
+            foreach (production_execution_detail production_execution_detail in db.production_execution_detail.Local)
+            {
+                production_execution_detail.State = EntityState.Unchanged;
+            }
             return true;
         }
     }

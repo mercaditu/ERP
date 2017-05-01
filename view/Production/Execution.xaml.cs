@@ -61,8 +61,8 @@ namespace Cognitivo.Production
 
             cmbcoefficient.SelectedIndex = -1;
 
-            dtpstarttime.Value = DateTime.Now.ToString();
-            dtpendtime.Value = DateTime.Now.ToString();
+            dtpstartdate.Value = DateTime.Now;
+            dtpenddate.Value = DateTime.Now;
 
             filter_task();
         }
@@ -110,16 +110,17 @@ namespace Cognitivo.Production
                     if (id > 0)
                     {
                         //  production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
-                        production_execution_detail _production_execution_detail = new production_execution_detail();
-
-                        //Check for contact
-                        _production_execution_detail.id_contact = contact.id_contact;
-                        _production_execution_detail.contact = contact;
-                        // _production_execution_detail.quantity = 1;
-                        _production_execution_detail.item = production_order_detail.item;
-                        _production_execution_detail.id_item = production_order_detail.item.id_item;
-                        _production_execution_detail.is_input = production_order_detail.is_input;
-                        _production_execution_detail.name = contact.name + ": " + production_order_detail.name;
+                        production_execution_detail _production_execution_detail = new production_execution_detail()
+                        {
+                            //Check for contact
+                            id_contact = contact.id_contact,
+                            contact = contact,
+                            // _production_execution_detail.quantity = 1;
+                            item = production_order_detail.item,
+                            id_item = production_order_detail.item.id_item,
+                            is_input = production_order_detail.is_input,
+                            name = contact.name + ": " + production_order_detail.name
+                        };
 
                         if (production_order_detail.id_project_task > 0)
                         {
@@ -140,17 +141,17 @@ namespace Cognitivo.Production
 
                             if (production_order_detail.item.id_item_type == item.item_type.Service)
                             {
-                                string start_date = string.Format("{0} {1}", dtpstartdate.Text, Convert.ToDateTime(dtpstarttime.Value).ToShortTimeString());
-                                _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                                string end_date = string.Format("{0} {1}", dtpenddate.Text, Convert.ToDateTime(dtpendtime.Value).ToShortTimeString());
-                                _production_execution_detail.end_date = Convert.ToDateTime(end_date);
+                                //string start_date = dtpstartdate.TextInput; //string.Format("{0} {1}", dtpstartdate.Text, Convert.ToDateTime(dtpstarttime.Value).ToShortTimeString());
+                                _production_execution_detail.start_date = (DateTime)dtpstartdate.Value; //Convert.ToDateTime(dtpstartdate.TextInput.);
+                                //string end_date = string.Format("{0} {1}", dtpenddate.Text, Convert.ToDateTime(dtpendtime.Value).ToShortTimeString());
+                                _production_execution_detail.end_date = (DateTime)dtpenddate.Value; //Convert.ToDateTime(end_date);
                             }
                             else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                             {
-                                string start_date = string.Format("{0} {1}", dtpscstartdate.Text, Convert.ToDateTime(dtpscstarttime.Value).ToShortTimeString());
-                                _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                                string end_date = string.Format("{0} {1}", dtpscenddate.Text, Convert.ToDateTime(dtpscendtime.Value).ToShortTimeString());
-                                _production_execution_detail.end_date = Convert.ToDateTime(end_date);
+                                //string start_date = string.Format("{0} {1}", dtpscstartdate.Text, Convert.ToDateTime(dtpscstarttime.Value).ToShortTimeString());
+                                _production_execution_detail.start_date = (DateTime)dtpscstartdate.Value; //Convert.ToDateTime(start_date);
+                                //string end_date = string.Format("{0} {1}", dtpscenddate.Text, Convert.ToDateTime(dtpscendtime.Value).ToShortTimeString());
+                                _production_execution_detail.end_date = (DateTime)dtpscenddate.Value; //Convert.ToDateTime(end_date);
                             }
 
                             _production_execution_detail.id_project_task = production_order_detail.id_project_task;

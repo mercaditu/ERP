@@ -135,10 +135,15 @@ namespace entity
         {
             get
             {
-                if (columnName == "id_item")
+                if (columnName == "item")
                 {
                     if (item == null)
-                        return "Item needs to be selected";
+                    {
+                        if (item.Error != null)
+                        {
+                            return item.Error;
+                        }
+                    }
                 }
                 // apply property level validation rules
                 if (columnName == "id_price_list")

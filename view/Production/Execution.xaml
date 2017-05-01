@@ -2,7 +2,6 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:Name="this"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
@@ -272,15 +271,17 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                                    <DatePicker x:Name="dtpstartdate"  Width="150" Height="27" />
-                                    <syncfusion:SfTimePicker  x:Name="dtpstarttime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm" />
-
+                                    <toolkit:DateTimeUpDown x:Name="dtpstartdate" Width="220" Format="FullDateTime" />
+                                    <!--<syncfusion:SfDatePicker x:Name="dtpstartdate" Width="220" />-->
+                                    <!--<DatePicker   Width="150" Height="27" />-->
+                                    <!--<syncfusion:SfTimePicker  x:Name="dtpstarttime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm" />-->
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                    <DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
-                                    <syncfusion:SfTimePicker  x:Name="dtpendtime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm"  />
-
+                                    <toolkit:DateTimeUpDown x:Name="dtpenddate" Width="220" Format="FullDateTime" />
+                                    <!--<syncfusion:SfDatePicker x:Name="dtpenddate" Width="220" />-->
+                                    <!--<DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
+                                    <syncfusion:SfTimePicker  x:Name="dtpendtime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm"  />-->
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -375,14 +376,16 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                                        <DatePicker x:Name="dtpscstartdate"  Width="150" Height="27" />
-                                        <syncfusion:SfTimePicker  x:Name="dtpscstarttime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm" />
+                                        <toolkit:DateTimeUpDown x:Name="dtpscstartdate" Width="220" Format="FullDateTime" />
+                                        <!--<DatePicker x:Name="dtpscstartdate"  Width="150" Height="27" />-->
+                                        <!--<syncfusion:SfTimePicker  x:Name="dtpscstarttime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm" />-->
 
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                        <DatePicker x:Name="dtpscenddate"  Width="150" Height="27" />
-                                        <syncfusion:SfTimePicker  x:Name="dtpscendtime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm"/>
+                                        <toolkit:DateTimeUpDown x:Name="dtpscenddate" Width="220" Format="FullDateTime" />
+                                        <!--<DatePicker x:Name="dtpscenddate"  Width="150" Height="27" />-->
+                                        <!--<syncfusion:SfTimePicker  x:Name="dtpscendtime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm"/>-->
 
                                     </StackPanel>
 
@@ -466,8 +469,7 @@
                                 <Button x:Name="btnInsert_Supplies" Content="{lex:Loc Insert}" Click="btnInsert_Click" />
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4" x:Name="dgSupplier" AutoGenerateColumns="False"
-									  ItemsSource="{Binding}"
-									>
+									  ItemsSource="{Binding}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
 														Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

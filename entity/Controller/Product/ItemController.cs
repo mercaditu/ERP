@@ -103,7 +103,6 @@ namespace entity.Controller.Product
 
         public item_price New_ItemPrice(item item)
         {
-
             if (CurrentSession.Currency_Default == null)
             {
                 if (db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).Any())
@@ -138,27 +137,84 @@ namespace entity.Controller.Product
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
-            
-            foreach (var error in db.GetValidationErrors())
-            {
-                item item = error.Entry.Entity as item;
-                if (item != null)
-                {
-                    if (item.item_price.Count() > 0)
-                    {
-                        db.item_price.RemoveRange(item.item_price);
-                    }
-                }
 
-                db.Entry(item).State = EntityState.Detached;
-            }
-           
-            db.SaveChanges();
             foreach (item item in db.items.Local)
             {
-                item.State = EntityState.Unchanged;
+                if (item.IsSelected && item.Error == null)
+                {
+                    if (item.State == EntityState.Added)
+                    {
+                        item.timestamp = DateTime.Now;
+                        item.State = EntityState.Unchanged;
+                        db.Entry(item).State = EntityState.Added;
+                        item.IsSelected = false;
+                    }
+                    else if (item.State == EntityState.Modified)
+                    {
+                        item.timestamp = DateTime.Now;
+                        item.State = EntityState.Unchanged;
+                        db.Entry(item).State = EntityState.Modified;
+                        item.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (item.State > 0)
+                {
+                    if (item.State != EntityState.Unchanged && item.Error != null)
+                    {
+                        if (item.item_price.Count() > 0)
+                        {
+                            db.item_price.RemoveRange(item.item_price);
+                        }
+
+                        if (item.item_dimension.Count() > 0)
+                        {
+                            db.item_dimension.RemoveRange(item.item_dimension);
+                        }
+
+                        if (item.item_product.Count() > 0)
+                        {
+                            db.item_product.RemoveRange(item.item_product);
+                        }
+
+                        if (item.item_asset.Count() > 0)
+                        {
+                            db.item_asset.RemoveRange(item.item_asset);
+                        }
+
+                        if (item.item_service.Count() > 0)
+                        {
+                            db.item_service.RemoveRange(item.item_service);
+                        }
+
+                        if (item.item_property.Count() > 0)
+                        {
+                            db.item_property.RemoveRange(item.item_property);
+                        }
+
+                        if (item.item_tag_detail.Count() > 0)
+                        {
+                            db.item_tag_detail.RemoveRange(item.item_tag_detail);
+                        }
+                    }
+                }
             }
-            return true;
+
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
+            }
+
+            if (db.GetValidationErrors().Count() > 0)
+            {
+                return false;
+            }
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
         }
     }
 }

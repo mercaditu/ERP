@@ -244,7 +244,6 @@ namespace Cognitivo.Product
 
         private void Save_Click(object sender)
         {
-
             //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
             item item = itemViewSource.View.CurrentItem as item;
 
@@ -262,8 +261,11 @@ namespace Cognitivo.Product
                     itemViewSource.View.Refresh();
                     toolBar.msgSaved(ItemDB.NumberOfRecords);
                 }
+                else
+                {
+                    toolBar.msgWarning("Validation Error. Check Entry");
+                }
             }
-
         }
 
         private void Search_Click(object sender, string query)

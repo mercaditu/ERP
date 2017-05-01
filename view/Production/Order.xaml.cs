@@ -70,9 +70,13 @@ namespace Cognitivo.Production
         private void toolBar_btnNew_Click(object sender)
         {
             int LineID = OrderDB.db.production_line.Local.Select(x => x.id_production_line).FirstOrDefault();
-            production_order Order = OrderDB.Create(LineID);
+
+            production_order Order = OrderDB.Create_Normal(LineID);
+            Order.State = EntityState.Added;
+            
             production_orderViewSource.View.Refresh();
             production_orderViewSource.View.MoveCurrentTo(Order);
+
             Update_Logistics();
             filter_task();
         }

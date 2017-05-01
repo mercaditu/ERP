@@ -53,7 +53,7 @@ namespace Cognitivo.Production
         private void New_Click(object sender)
         {
             int LineID = OrderDB.db.production_line.Local.Select(x => x.id_production_line).FirstOrDefault();
-            production_order Order = OrderDB.Create(LineID);
+            production_order Order = OrderDB.Create_Fraction(LineID);
             production_orderViewSource.View.MoveCurrentTo(Order);
         }
 

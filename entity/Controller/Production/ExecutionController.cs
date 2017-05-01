@@ -24,6 +24,7 @@ namespace entity.Controller.Production
             await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
         }
+
         public bool Create()
         {
 
@@ -61,9 +62,9 @@ namespace entity.Controller.Production
 
                         production_order_detail.status = Status.Production.Executed;
                         production_order_detail.RaisePropertyChanged("status");
-                        production_order_detail.State = System.Data.Entity.EntityState.Modified;
+                        production_order_detail.State = EntityState.Modified;
 
-                        production_execution_detail.State = System.Data.Entity.EntityState.Modified;
+                        production_execution_detail.State = EntityState.Modified;
                         production_execution_detail.status = Status.Production.Executed;
 
                         if (production_execution_detail.project_task != null)
@@ -102,18 +103,19 @@ namespace entity.Controller.Production
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
-
-
+            
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
             db.SaveChanges();
-            foreach (production_execution_detail production_execution_detail in db.production_execution_detail.Local)
+
+            foreach (production_order production_order in db.production_order.Local)
             {
-                production_execution_detail.State = EntityState.Unchanged;
+                production_order.State = EntityState.Unchanged;
             }
+
             return true;
         }
     }

@@ -27,12 +27,24 @@ namespace entity.Controller.Production
             await db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
         }
 
-        public production_order Create(int Line)
+        public production_order Create_Fraction(int Line)
         {
             production_order Order = new production_order();
             Order.State = EntityState.Added;
             Order.status = Status.Production.Pending;
             Order.type = production_order.ProductionOrderTypes.Fraction;
+            Order.IsSelected = true;
+            db.production_order.Add(Order);
+
+            return Order;
+        }
+
+        public production_order Create_Normal(int Line)
+        {
+            production_order Order = new production_order();
+            Order.State = EntityState.Added;
+            Order.status = Status.Production.Pending;
+            Order.type = production_order.ProductionOrderTypes.Production;
             Order.IsSelected = true;
             db.production_order.Add(Order);
 
@@ -87,22 +99,58 @@ namespace entity.Controller.Production
         {
 
         }
+
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
 
+            foreach (production_order production_order in db.production_order.Local.Where(x => x.id_production_line > 0))
+            {
+                if (production_order.IsSelected && production_order.Error == null)
+                {
+                    if (production_order.State == EntityState.Added)
+                    {
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        db.Entry(production_order).State = EntityState.Added;
+                    }
+                    else if (production_order.State == EntityState.Modified)
+                    {
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        db.Entry(production_order).State = EntityState.Modified;
+                    }
+                    else if (production_order.State == EntityState.Deleted)
+                    {
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        db.production_order.Remove(production_order);
+                    }
+                    NumberOfRecords += 1;
+                }
+                else if (production_order.State > 0)
+                {
+                    if (production_order.State != EntityState.Unchanged)
+                    {
+                        db.Entry(production_order).State = EntityState.Unchanged;
+                    }
+                }
+            }
 
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            db.SaveChanges();
-            foreach (production_order production_order in db.production_order.Local)
+            if (db.GetValidationErrors().Count() > 0)
             {
-                production_order.State = EntityState.Unchanged;
+                return false;
             }
-            return true;
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
         }
     }
 }

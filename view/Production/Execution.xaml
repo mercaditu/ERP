@@ -10,6 +10,7 @@
 	xmlns:lex="http://wpflocalizeextension.codeplex.com"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	  xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+        xmlns:Controller="clr-namespace:entity.Controller.Production;assembly=entity"
 	xmlns:converter="clr-namespace:Cognitivo.Converters"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -25,6 +26,8 @@
 						Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <Controller:OrderController x:Key="OrderDB"/>
+        <Controller:ExecutionController x:Key="ExecutionDB"/>
         <converter:TreeViewchildFilter x:Key="tree" />
         <converter:OrderTovisibility x:Key="OrderTovisibility" />
         <converter:Type2Enable x:Key="Type2Enable" />

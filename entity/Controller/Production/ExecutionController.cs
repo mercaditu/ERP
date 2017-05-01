@@ -7,8 +7,23 @@ namespace entity.Controller.Production
 {
     public class ExecutionController : Base
     {
-     
 
+        public async void Load(production_order.ProductionOrderTypes ProductionOrderTypes)
+        {
+            if (ProductionOrderTypes == production_order.ProductionOrderTypes.Fraction)
+            {
+                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == ProductionOrderTypes && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).LoadAsync();
+            }
+            else
+            {
+                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && (a.type == ProductionOrderTypes || a.type==production_order.ProductionOrderTypes.Internal) && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).LoadAsync();
+            }
+
+            await db.production_line.Where(x => x.id_company == CurrentSession.Id_Company && x.app_location.id_branch == CurrentSession.Id_Branch).LoadAsync();
+            await db.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
+            await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+            await db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+        }
         public bool Create()
         {
 

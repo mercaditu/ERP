@@ -16,7 +16,9 @@ namespace Cognitivo.Production
     {
         public bool ViewAll { get; set; }
 
-        private ExecutionDB ExecutionDB = new ExecutionDB();
+        //  private ExecutionDB ExecutionDB = new ExecutionDB();
+        private entity.Controller.Production.ExecutionController ExecutionDB;
+       // private entity.Controller.Production.OrderController OrderDB;
 
         //Production EXECUTION CollectionViewSource
         private CollectionViewSource project_task_dimensionViewSource, production_execution_detailViewSource;
@@ -31,9 +33,16 @@ namespace Cognitivo.Production
         public Execution()
         {
             InitializeComponent();
+
+
+            //OrderDB = FindResource("OrderDB") as entity.Controller.Production.OrderController;
+            ExecutionDB = FindResource("ExecutionDB") as entity.Controller.Production.ExecutionController;
+
+           // OrderDB.Initialize();
+            ExecutionDB.Initialize();
         }
 
-        private async void Page_Loaded(object sender, EventArgs e)
+        private  void Page_Loaded(object sender, EventArgs e)
         {
             production_execution_detailViewSource = FindResource("production_execution_detailViewSource") as CollectionViewSource;
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
@@ -41,14 +50,14 @@ namespace Cognitivo.Production
             Load();
 
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
-            await ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
-            hr_time_coefficientViewSource.Source = ExecutionDB.hr_time_coefficient.Local;
+           
+            hr_time_coefficientViewSource.Source = ExecutionDB.db.hr_time_coefficient.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            app_dimensionViewSource.Source = await ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
+            app_dimensionViewSource.Source = ExecutionDB.db.app_dimension.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            app_measurementViewSource.Source = await ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).ToListAsync();
+            app_measurementViewSource.Source = ExecutionDB.db.app_measurement.Local;
 
             cmbcoefficient.SelectedIndex = -1;
 
@@ -58,37 +67,31 @@ namespace Cognitivo.Production
             filter_task();
         }
 
-        private async void Load()
+        private void Load()
         {
-            production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
-            await ExecutionDB.production_order.Where(a =>
-                    a.id_company == CurrentSession.Id_Company &&
-                    a.type != production_order.ProductionOrderTypes.Fraction &&
-                    a.is_archived == false &&
-                    a.production_line.app_location.id_branch == CurrentSession.Id_Branch)
-                .Include(z => z.project)
-                .OrderByDescending(x => x.trans_date)
-                .LoadAsync();
-            production_orderViewSource.Source = ExecutionDB.production_order.Local.Where(x => x.is_archived == false);
+            ExecutionDB.Load(production_order.ProductionOrderTypes.Production);
+            production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
+
+            production_orderViewSource.Source = ExecutionDB.db.production_order.Local.Where(x => x.is_archived == false);
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-            ExecutionDB.SaveChanges();
+            ExecutionDB.SaveChanges_WithValidation();
         }
 
         private void itemserviceComboBox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             if (CmbService.ContactID > 0)
             {
-                contact contact = ExecutionDB.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
+                contact contact = ExecutionDB.db.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
                 if (contact != null)
                 {
                     adddatacontact(contact, treeOrder);
                     production_order_detail production_order_detail = (production_order_detail)treeOrder.SelectedItem;
                     if (production_order_detail != null)
                     {
-                        production_execution_detailViewSource.Source = ExecutionDB.production_execution_detail.Local.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
+                        production_execution_detailViewSource.Source = ExecutionDB.db.production_execution_detail.Local.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
                         production_execution_detailViewSource.View.Refresh();
                     }
                 }
@@ -124,7 +127,7 @@ namespace Cognitivo.Production
                         }
 
                         //Gets the Employee's contracts Hourly Rate.
-                        hr_contract contract = ExecutionDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
+                        hr_contract contract = ExecutionDB.db.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
                         if (contract != null)
                         {
                             _production_execution_detail.unit_cost = contract.Hourly;
@@ -157,7 +160,7 @@ namespace Cognitivo.Production
                             {
                                 cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
 
-                                pnl_ProductionAccount.ExecutionDB = ExecutionDB;
+                                pnl_ProductionAccount.ExecutionDB = ExecutionDB.db;
                                 pnl_ProductionAccount.Quantity_to_Execute = _production_execution_detail.quantity;
                                 pnl_ProductionAccount.production_execution_detail = _production_execution_detail;
                                 crud_modal.Visibility = Visibility.Visible;
@@ -165,7 +168,7 @@ namespace Cognitivo.Production
                             }
 
                             production_order_detail.production_execution_detail.Add(_production_execution_detail);
-                            ExecutionDB.SaveChangesWithoutValidation();
+                            ExecutionDB.SaveChanges_WithValidation();
                             //RefreshData();
                         }
                     }
@@ -184,7 +187,7 @@ namespace Cognitivo.Production
                 production_order production_order = (production_order)projectDataGrid.SelectedItem;
                 production_order.IsSelected = true;
                 production_order.State = EntityState.Modified;
-                ExecutionDB.Entry(production_order).State = EntityState.Modified;
+                ExecutionDB.db.Entry(production_order).State = EntityState.Modified;
             }
             else
             {
@@ -202,7 +205,7 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
 
-            if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Production) > 0)
+            if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Production))
             {
                 toolBar.msgApproved(1);
             }
@@ -232,7 +235,7 @@ namespace Cognitivo.Production
                     {
                         int _id_task = production_order_detail.project_task.id_project_task;
                         project_task_dimensionViewSource = (CollectionViewSource)FindResource("project_task_dimensionViewSource");
-                        project_task_dimensionViewSource.Source = ExecutionDB.project_task_dimension.Where(x => x.id_project_task == _id_task).ToList();
+                        project_task_dimensionViewSource.Source = ExecutionDB.db.project_task_dimension.Where(x => x.id_project_task == _id_task).ToList();
                     }
                 }
                 else if (production_order_detail.item.id_item_type == item.item_type.FixedAssets)
@@ -321,7 +324,7 @@ namespace Cognitivo.Production
             MessageBoxResult res = MessageBox.Show("Are you sure want to Archive?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                foreach (production_order production_order in ExecutionDB.production_order.Local.Where(x => x.IsSelected))
+                foreach (production_order production_order in ExecutionDB.db.production_order.Local.Where(x => x.IsSelected))
                 {
                     production_order.is_archived = true;
                 }
@@ -358,8 +361,8 @@ namespace Cognitivo.Production
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
                     production_execution_detail.State = EntityState.Deleted;
                     production_order_detail.production_execution_detail.Remove(production_execution_detail);
-                    ExecutionDB.production_execution_detail.Remove(production_execution_detail);
-                    ExecutionDB.SaveChanges();
+                    ExecutionDB.db.production_execution_detail.Remove(production_execution_detail);
+                    ExecutionDB.SaveChanges_WithValidation();
                     RefreshData();
                 }
             }
@@ -447,7 +450,7 @@ namespace Cognitivo.Production
                             DimensionPanel.mode = Configs.itemMovementFraction.modes.Execution;
 
                             DimensionPanel.id_item = (int)production_order_detail.id_item;
-                            DimensionPanel.ExecutionDB = ExecutionDB;
+                            DimensionPanel.ExecutionDB = ExecutionDB.db;
                             DimensionPanel.production_order_detail = production_order_detail;
                             DimensionPanel.Quantity = Quantity;
 
@@ -465,11 +468,11 @@ namespace Cognitivo.Production
                             {
                                 int ProductID = production_order_detail.item.item_product.FirstOrDefault().id_item_product;
 
-                                await ExecutionDB.item_movement.Where(x =>
+                                await ExecutionDB.db.item_movement.Where(x =>
                                     x.id_item_product == ProductID &&
                                     x.id_location == LocationID).LoadAsync();
 
-                                QuantityAvaiable = ExecutionDB.item_movement.Local.Sum(x => x.credit) - ExecutionDB.item_movement.Local.Sum(x => x.debit);
+                                QuantityAvaiable = ExecutionDB.db.item_movement.Local.Sum(x => x.credit) - ExecutionDB.db.item_movement.Local.Sum(x => x.debit);
                             }
 
                             if (QuantityAvaiable < (QuantityExe + Quantity))
@@ -499,7 +502,7 @@ namespace Cognitivo.Production
                     RefreshData();
                 }
 
-                Collection.Source = ExecutionDB.production_execution_detail.Local.Where(x => x.id_order_detail == production_order_detail.id_order_detail);
+                Collection.Source = ExecutionDB.db.production_execution_detail.Local.Where(x => x.id_order_detail == production_order_detail.id_order_detail);
 
                 if (production_order_detaillViewSource.View != null)
                 {
@@ -552,7 +555,7 @@ namespace Cognitivo.Production
             {
                 cntrl.Panels.pnl_ProductionAccount pnl_ProductionAccount = new cntrl.Panels.pnl_ProductionAccount();
 
-                pnl_ProductionAccount.ExecutionDB = ExecutionDB;
+                pnl_ProductionAccount.ExecutionDB = ExecutionDB.db;
                 pnl_ProductionAccount.Quantity_to_Execute = Quantity;
                 pnl_ProductionAccount.production_execution_detail = _production_execution_detail;
                 crud_modal.Visibility = Visibility.Visible;
@@ -567,14 +570,14 @@ namespace Cognitivo.Production
         {
             if (CmbServicecontract.ContactID > 0)
             {
-                contact contact = ExecutionDB.contacts.Where(x => x.id_contact == CmbServicecontract.ContactID).FirstOrDefault();
+                contact contact = ExecutionDB.db.contacts.Where(x => x.id_contact == CmbServicecontract.ContactID).FirstOrDefault();
                 adddatacontact(contact, treeOrder);
 
                 production_order_detail production_order_detail = (production_order_detail)treeOrder.SelectedItem_;
 
                 if (production_order_detail != null)
                 {
-                    production_execution_detailViewSource.Source = ExecutionDB.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
+                    production_execution_detailViewSource.Source = ExecutionDB.db.production_execution_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).ToList();
                 }
             }
         }
@@ -640,7 +643,7 @@ namespace Cognitivo.Production
 
                 if (production_execution_detail != null)
                 {
-                    item_movement item_movement = ExecutionDB.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                    item_movement item_movement = ExecutionDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                     if (item_movement != null)
                     {
                         production_execution_detail.batch = item_movement.code;

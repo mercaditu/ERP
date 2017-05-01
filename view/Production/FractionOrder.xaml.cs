@@ -47,12 +47,13 @@ namespace Cognitivo.Production
             ExecutionDB = FindResource("ExecutionDB") as entity.Controller.Production.ExecutionController;
 
             OrderDB.Initialize();
-            ExecutionDB.db = OrderDB.db;
+            ExecutionDB.Initialize();
         }
 
         private void New_Click(object sender)
         {
-            production_order Order = OrderDB.Create();
+            int LineID = OrderDB.db.production_line.Local.Select(x => x.id_production_line).FirstOrDefault();
+            production_order Order = OrderDB.Create(LineID);
             production_orderViewSource.View.MoveCurrentTo(Order);
         }
 
@@ -108,7 +109,8 @@ namespace Cognitivo.Production
             //projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
             //projectViewSource.Source = ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
-            production_lineViewSource = FindResource("production_lineViewSource") as CollectionViewSource;
+            OrderDB.Load(production_order.ProductionOrderTypes.Fraction);
+          production_lineViewSource = FindResource("production_lineViewSource") as CollectionViewSource;
             production_lineViewSource.Source = OrderDB.db.production_line.Local;
 
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;

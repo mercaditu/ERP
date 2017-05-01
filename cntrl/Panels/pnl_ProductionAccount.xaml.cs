@@ -12,7 +12,7 @@ namespace cntrl.Panels
     public partial class pnl_ProductionAccount : UserControl
     {
         private CollectionViewSource production_accountViewSource;
-        public ExecutionDB ExecutionDB { get; set; }
+        public db ExecutionDB { get; set; }
 
         public production_execution_detail production_execution_detail { get; set; }
 

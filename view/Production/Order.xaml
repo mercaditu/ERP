@@ -12,11 +12,14 @@
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:Controller="clr-namespace:entity.Controller.Production;assembly=entity"
 	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
 	  lex:LocalizeDictionary.DesignCulture="en-US"
 	  MinHeight="400" MinWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
+        <Controller:OrderController x:Key="OrderDB"/>
+        <Controller:ExecutionController x:Key="ExecutionDB"/>
         <converter:SecurityConverter x:Key="SecurityConverter" />
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color" />
         <converter:ProuctionPending2BooleanConverter x:Key="ProuctionPending2BooleanConverter" />

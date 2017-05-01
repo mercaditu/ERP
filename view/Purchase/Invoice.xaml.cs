@@ -1,6 +1,7 @@
 ﻿using entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Cognitivo.Purchase
             InitializeComponent();
             PurchaseDB = FindResource("PurchaseInvoice") as entity.Controller.Purchase.InvoiceController;
 
-            if (true)
+            if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 PurchaseDB.Initialize();
             }

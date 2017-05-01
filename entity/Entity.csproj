@@ -643,6 +643,7 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>WeatherSettings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Controller\Purchase\PurchaseOrder.cs" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\accounting_account.datasource" />
     <None Include="Properties\DataSources\accounting_budget.datasource" />

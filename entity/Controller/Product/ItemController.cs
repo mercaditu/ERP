@@ -230,18 +230,21 @@ namespace entity.Controller.Product
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
-
-           
-
+            
             foreach (var error in db.GetValidationErrors())
             {
                 item item = error.Entry.Entity as item;
-                db.item_price.RemoveRange(item.item_price);
+                if (item != null)
+                {
+                    if (item.item_price.Count() > 0)
+                    {
+                        db.item_price.RemoveRange(item.item_price);
+                    }
+                }
+
                 db.Entry(item).State = EntityState.Detached;
-                
             }
            
-
             db.SaveChanges();
             foreach (item item in db.items.Local)
             {

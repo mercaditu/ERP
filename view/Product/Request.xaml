@@ -99,7 +99,7 @@
                          metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=OneWay}"
                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                         Text="{Binding Path=number,ElementName=TaskApprove, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                         Text="{Binding Path=number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                 <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}" />
                 <ComboBox x:Name="cbxcurrency" Style="{StaticResource input_combobox}"
                               metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -154,7 +154,7 @@
                 <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                           metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                          SelectedItem="{Binding user_given, Mode=TwoWay, NotifyOnValidationError=True,
+                          SelectedItem="{Binding given_user, Mode=TwoWay, NotifyOnValidationError=True,
                           ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                           SelectedValuePath="id_user"
                           ItemsSource="{Binding Source={StaticResource security_userViewSource}}" />

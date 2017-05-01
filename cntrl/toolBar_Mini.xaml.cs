@@ -323,7 +323,7 @@ namespace cntrl
             if (!DesignerProperties.GetIsInDesignMode(this) && HasLoaded == false)
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
-                get_Icons(toolBarIcons.Basic.ToString(), ref security);
+                get_Icons(ToolBarIcons.Basic.ToString(), ref security);
 
                 ///Loaded prevents the Parent Tab Controls from rendering the code twice.
                 ///The enclosing If function checks for this to be True to Skip.

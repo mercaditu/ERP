@@ -12,7 +12,7 @@ using WPFLocalizeExtension.Extensions;
 
 namespace cntrl
 {
-    public enum toolBarIcons { Basic, Filter, Admin, Impex, Project, Production }
+    public enum ToolBarIcons { Basic, Filter, Admin, Impex, Project, Production }
 
     public partial class toolBarData
     {
@@ -29,15 +29,15 @@ namespace cntrl
             dtIconList.Columns.Add("img");
 
             //Basic
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Parent", "C");
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "New", "+");
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Edit", "e");
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "b", "Save", "s");
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "b", "Cancel", "c");
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Archived", "Y");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "a", "Parent", "C");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "a", "New", "+");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "a", "Edit", "e");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "b", "Save", "s");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "b", "Cancel", "c");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "a", "Archived", "Y");
 
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "s", "a", "Approve", "j");
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "s", "a", "Annul", "k");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "s", "a", "Approve", "j");
+            dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "s", "a", "Annul", "k");
         }
     }
 
@@ -55,10 +55,10 @@ namespace cntrl
         #endregion NotifyPropertyChanged
 
         public int TotalPending { get { return _TotalPending; } set { _TotalPending = value; RaisePropertyChanged("TotalPending"); RaisePropertyChanged("Total_PendingApproved"); } }
-        private int _TotalPending;
+        private int _TotalPending = 0;
 
         public int TotalApproved { get { return _TotalApproved; } set { _TotalApproved = value; RaisePropertyChanged("TotalApproved"); RaisePropertyChanged("Total_PendingApproved"); } }
-        private int _TotalApproved;
+        private int _TotalApproved = 0;
 
         private int Total_PendingApproved { get { return TotalPending + TotalApproved; } }
 
@@ -245,31 +245,6 @@ namespace cntrl
 
         #endregion "State Properties & Events"
 
-        #region "Progress Bar Properties"
-
-        public bool IsIndeterminate { get; set; }
-        public int Maximum { get; set; }
-        public int Value { get; set; }
-
-        public Visibility ProgressBar
-        {
-            get
-            {
-                return _ProgressBar;
-            }
-            set
-            {
-                if (value != _ProgressBar)
-                {
-                    _ProgressBar = value;
-                }
-            }
-        }
-
-        private Visibility _ProgressBar = Visibility.Collapsed;
-
-        #endregion "Progress Bar Properties"
-
         public App.Names appName { get; set; }
 
         #region "Events"
@@ -440,7 +415,7 @@ namespace cntrl
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
-                Get_Icons(toolBarIcons.Basic.ToString(), ref security);
+                Get_Icons(ToolBarIcons.Basic.ToString(), ref security);
             }
         }
 

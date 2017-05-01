@@ -29,11 +29,14 @@ namespace entity.Controller.Production
 
         public production_order Create_Fraction(int Line)
         {
-            production_order Order = new production_order();
-            Order.State = EntityState.Added;
-            Order.status = Status.Production.Pending;
-            Order.type = production_order.ProductionOrderTypes.Fraction;
-            Order.IsSelected = true;
+            production_order Order = new production_order()
+            {
+                State = EntityState.Added,
+                status = Status.Production.Pending,
+                type = production_order.ProductionOrderTypes.Fraction,
+                IsSelected = true
+            };
+
             db.production_order.Add(Order);
 
             return Order;
@@ -41,11 +44,14 @@ namespace entity.Controller.Production
 
         public production_order Create_Normal(int Line)
         {
-            production_order Order = new production_order();
-            Order.State = EntityState.Added;
-            Order.status = Status.Production.Pending;
-            Order.type = production_order.ProductionOrderTypes.Production;
-            Order.IsSelected = true;
+            production_order Order = new production_order()
+            {
+                State = EntityState.Added,
+                status = Status.Production.Pending,
+                type = production_order.ProductionOrderTypes.Production,
+                IsSelected = true
+            };
+
             db.production_order.Add(Order);
 
             return Order;

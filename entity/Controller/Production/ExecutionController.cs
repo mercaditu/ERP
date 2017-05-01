@@ -16,7 +16,7 @@ namespace entity.Controller.Production
             }
             else
             {
-                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && (a.type == ProductionOrderTypes || a.type==production_order.ProductionOrderTypes.Internal) && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).LoadAsync();
+                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && (a.type == ProductionOrderTypes || a.type == production_order.ProductionOrderTypes.Internal) && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
             await db.production_line.Where(x => x.id_company == CurrentSession.Id_Company && x.app_location.id_branch == CurrentSession.Id_Branch).LoadAsync();
@@ -83,7 +83,7 @@ namespace entity.Controller.Production
                             }
                         }
 
-                        if (Type == entity.production_order.ProductionOrderTypes.Fraction)
+                        if (Type == production_order.ProductionOrderTypes.Fraction)
                         {
                             if (production_execution_detail != null && production_execution_detail.production_order_detail != null && production_execution_detail.production_order_detail.production_order != null && production_execution_detail.production_order_detail.production_order.app_document_range != null)
                             {
@@ -103,20 +103,53 @@ namespace entity.Controller.Production
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
-            
+
+            foreach (production_order production_order in db.production_order.Local)
+            {
+                if (production_order.IsSelected && production_order.Error == null)
+                {
+                    if (production_order.State == EntityState.Added)
+                    {
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        db.Entry(production_order).State = EntityState.Added;
+                    }
+                    else if (production_order.State == EntityState.Modified)
+                    {
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        db.Entry(production_order).State = EntityState.Modified;
+                    }
+                    else if (production_order.State == EntityState.Deleted)
+                    {
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        db.production_order.Remove(production_order);
+                    }
+                }
+                else if (production_order.State > 0)
+                {
+                    if (production_order.State != EntityState.Unchanged)
+                    {
+                        db.Entry(production_order).State = EntityState.Unchanged;
+                    }
+                }
+            }
+
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            db.SaveChanges();
-
-            foreach (production_order production_order in db.production_order.Local)
+            if (db.GetValidationErrors().Count() > 0)
             {
-                production_order.State = EntityState.Unchanged;
+                return false;
             }
-
-            return true;
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
         }
     }
 }

@@ -260,8 +260,6 @@
                                           CanUserAddRows="False"
                                          ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}" SelectionMode="Single">
                                     <DataGrid.Columns>
-                                           <DataGridComboBoxColumn  Header="{lex:Loc Cognitivo:local:Item}" Width="*" SelectedValueBinding="{Binding id_item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="name" SelectedValuePath="id_item" 
-                                                     ItemsSource="{Binding Source={StaticResource itemsViewSource}}" IsReadOnly="True"/>
                                         <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Header="{lex:Loc Cognitivo:local:Module}" Width="*" IsReadOnly="True" />
                                         <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

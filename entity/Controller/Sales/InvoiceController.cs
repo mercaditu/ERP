@@ -9,12 +9,7 @@ namespace entity.Controller.Sales
 {
     public class InvoiceController: Base
     {
-        /// <summary>
-        /// Database Context. Already Initialized.
-        /// </summary>
         public Brillo.Promotion.Start Promotions { get; set; }
-
-        //DependencyProperty for IsARchived
 
         #region Properties
 

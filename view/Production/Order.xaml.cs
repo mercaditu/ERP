@@ -510,6 +510,7 @@ namespace Cognitivo.Production
         private void btnNewTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
+            stackQuantity.IsEnabled = true;
 
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order_detail production_order_detail = treeProject.SelectedItem as production_order_detail;
@@ -521,12 +522,16 @@ namespace Cognitivo.Production
                 {
                     if (production_order_detail.item.id_item_type == entity.item.item_type.Task)
                     {
-                        production_order_detail n_production_order_detail = new production_order_detail();
-                        n_production_order_detail.id_production_order = production_order.id_production_order;
-                        n_production_order_detail.production_order = production_order;
+                        production_order_detail n_production_order_detail = new production_order_detail()
+                        {
+                            id_production_order = production_order.id_production_order,
+                            production_order = production_order,
+                            quantity = 0,
+                            status = Status.Production.Pending
+                        };
+
                         n_production_order_detail.production_order.status = Status.Production.Pending;
-                        n_production_order_detail.quantity = 0;
-                        n_production_order_detail.status = Status.Production.Pending;
+
                         production_order_detail.child.Add(n_production_order_detail);
                         OrderDB.production_order_detail.Add(n_production_order_detail);
                         production_orderproduction_order_detailViewSource.View.Refresh();
@@ -560,6 +565,7 @@ namespace Cognitivo.Production
                 }
                 else
                 {
+                    stackQuantity.IsEnabled = true;
                     stpcode.IsEnabled = true;
                 }
             }
@@ -575,6 +581,8 @@ namespace Cognitivo.Production
                     production_order.State = EntityState.Modified;
                     Update_Logistics();
                     stpcode.IsEnabled = false;
+                    stackQuantity.IsEnabled = false;
+
                     toolBar.msgSaved(OrderDB.NumberOfRecords);
                 }
             }
@@ -648,12 +656,12 @@ namespace Cognitivo.Production
                 if (Item_Type == item.item_type.Task)
                 {
                     stpdate.Visibility = Visibility.Visible;
-                    stpitem.Visibility = Visibility.Collapsed;
+                    stackQuantity.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     stpdate.Visibility = Visibility.Collapsed;
-                    stpitem.Visibility = Visibility.Visible;
+                    stackQuantity.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -773,17 +781,9 @@ namespace Cognitivo.Production
             }
         }
 
-        private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
-       
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            production_order_detail obj = (production_order_detail)itemDataGrid.SelectedItem;
-            if (obj != null)
+            if (itemDataGrid.SelectedItem is production_order_detail obj)
             {
                 if (obj.project_task != null)
                 {
@@ -803,8 +803,7 @@ namespace Cognitivo.Production
 
         private void Slider_LostFocus(object sender, RoutedEventArgs e)
         {
-            production_order_detail production_order_detail = production_orderproduction_order_detailViewSource.View.CurrentItem as production_order_detail;
-            if (production_order_detail != null)
+            if (production_orderproduction_order_detailViewSource.View.CurrentItem is production_order_detail production_order_detail)
             {
                 using (db db = new db())
                 {

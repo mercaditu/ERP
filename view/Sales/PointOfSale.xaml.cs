@@ -201,7 +201,7 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ApplicationWindow myWindow = Window.GetWindow(this) as ApplicationWindow;
+            SalesDB.Initialize();
 
             New_Sale_Payment();
 

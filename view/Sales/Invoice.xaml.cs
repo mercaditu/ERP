@@ -662,7 +662,6 @@ namespace Cognitivo.Sales
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
             }
-
         }
 
         private void RecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -701,7 +700,6 @@ namespace Cognitivo.Sales
 
         private void GridSearch(object sender, RoutedEventArgs e)
         {
-            
             Load_PrimaryDataThread(null, null);
         }
 

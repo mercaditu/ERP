@@ -116,7 +116,7 @@ namespace Cognitivo.Commercial
 
         #region Toolbar Events
 
-        private void toolBar_btnNew_Click(object sender)
+        private void New_Click(object sender)
         {
             contact contact = ContactDB.Create();
             
@@ -125,7 +125,7 @@ namespace Cognitivo.Commercial
             contactViewSource.View.MoveCurrentToLast();
         }
 
-        private void toolBar_btnDelete_Click(object sender)
+        private void Delete_Click(object sender)
         {
             try
             {
@@ -143,12 +143,11 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void toolBar_btnEdit_Click(object sender)
+        private void Edit_Click(object sender)
         {
             if (listContacts.SelectedItem != null)
             {
-                contact contact = (contact)listContacts.SelectedItem;
-                ContactDB.Edit(ref contact);
+                ContactDB.Edit(listContacts.SelectedItem as contact);
             }
             else
             {
@@ -156,7 +155,7 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void toolBar_btnSave_Click(object sender)
+        private void Save_Click(object sender)
         {
             if (ContactDB.SaveChanges_WithValidation())
             {
@@ -165,7 +164,7 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void toolBar_btnCancel_Click(object sender)
+        private void Cancel_Click(object sender)
         {
             ContactDB.CancelAllChanges();
             contact contact = contactViewSource.View.CurrentItem as contact;
@@ -260,10 +259,8 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
+        private void Search_Click(object sender, string query)
         {
-            try
-            {
                 if (!string.IsNullOrEmpty(query))
                 {
                     contactViewSource.View.Filter = i =>
@@ -304,11 +301,6 @@ namespace Cognitivo.Commercial
                 {
                     contactViewSource.View.Filter = null;
                 }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -329,9 +321,7 @@ namespace Cognitivo.Commercial
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
-            {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     //DeleteDetailGridRow
@@ -350,11 +340,6 @@ namespace Cognitivo.Commercial
                         contactcontact_tag_detailViewSource.View.Refresh();
                     }
                 }
-            }
-            catch (Exception)
-            {
-                //throw;
-            }
         }
 
         private void LoadRelatedContactOnThread(contact ParentContact)
@@ -392,7 +377,6 @@ namespace Cognitivo.Commercial
 
         private void Add_Tag()
         {
-            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
             if (cbxTag.Data != null)
             {
                 int id = Convert.ToInt32(((contact_tag)cbxTag.Data).id_tag);
@@ -401,9 +385,12 @@ namespace Cognitivo.Commercial
                     contact contact = contactViewSource.View.CurrentItem as contact;
                     if (contact != null)
                     {
-                        contact_tag_detail contact_tag_detail = new contact_tag_detail();
-                        contact_tag_detail.id_tag = ((contact_tag)cbxTag.Data).id_tag;
-                        contact_tag_detail.contact_tag = ((contact_tag)cbxTag.Data);
+                        contact_tag_detail contact_tag_detail = new contact_tag_detail()
+                        {
+                            id_tag = ((contact_tag)cbxTag.Data).id_tag,
+                            contact_tag = ((contact_tag)cbxTag.Data)
+                        };
+
                         contact.contact_tag_detail.Add(contact_tag_detail);
                         CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
                         contactcontact_tag_detailViewSource.View.Refresh();
@@ -414,9 +401,7 @@ namespace Cognitivo.Commercial
 
         private async void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            contact contact = contactViewSource.View.CurrentItem as contact;
-
-            if (contact != null)
+            if (contactViewSource.View.CurrentItem is contact contact)
             {
                 LoadRelatedContactOnThread(contact);
 
@@ -445,11 +430,6 @@ namespace Cognitivo.Commercial
                     LoadRelatedContactOnThread(ParentContact);
                 }
             }
-        }
-
-        private void contactcontact_subscriptionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            // FilterSubscription();
         }
 
         private void MapsDropPin_Click(object sender, MouseButtonEventArgs e)
@@ -498,10 +478,12 @@ namespace Cognitivo.Commercial
                 }
                 contact_field_value contact_field_value = new contact_field_value();
                 contact_field_value.app_field = app_field;
+
                 contact.contact_field_value.Add(contact_field_value);
                 contactViewSource.View.Refresh();
+
                 contactcontact_field_valueViewSource.View.Refresh();
-                contactcontact_field_valueViewSource.View.MoveCurrentToLast();
+                contactcontact_field_valueViewSource.View.MoveCurrentTo(contact_field_value);
             }
         }
 
@@ -652,15 +634,9 @@ namespace Cognitivo.Commercial
                         {
                             return true;
                         }
-                        else
-                        {
-                            return false;
-                        }
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return false;
                 };
             }
         }
@@ -681,15 +657,9 @@ namespace Cognitivo.Commercial
                         {
                             return true;
                         }
-                        else
-                        {
-                            return false;
-                        }
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return false;
                 };
             }
         }
@@ -710,15 +680,9 @@ namespace Cognitivo.Commercial
                         {
                             return true;
                         }
-                        else
-                        {
-                            return false;
-                        }
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return false;
                 };
             }
         }

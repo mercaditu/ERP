@@ -385,12 +385,12 @@
         </TabControl>
 
         <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="Contact"
-					   btnNew_Click="toolBar_btnNew_Click"
-					   btnDelete_Click="toolBar_btnDelete_Click"
-					   btnEdit_Click="toolBar_btnEdit_Click"
-					   btnSave_Click="toolBar_btnSave_Click"
-					   btnCancel_Click="toolBar_btnCancel_Click"
-					   btnSearch_Click="toolBar_btnSearch_Click"
+					   btnNew_Click="New_Click"
+					   btnDelete_Click="Delete_Click"
+					   btnEdit_Click="Edit_Click"
+					   btnSave_Click="Save_Click"
+					   btnCancel_Click="Cancel_Click"
+					   btnSearch_Click="Search_Click"
                        btnSync_Click="Page_Loaded"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

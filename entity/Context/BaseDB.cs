@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Windows;
-using WPFLocalizeExtension.Extensions;
 
 namespace entity
 {
@@ -12,7 +11,20 @@ namespace entity
 
         public override int SaveChanges()
         {
-            return base.SaveChanges();
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (Exception)
+            {
+                //try to go through possible Validation Errors and remove before trying to re-attempt save.
+                foreach (var error in base.GetValidationErrors())
+                {
+                    base.Entry(error.Entry).State = EntityState.Detached;
+                }
+
+                return base.SaveChanges();
+            }
         }
 
         public override Task<int> SaveChangesAsync()

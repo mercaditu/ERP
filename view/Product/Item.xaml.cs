@@ -244,8 +244,7 @@ namespace Cognitivo.Product
 
         private void Save_Click(object sender)
         {
-            IEnumerable<DbEntityValidationResult> validationresult = ItemDB.db.GetValidationErrors();
-            if (validationresult.Count() == 0)
+            if (ItemDB.db.GetValidationErrors().Count() == 0)
             {
                 //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
                 item item = itemViewSource.View.CurrentItem as item;

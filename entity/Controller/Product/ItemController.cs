@@ -158,63 +158,69 @@ namespace entity.Controller.Product
                     }
                     NumberOfRecords += 1;
                 }
+               
 
                 //If Error or Not Selected, This will Ignore Updates into DB allowing code to run without errors.
-                if (item.State > 0)
-                {
-                    if (item.State != EntityState.Unchanged)
-                    {
-                        db.Entry(item).State = EntityState.Unchanged;
+                //if (item.State > 0 && item.Error != null)
+                //{
+                //    if (item.State != EntityState.Unchanged)
+                //    {
+                //        //db.Entry(item).State = EntityState.Unchanged;
 
-                        foreach (item_price price in item.item_price)
-                        {
-                            if (price.State != EntityState.Unchanged)
-                            {
-                                db.Entry(price).State = EntityState.Unchanged;
-                            }
-                        }
+                //        foreach (item_price price in item.item_price)
+                //        {
+                //            if (price.State != EntityState.Unchanged)
+                //            {
+                //                db.Entry(price).State = EntityState.Detached;
+                //            }
+                //        }
 
-                        foreach (item_product product in item.item_product)
-                        {
-                            if (product.State != EntityState.Unchanged)
-                            {
-                                db.Entry(product).State = EntityState.Unchanged;
-                            }
-                        }
+                //        foreach (item_product product in item.item_product)
+                //        {
+                //            if (product.State != EntityState.Unchanged)
+                //            {
+                //                db.Entry(product).State = EntityState.Detached;
+                //            }
+                //        }
 
-                        foreach (item_asset asset in item.item_asset)
-                        {
-                            if (asset.State != EntityState.Unchanged)
-                            {
-                                db.Entry(asset).State = EntityState.Unchanged;
-                            }
-                        }
+                //        foreach (item_asset asset in item.item_asset)
+                //        {
+                //            if (asset.State != EntityState.Unchanged)
+                //            {
+                //                db.Entry(asset).State = EntityState.Detached;
+                //            }
+                //        }
 
-                        foreach (item_dimension dimension in item.item_dimension)
-                        {
-                            if (dimension.State != EntityState.Unchanged)
-                            {
-                                db.Entry(dimension).State = EntityState.Unchanged;
-                            }
-                        }
+                //        foreach (item_dimension dimension in item.item_dimension)
+                //        {
+                //            if (dimension.State != EntityState.Unchanged)
+                //            {
+                //                db.Entry(dimension).State = EntityState.Detached;
+                //            }
+                //        }
 
-                        foreach (item_property property in item.item_property)
-                        {
-                            if (property.State != EntityState.Unchanged)
-                            {
-                                db.Entry(property).State = EntityState.Unchanged;
-                            }
-                        }
+                //        foreach (item_property property in item.item_property)
+                //        {
+                //            if (property.State != EntityState.Unchanged)
+                //            {
+                //                db.Entry(property).State = EntityState.Detached;
+                //            }
+                //        }
 
-                        foreach (item_tag_detail tag_detail in item.item_tag_detail)
-                        {
-                            if (tag_detail.State != EntityState.Unchanged)
-                            {
-                                db.Entry(tag_detail).State = EntityState.Unchanged;
-                            }
-                        }
-                    }
-                }
+                //        foreach (item_tag_detail tag_detail in item.item_tag_detail)
+                //        {
+                //            if (tag_detail.State != EntityState.Unchanged)
+                //            {
+                //                db.Entry(tag_detail).State = EntityState.Detached;
+                //            }
+                //        }
+                //    }
+                //}
+            }
+
+            foreach (var Entity in db.GetValidationErrors())
+            {
+                db.Entry(Entity.Entry.Entity).State = EntityState.Detached;
             }
 
             db.SaveChanges();

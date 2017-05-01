@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Windows;
 
 namespace entity.Controller.Commercial
 {
-    public class ContactController:Base
+    public class ContactController : Base
     {
 
         public async void LoadCustomers()
@@ -33,7 +32,6 @@ namespace entity.Controller.Commercial
             await db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
             await db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
-
             await db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).LoadAsync();
         }
 
@@ -70,7 +68,7 @@ namespace entity.Controller.Commercial
             return contact;
         }
 
-        public bool Edit(ref contact contact)
+        public bool Edit(contact contact)
         {
             contact.IsSelected = true;
             contact.State = EntityState.Modified;
@@ -82,32 +80,35 @@ namespace entity.Controller.Commercial
         {
             NumberOfRecords = 0;
 
-            foreach (contact contact in db.contacts.Local)
-            {
-                if (contact.IsSelected)
-                {
-                    if (contact.State == EntityState.Added)
-                    {
-                        contact.timestamp = DateTime.Now;
-                        contact.State = EntityState.Unchanged;
-                        db.Entry(contact).State = EntityState.Added;
-                    }
-                    else if (contact.State == EntityState.Modified)
-                    {
-                        contact.timestamp = DateTime.Now;
-                        contact.State = EntityState.Unchanged;
-                        db.Entry(contact).State = EntityState.Modified;
-                    }
+            //foreach (contact contact in db.contacts.Local)
+            //{
+            //    if (contact.IsSelected && contact.Error == null)
+            //    {
+            //        //non validated data is getting here. check
+            //        if (contact.State == EntityState.Added)
+            //        {
+            //            contact.timestamp = DateTime.Now;
+            //            contact.State = EntityState.Unchanged;
+            //            db.Entry(contact).State = EntityState.Added;
+            //        }
+            //        else if (contact.State == EntityState.Modified)
+            //        {
+            //            contact.timestamp = DateTime.Now;
+            //            contact.State = EntityState.Unchanged;
+            //            db.Entry(contact).State = EntityState.Modified;
+            //        }
 
-                    NumberOfRecords += 1;
-                }
-                else if (contact.State > 0)
-                {
-                    if (contact.State != EntityState.Unchanged)
-                    {
-                        db.Entry(contact).State = EntityState.Unchanged;
-                    }
-                }
+            //        NumberOfRecords += 1;
+            //    }
+            //    else if (contact.State > 0)
+            //    {
+            //        contact.State = EntityState.Unchanged;
+            //    }
+            //}
+
+            foreach (var error in db.GetValidationErrors())
+            {
+                db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
             db.SaveChanges();

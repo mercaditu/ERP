@@ -261,18 +261,16 @@ namespace entity.Controller.Sales
                     NumberOfRecords += 1;
                 }
 
-                if (sales_invoice.State > 0)
+                if (sales_invoice.State != EntityState.Unchanged && sales_invoice.Error != null)
                 {
-                    if (sales_invoice.State != EntityState.Unchanged && sales_invoice.Error != null)
+                    if (sales_invoice.sales_invoice_detail.Count() > 0)
                     {
-                        if (sales_invoice.sales_invoice_detail.Count() > 0)
-                        {
-                            db.sales_invoice_detail.RemoveRange(sales_invoice.sales_invoice_detail);
-                        }
+                        db.sales_invoice_detail.RemoveRange(sales_invoice.sales_invoice_detail);
+                    }
 
-
-
-
+                    if (sales_invoice.crm_opportunity != null)
+                    {
+                        db.crm_opportunity.Remove(sales_invoice.crm_opportunity);
                     }
                 }
             }
@@ -293,9 +291,7 @@ namespace entity.Controller.Sales
             }
 
         }
-
-
-
+        
         #endregion
 
         #region Approve

@@ -295,9 +295,6 @@ namespace cntrl
             }
         }
 
-
-
-
         public ReportPanel()
         {
             InitializeComponent();
@@ -310,7 +307,6 @@ namespace cntrl
 
             ReportViewSource = (CollectionViewSource)FindResource("ReportViewSource");
             ReportViewSource.Source = Generate.ReportList.Where(x => x.Application == ApplicationName).ToList();
-
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

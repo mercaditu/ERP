@@ -150,7 +150,7 @@ namespace cntrl
                             ItemsSource = view.ToTable(true, item.ColumnName).DefaultView
                         };
                         TextSearch.SetTextPath(ComboBox, item.ColumnName);
-                        
+
                         stpFilter.Children.Add(ComboBox);
                     }
                     else if (item.DataType == typeof(bool))
@@ -210,7 +210,7 @@ namespace cntrl
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
-          
+
             if (Report.Parameters.Where(x => x == Class.Report.Types.Project).Count() > 0)
             {
                 ShowProject = true;
@@ -235,7 +235,7 @@ namespace cntrl
             query = query.Replace("@ProjectID", ProjectID.ToString());
             dt = QueryExecutor.DT(query);
 
-            if (dt.Rows.Count>0)
+            if (dt.Rows.Count > 0)
             {
                 if (Report.Name.ToLower() == "HumanResource".ToLower())
                 {
@@ -279,10 +279,24 @@ namespace cntrl
             reportViewer.Refresh();
             reportViewer.RefreshReport();
 
-            // ReportDesigner.ReportModule = Report.Application.ToString();
-            //ReportDesigner.ReportPath = @"C:/Users/ABC/Documents/CogntivoERP/SalesInvoice/CostOfGoodsSold.rdlc";
-            //ReportDesigner.open();
+
+            string ReportName = Report.Path.Replace("cntrl.Reports.", "");
+            ReportName = ReportName.Remove(0, ReportName.IndexOf(".") + 1);
+            string path = entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\" + Report.Application + "\\" + ReportName);
+            if (entity.Brillo.IO.FileExists(path))
+            {
+                // ReportDesigner.ReportModule = Report.Application.ToString();
+                ReportDesigner.ReportPath = @path;
+                ReportDesigner.open();
+            }
+            else
+            {
+
+            }
         }
+
+
+
 
         public ReportPanel()
         {
@@ -293,20 +307,10 @@ namespace cntrl
         {
             Class.Generate Generate = new Class.Generate();
             Generate.GenerateReportList();
-            
+
             ReportViewSource = (CollectionViewSource)FindResource("ReportViewSource");
             ReportViewSource.Source = Generate.ReportList.Where(x => x.Application == ApplicationName).ToList();
 
-            foreach (Class.Report Report in Generate.ReportList)
-            {
-                string ReportName = Report.Path.Replace("cntrl.Reports.", "");
-                ReportName = ReportName.Remove(0, ReportName.IndexOf(".") + 1);
-                string path = entity.Brillo.IO.CreateIfNotExists(Environment.SpecialFolder.MyDocuments + "\\CogntivoERP\\" + Report.Application + "\\" + ReportName);
-                if (!entity.Brillo.IO.FileExists(path))
-                {
-
-                }
-            }
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -386,7 +390,7 @@ namespace cntrl
                 var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
                 var workBook = excelEngine.Excel.Workbooks[0];
                 // Add code to show save panel.
-              System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog()
+                System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog()
                 {
                     FileName = "Excel", // Default file name
                     DefaultExt = ".xlsx", // Default file extension
@@ -396,10 +400,10 @@ namespace cntrl
                 //Show save file dialog box
                 System.Windows.Forms.DialogResult result = dlg.ShowDialog();
 
-              //  Process save file dialog box results
+                //  Process save file dialog box results
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                   // Save document
+                    // Save document
                     workBook.SaveAs(dlg.FileName);
                 }
             }

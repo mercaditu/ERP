@@ -11,6 +11,7 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
     	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+              xmlns:Report="clr-namespace:ReportDesigner;assembly=ReportDesigner"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
@@ -27,13 +28,13 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <TabItem Header="{lex:Loc Reports}">
-                <syncfusion:ReportViewer  x:Name="reportViewer"/>
-                <!--<WindowsFormsHost>
+                <!--<syncfusion:ReportViewer  x:Name="reportViewer"/>-->
+                <WindowsFormsHost>
                     <rv:ReportViewer x:Name="reportViewer" />
-                </WindowsFormsHost>-->
+                </WindowsFormsHost>
             </TabItem>
             <TabItem Header="{lex:Loc Report}">
-                <reports:ReportDesigner x:Name="ReportDesigner"/>
+                <Report:ReportDesigner x:Name="ReportDesigner"/>
             </TabItem>
 
             <TabItem Header="Data">

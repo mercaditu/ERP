@@ -15,7 +15,7 @@ namespace entity.Controller.Sales
 
         #region Properties
 
-        public DateTime Start_Range
+        public new DateTime Start_Range
         {
             get { return _start_Range; }
             set
@@ -28,7 +28,7 @@ namespace entity.Controller.Sales
         }
         private DateTime _start_Range = DateTime.Now.AddDays(-7);
 
-        public DateTime End_Range
+        public new DateTime End_Range
         {
             get { return _end_Range; }
             set

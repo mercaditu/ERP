@@ -18,7 +18,7 @@ namespace Cognitivo.Production
 
         //  private ExecutionDB ExecutionDB = new ExecutionDB();
         private entity.Controller.Production.ExecutionController ExecutionDB;
-       // private entity.Controller.Production.OrderController OrderDB;
+        // private entity.Controller.Production.OrderController OrderDB;
 
         //Production EXECUTION CollectionViewSource
         private CollectionViewSource project_task_dimensionViewSource, production_execution_detailViewSource;
@@ -38,11 +38,11 @@ namespace Cognitivo.Production
             //OrderDB = FindResource("OrderDB") as entity.Controller.Production.OrderController;
             ExecutionDB = FindResource("ExecutionDB") as entity.Controller.Production.ExecutionController;
 
-           // OrderDB.Initialize();
+            // OrderDB.Initialize();
             ExecutionDB.Initialize();
         }
 
-        private  void Page_Loaded(object sender, EventArgs e)
+        private void Page_Loaded(object sender, EventArgs e)
         {
             production_execution_detailViewSource = FindResource("production_execution_detailViewSource") as CollectionViewSource;
             production_order_detaillViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
@@ -50,7 +50,7 @@ namespace Cognitivo.Production
             Load();
 
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
-           
+
             hr_time_coefficientViewSource.Source = ExecutionDB.db.hr_time_coefficient.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
@@ -61,8 +61,8 @@ namespace Cognitivo.Production
 
             cmbcoefficient.SelectedIndex = -1;
 
-            dtpstartdate.Value = DateTime.Now;
-            dtpenddate.Value = DateTime.Now;
+            dtpstartdate.Text = DateTime.Now.ToString();
+            dtpenddate.Text = DateTime.Now.ToString();
 
             filter_task();
         }
@@ -142,16 +142,16 @@ namespace Cognitivo.Production
                             if (production_order_detail.item.id_item_type == item.item_type.Service)
                             {
                                 //string start_date = dtpstartdate.TextInput; //string.Format("{0} {1}", dtpstartdate.Text, Convert.ToDateTime(dtpstarttime.Value).ToShortTimeString());
-                                _production_execution_detail.start_date = (DateTime)dtpstartdate.Value; //Convert.ToDateTime(dtpstartdate.TextInput.);
+                                //  _production_execution_detail.start_date = Convert.ToDateTime(dtpstartdate.SelectedDate); //Convert.ToDateTime(dtpstartdate.TextInput.);
                                 //string end_date = string.Format("{0} {1}", dtpenddate.Text, Convert.ToDateTime(dtpendtime.Value).ToShortTimeString());
-                                _production_execution_detail.end_date = (DateTime)dtpenddate.Value; //Convert.ToDateTime(end_date);
+                                // _production_execution_detail.end_date = Convert.ToDateTime(dtpenddate.SelectedDate); //Convert.ToDateTime(end_date);
                             }
                             else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                             {
                                 //string start_date = string.Format("{0} {1}", dtpscstartdate.Text, Convert.ToDateTime(dtpscstarttime.Value).ToShortTimeString());
-                                _production_execution_detail.start_date = (DateTime)dtpscstartdate.Value; //Convert.ToDateTime(start_date);
+                                //  _production_execution_detail.start_date = Convert.ToDateTime(dtpscstartdate.SelectedDate); //Convert.ToDateTime(start_date);
                                 //string end_date = string.Format("{0} {1}", dtpscenddate.Text, Convert.ToDateTime(dtpscendtime.Value).ToShortTimeString());
-                                _production_execution_detail.end_date = (DateTime)dtpscenddate.Value; //Convert.ToDateTime(end_date);
+                                //_production_execution_detail.end_date = Convert.ToDateTime(dtpscenddate.SelectedDate); //Convert.ToDateTime(end_date);
                             }
 
                             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
@@ -386,13 +386,13 @@ namespace Cognitivo.Production
                         production_order_detail.CalcExecutedCost_TimerTaks();
                     }
 
-                  
+
                     if (production_order_detaillViewSource.View != null)
                     {
                         production_order_detaillViewSource.View.Refresh();
                     }
                 }
-              //  production_orderViewSource.View.Refresh();
+                //  production_orderViewSource.View.Refresh();
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
@@ -541,12 +541,12 @@ namespace Cognitivo.Production
             _production_execution_detail.is_input = production_order_detail.is_input;
             if (_production_execution_detail.item.id_item_type == item.item_type.Product || _production_execution_detail.item.id_item_type == item.item_type.RawMaterial)
             {
-                if (_production_execution_detail.item.item_product.FirstOrDefault()!=null)
+                if (_production_execution_detail.item.item_product.FirstOrDefault() != null)
                 {
                     if (_production_execution_detail.item.item_product.FirstOrDefault().can_expire)
                     {
                         crud_modalExpire.Visibility = Visibility.Visible;
-                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(production_order_detail.production_order.id_branch,null, _production_execution_detail.item.item_product.FirstOrDefault().id_item_product);
+                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(production_order_detail.production_order.id_branch, null, _production_execution_detail.item.item_product.FirstOrDefault().id_item_product);
                         crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                     }
                 }
@@ -565,7 +565,7 @@ namespace Cognitivo.Production
             production_order_detail.production_execution_detail.Add(_production_execution_detail);
         }
 
-    
+
 
         private void CmbServicecontract_Select(object sender, RoutedEventArgs e)
         {
@@ -585,7 +585,7 @@ namespace Cognitivo.Production
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-          //  crud_modal.Children.Clear();
+            //  crud_modal.Children.Clear();
             RefreshData();
         }
 

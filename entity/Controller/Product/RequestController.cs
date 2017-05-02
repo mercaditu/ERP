@@ -457,18 +457,62 @@ namespace entity.Controller.Product
         {
             NumberOfRecords = 0;
 
+            foreach (item_request item_request in db.item_request.Local)
+            {
+                if (item_request.IsSelected)
+                {
+                    if (item_request.State == EntityState.Added)
+                    {
+                        item_request.timestamp = DateTime.Now;
+                        item_request.State = EntityState.Unchanged;
+                        db.Entry(item_request).State = EntityState.Added;
+                        item_request.IsSelected = false;
+                    }
+                    else if (item_request.State == EntityState.Modified)
+                    {
+                        item_request.timestamp = DateTime.Now;
+                        item_request.State = EntityState.Unchanged;
+                        db.Entry(item_request).State = EntityState.Modified;
+                        item_request.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (item_request.State > 0)
+                {
+                    if (item_request.State != EntityState.Unchanged )
+                    {
+                        if (item_request.item_request_detail.Count() > 0)
+                        {
+                            db.item_request_detail.RemoveRange(item_request.item_request_detail);
+                        }
+
+                        if (item_request.item_transfer.Count() > 0)
+                        {
+                            db.item_transfer.RemoveRange(item_request.item_transfer);
+                        }
+
+                       
+
+                    }
+                }
+            }
 
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            db.SaveChanges();
-            foreach (item_request item_request in db.item_request.Local)
+            if (db.GetValidationErrors().Count() > 0)
             {
-                item_request.State = EntityState.Unchanged;
+                return false;
             }
-            return true;
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
+
         }
     }
 }

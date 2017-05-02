@@ -235,29 +235,62 @@ namespace entity.Controller.Sales
                 db.crm_opportunity.Attach(crm_opportunity);
             }
         }
-        public  bool SaveChanges_WithValidation()
+        public bool SaveChanges_WithValidation()
         {
+            NumberOfRecords = 0;
+
+            foreach (sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
+                if (sales_invoice.IsSelected && sales_invoice.Error == null)
+                {
+                    if (sales_invoice.State == EntityState.Added)
+                    {
+                        sales_invoice.timestamp = DateTime.Now;
+                        sales_invoice.State = EntityState.Unchanged;
+                        db.Entry(sales_invoice).State = EntityState.Added;
+                        sales_invoice.IsSelected = false;
+                    }
+                    else if (sales_invoice.State == EntityState.Modified)
+                    {
+                        sales_invoice.timestamp = DateTime.Now;
+                        sales_invoice.State = EntityState.Unchanged;
+                        db.Entry(sales_invoice).State = EntityState.Modified;
+                        sales_invoice.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (sales_invoice.State > 0)
+                {
+                    if (sales_invoice.State != EntityState.Unchanged && sales_invoice.Error != null)
+                    {
+                        if (sales_invoice.sales_invoice_detail.Count() > 0)
+                        {
+                            db.sales_invoice_detail.RemoveRange(sales_invoice.sales_invoice_detail);
+                        }
+
+
+
+
+                    }
+                }
+            }
+
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
-            foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
+
+            if (db.GetValidationErrors().Count() > 0)
             {
-               
-                if (db.Entry(invoice).State == EntityState.Added)
-                {
-
-                    Add_CRM(invoice);
-
-
-                }
-                invoice.State = EntityState.Unchanged;
+                return false;
+            }
+            else
+            {
+                db.SaveChanges();
+                return true;
             }
 
-
-            db.SaveChanges();
-
-            return true;
         }
 
 

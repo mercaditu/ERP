@@ -297,18 +297,61 @@ namespace entity.Controller.Purchase
         {
             NumberOfRecords = 0;
 
+            foreach (purchase_tender purchase_tender in db.purchase_tender.Local)
+            {
+                if (purchase_tender.IsSelected)
+                {
+                    if (purchase_tender.State == EntityState.Added)
+                    {
+                        purchase_tender.timestamp = DateTime.Now;
+                        purchase_tender.State = EntityState.Unchanged;
+                        db.Entry(purchase_tender).State = EntityState.Added;
+                        purchase_tender.IsSelected = false;
+                    }
+                    else if (purchase_tender.State == EntityState.Modified)
+                    {
+                        purchase_tender.timestamp = DateTime.Now;
+                        purchase_tender.State = EntityState.Unchanged;
+                        db.Entry(purchase_tender).State = EntityState.Modified;
+                        purchase_tender.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (purchase_tender.State > 0)
+                {
+                    if (purchase_tender.State != EntityState.Unchanged )
+                    {
+                        if (purchase_tender.purchase_tender_item_detail.Count() > 0)
+                        {
+                            db.purchase_tender_item_detail.RemoveRange(purchase_tender.purchase_tender_item_detail);
+                        }
+
+                        if (purchase_tender.purchase_tender_contact_detail.Count() > 0)
+                        {
+                            db.purchase_tender_contact_detail.RemoveRange(purchase_tender.purchase_tender_contact_detail);
+                        }
+
+
+                    }
+                }
+            }
 
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            db.SaveChanges();
-            foreach (purchase_tender purchase_tender in db.purchase_tender.Local)
+            if (db.GetValidationErrors().Count() > 0)
             {
-                purchase_tender.State = EntityState.Unchanged;
+                return false;
             }
-            return true;
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace cntrl.Class
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name = entity.Brillo.Localize.StringText("CostOfGoodsSold")!= string.Empty ? entity.Brillo.Localize.StringText("CostOfGoodsSold") :"CostOfGoodsSold",
-                Path = "cntrl.Reports.Sales.CostOfGoodsSold.rdl",
+                Path = "cntrl.Reports.Sales.CostOfGoodsSold.rdlc",
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
             },

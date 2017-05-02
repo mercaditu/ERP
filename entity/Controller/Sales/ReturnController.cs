@@ -237,26 +237,60 @@ namespace entity.Controller.Sales
         }
         public bool SaveChanges_WithValidation()
         {
+            NumberOfRecords = 0;
+
+            foreach (sales_return sales_return in db.sales_return.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
+                if (sales_return.IsSelected && sales_return.Error == null)
+                {
+                    if (sales_return.State == EntityState.Added)
+                    {
+                        sales_return.timestamp = DateTime.Now;
+                        sales_return.State = EntityState.Unchanged;
+                        db.Entry(sales_return).State = EntityState.Added;
+                        sales_return.IsSelected = false;
+                    }
+                    else if (sales_return.State == EntityState.Modified)
+                    {
+                        sales_return.timestamp = DateTime.Now;
+                        sales_return.State = EntityState.Unchanged;
+                        db.Entry(sales_return).State = EntityState.Modified;
+                        sales_return.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (sales_return.State > 0)
+                {
+                    if (sales_return.State != EntityState.Unchanged && sales_return.Error != null)
+                    {
+                        if (sales_return.sales_return_detail.Count() > 0)
+                        {
+                            db.sales_return_detail.RemoveRange(sales_return.sales_return_detail);
+                        }
+
+
+
+
+                    }
+                }
+            }
+
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
-            foreach (sales_return Return in db.sales_return.Local.Where(x => x.IsSelected && x.id_contact > 0))
+
+            if (db.GetValidationErrors().Count() > 0)
             {
-
-                if (db.Entry(Return).State == EntityState.Added)
-                {
-
-                    Add_CRM(Return);
-
-
-                }
-                Return.State = EntityState.Unchanged;
+                return false;
+            }
+            else
+            {
+                db.SaveChanges();
+                return true;
             }
 
-
-            db.SaveChanges();
-            return true;
         }
 
 

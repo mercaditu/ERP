@@ -87,18 +87,58 @@ namespace entity.Controller.Purchase
         {
             NumberOfRecords = 0;
 
+            foreach (purchase_order purchase_order in db.purchase_order.Local)
+            {
+                if (purchase_order.IsSelected)
+                {
+                    if (purchase_order.State == EntityState.Added)
+                    {
+                        purchase_order.timestamp = DateTime.Now;
+                        purchase_order.State = EntityState.Unchanged;
+                        db.Entry(purchase_order).State = EntityState.Added;
+                        purchase_order.IsSelected = false;
+                    }
+                    else if (purchase_order.State == EntityState.Modified)
+                    {
+                        purchase_order.timestamp = DateTime.Now;
+                        purchase_order.State = EntityState.Unchanged;
+                        db.Entry(purchase_order).State = EntityState.Modified;
+                        purchase_order.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (purchase_order.State > 0)
+                {
+                    if (purchase_order.State != EntityState.Unchanged)
+                    {
+                        if (purchase_order.purchase_order_detail.Count() > 0)
+                        {
+                            db.purchase_order_detail.RemoveRange(purchase_order.purchase_order_detail);
+                        }
+
+
+
+
+                    }
+                }
+            }
 
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            db.SaveChanges();
-            foreach (purchase_order purchase_order in db.purchase_order.Local)
+            if (db.GetValidationErrors().Count() > 0)
             {
-                purchase_order.State = EntityState.Unchanged;
+                return false;
             }
-            return true;
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
+
         }
 
         #endregion

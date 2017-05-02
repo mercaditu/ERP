@@ -276,28 +276,62 @@ namespace entity.Controller.Sales
                 db.crm_opportunity.Attach(crm_opportunity);
             }
         }
-        public  bool SaveChanges_WithValidation()
+        public bool SaveChanges_WithValidation()
         {
+            NumberOfRecords = 0;
+
+            foreach (sales_order sales_order in db.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
+                if (sales_order.IsSelected && sales_order.Error == null)
+                {
+                    if (sales_order.State == EntityState.Added)
+                    {
+                        sales_order.timestamp = DateTime.Now;
+                        sales_order.State = EntityState.Unchanged;
+                        db.Entry(sales_order).State = EntityState.Added;
+                        sales_order.IsSelected = false;
+                    }
+                    else if (sales_order.State == EntityState.Modified)
+                    {
+                        sales_order.timestamp = DateTime.Now;
+                        sales_order.State = EntityState.Unchanged;
+                        db.Entry(sales_order).State = EntityState.Modified;
+                        sales_order.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (sales_order.State > 0)
+                {
+                    if (sales_order.State != EntityState.Unchanged && sales_order.Error != null)
+                    {
+                        if (sales_order.sales_order_detail.Count() > 0)
+                        {
+                            db.sales_order_detail.RemoveRange(sales_order.sales_order_detail);
+                        }
+
+
+
+
+                    }
+                }
+            }
+
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
-            foreach (sales_order order in db.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0))
+
+            if (db.GetValidationErrors().Count() > 0)
             {
-               
-                if (db.Entry(order).State == EntityState.Added)
-                {
-
-                    Add_CRM(order);
-
-
-                }
-                order.State = EntityState.Unchanged;
+                return false;
+            }
+            else
+            {
+                db.SaveChanges();
+                return true;
             }
 
-
-            db.SaveChanges();
-            return true;
         }
 
 

@@ -71,18 +71,109 @@ namespace entity.Controller.Commercial
         {
             NumberOfRecords = 0;
 
-            
+            foreach (contact contact in db.contacts.Local)
+            {
+                if (contact.IsSelected && contact.Error == null)
+                {
+                    if (contact.State == EntityState.Added)
+                    {
+                        contact.timestamp = DateTime.Now;
+                        contact.State = EntityState.Unchanged;
+                        db.Entry(contact).State = EntityState.Added;
+                        contact.IsSelected = false;
+                    }
+                    else if (contact.State == EntityState.Modified)
+                    {
+                        contact.timestamp = DateTime.Now;
+                        contact.State = EntityState.Unchanged;
+                        db.Entry(contact).State = EntityState.Modified;
+                        contact.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (contact.State > 0)
+                {
+                    if (contact.State != EntityState.Unchanged && contact.Error != null)
+                    {
+                        if (contact.contact_field_value.Count() > 0)
+                        {
+                            db.contact_field_value.RemoveRange(contact.contact_field_value);
+                        }
+
+                        if (contact.contact_tag_detail.Count() > 0)
+                        {
+                            db.contact_tag_detail.RemoveRange(contact.contact_tag_detail);
+                        }
+
+                        if (contact.contact_subscription.Count() > 0)
+                        {
+                            db.contact_subscription.RemoveRange(contact.contact_subscription);
+                        }
+
+                        if (contact.hr_contract.Count() > 0)
+                        {
+                            db.hr_contract.RemoveRange(contact.hr_contract);
+                        }
+
+                        if (contact.hr_education.Count() > 0)
+                        {
+                            db.hr_education.RemoveRange(contact.hr_education);
+                        }
+
+                        if (contact.hr_family.Count() > 0)
+                        {
+                            db.hr_family.RemoveRange(contact.hr_family);
+                        }
+
+                        if (contact.hr_position.Count() > 0)
+                        {
+                            db.hr_position.RemoveRange(contact.hr_position);
+                        }
+                        if (contact.hr_talent_detail.Count() > 0)
+                        {
+                            db.hr_talent_detail.RemoveRange(contact.hr_talent_detail);
+                        }
+                        if (contact.hr_timesheet.Count() > 0)
+                        {
+                            db.hr_timesheet.RemoveRange(contact.hr_timesheet);
+                        }
+                        if (contact.item_asset.Count() > 0)
+                        {
+                            db.hr_timesheet.RemoveRange(contact.hr_timesheet);
+                        }
+                        if (contact.item_asset_maintainance_detail.Count() > 0)
+                        {
+                            db.item_asset_maintainance_detail.RemoveRange(contact.item_asset_maintainance_detail);
+                        }
+                        if (contact.item_brand.Count() > 0)
+                        {
+                            db.item_brand.RemoveRange(contact.item_brand);
+                        }
+                        if (contact.item_transfer.Count() > 0)
+                        {
+                            db.item_transfer.RemoveRange(contact.item_transfer);
+                        }
+                       
+                    }
+                }
+            }
+
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            db.SaveChanges();
-            foreach (contact contact in db.contacts.Local)
+            if (db.GetValidationErrors().Count() > 0)
             {
-                contact.State = EntityState.Unchanged;
+                return false;
             }
-            return true;
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
+          
         }
 
         public bool Edit(contact contact)

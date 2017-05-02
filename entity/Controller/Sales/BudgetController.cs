@@ -230,31 +230,65 @@ namespace entity.Controller.Sales
             db.crm_opportunity.Add(crm_opportunity);
 
         }
-
         public bool SaveChanges_WithValidation()
         {
+            NumberOfRecords = 0;
+
+            foreach (sales_budget sales_budget in db.sales_budget.Local.Where(x => x.IsSelected && x.id_contact > 0))
+            {
+                if (sales_budget.IsSelected && sales_budget.Error == null)
+                {
+                    if (sales_budget.State == EntityState.Added)
+                    {
+                        sales_budget.timestamp = DateTime.Now;
+                        sales_budget.State = EntityState.Unchanged;
+                        db.Entry(sales_budget).State = EntityState.Added;
+                        sales_budget.IsSelected = false;
+                    }
+                    else if (sales_budget.State == EntityState.Modified)
+                    {
+                        sales_budget.timestamp = DateTime.Now;
+                        sales_budget.State = EntityState.Unchanged;
+                        db.Entry(sales_budget).State = EntityState.Modified;
+                        sales_budget.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (sales_budget.State > 0)
+                {
+                    if (sales_budget.State != EntityState.Unchanged && sales_budget.Error != null)
+                    {
+                        if (sales_budget.sales_budget_detail.Count() > 0)
+                        {
+                            db.sales_budget_detail.RemoveRange(sales_budget.sales_budget_detail);
+                        }
+
+                     
+                       
+
+                    }
+                }
+            }
+
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
-            foreach (sales_budget budget in db.sales_budget.Local.Where(x => x.IsSelected && x.id_contact > 0))
+
+            if (db.GetValidationErrors().Count() > 0)
             {
-
-               
-                if (db.Entry(budget).State==EntityState.Added)
-                {
-
-                    Add_CRM(budget);
-
-
-                }
-                budget.State = EntityState.Unchanged;
+                return false;
+            }
+            else
+            {
+                db.SaveChanges();
+                return true;
             }
 
-
-            db.SaveChanges();
-            return true;
         }
+
+    
 
         #endregion
 

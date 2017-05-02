@@ -84,18 +84,57 @@ namespace entity.Controller.Purchase
         {
             NumberOfRecords = 0;
 
+            foreach (purchase_return purchase_return in db.purchase_return.Local)
+            {
+                if (purchase_return.IsSelected && purchase_return.Error == null)
+                {
+                    if (purchase_return.State == EntityState.Added)
+                    {
+                        purchase_return.timestamp = DateTime.Now;
+                        purchase_return.State = EntityState.Unchanged;
+                        db.Entry(purchase_return).State = EntityState.Added;
+                        purchase_return.IsSelected = false;
+                    }
+                    else if (purchase_return.State == EntityState.Modified)
+                    {
+                        purchase_return.timestamp = DateTime.Now;
+                        purchase_return.State = EntityState.Unchanged;
+                        db.Entry(purchase_return).State = EntityState.Modified;
+                        purchase_return.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+
+                if (purchase_return.State > 0)
+                {
+                    if (purchase_return.State != EntityState.Unchanged && purchase_return.Error != null)
+                    {
+                        if (purchase_return.purchase_return_detail.Count() > 0)
+                        {
+                            db.purchase_return_detail.RemoveRange(purchase_return.purchase_return_detail);
+                        }
+
+                        
+
+                    }
+                }
+            }
 
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
-            db.SaveChanges();
-            foreach (purchase_return purchase_return in db.purchase_return.Local)
+            if (db.GetValidationErrors().Count() > 0)
             {
-                purchase_return.State = EntityState.Unchanged;
+                return false;
             }
-            return true;
+            else
+            {
+                db.SaveChanges();
+                return true;
+            }
+
         }
 
         #endregion

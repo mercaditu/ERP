@@ -195,8 +195,8 @@ namespace cntrl
             ParametersCost.Name = "ParameterCost";
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
             Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter();
-            ParametersCost.Name = "Parameters";
-            ParametersCost.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
+            Parameters.Name = "Parameters";
+            Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
             reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
 
@@ -271,8 +271,8 @@ namespace cntrl
             ParametersCost.Name = "ParameterCost";
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
             Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter();
-            ParametersCost.Name = "Parameters";
-            ParametersCost.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
+            Parameters.Name = "Parameters";
+            Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
             reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
 
@@ -280,7 +280,7 @@ namespace cntrl
             reportViewer.RefreshReport();
 
             // ReportDesigner.ReportModule = Report.Application.ToString();
-            ReportDesigner.ReportPath = @"C:/Users/ABC/Documents/CogntivoERP/SalesInvoice/SalesAnalysis.rdlc";
+            ReportDesigner.ReportPath = @"C:/Users/ABC/Documents/CogntivoERP/SalesInvoice/CostOfGoodsSold.rdlc";
             ReportDesigner.open();
         }
 

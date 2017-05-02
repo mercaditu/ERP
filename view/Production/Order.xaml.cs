@@ -186,12 +186,16 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            toolBar_btnSave_Click(sender);
-
-            if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Fraction))
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            if (production_order != null)
             {
-                toolBar.msgApproved(1);
+                production_order.status = Status.Production.Executed;
+                if (OrderDB.SaveChanges_WithValidation() )
+                {
+                    toolBar.msgApproved(1);
+                }
             }
+         
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -654,6 +658,7 @@ namespace Cognitivo.Production
 
         private void toolIcon_Click(object sender)
         {
+           
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_orderproduction_order_detailViewSource.View.Filter = null;
 

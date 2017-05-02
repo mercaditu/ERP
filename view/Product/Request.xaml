@@ -187,7 +187,7 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Binding="{Binding quantity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True" />
                             <DataGridComboBoxColumn x:Name="cmburgency" Header="{lex:Loc Cognitivo:local:Urgency}" Width="*" SelectedValueBinding="{Binding urgency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="comment" Width="SizeToHeader" />
+                            <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Comment}" Width="SizeToHeader" />
                             <DataGridTextColumn Binding="{Binding Balance, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Available}" Width="SizeToHeader" IsReadOnly="True" />
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
@@ -235,7 +235,7 @@
                         		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="{lex:Loc Cognitivo:local:Dimensions}" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Dimension}" Width="100" FontWeight="Bold" />
                                                 <DataGridTextColumn Binding="{Binding value, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
                                                 <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -319,7 +319,7 @@
                                 Header="{lex:Loc Cognitivo:local:Items}" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*" />
 
                                         <DataGridTextColumn
-                                Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
+                                Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                     </DataGrid.Columns>
                                     <DataGrid.RowDetailsTemplate>
                                         <DataTemplate>
@@ -329,11 +329,11 @@
                         		          RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                                 <DataGrid.Columns>
                                                     <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                            Header="Dimension" Width="100" />
+                                                            Header="{lex:Loc Cognitivo:local:Dimension}" Width="100" />
                                                     <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-                                                            Header="value" Width="100" />
+                                                            Header="{lex:Loc Cognitivo:local:Value}" Width="100" />
                                                     <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                            Header="Measurement" Width="100" />
+                                                            Header="{lex:Loc Cognitivo:local:Measurement}" Width="100" />
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </DataTemplate>

@@ -402,7 +402,7 @@
                 </TabItem>
             </TabControl>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Top" Margin="5">
-                <Button x:Name="btncost" Click="Button_Click" Content="{lex:Loc Cost}" VerticalAlignment="Center" />
+                <Button x:Name="btncost" Click="Button_Click" Content="{lex:Loc CostCalculation}" VerticalAlignment="Center" />
             </StackPanel>
         </Grid>
 

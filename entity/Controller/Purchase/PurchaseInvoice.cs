@@ -356,6 +356,7 @@ namespace entity.Controller.Purchase
                         purchase_invoice.State = EntityState.Unchanged;
                         db.purchase_invoice.Remove(purchase_invoice);
                     }
+
                     NumberOfRecords += 1;
                 }
                 else if (purchase_invoice.State > 0)

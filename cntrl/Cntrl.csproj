@@ -137,7 +137,7 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="ReachFramework" />
     <Reference Include="ReportDesigner">
-      <HintPath>..\..\..\..\Visual Studio 2015\Projects\ReportDesigner\ReportDesigner\bin\Debug\ReportDesigner.dll</HintPath>
+      <HintPath>..\packages\ReportDesigner.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Chart.WPF, Version=14.4450.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -3,20 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:Controls="clr-namespace:cntrl.Controls"
-             xmlns:reports="clr-namespace:cntrl.Reports"
              xmlns:local="clr-namespace:cntrl"
              xmlns:reporting="clr-namespace:cntrl.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
     	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-              xmlns:Report="clr-namespace:ReportDesigner;assembly=ReportDesigner"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d" Foreground="White"
-             d:DesignHeight="600" d:DesignWidth="800" Loaded="this_Loaded">
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="Load">
     <UserControl.Resources>
         <CollectionViewSource x:Key="ReportViewSource" d:DesignSource="{d:DesignInstance {x:Type reporting:Report}, CreateList=True}" />
         <CollectionViewSource x:Key="ReportReport_paremeterViewSource" Source="{Binding Report_Parameter, Source={StaticResource ReportViewSource}}" />
@@ -28,15 +24,10 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <TabItem Header="{lex:Loc Reports}">
-                <!--<syncfusion:ReportViewer  x:Name="reportViewer"/>-->
                 <WindowsFormsHost>
                     <rv:ReportViewer x:Name="reportViewer" />
                 </WindowsFormsHost>
             </TabItem>
-            <TabItem Header="{lex:Loc Report}">
-                <Report:ReportDesigner x:Name="ReportDesigner"/>
-            </TabItem>
-
             <TabItem Header="Data">
                 <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch"
                                        NavigationMode="Cell" HideEmptyGridViewDefinition="True" EnableDataVirtualization="True"
@@ -60,12 +51,14 @@
                                 <Label Content="{lex:Loc Reports}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
                             </StackPanel>
                             <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click"
+                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Refresh_Click"
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
                         </Grid>
                     </Expander.Header>
-                    <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" x:Name="ReportList"
-                         DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged">
+                    <!---->
+                    <ListBox x:Name="ReportList" 
+                             DisplayMemberPath="Name"
+                             ItemsSource="{Binding Source={StaticResource ReportViewSource}}" SelectionChanged="Report_SelectionChanged">
                         <ListBox.Background>
                             <SolidColorBrush Color="White" Opacity="0.64" />
                         </ListBox.Background>
@@ -75,7 +68,7 @@
                 <Expander IsExpanded="True">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="&#xE81D;" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                            <Button Content="&#xE81D;" Width="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
                                     FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="16"
                                     Style="{DynamicResource MetroCircleButtonStyle}" />
                             <Label Content="{lex:Loc Parameters}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
@@ -115,10 +108,10 @@
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                 <Button Content="&#xE888;" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Button_Click_1"
+                                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
                                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
                                 <Button Content="k" Width="24.5" Height="24.5" Background="RoyalBlue" BorderBrush="White" HorizontalAlignment="Right"
-                                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Click"
+                                        FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White" FontSize="10" Click="Filter_Cancel"
                                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
                             </StackPanel>
                         </Grid>
@@ -143,13 +136,9 @@
                     </Expander.Header>
                     <Button Content="Excel" Style="{StaticResource btn_green}" Click="Export_Click" />
                 </Expander>
-                <Expander>
-                    <Expander.Header>
-                        <Label Content="{lex:Loc Edit}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
-                    </Expander.Header>
-                    <Button Content="Edit" Style="{StaticResource btn_green}" Click="Edit_Click" />
-                </Expander>
             </StackPanel>
         </ScrollViewer>
+        <local:toolIcon Click="Edit_Click" Grid.Column="1" icoName="{lex:Loc Designer}" imgSource="" Margin="4"
+                        VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </Grid>
 </UserControl>

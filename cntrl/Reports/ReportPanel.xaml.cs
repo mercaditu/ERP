@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Xml.Linq;
 using Syncfusion.Windows.Reports;
+using System.Collections.Generic;
 
 //using System.Windows.Forms;
 
@@ -68,12 +69,12 @@ namespace cntrl
             set { SetValue(ApplicationNameProperty, value); }
         }
 
-        private System.Windows.Data.CollectionViewSource ReportViewSource;
+        private CollectionViewSource ReportViewSource;
 
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
-            set { _StartDate = value; RefreshPanel = true; Fill(); Button_Click_1(null, null); }
+            set { _StartDate = value; RefreshPanel = true; Fill(); /*Filter_Click(null, null);*/ }
         }
 
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
@@ -93,7 +94,7 @@ namespace cntrl
         public DateTime EndDate
         {
             get { return AbsoluteDate.End(_EndDate); }
-            set { _EndDate = value; RefreshPanel = true; Fill(); Button_Click_1(null, null); }
+            set { _EndDate = value; RefreshPanel = true; Fill(); /*Button_Click_1(null, null);*/ }
         }
 
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
@@ -107,7 +108,6 @@ namespace cntrl
             set
             {
                 _ReportDt = value;
-
                 ClearFilter();
             }
         }
@@ -155,20 +155,28 @@ namespace cntrl
                     }
                     else if (item.DataType == typeof(bool))
                     {
-                        Label Label = new Label();
-                        Label.Name = item.ColumnName;
-                        Label.Content = entity.Brillo.Localize.StringText(item.ColumnName) != string.Empty ? entity.Brillo.Localize.StringText(item.ColumnName) : item.ColumnName;
-                        Label.Foreground = Brushes.Black;
                         Style lblStyle = Application.Current.FindResource("input_label") as Style;
-                        Label.Style = lblStyle;
+
+                        Label Label = new Label()
+                        {
+                            Name = item.ColumnName,
+                            Content = entity.Brillo.Localize.StringText(item.ColumnName) != string.Empty ? entity.Brillo.Localize.StringText(item.ColumnName) : item.ColumnName,
+                            Foreground = Brushes.Black,
+                            Style = lblStyle
+                        };
+
                         stpFilter.Children.Add(Label);
 
-                        CheckBox CheckBox = new CheckBox();
                         Style cbxStyle = Application.Current.FindResource("input_checkbox") as Style;
-                        CheckBox.Style = cbxStyle;
                         DataView view = new DataView(ReportDt);
-                        CheckBox.Name = "cbx" + item.ColumnName;
-                        CheckBox.Tag = item.ColumnName;
+
+                        CheckBox CheckBox = new CheckBox()
+                        {
+                            Style = cbxStyle,
+                            Name = "cbx" + item.ColumnName,
+                            Tag = item.ColumnName
+                        };
+
                         stpFilter.Children.Add(CheckBox);
                     }
                 }
@@ -191,11 +199,18 @@ namespace cntrl
             reportStream = RdlcReportHelper.TranslateReport(reportStream);
             reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
-            Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter();
-            ParametersCost.Name = "ParameterCost";
+            Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter()
+            {
+                Name = "ParameterCost"
+            };
+
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
-            Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter();
-            Parameters.Name = "Parameters";
+
+            Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter()
+            {
+                Name = "Parameters"
+            };
+
             Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
             reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
@@ -206,7 +221,7 @@ namespace cntrl
 
         public void Fill()
         {
-            this.reportViewer.Reset();
+            reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
@@ -230,20 +245,22 @@ namespace cntrl
             }
 
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            query = query.Replace("@ProjectID", ProjectID.ToString());
+
             query = query.Replace("@StartDate", StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
             query = query.Replace("@EndDate", EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
-            query = query.Replace("@ProjectID", ProjectID.ToString());
+
             dt = QueryExecutor.DT(query);
 
             if (dt.Rows.Count > 0)
             {
                 if (Report.Name.ToLower() == "HumanResource".ToLower())
                 {
-                    dt = dt.Select("id_item_type=5 or id_item_type=3 or id_item_type=7").CopyToDataTable();
+                    dt = dt.Select("id_item_type = 5 or id_item_type = 3 or id_item_type = 7").CopyToDataTable();
                 }
                 else if (Report.Name.ToLower() == "RawMaterials".ToLower())
                 {
-                    dt = dt.Select("id_item_type=5 or id_item_type=1 or id_item_type=2 or id_item_type=6").CopyToDataTable();
+                    dt = dt.Select("id_item_type = 5 or id_item_type = 1 or id_item_type = 2 or id_item_type = 6").CopyToDataTable();
                 }
             }
 
@@ -262,10 +279,13 @@ namespace cntrl
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
-            // translate the report
-            reportStream = RdlcReportHelper.TranslateReport(reportStream);
 
-            reportViewer.LocalReport.LoadReportDefinition(reportStream);
+            // translate the report
+            if (reportStream != null)
+            {
+                reportStream = RdlcReportHelper.TranslateReport(reportStream);
+                reportViewer.LocalReport.LoadReportDefinition(reportStream);
+            }
 
             Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter();
             ParametersCost.Name = "ParameterCost";
@@ -275,48 +295,72 @@ namespace cntrl
             Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
             reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
-
-           
-
-
+            
             reportViewer.Refresh();
             reportViewer.RefreshReport();
-
         }
-
-     
-
-
+        
         public ReportPanel()
         {
             InitializeComponent();
         }
 
-        private void this_Loaded(object sender, RoutedEventArgs e)
+        private void Load(object sender, RoutedEventArgs e)
         {
             Class.Generate Generate = new Class.Generate();
             Generate.GenerateReportList();
 
-            ReportViewSource = (CollectionViewSource)FindResource("ReportViewSource");
-            ReportViewSource.Source = Generate.ReportList.Where(x => x.Application == ApplicationName).ToList();
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Reports\\" + ApplicationName + "\\";
+            
+            foreach (var Report in Generate.ReportList.Where(x => x.Application == ApplicationName).ToList())
+            {
+                //Check if Report exists in Path.
+                string ReportName = Report.Path.Replace("cntrl.Reports.", "");
+                ReportName = ReportName.Remove(0, ReportName.IndexOf(".") + 1);
+                entity.Brillo.IO.CreateIfNotExists(path + ReportName);
 
+                if (entity.Brillo.IO.FileExists(path) == false)
+                {
+                    using (Stream resource = GetType().Assembly.GetManifestResourceStream(Report.Path))
+                    {
+                        if (resource == null)
+                        {
+                            throw new ArgumentException("Resource Not Found", "resourceName");
+                        }
+                        using (Stream output = File.OpenWrite(path + ReportName))
+                        {
+                            resource.CopyTo(output);
+                        }
+                    }
+                }
+
+                ListBoxItem LBItem = new ListBoxItem()
+                {
+                    Content = entity.Brillo.Localize.StringText(ReportName),
+                    Tag = path + ReportName
+                };
+
+                Report.Path = path + ReportName;
+            }
+
+            ReportViewSource = FindResource("ReportViewSource") as CollectionViewSource;
+            ReportViewSource.Source = Generate.ReportList.Where(x => x.Application == ApplicationName).ToList();
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Report_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ReportList.SelectedItem!=null)
             {
                 Fill();
             }
-        
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             Fill();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Filter_Click(object sender, RoutedEventArgs e)
         {
             Fill();
             RefreshPanel = false;
@@ -366,7 +410,7 @@ namespace cntrl
             Filter();
         }
 
-        private void Filter_Click(object sender, RoutedEventArgs e)
+        private void Filter_Cancel(object sender, RoutedEventArgs e)
         {
             RefreshPanel = true;
             Fill();
@@ -405,12 +449,16 @@ namespace cntrl
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
-            cntrl.Reports.ReportEditor ReportDesigner = new cntrl.Reports.ReportEditor();
-            ReportDesigner.Path = Report.Path;
-            ReportDesigner.Application = Report.Application;
+
+            Reports.ReportEditor ReportDesigner = new Reports.ReportEditor()
+            {
+                Path = Report.Path,
+                Application = Report.Application
+            };
+
             Window window = new Window
             {
-                Title = "Report",
+                Title = "Report Designer",
                 Content = ReportDesigner
             };
 

@@ -78,7 +78,8 @@ namespace Cognitivo.Purchase
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
+            TenderDB.Load();
+               purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
             purchase_tenderViewSource.Source = TenderDB.db.purchase_tender.Local;
 
             purchase_tenderpurchase_tender_contact_detailViewSource = FindResource("purchase_tenderpurchase_tender_contact_detailViewSource") as CollectionViewSource;

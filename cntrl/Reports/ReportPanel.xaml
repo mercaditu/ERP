@@ -64,7 +64,7 @@
                         Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="{lex:Loc Refresh}" />
                         </Grid>
                     </Expander.Header>
-                    <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}"
+                    <ListBox ItemsSource="{Binding Source={StaticResource ReportViewSource}}" x:Name="ReportList"
                          DisplayMemberPath="Name" SelectionChanged="ListBox_SelectionChanged">
                         <ListBox.Background>
                             <SolidColorBrush Color="White" Opacity="0.64" />
@@ -142,6 +142,12 @@
                         <Label Content="{lex:Loc Share}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
                     </Expander.Header>
                     <Button Content="Excel" Style="{StaticResource btn_green}" Click="Export_Click" />
+                </Expander>
+                <Expander>
+                    <Expander.Header>
+                        <Label Content="{lex:Loc Edit}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                    </Expander.Header>
+                    <Button Content="Edit" Style="{StaticResource btn_green}" Click="Edit_Click" />
                 </Expander>
             </StackPanel>
         </ScrollViewer>

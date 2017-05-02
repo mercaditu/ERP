@@ -674,8 +674,8 @@
     <Compile Include="Reports\Projects\ProjectFinance.cs" />
     <Compile Include="Reports\Purchases\Purchase.cs" />
     <Compile Include="Reports\Purchases\PurchaseTender.cs" />
-    <Compile Include="Reports\ReportDesigner.xaml.cs">
-      <DependentUpon>ReportDesigner.xaml</DependentUpon>
+    <Compile Include="Reports\ReportEditor.xaml.cs">
+      <DependentUpon>ReportEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reports\Sales\Sales.cs" />
     <Compile Include="Reports\Sales\SalesAnalysis.cs" />
@@ -1312,7 +1312,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Reports\ReportDesigner.xaml">
+    <Page Include="Reports\ReportEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

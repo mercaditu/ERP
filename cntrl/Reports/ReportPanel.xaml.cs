@@ -276,24 +276,16 @@ namespace cntrl
 
             reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
 
+           
+
+
             reportViewer.Refresh();
             reportViewer.RefreshReport();
 
-
-            string ReportName = Report.Path.Replace("cntrl.Reports.", "");
-            ReportName = ReportName.Remove(0, ReportName.IndexOf(".") + 1);
-            string path = entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\" + Report.Application + "\\" + ReportName);
-            if (entity.Brillo.IO.FileExists(path))
-            {
-                // ReportDesigner.ReportModule = Report.Application.ToString();
-                ReportDesigner.ReportPath = @path;
-                ReportDesigner.open();
-            }
-            else
-            {
-
-            }
         }
+
+     
+
 
         public ReportPanel()
         {
@@ -307,11 +299,16 @@ namespace cntrl
 
             ReportViewSource = (CollectionViewSource)FindResource("ReportViewSource");
             ReportViewSource.Source = Generate.ReportList.Where(x => x.Application == ApplicationName).ToList();
+
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Fill();
+            if (ReportList.SelectedItem!=null)
+            {
+                Fill();
+            }
+        
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -403,6 +400,21 @@ namespace cntrl
                     workBook.SaveAs(dlg.FileName);
                 }
             }
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
+            cntrl.Reports.ReportEditor ReportDesigner = new cntrl.Reports.ReportEditor();
+            ReportDesigner.Path = Report.Path;
+            ReportDesigner.Application = Report.Application;
+            Window window = new Window
+            {
+                Title = "Report",
+                Content = ReportDesigner
+            };
+
+            window.ShowDialog();
         }
     }
 

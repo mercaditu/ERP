@@ -145,7 +145,7 @@
     <value>חשבונות חייבים</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
-    <value>שירות חשבון</value>
+    <value>Utility חשבון</value>
   </data>
   <data name="Activate" xml:space="preserve">
     <value>לְהַפְעִיל</value>
@@ -196,10 +196,13 @@
     <value>יישום</value>
   </data>
   <data name="Applicationrestartwillberequired" xml:space="preserve">
-    <value>הפעל מחדש את היישום יידרש</value>
+    <value>אתחול אפליקציה יידרש</value>
   </data>
   <data name="Approve" xml:space="preserve">
     <value>לְאַשֵׁר</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>ארכיון</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>אֵזוֹר</value>
@@ -271,10 +274,10 @@
     <value>קוֹנֶה</value>
   </data>
   <data name="BuyRate" xml:space="preserve">
-    <value>לקנות דרג</value>
+    <value>לקנות שערים</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
-    <value>לפי מאפיין</value>
+    <value>לפי מאפיינים</value>
   </data>
   <data name="ByValue" xml:space="preserve">
     <value>לפי ערך</value>
@@ -292,7 +295,7 @@
     <value>עלול לפקוע</value>
   </data>
   <data name="CapitalResource" xml:space="preserve">
-    <value>משאבי הון</value>
+    <value>Resource Capital</value>
   </data>
   <data name="CaractersLeft" xml:space="preserve">
     <value>Caracters שמאל</value>
@@ -334,7 +337,7 @@
     <value>נציבות</value>
   </data>
   <data name="CommisionBase" xml:space="preserve">
-    <value>מאגר הנציבות</value>
+    <value>בסיס עמלות</value>
   </data>
   <data name="CommisionTemplate" xml:space="preserve">
     <value>תבנית נציבות</value>
@@ -424,10 +427,10 @@
     <value>נוֹכְחִי</value>
   </data>
   <data name="CurrentAccountCustomer" xml:space="preserve">
-    <value>לקוחות החשבון השוטף במאזן התשלומים</value>
+    <value>לקוחות חשבון שוטפים</value>
   </data>
   <data name="CurrentAccountEvent" xml:space="preserve">
-    <value>אירוע החשבון השוטף במאזן התשלומים</value>
+    <value>אירוע חשבון שוטף</value>
   </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>כרגע חשבון</value>
@@ -439,10 +442,10 @@
     <value>צרכן</value>
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
-    <value>החשבון השוטף במאזן התשלומים של לקוחות</value>
+    <value>החשבון השוטף של לקוחות</value>
   </data>
   <data name="CustomerDeliveryList" xml:space="preserve">
-    <value>רשימה מסירה ללקוח</value>
+    <value>רשימת מסירה ללקוח</value>
   </data>
   <data name="Customize" xml:space="preserve">
     <value>התאמה אישית</value>
@@ -493,19 +496,19 @@
     <value>תאור</value>
   </data>
   <data name="desc_Account" xml:space="preserve">
-    <value>חשבונות לעקוב אחר כל התהליכים הפיננסיים</value>
+    <value>חשבונות ולעקוב אחר כל העסקות הפיננסיות</value>
   </data>
   <data name="desc_AccountsPayable" xml:space="preserve">
-    <value>כנס תשלומים ולחשב מה חדש שמאל</value>
+    <value>הכנס תשלומים שנעשו ולחשב מה חדש שמאל</value>
   </data>
   <data name="desc_AccountsReceivable" xml:space="preserve">
     <value>הכנס תשלומים קלים ולחשב מה חדש שמאל</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>יצירה לנהל עם החשבונות הפיננסיים שלך</value>
+    <value>צור לנהל עם החשבונות הפיננסיים שלך</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
-    <value>הבנקים יש יכולת להחזיק חשבונות מרובים</value>
+    <value>יש בנקים יכולת להחזיק חשבונות מרובים</value>
   </data>
   <data name="desc_Contact" xml:space="preserve">
     <value>פרטים ליצירת קשר עבור אנשי הקשר והספקים שלך</value>
@@ -517,7 +520,7 @@
     <value>תגיות לעזור לחפש &amp; למיין את אנשי הקשר במהירות</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
-    <value>מאפשר העברת נתונים במטבעות ושערי שונות</value>
+    <value>מאפשר עסקאות במטבעות ושערי שונים</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
     <value>כל הפריטים יהיה ממוסחר</value>
@@ -526,13 +529,13 @@
     <value>תגיות לעזור לחפש &amp; למיין פריטים במהירות</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
-    <value>מיקומים להחזיק מלאים בתוך סניף</value>
+    <value>מיקומים להחזיק מלאי במסגרת ענף</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
-    <value>מלא תחזוקה ולתיאום עבור הנכסים שלך</value>
+    <value>שליטה תחזוקה ולתיאום עבור הנכסים שלך</value>
   </data>
   <data name="desc_Movement" xml:space="preserve">
-    <value>זז פריטים אל ממקומות שונים</value>
+    <value>האם להעביר את הפריטים ו ממקומות שונים</value>
   </data>
   <data name="desc_PriceList" xml:space="preserve">
     <value>ולמסחר אותו פריט בנקודות מחיר שונות</value>
@@ -565,7 +568,7 @@
     <value>מצב מפתח</value>
   </data>
   <data name="DifferenceinDate" xml:space="preserve">
-    <value>הבדל התאריך</value>
+    <value>הבדל ב תאריך</value>
   </data>
   <data name="Dimension" xml:space="preserve">
     <value>מֵמַד</value>
@@ -589,7 +592,7 @@
     <value>בוצע</value>
   </data>
   <data name="DownTime" xml:space="preserve">
-    <value>לאורך זמן</value>
+    <value>פעם למטה</value>
   </data>
   <data name="Driver" xml:space="preserve">
     <value>נהג</value>
@@ -628,7 +631,7 @@
     <value>להיכנס</value>
   </data>
   <data name="Equity" xml:space="preserve">
-    <value>הון עצמי</value>
+    <value>אקוויטי</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>שְׁגִיאָה</value>
@@ -637,7 +640,7 @@
     <value>תאריך הגעה משוער</value>
   </data>
   <data name="EstimatedDateofDeparture" xml:space="preserve">
-    <value>תאריך משוער של הגעה</value>
+    <value>תאריך משוער של עזיבה</value>
   </data>
   <data name="EstimatedTimeofArrival" xml:space="preserve">
     <value>זמן הגעה משוער</value>
@@ -763,10 +766,10 @@
     <value>שלום</value>
   </data>
   <data name="HistoricStockLevels" xml:space="preserve">
-    <value>רמות המלאי היסטוריים</value>
+    <value>רמות מלאי הסטוריות</value>
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
-    <value>ערכי Stock הסטוריים</value>
+    <value>ערכים לניירות הסטוריים</value>
   </data>
   <data name="Hour" xml:space="preserve">
     <value>שָׁעָה</value>
@@ -780,6 +783,9 @@
   <data name="Humidity" xml:space="preserve">
     <value>לחות</value>
   </data>
+  <data name="Importance" xml:space="preserve">
+    <value>חֲשִׁיבוּת</value>
+  </data>
   <data name="Importation" xml:space="preserve">
     <value>יְבוּא</value>
   </data>
@@ -787,7 +793,7 @@
     <value>תבוא</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
-    <value>להשבית</value>
+    <value>השבתה</value>
   </data>
   <data name="Incomes" xml:space="preserve">
     <value>הכנסות</value>
@@ -819,8 +825,8 @@
   <data name="Integration" xml:space="preserve">
     <value>שילוב</value>
   </data>
-  <data name="Interest" xml:space="preserve">
-    <value>ריבית</value>
+  <data name="Interests" xml:space="preserve">
+    <value>תחומי עניין</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>המסחר הבינלאומי</value>
@@ -889,7 +895,7 @@
     <value>שפה</value>
   </data>
   <data name="LastUsed" xml:space="preserve">
-    <value>השימוש האחרון</value>
+    <value>שימוש אחרון</value>
   </data>
   <data name="Latitude" xml:space="preserve">
     <value>קו רוחב</value>
@@ -937,7 +943,7 @@
     <value>Longitud</value>
   </data>
   <data name="LotNumber" xml:space="preserve">
-    <value>מספר פריט</value>
+    <value>ממספרת</value>
   </data>
   <data name="Maintainance" xml:space="preserve">
     <value>תחזוקה</value>
@@ -1120,7 +1126,7 @@
     <value>רשימת מחירים</value>
   </data>
   <data name="PricewithVAT" xml:space="preserve">
-    <value>מחיר כולל מע"מ</value>
+    <value>מחיר עם מע"מ</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>הדפס</value>
@@ -1153,13 +1159,13 @@
     <value>הפקה</value>
   </data>
   <data name="ProductionbyFraction" xml:space="preserve">
-    <value>ייצור על ידי שבר</value>
+    <value>ייצור על ידי Fraction</value>
   </data>
   <data name="ProductionExecution" xml:space="preserve">
-    <value>ביצוע ייצור</value>
+    <value>ביצוע הפקה</value>
   </data>
   <data name="ProductionOrder" xml:space="preserve">
-    <value>הזמנת ייצור</value>
+    <value>להזמין ייצור</value>
   </data>
   <data name="ProductionOrderStatus" xml:space="preserve">
     <value>מצב הפקה להזמין</value>
@@ -1183,7 +1189,7 @@
     <value>שטר חוב</value>
   </data>
   <data name="Promoted" xml:space="preserve">
-    <value>מקודם</value>
+    <value>מקודמות</value>
   </data>
   <data name="Properties" xml:space="preserve">
     <value>נכסים</value>
@@ -1192,58 +1198,58 @@
     <value>נכס</value>
   </data>
   <data name="ProratedCost" xml:space="preserve">
-    <value>עלות יחסית</value>
+    <value>עלות בחלוקה יחסית</value>
   </data>
   <data name="Purchase" xml:space="preserve">
     <value>לִרְכּוֹשׁ</value>
   </data>
   <data name="PurchasebyCostCenter" xml:space="preserve">
-    <value>רכישה באמצעות מרכז עלות</value>
+    <value>רכישה לפי מרכז עלות</value>
   </data>
   <data name="PurchaseDate" xml:space="preserve">
     <value>תאריך רכישה</value>
   </data>
   <data name="PurchaseDetail" xml:space="preserve">
-    <value>פרטי רכישה</value>
+    <value>פירוט רכישה</value>
   </data>
   <data name="PurchaseDocuments" xml:space="preserve">
-    <value>מסמכי רכש</value>
+    <value>מסמכי רכישה</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
     <value>חשבונית קנייה</value>
   </data>
   <data name="PurchaseInvoiceSummary" xml:space="preserve">
-    <value>לרכוש סיכום חשבוניות</value>
+    <value>רכישת סיכום חשבוניות</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>הזמנה</value>
   </data>
   <data name="PurchaseOrderSummary" xml:space="preserve">
-    <value>לרכוש סיכום להזמין</value>
+    <value>רכישת סיכום להזמין</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
     <value>חזור רכישה</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
-    <value>מכרז רכש</value>
+    <value>מכרז רכישה</value>
   </data>
   <data name="PurchaseTenderSummary" xml:space="preserve">
     <value>סיכום מכרז הרכש</value>
   </data>
   <data name="PurchaseValue" xml:space="preserve">
-    <value>ערך הרכישה</value>
+    <value>ערך רכישה</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>כַּמוּת</value>
   </data>
   <data name="quantityverified" xml:space="preserve">
-    <value>כמות אומה</value>
+    <value>כמות מאומתת</value>
   </data>
   <data name="Question" xml:space="preserve">
     <value>שְׁאֵלָה</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>ביטול שינויים! האם אתה בטוח?</value>
+    <value>לבטל שינויים! האם אתה בטוח?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
     <value>לִמְחוֹק! האם אתה בטוח?</value>
@@ -1252,7 +1258,7 @@
     <value>פעולה מהירה</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
-    <value>פעולות מהירות</value>
+    <value>פעילות מהירות</value>
   </data>
   <data name="QuickLook" xml:space="preserve">
     <value>מבט מהיר</value>
@@ -1309,10 +1315,10 @@
     <value>הֶדפֵּס</value>
   </data>
   <data name="Requested" xml:space="preserve">
-    <value>מגיש הבקשה</value>
+    <value>המתבקש</value>
   </data>
   <data name="RequestManagement" xml:space="preserve">
-    <value>לבקש מההנהלה</value>
+    <value>בקשת ניהול</value>
   </data>
   <data name="RequestResource" xml:space="preserve">
     <value>משאבי בקשה</value>
@@ -1325,6 +1331,9 @@
   </data>
   <data name="Rounding" xml:space="preserve">
     <value>עיגול</value>
+  </data>
+  <data name="RowLimit" xml:space="preserve">
+    <value>הגבל Row</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>מְכִירָה</value>
@@ -1342,7 +1351,7 @@
     <value>סיכום תקציב מכירות</value>
   </data>
   <data name="SalesbyBranch" xml:space="preserve">
-    <value>מכירות לפי ענף</value>
+    <value>מכירות לפי סניף</value>
   </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>מכירות לפי מותג</value>
@@ -1357,7 +1366,7 @@
     <value>מכירות לפי פריט</value>
   </data>
   <data name="SalesbySalesman" xml:space="preserve">
-    <value>מכירות לפי איש מכירות</value>
+    <value>מכירות לפי סוכן</value>
   </data>
   <data name="SalesbyTag" xml:space="preserve">
     <value>מכירות לפי תג</value>
@@ -1366,7 +1375,7 @@
     <value>פרטי מכירות</value>
   </data>
   <data name="SalesDocuments" xml:space="preserve">
-    <value>מסמכי המכירה</value>
+    <value>מסמכי מכירות</value>
   </data>
   <data name="SalesInvoice" xml:space="preserve">
     <value>חשבונית מכירות</value>
@@ -1378,7 +1387,7 @@
     <value>איש מכירות</value>
   </data>
   <data name="SalesmanType" xml:space="preserve">
-    <value>סוג Salesman</value>
+    <value>סוג הסוכן</value>
   </data>
   <data name="SalesOrder" xml:space="preserve">
     <value>סדר מכירות</value>
@@ -1411,10 +1420,10 @@
     <value>חפש</value>
   </data>
   <data name="Searchexactcode" xml:space="preserve">
-    <value>חפש קוד מדויק</value>
+    <value>חיפוש קוד מדויק</value>
   </data>
   <data name="Searchonlyavailable" xml:space="preserve">
-    <value>חיפוש רק זמין</value>
+    <value>חיפוש בלבד זמין</value>
   </data>
   <data name="SeatsAvailable" xml:space="preserve">
     <value>מקומות פנויים</value>
@@ -1423,7 +1432,7 @@
     <value>בִּטָחוֹן</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
-    <value>תשובת אבטחה</value>
+    <value>תשובה לשאלת אבטחה</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
     <value>בחר הכל</value>
@@ -1432,7 +1441,7 @@
     <value>מוֹכֵר</value>
   </data>
   <data name="SellRate" xml:space="preserve">
-    <value>למכור דרג</value>
+    <value>מכור שערים</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>שֵׁרוּת</value>
@@ -1462,7 +1471,7 @@
     <value>לִקְנוֹת</value>
   </data>
   <data name="SingleCurrency" xml:space="preserve">
-    <value>מטבע יחיד</value>
+    <value>מטבע אחיד</value>
   </data>
   <data name="SocialID" xml:space="preserve">
     <value>חברתי ID</value>
@@ -1495,7 +1504,7 @@
     <value>המניה</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
-    <value>מאגר מקסימאלי</value>
+    <value>במלאי מקסימאלי</value>
   </data>
   <data name="StockMinimum" xml:space="preserve">
     <value>מלאי מינימום</value>
@@ -1519,7 +1528,7 @@
     <value>ספק</value>
   </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
-    <value>החשבון השוטף של הספק</value>
+    <value>חשבון שוטף ספק</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>אספקה</value>
@@ -1564,7 +1573,7 @@
     <value>עִסקָה</value>
   </data>
   <data name="TransactionDate" xml:space="preserve">
-    <value>תאריך עסקה</value>
+    <value>תאריך ביצוע העסקה</value>
   </data>
   <data name="TransactionNumber" xml:space="preserve">
     <value>מספר העסקה</value>
@@ -1576,7 +1585,7 @@
     <value>לְהַעֲבִיר</value>
   </data>
   <data name="TransferbetweenWarehouse" xml:space="preserve">
-    <value>העברה בין המחסן</value>
+    <value>העברה בין מחסנים</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>סוּג</value>
@@ -1591,7 +1600,7 @@
     <value>מִשׁתַמֵשׁ</value>
   </data>
   <data name="UserRole" xml:space="preserve">
-    <value>תפקיד המשתמש</value>
+    <value>תפקיד משתמש</value>
   </data>
   <data name="ValidUntil" xml:space="preserve">
     <value>בתוקף עד</value>
@@ -1621,7 +1630,7 @@
     <value>מכירות מע"מ</value>
   </data>
   <data name="VATWithholding" xml:space="preserve">
-    <value>במקור מע"מ</value>
+    <value>ניכוי מע"מ</value>
   </data>
   <data name="VerifiedBy" xml:space="preserve">
     <value>מאושר על ידי</value>

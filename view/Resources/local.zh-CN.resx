@@ -201,6 +201,9 @@
   <data name="Approve" xml:space="preserve">
     <value>批准</value>
   </data>
+  <data name="Archive" xml:space="preserve">
+    <value>档案</value>
+  </data>
   <data name="Area" xml:space="preserve">
     <value>区</value>
   </data>
@@ -214,13 +217,13 @@
     <value>审计</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
-    <value>自动计费</value>
+    <value>自动会计</value>
   </data>
   <data name="AutomaticRecipe" xml:space="preserve">
     <value>自动配方</value>
   </data>
   <data name="Available" xml:space="preserve">
-    <value>可用的</value>
+    <value>可得到</value>
   </data>
   <data name="AvailableCredit" xml:space="preserve">
     <value>剩余金额</value>
@@ -253,7 +256,7 @@
     <value>血型</value>
   </data>
   <data name="BookofExpenses" xml:space="preserve">
-    <value>费用之书</value>
+    <value>费用的书</value>
   </data>
   <data name="BookofIncomes" xml:space="preserve">
     <value>收入本书</value>
@@ -322,13 +325,13 @@
     <value>系数</value>
   </data>
   <data name="CollectionAgent" xml:space="preserve">
-    <value>收集代理</value>
+    <value>收款代理人</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>评论</value>
   </data>
   <data name="Commercial" xml:space="preserve">
-    <value>商业的</value>
+    <value>广告</value>
   </data>
   <data name="Commision" xml:space="preserve">
     <value>佣金</value>
@@ -349,7 +352,7 @@
     <value>组态</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>接</value>
+    <value>连</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
     <value>连接生成器</value>
@@ -361,7 +364,7 @@
     <value>消耗</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
-    <value>消耗接下来范围</value>
+    <value>消费下一个范围</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>联系</value>
@@ -496,61 +499,61 @@
     <value>账户跟踪所有的金融交易</value>
   </data>
   <data name="desc_AccountsPayable" xml:space="preserve">
-    <value>将支付的款项，并计算左什么</value>
+    <value>插入的付款和计算什么左</value>
   </data>
   <data name="desc_AccountsReceivable" xml:space="preserve">
-    <value>将缓解支付和计算什么左</value>
+    <value>插入缓解支付和计算什么左</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>创建并与金融账户交易</value>
+    <value>创建并与您的金融账户交易</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
     <value>银行有能力持有多个账户</value>
   </data>
   <data name="desc_Contact" xml:space="preserve">
-    <value>您的联系人和供应商的联系信息</value>
+    <value>为您的联系人和供应商联系信息</value>
   </data>
   <data name="desc_ContactRole" xml:space="preserve">
-    <value>定义角色和权利为我们的联系方式</value>
+    <value>定义角色和权利，我们接触</value>
   </data>
   <data name="desc_contactTag" xml:space="preserve">
-    <value>标签有助于搜索和联系人快速排序</value>
+    <value>标签可帮助搜索和联系人快速排序</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
-    <value>允许在不同的货币及利率交易</value>
+    <value>允许以不同的货币及利率交易</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
-    <value>将商业化的所有项目</value>
+    <value>将被商业化的所有项目</value>
   </data>
   <data name="desc_ItemTag" xml:space="preserve">
-    <value>标签有助于搜索和快速排序项</value>
+    <value>标签可帮助搜索和快速排序项</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
-    <value>地点分支内持有库存</value>
+    <value>位置分支内持有库存</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
-    <value>控制与schedual修的为您的资产</value>
+    <value>控制和schedual修的为您的资产</value>
   </data>
   <data name="desc_Movement" xml:space="preserve">
-    <value>移动项目，并从不同的地点</value>
+    <value>要将项目，并从不同的位置</value>
   </data>
   <data name="desc_PriceList" xml:space="preserve">
-    <value>不同价位的商品化同一项目</value>
+    <value>不同价位的商业化同一个项目</value>
   </data>
   <data name="desc_Stock" xml:space="preserve">
-    <value>按部门和位置分组库存水平</value>
+    <value>通过分公司和位置分组库存水平</value>
   </data>
   <data name="desc_Terminal" xml:space="preserve">
-    <value>终端让我们发出的文件</value>
+    <value>终端让我们发出文件</value>
   </data>
   <data name="desc_Transfer" xml:space="preserve">
-    <value>转移项目，并从不同的商店</value>
+    <value>转让项目，并从不同的商店</value>
   </data>
   <data name="desc_VAT" xml:space="preserve">
-    <value>售卖或购买过程中施加税</value>
+    <value>销售或购买过程中施加税</value>
   </data>
   <data name="desc_VATGroup" xml:space="preserve">
-    <value>增值税的分组简单地交易</value>
+    <value>增值税是分组简单地交易</value>
   </data>
   <data name="Designer" xml:space="preserve">
     <value>设计师</value>
@@ -586,7 +589,7 @@
     <value>文件</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>做</value>
+    <value>完成</value>
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>停机时间</value>
@@ -694,7 +697,7 @@
     <value>金融</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>完</value>
+    <value>成品</value>
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
     <value>会计期间</value>
@@ -780,6 +783,9 @@
   <data name="Humidity" xml:space="preserve">
     <value>湿度</value>
   </data>
+  <data name="Importance" xml:space="preserve">
+    <value>重要性</value>
+  </data>
   <data name="Importation" xml:space="preserve">
     <value>输入</value>
   </data>
@@ -819,8 +825,8 @@
   <data name="Integration" xml:space="preserve">
     <value>积分</value>
   </data>
-  <data name="Interest" xml:space="preserve">
-    <value>利益</value>
+  <data name="Interests" xml:space="preserve">
+    <value>兴趣</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>国际商务</value>
@@ -832,7 +838,7 @@
     <value>存货流转</value>
   </data>
   <data name="InventoryFlowwithDimension" xml:space="preserve">
-    <value>存货流转与尺寸</value>
+    <value>库存流量与尺寸</value>
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>发票</value>
@@ -856,7 +862,7 @@
     <value>ISO代码</value>
   </data>
   <data name="Issubstitute" xml:space="preserve">
-    <value>是替身</value>
+    <value>是替代</value>
   </data>
   <data name="Issued" xml:space="preserve">
     <value>发行</value>
@@ -868,7 +874,7 @@
     <value>项目已过期</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
-    <value>运动项目</value>
+    <value>物品移动</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>项目</value>
@@ -919,7 +925,7 @@
     <value>名单</value>
   </data>
   <data name="LocatetheServer" xml:space="preserve">
-    <value>定位服务器</value>
+    <value>找到服务器</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>位置</value>
@@ -985,7 +991,7 @@
     <value>迁移类型</value>
   </data>
   <data name="MobilePointofSale" xml:space="preserve">
-    <value>销售移动点</value>
+    <value>销售的移动点</value>
   </data>
   <data name="Module" xml:space="preserve">
     <value>模</value>
@@ -1069,7 +1075,7 @@
     <value>付款方式：收到</value>
   </data>
   <data name="PaymentsMade" xml:space="preserve">
-    <value>制造付款</value>
+    <value>支付情况</value>
   </data>
   <data name="PaymentsRecieved" xml:space="preserve">
     <value>付款：收到</value>
@@ -1153,7 +1159,7 @@
     <value>生产</value>
   </data>
   <data name="ProductionbyFraction" xml:space="preserve">
-    <value>产量分数</value>
+    <value>生产用馏分</value>
   </data>
   <data name="ProductionExecution" xml:space="preserve">
     <value>生产执行</value>
@@ -1192,7 +1198,7 @@
     <value>属性</value>
   </data>
   <data name="ProratedCost" xml:space="preserve">
-    <value>比例计算的费用</value>
+    <value>按比例分摊的成本</value>
   </data>
   <data name="Purchase" xml:space="preserve">
     <value>采购</value>
@@ -1210,7 +1216,7 @@
     <value>购买文件</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
-    <value>购买发票</value>
+    <value>采购发票</value>
   </data>
   <data name="PurchaseInvoiceSummary" xml:space="preserve">
     <value>购买发票摘要</value>
@@ -1237,7 +1243,7 @@
     <value>数量</value>
   </data>
   <data name="quantityverified" xml:space="preserve">
-    <value>验证数量</value>
+    <value>量验证</value>
   </data>
   <data name="Question" xml:space="preserve">
     <value>题</value>
@@ -1326,6 +1332,9 @@
   <data name="Rounding" xml:space="preserve">
     <value>四舍五入</value>
   </data>
+  <data name="RowLimit" xml:space="preserve">
+    <value>行限制</value>
+  </data>
   <data name="Sale" xml:space="preserve">
     <value>拍卖</value>
   </data>
@@ -1345,7 +1354,7 @@
     <value>由销售分公司</value>
   </data>
   <data name="SalesbyBrand" xml:space="preserve">
-    <value>通过销售品牌</value>
+    <value>销售的品牌</value>
   </data>
   <data name="SalesbyCustomer" xml:space="preserve">
     <value>销售由客户</value>
@@ -1354,10 +1363,10 @@
     <value>销售按日期</value>
   </data>
   <data name="SalesbyItem" xml:space="preserve">
-    <value>通过销售项目</value>
+    <value>销售的项目</value>
   </data>
   <data name="SalesbySalesman" xml:space="preserve">
-    <value>销售由业务员</value>
+    <value>通过销售推销员</value>
   </data>
   <data name="SalesbyTag" xml:space="preserve">
     <value>销售按标签</value>
@@ -1372,7 +1381,7 @@
     <value>销售发票</value>
   </data>
   <data name="SalesInvoiceSummary" xml:space="preserve">
-    <value>销售发票摘要</value>
+    <value>销售发票汇总</value>
   </data>
   <data name="Salesman" xml:space="preserve">
     <value>推销员</value>
@@ -1384,7 +1393,7 @@
     <value>销售订单</value>
   </data>
   <data name="SalesOrderSummary" xml:space="preserve">
-    <value>销售订单摘要</value>
+    <value>销售订单汇总</value>
   </data>
   <data name="SalesPromotion" xml:space="preserve">
     <value>打折促销</value>
@@ -1441,7 +1450,7 @@
     <value>服务合同</value>
   </data>
   <data name="ServicesperEvent" xml:space="preserve">
-    <value>每个事件服务</value>
+    <value>每次事件服务</value>
   </data>
   <data name="ServicesperPerson" xml:space="preserve">
     <value>每人服务</value>
@@ -1618,10 +1627,10 @@
     <value>购买增值税</value>
   </data>
   <data name="VATSales" xml:space="preserve">
-    <value>销售增值税</value>
+    <value>增值税销售</value>
   </data>
   <data name="VATWithholding" xml:space="preserve">
-    <value>代扣代缴增值税</value>
+    <value>增值税扣缴</value>
   </data>
   <data name="VerifiedBy" xml:space="preserve">
     <value>经核实</value>
@@ -1651,7 +1660,7 @@
     <value>工作</value>
   </data>
   <data name="WorkType" xml:space="preserve">
-    <value>工作类型</value>
+    <value>作品类型</value>
   </data>
   <data name="Year" xml:space="preserve">
     <value>年</value>

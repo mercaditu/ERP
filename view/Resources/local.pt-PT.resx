@@ -133,7 +133,7 @@
     <value>Contabilidade</value>
   </data>
   <data name="AccountingJournal" xml:space="preserve">
-    <value>Contabilidade Jornal</value>
+    <value>Accounting Journal</value>
   </data>
   <data name="Accounts" xml:space="preserve">
     <value>Contas</value>
@@ -175,7 +175,7 @@
     <value>Avançado</value>
   </data>
   <data name="Alias" xml:space="preserve">
-    <value>Aliás</value>
+    <value>Pseudônimo</value>
   </data>
   <data name="Allow" xml:space="preserve">
     <value>Permitir</value>
@@ -187,7 +187,7 @@
     <value>Quantia Paga</value>
   </data>
   <data name="AnalisysofAccountsReceivable" xml:space="preserve">
-    <value>Análise Das Contas A Receber</value>
+    <value>Análise Do Contas A Receber</value>
   </data>
   <data name="Annul" xml:space="preserve">
     <value>Anular</value>
@@ -201,8 +201,8 @@
   <data name="Approve" xml:space="preserve">
     <value>Aprovar</value>
   </data>
-  <data name="Archived" xml:space="preserve">
-    <value>Arquivado</value>
+  <data name="Archive" xml:space="preserve">
+    <value>Arquivo</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>Área</value>
@@ -292,7 +292,7 @@
     <value>Cancelar</value>
   </data>
   <data name="CanExpire" xml:space="preserve">
-    <value>Podem Expirar</value>
+    <value>Pode Expirar</value>
   </data>
   <data name="CapitalResource" xml:space="preserve">
     <value>Resource Capital</value>
@@ -373,13 +373,13 @@
     <value>Pessoa De Contato</value>
   </data>
   <data name="ContactRole" xml:space="preserve">
-    <value>Contactar Papel</value>
+    <value>Contato Papel</value>
   </data>
   <data name="Contacts" xml:space="preserve">
     <value>Contatos</value>
   </data>
   <data name="ContactTags" xml:space="preserve">
-    <value>Contacto Etiquetas</value>
+    <value>Contato Tag</value>
   </data>
   <data name="Contract" xml:space="preserve">
     <value>Contrato</value>
@@ -517,7 +517,7 @@
     <value>Definir Funções E Direitos Para Os Nossos Contactos</value>
   </data>
   <data name="desc_contactTag" xml:space="preserve">
-    <value>Etiquetas Ajudar A Procurar E Classificar Os Contatos Rapidamente</value>
+    <value>As Tags Ajudam Pesquisar E Classificar Os Contatos Rapidamente</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
     <value>Permite Transações Em Diferentes Moedas E Taxas</value>
@@ -526,7 +526,7 @@
     <value>Todos Os Itens Que Serão Comercializados</value>
   </data>
   <data name="desc_ItemTag" xml:space="preserve">
-    <value>Etiquetas Ajudar A Procurar E Classificar Os Itens Rapidamente</value>
+    <value>As Tags Ajudam Pesquisar E Classificar Os Itens Rapidamente</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
     <value>Locais De Manter Estoques Dentro De Um Ramo</value>
@@ -544,19 +544,19 @@
     <value>Os Níveis De Estoque Agrupados Por Ramo E Localização</value>
   </data>
   <data name="desc_Terminal" xml:space="preserve">
-    <value>Terminais Permitem-Nos Para Emitir Documentos</value>
+    <value>Terminais Permitir-Nos Para Emitir Documentos</value>
   </data>
   <data name="desc_Transfer" xml:space="preserve">
     <value>Transferir Itens De E Para Diferentes Lojas</value>
   </data>
   <data name="desc_VAT" xml:space="preserve">
-    <value>Impostos Aplicados Durante Uma Compra Ou Venda</value>
+    <value>Impostos Aplicados Durante Uma Venda Ou Compra</value>
   </data>
   <data name="desc_VATGroup" xml:space="preserve">
     <value>Iva Que São Agrupados Para Simplesmente Transações</value>
   </data>
   <data name="Designer" xml:space="preserve">
-    <value>Desenhista</value>
+    <value>Estilista</value>
   </data>
   <data name="Destination" xml:space="preserve">
     <value>Destino</value>
@@ -782,6 +782,9 @@
   </data>
   <data name="Humidity" xml:space="preserve">
     <value>Umidade</value>
+  </data>
+  <data name="Importance" xml:space="preserve">
+    <value>Importância</value>
   </data>
   <data name="Importation" xml:space="preserve">
     <value>Importação</value>
@@ -1081,7 +1084,7 @@
     <value>Tipo De Pagamento</value>
   </data>
   <data name="PendingDocuments" xml:space="preserve">
-    <value>Enquanto Se Aguarda Documentos</value>
+    <value>Pendente Documentos</value>
   </data>
   <data name="PendingPayables" xml:space="preserve">
     <value>Dívidas Pendentes</value>
@@ -1138,7 +1141,7 @@
     <value>Impressão De Cheques</value>
   </data>
   <data name="PrintingPress" xml:space="preserve">
-    <value>Printing Press</value>
+    <value>Imprensa</value>
   </data>
   <data name="Privilege" xml:space="preserve">
     <value>Privilégio</value>
@@ -1165,10 +1168,10 @@
     <value>Ordem De Produção</value>
   </data>
   <data name="ProductionOrderStatus" xml:space="preserve">
-    <value>Produção Ordem</value>
+    <value>Produção Status Do Pedido</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
-    <value>Status De Produção</value>
+    <value>Status Da Produção</value>
   </data>
   <data name="Profit" xml:space="preserve">
     <value>Lucro</value>
@@ -1216,7 +1219,7 @@
     <value>Nota Fiscal De Compra</value>
   </data>
   <data name="PurchaseInvoiceSummary" xml:space="preserve">
-    <value>Comprar Resumo Da Fatura</value>
+    <value>Comprar Invoice Summary</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>Ordem De Compra</value>
@@ -1246,7 +1249,7 @@
     <value>Questão</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>Cancelar Alterações! Você Tem Certeza?</value>
+    <value>Cancelar As Alterações! Você Tem Certeza?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
     <value>Excluir! Você Tem Certeza?</value>
@@ -1318,7 +1321,7 @@
     <value>Gerenciamento De Solicitações</value>
   </data>
   <data name="RequestResource" xml:space="preserve">
-    <value>Resource Pedido</value>
+    <value>Resource Request</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>Requeridos</value>
@@ -1328,6 +1331,9 @@
   </data>
   <data name="Rounding" xml:space="preserve">
     <value>Completando</value>
+  </data>
+  <data name="RowLimit" xml:space="preserve">
+    <value>Limite De Linhas</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>Venda</value>
@@ -1345,7 +1351,7 @@
     <value>Resumo Do Orçamento De Vendas</value>
   </data>
   <data name="SalesbyBranch" xml:space="preserve">
-    <value>Vendas Por Ramo</value>
+    <value>Vendas Por Filial</value>
   </data>
   <data name="SalesbyBrand" xml:space="preserve">
     <value>Vendas Por Marca</value>
@@ -1579,7 +1585,7 @@
     <value>Transferir</value>
   </data>
   <data name="TransferbetweenWarehouse" xml:space="preserve">
-    <value>Transferência Entre Warehouse</value>
+    <value>A Transferência Entre Armazém</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo</value>

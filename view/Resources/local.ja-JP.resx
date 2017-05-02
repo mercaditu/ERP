@@ -127,10 +127,10 @@
     <value>勘定残高</value>
   </data>
   <data name="Accounted" xml:space="preserve">
-    <value>会計処理</value>
+    <value>占めました</value>
   </data>
   <data name="Accounting" xml:space="preserve">
-    <value>会計</value>
+    <value>経理</value>
   </data>
   <data name="AccountingJournal" xml:space="preserve">
     <value>会計ジャーナル</value>
@@ -148,7 +148,7 @@
     <value>アカウントユーティリティ</value>
   </data>
   <data name="Activate" xml:space="preserve">
-    <value>活性化します</value>
+    <value>アクティブ化</value>
   </data>
   <data name="Active" xml:space="preserve">
     <value>アクティブ</value>
@@ -160,10 +160,10 @@
     <value>住所</value>
   </data>
   <data name="AddsValue" xml:space="preserve">
-    <value>値が追加されます</value>
+    <value>値が追加します</value>
   </data>
   <data name="Adjust" xml:space="preserve">
-    <value>調整します</value>
+    <value>調節します</value>
   </data>
   <data name="Administrative" xml:space="preserve">
     <value>行政の</value>
@@ -172,13 +172,13 @@
     <value>大人</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>高度な</value>
+    <value>高度</value>
   </data>
   <data name="Alias" xml:space="preserve">
     <value>エイリアス</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>許可します</value>
+    <value>許します</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>量</value>
@@ -190,7 +190,7 @@
     <value>売掛金のAnalisys</value>
   </data>
   <data name="Annul" xml:space="preserve">
-    <value>取り消します</value>
+    <value>ディゾルブ</value>
   </data>
   <data name="Application" xml:space="preserve">
     <value>応用</value>
@@ -199,7 +199,10 @@
     <value>アプリケーションの再起動が必要になります</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>承認します</value>
+    <value>認めます</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>アーカイブ</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>エリア</value>
@@ -208,7 +211,7 @@
     <value>到着日</value>
   </data>
   <data name="Assets" xml:space="preserve">
-    <value>資産</value>
+    <value>財産</value>
   </data>
   <data name="Audit" xml:space="preserve">
     <value>監査</value>
@@ -223,7 +226,7 @@
     <value>利用できます</value>
   </data>
   <data name="AvailableCredit" xml:space="preserve">
-    <value>利用可能なクレジット</value>
+    <value>利用可能なクレジットカード</value>
   </data>
   <data name="BackgroundImage" xml:space="preserve">
     <value>背景画像</value>
@@ -238,7 +241,7 @@
     <value>基本給</value>
   </data>
   <data name="Basic" xml:space="preserve">
-    <value>基本</value>
+    <value>基本的な</value>
   </data>
   <data name="Batch" xml:space="preserve">
     <value>バッチ</value>
@@ -253,7 +256,7 @@
     <value>血液型</value>
   </data>
   <data name="BookofExpenses" xml:space="preserve">
-    <value>経費の書籍</value>
+    <value>費用のブック</value>
   </data>
   <data name="BookofIncomes" xml:space="preserve">
     <value>所得の書籍</value>
@@ -265,13 +268,13 @@
     <value>ブランド</value>
   </data>
   <data name="BudgetNumber" xml:space="preserve">
-    <value>予算番号</value>
+    <value>予算ナンバー</value>
   </data>
   <data name="Buyer" xml:space="preserve">
     <value>買い手</value>
   </data>
   <data name="BuyRate" xml:space="preserve">
-    <value>購入率</value>
+    <value>購入レート</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
     <value>寸法によって</value>
@@ -280,7 +283,7 @@
     <value>値で</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>計算</value>
+    <value>計算します</value>
   </data>
   <data name="Calculated" xml:space="preserve">
     <value>計算されました</value>
@@ -349,7 +352,7 @@
     <value>コンフィギュレーション</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>接続します</value>
+    <value>コネクト</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
     <value>接続ビルダー</value>
@@ -361,7 +364,7 @@
     <value>消費します</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
-    <value>次の範囲を消費します</value>
+    <value>次の範囲を消費</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>接触</value>
@@ -376,7 +379,7 @@
     <value>コンタクト</value>
   </data>
   <data name="ContactTags" xml:space="preserve">
-    <value>お問い合わせタグ</value>
+    <value>コンタクトタグ</value>
   </data>
   <data name="Contract" xml:space="preserve">
     <value>契約する</value>
@@ -388,7 +391,7 @@
     <value>コスト</value>
   </data>
   <data name="CostCalculation" xml:space="preserve">
-    <value>原価計算</value>
+    <value>コスト計算</value>
   </data>
   <data name="CostCenter" xml:space="preserve">
     <value>コストセンター</value>
@@ -412,7 +415,7 @@
     <value>クレジット日数</value>
   </data>
   <data name="CreditLimit" xml:space="preserve">
-    <value>信用限度</value>
+    <value>限度額</value>
   </data>
   <data name="CreditLine" xml:space="preserve">
     <value>クレジットライン</value>
@@ -424,10 +427,10 @@
     <value>現在</value>
   </data>
   <data name="CurrentAccountCustomer" xml:space="preserve">
-    <value>現在のアカウントのお客様</value>
+    <value>経常収支のお客様</value>
   </data>
   <data name="CurrentAccountEvent" xml:space="preserve">
-    <value>現在のアカウントのイベント</value>
+    <value>経常収支のイベント</value>
   </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>現在のアカウントで</value>
@@ -451,7 +454,7 @@
     <value>関税</value>
   </data>
   <data name="DailyGoal" xml:space="preserve">
-    <value>デイリーゴール</value>
+    <value>毎日の目標</value>
   </data>
   <data name="Database" xml:space="preserve">
     <value>データベース</value>
@@ -472,7 +475,7 @@
     <value>DebeHaber統合</value>
   </data>
   <data name="Debit" xml:space="preserve">
-    <value>借方</value>
+    <value>借り方</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>デフォルト</value>
@@ -502,22 +505,22 @@
     <value>安心の支払いを挿入していただきました左の計算</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>作成し、あなたの金融勘定と取引</value>
+    <value>作成し、金融機関の口座と取引</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
-    <value>銀行は複数のアカウントを保持する能力を持っています</value>
+    <value>銀行は複数のアカウントを保有する能力を持っています</value>
   </data>
   <data name="desc_Contact" xml:space="preserve">
-    <value>あなたの連絡先や仕入先の連絡先情報</value>
+    <value>ご連絡先や仕入先の連絡先情報</value>
   </data>
   <data name="desc_ContactRole" xml:space="preserve">
-    <value>私たちの連絡先の役割と権限を定義します</value>
+    <value>私たちの連絡先の役割と権限の定義</value>
   </data>
   <data name="desc_contactTag" xml:space="preserve">
     <value>タグは、すぐに連絡先を検索＆ソートする手助け</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
-    <value>異なる通貨および金利の取引を可能にします</value>
+    <value>異なる通貨や金利の取引を可能にします</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
     <value>商品化されるすべてのアイテム</value>
@@ -529,25 +532,25 @@
     <value>場所は、分岐内の在庫を保持します</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
-    <value>あなたの資産の制御とschedualメンテナンス</value>
+    <value>あなたの資産の管理とメンテナンスschedual</value>
   </data>
   <data name="desc_Movement" xml:space="preserve">
-    <value>別の場所やからアイテムを移動します</value>
+    <value>別の場所にしてからアイテムを移動</value>
   </data>
   <data name="desc_PriceList" xml:space="preserve">
     <value>異なる価格で同じアイテムを商品化</value>
   </data>
   <data name="desc_Stock" xml:space="preserve">
-    <value>ブランチと場所ごとにグループ化された在庫レベル</value>
+    <value>ブランチと場所によってグループ化された在庫レベル</value>
   </data>
   <data name="desc_Terminal" xml:space="preserve">
-    <value>ターミナルは、私たちは文書を放出することを可能にします</value>
+    <value>ターミナルは、私たちは、文書を放出することができます</value>
   </data>
   <data name="desc_Transfer" xml:space="preserve">
-    <value>別の店から項目を転送</value>
+    <value>別の店にしてからアイテムを転送</value>
   </data>
   <data name="desc_VAT" xml:space="preserve">
-    <value>売却または購入時に適用される税金</value>
+    <value>売却または購入の際に適用される税</value>
   </data>
   <data name="desc_VATGroup" xml:space="preserve">
     <value>単に取引にグループ化されている付加価値税（VAT）</value>
@@ -580,13 +583,13 @@
     <value>距離</value>
   </data>
   <data name="Divisible" xml:space="preserve">
-    <value>割り切れます</value>
+    <value>可分</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>資料</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>終わりました</value>
+    <value>完了</value>
   </data>
   <data name="DownTime" xml:space="preserve">
     <value>ダウンタイム</value>
@@ -595,13 +598,13 @@
     <value>ドライバ</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>複製</value>
+    <value>複写</value>
   </data>
   <data name="DynamicFields" xml:space="preserve">
     <value>ダイナミックフィールド</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>編集</value>
+    <value>編集します</value>
   </data>
   <data name="Education" xml:space="preserve">
     <value>教育</value>
@@ -637,7 +640,7 @@
     <value>到着予定日</value>
   </data>
   <data name="EstimatedDateofDeparture" xml:space="preserve">
-    <value>出発予定日</value>
+    <value>出発の予定日</value>
   </data>
   <data name="EstimatedTimeofArrival" xml:space="preserve">
     <value>到着予定時刻</value>
@@ -685,19 +688,19 @@
     <value>フィルタ</value>
   </data>
   <data name="FinalCost" xml:space="preserve">
-    <value>最終原価</value>
+    <value>最終コスト</value>
   </data>
   <data name="Finance" xml:space="preserve">
     <value>ファイナンス</value>
   </data>
   <data name="Financial" xml:space="preserve">
-    <value>ファイナンシャル</value>
+    <value>金融</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>完成しました</value>
+    <value>完成</value>
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
-    <value>会計期間</value>
+    <value>期</value>
   </data>
   <data name="FixedAssetGroup" xml:space="preserve">
     <value>固定資産グループ</value>
@@ -706,10 +709,10 @@
     <value>固定資産</value>
   </data>
   <data name="FootTraffic" xml:space="preserve">
-    <value>フットトラフィック</value>
+    <value>足の交通</value>
   </data>
   <data name="Forced" xml:space="preserve">
-    <value>強制的な</value>
+    <value>強制</value>
   </data>
   <data name="Form" xml:space="preserve">
     <value>形</value>
@@ -718,7 +721,7 @@
     <value>分数</value>
   </data>
   <data name="Freight" xml:space="preserve">
-    <value>運賃</value>
+    <value>貨物運送</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>性別</value>
@@ -730,13 +733,13 @@
     <value>地理</value>
   </data>
   <data name="GetDetails" xml:space="preserve">
-    <value>詳細を取得します</value>
+    <value>詳細を見ます</value>
   </data>
   <data name="Gift" xml:space="preserve">
     <value>贈り物</value>
   </data>
   <data name="GovernmentID" xml:space="preserve">
-    <value>政府ID</value>
+    <value>政府のID</value>
   </data>
   <data name="GracePeriod" xml:space="preserve">
     <value>猶予期間</value>
@@ -751,7 +754,7 @@
     <value>ゲスト</value>
   </data>
   <data name="HasPromotion" xml:space="preserve">
-    <value>プロモーションがあります</value>
+    <value>昇進を持っています</value>
   </data>
   <data name="HasWeight" xml:space="preserve">
     <value>量を有し、</value>
@@ -780,6 +783,9 @@
   <data name="Humidity" xml:space="preserve">
     <value>湿度</value>
   </data>
+  <data name="Importance" xml:space="preserve">
+    <value>重要性</value>
+  </data>
   <data name="Importation" xml:space="preserve">
     <value>輸入</value>
   </data>
@@ -787,10 +793,10 @@
     <value>輸入</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
-    <value>不活性化します</value>
+    <value>不活性化</value>
   </data>
   <data name="Incomes" xml:space="preserve">
-    <value>所得</value>
+    <value>収入</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
     <value>インコタームズ</value>
@@ -819,11 +825,11 @@
   <data name="Integration" xml:space="preserve">
     <value>統合</value>
   </data>
-  <data name="Interest" xml:space="preserve">
-    <value>関心</value>
+  <data name="Interests" xml:space="preserve">
+    <value>興味</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
-    <value>国際通商</value>
+    <value>国際商取引</value>
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>インベントリ</value>
@@ -841,7 +847,7 @@
     <value>請求書の日</value>
   </data>
   <data name="InvoiceInterval" xml:space="preserve">
-    <value>請求書インターバル</value>
+    <value>請求書の間隔</value>
   </data>
   <data name="InvoiceNumber" xml:space="preserve">
     <value>請求書番号</value>
@@ -856,7 +862,7 @@
     <value>ISOコード</value>
   </data>
   <data name="Issubstitute" xml:space="preserve">
-    <value>代替です</value>
+    <value>代替は、</value>
   </data>
   <data name="Issued" xml:space="preserve">
     <value>発行済み</value>
@@ -868,7 +874,7 @@
     <value>アイテムは有効期限が切れ</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
-    <value>アイテムの移動</value>
+    <value>アイテムのムーブメント</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>アイテム</value>
@@ -889,7 +895,7 @@
     <value>言語</value>
   </data>
   <data name="LastUsed" xml:space="preserve">
-    <value>最終使用日</value>
+    <value>最後に使用しました</value>
   </data>
   <data name="Latitude" xml:space="preserve">
     <value>緯度</value>
@@ -919,7 +925,7 @@
     <value>リスト</value>
   </data>
   <data name="LocatetheServer" xml:space="preserve">
-    <value>サーバーを探します</value>
+    <value>サーバーを検索します</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>ロケーション</value>
@@ -943,7 +949,7 @@
     <value>メンテナンス</value>
   </data>
   <data name="MakeaGroupPayment" xml:space="preserve">
-    <value>グループの支払いを作ります</value>
+    <value>グループ一時払い</value>
   </data>
   <data name="MakePayment" xml:space="preserve">
     <value>支払う</value>
@@ -961,7 +967,7 @@
     <value>配偶者の有無</value>
   </data>
   <data name="Markup" xml:space="preserve">
-    <value>値上げ</value>
+    <value>マークアップ</value>
   </data>
   <data name="Mask" xml:space="preserve">
     <value>マスク</value>
@@ -976,7 +982,7 @@
     <value>測定タイプ</value>
   </data>
   <data name="MerchandisewithCredits" xml:space="preserve">
-    <value>クレジット付き商品</value>
+    <value>クレジットでの商品</value>
   </data>
   <data name="MerchandisewithDebits" xml:space="preserve">
     <value>借方と商品</value>
@@ -1015,7 +1021,7 @@
     <value>新しい</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>いいえ</value>
+    <value>ノー</value>
   </data>
   <data name="Number" xml:space="preserve">
     <value>数</value>
@@ -1048,7 +1054,7 @@
     <value>パスワード</value>
   </data>
   <data name="Payable" xml:space="preserve">
-    <value>支払うべき</value>
+    <value>買掛金</value>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>支払い</value>
@@ -1081,7 +1087,7 @@
     <value>保留中のドキュメント</value>
   </data>
   <data name="PendingPayables" xml:space="preserve">
-    <value>保留中の支払債務</value>
+    <value>保留支払債務</value>
   </data>
   <data name="PendingReceivables" xml:space="preserve">
     <value>保留中の債権</value>
@@ -1102,13 +1108,13 @@
     <value>選んでください</value>
   </data>
   <data name="PointofSale" xml:space="preserve">
-    <value>販売時点管理</value>
+    <value>販売場所</value>
   </data>
   <data name="Position" xml:space="preserve">
     <value>ポジション</value>
   </data>
   <data name="Preference" xml:space="preserve">
-    <value>好み</value>
+    <value>優先</value>
   </data>
   <data name="Preventive" xml:space="preserve">
     <value>予防の</value>
@@ -1120,10 +1126,10 @@
     <value>価格表</value>
   </data>
   <data name="PricewithVAT" xml:space="preserve">
-    <value>付加価値税と価格</value>
+    <value>VATと価格</value>
   </data>
   <data name="Print" xml:space="preserve">
-    <value>印刷</value>
+    <value>プリント</value>
   </data>
   <data name="Printer" xml:space="preserve">
     <value>プリンタ</value>
@@ -1132,7 +1138,7 @@
     <value>プリンタの値</value>
   </data>
   <data name="PrintingCheques" xml:space="preserve">
-    <value>印刷小切手</value>
+    <value>印刷チェック</value>
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>印刷機</value>
@@ -1177,10 +1183,10 @@
     <value>プロジェクト実行</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
-    <value>プロジェクト・ファイナンス</value>
+    <value>プロジェクトファイナンス</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
-    <value>約束手形</value>
+    <value>手形</value>
   </data>
   <data name="Promoted" xml:space="preserve">
     <value>昇格</value>
@@ -1198,7 +1204,7 @@
     <value>購入</value>
   </data>
   <data name="PurchasebyCostCenter" xml:space="preserve">
-    <value>コストセンターによって購入</value>
+    <value>コストセンターによる購入</value>
   </data>
   <data name="PurchaseDate" xml:space="preserve">
     <value>購入日</value>
@@ -1213,7 +1219,7 @@
     <value>購入請求書</value>
   </data>
   <data name="PurchaseInvoiceSummary" xml:space="preserve">
-    <value>購入請求一覧</value>
+    <value>請求書の要約を購入</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>注文書</value>
@@ -1231,7 +1237,7 @@
     <value>購入入札の概要</value>
   </data>
   <data name="PurchaseValue" xml:space="preserve">
-    <value>購入価値</value>
+    <value>購入の価値</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>量</value>
@@ -1249,7 +1255,7 @@
     <value>削除！本気ですか？</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
-    <value>迅速な行動</value>
+    <value>クイックアクション</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
     <value>クイックアクション</value>
@@ -1282,7 +1288,7 @@
     <value>レシピ</value>
   </data>
   <data name="Refinance" xml:space="preserve">
-    <value>借り換えます</value>
+    <value>借り換え</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>リフレッシュ</value>
@@ -1306,7 +1312,7 @@
     <value>レポート</value>
   </data>
   <data name="Reprint" xml:space="preserve">
-    <value>リプリント</value>
+    <value>再版</value>
   </data>
   <data name="Requested" xml:space="preserve">
     <value>要求されました</value>
@@ -1321,10 +1327,13 @@
     <value>必須</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
-    <value>戻り数</value>
+    <value>リターン数</value>
   </data>
   <data name="Rounding" xml:space="preserve">
     <value>丸め</value>
+  </data>
+  <data name="RowLimit" xml:space="preserve">
+    <value>行の制限</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>販売</value>
@@ -1336,7 +1345,7 @@
     <value>販売分析</value>
   </data>
   <data name="SalesBudget" xml:space="preserve">
-    <value>販売予算</value>
+    <value>売上予算</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>販売予算の概要</value>
@@ -1354,10 +1363,10 @@
     <value>日別売上高</value>
   </data>
   <data name="SalesbyItem" xml:space="preserve">
-    <value>項目別売上高</value>
+    <value>アイテム別売上高</value>
   </data>
   <data name="SalesbySalesman" xml:space="preserve">
-    <value>セールスマン別売上高</value>
+    <value>セールスマンによって販売</value>
   </data>
   <data name="SalesbyTag" xml:space="preserve">
     <value>タグ別売上高</value>
@@ -1369,7 +1378,7 @@
     <value>販売伝票</value>
   </data>
   <data name="SalesInvoice" xml:space="preserve">
-    <value>売上送り状</value>
+    <value>売上請求書</value>
   </data>
   <data name="SalesInvoiceSummary" xml:space="preserve">
     <value>売上請求書の概要</value>
@@ -1393,7 +1402,7 @@
     <value>営業担当者</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
-    <value>販売戻ります</value>
+    <value>販売リターン</value>
   </data>
   <data name="Saloon" xml:space="preserve">
     <value>サルーン</value>
@@ -1438,7 +1447,7 @@
     <value>サービス</value>
   </data>
   <data name="ServiceContract" xml:space="preserve">
-    <value>請負契約</value>
+    <value>サービス契約</value>
   </data>
   <data name="ServicesperEvent" xml:space="preserve">
     <value>イベントごとのサービス</value>
@@ -1450,7 +1459,7 @@
     <value>設定</value>
   </data>
   <data name="Sex" xml:space="preserve">
-    <value>セックス</value>
+    <value>性別</value>
   </data>
   <data name="Share" xml:space="preserve">
     <value>シェア</value>
@@ -1465,7 +1474,7 @@
     <value>単一通貨</value>
   </data>
   <data name="SocialID" xml:space="preserve">
-    <value>ソーシャルID</value>
+    <value>社会的なID</value>
   </data>
   <data name="SoleCurrency" xml:space="preserve">
     <value>ソール通貨</value>
@@ -1495,10 +1504,10 @@
     <value>株式</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
-    <value>株価の最大</value>
+    <value>証券最大</value>
   </data>
   <data name="StockMinimum" xml:space="preserve">
-    <value>株価最小</value>
+    <value>証券取引の最小</value>
   </data>
   <data name="StylePrinter" xml:space="preserve">
     <value>スタイルプリンター</value>
@@ -1507,19 +1516,19 @@
     <value>スタイル領収書</value>
   </data>
   <data name="Subscription" xml:space="preserve">
-    <value>サブスクリプション</value>
+    <value>購読</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
     <value>小計</value>
   </data>
   <data name="SubTotalwithVAT" xml:space="preserve">
-    <value>付加価値税と小計</value>
+    <value>VATと小計</value>
   </data>
   <data name="Supplier" xml:space="preserve">
     <value>サプライヤー</value>
   </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
-    <value>サプライヤー現在のアカウント</value>
+    <value>サプライヤー経常収支</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>用品</value>
@@ -1555,10 +1564,10 @@
     <value>条項</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>合計</value>
+    <value>トータル</value>
   </data>
   <data name="Transact" xml:space="preserve">
-    <value>トランスアクト</value>
+    <value>取引します</value>
   </data>
   <data name="Transaction" xml:space="preserve">
     <value>トランザクション</value>
@@ -1567,7 +1576,7 @@
     <value>取引日</value>
   </data>
   <data name="TransactionNumber" xml:space="preserve">
-    <value>トランザクション数</value>
+    <value>トランザクション番号</value>
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>取引</value>
@@ -1576,7 +1585,7 @@
     <value>転送</value>
   </data>
   <data name="TransferbetweenWarehouse" xml:space="preserve">
-    <value>倉庫間の転送</value>
+    <value>倉庫間転送</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>タイプ</value>
@@ -1609,10 +1618,10 @@
     <value>VAT除外</value>
   </data>
   <data name="VATGrouping" xml:space="preserve">
-    <value>付加価値税（VAT）のグループ化</value>
+    <value>VATグループ化</value>
   </data>
   <data name="VATIncluded" xml:space="preserve">
-    <value>付加価値税が含まれてい</value>
+    <value>VAT含ま</value>
   </data>
   <data name="VATPurchase" xml:space="preserve">
     <value>VAT購入</value>

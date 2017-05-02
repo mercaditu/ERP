@@ -201,8 +201,8 @@
   <data name="Approve" xml:space="preserve">
     <value>Approve</value>
   </data>
-  <data name="Archived" xml:space="preserve">
-    <value>Archived</value>
+  <data name="Archive" xml:space="preserve">
+    <value>Archive</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>Area</value>
@@ -783,6 +783,9 @@
   <data name="Humidity" xml:space="preserve">
     <value>Humidity</value>
   </data>
+  <data name="Importance" xml:space="preserve">
+    <value>Importance</value>
+  </data>
   <data name="Importation" xml:space="preserve">
     <value>Importation</value>
   </data>
@@ -1328,6 +1331,9 @@
   </data>
   <data name="Rounding" xml:space="preserve">
     <value>Rounding</value>
+  </data>
+  <data name="RowLimit" xml:space="preserve">
+    <value>Row Limit</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>Sale</value>

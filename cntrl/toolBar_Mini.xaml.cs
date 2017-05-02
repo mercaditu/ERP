@@ -179,10 +179,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnParent_Click != null)
-            {
-                btnParent_Click(this);
-            }
+            btnParent_Click?.Invoke(this);
         }
 
         //NEW
@@ -198,10 +195,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnNew_Click != null)
-            {
-                btnNew_Click(this);
-            }
+            btnNew_Click?.Invoke(this);
         }
 
         //EDIT
@@ -216,10 +210,7 @@ namespace cntrl
                 toolIcon_Mini _toolicon = (toolIcon_Mini)sender;
                 _toolicon.Focus();
             }
-            if (btnEdit_Click != null)
-            {
-                btnEdit_Click(sender);
-            }
+            btnEdit_Click?.Invoke(sender);
         }
 
         //DELETE
@@ -235,10 +226,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnDelete_Click != null)
-            {
-                btnDelete_Click(sender);
-            }
+            btnDelete_Click?.Invoke(sender);
         }
 
         //SAVE
@@ -254,10 +242,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnSave_Click != null)
-            {
-                btnSave_Click(sender);
-            }
+            btnSave_Click?.Invoke(sender);
         }
 
         //CANCEL
@@ -273,10 +258,7 @@ namespace cntrl
                 _toolicon.Focus();
             }
 
-            if (btnCancel_Click != null)
-            {
-                btnCancel_Click(sender);
-            }
+            btnCancel_Click?.Invoke(sender);
         }
 
         //APPROVE
@@ -288,10 +270,7 @@ namespace cntrl
         {
             toolIcon_Mini _toolicon = (toolIcon_Mini)sender;
             _toolicon.Focus();
-            if (btnApprove_Click != null)
-            {
-                btnApprove_Click(this);
-            }
+            btnApprove_Click?.Invoke(this);
         }
 
         //ANULL
@@ -303,10 +282,7 @@ namespace cntrl
         {
             toolIcon_Mini _toolicon = (toolIcon_Mini)sender;
             _toolicon.Focus();
-            if (btnAnull_Click != null)
-            {
-                btnAnull_Click(this);
-            }
+            btnAnull_Click?.Invoke(this);
         }
 
         #endregion "Events"

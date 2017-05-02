@@ -54,6 +54,32 @@ namespace entity
 
         public decimal quantity { get; set; }
 
+        [NotMapped]
+        public new bool IsSelected
+        {
+            get { return _is_selected; }
+            set
+            {
+                if (value != _is_selected)
+                {
+                    _is_selected = value;
+                    RaisePropertyChanged("IsSelected");
+                    if (Parent_selected == false)
+                    {
+                        foreach (var task in child)
+                        {
+                            if (task.status != Status.Project.Rejected)
+                                task.IsSelected = value;
+                        }
+                    }
+                }
+            }
+        }
+        private bool _is_selected;
+
+        [NotMapped]
+        private bool Parent_selected;
+
         //Heirarchy Nav Property
         public virtual project_template_detail parent { get; set; }
 

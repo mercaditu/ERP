@@ -176,23 +176,29 @@ namespace Cognitivo.Project.Development
                 projectproject_template_detailViewSource.View.Filter = null;
                 List<project_template_detail> project_template_detailLIST = treeProject.ItemsSource.Cast<project_template_detail>().ToList();
                 project_template_detailLIST = project_template_detailLIST.Where(x => x.IsSelected == true).ToList();
+
                 using (db db = new db())
                 {
                     foreach (project_template_detail project_template_detail in project_template_detailLIST)
                     {
                         project_template_detail _project_template_detail = db.project_template_detail.Where(x => x.id_template_detail == project_template_detail.id_template_detail).FirstOrDefault();
-
                         db.project_template_detail.Remove(_project_template_detail);
                     }
                     db.SaveChanges();
                 }
 
                 ProjectTemplateDB = new ProjectTemplateDB();
-                project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
+
+                project_templateViewSource = FindResource("project_templateViewSource") as CollectionViewSource;
                 ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company).Load();
                 project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
                 filter_task();
             }
+        }
+
+        private void RemoveChild(ref db db)
+        {
+
         }
 
         #endregion Project Type Events

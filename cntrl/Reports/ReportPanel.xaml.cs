@@ -280,8 +280,8 @@ namespace cntrl
             reportViewer.RefreshReport();
 
             // ReportDesigner.ReportModule = Report.Application.ToString();
-            ReportDesigner.ReportPath = @"C:/Users/ABC/Documents/CogntivoERP/SalesInvoice/CostOfGoodsSold.rdlc";
-            ReportDesigner.open();
+            //ReportDesigner.ReportPath = @"C:/Users/ABC/Documents/CogntivoERP/SalesInvoice/CostOfGoodsSold.rdlc";
+            //ReportDesigner.open();
         }
 
         public ReportPanel()

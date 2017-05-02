@@ -9,18 +9,18 @@ using WPFLocalizeExtension.Extensions;
 
 namespace entity.Controller.Sales
 {
-    public class ReturnController:Base
+    public class ReturnController : Base
     {
-       
+
         public Brillo.Promotion.Start Promotions { get; set; }
 
-   
+
 
         public ReturnController()
         {
 
         }
-        
+
         #region Load
 
         public async void Load(bool FilterByTerminal)
@@ -248,6 +248,7 @@ namespace entity.Controller.Sales
                         sales_return.timestamp = DateTime.Now;
                         sales_return.State = EntityState.Unchanged;
                         db.Entry(sales_return).State = EntityState.Added;
+                        Add_CRM(sales_return);
                         sales_return.IsSelected = false;
                     }
                     else if (sales_return.State == EntityState.Modified)
@@ -623,6 +624,6 @@ namespace entity.Controller.Sales
 
         #endregion
 
-       
+
     }
 }

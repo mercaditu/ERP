@@ -249,6 +249,7 @@ namespace entity.Controller.Sales
                         sales_invoice.State = EntityState.Unchanged;
                         db.Entry(sales_invoice).State = EntityState.Added;
                         sales_invoice.IsSelected = false;
+                        Add_CRM(sales_invoice);
                     }
                     else if (sales_invoice.State == EntityState.Modified)
                     {

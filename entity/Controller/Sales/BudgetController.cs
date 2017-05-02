@@ -244,6 +244,7 @@ namespace entity.Controller.Sales
                         sales_budget.State = EntityState.Unchanged;
                         db.Entry(sales_budget).State = EntityState.Added;
                         sales_budget.IsSelected = false;
+                        Add_CRM(sales_budget);
                     }
                     else if (sales_budget.State == EntityState.Modified)
                     {

@@ -290,6 +290,7 @@ namespace entity.Controller.Sales
                         sales_order.State = EntityState.Unchanged;
                         db.Entry(sales_order).State = EntityState.Added;
                         sales_order.IsSelected = false;
+                        Add_CRM(sales_order);
                     }
                     else if (sales_order.State == EntityState.Modified)
                     {

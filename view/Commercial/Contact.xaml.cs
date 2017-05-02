@@ -40,10 +40,10 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, EventArgs e)
         {
-            contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
-            contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
-            contactcontact_field_valueemailViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueemailViewSource");
-            contactcontact_field_valuephoneViewSource = (CollectionViewSource)FindResource("contactcontact_field_valuephoneViewSource");
+            contactChildListViewSource = FindResource("contactChildListViewSource") as CollectionViewSource;
+            contactcontact_field_valueViewSource = FindResource("contactcontact_field_valueViewSource") as CollectionViewSource;
+            contactcontact_field_valueemailViewSource = FindResource("contactcontact_field_valueemailViewSource") as CollectionViewSource;
+            contactcontact_field_valuephoneViewSource = FindResource("contactcontact_field_valuephoneViewSource") as CollectionViewSource;
 
             Window Win = Window.GetWindow(this) as Window;
 
@@ -51,19 +51,19 @@ namespace Cognitivo.Commercial
             {
                 ContactDB.LoadCustomers();
             }
-            else if (Win.Title == entity.Brillo.Localize.StringText("Suppliers"))
+            else if (Win.Title == entity.Brillo.Localize.StringText("Supplier"))
             {
                 ContactDB.LoadSuppliers();
             }
           
-            contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
+            contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
             contactViewSource.Source = ContactDB.db.contacts.Local;
 
-            CollectionViewSource contactParentViewSource = (CollectionViewSource)FindResource("contactParentViewSource");
+            CollectionViewSource contactParentViewSource = FindResource("contactParentViewSource") as CollectionViewSource;
             contactParentViewSource.Source = ContactDB.db.contacts.Local;
 
             //ContactRole
-            CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
+            CollectionViewSource contactRoleViewSource = FindResource("contactRoleViewSource") as CollectionViewSource;
             contactRoleViewSource.Source = ContactDB.db.contact_role.Local;
 
             //AppContract
@@ -103,7 +103,7 @@ namespace Cognitivo.Commercial
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
-            CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
+            CollectionViewSource contact_tagViewSource = FindResource("contact_tagViewSource") as CollectionViewSource;
             contact_tagViewSource.Source = ContactDB.db.contact_tag.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;

@@ -59,7 +59,7 @@ namespace entity
                 }
                 else
                 {
-                    if (this.sales_packing_relation.Count() > 0)
+                    if (sales_packing_relation.Count() > 0)
                     {
                         return true;
                     }

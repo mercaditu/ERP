@@ -33,8 +33,8 @@ namespace cntrl.Curd
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             Mode = App_Mode;
             this.PaymentDB = PaymentDB;
-            paymentViewSource = (CollectionViewSource)FindResource("paymentViewSource");
-            paymentpayment_detailViewSource = (CollectionViewSource)FindResource("paymentpayment_detailViewSource");
+            paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
+            paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
             payment_schedualList = _payment_schedualList;
 
             payment payment = new payment();
@@ -81,40 +81,43 @@ namespace cntrl.Curd
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
+            CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
             await PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
 
             //Fix if Payment Type not inserted.
             if (PaymentDB.payment_type.Local.Count == 0)
             {
-                entity.payment_type payment_type = new entity.payment_type();
-                payment_type.name = "Cash";
-                payment_type.is_active = true;
-                payment_type.is_default = true;
+                entity.payment_type payment_type = new entity.payment_type()
+                {
+                    name = "Cash",
+                    is_active = true,
+                    is_default = true
+                };
 
                 PaymentDB.payment_type.Add(payment_type);
             }
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
-            app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
+            app_accountViewSource = this.FindResource("app_accountViewSource") as CollectionViewSource;
             await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company &&
             (a.id_account_type == app_account.app_account_type.Bank || a.id_account == CurrentSession.Id_Account)).LoadAsync();
 
             //Fix if Payment Type not inserted.
             if (PaymentDB.app_account.Local.Count == 0)
             {
-                app_account app_account = new app_account();
-                app_account.name = "CashBox";
-                app_account.code = "Generic";
-                app_account.id_account_type = entity.app_account.app_account_type.Terminal;
-                app_account.id_terminal = CurrentSession.Id_Terminal;
-                app_account.is_active = true;
-
+                app_account app_account = new app_account()
+                {
+                    name = "CashBox",
+                    code = "Generic",
+                    id_account_type = entity.app_account.app_account_type.Terminal,
+                    id_terminal = CurrentSession.Id_Terminal,
+                    is_active = true
+                };
                 PaymentDB.app_account.Add(app_account);
             }
             app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            CollectionViewSource salesRepViewSourceCollector = (CollectionViewSource)this.FindResource("salesRepViewSourceCollector");
+            CollectionViewSource salesRepViewSourceCollector = this.FindResource("salesRepViewSourceCollector") as CollectionViewSource;
             salesRepViewSourceCollector.Source = await PaymentDB.sales_rep.Where(a => a.enum_type == sales_rep.SalesRepType.Collector && a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
 
             if (Mode == Modes.Recievable)
@@ -123,11 +126,9 @@ namespace cntrl.Curd
                 stackDocument.Visibility = Visibility.Visible;
             }
 
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            if (payment != null)
+            if (paymentViewSource.View.CurrentItem is payment payment)
             {
-                app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
-                if (app_account != null)
+                if (app_accountViewSource.View.CurrentItem is app_account app_account)
                 {
                     foreach (payment_detail payment_detail in payment.payment_detail)
                     {
@@ -139,7 +140,7 @@ namespace cntrl.Curd
 
         #region Events
 
-        private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();
@@ -181,10 +182,10 @@ namespace cntrl.Curd
             bool IsPrintable = Mode == Modes.Recievable ? true : false;
             PaymentDB.Approve(payment_schedualList, IsRecievable, IsPrintable);
 
-            lblCancel_MouseDown(null, null);
+            Cancel_MouseDown(null, null);
         }
 
-        private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
             payment payment = paymentViewSource.View.CurrentItem as payment;
@@ -249,7 +250,7 @@ namespace cntrl.Curd
 
         #region Purchase and Sales Returns
 
-        private void sbxPurchaseReturn_Select(object sender, RoutedEventArgs e)
+        private void PurchaseReturn_Select(object sender, RoutedEventArgs e)
         {
             if (sbxPurchaseReturn.ReturnID > 0)
             {
@@ -264,7 +265,7 @@ namespace cntrl.Curd
             }
         }
 
-        private void sbxReturn_Select(object sender, RoutedEventArgs e)
+        private void Return_Select(object sender, RoutedEventArgs e)
         {
             if (sbxReturn.ReturnID > 0)
             {
@@ -285,7 +286,7 @@ namespace cntrl.Curd
 
         #endregion Purchase and Sales Returns
 
-        private void btnAddDetail_Click(object sender, RoutedEventArgs e)
+        private void AddDetail_Click(object sender, RoutedEventArgs e)
         {
             payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
             if (payment_detail != null)
@@ -357,16 +358,12 @@ namespace cntrl.Curd
             }
         }
 
-        private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)
+        private void DeleteDetail_Click(object sender, RoutedEventArgs e)
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
             payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
             PaymentDB.payment_detail.Remove(payment_detail);
             paymentpayment_detailViewSource.View.Refresh();
-        }
-
-        private void btnEditDetail_Click(object sender, RoutedEventArgs e)
-        {
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

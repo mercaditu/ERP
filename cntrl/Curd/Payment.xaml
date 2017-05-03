@@ -46,7 +46,7 @@
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
 					 Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}" />
             <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-				   HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" Foreground="White"
+				   HorizontalAlignment="Right" MouseDown="Cancel_MouseDown" Foreground="White"
 				   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
 
@@ -90,12 +90,12 @@
                     <Grid>
                         <Label Content="{lex:Loc Details}" Style="{StaticResource H3}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="AddDetail_Click"
 									Content="+" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue" />
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnEditDetail_Click"
-									Content="e" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue" />
+                            <!--<Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="EditDetail_Click"
+									Content="e" Cursor="Hand" FontFamily="cognitivo" Foreground="RoyalBlue" />-->
                             <Rectangle Width="0.3" Fill="Black" Margin="8" />
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="Pink" BorderThickness="3" BorderBrush="White" Click="btnDeleteDetail_Click"
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="Pink" BorderThickness="3" BorderBrush="White" Click="DeleteDetail_Click"
 									Content="d" Cursor="Hand" FontFamily="cognitivo" Foreground="Crimson" />
                         </StackPanel>
                     </Grid>
@@ -131,7 +131,7 @@
 									  ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
 									  SelectedValue="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
 									  Style="{StaticResource input_combobox}"
-									  SelectionChanged="cbxPamentType_SelectionChanged">
+									  SelectionChanged="PamentType_SelectionChanged">
                                 <ComboBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel />
@@ -180,7 +180,7 @@
                                         <cntrl:SmartBoxColumn Header="Balance" ForProperty="comment" Binding="{Binding Balance, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" EnableSearch="False" />
                                     </cntrl:SearchableTextbox.Columns>
 								</cntrl:SearchableTextbox>-->
-                                <Controls:SmartBox_PurchaseReturn x:Name="sbxPurchaseReturn" Select="sbxPurchaseReturn_Select" />
+                                <Controls:SmartBox_PurchaseReturn x:Name="sbxPurchaseReturn" Select="PurchaseReturn_Select" />
                             </StackPanel>
 
                             <StackPanel x:Name="stpcreditsales" Visibility="Collapsed">
@@ -196,7 +196,7 @@
 										<cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Comment}" ForProperty="comment" Binding="{Binding comment, Mode=Default}" EnableSearch="True" />
 									</cntrl:SearchableTextbox.Columns>
 								</cntrl:SearchableTextbox>-->
-                                <Controls:SmartBox_SalesReturn x:Name="sbxReturn" Select="sbxReturn_Select" />
+                                <Controls:SmartBox_SalesReturn x:Name="sbxReturn" Select="Return_Select" />
                             </StackPanel>
 
                             <Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}" />

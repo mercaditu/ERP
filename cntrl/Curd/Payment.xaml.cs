@@ -253,14 +253,14 @@ namespace cntrl.Curd
         {
             if (sbxPurchaseReturn.ReturnID > 0)
             {
-                CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+                CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                 purchase_return purchase_return = PaymentDB.purchase_return.Find(sbxPurchaseReturn.ReturnID);
                 decimal return_value = sbxPurchaseReturn.Balance;
-                payment_detail.value = return_value;
+                payment_detail.value = payment_detail.value >= return_value ? return_value : payment_detail.value;
                 payment_detail.id_purchase_return = purchase_return.id_purchase_return;
                 payment_detail.Max_Value = return_value;
-                sbxPurchaseReturn.Text = purchase_return.number + "-" + purchase_return.trans_date; ;
+                sbxPurchaseReturn.Text = purchase_return.number + " - " + purchase_return.trans_date; ;
             }
         }
 
@@ -268,16 +268,16 @@ namespace cntrl.Curd
         {
             if (sbxReturn.ReturnID > 0)
             {
-                CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+                CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                 if (payment_detail != null)
                 {
                     sales_return sales_return = PaymentDB.sales_return.Find(sbxReturn.ReturnID);
                     decimal return_value = sbxReturn.Balance;
                     payment_detail.id_sales_return = sales_return.id_sales_return;
-                    payment_detail.value = return_value;
+                    payment_detail.value = payment_detail.value >= return_value ? return_value : payment_detail.value;
                     payment_detail.Max_Value = return_value;
-                    sbxReturn.Text = sales_return.number + "-" + sales_return.trans_date;
+                    sbxReturn.Text = sales_return.number + " - " + sales_return.trans_date;
                     sbxReturn.RaisePropertyChanged("Text");
                 }
             }

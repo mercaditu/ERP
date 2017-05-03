@@ -202,6 +202,7 @@ namespace Cognitivo.Configs
 
                 if (Transfer.id_accountorigin != null && Transfer.id_accountdest != null && payment_type != null)
                 {
+                    //Fix this code. Allow use of manual FX Rate and create into table.
                     int DestinationRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencydest).FirstOrDefault().id_currencyfx;
                     int OriginRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currencyfx;
 
@@ -210,7 +211,9 @@ namespace Cognitivo.Configs
                         .CurrencyFX_ActiveRates
                         .Where(x => x.id_currency == DestinationRate_ID).FirstOrDefault();
 
-                    if (app_currencyfx.sell_value != Transfer.FXRate)
+                    decimal SellRate = app_currencyfx != null ? app_currencyfx.sell_value : 0;
+
+                    if (SellRate != Transfer.FXRate)
                     {
                         using (db _db = new db())
                         {
@@ -226,12 +229,12 @@ namespace Cognitivo.Configs
                             _db.app_currencyfx.Add(fx);
                             _db.SaveChanges();
 
-                            DestinationRate_ID = fx.id_currency;
+                            DestinationRate_ID = fx.id_currencyfx;
                         }
                     }
                     else
                     {
-                        DestinationRate_ID = app_currencyfx.id_currency;
+                        DestinationRate_ID = app_currencyfx.id_currencyfx;
                     }
 
                     //Set up Origin Data.

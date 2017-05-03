@@ -19,5 +19,7 @@ namespace entity.Brillo
         public static string Question_Delete { get { return StringText("Question_Delete"); } }
         public static string Question_Cancel { get { return StringText("Question_Cancel"); } }
         public static string PleaseSelect { get { return StringText("PleaseSelect"); } }
+
+        public static string Question_Archive { get { return StringText("Question_Archive"); } }
     }
 }

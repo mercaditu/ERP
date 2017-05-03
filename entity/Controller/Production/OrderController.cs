@@ -78,7 +78,7 @@ namespace entity.Controller.Production
 
         public bool Archive()
         {
-            MessageBoxResult res = MessageBox.Show(Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show(Brillo.Localize.Question_Archive, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 foreach (production_order Order in db.production_order.Local.Where(x => x.IsSelected))

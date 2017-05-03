@@ -165,6 +165,7 @@ namespace entity
         public string email { get; set; }
         public string address { get; set; }
         public decimal? credit_limit { get; set; }
+        
         public int? lead_time { get; set; }
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }

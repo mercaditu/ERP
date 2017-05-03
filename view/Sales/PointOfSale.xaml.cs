@@ -2,6 +2,7 @@
 using entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace Cognitivo.Sales
             InitializeComponent();
 
             SalesDB = FindResource("SalesDB") as entity.Controller.Sales.InvoiceController;
+            if (DesignerProperties.GetIsInDesignMode(this) == false)
+            {
+                //Load Controller.
+                SalesDB.Initialize();
+                SalesDB.LoadPromotion();
+            }
             PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
             //Share DB to increase efficiency.
             PaymentDB.db = SalesDB.db;

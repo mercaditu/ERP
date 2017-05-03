@@ -12,6 +12,7 @@ namespace entity
         /// Contact ID
         /// </summary>
         [Required]
+        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_contact
         {
             get { return _id_contact; }

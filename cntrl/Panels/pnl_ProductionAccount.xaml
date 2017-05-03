@@ -10,7 +10,7 @@
              VerticalAlignment="Center"
              xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity"
-             mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded"
+             mc:Ignorable="d" Width="500" Loaded="UserControl_Loaded"
              BorderBrush="{StaticResource AccentColor_Brush}" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter" />
@@ -34,10 +34,10 @@
             <StackPanel Orientation="Horizontal"
                         DataContext="{StaticResource production_accountViewSource}">
                 <StackPanel x:Name="stpDisplay">
-                    <DataGrid x:Name="item_inventory_detailDataGrid" MinHeight="128" MaxHeight="256"
-                              AutoGenerateColumns="False" ItemsSource="{Binding}"
+                    <DataGrid x:Name="item_inventory_detailDataGrid" MinHeight="128" 
+                              AutoGenerateColumns="False" ItemsSource="{Binding}"  HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Visible"
                               EnableRowVirtualization="True" CanUserAddRows="False" CanUserDeleteRows="False"
-                              RowDetailsVisibilityMode="Collapsed" HeadersVisibility="Column" Width="355">
+                              RowDetailsVisibilityMode="Collapsed" HeadersVisibility="Column" Width="496">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"

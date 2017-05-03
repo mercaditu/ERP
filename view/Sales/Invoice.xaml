@@ -609,7 +609,7 @@
                                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                             </StackPanel>
 
-                            <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}"
+                            <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}"
                                              Has_Rounding="{Binding ElementName=cbxCurrency, Path=HasRounding, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											 Currency="{Binding app_currencyfx.app_currency.code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											 DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"

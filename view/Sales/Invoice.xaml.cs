@@ -268,38 +268,38 @@ namespace Cognitivo.Sales
 
         #endregion Filter Data
 
-        //private void calculate_vat(object sender, EventArgs e)
-        //{
-        //    if ((sales_invoice)sales_invoiceDataGrid.SelectedItem != null)
-        //    {
-        //        ((sales_invoice)sales_invoiceDataGrid.SelectedItem).RaisePropertyChanged("GrandTotal");
-        //        List<sales_invoice_detail> sales_invoice_detail = ((sales_invoice)sales_invoiceDataGrid.SelectedItem).sales_invoice_detail.ToList();
-        //        if (sales_invoice_detail.Count > 0)
-        //        {
-        //            var listvat = sales_invoice_detail
-        //                   .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-        //                       , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
-        //                       .GroupBy(a => new { a.name, a.id_vat, a.ad })
-        //               .Select(g => new
-        //               {
-        //                   id_vat = g.Key.id_vat,
-        //                   name = g.Key.name,
-        //                   value = g.Sum(a => a.value * a.ad.quantity)
-        //               }).ToList();
+        private void calculate_vat(object sender, EventArgs e)
+        {
+            if ((sales_invoice)sales_invoiceDataGrid.SelectedItem != null)
+            {
+                ((sales_invoice)sales_invoiceDataGrid.SelectedItem).RaisePropertyChanged("GrandTotal");
+                List<sales_invoice_detail> sales_invoice_detail = ((sales_invoice)sales_invoiceDataGrid.SelectedItem).sales_invoice_detail.ToList();
+                if (sales_invoice_detail.Count > 0)
+                {
+                    var listvat = sales_invoice_detail
+                           .Join(SalesDB.db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                               , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
+                               .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                       .Select(g => new
+                       {
+                           id_vat = g.Key.id_vat,
+                           name = g.Key.name,
+                           value = g.Sum(a => a.value * a.ad.quantity)
+                       }).ToList();
 
-        //            dgvVAT.ItemsSource = listvat.GroupBy(x => x.id_vat).Select(g => new
-        //            {
-        //                id_vat = g.Max(y => y.id_vat),
-        //                name = g.Max(y => y.name),
-        //                value = g.Sum(a => a.value)
-        //            }).ToList();
-        //        }
-        //    }
-        //}
+                    dgvVAT.ItemsSource = listvat.GroupBy(x => x.id_vat).Select(g => new
+                    {
+                        id_vat = g.Max(y => y.id_vat),
+                        name = g.Max(y => y.name),
+                        value = g.Sum(a => a.value)
+                    }).ToList();
+                }
+            }
+        }
 
         private void Detail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            //calculate_vat(sender, e);
+            calculate_vat(sender, e);
         }
 
         #region PrefSettings
@@ -472,12 +472,12 @@ namespace Cognitivo.Sales
                     }
                 }
             }
-            //calculate_vat(sender, e);
+           calculate_vat(sender, e);
         }
 
         private void Detail_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            //calculate_vat(sender, e);
+            calculate_vat(sender, e);
         }
 
         private void PackingList_Click(object sender, RoutedEventArgs e)
@@ -585,6 +585,7 @@ namespace Cognitivo.Sales
                             sales_invoice = Invoice,
                             item = _sales_order_detail.item,
                             id_item = _sales_order_detail.id_item,
+                            item_description = _sales_order_detail.item_description,
                             quantity = _sales_order_detail.quantity - SalesDB.db.sales_invoice_detail
                                                                                      .Where(x => x.id_sales_order_detail == _sales_order_detail.id_sales_order_detail)
                                                                                      .GroupBy(x => x.id_sales_order_detail)

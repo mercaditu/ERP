@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace entity.Controller.Finance
 {
-    public class Credit 
+    public class Credit
     {
         #region Finance
 
@@ -50,7 +50,7 @@ namespace entity.Controller.Finance
                                 {
                                     int OriginalFXRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == SumByCurrency.CurrencyID).Select(x => x.id_currencyfx).FirstOrDefault();
                                     int DefaultFXRate = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == CurrencyFX.id_currency).Select(x => x.id_currencyfx).FirstOrDefault();
-                                    BalanceInDefault += Brillo.Currency.convert_Values(SumByCurrency.Balance, OriginalFXRate, DefaultFXRate, App.Modules.Sales); 
+                                    BalanceInDefault += Brillo.Currency.convert_Values(SumByCurrency.Balance, OriginalFXRate, DefaultFXRate, App.Modules.Sales);
                                 }
 
                                 Customer.credit_availability = Customer.credit_limit - BalanceInDefault;
@@ -70,6 +70,14 @@ namespace entity.Controller.Finance
                             }
                         }
                     }
+                    else
+                    {
+                        Customer.credit_availability = Customer.credit_limit;
+                    }
+                }
+                else
+                {
+                    Customer.credit_availability = Customer.credit_limit;
                 }
             }
 

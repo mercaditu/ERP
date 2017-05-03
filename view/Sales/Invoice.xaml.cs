@@ -899,5 +899,7 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource.View.Refresh();
             SalesDB.db.SaveChanges();
         }
+
+       
     }
 }

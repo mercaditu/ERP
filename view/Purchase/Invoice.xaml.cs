@@ -105,7 +105,7 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
-            if (PurchaseDB.SaveChanges_WithValidation() )
+            if (PurchaseDB.SaveChanges_WithValidation())
             {
                 purchase_invoiceViewSource.View.Refresh();
                 toolBar.msgSaved(PurchaseDB.NumberOfRecords);
@@ -457,28 +457,28 @@ namespace Cognitivo.Purchase
 
         private void Search_Click(object sender, string query)
         {
-                if (!string.IsNullOrEmpty(query) && purchase_invoiceViewSource != null)
+            if (!string.IsNullOrEmpty(query) && purchase_invoiceViewSource != null)
+            {
+                purchase_invoiceViewSource.View.Filter = i =>
                 {
-                    purchase_invoiceViewSource.View.Filter = i =>
-                    {
-                        purchase_invoice purchase_invoice = i as purchase_invoice;
-                        string number = purchase_invoice.number != null ? purchase_invoice.number : "";
-                        string contact = purchase_invoice.contact != null ? purchase_invoice.contact.name : "";
+                    purchase_invoice purchase_invoice = i as purchase_invoice;
+                    string number = purchase_invoice.number != null ? purchase_invoice.number : "";
+                    string contact = purchase_invoice.contact != null ? purchase_invoice.contact.name : "";
 
-                        if (contact.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    purchase_invoiceViewSource.View.Filter = null;
-                }
+                    if (contact.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
+            }
+            else
+            {
+                purchase_invoiceViewSource.View.Filter = null;
+            }
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -639,41 +639,77 @@ namespace Cognitivo.Purchase
 
                 foreach (purchase_order_detail _purchase_order_detail in purchase_order.purchase_order_detail)
                 {
-                    if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)
+                    if (_purchase_order_detail.item != null && _purchase_order_detail.item.id_item_type == item.item_type.ServiceContract)
                     {
-                        purchase_invoice.State = EntityState.Modified;
-
-                        purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail()
+                        production_service_account production_service_account = PurchaseDB.db.production_service_account.
+                                                                                 Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail).FirstOrDefault();
+                        if (production_service_account != null)
                         {
-                            purchase_invoice = purchase_invoice,
-                            id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail,
-                            id_vat_group = _purchase_order_detail.id_vat_group,
-                            app_cost_center = _purchase_order_detail.app_cost_center,
-                            id_cost_center = _purchase_order_detail.id_cost_center,
-                            item = _purchase_order_detail.item,
-                            id_item = _purchase_order_detail.id_item,
-                            item_description = _purchase_order_detail.item_description,
-                            quantity = _purchase_order_detail.quantity - PurchaseDB.db.purchase_invoice_detail
-                                                                    .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
-                                                                    .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(),
-                            unit_cost = _purchase_order_detail.unit_cost,
-                            batch_code = _purchase_order_detail.batch_code,
-                            expire_date = _purchase_order_detail.expire_date
-                        };
-                        foreach (purchase_order_dimension purchase_order_dimension in _purchase_order_detail.purchase_order_dimension)
-                        {
-                            purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension()
+                            List< production_service_account> production_service_accountList = production_service_account.child.
+                                                                 Where(x => x.id_purchase_invoice_detail == null).ToList() ;
+                            foreach (production_service_account item in production_service_accountList)
                             {
-                                id_dimension = purchase_order_dimension.id_dimension,
-                                value = purchase_order_dimension.value,
-                                id_measurement = purchase_order_dimension.id_measurement
-                            };
-
-                            //Add Dimension to Detail
-                            purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
+                                purchase_invoice_detail purchase_invoice_detailProdcution = new purchase_invoice_detail();
+                                purchase_invoice_detailProdcution.id_cost_center = _purchase_order_detail.id_cost_center;
+                                purchase_invoice_detailProdcution.comment = _purchase_order_detail.comment;
+                                purchase_invoice_detailProdcution.discount = _purchase_order_detail.discount;
+                                purchase_invoice_detailProdcution.id_item = _purchase_order_detail.id_item;
+                                purchase_invoice_detailProdcution.item_description = _purchase_order_detail.item_description;
+                                purchase_invoice_detailProdcution.id_location = _purchase_order_detail.id_location;
+                                purchase_invoice_detailProdcution.purchase_order_detail = _purchase_order_detail;
+                                purchase_invoice_detailProdcution.id_vat_group = _purchase_order_detail.id_vat_group;
+                                purchase_invoice_detailProdcution.quantity = item.debit;
+                                purchase_invoice_detailProdcution.unit_cost = item.unit_cost;
+                                purchase_invoice_detailProdcution.batch_code = _purchase_order_detail.batch_code;
+                                purchase_invoice_detailProdcution.expire_date = _purchase_order_detail.expire_date;
+                                purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detailProdcution);
+                            }
                         }
-                        //Add Detail to Header
-                        purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
+                        else
+                        {
+                            toolBar.msgWarning("Item Not Used");
+                            return;
+                        }
+
+                    }
+                    else
+                    {
+                        if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)
+                        {
+                            purchase_invoice.State = EntityState.Modified;
+
+                            purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail()
+                            {
+                                purchase_invoice = purchase_invoice,
+                                id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail,
+                                id_vat_group = _purchase_order_detail.id_vat_group,
+                                app_cost_center = _purchase_order_detail.app_cost_center,
+                                id_cost_center = _purchase_order_detail.id_cost_center,
+                                item = _purchase_order_detail.item,
+                                id_item = _purchase_order_detail.id_item,
+                                item_description = _purchase_order_detail.item_description,
+                                quantity = _purchase_order_detail.quantity - PurchaseDB.db.purchase_invoice_detail
+                                                                        .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
+                                                                        .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(),
+                                unit_cost = _purchase_order_detail.unit_cost,
+                                batch_code = _purchase_order_detail.batch_code,
+                                expire_date = _purchase_order_detail.expire_date
+                            };
+                            foreach (purchase_order_dimension purchase_order_dimension in _purchase_order_detail.purchase_order_dimension)
+                            {
+                                purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension()
+                                {
+                                    id_dimension = purchase_order_dimension.id_dimension,
+                                    value = purchase_order_dimension.value,
+                                    id_measurement = purchase_order_dimension.id_measurement
+                                };
+
+                                //Add Dimension to Detail
+                                purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
+                            }
+                            //Add Detail to Header
+                            purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
+                        }
                     }
                 }
             }
@@ -889,6 +925,6 @@ namespace Cognitivo.Purchase
             }
         }
 
-        
+
     }
 }

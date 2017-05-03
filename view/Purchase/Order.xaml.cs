@@ -48,8 +48,8 @@ namespace Cognitivo.Purchase
             OrderSetting OrderSetting = new OrderSetting();
 
             PurchaseDB.Load(OrderSetting.filterbyBranch);
-            
-               
+
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
@@ -59,7 +59,7 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-            
+
             cbxDepartment.ItemsSource = PurchaseDB.db.app_department.Local;
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -67,21 +67,21 @@ namespace Cognitivo.Purchase
                 cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseDB.db, entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
-          
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
                 app_dimensionViewSource.Source = PurchaseDB.db.app_dimension.Local;
             }));
 
-           
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_measurementViewSource = FindResource("app_measurementViewSource") as CollectionViewSource;
                 app_measurementViewSource.Source = PurchaseDB.db.app_measurement.Local;
             }));
 
-           
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
@@ -635,31 +635,66 @@ namespace Cognitivo.Purchase
 
                 foreach (purchase_order_detail detail in purchase_order.purchase_order_detail)
                 {
-                    purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
-                    purchase_invoice_detail.id_cost_center = detail.id_cost_center;
-                    purchase_invoice_detail.comment = detail.comment;
-                    purchase_invoice_detail.discount = detail.discount;
-                    purchase_invoice_detail.id_item = detail.id_item;
-                    purchase_invoice_detail.item_description = detail.item_description;
-                    purchase_invoice_detail.id_location = detail.id_location;
-                    purchase_invoice_detail.purchase_order_detail = detail;
-                    purchase_invoice_detail.id_vat_group = detail.id_vat_group;
-                    purchase_invoice_detail.quantity = detail.quantity - detail.purchase_invoice_detail.Sum(x => x.quantity);
-                    purchase_invoice_detail.unit_cost = detail.unit_cost;
-                    purchase_invoice_detail.batch_code = detail.batch_code;
-                    purchase_invoice_detail.expire_date = detail.expire_date;
-
-                    foreach (purchase_order_dimension dim in detail.purchase_order_dimension)
+                    if (detail.item != null && detail.item.id_item_type == item.item_type.ServiceContract)
                     {
-                        purchase_invoice_dimension dimension = new purchase_invoice_dimension();
-                        dimension.id_dimension = dim.id_dimension;
-                        dimension.id_measurement = dim.id_measurement;
-                        dimension.value = dim.value;
-                        
-                        purchase_invoice_detail.purchase_invoice_dimension.Add(dimension);
-                    }
+                        production_service_account production_service_account = PurchaseDB.db.production_service_account.Where(x => x.id_purchase_order_detail == detail.id_purchase_order_detail).FirstOrDefault();
+                        if (production_service_account != null)
+                        {
+                            List<production_service_account> production_service_accountList = production_service_account.child.
+                                                                Where(x => x.id_purchase_invoice_detail == null).ToList();
+                            foreach (production_service_account item in production_service_accountList)
+                            {
+                                purchase_invoice_detail purchase_invoice_detailProdcution = new purchase_invoice_detail();
+                                purchase_invoice_detailProdcution.id_cost_center = detail.id_cost_center;
+                                purchase_invoice_detailProdcution.comment = detail.comment;
+                                purchase_invoice_detailProdcution.discount = detail.discount;
+                                purchase_invoice_detailProdcution.id_item = detail.id_item;
+                                purchase_invoice_detailProdcution.item_description = detail.item_description;
+                                purchase_invoice_detailProdcution.id_location = detail.id_location;
+                                purchase_invoice_detailProdcution.purchase_order_detail = detail;
+                                purchase_invoice_detailProdcution.id_vat_group = detail.id_vat_group;
+                                purchase_invoice_detailProdcution.quantity = item.debit;
+                                purchase_invoice_detailProdcution.unit_cost = item.unit_cost;
+                                purchase_invoice_detailProdcution.batch_code = detail.batch_code;
+                                purchase_invoice_detailProdcution.expire_date = detail.expire_date;
+                                purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detailProdcution);
+                            }
+                        }
+                        else
+                        {
+                            toolBar.msgWarning("Item Not Used");
+                            return;
+                        }
 
-                    purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
+                    }
+                    else
+                    {
+                        purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
+                        purchase_invoice_detail.id_cost_center = detail.id_cost_center;
+                        purchase_invoice_detail.comment = detail.comment;
+                        purchase_invoice_detail.discount = detail.discount;
+                        purchase_invoice_detail.id_item = detail.id_item;
+                        purchase_invoice_detail.item_description = detail.item_description;
+                        purchase_invoice_detail.id_location = detail.id_location;
+                        purchase_invoice_detail.purchase_order_detail = detail;
+                        purchase_invoice_detail.id_vat_group = detail.id_vat_group;
+                        purchase_invoice_detail.quantity = detail.quantity - detail.purchase_invoice_detail.Sum(x => x.quantity);
+                        purchase_invoice_detail.unit_cost = detail.unit_cost;
+                        purchase_invoice_detail.batch_code = detail.batch_code;
+                        purchase_invoice_detail.expire_date = detail.expire_date;
+
+                        foreach (purchase_order_dimension dim in detail.purchase_order_dimension)
+                        {
+                            purchase_invoice_dimension dimension = new purchase_invoice_dimension();
+                            dimension.id_dimension = dim.id_dimension;
+                            dimension.id_measurement = dim.id_measurement;
+                            dimension.value = dim.value;
+
+                            purchase_invoice_detail.purchase_invoice_dimension.Add(dimension);
+                        }
+
+                        purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
+                    }
                 }
 
                 PurchaseDB.db.purchase_invoice.Add(purchase_invoice);

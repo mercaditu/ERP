@@ -69,14 +69,14 @@ namespace cntrl.Panels
             {
                 production_service_account production_service_account = new production_service_account();
                 production_service_account.id_contact = production_execution_detail.id_contact;
-
+                production_service_account.id_order_detail = production_execution_detail.id_order_detail;
                 production_service_account.id_item = (int)production_execution_detail.id_item;
                 production_service_account.unit_cost = SelectedAccount.unit_cost;
                 production_service_account.debit = production_execution_detail.quantity;
                 production_service_account.credit = 0;
                 SelectedAccount.child.Add(production_service_account);
             }
-
+            ExecutionDB.SaveChanges();
             btnCancel_Click(sender, null);
         }
     }

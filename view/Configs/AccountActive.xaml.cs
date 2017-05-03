@@ -83,7 +83,9 @@ namespace Cognitivo.Configs
                          amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                      }).ToList();
 
-                var app_account_detailFinalList = app_account_detailList.GroupBy(ad => new { ad.cur, ad.payType }).Select(s => new
+                var app_account_detailFinalList = app_account_detailList
+                    .GroupBy(ad => new { ad.cur, ad.payType })
+                    .Select(s => new
                 {
                     id_currencyfx = s.Max(x => x.id_currencyfx),
                     id_paymenttype = s.Max(x => x.id_paymenttype),
@@ -103,44 +105,13 @@ namespace Cognitivo.Configs
                         clsTransferAmount.amount = item.amount;
                         clsTransferAmount.Currencyfxnameorigin = item.cur;
                         clsTransferAmount.id_payment_type = item.id_paymenttype;
-                        clsTransferAmount.id_currencyfxorigin = item.id_currencyfx;
+                        //Over write the CurrencyFXID with New FX ID that is currenty being used.
+                        clsTransferAmount.id_currencyfxorigin = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.app_currency.name == item.cur).FirstOrDefault().id_currencyfx;
                         listOpenAmt.Add(clsTransferAmount);
                     }
-
-                    foreach (app_currencyfx app_currencyfx in db.app_currencyfx.Where(x => x.is_active).ToList())
-                    {
-                        if (listOpenAmt.Where(x => x.id_currencyfxdest == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
-                        {
-                            foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
-                            {
-                                Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
-                                clsTransferAmount.PaymentTypeName = payment_type.name;
-                                clsTransferAmount.amount = 0;
-                                clsTransferAmount.Currencyfxnameorigin = app_currencyfx.app_currency.name;
-                                clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-                                clsTransferAmount.id_currencyfxorigin = app_currencyfx.id_currencyfx;
-                                listOpenAmt.Add(clsTransferAmount);
-                            }
-                        }
-                        else
-                        {
-                            foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
-                            {
-                                if (listOpenAmt.Where(x => x.id_payment_type == payment_type.id_payment_type && x.id_currencyfxorigin == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
-                                {
-                                    Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
-                                    clsTransferAmount.PaymentTypeName = payment_type.name;
-                                    clsTransferAmount.amount = 0;
-                                    clsTransferAmount.Currencyfxnameorigin = app_currencyfx.app_currency.name;
-                                    clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-                                    clsTransferAmount.id_currencyfxorigin = app_currencyfx.id_currencyfx;
-                                    listOpenAmt.Add(clsTransferAmount);
-                                }
-                            }
-                        }
-                    }
                 }
-                else
+                else 
+                //If no previous data is in, then bring blank values for each type of currency and payment type.
                 {
                     List<app_currency> app_currencyList = new List<app_currency>();
                     app_currencyList = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();

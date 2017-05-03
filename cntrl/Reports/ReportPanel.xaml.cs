@@ -340,7 +340,7 @@ namespace cntrl
                     Tag = path + ReportName
                 };
 
-                //Report.Path = path + ReportName;
+                Report.Path = path + ReportName;
             }
 
             ReportViewSource = FindResource("ReportViewSource") as CollectionViewSource;

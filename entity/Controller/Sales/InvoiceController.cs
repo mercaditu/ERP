@@ -166,54 +166,7 @@ namespace entity.Controller.Sales
         #endregion
 
         #region Save
-
-        //public int SaveChanges_and_Validate()
-        //{
-        //    NumberOfRecords = 0;
-        //    foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
-        //    {
-        //        if (invoice.Error == null)
-        //        {
-        //            if (invoice.State == EntityState.Added)
-        //            {
-        //                invoice.timestamp = DateTime.Now;
-        //                invoice.State = EntityState.Unchanged;
-        //                db.Entry(invoice).State = EntityState.Added;
-        //                Add_CRM(invoice);
-
-        //                //Check Promotions before Saving.
-        //                Check_Promotions(invoice);
-        //            }
-        //            else if (invoice.State == EntityState.Modified)
-        //            {
-        //                invoice.timestamp = DateTime.Now;
-        //                invoice.State = EntityState.Unchanged;
-        //                db.Entry(invoice).State = EntityState.Modified;
-
-        //                //Check Promotions before Saving.
-        //                Check_Promotions(invoice);
-        //            }
-        //            else if (invoice.State == EntityState.Deleted)
-        //            {
-        //                invoice.timestamp = DateTime.Now;
-        //                invoice.is_head = false;
-        //                invoice.State = EntityState.Deleted;
-        //                db.Entry(invoice).State = EntityState.Modified;
-        //            }
-        //            NumberOfRecords += 1;
-        //        }
-        //        if (invoice.State > 0)
-        //        {
-        //            if (invoice.State != EntityState.Unchanged)
-        //            {
-        //                db.Entry(invoice).State = EntityState.Unchanged;
-        //            }
-        //        }
-        //    }
-
-        //    return db.SaveChanges();
-        //}
-
+        
         private void Add_CRM(sales_invoice invoice)
         {
             if (invoice.id_sales_order == 0 || invoice.id_sales_order == null)
@@ -526,23 +479,41 @@ namespace entity.Controller.Sales
             Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
             item_movementList = _Stock.SalesInvoice_Approve(db, invoice);
 
-            if (item_movementList.Count() > 0)
+            //Loop through each Item Movement and assign cost to detail for reporting purposes.
+            foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item_movement.Count() > 0))
             {
-                db.item_movement.AddRange(item_movementList);
-
-                foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+                if (sales_detail.item_movement.FirstOrDefault() != null)
                 {
-                    if (sales_detail.item_movement.FirstOrDefault() != null)
+                    if (sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault() != null)
                     {
-                        if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
-                        {
-                            sales_detail.unit_cost = Brillo.Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-                            sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                            sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
-                        }
+                        sales_detail.unit_cost = Currency.convert_Values
+                        (
+                        sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                        sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                        sales_detail.sales_invoice.id_currencyfx,
+                        App.Modules.Sales
+                        );
                     }
                 }
             }
+
+            //if (item_movementList.Count() > 0)
+            //{
+            //    db.item_movement.AddRange(item_movementList);
+
+            //    foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+            //    {
+            //        if (sales_detail.item_movement.FirstOrDefault() != null)
+            //        {
+            //            if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
+            //            {
+            //                sales_detail.unit_cost = Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+            //                sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+            //                sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>

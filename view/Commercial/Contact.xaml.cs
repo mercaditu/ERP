@@ -64,7 +64,7 @@ namespace Cognitivo.Commercial
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = FindResource("contactRoleViewSource") as CollectionViewSource;
-            contactRoleViewSource.Source = ContactDB.db.contact_role.Local;
+            contactRoleViewSource.Source = ContactDB.db.contact_role.Local.OrderBy(a => a.name);
 
             //AppContract
             CollectionViewSource appContractViewSource = FindResource("appContractViewSource") as CollectionViewSource;
@@ -72,7 +72,7 @@ namespace Cognitivo.Commercial
 
             //AppCostCenter
             CollectionViewSource appCostCenterViewSource = FindResource("appCostCenterViewSource") as CollectionViewSource;
-            appCostCenterViewSource.Source = ContactDB.db.app_cost_center.Local;
+            appCostCenterViewSource.Source = ContactDB.db.app_cost_center.Local.OrderBy(a => a.name);
 
             //ItemPriceList
             CollectionViewSource itemPriceListViewSource = FindResource("itemPriceListViewSource") as CollectionViewSource;

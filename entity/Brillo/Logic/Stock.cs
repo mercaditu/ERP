@@ -587,7 +587,8 @@ namespace entity.Brillo.Logic
                 {
                     if (sales_return.sales_return_detail.Where(x => x.id_item > 0).Count() > 0)
                     {
-                        Invoice_WithProducts.AddRange(sales_return.sales_return_detail.Where(x => x.item.item_product.Count() > 0).ToList());
+                        //Due to lack of special field, use Is Read to know if we should discount item or not.
+                        Invoice_WithProducts.AddRange(sales_return.sales_return_detail.Where(x => x.item.item_product.Count() > 0 && x.is_read == true).ToList());
                     }
                 }
             }

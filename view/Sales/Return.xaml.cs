@@ -24,6 +24,7 @@ namespace Cognitivo.Sales
             InitializeComponent();
             //Load Controller.
             SalesReturnDB = FindResource("SalesReturnDB") as entity.Controller.Sales.ReturnController;
+
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.
@@ -33,7 +34,8 @@ namespace Cognitivo.Sales
 
         private void load_PrimaryDataThread()
         {
-           
+            SalesReturnDB.Load(false);
+
             salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
             salesReturnViewSource.Source = SalesReturnDB.db.sales_return.Local;
         }

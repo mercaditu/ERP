@@ -375,7 +375,7 @@ namespace entity.Controller.Sales
                                 {
                                     if (sales_return_detail.item_movement.FirstOrDefault().item_movement_value != null)
                                     {
-                                        sales_return_detail.unit_cost = Brillo.Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                                        sales_return_detail.unit_cost = Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
                                         sales_return_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
                                         sales_return_detail.sales_return.id_currencyfx, App.Modules.Sales);
                                     }

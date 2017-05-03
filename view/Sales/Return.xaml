@@ -283,7 +283,8 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding id_sales_return_detail, UpdateSourceTrigger=PropertyChanged}"
 													Header="Id" IsReadOnly="True" Width="SizeToHeader" Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Stock}" Width="Auto" />
+                                <DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Stock}" Width="Auto" 
+                                                        Binding="{Binding is_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Invoice}" Width="SizeToHeader" IsReadOnly="True"
 													Binding="{Binding sales_invoice_detail.sales_invoice.number}" />
                                 <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}"

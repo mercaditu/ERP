@@ -188,6 +188,7 @@ namespace entity.Controller.Sales
                 db.crm_opportunity.Attach(crm_opportunity);
             }
         }
+
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
@@ -262,7 +263,7 @@ namespace entity.Controller.Sales
 
 
             List<sales_invoice> SalesInvoiceList = db.sales_invoice.Local.Where(x =>
-                                                x.status != Status.Documents_General.Approved
+                                                x.status == Status.Documents_General.Pending
                                                         && x.IsSelected && x.Error == null).ToList();
             foreach (sales_invoice invoice in SalesInvoiceList)
             {
@@ -270,7 +271,7 @@ namespace entity.Controller.Sales
             }
 
             foreach (sales_invoice invoice in db.sales_invoice.Local.Where(x =>
-                                                x.status != Status.Documents_General.Approved && x.is_head
+                                                x.status == Status.Documents_General.Pending && x.is_head
                                                         && x.IsSelected && x.Error == null && x.id_contact > 0))
             {
                 if (invoice.id_sales_invoice == 0 && invoice.id_contact > 0)

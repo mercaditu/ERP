@@ -9,14 +9,9 @@ using System.Windows;
 namespace entity.Controller.Sales
 {
     public class BudgetController : Base
-    {
-
-
-
-
+    { 
         public Brillo.Promotion.Start Promotions { get; set; }
-
-
+        
         public BudgetController()
         {
 

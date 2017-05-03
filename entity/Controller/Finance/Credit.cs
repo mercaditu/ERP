@@ -19,7 +19,7 @@ namespace entity.Controller.Finance
         public bool CheckLimit_InSales(decimal GrandTotal, app_currencyfx CurrencyFX, contact Customer, app_contract Contract)
         {
             //If Contact Credit Limit is none, we will assume that Credit Limit is not enforced.
-            if (Customer.credit_limit != null)
+            if (Customer.credit_limit != null && CurrencyFX != null && Customer != null && Contract != null)
             {
                 //If Sales Contract is Cash. Credit Limit is not enforced.
                 if (Contract.app_contract_detail.Sum(x => x.interval) > 0)
@@ -28,7 +28,7 @@ namespace entity.Controller.Finance
                     //sales_invoice.contact.Check_CreditAvailability();
                     if (Customer.credit_limit != null)
                     {
-                        if (Customer.credit_limit > 0 && Customer.id_contact != 0)
+                        if (Customer.id_contact != 0)
                         {
                             using (db db = new db())
                             {
@@ -37,6 +37,7 @@ namespace entity.Controller.Finance
                                     from c in db.app_currency
                                     join fx in db.app_currencyfx on c.id_currency equals fx.id_currency
                                     join ps in db.payment_schedual on fx.id_currencyfx equals ps.id_currencyfx
+                                    where ps.id_contact == Customer.id_contact
                                     group ps by new { fx.id_currency } into g
                                     select new
                                     {
@@ -57,8 +58,8 @@ namespace entity.Controller.Finance
                                 Customer.RaisePropertyChanged("credit_availability");
 
                                 //Check if Availability is greater than 0.
-                                if (Customer.credit_availability > 0)
-                                {
+                                //if (Customer.credit_availability > 0)
+                                //{
                                     decimal TotalSales = GrandTotal;
                                     decimal CreditAvailability = (decimal)Customer.credit_availability;
 
@@ -66,21 +67,14 @@ namespace entity.Controller.Finance
                                     {
                                         return false;
                                     }
-                                }
+                                //}
                             }
                         }
                     }
-                    else
-                    {
-                        Customer.credit_availability = Customer.credit_limit;
-                    }
-                }
-                else
-                {
-                    Customer.credit_availability = Customer.credit_limit;
                 }
             }
 
+            Customer.credit_availability = Customer.credit_limit;
             return true;
         }
 

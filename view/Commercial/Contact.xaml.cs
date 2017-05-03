@@ -525,7 +525,7 @@ namespace Cognitivo.Commercial
                 {
                     app_field = new app_field();
                     app_field.field_type = app_field.field_types.Telephone;
-                    app_field.name = "Work";
+                    app_field.name = entity.Brillo.Localize.StringText("Work");
                     ContactDB.db.app_field.Add(app_field);
 
                     app_fieldphoneViewSource.View.Refresh();

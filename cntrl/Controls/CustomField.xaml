@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:converter="clr-namespace:Cognitivo.Converters"
-             xmlns:local="clr-namespace:cntrl.Controls"
-             mc:Ignorable="d" xmlns:entity="clr-namespace:entity;assembly=entity"
+             mc:Ignorable="d"
              MinWidth="256">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visi" />
@@ -16,7 +14,7 @@
                     Background="Transparent" BorderBrush="Transparent"
                     HorizontalContentAlignment="Right"
 					DisplayMemberPath="name"
-					SelectedValue="{Binding ElementName=_CustomField, Path=FieldID, Mode=TwoWay,
+					SelectedValue="{Binding ElementName=this, Path=FieldID, Mode=TwoWay,
                     NotifyOnValidationError=True, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
             <ComboBox.ItemsPanel>

@@ -53,7 +53,7 @@ namespace Cognitivo.Production
         private async void load_Schedual()
         {
             production_service_accountViewSource = FindResource("production_service_accountViewSource") as CollectionViewSource;
-
+            production_service_accountViewSource.Source = null;
             if (production_service_accountViewSource != null)
             {
                 contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
@@ -63,7 +63,7 @@ namespace Cognitivo.Production
                                     .Where(
                                         x => x.id_company == CurrentSession.Id_Company
                                         && x.id_purchase_order_detail != null
-                                        && x.credit != x.child.Where(z => z.id_purchase_invoice_detail == null).Sum(y => y.debit)
+                                        && x.credit != x.child.Where(z => z.id_purchase_invoice_detail != null).Sum(y => y.debit)
                                         )
                                         .Include(y => y.purchase_order_detail)
                                         .Include(z => z.contact)

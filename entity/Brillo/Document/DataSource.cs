@@ -713,14 +713,14 @@ namespace entity.Brillo.Document
                     EndDate = g.end_date != null ? g.end_date.ToString() : "",
                     item_input = g.parent != null ? g.parent.item != null ? g.parent.item.name : "" : "",
                     item_input_quantity = g.quantity ,
-                    DimensionStringInput = g.parent != null ? g.parent.DimensionString:"",
+                    ParentDimension = g.parent != null ? g.parent.DimensionString:"",
                     item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
-                    quantity = g.quantity,
-                    DimensionString = g.DimensionString,
+                    Dimension = g.DimensionString,
                     trans_date = g.trans_date,
                     EmpName=g.contact!=null?g.contact.name:"",
-                    Hours=g.hours
+
+                    Hours =g.hours
 
                 }).ToList();
 

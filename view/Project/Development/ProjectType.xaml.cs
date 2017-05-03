@@ -26,6 +26,7 @@ namespace Cognitivo.Project.Development
         {
             project_templateViewSource = FindResource("project_templateViewSource") as CollectionViewSource;
             await ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+
             project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
 
             projectproject_template_detailViewSource = FindResource("projectproject_template_detailViewSource") as CollectionViewSource;
@@ -118,9 +119,11 @@ namespace Cognitivo.Project.Development
             if (project_template_detail != null && project_template_detail.item.id_item_type == entity.item.item_type.Task)
             {
                 //Adding a Child Item.
-                project_template_detail n_project_template = new project_template_detail();
-                n_project_template.id_project_template = project_template.id_project_template;
-                n_project_template.status = Status.Project.Pending;
+                project_template_detail n_project_template = new project_template_detail()
+                {
+                    id_project_template = project_template.id_project_template,
+                    status = Status.Project.Pending
+                };
                 project_template_detail.child.Add(n_project_template);
 
                 ProjectTemplateDB.project_template_detail.Add(n_project_template);
@@ -143,9 +146,12 @@ namespace Cognitivo.Project.Development
 
             project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
 
-            project_template_detail n_project_template = new project_template_detail();
-            n_project_template.id_project_template = project_template.id_project_template;
-            n_project_template.status = Status.Project.Pending;
+            project_template_detail n_project_template = new project_template_detail()
+            {
+                id_project_template = project_template.id_project_template,
+                status = Status.Project.Pending
+            };
+
             ProjectTemplateDB.project_template_detail.Add(n_project_template);
 
             projectproject_template_detailViewSource.View.Filter = null;
@@ -171,28 +177,36 @@ namespace Cognitivo.Project.Development
 
         private void btnDeleteTask_Click(object sender)
         {
-            if (projectproject_template_detailViewSource.View != null)
+            MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
             {
-                projectproject_template_detailViewSource.View.Filter = null;
-                List<project_template_detail> project_template_detailLIST = treeProject.ItemsSource.Cast<project_template_detail>().ToList();
-                project_template_detailLIST = project_template_detailLIST.Where(x => x.IsSelected == true).ToList();
-
-                using (db db = new db())
+                if (projectproject_template_detailViewSource.View != null)
                 {
-                    foreach (project_template_detail project_template_detail in project_template_detailLIST)
+                    projectproject_template_detailViewSource.View.Filter = null;
+                    List<project_template_detail> project_template_detailLIST = treeProject.ItemsSource.Cast<project_template_detail>().ToList();
+                    project_template_detailLIST = project_template_detailLIST.Where(x => x.IsSelected == true).ToList();
+
+                    using (db db = new db())
                     {
-                        project_template_detail _project_template_detail = db.project_template_detail.Where(x => x.id_template_detail == project_template_detail.id_template_detail).FirstOrDefault();
-                        db.project_template_detail.Remove(_project_template_detail);
+                        foreach (project_template_detail project_template_detail in project_template_detailLIST)
+                        {
+                            project_template_detail _project_template_detail = db.project_template_detail.Where(x => x.id_template_detail == project_template_detail.id_template_detail).FirstOrDefault();
+                            db.project_template_detail.Remove(_project_template_detail);
+                        }
+                        db.SaveChanges();
                     }
-                    db.SaveChanges();
+
+
+                    Page_Loaded(null, null);
                 }
 
-                ProjectTemplateDB = new ProjectTemplateDB();
 
-                project_templateViewSource = FindResource("project_templateViewSource") as CollectionViewSource;
-                ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-                project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
-                filter_task();
+                //ProjectTemplateDB = new ProjectTemplateDB();
+
+                //project_templateViewSource = FindResource("project_templateViewSource") as CollectionViewSource;
+                //ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+                //project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
+                //filter_task();
             }
         }
 

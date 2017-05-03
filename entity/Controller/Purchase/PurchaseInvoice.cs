@@ -142,7 +142,13 @@ namespace entity.Controller.Purchase
 
                     if (invoice.status == Status.Documents_General.Pending)
                     {
-                        List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                        if (invoice.code != null)
+                        {
+                            invoice.contact.code = invoice.code;
+                            invoice.contact.trans_code_exp = invoice.contact.trans_code_exp ?? DateTime.Now.AddMonths(1);
+                        }
+
+                        List <payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
 
                         ///Insert Payment Schedual Logic

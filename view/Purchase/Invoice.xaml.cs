@@ -146,10 +146,17 @@ namespace Cognitivo.Purchase
                     purchase_invoice.id_contact = contact.id_contact;
                     purchase_invoice.contact = contact;
 
-                    if (contact.trans_code_exp > DateTime.Today)
+                    if (contact.trans_code_exp != null)
                     {
-                        purchase_invoice.code = contact.trans_code;
-                        purchase_invoice.RaisePropertyChanged("code");
+                        if (contact.trans_code_exp >= DateTime.Today.Date)
+                        {
+                            purchase_invoice.code = contact.trans_code;
+                            purchase_invoice.RaisePropertyChanged("code");
+                        }
+                    }
+                    else if (contact.code != null)
+                    {
+                        contact.trans_code_exp = DateTime.Now.AddMonths(1);
                     }
 
                     ///Start Thread to get Data.

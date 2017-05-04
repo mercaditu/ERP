@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace entity.Controller.Sales
 {
-    public class InvoiceController: Base
+    public class InvoiceController : Base
     {
         public Brillo.Promotion.Start Promotions { get; set; }
 
@@ -62,7 +62,7 @@ namespace entity.Controller.Sales
                     .ThenBy(x => x.number)
                     .LoadAsync();
         }
-        
+
         #endregion
 
         #region Create
@@ -98,7 +98,7 @@ namespace entity.Controller.Sales
         public sales_invoice_detail Create_Detail(
             ref sales_invoice Invoice, item Item, item_movement ItemMovement,
             bool AllowDouble,
-            decimal QuantityInStock, 
+            decimal QuantityInStock,
             decimal Quantity)
         {
             int? i = null;
@@ -134,7 +134,7 @@ namespace entity.Controller.Sales
                     sales_invoice_detail.unit_price = sales_invoice_detail.unit_price * (1 + surcharge);
                 }
             }
-            
+
             Invoice.sales_invoice_detail.Add(sales_invoice_detail);
 
             //Check for Promotions after each insert.
@@ -162,11 +162,11 @@ namespace entity.Controller.Sales
 
             db.SaveChanges();
         }
-        
+
         #endregion
 
         #region Save
-        
+
         private void Add_CRM(sales_invoice invoice)
         {
             if (invoice.id_sales_order == 0 || invoice.id_sales_order == null)
@@ -245,7 +245,7 @@ namespace entity.Controller.Sales
             }
 
         }
-        
+
         #endregion
 
         #region Approve
@@ -286,9 +286,9 @@ namespace entity.Controller.Sales
                 Finance.Credit Credit = new Finance.Credit();
 
                 if (Credit.CheckLimit_InSales(
-                    invoice.GrandTotal, 
-                    invoice.app_currencyfx, 
-                    invoice.contact, 
+                    invoice.GrandTotal,
+                    invoice.app_currencyfx,
+                    invoice.contact,
                     invoice.app_contract))
                 {
                     //Logic
@@ -498,23 +498,23 @@ namespace entity.Controller.Sales
                 }
             }
 
-            //if (item_movementList.Count() > 0)
-            //{
-            //    db.item_movement.AddRange(item_movementList);
+            if (item_movementList.Count() > 0)
+            {
+                db.item_movement.AddRange(item_movementList);
 
-            //    foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
-            //    {
-            //        if (sales_detail.item_movement.FirstOrDefault() != null)
-            //        {
-            //            if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
-            //            {
-            //                sales_detail.unit_cost = Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-            //                sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-            //                sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
-            //            }
-            //        }
-            //    }
-            //}
+                foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+                {
+                    if (sales_detail.item_movement.FirstOrDefault() != null)
+                    {
+                        if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                        {
+                            sales_detail.unit_cost = Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                            sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                            sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

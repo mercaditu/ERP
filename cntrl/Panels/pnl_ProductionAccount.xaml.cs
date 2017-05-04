@@ -62,8 +62,8 @@ namespace cntrl.Panels
             //Make proper logic for Quantites
             production_service_account SelectedAccount = ExecutionDB.production_service_account.Local.Where(x => x.IsSelected).FirstOrDefault();
 
-            if (SelectedAccount == null)
-            { SelectedAccount = ExecutionDB.production_service_account.Local.FirstOrDefault(); }
+            //if (SelectedAccount == null)
+            //{ SelectedAccount = ExecutionDB.production_service_account.Local.FirstOrDefault(); }
 
             if (SelectedAccount != null)
             {

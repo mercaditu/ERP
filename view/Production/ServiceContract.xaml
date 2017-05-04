@@ -67,7 +67,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
+                    <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>

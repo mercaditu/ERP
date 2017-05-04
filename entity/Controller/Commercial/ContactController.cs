@@ -28,7 +28,7 @@ namespace entity.Controller.Commercial
 
         private async void LoadSecondary()
         {
-            await db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
+            await db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
             await db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
             await db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
@@ -64,7 +64,7 @@ namespace entity.Controller.Commercial
                     contact.id_contact_role = _id_contact_role;
                 }
             }
-            
+
             return contact;
         }
         public bool SaveChanges_WithValidation()
@@ -154,7 +154,7 @@ namespace entity.Controller.Commercial
                         {
                             db.item_transfer.RemoveRange(contact.item_transfer);
                         }
-                       
+
                     }
                 }
             }
@@ -173,7 +173,7 @@ namespace entity.Controller.Commercial
                 db.SaveChanges();
                 return true;
             }
-          
+
         }
 
         public bool Edit(contact contact)
@@ -184,6 +184,6 @@ namespace entity.Controller.Commercial
             return true;
         }
 
-       
+
     }
 }

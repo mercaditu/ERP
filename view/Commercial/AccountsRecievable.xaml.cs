@@ -27,6 +27,8 @@ namespace Cognitivo.Commercial
 
         #endregion INotifyPropertyChanged
 
+        cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountReceivable);
+
         private CollectionViewSource payment_schedualViewSource, contactViewSource;
         private PaymentDB PaymentDB = new PaymentDB();
 
@@ -312,19 +314,18 @@ namespace Cognitivo.Commercial
         {
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
 
-            cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountReceivable);
             if (payment_schedualViewSource != null)
             {
                 if (payment_schedualViewSource.View != null)
                 {
                     payment_schedualViewSource.View.Filter = i =>
-                        {
-                            payment_schedual payment_schedual = (payment_schedual)i;
-                            if (payment_schedual.IsSelected == true)
-                                return true;
-                            else
-                                return false;
-                        };
+                    {
+                        payment_schedual payment_schedual = (payment_schedual)i;
+                        if (payment_schedual.IsSelected == true)
+                            return true;
+                        else
+                            return false;
+                    };
                 }
             }
             payment_schedualViewSource.View.MoveCurrentToLast();
@@ -339,6 +340,19 @@ namespace Cognitivo.Commercial
 
         public void SaveRefinance_Click(object sender)
         {
+            foreach (payment_schedual payment_schedual in Refinance.payment_schedualList)
+            {
+                if (payment_schedual.id_payment_schedual == 0)
+                {
+                    PaymentDB.payment_schedual.Add(payment_schedual);
+                }
+                else
+                {
+                    payment_schedual _payment_schedual = PaymentDB.payment_schedual.Find(payment_schedual.id_payment_schedual);
+                    _payment_schedual.debit = payment_schedual.debit;
+                }
+            }
+
             IEnumerable<DbEntityValidationResult> validationresult = PaymentDB.GetValidationErrors();
             if (validationresult.Count() == 0)
             {

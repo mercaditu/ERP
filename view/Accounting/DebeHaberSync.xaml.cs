@@ -25,7 +25,8 @@ namespace Cognitivo.Accounting
         private CollectionViewSource item_assetViewSource;
         private CollectionViewSource production_order_detailViewSource;
 
-        private db db = new db();
+        //private db db = new db();
+        private dbContext db = new dbContext();
 
         private string RelationshipHash = string.Empty;
 
@@ -49,6 +50,8 @@ namespace Cognitivo.Accounting
         {
             InitializeComponent();
 
+            db.db = new db();
+
             DatePanel.StartDate = DateTime.Now.AddMonths(-1);
             DatePanel.EndDate = DateTime.Now.Date.AddDays(1).AddTicks(-1);
 
@@ -60,7 +63,7 @@ namespace Cognitivo.Accounting
             item_assetViewSource = FindResource("item_assetViewSource") as CollectionViewSource;
             production_order_detailViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
 
-            RelationshipHash = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
+            RelationshipHash = db.db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
 
             var timer = new System.Threading.Timer(
                 e => btnData_Refresh(null, null),
@@ -96,7 +99,7 @@ namespace Cognitivo.Accounting
         public async void Get_SalesInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            sales_invoiceViewSource.Source = await db.sales_invoice.Where(x =>
+            sales_invoiceViewSource.Source = await db.db.sales_invoice.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
@@ -106,7 +109,7 @@ namespace Cognitivo.Accounting
         public async void Get_Payment()
         {
             //x.Is Head replace with Is_Accounted = True.
-            payment_detailViewSource.Source = await db.payment_detail.Where(x =>
+            payment_detailViewSource.Source = await db.db.payment_detail.Where(x =>
                 x.payment.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.payment.is_accounted == false &&
@@ -116,7 +119,7 @@ namespace Cognitivo.Accounting
         public async void Get_SalesReturn()
         {
             //x.Is Head replace with Is_Accounted = True.
-            sales_returnViewSource.Source = await db.sales_return.Where(x =>
+            sales_returnViewSource.Source = await db.db.sales_return.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
@@ -126,7 +129,7 @@ namespace Cognitivo.Accounting
         public async void Get_PurchaseReturnInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            purchase_returnViewSource.Source = await db.purchase_return.Where(x =>
+            purchase_returnViewSource.Source = await db.db.purchase_return.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
@@ -136,7 +139,7 @@ namespace Cognitivo.Accounting
         public async void Get_PurchaseInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            purchase_invoiceViewSource.Source = await db.purchase_invoice.Where(x =>
+            purchase_invoiceViewSource.Source = await db.db.purchase_invoice.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
                 x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
                 x.is_accounted == false &&
@@ -145,16 +148,16 @@ namespace Cognitivo.Accounting
 
         private async void Get_ItemAsset()
         {
-            await db.item_asset.Where(x =>
+            await db.db.item_asset.Where(x =>
                 x.id_company == CurrentSession.Id_Company &&
                 x.item.is_active == true).ToListAsync();
-            item_assetViewSource.Source = db.item_asset.Local;
+            item_assetViewSource.Source = db.db.item_asset.Local;
         }
 
         private async void Get_ProductionExecution()
         {
             //If we bring only low level items, it's easy to calculate the higher level items.
-            await db.production_order.Where
+            await db.db.production_order.Where
                 (x =>
                 x.id_company == CurrentSession.Id_Company
                 //x.production_order_detail.Where(y => y.product == false).Count() > 0
@@ -164,7 +167,7 @@ namespace Cognitivo.Accounting
                 //.Include(a => a.production_execution_detail)
                 .ToListAsync();
 
-            production_order_detailViewSource.Source = db.production_order.Local;
+            production_order_detailViewSource.Source = db.db.production_order.Local;
         }
 
         #endregion LoadData
@@ -184,7 +187,7 @@ namespace Cognitivo.Accounting
 
         private void Sales_Sync()
         {
-            List<sales_invoice> SalesList = db.sales_invoice.Local.Where(x => x.IsSelected).ToList();
+            List<sales_invoice> SalesList = db.db.sales_invoice.Local.Where(x => x.IsSelected).ToList();
 
             //Loop through
             foreach (sales_invoice sales_invoice in SalesList)
@@ -204,7 +207,7 @@ namespace Cognitivo.Accounting
                 {
                     DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_BySales(Detail, db);
+                    CommercialInvoice_Detail.Fill_BySales(Detail, db.db);
                     Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
@@ -238,7 +241,7 @@ namespace Cognitivo.Accounting
                             schedual.payment_detail.payment.is_accounted = true;
                         }
                     }
-                    db.SaveChanges();
+                    db.db.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -253,7 +256,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    db.SaveChanges();
+                    db.db.SaveChanges();
                     fill();
                 }
             }
@@ -266,7 +269,7 @@ namespace Cognitivo.Accounting
         private void Purchase_Sync()
         {
             //Loop through
-            List<purchase_invoice> PurchaseList = db.purchase_invoice.Local.Where(x => x.IsSelected).ToList();
+            List<purchase_invoice> PurchaseList = db.db.purchase_invoice.Local.Where(x => x.IsSelected).ToList();
 
             foreach (purchase_invoice purchase_invoice in PurchaseList)
             {
@@ -284,7 +287,7 @@ namespace Cognitivo.Accounting
                 {
                     DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_ByPurchase(Detail, db);
+                    CommercialInvoice_Detail.Fill_ByPurchase(Detail, db.db);
                     Purchase.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
@@ -332,7 +335,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    db.SaveChanges();
+                    db.db.SaveChanges();
                     fill();
                 }
             }
@@ -344,13 +347,14 @@ namespace Cognitivo.Accounting
 
         private void SalesReturn_Sync()
         {
-            List<sales_return> SalesReturnList = db.sales_return.Local.Where(x => x.IsSelected).ToList();
+            List<sales_return> SalesReturnList = db.db.sales_return.Local.Where(x => x.IsSelected).ToList();
 
             //Loop through
             foreach (sales_return sales_return in SalesReturnList)
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration();
                 Integration.Key = RelationshipHash;
+
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
 
                 DebeHaber.Commercial_Invoice SalesReturn = new DebeHaber.Commercial_Invoice();
@@ -363,7 +367,7 @@ namespace Cognitivo.Accounting
                 {
                     DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_BySalesReturn(Detail, db);
+                    CommercialInvoice_Detail.Fill_BySalesReturn(Detail, db.db);
                     SalesReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
@@ -412,7 +416,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    db.SaveChanges();
+                    db.db.SaveChanges();
                     fill();
                 }
             }
@@ -424,7 +428,7 @@ namespace Cognitivo.Accounting
 
         private void PurchaseReturn_Sync()
         {
-            List<purchase_return> PurchaseReturnList = db.purchase_return.Local.Where(x => x.IsSelected).ToList();
+            List<purchase_return> PurchaseReturnList = db.db.purchase_return.Local.Where(x => x.IsSelected).ToList();
 
             //Loop through
             foreach (purchase_return purchase_return in PurchaseReturnList)
@@ -443,7 +447,7 @@ namespace Cognitivo.Accounting
                 {
                     DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_ByPurchaseReturn(Detail, db);
+                    CommercialInvoice_Detail.Fill_ByPurchaseReturn(Detail, db.db);
                     PurchaseReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
@@ -493,7 +497,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    db.SaveChanges();
+                    db.db.SaveChanges();
                     fill();
                 }
             }
@@ -505,7 +509,7 @@ namespace Cognitivo.Accounting
 
         private void PaymentSync()
         {
-            List<payment_detail> PaymentList = db.payment_detail.Local.Where(x => x.IsSelected && x.payment.is_accounted == false).ToList();
+            List<payment_detail> PaymentList = db.db.payment_detail.Local.Where(x => x.IsSelected && x.payment.is_accounted == false).ToList();
 
             //Loop through
             foreach (payment_detail payment_detail in PaymentList)
@@ -517,7 +521,7 @@ namespace Cognitivo.Accounting
                 DebeHaber.Payments Payment = new DebeHaber.Payments();
 
                 //Loads Data from Sales
-                payment_schedual schedual = db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
+                payment_schedual schedual = db.db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
                 Payment.FillPayments(schedual);
 
                 Transaction.Payments.Add(Payment);
@@ -544,7 +548,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    db.SaveChanges();
+                    db.db.SaveChanges();
                     fill();
                 }
             }
@@ -556,7 +560,7 @@ namespace Cognitivo.Accounting
 
         private void Production_Sync()
         {
-            List<production_order> OrderList = db.production_order.Local.Where(x => x.IsSelected).ToList();
+            List<production_order> OrderList = db.db.production_order.Local.Where(x => x.IsSelected).ToList();
 
             foreach (production_order ProductionOrder in OrderList)
             {
@@ -566,7 +570,7 @@ namespace Cognitivo.Accounting
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
                 DebeHaber.Production Production = new DebeHaber.Production();
 
-                Production.branch = ProductionOrder.id_branch > 0 ? db.app_branch.Find(ProductionOrder.id_branch).name : "";
+                Production.branch = ProductionOrder.id_branch > 0 ? db.db.app_branch.Find(ProductionOrder.id_branch).name : "";
                 Production.name = ProductionOrder.name;
                 Production.trans_date = ProductionOrder.trans_date;
 
@@ -575,7 +579,7 @@ namespace Cognitivo.Accounting
                     if (Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed).Count() > 0)
                     {
                         DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
-                        Production_Detail.Fill_ByExecution(Detail, db);
+                        Production_Detail.Fill_ByExecution(Detail, db.db);
                         Production.Production_Detail.Add(Production_Detail);
                     }
                 }
@@ -608,7 +612,7 @@ namespace Cognitivo.Accounting
                 }
                 finally
                 {
-                    db.SaveChanges();
+                    db.db.SaveChanges();
                     fill();
                 }
             }
@@ -618,7 +622,7 @@ namespace Cognitivo.Accounting
 
         private void FixedAsset(DebeHaber.Transaction Transaction)
         {
-            List<item_asset_group> AssetGroupList = db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            List<item_asset_group> AssetGroupList = db.db.item_asset_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             foreach (item_asset_group item_asset_group in AssetGroupList)
             {

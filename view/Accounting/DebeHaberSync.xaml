@@ -4,8 +4,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
-	  mc:Ignorable="d"
-            xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+	  mc:Ignorable="d" xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 		xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -23,12 +22,12 @@
         <CollectionViewSource x:Key="production_order_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}" />
     </Page.Resources>
     <Grid>
-        <Label x:Name="tbxServer" LostFocus="tbxServer_LostFocus"
+        <Label x:Name="tbxServer" LostFocus="tbxServer_LostFocus" VerticalAlignment="Top" HorizontalAlignment="Center"
                            Content="{Binding Source={x:Static mainpref:Settings.Default}, Path=DebeHaberConnString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                            HorizontalContentAlignment="Center" FontSize="14" Foreground="Gray"
                            Style="{StaticResource EditableLabelStyle}" />
-        <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
-			   VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <!--<Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
+			   VerticalAlignment="Top" HorizontalAlignment="Left" />-->
         <cntrl:DateRange x:Name="DatePanel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" Background="Black"
                           StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay}"  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay}" />
 

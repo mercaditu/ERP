@@ -72,9 +72,9 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}" 
                         		Header="{lex:Loc Cognitivo:local:Receivable}" Width="auto" Visibility="{Binding Recievable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource bool2visibility}, ElementName=_Refinance}" />
-                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}"
                         		Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" Visibility="{Binding Payable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource bool2visibility}, ElementName=_Refinance}" />
                         </DataGrid.Columns>
                     </DataGrid>

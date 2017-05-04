@@ -140,8 +140,10 @@ namespace entity.Controller.Purchase
         #endregion
 
         #region Approve
-        public void Approve()
+        public bool Approve()
         {
+            NumberOfRecords = 0;
+
             foreach (purchase_return purchase_return in db.purchase_return.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
                 if (purchase_return.status != Status.Documents_General.Approved &&
@@ -204,6 +206,9 @@ namespace entity.Controller.Purchase
 
                         purchase_return.status = Status.Documents_General.Approved;
                         SaveChanges_WithValidation();
+
+                        NumberOfRecords += 1;
+                        purchase_return.IsSelected = false;
                     }
                     else if (purchase_return.Error != null)
                     {
@@ -211,6 +216,8 @@ namespace entity.Controller.Purchase
                     }
                 }
             }
+
+            return true;
         }
 
         private void Linked2Sales(purchase_return purchase_return)

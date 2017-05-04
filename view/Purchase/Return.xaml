@@ -149,7 +149,7 @@
 								  RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="purchase_return_detailDataGrid_RowEditEnding" CellEditEnding="purchase_return_detailDataGrid_CellEditEnding">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding id_purchase_return_detail, UpdateSourceTrigger=PropertyChanged}" Header="Id" IsReadOnly="True" Width="SizeToHeader" Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Stock}" Width="30" />
+                        <DataGridCheckBoxColumn Binding="{Binding is_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Stock}" Width="30" />
                         <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:CostCenter}" Width="SizeToHeader"
 												ItemsSource="{Binding Source={StaticResource app_cost_centerViewSource}}"
 												DisplayMemberPath="name" SelectedValuePath="id_cost_center"

@@ -16,80 +16,8 @@ namespace entity.Brillo.Logic
         {
             List<item_movement> item_movementList = new List<item_movement>();
 
-            //PURCHASE RETURN
-            if (obj_entity.GetType().BaseType == typeof(purchase_return) || obj_entity.GetType() == typeof(purchase_return))
-            {
-                purchase_return purchase_return = (purchase_return)obj_entity;
-                List<purchase_return_detail> Listpurchase_return_detail = purchase_return.purchase_return_detail.Where(x => x.id_item > 0).ToList();
-                foreach (purchase_return_detail purchase_return_detail in Listpurchase_return_detail
-                    .Where(x => x.item.item_product.Count() > 0))
-                {
-                    item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
-                    purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
-                    purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
-                    if (purchase_return.id_purchase_invoice > 0)
-                    {
-                        Brillo.Stock stock = new Brillo.Stock();
-                        List<StockList> Items_InStockLIST = new List<StockList>();
-                        foreach (item_movement _item_movement in purchase_return_detail.purchase_invoice_detail.item_movement)
-                        {
-                            StockList Stock = new StockList();
-                            Stock.MovementID = Convert.ToInt32(_item_movement.id_movement);
-                            Stock.TranDate = Convert.ToDateTime(_item_movement.trans_date);
-                            Stock.QtyBalance = Convert.ToDecimal(_item_movement.credit);
-                            Stock.Cost = Convert.ToDecimal(_item_movement.item_movement_value.Sum(x => x.unit_value));
-                            Stock.LocationID = _item_movement.id_location;
-                            Stock.ExpirationDate = _item_movement.expire_date;
-                            Stock.code = _item_movement.code;
-
-                            Items_InStockLIST.Add(Stock);
-                        }
-
-                        item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
-                                                 App.Names.PurchaseReturn,
-                                                 purchase_return_detail.id_purchase_return,
-                                                 purchase_return_detail.id_purchase_return_detail,
-                                                 purchase_return.id_currencyfx,
-                                                 item_product,
-                                                 (int)purchase_return_detail.id_location,
-                                                 purchase_return_detail.quantity,
-                                                 purchase_return.trans_date,
-                                                 comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name)
-                                                 ));
-                    }
-                    else
-                    {
-                        List<StockList> Items_InStockLIST = null;
-                        //Get specific Movement ID
-                        if (purchase_return_detail.movement_id != null && purchase_return_detail.movement_id > 0)
-                        {
-                            Brillo.Stock stockBrillo = new Brillo.Stock();
-                            Items_InStockLIST = stockBrillo.ScalarMovement((long)purchase_return_detail.movement_id);
-                        }
-                        else
-                        { // Get all Movements with Balance.
-                            Brillo.Stock stock = new Brillo.Stock();
-                            Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
-                        }
-
-                        item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
-                                                 App.Names.PurchaseReturn,
-                                                 purchase_return_detail.id_purchase_return,
-                                                 purchase_return_detail.id_purchase_return_detail,
-                                                 purchase_return.id_currencyfx,
-                                                 item_product,
-                                                 (int)purchase_return_detail.id_location,
-                                                 purchase_return_detail.quantity,
-                                                 purchase_return.trans_date,
-                                                 comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name)
-                                                 ));
-                    }
-                }
-                //Return List so we can save into context.
-                return item_movementList;
-            }
             //PRODUCTION EXECUTION
-            else if (obj_entity.GetType().BaseType == typeof(production_execution_detail) || obj_entity.GetType() == typeof(production_execution_detail))
+            if (obj_entity.GetType().BaseType == typeof(production_execution_detail) || obj_entity.GetType() == typeof(production_execution_detail))
             {
                 List<item_movement> item_movementINPUT = new List<item_movement>();
                 List<item_movement> item_movementOUTPUT = new List<item_movement>();
@@ -423,6 +351,96 @@ namespace entity.Brillo.Logic
                         comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number ?? "", purchase_invoice.contact.name), item_movement_dimensionLIST,
                         purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code
                 ));
+                }
+            }
+            //Return List so we can save into context.
+            return item_movementList;
+        }
+
+        public List<item_movement> PurchaseReturn_Approve(db db, purchase_return purchase_return)
+        {
+            List<item_movement> item_movementList = new List<item_movement>();
+            List<purchase_return_detail> Invoice_WithProducts = new List<purchase_return_detail>();
+
+            if (purchase_return != null)
+            {
+                if (purchase_return.purchase_return_detail.Count() > 0)
+                {
+                    if (purchase_return.purchase_return_detail.Where(x => x.item != null).Count() > 0)
+                    {
+                        //Due to lack of special field, use Is Read to know if we should discount item or not.
+                        Invoice_WithProducts.AddRange(purchase_return.purchase_return_detail
+                            .Where(x => x.item.item_product.Count() > 0 && x.is_read == true).ToList());
+                    }
+                }
+            }
+            else
+            {
+                return item_movementList;
+            }
+
+            //SALES RETURN
+            foreach (purchase_return_detail purchase_return_detail in Invoice_WithProducts)
+            {
+                item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
+                purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
+                purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
+                if (purchase_return.id_purchase_invoice > 0)
+                {
+                    Brillo.Stock stock = new Brillo.Stock();
+                    List<StockList> Items_InStockLIST = new List<StockList>();
+                    foreach (item_movement _item_movement in purchase_return_detail.purchase_invoice_detail.item_movement)
+                    {
+                        StockList Stock = new StockList();
+                        Stock.MovementID = Convert.ToInt32(_item_movement.id_movement);
+                        Stock.TranDate = Convert.ToDateTime(_item_movement.trans_date);
+                        Stock.QtyBalance = Convert.ToDecimal(_item_movement.credit);
+                        Stock.Cost = Convert.ToDecimal(_item_movement.item_movement_value.Sum(x => x.unit_value));
+                        Stock.LocationID = _item_movement.id_location;
+                        Stock.ExpirationDate = _item_movement.expire_date;
+                        Stock.code = _item_movement.code;
+
+                        Items_InStockLIST.Add(Stock);
+                    }
+
+                    item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                                App.Names.PurchaseReturn,
+                                                purchase_return_detail.id_purchase_return,
+                                                purchase_return_detail.id_purchase_return_detail,
+                                                purchase_return.id_currencyfx,
+                                                item_product,
+                                                (int)purchase_return_detail.id_location,
+                                                purchase_return_detail.quantity,
+                                                purchase_return.trans_date,
+                                                comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name)
+                                                ));
+                }
+                else
+                {
+                    List<StockList> Items_InStockLIST = null;
+                    //Get specific Movement ID
+                    if (purchase_return_detail.movement_id != null && purchase_return_detail.movement_id > 0)
+                    {
+                        Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Items_InStockLIST = stockBrillo.ScalarMovement((long)purchase_return_detail.movement_id);
+                    }
+                    else
+                    { // Get all Movements with Balance.
+                        Brillo.Stock stock = new Brillo.Stock();
+                        Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
+                    }
+
+                    item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                                App.Names.PurchaseReturn,
+                                                purchase_return_detail.id_purchase_return,
+                                                purchase_return_detail.id_purchase_return_detail,
+                                                purchase_return.id_currencyfx,
+                                                item_product,
+                                                (int)purchase_return_detail.id_location,
+                                                purchase_return_detail.quantity,
+                                                purchase_return.trans_date,
+                                                comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name)
+                                                ));
                 }
             }
             //Return List so we can save into context.

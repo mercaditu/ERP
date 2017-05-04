@@ -36,6 +36,7 @@ namespace Cognitivo.Purchase
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             PurchaseReturnDB.Load();
+            
             //PurchaseReturn
             purchaseReturnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
            
@@ -398,10 +399,9 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            PurchaseReturnDB.Approve();
-            foreach (purchase_return purchase_return in purchaseReturnViewSource.View.Cast<purchase_return>().ToList())
+            if (PurchaseReturnDB.Approve())
             {
-                purchase_return.IsSelected = false;
+                toolBar.msgApproved(PurchaseReturnDB.NumberOfRecords);
             }
         }
 

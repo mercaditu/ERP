@@ -12,7 +12,7 @@ namespace entity.Controller.Production
         {
             if (ProductionOrderTypes == production_order.ProductionOrderTypes.Fraction)
             {
-                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == ProductionOrderTypes && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).LoadAsync();
+                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == ProductionOrderTypes && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).Include(x=>x.production_order_detail).OrderByDescending(x => x.trans_date).LoadAsync();
             }
             else
             {

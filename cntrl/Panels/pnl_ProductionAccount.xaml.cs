@@ -1,4 +1,5 @@
 ﻿using entity;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -27,19 +28,20 @@ namespace cntrl.Panels
         {
             production_accountViewSource = FindResource("production_accountViewSource") as CollectionViewSource;
 
+            List< production_service_account> production_service_accountList=
             ExecutionDB.production_service_account
             .Where
             (
                 x =>
                 x.id_company == CurrentSession.Id_Company &&
-                (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0 &&
                 x.id_item == production_execution_detail.id_item
             )
             .Include(x => x.item)
-            .Load();
-            production_accountViewSource.Source = ExecutionDB.production_service_account.Local;
+            .ToList();
+            production_service_accountList= production_service_accountList.Where(x => x.Balance > 0).ToList();
+            production_accountViewSource.Source = production_service_accountList;
 
-            if (ExecutionDB.production_service_account.Local.Count() == 0)
+            if (production_service_accountList.Count() == 0)
             {
                 gridSave.Visibility = Visibility.Hidden;
             }
@@ -60,7 +62,7 @@ namespace cntrl.Panels
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             //Make proper logic for Quantites
-            production_service_account SelectedAccount = ExecutionDB.production_service_account.Local.Where(x => x.IsSelected).FirstOrDefault();
+            production_service_account SelectedAccount = production_accountViewSource.View.OfType< production_service_account>().ToList().Where(x => x.IsSelected).FirstOrDefault();
 
             //if (SelectedAccount == null)
             //{ SelectedAccount = ExecutionDB.production_service_account.Local.FirstOrDefault(); }

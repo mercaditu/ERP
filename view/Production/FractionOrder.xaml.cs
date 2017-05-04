@@ -110,6 +110,7 @@ namespace Cognitivo.Production
             //projectViewSource.Source = ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             OrderDB.Load(production_order.ProductionOrderTypes.Fraction);
+            ExecutionDB.Load(production_order.ProductionOrderTypes.Fraction);
           production_lineViewSource = FindResource("production_lineViewSource") as CollectionViewSource;
             production_lineViewSource.Source = OrderDB.db.production_line.Local;
 
@@ -187,7 +188,7 @@ namespace Cognitivo.Production
         {
             Save_Click(sender);
 
-            if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Fraction))
+            if (OrderDB.Approve(production_order.ProductionOrderTypes.Fraction))
             {
                 toolBar.msgApproved(1);
             }

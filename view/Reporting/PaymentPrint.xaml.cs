@@ -51,11 +51,12 @@ namespace Cognitivo.Reporting
 
                     reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
                     reportViewer.LocalReport.DataSources.Clear();
-                    // reportViewer.LocalReport.DataSources.Add(DataSource.Create(payment_detail));
+                     reportViewer.LocalReport.DataSources.Add(DataSource.Create(payment_detail));
                     reportViewer.LocalReport.Refresh();
+                    reportViewer.RefreshReport();
                 }
             }
-            reportViewer.RefreshReport();
+         
         }
 
         private void PaymentTypeDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

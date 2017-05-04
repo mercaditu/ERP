@@ -135,6 +135,8 @@ namespace Cognitivo.Commercial
                     contact.is_head = false;
                     contact.State = EntityState.Deleted;
                     contact.IsSelected = true;
+                    
+                  
                 }
             }
             catch (Exception ex)

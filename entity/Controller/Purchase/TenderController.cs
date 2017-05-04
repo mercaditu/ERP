@@ -35,6 +35,15 @@ namespace entity.Controller.Purchase
             Tender.State = EntityState.Modified;
             db.Entry(Tender).State = EntityState.Modified;
 
+            //Check Ordered Quantity
+            foreach (purchase_tender_contact purchase_tender_contact in Tender.purchase_tender_contact_detail)
+            {
+                foreach (purchase_tender_detail detail in purchase_tender_contact.purchase_tender_detail)
+                {
+                    detail.IssuedQuantity_InOrder = detail.purchase_order_detail.Where(x => x.purchase_order.status != Status.Documents_General.Annulled).Sum(x => x.quantity);
+                }
+            }
+
             return Tender;
         }
 
@@ -133,9 +142,12 @@ namespace entity.Controller.Purchase
                                     }
                                     else
                                     {
-                                        app_cost_center = new app_cost_center();
-                                        app_cost_center.name = "Merchandice";
-                                        app_cost_center.is_product = true;
+                                        app_cost_center = new app_cost_center()
+                                        {
+                                            name = "Merchandice",
+                                            is_product = true
+                                        };
+
                                         db.app_cost_center.Add(app_cost_center);
                                         purchase_order_detail.app_cost_center = app_cost_center;
                                     }
@@ -151,9 +163,12 @@ namespace entity.Controller.Purchase
                                     }
                                     else
                                     {
-                                        app_cost_center = new app_cost_center();
-                                        app_cost_center.name = "Administrative";
-                                        app_cost_center.is_administrative = true;
+                                        app_cost_center = new app_cost_center()
+                                        {
+                                            name = "Administrative",
+                                            is_administrative = true
+                                        };
+
                                         db.app_cost_center.Add(app_cost_center);
                                         purchase_order_detail.app_cost_center = app_cost_center;
                                     }
@@ -163,15 +178,15 @@ namespace entity.Controller.Purchase
                                 /// If so, then use Order Quantity, which is a partial amount.
                                 /// If not, then get out of this code, and go for the next loop.
 
-                                decimal OrderedQuantity = purchase_tender_detail.purchase_order_detail.Where(x => x.purchase_order.status != Status.Documents_General.Annulled).Sum(x => x.quantity);
+                                decimal IssuedQuantity_InOrder = purchase_tender_detail.purchase_order_detail.Where(x => x.purchase_order.status != Status.Documents_General.Annulled).Sum(x => x.quantity);
 
-                                if (OrderedQuantity < purchase_tender_detail.quantity)
+                                if (IssuedQuantity_InOrder < purchase_tender_detail.quantity)
                                 {
                                     //Gets balance of remaining amount. Balance can never be 0?
-                                    decimal Balance = purchase_tender_detail.quantity - OrderedQuantity;
+                                    decimal Balance = purchase_tender_detail.quantity - IssuedQuantity_InOrder;
 
                                     if (Balance > purchase_tender_detail.OrderQuantity)
-                                    { //If balance is greater than Order Quantity. Order the OrderQuantity only. Keep status pending to allow future buying.
+                                    { //If Balance is greater than Order Quantity. Order the OrderQuantity only. Keep status pending to allow future buying.
                                         purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity;
                                     }
                                     else if (Balance == purchase_tender_detail.OrderQuantity)
@@ -179,11 +194,13 @@ namespace entity.Controller.Purchase
                                         //If Quantity is exactly the same, then use quantity and approve, to stop further buying.
                                         purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity;
                                         purchase_tender_detail.status = Status.Documents_General.Approved;
+                                        purchase_tender_detail.RaisePropertyChanged("status");
                                     }
                                     else
-                                    { //If balance is smaller than OrdeRQuantity, Order the Balance only. Approve to stop further buying.
-                                        purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity - Balance;
+                                    { //If balance is smaller than OrderQuantity, Order the Balance only. Approve to stop further buying.
+                                        purchase_order_detail.quantity = purchase_tender_detail.OrderQuantity; // - Balance;
                                         purchase_tender_detail.status = Status.Documents_General.Approved;
+                                        purchase_tender_detail.RaisePropertyChanged("status");
                                     }
                                 }
                                 else

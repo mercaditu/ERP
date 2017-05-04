@@ -121,11 +121,13 @@ namespace Cognitivo.Purchase
                     //Checks if product exists.
                     if (purchase_tender.purchase_tender_item_detail.Where(x => x.id_item == item.id_item).Count() == 0)
                     {
-                        purchase_tender_item purchase_tender_item = new purchase_tender_item();
-                        purchase_tender_item.item = item;
-                        purchase_tender_item.id_item = item.id_item;
-                        purchase_tender_item.item_description = item.name;
-                        purchase_tender_item.quantity = sbxItem.Quantity;
+                        purchase_tender_item purchase_tender_item = new purchase_tender_item()
+                        {
+                            item = item,
+                            id_item = item.id_item,
+                            item_description = item.name,
+                            quantity = sbxItem.Quantity
+                        };
 
                         foreach (item_dimension item_dimension in item.item_dimension)
                         {
@@ -294,14 +296,15 @@ namespace Cognitivo.Purchase
                             {
                                 if (TenderDB.db.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item) == null)
                                 {
-                                    purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
+                                    purchase_tender_detail purchase_tender_detail = new purchase_tender_detail()
+                                    {
+                                        id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item,
+                                        purchase_tender_item = purchase_tender_item,
+                                        quantity = 1,
+                                        id_vat_group = TenderDB.db.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group,
+                                        unit_cost = 0
+                                    };
 
-                                    purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
-                                    purchase_tender_detail.purchase_tender_item = purchase_tender_item;
-                                    purchase_tender_detail.quantity = 1;
-                                    purchase_tender_detail.id_vat_group = TenderDB.db.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
-
-                                    purchase_tender_detail.unit_cost = 0;
                                     purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                                 }
                                 else
@@ -459,7 +462,7 @@ namespace Cognitivo.Purchase
             LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.UnitCost_Vat);
         }
 
-        private void EditCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        private void EditCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (e.Parameter as purchase_tender_contact != null)
             {

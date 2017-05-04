@@ -76,7 +76,7 @@ namespace entity
 
                     if (purchase_tender_item != null)
                     {
-                        _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored, GetDimensionValue());
+                        _quantity = ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored, GetDimensionValue());
                         RaisePropertyChanged("quantity");
                     }
                 }
@@ -109,8 +109,16 @@ namespace entity
                 RaisePropertyChanged("OrderQuantity");
             }
         }
-
         private decimal _OrderQuantity;
+
+        [NotMapped]
+        public decimal IssuedQuantity_InOrder
+        {
+            get { return _IssuedQuantity_InOrder; }
+            set { _IssuedQuantity_InOrder = value; RaisePropertyChanged("IssuedQuantity_InOrder"); }
+        }
+
+        private decimal _IssuedQuantity_InOrder;
 
         /// <summary>
         ///

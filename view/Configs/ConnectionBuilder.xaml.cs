@@ -93,8 +93,8 @@ namespace Cognitivo.Configs
         public void updateConfigFile()
         {
             string name = "Cognitivo.Properties.Settings.MySQLconnString";
-            string ApplicationPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-            string YourPath = System.IO.Path.GetDirectoryName(ApplicationPath);
+            string ApplicationPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            string YourPath = Path.GetDirectoryName(ApplicationPath);
             bool isNew = false;
 
             XmlDocument doc = new XmlDocument();

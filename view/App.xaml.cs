@@ -1,7 +1,6 @@
 ﻿using Cognitivo.Menu;
 using InteractivePreGeneratedViews;
 using System;
-using System.Configuration;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -9,7 +8,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using System.Xml;
 
 namespace Cognitivo
 {

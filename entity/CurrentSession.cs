@@ -417,6 +417,16 @@ namespace entity
         public static bool Allow_BarCodeSearchOnly { get; set; }
         public static bool Show_InStockProductsOnly { get; set; }
 
+        public static string ApplicationFile_Path
+        {
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\";
+            }
+        }
+
+        public static MySql.Data.MySqlClient.MySqlConnectionStringBuilder MySQLConnString { get; set; } 
+
         public static app_currencyfx Get_Currency_Default_Rate()
         {
             return CurrencyFX_ActiveRates.Where(x => x.id_currency == Currency_Default.id_currency).FirstOrDefault();

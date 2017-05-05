@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,6 +59,25 @@ namespace Cognitivo.Configs
                 //sqlConn_Plain.Dispose();
 
                 connString.AppendFormat("database={0}; Integrated Security=True; convert zero datetime=True", tbxDataBase.Text);
+                if (entity.Brillo.IO.FileExists(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt"))
+                {
+                    FileInfo fi = new FileInfo(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt");
+                    using (TextWriter txtWriter = new StreamWriter(fi.Open(FileMode.Truncate)))
+                    {
+                        
+                        
+                        txtWriter.Write(connString.ToString());
+                    }
+                }
+                else
+                {
+                    using (FileStream fs = File.Create(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt"))
+                    {
+                        Byte[] info = new UTF8Encoding(true).GetBytes(connString.ToString());
+                        // Add some information to the file.
+                        fs.Write(info, 0, info.Length);
+                    }
+                }
 
                 updateConfigFile();
 

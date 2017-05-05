@@ -1,12 +1,34 @@
 ﻿namespace entity
 {
+    using System.Configuration;
+    using System.Data.Common;
     using System.Data.Entity;
+    using System.Data.Entity.Core.EntityClient;
 
     public class db : DbContext
     {
-        public db() : base("name=Cognitivo.Properties.Settings.MySQLconnString")
+        public db() : base("name = Cognitivo.Properties.Settings.MySQLconnString")
         {
             Configuration.LazyLoadingEnabled = true;
+        }
+
+        public static DbConnection GetSqlConnection()
+        {
+            // Initialize the EntityConnectionStringBuilder. 
+            EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder();
+
+            var connectionSettings = ConfigurationManager.ConnectionStrings["Cognitivo.Properties.Settings.MySQLconnString"];
+
+            // Set the provider name. 
+            entityBuilder.Provider = connectionSettings.ProviderName;
+
+            // Set the provider-specific connection string. 
+            entityBuilder.ProviderConnectionString = connectionSettings.ConnectionString;
+
+            // Set the Metadata location. 
+            //entityBuilder.Metadata = "res://*/Models.TestModel.csdl|res://*/Models.TestModel.ssdl|res://*/Models.TestModel.msl";
+
+            return new EntityConnection(entityBuilder.ToString());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

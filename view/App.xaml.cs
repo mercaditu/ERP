@@ -90,8 +90,6 @@ namespace Cognitivo
                 config.ConnectionStrings.ConnectionStrings[ConnName].ConnectionString = ConnString;
                 config.Save(ConfigurationSaveMode.Modified, true);
                 ConfigurationManager.RefreshSection("connectionStrings");
-
-                //MessageBox.Show(Cognitivo.Properties.Settings.Default.MySQLconnString);
             }
             else
             {

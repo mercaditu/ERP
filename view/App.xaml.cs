@@ -1,6 +1,7 @@
 ﻿using Cognitivo.Menu;
 using InteractivePreGeneratedViews;
 using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace Cognitivo
 {
@@ -82,31 +84,22 @@ namespace Cognitivo
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
             //Read External File.
-            //if (entity.Brillo.IO.FileExists(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt"))
-            //{
+            if (entity.Brillo.IO.FileExists(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt"))
+            {
+                //string NodeName = "Cognitivo.Properties.Settings.MySQLconnString";
+                //string ConnString = System.IO.File.ReadAllText(@entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt");
 
-            //    string name = "Cognitivo.Properties.Settings.MySQLconnString";
-            //    string text = System.IO.File.ReadAllText(@entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt");
-            //    XmlDocument doc = new XmlDocument();
-            //    doc.Load(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
-            //    XmlNodeList list = doc.DocumentElement.SelectNodes(string.Format("connectionStrings/add[@name='{0}']", name));
-            //    XmlNode node = list[0];
-            //    node.Attributes["connectionString"].Value = text;
-            //    doc.DocumentElement.SelectNodes("connectionStrings")[0].AppendChild(node);
-            //    doc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+                //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                //config.ConnectionStrings.ConnectionStrings[NodeName].ConnectionString = ConnString;
+                //config.Save(ConfigurationSaveMode.Modified, true);
+                //ConfigurationManager.RefreshSection("connectionStrings");
 
-            //    ConfigurationManager.RefreshSection("connectionStrings");
-            //    MessageBox.Show(Cognitivo.Properties.Settings.Default.MySQLconnString);
-
-
-            //}
-            //else
-            //{
-            //    // do nothing
-
-            //}
-            //Update Internal File
-
+                //MessageBox.Show(Cognitivo.Properties.Settings.Default.MySQLconnString);
+            }
+            else
+            {
+            // do nothing
+            }
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<entity.db, entity.Migrations.Configuration>());
@@ -120,7 +113,7 @@ namespace Cognitivo
 
             Menu.SplashScreen splash = new Menu.SplashScreen();
             splash.Show();
-            //Task taskAuth = Task.Factory.StartNew(() => check_createdb(splash));
+
             MainWindow MainWin = new MainWindow();
 
             try

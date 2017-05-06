@@ -9,6 +9,7 @@ namespace entity.Migrations
         public MySqlHistoryContext(DbConnection connection, string defaultSchema)
             : base(connection, defaultSchema)
         {
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

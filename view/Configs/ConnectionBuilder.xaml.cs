@@ -11,28 +11,12 @@ namespace Cognitivo.Configs
 {
     public partial class ConnectionBuilder : Page
     {
-        private StringBuilder connString = new StringBuilder();
+        //
 
         public ConnectionBuilder()
         { InitializeComponent(); }
 
         #region "Database Providers"
-
-        public void SQLServerconnString()
-        {
-        }
-
-        public void OracleconnString()
-        {
-        }
-
-        public void IBMDB2connString()
-        {
-        }
-
-        public void SQLite()
-        {
-        }
 
         public void MySQLconnString(string connString)
         {
@@ -46,6 +30,7 @@ namespace Cognitivo.Configs
 
         private void btnTestConn_Click(object sender, RoutedEventArgs e)
         {
+            StringBuilder connString = new StringBuilder();
             connString.Clear();
             connString.AppendFormat("server={0}; User Id={1}; Password={2};",
                                      tbxIPAddress.Text,

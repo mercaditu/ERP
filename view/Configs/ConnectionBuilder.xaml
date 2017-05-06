@@ -44,12 +44,7 @@
                Content="{lex:Loc Password}"
                metro:TextBoxHelper.SelectAllOnFocus="True"
                HorizontalAlignment="Center" />
-        <PasswordBox x:Name="tbxPassword"
-                     Style="{StaticResource input_password}"
-                     metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                     metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-                     metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
-                     metro:TextBoxHelper.SelectAllOnFocus="True"
+        <PasswordBox x:Name="tbxPassword" Width="256"
                      HorizontalAlignment="Center" />
         <CheckBox x:Name="chbxAdvanced" Content="{lex:Loc Advanced}" Style="{StaticResource input_checkbox}" HorizontalAlignment="Center" />
         <StackPanel Visibility="{Binding ElementName=chbxAdvanced, Path=IsChecked, Converter={StaticResource Bool2Visibility}}">
@@ -64,8 +59,7 @@
         <Button Width="256" Click="btnTestConn_Click" BorderBrush="Transparent" Margin="0,0,0,10">
             <Button.Content>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
-                    <ProgressBar Name="progBar" Margin="0" Height="{Binding}" Width="{Binding}"
-                                         Background="{StaticResource {x:Static SystemColors.ActiveBorderBrushKey}}" />
+                    <ProgressBar Name="progBar" Margin="0" Background="RoyalBlue" />
                     <Label Content="{lex:Loc Connect}" FontSize="18" Height="35"
                                    HorizontalContentAlignment="Center" />
                 </Grid>

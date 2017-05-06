@@ -11,8 +11,6 @@
       Name="pageStartup"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
     <Page.Resources>
-        <converter:Text2Collapsed x:Key="Text2Collapsed" />
-        <converter:IsActive2ColorConverter x:Key="IsActive2ColorConverter" />
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <Storyboard x:Key="AnimateButton">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)" Storyboard.TargetName="button">
@@ -37,8 +35,7 @@
         </StackPanel>
         <Frame x:Name="frameConfig" Margin="0,86,0,0"
                NavigationUIVisibility="Hidden" />
-        <Grid Visibility="{Binding ElementName=frameConfig, Path=Content, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Text2Collapsed}}"
-              Margin="0,90,0,0" MaxWidth="1024">
+        <Grid Margin="0,90,0,0" MaxWidth="1024">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />

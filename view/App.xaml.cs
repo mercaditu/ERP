@@ -117,7 +117,7 @@ namespace Cognitivo
                 {
                     db.Configuration.LazyLoadingEnabled = false;
                     db.Configuration.AutoDetectChangesEnabled = false;
-
+                    
                     if (entity.Brillo.IO.FileExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Entity\\View.xml") == false)
                     {
                         InteractiveViews.SetViewCacheFactory(db,
@@ -127,7 +127,8 @@ namespace Cognitivo
                     if (db.Database.Exists() == false)
                     {
                         //If database does not exist, then send to StartUp Page to decide if to change connection string or create database.
-                        MainWin.mainFrame.Navigate(new StartUp());
+                        //MainWin.mainFrame.Navigate(new StartUp());
+                        db.Database.CreateIfNotExists();
                     }
                     else
                     {

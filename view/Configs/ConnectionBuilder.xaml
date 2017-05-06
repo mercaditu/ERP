@@ -17,21 +17,6 @@
                 VerticalAlignment="Top" HorizontalAlignment="Center">
         <Label Content="{lex:Loc LocatetheServer}" Style="{StaticResource H1}" HorizontalAlignment="Center" />
         <Rectangle Height="1" Margin="15" Fill="Silver" />
-        <StackPanel Visibility="Collapsed">
-            <Label Style="{StaticResource input_label}" Content="{lex:Loc DataBase}" HorizontalAlignment="Center" />
-            <ComboBox IsEnabled="False"
-                	HorizontalAlignment="Center" VerticalAlignment="Center" IsEditable="True"
-                	Margin="10,5"  Width="256" FontSize="26">
-                <ComboBox.Items>
-                    <ComboBoxItem Content="MySQL" />
-                    <Rectangle Height="1" Fill="Silver" />
-                    <ComboBoxItem Content="IBM DB2" />
-                    <ComboBoxItem Content="Postgres" />
-                    <ComboBoxItem Content="Oracle" />
-                    <ComboBoxItem Content="SQL Server" />
-                </ComboBox.Items>
-            </ComboBox>
-        </StackPanel>
         <Label Style="{StaticResource input_label}" Content="{lex:Loc IPAddress}" HorizontalAlignment="Center" />
         <TextBox x:Name="tbxIPAddress" Style="{StaticResource input_textbox}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
@@ -59,8 +44,8 @@
         <Button Width="256" Click="btnTestConn_Click" BorderBrush="Transparent" Margin="0,0,0,10">
             <Button.Content>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
-                    <ProgressBar Name="progBar" Margin="0" Background="RoyalBlue" />
-                    <Label Content="{lex:Loc Connect}" FontSize="18" Height="35"
+                    <ProgressBar Name="progBar" Margin="0" Height="23" Background="RoyalBlue"/>
+                    <Label Content="{lex:Loc Connect}" FontSize="18" Height="35" Foreground="White"
                                    HorizontalContentAlignment="Center" />
                 </Grid>
             </Button.Content>

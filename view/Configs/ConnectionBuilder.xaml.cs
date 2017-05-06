@@ -11,8 +11,6 @@ namespace Cognitivo.Configs
 {
     public partial class ConnectionBuilder : Page
     {
-        //
-
         public ConnectionBuilder()
         { InitializeComponent(); }
 
@@ -32,7 +30,8 @@ namespace Cognitivo.Configs
         {
             StringBuilder connString = new StringBuilder();
             connString.Clear();
-            connString.AppendFormat("server={0}; User Id={1}; Password={2};",
+            
+            connString.AppendFormat("server={0}; user id={1}; password={2};",
                                      tbxIPAddress.Text,
                                      tbxUser.Text,
                                      tbxPassword.Password.ToString());
@@ -41,16 +40,13 @@ namespace Cognitivo.Configs
                 MySqlConnection sqlConn_Plain = new MySqlConnection(connString.ToString());
                 sqlConn_Plain.Open();
                 sqlConn_Plain.Close();
-                //sqlConn_Plain.Dispose();
 
-                connString.AppendFormat("database={0}; Integrated Security=True; convert zero datetime=True", tbxDataBase.Text);
+                connString.AppendFormat("database={0}; persistsecurityinfo = True;", tbxDataBase.Text);
                 if (entity.Brillo.IO.FileExists(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt"))
                 {
                     FileInfo fi = new FileInfo(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt");
                     using (TextWriter txtWriter = new StreamWriter(fi.Open(FileMode.Truncate)))
                     {
-                        
-                        
                         txtWriter.Write(connString.ToString());
                     }
                 }
@@ -87,6 +83,7 @@ namespace Cognitivo.Configs
             XmlNodeList list = doc.DocumentElement.SelectNodes(string.Format("connectionStrings/add[@name='{0}']", name));
             XmlNode node;
             isNew = list.Count == 0;
+
             if (isNew)
             {
                 node = doc.CreateNode(XmlNodeType.Element, "add", null);
@@ -108,20 +105,24 @@ namespace Cognitivo.Configs
             }
 
             string conString = node.Attributes["connectionString"].Value;
-            MySqlConnectionStringBuilder conStringBuilder = new MySqlConnectionStringBuilder(conString);
-            conStringBuilder.Server = tbxIPAddress.Text;
-            conStringBuilder.Database = tbxDataBase.Text;
-            conStringBuilder.IntegratedSecurity = false;
-            conStringBuilder.UserID = tbxUser.Text;
-            conStringBuilder.Password = tbxPassword.Password.ToString();
-            conStringBuilder.ConnectionTimeout = 128;
-            conStringBuilder.DefaultCommandTimeout = 128;
+            MySqlConnectionStringBuilder conStringBuilder = new MySqlConnectionStringBuilder(conString)
+            {
+                Server = tbxIPAddress.Text,
+                Database = tbxDataBase.Text,
+                IntegratedSecurity = false,
+                UserID = tbxUser.Text,
+                Password = tbxPassword.Password.ToString(),
+                ConnectionTimeout = 128,
+                DefaultCommandTimeout = 128
+            };
 
             node.Attributes["connectionString"].Value = conStringBuilder.ConnectionString;
+
             if (isNew)
             {
                 doc.DocumentElement.SelectNodes("connectionStrings")[0].AppendChild(node);
             }
+
             doc.Save(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
         }
     }

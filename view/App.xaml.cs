@@ -9,14 +9,11 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using System.Xml;
 
 namespace Cognitivo
 {
     public partial class App : Application
     {
-
-
         public App()
         {
             if (Cognitivo.Properties.Settings.Default.UpgradeSettings)
@@ -86,15 +83,15 @@ namespace Cognitivo
             //Read External File.
             if (entity.Brillo.IO.FileExists(entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt"))
             {
-                //string NodeName = "Cognitivo.Properties.Settings.MySQLconnString";
-                //string ConnString = System.IO.File.ReadAllText(@entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt");
+                string ConnName = "Cognitivo.Properties.Settings.MySQLconnString";
+                string ConnString = System.IO.File.ReadAllText(@entity.CurrentSession.ApplicationFile_Path + "Entity\\ConnString.txt");
 
-                //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                //config.ConnectionStrings.ConnectionStrings[NodeName].ConnectionString = ConnString;
-                //config.Save(ConfigurationSaveMode.Modified, true);
-                //ConfigurationManager.RefreshSection("connectionStrings");
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.ConnectionStrings.ConnectionStrings[ConnName].ConnectionString = ConnString;
+                config.Save(ConfigurationSaveMode.Modified, true);
+                ConfigurationManager.RefreshSection("connectionStrings");
 
-                //MessageBox.Show(Cognitivo.Properties.Settings.Default.MySQLconnString);
+                MessageBox.Show(Cognitivo.Properties.Settings.Default.MySQLconnString);
             }
             else
             {
@@ -131,18 +128,21 @@ namespace Cognitivo
 
                     if (db.Database.Exists() == false)
                     {
-                        MainWin.mainFrame.Navigate(new StartUp()); //}));
+                        //If database does not exist, then send to StartUp Page to decide if to change connection string or create database.
+                        MainWin.mainFrame.Navigate(new StartUp());
                     }
                     else
                     {
+                        //Normal Login
                         await db.app_company.Select(x => x.id_company).FirstOrDefaultAsync();
-                        MainWin.mainFrame.Navigate(new MainLogIn());// }));
+                        MainWin.mainFrame.Navigate(new MainLogIn());
                     }
                 }
             }
-            catch (Exception)
+            catch
             {
-                MainWin.mainFrame.Navigate(new StartUp()); //}));
+                //If Server cannot be found, launch the ConnectionBuilder page to set it up.
+                MainWin.mainFrame.Navigate(new Configs.ConnectionBuilder());
             }
 
 

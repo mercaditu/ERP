@@ -129,6 +129,7 @@ namespace Cognitivo
                         //If database does not exist, then send to StartUp Page to decide if to change connection string or create database.
                         //MainWin.mainFrame.Navigate(new StartUp());
                         db.Database.CreateIfNotExists();
+                        MainWin.mainFrame.Navigate(new MainSetup());
                     }
                     else
                     {

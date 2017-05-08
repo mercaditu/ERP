@@ -988,6 +988,16 @@ namespace entity.Brillo.Logic
                     }
 
                     item_movement.trans_date = TransDate;
+                    foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
+                    {
+                        item_movement_dimension _item_movement_dimension = new item_movement_dimension()
+                        {
+                            id_dimension = item_movement_dimension.id_dimension,
+                            value = item_movement_dimension.value
+                        };
+
+                        item_movement.item_movement_dimension.Add(_item_movement_dimension);
+                    }
 
                     if (ApplicationID == App.Names.ProductionExecution)
                     {
@@ -998,8 +1008,8 @@ namespace entity.Brillo.Logic
                             {
                                 if (parent_movement_dimension != null && item_movement.item_movement_dimension != null)
                                 {
-                                    decimal ParentDimesion = 0;
-                                    decimal ChildDimesion = 0;
+                                    decimal ParentDimesion = 1;
+                                    decimal ChildDimesion = 1;
 
                                     foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
                                     {
@@ -1039,16 +1049,7 @@ namespace entity.Brillo.Logic
                         item_movement.item_movement_value.Add(item_movement_value);
                     }
 
-                    foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
-                    {
-                        item_movement_dimension _item_movement_dimension = new item_movement_dimension()
-                        {
-                            id_dimension = item_movement_dimension.id_dimension,
-                            value = item_movement_dimension.value
-                        };
-
-                        item_movement.item_movement_dimension.Add(_item_movement_dimension);
-                    }
+                    
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);

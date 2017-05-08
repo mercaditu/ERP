@@ -1066,6 +1066,7 @@ namespace entity.Brillo.Document
                 }
                 return ContactList.Remove(0, 1);
             }
+            
 
             return ContactList;
         }

@@ -447,7 +447,7 @@ namespace entity.Brillo.Logic
             return item_movementList;
         }
 
-        public List<item_movement> SalesInvoice_Approve(db db, sales_invoice sales_invoice)
+        public List<item_movement> SalesInvoice_Approve(db db, ref sales_invoice sales_invoice)
         {
             List<item_movement> item_movementList = new List<item_movement>();
             List<sales_invoice_detail> Invoice_WithProducts = new List<sales_invoice_detail>();

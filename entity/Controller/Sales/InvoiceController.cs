@@ -478,7 +478,7 @@ namespace entity.Controller.Sales
             List<item_movement> item_movementList = new List<item_movement>();
 
             Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-            item_movementList = _Stock.SalesInvoice_Approve(db, invoice);
+            item_movementList = _Stock.SalesInvoice_Approve(db, ref invoice);
 
             //Loop through each Item Movement and assign cost to detail for reporting purposes.
             foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item_movement.Count() > 0))
@@ -487,6 +487,7 @@ namespace entity.Controller.Sales
                 {
                     if (sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault() != null)
                     {
+                        //item_movement item_movement = db.item_movement.Find()
                         sales_detail.unit_cost = Currency.convert_Values
                         (
                         sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),

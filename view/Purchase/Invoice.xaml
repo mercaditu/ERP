@@ -222,7 +222,7 @@
 												</Hyperlink>
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" 
 									Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_PurchaseOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <Label Content="C" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">

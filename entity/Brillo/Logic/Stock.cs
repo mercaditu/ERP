@@ -988,17 +988,7 @@ namespace entity.Brillo.Logic
                     }
 
                     item_movement.trans_date = TransDate;
-                    foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
-                    {
-                        item_movement_dimension _item_movement_dimension = new item_movement_dimension()
-                        {
-                            id_dimension = item_movement_dimension.id_dimension,
-                            value = item_movement_dimension.value
-                        };
-
-                        item_movement.item_movement_dimension.Add(_item_movement_dimension);
-                    }
-
+                  
                     if (ApplicationID == App.Names.ProductionExecution)
                     {
                         if (db.production_execution_detail.Find(TransactionDetailID) != null)
@@ -1049,7 +1039,17 @@ namespace entity.Brillo.Logic
                         item_movement.item_movement_value.Add(item_movement_value);
                     }
 
-                    
+
+                    foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
+                    {
+                        item_movement_dimension _item_movement_dimension = new item_movement_dimension()
+                        {
+                            id_dimension = item_movement_dimension.id_dimension,
+                            value = item_movement_dimension.value
+                        };
+
+                        item_movement.item_movement_dimension.Add(_item_movement_dimension);
+                    }
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);

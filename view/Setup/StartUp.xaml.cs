@@ -120,12 +120,14 @@ namespace Cognitivo.Menu
 
         private void connStringBuilder_Click(object sender, RoutedEventArgs e)
         {
-            frameConfig.Navigate(new ConnectionBuilder());
+            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
+            myWindow.mainFrame.Navigate(new ConnectionBuilder());
         }
 
         private void createDB_Click(object sender, EventArgs e)
         {
-            frameConfig.Navigate(new Menu.WaitPage());
+            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
+            myWindow.mainFrame.Navigate(new WaitPage());
             Task task_createDB = Task.Factory.StartNew(() => createDB(null, null));
         }
 
@@ -148,12 +150,15 @@ namespace Cognitivo.Menu
                     }
                 }
             }
-            Dispatcher.BeginInvoke((Action)(() => frameConfig.Content = null));
+
+            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
+            Dispatcher.BeginInvoke((Action)(() => myWindow.mainFrame.Content = null));
         }
 
         private void createCompany_Click(object sender, RoutedEventArgs e)
         {
-            frameConfig.Navigate(new MainSetup());
+            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
+            myWindow.mainFrame.Navigate(new MainSetup());
         }
 
         private object SQLQuery_ReturnScalar(string strSQL, bool generic)
@@ -196,7 +201,8 @@ namespace Cognitivo.Menu
 
         private void migrate_Click(object sender, RoutedEventArgs e)
         {
-            frameConfig.Navigate(new Setup.Migration.MigrationAssistant());
+            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
+            myWindow.mainFrame.Navigate(new Setup.Migration.MigrationAssistant());
         }
 
         private void Image_PreviewMouseUp(object sender, MouseButtonEventArgs e)

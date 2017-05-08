@@ -14,7 +14,7 @@
             im.comment as Comment, im.debit as Debit, im.credit as Credit,
             imv.comment as CostDetail, imv.unit_value as Cost,
 
-            dim.name as Dimension, imd.value as Value,
+            -- dim.name as Dimension, imd.value as Value,
 
             im.trans_date as Date, im.code as LotNumber, im.expire_date as ExpiryDate, im.timestamp as Timestamp, im.parent_id_movement as ParentID,
             u.name as User
@@ -24,8 +24,8 @@
             inner join app_location as l on im.id_location = l.id_location
             inner join app_branch as branch on l.id_branch = branch.id_branch
             left join item_movement_value as imv on im.id_movement = imv.id_movement
-            left join item_movement_dimension as imd on im.id_movement = imd.id_movement
-            left join app_dimension as dim on imd.id_dimension = dim.id_dimension
+           -- left join item_movement_dimension as imd on im.id_movement = imd.id_movement
+           -- left join app_dimension as dim on imd.id_dimension = dim.id_dimension
             inner join item_product as ip on im.id_item_product = ip.id_item_product
             inner join items as i on ip.id_item = i.id_item
             inner join security_user as u on im.id_user = u.id_user

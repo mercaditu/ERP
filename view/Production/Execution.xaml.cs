@@ -169,7 +169,7 @@ namespace Cognitivo.Production
                             }
 
                             production_order_detail.production_execution_detail.Add(_production_execution_detail);
-                            ExecutionDB.SaveChanges_WithValidation();
+                            ExecutionDB.db.SaveChanges();
                             //RefreshData();
                         }
                     }
@@ -655,6 +655,8 @@ namespace Cognitivo.Production
                 production_execution_detailViewSource.View.Refresh();
             }
         }
+
+     
 
         public event PropertyChangedEventHandler PropertyChanged;
 

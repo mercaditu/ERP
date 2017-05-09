@@ -55,6 +55,9 @@
         <CollectionViewSource x:Key="production_executionproduction_execustion_detailViewSource" Source="{Binding production_execustion_detail, Source={StaticResource production_orderproduction_order_detailViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="production_execution_detailProductViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="production_execution_detailRawViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}" />
+        <CollectionViewSource x:Key="production_execution_detailDimensionProductViewSource" Source="{Binding production_execution_dimension, Source={StaticResource production_execution_detailProductViewSource}}" />
+        <CollectionViewSource x:Key="production_execution_detailDimensionRawViewSource" Source="{Binding production_execution_dimension, Source={StaticResource production_execution_detailRawViewSource}}" />
+        
         <CollectionViewSource x:Key="production_execution_detailAssetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="production_execution_detailServiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}" />
         <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution_detail}, CreateList=True}" />
@@ -317,6 +320,23 @@
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
                                         </DataGrid.Columns>
+                                        <DataGrid.RowDetailsTemplate>
+                                            <DataTemplate>
+                                                <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
+                        		          EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		          ItemsSource="{Binding Source={StaticResource production_execution_detailDimensionProductViewSource}}"
+                        		          RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Dimension}" Width="100" FontWeight="Bold" />
+                                                        <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,StringFormat=N2}"
+                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
+                                                        <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Measurement}" Width="100" FontWeight="Bold" />
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </DataTemplate>
+                                        </DataGrid.RowDetailsTemplate>
                                     </DataGrid>
                                 </StackPanel>
                             </Grid>
@@ -374,6 +394,23 @@
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
                                         </DataGrid.Columns>
+                                        <DataGrid.RowDetailsTemplate>
+                                            <DataTemplate>
+                                                <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
+                        		          EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		          ItemsSource="{Binding Source={StaticResource production_execution_detailDimensionRawViewSource}}"
+                        		          RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Dimension}" Width="100" FontWeight="Bold" />
+                                                        <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,StringFormat=N2}"
+                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
+                                                        <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Measurement}" Width="100" FontWeight="Bold" />
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </DataTemplate>
+                                        </DataGrid.RowDetailsTemplate>
                                     </DataGrid>
                                 </StackPanel>
                             </Grid>

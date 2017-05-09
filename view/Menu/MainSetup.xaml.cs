@@ -34,7 +34,7 @@ namespace Cognitivo.Menu
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            if (txtname.Text == string.Empty || txtalias.Text == string.Empty
+            if (txtcomapnyname.Text == string.Empty || txtalias.Text == string.Empty
                 || txtGovID.Text == string.Empty || txtFullName.Text == string.Empty
                 || txtName.Text == string.Empty || txtPass.Password == string.Empty)
             {
@@ -43,7 +43,7 @@ namespace Cognitivo.Menu
             }
 
             app_company app_company = new app_company();
-            app_company.name = txtname.Text;
+            app_company.name = txtcomapnyname.Text;
             app_company.alias = txtalias.Text;
             app_company.gov_code = txtGovID.Text;
             app_company.address = "Address";
@@ -59,7 +59,7 @@ namespace Cognitivo.Menu
                 try
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                    app_company.version = Licence.CreateLicence(txtname.Text, txtGovID.Text, txtName.Text, "", (int)CurrentSession.Versions.Full);
+                    app_company.version = Licence.CreateLicence(txtFullName.Text, txtGovID.Text, txtcomapnyname.Text,"" , (int)CurrentSession.Versions.Full);
                 }
                 catch (Exception)
                 {

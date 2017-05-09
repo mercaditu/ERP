@@ -37,7 +37,7 @@
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Company}" HorizontalAlignment="Center" />
                     <StackPanel x:Name="stpDisplay" HorizontalAlignment="Center">
                         <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="txtname" Style="{StaticResource input_textbox}" />
+                        <TextBox x:Name="txtcomapnyname" Style="{StaticResource input_textbox}" />
                         <Label Content="{lex:Loc Alias}" Style="{StaticResource input_label}" />
                         <TextBox x:Name="txtalias" Style="{StaticResource input_textbox}" />
                         <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}" />

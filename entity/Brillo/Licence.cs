@@ -61,7 +61,7 @@ namespace entity.Brillo
         public licence CompanyLicence { get; set; }
 
 
-        public string CreateLicence(string FirstName, string LastName, string CompanyName, string Email, int version)
+        public string CreateLicence(string FirstName, string ComapnyCode, string CompanyName, string Email, int version)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace entity.Brillo
                     Email = "abc@FirstName.com";
                 }
 
-                webAddr = webAddr + "/" + FirstName + "/" + LastName + "/" + CompanyName + "/" + Email + "/" + version;
+                webAddr = webAddr + "/" + FirstName + "/" + ComapnyCode + "/" + CompanyName + "/" + Email + "/" + version;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "get";

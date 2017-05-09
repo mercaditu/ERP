@@ -39,20 +39,26 @@ namespace Cognitivo.Menu
                 Tag = "Fav",
                 ModuleName = "Favorite"
             };
-            entity.Brillo.Licence Licence = new entity.Brillo.Licence();
 
-            using (entity.db db = new entity.db())
-            {
+            ////try
+            ////{
+            ////    entity.Brillo.Licence Licence = new entity.Brillo.Licence();
 
-                app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-                if (app_company != null)
-                {
-                    Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, security_user.security_role.security_user.Count());
-                }
-                
-            }
-
+            ////    using (db db = new db())
+            ////    {
+            ////        app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+            ////        security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+            ////        if (app_company != null)
+            ////        {
+            ////            Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, db.security_user.Where(x => x.security_role.version == security_user.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
+            ////            //Check current Role Version and see if limit is not exceeded.
+            ////            //If Exceded, figure out what to do. Maybe Message Box reduce automatically to lite???
+            ////            //If not continue without trouble.
+            ////        }
+            ////    }
+            ////}
+            ////catch {  }
+         
             get_Apps(Icon, null);
         }
 

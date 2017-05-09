@@ -73,12 +73,17 @@ namespace Cognitivo.Security
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
 
-                    //if (Licence.CompanyLicence!= null)
-                    //{
-                    //}
-                    //else
-                    //{
-                    //}
+                    using (entity.db db = new entity.db())
+                    {
+
+                        app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+
+                        if (app_company != null)
+                        {
+                            Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, security_user.security_role.security_user.Count());
+                        }
+
+                    }
                     if (UserDB.SaveChanges() > 0)
                     {
                         toolBar.msgSaved(1);

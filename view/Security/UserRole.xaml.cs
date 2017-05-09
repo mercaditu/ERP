@@ -49,16 +49,16 @@ namespace Cognitivo.Security
             Add_Privallge();
             cbxVersion.ItemsSource = Enum.GetValues(typeof(CurrentSession.Versions));
 
-            app_company app_company = UserRoleDB.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-            if (app_company != null)
-            {
-                Licence.VerifyCompanyLicence(app_company.version);
-                if (Licence.CompanyLicence != null)
-                {
-                    VersionGrid.ItemsSource = Licence.CompanyLicence.versions;
-                }
+            //app_company app_company = UserRoleDB.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+            //if (app_company != null)
+            //{
+            //    Licence.VerifyCompanyLicence(app_company.version);
+            //    if (Licence.CompanyLicence != null)
+            //    {
+            //        VersionGrid.ItemsSource = Licence.CompanyLicence.versions;
+            //    }
 
-            }
+            //}
         }
 
         private void Search_Click(object sender, string query)
@@ -103,7 +103,7 @@ namespace Cognitivo.Security
                     .app_company
                     .Where(x => x.id_company == CurrentSession.Id_Company)
                     .Select(y => y.version)
-                    .FirstOrDefault());
+                    .FirstOrDefault(),(int)security_role.Version,UserCount);
 
                 if (Licence.CompanyLicence != null)
                 {

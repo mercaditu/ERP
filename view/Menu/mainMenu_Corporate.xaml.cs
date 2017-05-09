@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Threading;
 using WPFLocalizeExtension.Extensions;
+using entity;
+using System.Linq;
 
 namespace Cognitivo.Menu
 {
@@ -37,6 +39,19 @@ namespace Cognitivo.Menu
                 Tag = "Fav",
                 ModuleName = "Favorite"
             };
+            entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+
+            using (entity.db db = new entity.db())
+            {
+
+                app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+                if (app_company != null)
+                {
+                    Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, security_user.security_role.security_user.Count());
+                }
+                
+            }
 
             get_Apps(Icon, null);
         }

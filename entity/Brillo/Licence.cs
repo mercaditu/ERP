@@ -116,12 +116,12 @@ namespace entity.Brillo
             }
         }
 
-        public void VerifyCompanyLicence(String LicenceKey)
+        public void VerifyCompanyLicence(String LicenceKey,int version,int user_count)
         {
             try
             {
                 var webAddr = "http://www.cognitivo.in/LicenceManager/public/LicenceVerify";
-                webAddr = webAddr + "/" + LicenceKey;
+                webAddr = webAddr + "/" + LicenceKey + "/" + version + "/" + user_count;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "get";

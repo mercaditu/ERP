@@ -244,7 +244,7 @@ namespace entity
             //        Version = Versions.Lite;
             //    }
             //}
-
+         
 
             Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();

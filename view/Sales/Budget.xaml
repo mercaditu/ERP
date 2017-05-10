@@ -338,7 +338,7 @@
                 </StackPanel>
                 <DataGrid x:Name="sales_budget_detailDataGrid" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
-						  UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+						  UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CanUserDeleteRows="False"
 						  ItemsSource="{Binding Source={StaticResource sales_budgetsales_budget_detailViewSource}}"
 						  RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="Sales_Budget_detailDataGrid_RowEditEnding"
 						  CellEditEnding="Sales_Budget_detailDataGrid_CellEditEnding" Grid.ColumnSpan="2">

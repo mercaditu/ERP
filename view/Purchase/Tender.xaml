@@ -282,7 +282,7 @@
                             <Controls:SmartBox_Contact x:Name="sbxContact" Select="set_ContactPref" Get_Suppliers="True" VerticalAlignment="Top" />
                         </StackPanel>
 
-                        <DataGrid x:Name="purchase_tender_contact_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+                        <DataGrid x:Name="purchase_tender_contact_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}" Margin="4,35,4,0"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="purchase_tender_contact_detailDataGrid_SelectionChanged"
                                   CanUserAddRows="False" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
@@ -324,7 +324,7 @@
                         <cntrl:toolBar_Mini btnApprove_Click="Mini_Approve_Click" Status="{Binding status,Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         <DataGrid x:Name="purchase_tender_item_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="1"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4"
-                                  RowEditEnding="purchase_tender_item_detailDataGrid_RowEditEnding"
+                                  RowEditEnding="purchase_tender_item_detailDataGrid_RowEditEnding" CanUserDeleteRows="False"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>

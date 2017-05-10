@@ -215,6 +215,9 @@ namespace Cognitivo.Sales
                     //DeleteDetailGridRow
                     sales_packinglist_detailDataGrid.CancelEdit();
                     PackingListDB.sales_packing_detail.Remove(e.Parameter as sales_packing_detail);
+                    Refresh_GroupByGrid();
+                    GridVerifiedList.SelectedIndex = 0;
+                    sales_packingViewSource.View.Refresh();
                     sales_packingsales_packinglist_detailViewSource.View.Refresh();
                 }
             }
@@ -486,7 +489,30 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        
+
+        private void Search_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                sales_packingViewSource.View.Filter = i =>
+                {
+                    sales_packing Packing = i as sales_packing;
+                    string Name = Packing.contact != null ? Packing.contact.name : "";
+                    string Number = Packing.number != null ? Packing.number : "";
+
+                    if (Name.ToLower().Contains(query.ToLower()) || Number.ToLower().Contains(query.ToLower()))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                };
+            }
+            else
+            {
+                sales_packingViewSource.View.Filter = null;
+            }
+        }
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             sales_packing packing = sales_packingViewSource.View.CurrentItem as sales_packing;

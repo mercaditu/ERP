@@ -352,7 +352,7 @@
 														IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                                 </Grid>
                             </StackPanel>
-                            <DataGrid x:Name="dgvSalesDetail" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"
+                            <DataGrid x:Name="dgvSalesDetail" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto" CanUserDeleteRows="False"
 								  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
 								  ItemsSource="{Binding Source={StaticResource sales_ordersales_order_detailViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="sales_order_detailDataGrid_RowEditEnding"
 								  InitializingNewItem="sales_order_detailDataGrid_InitializingNewItem" CellEditEnding="sales_order_detailDataGrid_CellEditEnding">

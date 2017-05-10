@@ -60,7 +60,7 @@
             <Button  Click="ListProducts" Content="Buscar" Width="128" />
         </StackPanel>
 
-        <DataGrid Grid.Row="2" Margin="32,8" AutoGenerateColumns="False" SelectionChanged="StockList" CanUserAddRows="False" CanUserReorderColumns="False"
+        <DataGrid Grid.Row="2" Margin="32,8" AutoGenerateColumns="False" SelectionChanged="StockList" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
                   ItemsSource="{Binding}">
             <DataGrid.Background>
                 <SolidColorBrush Color="White" Opacity="0.16" />

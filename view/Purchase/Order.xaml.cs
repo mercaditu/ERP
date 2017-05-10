@@ -370,7 +370,7 @@ namespace Cognitivo.Purchase
                     {
                         //DeleteDetailGridRow
                         purchase_order_detailDataGrid.CancelEdit();
-                        purchase_order.purchase_order_detail.Remove(e.Parameter as purchase_order_detail);
+                        PurchaseDB.db.purchase_order_detail.Remove(e.Parameter as purchase_order_detail);
                         purchase_orderpurchase_order_detailViewSource.View.Refresh();
                         // calculate_total(sender, e);
                     }

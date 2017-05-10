@@ -239,7 +239,7 @@
                 <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                 <TabControl>
                     <TabItem  Header="{lex:Loc Items}">
-                        <DataGrid x:Name="sales_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+                        <DataGrid x:Name="sales_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False"
                           ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailViewSource}}"
                           RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
@@ -307,7 +307,7 @@
                                     <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False"
                           ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}}"
                           RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
@@ -377,6 +377,7 @@
                        btnSave_Click="toolBar_btnSave_Click"
                        btnApprove_Click="btnApprove_Click"
                           btnAnull_Click="toolBar_btnAnull_Click"
+                       btnSearch_Click="Search_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

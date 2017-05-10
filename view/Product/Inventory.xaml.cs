@@ -477,6 +477,29 @@ namespace Cognitivo.Product
                 }
             }
         }
+        private void Search_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                item_inventoryViewSource.View.Filter = i =>
+                {
+                    item_inventory Inventory = i as item_inventory;
+                    string comment = Inventory.comment != null ? Inventory.comment: "";
+                 
+
+                    if (comment.ToLower().Contains(query.ToLower()))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                };
+            }
+            else
+            {
+                item_inventoryViewSource.View.Filter = null;
+            }
+        }
 
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

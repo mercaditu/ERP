@@ -140,7 +140,7 @@
                 </TabItem>
                 <TabItem Header="{lex:Loc Purchase}">
                     <Grid>
-                        <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                        <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserDeleteRows="False"
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                             <DataGrid.Columns>
@@ -183,7 +183,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <DataGrid  x:Name="impeximpex_expenseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
-                                       ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}"
+                                       ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}" CanUserDeleteRows="False"
                                        RowEditEnding="impeximpex_expenseDataGrid_RowEditEnding"
                                        RowDetailsVisibilityMode="VisibleWhenSelected" Margin="4">
                                 <DataGrid.Columns>
@@ -208,7 +208,7 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" Grid.Column="1"
+                            <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" Grid.Column="1" CanUserDeleteRows="False"
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4,4,4"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionChanged="productDataGrid_SelectionChanged">
                                 <DataGrid.Columns>

@@ -318,7 +318,7 @@
                     </Popup>
                 </StackPanel>
 
-                <DataGrid x:Name="purchase_order_detailDataGrid" Margin="0,55,0,0" AutoGenerateColumns="False" SelectionMode="Single"
+                <DataGrid x:Name="purchase_order_detailDataGrid" Margin="0,55,0,0" AutoGenerateColumns="False" SelectionMode="Single" CanUserDeleteRows="False"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 											   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
 						  RowDetailsVisibilityMode="Collapsed" CanUserAddRows="False"

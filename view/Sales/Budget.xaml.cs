@@ -68,7 +68,7 @@ namespace Cognitivo.Sales
 
         private void New_Click(object sender)
         {
-            sales_budget sales_budget = SalesBudgetDB.Create(new Settings().TransDate_Offset,false);
+            sales_budget sales_budget = SalesBudgetDB.Create(new Settings().TransDate_Offset, false);
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             SalesBudgetDB.db.sales_budget.Add(sales_budget);
@@ -105,9 +105,14 @@ namespace Cognitivo.Sales
             MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                SalesBudgetDB.db.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);
-                sales_budgetViewSource.View.MoveCurrentToFirst();
-                Save_Click(sender);
+                sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
+                if (sales_budget!=null)
+                {
+                    SalesBudgetDB.db.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);
+                    sales_budgetViewSource.View.MoveCurrentToFirst();
+                    Save_Click(sender);
+                }
+              
             }
         }
 
@@ -287,7 +292,7 @@ namespace Cognitivo.Sales
                     string Name = Budget.contact != null ? Budget.contact.name : "";
                     string Number = Budget.number != null ? Budget.number : "";
 
-                    if (Name.ToLower().Contains(query.ToLower()) && Number.ToLower().Contains(query.ToLower()))
+                    if (Name.ToLower().Contains(query.ToLower()) || Number.ToLower().Contains(query.ToLower()))
                     {
                         return true;
                     }
@@ -477,7 +482,7 @@ namespace Cognitivo.Sales
                     ///If there are pending or approved Orders, those quantities will be included inthe minus, and if those
                     ///values cause the Current Sales Order Detail to have 0 or negative quantities, then we cannot push it
                     ///into a new sales order.
-                    
+
                     if (sales_order_detail.quantity > 0)
                     {
                         sales_order.sales_order_detail.Add(sales_order_detail);

@@ -40,25 +40,25 @@ namespace Cognitivo.Menu
                 ModuleName = "Favorite"
             };
 
-            ////try
-            ////{
-            ////    entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+            try
+            {
+                entity.Brillo.Licence Licence = new entity.Brillo.Licence();
 
-            ////    using (db db = new db())
-            ////    {
-            ////        app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-            ////        security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-            ////        if (app_company != null)
-            ////        {
-            ////            Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, db.security_user.Where(x => x.security_role.version == security_user.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
-            ////            //Check current Role Version and see if limit is not exceeded.
-            ////            //If Exceded, figure out what to do. Maybe Message Box reduce automatically to lite???
-            ////            //If not continue without trouble.
-            ////        }
-            ////    }
-            ////}
-            ////catch {  }
-         
+                using (db db = new db())
+                {
+                    app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+                    if (app_company != null)
+                    {
+                        Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, db.security_user.Where(x => x.security_role.version == security_user.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
+                       // check current role version and see if limit is not exceeded.
+                       // if exceded, figure out what to do.maybe message box reduce automatically to lite ???
+                       //if not continue without trouble.
+                    }
+                }
+            }
+            catch { }
+
             get_Apps(Icon, null);
         }
 

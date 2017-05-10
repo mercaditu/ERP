@@ -116,7 +116,7 @@
                 <TabItem Header="{lex:Loc Sales}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <DataGrid x:Name="impex_ExportDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
-								  EnableRowVirtualization="True" Height="Auto"
+								  EnableRowVirtualization="True" Height="Auto" CanUserDeleteRows="False"
 								  RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding number}" Header="Invoice" Width="*" />
@@ -145,7 +145,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <DataGrid  x:Name="impeximpex_expenseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
-								  ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}"
+								  ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}" CanUserDeleteRows="False"
 								  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="4">
                                 <DataGrid.Columns>
 

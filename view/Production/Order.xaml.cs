@@ -617,6 +617,7 @@ namespace Cognitivo.Production
                         toolBar_btnAnull_Click(sender);
                     }
                 }
+                OrderDB.Initialize();
                 OrderDB.Load(production_order.ProductionOrderTypes.Production);
                 OrderDB.db.production_order.Where(a =>
                         a.id_company == CurrentSession.Id_Company &&

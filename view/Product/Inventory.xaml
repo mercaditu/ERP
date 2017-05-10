@@ -49,6 +49,7 @@
 					   btnNew_Click="toolBar_btnNew_Click"
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   appName="Inventory"
+                           btnSearch_Click="Search_Click"
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 						Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

@@ -84,7 +84,7 @@
 									VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue" />
                         </StackPanel>
                     </StackPanel>
-                    <DataGrid AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False"
+                    <DataGrid AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False" CanUserDeleteRows="False"
 							  VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True" EnableColumnVirtualization="True"
 							  ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">
                         <DataGrid.Columns>
@@ -635,7 +635,7 @@
                             <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" Margin="5,58,0,0" HorizontalAlignment="Left"
 									  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
 														   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
-									  CanUserAddRows="False"
+									  CanUserAddRows="False" CanUserDeleteRows="False"
 									  ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
 									  InitializingNewItem="Detail_InitializingNewItem"
 									  RowEditEnding="Detail_RowEditEnding"

@@ -215,7 +215,7 @@
             <Grid Grid.Row="1" Grid.ColumnSpan="2" IsEnabled="{Binding ElementName=pagePackingList, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
                 <TabControl>
                     <TabItem Header="{lex:Loc Items}">
-                        <DataGrid x:Name="purchase_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+                        <DataGrid x:Name="purchase_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
@@ -262,7 +262,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" />
-                            <DataGrid Grid.Column="2"
+                            <DataGrid Grid.Column="2" CanUserDeleteRows="False"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">

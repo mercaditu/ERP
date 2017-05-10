@@ -318,7 +318,7 @@ namespace Cognitivo.Sales
                 {
                     if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
                     {
-                        sales_invoice.sales_invoice_detail.Remove(sales_invoice_detail);
+                        SalesDB.db.sales_invoice_detail.Remove(sales_invoice_detail);
 
                         if (FindResource("sales_invoicesales_invoice_detailViewSource") is CollectionViewSource sales_invoicesales_invoice_detailViewSource)
                         {
@@ -333,7 +333,7 @@ namespace Cognitivo.Sales
                 {
                     if (paymentViewSource.View.CurrentItem is payment payment)
                     {
-                        payment.payment_detail.Remove(payment_detail);
+                        PaymentDB.db.payment_detail.Remove(payment_detail);
                         paymentViewSource.View.Refresh();
 
                         if (FindResource("paymentpayment_detailViewSource") is CollectionViewSource paymentpayment_detailViewSource)

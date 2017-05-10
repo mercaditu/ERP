@@ -158,7 +158,7 @@
                             <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="Item_Select"
                                                  QuantityIntegration="{Binding QuantityIntegration, Source={x:Static pref:Settings.Default}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                         </Viewbox>
-                        <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
+                        <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True" CanUserDeleteRows="False"
 						                    Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
 						                    ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
                                             Foreground="Black" CellStyle="{StaticResource DataGridCellStyle}">
@@ -323,7 +323,7 @@
                                 </Grid>
                             </StackPanel>
 
-                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16"
+                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16" CanUserDeleteRows="False"
 							ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="PaymentDetail_InitializingNewItem">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"

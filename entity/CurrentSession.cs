@@ -208,9 +208,7 @@ namespace entity
         {
             UserRole = Role;
             // Brillo.Licence Licence = new Brillo.Licence();
-
-
-
+            
             // string licensekey = "";
             //app_company app_company;
 
@@ -244,7 +242,10 @@ namespace entity
             //        Version = Versions.Lite;
             //    }
             //}
-         
+            
+            //Remvoe this code by Wednesday/Thursday
+
+            Version = Versions.Full;
 
             Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();

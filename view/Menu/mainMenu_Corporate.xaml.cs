@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using WPFLocalizeExtension.Extensions;
 using entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cognitivo.Menu
 {
@@ -40,31 +41,33 @@ namespace Cognitivo.Menu
                 ModuleName = "Favorite"
             };
 
-            try
-            {
-                entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-
-                using (db db = new db())
-                {
-                    app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                    security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-                    if (app_company != null)
-                    {
-                        Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, db.security_user.Where(x => x.security_role.version == security_user.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
-                       // check current role version and see if limit is not exceeded.
-                       // if exceded, figure out what to do.maybe message box reduce automatically to lite ???
-                       //if not continue without trouble.
-                    }
-                }
-            }
-            catch { }
-
             get_Apps(Icon, null);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             rootWindow = Window.GetWindow(this) as MainWindow;
+
+            Task taskCheckOnline = Task.Factory.StartNew(() => OnlineRegistration());
+        }
+
+        private void OnlineRegistration()
+        {
+            entity.Brillo.Licence Licence = new entity.Brillo.Licence();
+
+            using (db db = new db())
+            {
+                string Version = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).Select(x => x.version).FirstOrDefault();
+                security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+
+                if (string.IsNullOrEmpty(Version) == false && security_user != null)
+                {
+                    Licence.VerifyCompanyLicence(Version, (int)security_user.security_role.Version, db.security_user.Where(x => x.security_role.version == security_user.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
+                    // check current role version and see if limit is not exceeded.
+                    // if exceded, figure out what to do.maybe message box reduce automatically to lite ???
+                    //if not continue without trouble.
+                }
+            }
         }
 
         private void Add2Favorites(object sender, RoutedEventArgs e)

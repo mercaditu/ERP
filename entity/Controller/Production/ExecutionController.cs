@@ -82,19 +82,33 @@ namespace entity.Controller.Production
                                 }
                             }
                         }
-
-                        if (Type == production_order.ProductionOrderTypes.Fraction)
-                        {
-                            if (production_execution_detail != null && production_execution_detail.production_order_detail != null && production_execution_detail.production_order_detail.production_order != null && production_execution_detail.production_order_detail.production_order.app_document_range != null)
-                            {
-                                Brillo.Document.Start.Automatic(production_execution_detail, production_execution_detail.production_order_detail.production_order.app_document_range);
-                            }
-
-                        }
                         NumberOfRecords += 1;
                     }
                 }
             }
+
+            foreach (production_order_detail production_order_detail in db.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved))
+            {
+                production_order order = production_order_detail.production_order;
+                if (order != null)
+                {
+                    if (Type == production_order.ProductionOrderTypes.Fraction)
+                    {
+                        if (order != null && order.app_document_range != null)
+                        {
+                            Brillo.Document.Start.Automatic(order, order.app_document_range);
+                        }
+
+                    }
+                }
+                continue;
+            }
+
+            if (true)
+            {
+
+            }
+
 
             db.SaveChanges();
             return true;

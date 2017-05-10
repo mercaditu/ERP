@@ -107,8 +107,10 @@ namespace entity.Brillo.Document
             }
             else if (AppName == typeof(production_execution_detail).ToString() || BaseName == typeof(production_execution_detail).ToString())
             {
-                production_execution_detail production_execution_detail = (production_execution_detail)Document;
-                return ProductionExecutionDetail(production_execution_detail);
+                if ((production_order)Document != null)
+                {
+                    return ProductionExecutionDetail((production_order)Document);
+                }
             }
 
             return null;
@@ -697,30 +699,29 @@ namespace entity.Brillo.Document
 
             return reportDataSource;
         }
-        public ReportDataSource ProductionExecutionDetail(production_execution_detail production_execution_detail)
+        public ReportDataSource ProductionExecutionDetail(production_order production_order)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            List<production_execution_detail> Listproduction_execution_detail = new List<entity.production_execution_detail>();
-            Listproduction_execution_detail.Add(production_execution_detail);
-            reportDataSource.Value = Listproduction_execution_detail
+            //List<production_execution_detail> Listproduction_execution_detail = new List<entity.production_execution_detail>();
+            //Listproduction_execution_detail.Add(production_execution_detail);
+            reportDataSource.Value = production_order.production_order_detail
                 .Select(g => new
                 {
                     ProjectName = g.project_task != null ? g.project_task.project != null ? g.project_task.project.name : "" : "",
-                    Number = g.production_order_detail != null?g.production_order_detail.production_order != null ? g.production_order_detail.production_order.work_number : "":"",
+                    Number = g.production_order != null ? g.production_order.work_number :"",
                     Name = g.name,
-                    Line = g.production_order_detail != null ? g.production_order_detail.production_order != null ? g.production_order_detail.production_order.production_line != null ? g.production_order_detail.production_order.production_line.name : "" : "" : "",
-                    StartDate = g.start_date != null ? g.start_date.ToString() : "",
-                    EndDate = g.end_date != null ? g.end_date.ToString() : "",
+                    Line = g.production_order != null ? g.production_order.production_line != null ? g.production_order.production_line.name : "" : "" ,
+                    StartDate = g.production_execution_detail.FirstOrDefault() != null ? g.production_execution_detail.FirstOrDefault().start_date.ToString() : "",
+                    EndDate = g.production_execution_detail.LastOrDefault() != null ? g.production_execution_detail.LastOrDefault().end_date.ToString() : "",
                     item_input = g.parent != null ? g.parent.item != null ? g.parent.item.name : "" : "",
-                    item_input_quantity = g.quantity ,
-                    ParentDimension = g.parent != null ? g.parent.DimensionString:"",
+                    item_input_quantity = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Sum(x => x.quantity) : 0 ,
+                    ParentDimension = g.parent != null ? g.parent.production_execution_detail.Count() > 0 ? g.parent.production_execution_detail.FirstOrDefault().DimensionString : "" : "",
                     item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
-                    Dimension = g.DimensionString,
+                    Dimension = g.production_execution_detail.Count() > 0 ? g.parent.production_execution_detail.FirstOrDefault().DimensionString : "",
                     trans_date = g.trans_date,
-                    EmpName=g.contact!=null?g.contact.name:"",
-
-                    Hours =g.hours
+                    EmpName = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.FirstOrDefault().contact != null ? g.production_execution_detail.FirstOrDefault().contact.name : "" : "",
+                    Hours = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Sum(x => x.hours) : 0,
 
                 }).ToList();
 

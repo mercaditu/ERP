@@ -134,8 +134,14 @@ namespace Cognitivo
                     else
                     {
                         //Normal Login
-                        await db.app_company.Select(x => x.id_company).FirstOrDefaultAsync();
-                        MainWin.mainFrame.Navigate(new MainLogIn());
+                        if (db.app_company.Count() > 0)
+                        {
+                            MainWin.mainFrame.Navigate(new MainLogIn());
+                        }
+                        else //IF company count is zero, direct to MainSetup
+                        {
+                            MainWin.mainFrame.Navigate(new MainSetup());
+                        }
                     }
                 }
             }

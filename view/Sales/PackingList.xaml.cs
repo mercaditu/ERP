@@ -145,7 +145,7 @@ namespace Cognitivo.Sales
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                PackingListDB.purchase_packing.Remove((purchase_packing)sales_packingViewSource.View.CurrentItem);
+                PackingListDB.sales_packing.Remove((sales_packing)sales_packingViewSource.View.CurrentItem);
                 sales_packingViewSource.View.MoveCurrentToFirst();
                 toolBar_btnSave_Click(sender);
             }

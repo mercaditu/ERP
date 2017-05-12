@@ -41,7 +41,7 @@
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" IsReadOnly="False" />
                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date}" Width="75" IsReadOnly="True" />
                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number}" Width="128" IsReadOnly="True" />
                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, StringFormat={}{0:N}}"  Width="128" IsReadOnly="True" />

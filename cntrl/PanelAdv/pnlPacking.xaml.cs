@@ -42,7 +42,7 @@ namespace cntrl.PanelAdv
                 if (_contact != null)
                 {
                     sales_packingViewSource = (CollectionViewSource)Resources["sales_packingViewSource"];
-                    sales_packingViewSource.Source = _entity.sales_packing.Where(x => x.id_contact == _contact.id_contact).ToList();
+                    sales_packingViewSource.Source = _entity.sales_packing.Where(x => x.id_contact == _contact.id_contact && x.status==Status.Documents_General.Approved).ToList();
                 }
             }
         }

@@ -281,5 +281,16 @@ namespace Cognitivo.Menu
                 db.SaveChanges();
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
+
+            ProductMovementDB ProductMovementDB = new ProductMovementDB();
+            ProductMovementDB.ChangeBarcode_ProductMovement();
+            ProductMovementDB.SaveChanges();
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
+
+        }
     }
 }

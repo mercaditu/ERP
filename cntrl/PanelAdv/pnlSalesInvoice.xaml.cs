@@ -74,7 +74,9 @@ namespace cntrl.PanelAdv
                 x.id_contact == _contact.id_contact &&
                 x.status == Status.Documents_General.Approved
                 ).ToList();
-            sales_invoiceViewSource.Source = SalesList.Where(x => x.sales_invoice_detail.Where(y => y.Balance > 0).Count() > 0);
+            List<int> sales = SalesList.Where(x => x.sales_invoice_detail.Where(y => y.Balance > 0).Count() > 0).Select(x => x.id_sales_invoice).ToList();
+           
+            sales_invoiceViewSource.Source = db.sales_invoice.Where(x => sales.Contains(x.id_sales_invoice)).ToList();
         }
 
         private void sales_invocieDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)

@@ -134,6 +134,7 @@ namespace Cognitivo.Purchase
                     purchase_order.is_head = false;
                     purchase_order.State = EntityState.Deleted;
                     purchase_order.IsSelected = true;
+                    PurchaseDB.db.SaveChanges();
                 }
             }
             catch (Exception ex)

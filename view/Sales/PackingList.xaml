@@ -239,7 +239,7 @@
                 <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                 <TabControl>
                     <TabItem  Header="{lex:Loc Items}">
-                        <DataGrid x:Name="sales_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False"
+                        <DataGrid x:Name="sales_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False" Height="250"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
@@ -298,7 +298,7 @@
                                 <ColumnDefinition Width="21*" />
                             </Grid.ColumnDefinitions>
                             <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
-                                      VerticalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Auto" Height="250"
                                       AutoGenerateColumns="False" EnableRowVirtualization="True" SelectionChanged="GridVerifiedList_SelectionChanged"
                                       x:Name="GridVerifiedList" RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
@@ -308,8 +308,8 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                             <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                      CanUserDeleteRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                                      VerticalScrollBarVisibility="Auto"
+                                      CanUserDeleteRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="250"
+                                      CanUserAddRows="False"
                                       ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}}"
                                       RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>

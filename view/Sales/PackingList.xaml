@@ -291,7 +291,7 @@
                         </DataGrid>
                     </TabItem>
                     <TabItem  Header="{lex:Loc Approve}">
-                        <Grid>
+                        <Grid Height="200">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="119*" />
                                 <ColumnDefinition Width="158*" />
@@ -307,7 +307,8 @@
                                     <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False"
+                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                                      CanUserDeleteRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                                       VerticalScrollBarVisibility="Auto"
                                       ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}}"
                                       RowDetailsVisibilityMode="VisibleWhenSelected">

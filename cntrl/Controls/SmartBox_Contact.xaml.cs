@@ -33,7 +33,7 @@ namespace cntrl.Controls
             {
                 if (_CanCreate != value)
                 {
-                    _CanCreate = new entity.Brillo.Security(App.Names.Contact).create ? value : false;
+                    _CanCreate = new entity.Brillo.Security(App.Names.Contact).create;
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace cntrl.Controls
             {
                 if (_CanModify != value)
                 {
-                    _CanModify = new entity.Brillo.Security(App.Names.Contact).edit ? value : false;
+                    _CanModify = new entity.Brillo.Security(App.Names.Contact).edit;
                 }
             }
         }

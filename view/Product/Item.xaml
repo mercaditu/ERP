@@ -28,20 +28,20 @@
         <convert:TrueToFalseConverter x:Key="TrueToFalse" />
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem" />
         <convert:ItemProduct2VisibilityConverter x:Key="ItemProduct2VisibilityConverter" />
-        <convert:NumberFormat x:Key="Numberformatting" />
+        <!--<convert:NumberFormat x:Key="Numberformatting" />-->
         <Controller:ItemController x:Key="ItemDB"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSourcenew" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSourceconvert" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
-        <CollectionViewSource x:Key="app_propertyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_property}, CreateList=True}" />
+        <!--<CollectionViewSource x:Key="app_propertyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_property}, CreateList=True}" />-->
         <CollectionViewSource x:Key="app_dimentionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}" />
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}" />
         <CollectionViewSource x:Key="item_price_listViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_price_list}, CreateList=True}" />
         <CollectionViewSource x:Key="itemitem_priceViewSource" Source="{Binding item_price, Source={StaticResource itemViewSource}}" />
         <CollectionViewSource x:Key="itemitem_productViewSource" Source="{Binding item_product, Source={StaticResource itemViewSource}}" />
-        <CollectionViewSource x:Key="itemitem_propertyViewSource" Source="{Binding item_property, Source={StaticResource itemViewSource}}" />
+        <!--<CollectionViewSource x:Key="itemitem_propertyViewSource" Source="{Binding item_property, Source={StaticResource itemViewSource}}" />-->
         <CollectionViewSource x:Key="itemitem_serviceViewSource" Source="{Binding item_service, Source={StaticResource itemViewSource}}" />
         <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}" />
         <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}" />
@@ -49,7 +49,7 @@
         <CollectionViewSource x:Key="item_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_template}, CreateList=True}" />
         <CollectionViewSource x:Key="item_templateitem_template_detaildetailViewSource" Source="{Binding item_template_detail, Source={StaticResource item_templateViewSource}}" />
 
-        <CollectionViewSource x:Key="item_asset_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_group}, CreateList=True}" />
+        <!--<CollectionViewSource x:Key="item_asset_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_group}, CreateList=True}" />-->
         <CollectionViewSource x:Key="itemitem_dimentionViewSource" Source="{Binding item_dimension, Source={StaticResource itemViewSource}}" />
         <CollectionViewSource x:Key="itemitem_conversion_factorViewSource" Source="{Binding item_conversion_factor, Source={StaticResource itemitem_productViewSource}}" />
 

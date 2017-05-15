@@ -476,10 +476,8 @@ namespace Cognitivo.Purchase
                     {
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return false;
                 };
             }
             else

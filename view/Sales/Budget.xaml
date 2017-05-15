@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Sales.Budget" x:Name="SalesBudget" Title="{lex:Loc SalesBudget}"
+﻿<Page x:Class="Cognitivo.Sales.Budget" Title="{lex:Loc SalesBudget}"
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls" 
       Background="{StaticResource winBackground}"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -26,17 +26,14 @@
         <Salescontroller:BudgetController x:Key="SalesBudget"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
-        <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />
-        <converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <CollectionViewSource x:Key="sales_budgetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget},CreateList=True}" />
-        <CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
+        <!--<CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}" />
-
         <CollectionViewSource x:Key="contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}" />
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}" />
-        <CollectionViewSource x:Key="currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_budgetViewSource}}" />
+        <CollectionViewSource x:Key="currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_budgetViewSource}}" />-->
 
         <CollectionViewSource x:Key="sales_budgetsales_budget_detailViewSource" Source="{Binding sales_budget_detail, Source={StaticResource sales_budgetViewSource}}" />
         <CollectionViewSource x:Key="app_document_rangeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_document_range}, CreateList=True}" />

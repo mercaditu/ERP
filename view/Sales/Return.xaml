@@ -6,7 +6,7 @@
 	xmlns:entity="clr-namespace:entity;assembly=entity"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:customcmd="clr-namespace:Cognitivo.Class"
-	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+	xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	xmlns:Converter ="clr-namespace:Cognitivo.Converters"
 	xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	mc:Ignorable="d"
@@ -26,8 +26,8 @@
         <controller:ReturnController x:Key="SalesReturnDB"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <Converter:TrueToFalseConverter x:Key="TrueToFalse" />
-        <Converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />
-        <Converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
+        <!--<Converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />-->
+        <!--<Converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />-->
         <Converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />

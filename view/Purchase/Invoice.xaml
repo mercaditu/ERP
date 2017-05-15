@@ -6,7 +6,7 @@
 		xmlns:entity="clr-namespace:entity;assembly=entity"
 		xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	    xmlns:pref="clr-namespace:Cognitivo.Purchase"
-		xmlns:Class="clr-namespace:Cognitivo.Class"
+		xmlns:Clss="clr-namespace:Cognitivo.Class"
        xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
 		xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 		xmlns:converter="clr-namespace:Cognitivo.Converters"
@@ -17,22 +17,22 @@
 		lex:LocalizeDictionary.DesignCulture="en-US"
 		mc:Ignorable="d" MinHeight="670" MinWidth="700" Loaded="pageInvoice_Loaded">
     <Page.CommandBindings>
-        <CommandBinding x:Name="DeleteCommand" Command="Class:CustomCommands.Delete"
+        <CommandBinding x:Name="DeleteCommand" Command="Clss:CustomCommands.Delete"
 						CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
         <Controller:InvoiceController x:Key="PurchaseInvoice"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
-        <converter:Status2Enable x:Key="Status2Enable" />
+        <!--<converter:Status2Enable x:Key="Status2Enable" />-->
 
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
-        <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />
-        <converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
+        <!--<converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />-->
+        <!--<converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />-->
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_invoicepurchase_invoice_detailViewSource" Source="{Binding purchase_invoice_detail, Source={StaticResource purchase_invoiceViewSource}}" />
         <CollectionViewSource x:Key="purchase_invoice_detailpurchase_invoice_dimensionViewSource" Source="{Binding purchase_invoice_dimension, Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" />
-        <CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}" />
+        <!--<CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}" />-->
         <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}" />
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />

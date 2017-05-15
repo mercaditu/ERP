@@ -4,9 +4,9 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:entity="clr-namespace:entity;assembly=entity" 
-      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
-      x:Class="Cognitivo.Purchase.Return"
-         xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
+    xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+    x:Class="Cognitivo.Purchase.Return"
+    xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
 	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	xmlns:pref="clr-namespace:Cognitivo.Purchase"
@@ -29,8 +29,8 @@
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_returnpurchase_return_detailViewSource" Source="{Binding purchase_return_detail, Source={StaticResource purchase_returnViewSource}}" />
-        <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
-        <CollectionViewSource x:Key="currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource purchase_returnViewSource}}" />
+        <!--<CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />-->
+        <!--<CollectionViewSource x:Key="currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource purchase_returnViewSource}}" />-->
         <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}" />
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}" />
     </Page.Resources>

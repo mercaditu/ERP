@@ -214,7 +214,7 @@
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
 
                                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
-                                    <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"
+                                    <DatePicker x:Name="dtpTrans_Date" 
 												metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 												metro:ControlsHelper.MouseOverBorderBrush="Silver"
 												SelectedDate="{Binding trans_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />

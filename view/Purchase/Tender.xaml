@@ -36,7 +36,7 @@
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_item_detailViewSource" Source="{Binding purchase_tender_detail, Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}" />
         <CollectionViewSource x:Key="purchase_tender_detail_dimensionViewSource" Source="{Binding purchase_tender_detail_dimension, Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" />
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_itemViewSource" Source="{Binding purchase_tender_item_detail, Source={StaticResource purchase_tenderViewSource}}" />
-        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
+        <!--<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />-->
         <CollectionViewSource x:Key="app_conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}" />
         <CollectionViewSource x:Key="app_contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}" />
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}" />

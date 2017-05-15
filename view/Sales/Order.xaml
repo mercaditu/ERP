@@ -14,11 +14,9 @@
 	  mc:Ignorable="d" MinHeight="600" MinWidth="800"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
-      
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
 	  Loaded="Page_Loaded">
-
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
@@ -26,8 +24,8 @@
         <Controller:OrderController x:Key="SalesOrder"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
-        <converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />
-        <converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />
+        <!--<converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />-->
+        <!--<converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />-->
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}" />

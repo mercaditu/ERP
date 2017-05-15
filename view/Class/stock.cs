@@ -35,7 +35,7 @@ namespace Cognitivo.Class
                              brand.name as Brand,
                                  mov.code as BatchCode,
                                  mov.expire_date as ExpiryDate,
-                                mov.id_movement as MovementID
+                        mov.id_movement as MovementID
                              from item_movement as mov
                              inner join app_location as loc on mov.id_location = loc.id_location
                              inner join app_branch as branch on loc.id_branch = branch.id_branch
@@ -65,8 +65,8 @@ namespace Cognitivo.Class
                                 im.expire_date as ExpiryDate,
                                 im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
                                 measure.name as Measurement,
-                                im.id_movement as MovementID,
-                                (select sum(unit_value) from item_movement_value where id_movement = im.id_movement) as Cost
+im.id_movement as MovementID,
+                                sum(imv.unit_value) as Cost
 
                                 from item_movement as im
 
@@ -93,8 +93,7 @@ namespace Cognitivo.Class
                                  (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost,
                                  mov.code as BatchCode,
                                  mov.expire_date as ExpiryDate,
-                                 mov.id_movement as MovementID
-
+                                    mov.id_movement as MovementID
                                  from item_movement as mov
 
                                  inner join app_location as loc on mov.id_location = loc.id_location

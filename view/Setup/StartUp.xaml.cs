@@ -268,8 +268,8 @@ namespace Cognitivo.Menu
                                 x.id_item_product == item_product.id_item_product &&
                                 (x.credit - x.child.Sum(y => y.debit)) > 0 &&
                                 x.item_movement_value.Sum(y => y.unit_value) > 0)
-                                .OrderByDescending(x => x.trans_date)
-                                .Include(x => x.item_movement_value).LastOrDefault();
+                                .OrderBy(x => x.trans_date)
+                                .Include(x => x.item_movement_value).FirstOrDefault();
 
                         if (item_movement != null)
                         {

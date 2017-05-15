@@ -187,33 +187,35 @@ namespace cntrl
         {
             this.reportViewer.Reset();
 
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Syncfusion.Windows.Reports.ReportDataSource reportDataSource1 = new Syncfusion.Windows.Reports.ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
-            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportViewer.DataSources.Add(reportDataSource1);
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
             // translate the report
             reportStream = RdlcReportHelper.TranslateReport(reportStream);
-            reportViewer.LocalReport.LoadReportDefinition(reportStream);
+            reportViewer.LoadReport(reportStream);
 
-            Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter()
+            Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter()
             {
                 Name = "ParameterCost"
             };
 
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
 
-            Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter()
+            Syncfusion.Windows.Reports.ReportParameter Parameters = new Syncfusion.Windows.Reports.ReportParameter()
             {
                 Name = "Parameters"
             };
 
             Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
-
-            reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
+            List<Syncfusion.Windows.Reports.ReportParameter> parametersList = new List<Syncfusion.Windows.Reports.ReportParameter>();
+            parametersList.Add(Parameters);
+            parametersList.Add(ParametersCost);
+            reportViewer.SetParameters(parametersList);
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();
@@ -223,7 +225,7 @@ namespace cntrl
         {
             reportViewer.Reset();
 
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Syncfusion.Windows.Reports.ReportDataSource reportDataSource1 = new Syncfusion.Windows.Reports.ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
             if (Report.Parameters.Where(x => x == Class.Report.Types.Project).Count() > 0)
@@ -276,26 +278,31 @@ namespace cntrl
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 
-            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportViewer.DataSources.Add(reportDataSource1);
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
-
             // translate the report
-            if (reportStream != null)
+            reportStream = RdlcReportHelper.TranslateReport(reportStream);
+            reportViewer.LoadReport(reportStream);
+
+            Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter()
             {
-                reportStream = RdlcReportHelper.TranslateReport(reportStream);
-                reportViewer.LocalReport.LoadReportDefinition(reportStream);
-            }
+                Name = "ParameterCost"
+            };
 
-            Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter();
-            ParametersCost.Name = "ParameterCost";
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
-            Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter();
-            Parameters.Name = "Parameters";
-            Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
-            reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
-            
+            Syncfusion.Windows.Reports.ReportParameter Parameters = new Syncfusion.Windows.Reports.ReportParameter()
+            {
+                Name = "Parameters"
+            };
+
+            Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
+            List<Syncfusion.Windows.Reports.ReportParameter> parametersList = new List<Syncfusion.Windows.Reports.ReportParameter>();
+            parametersList.Add(Parameters);
+            parametersList.Add(ParametersCost);
+            reportViewer.SetParameters(parametersList);
+
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }

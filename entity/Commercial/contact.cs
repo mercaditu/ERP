@@ -79,10 +79,14 @@ namespace entity
             contact_subscription = new List<contact_subscription>();
             item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
             hr_contract = new List<hr_contract>();
+            hr_position = new List<hr_position>();
             hr_education = new List<hr_education>();
             hr_timesheet = new List<hr_timesheet>();
             hr_family = new List<hr_family>();
             hr_talent_detail = new List<hr_talent_detail>();
+            item_asset = new List<item_asset>();
+            item_brand = new List<item_brand>();
+            item_transfer = new List<item_transfer>();
             contact_field_value = new List<contact_field_value>();
         }
 
@@ -165,7 +169,7 @@ namespace entity
         public string email { get; set; }
         public string address { get; set; }
         public decimal? credit_limit { get; set; }
-        
+
         public int? lead_time { get; set; }
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }

@@ -283,8 +283,9 @@ namespace cntrl
             Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
             // translate the report
             reportStream = RdlcReportHelper.TranslateReport(reportStream);
+            reportViewer.ProcessingMode = Syncfusion.Windows.Reports.Viewer.ProcessingMode.Local;
             reportViewer.LoadReport(reportStream);
-
+          
             Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter()
             {
                 Name = "ParameterCost"

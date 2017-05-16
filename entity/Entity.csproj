@@ -485,9 +485,6 @@
     <Compile Include="Purchase\purchase_tender_dimension.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ReportDesigner.xaml.cs">
-      <DependentUpon>ReportDesigner.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\ContactSubscription.cs" />
     <Compile Include="Reporting\Inventory.cs" />
     <Compile Include="Reporting\PaymentsReceivable.cs" />
@@ -813,10 +810,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="DocumentViewr.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ReportDesigner.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

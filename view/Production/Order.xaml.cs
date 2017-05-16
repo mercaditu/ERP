@@ -500,7 +500,7 @@ namespace Cognitivo.Production
         private void btnNewTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
-            stackQuantity.IsEnabled = true;
+            stpitem.IsEnabled = true;
 
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order_detail production_order_detail = treeProject.SelectedItem as production_order_detail;
@@ -555,7 +555,7 @@ namespace Cognitivo.Production
                 }
                 else
                 {
-                    stackQuantity.IsEnabled = true;
+                    stpitem.IsEnabled = true;
                     stpcode.IsEnabled = true;
                 }
             }
@@ -571,7 +571,7 @@ namespace Cognitivo.Production
                     production_order.State = EntityState.Modified;
                     Update_Logistics();
                     stpcode.IsEnabled = false;
-                    stackQuantity.IsEnabled = false;
+                    stpitem.IsEnabled = false;
 
                     toolBar.msgSaved(OrderDB.NumberOfRecords);
                 }
@@ -647,12 +647,12 @@ namespace Cognitivo.Production
                 if (Item_Type == item.item_type.Task)
                 {
                     stpdate.Visibility = Visibility.Visible;
-                    stackQuantity.Visibility = Visibility.Collapsed;
+                    stpitem.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     stpdate.Visibility = Visibility.Collapsed;
-                    stackQuantity.Visibility = Visibility.Visible;
+                    stpitem.Visibility = Visibility.Visible;
                 }
             }
         }

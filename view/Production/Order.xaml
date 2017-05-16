@@ -220,7 +220,7 @@
 													SelectedDate="{Binding end_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                         </StackPanel>
 
-                                        <StackPanel x:Name="stpitem" Visibility="Collapsed">
+                                        <StackPanel x:Name="stpitem" >
                                             <Label IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}"
                                                 Content="{lex:Loc Quantity}" Style="{StaticResource input_label}" />
                                             <TextBox IsEnabled="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}"

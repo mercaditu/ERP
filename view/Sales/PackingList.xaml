@@ -331,7 +331,7 @@
                                         <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
-                                                <StackPanel>
+                                                <StackPanel Width="250">
                                                     <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                                     <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
                                                 </StackPanel>

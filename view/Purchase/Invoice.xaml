@@ -472,7 +472,7 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="Class:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}" />
+                                <Button Command="Clss:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

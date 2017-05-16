@@ -66,7 +66,7 @@ namespace Cognitivo.Class
                                 im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
                                 measure.name as Measurement,
 im.id_movement as MovementID,
-                                sum(imv.unit_value) as Cost
+(select sum(unit_value) from item_movement_value where id_movement = im.id_movement) as Cost
 
                                 from item_movement as im
 

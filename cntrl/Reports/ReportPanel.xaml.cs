@@ -187,35 +187,33 @@ namespace cntrl
         {
             this.reportViewer.Reset();
 
-            Syncfusion.Windows.Reports.ReportDataSource reportDataSource1 = new Syncfusion.Windows.Reports.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
-            reportViewer.DataSources.Add(reportDataSource1);
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
             // translate the report
             reportStream = RdlcReportHelper.TranslateReport(reportStream);
-            reportViewer.LoadReport(reportStream);
+            reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
-            Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter()
+            Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter()
             {
                 Name = "ParameterCost"
             };
 
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
 
-            Syncfusion.Windows.Reports.ReportParameter Parameters = new Syncfusion.Windows.Reports.ReportParameter()
+            Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter()
             {
                 Name = "Parameters"
             };
 
             Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
-            List<Syncfusion.Windows.Reports.ReportParameter> parametersList = new List<Syncfusion.Windows.Reports.ReportParameter>();
-            parametersList.Add(Parameters);
-            parametersList.Add(ParametersCost);
-            reportViewer.SetParameters(parametersList);
+
+            reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();
@@ -225,7 +223,7 @@ namespace cntrl
         {
             reportViewer.Reset();
 
-            Syncfusion.Windows.Reports.ReportDataSource reportDataSource1 = new Syncfusion.Windows.Reports.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
             if (Report.Parameters.Where(x => x == Class.Report.Types.Project).Count() > 0)
@@ -278,36 +276,30 @@ namespace cntrl
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
 
-            reportViewer.DataSources.Add(reportDataSource1);
+            reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream reportStream = assembly.GetManifestResourceStream(Report.Path);
+
             // translate the report
-            reportStream = RdlcReportHelper.TranslateReport(reportStream);
-            reportViewer.ProcessingMode = Syncfusion.Windows.Reports.Viewer.ProcessingMode.Local;
-            reportViewer.LoadReport(reportStream);
-          
-            Syncfusion.Windows.Reports.ReportParameter ParametersCost = new Syncfusion.Windows.Reports.ReportParameter()
+            if (reportStream != null)
             {
-                Name = "ParameterCost"
-            };
+                reportStream = RdlcReportHelper.TranslateReport(reportStream);
+                reportViewer.LocalReport.LoadReportDefinition(reportStream);
+            }
 
+            Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter();
+            ParametersCost.Name = "ParameterCost";
             ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
-
-            Syncfusion.Windows.Reports.ReportParameter Parameters = new Syncfusion.Windows.Reports.ReportParameter()
-            {
-                Name = "Parameters"
-            };
-
+            Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter();
+            Parameters.Name = "Parameters";
             Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
-            List<Syncfusion.Windows.Reports.ReportParameter> parametersList = new List<Syncfusion.Windows.Reports.ReportParameter>();
-            parametersList.Add(Parameters);
-            parametersList.Add(ParametersCost);
-            reportViewer.SetParameters(parametersList);
+
+            reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
 
             reportViewer.Refresh();
             reportViewer.RefreshReport();
         }
-        
+
         public ReportPanel()
         {
             InitializeComponent();
@@ -319,7 +311,7 @@ namespace cntrl
             Generate.GenerateReportList();
 
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Reports\\" + ApplicationName + "\\";
-            
+
             foreach (var Report in Generate.ReportList.Where(x => x.Application == ApplicationName).ToList())
             {
                 //Check if Report exists in Path.
@@ -357,7 +349,7 @@ namespace cntrl
 
         private void Report_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ReportList.SelectedItem!=null)
+            if (ReportList.SelectedItem != null)
             {
                 Fill();
             }

@@ -104,22 +104,37 @@ namespace Cognitivo.Production
             production_order _production_order = (production_order)production_orderDataGrid.SelectedItem;
             if ((_production_order.work_number == null || _production_order.work_number == string.Empty) && _production_order.id_range > 0)
             {
-                if (_production_order.id_branch > 0)
-                {
-                    entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == _production_order.id_branch).FirstOrDefault().code;
-                }
+				if (_production_order.id_branch > 0)
+				{
+					entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == _production_order.id_branch).FirstOrDefault().code;
+				}
+				else
+				{
+					entity.Brillo.Logic.Range.branch_Code = "";
+				}
                 if (_production_order.id_terminal > 0)
                 {
                     entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == _production_order.id_terminal).FirstOrDefault().code;
                 }
-				
+				else
+				{
+					entity.Brillo.Logic.Range.terminal_Code = "";
+				}
 				if (_production_order.id_user>0)
 				{
 					entity.Brillo.Logic.Range.user_Code = OrderDB.db.security_user.Where(x => x.id_user == _production_order.id_user).Select(x => x.code).FirstOrDefault();
 				}
+				else
+				{
+					entity.Brillo.Logic.Range.user_Code = "";
+				}
 				if (_production_order.id_project>0)
 				{
 					entity.Brillo.Logic.Range.project_Code = OrderDB.db.projects.Where(x => x.id_project == _production_order.id_project).Select(x => x.code).FirstOrDefault();
+				}
+				else
+				{
+					entity.Brillo.Logic.Range.project_Code = "";
 				}
 
 				app_document_range app_document_range = OrderDB.db.app_document_range.Where(x => x.id_range == _production_order.id_range).FirstOrDefault();

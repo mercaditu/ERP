@@ -115,7 +115,10 @@ namespace entity.Brillo.Logic
                                       ||
                                     (
                                     x.app_document.filterby_branch == true &&
-                                    x.id_branch == BranchID &&
+                                    x.id_branch == BranchID
+                                    )
+                                     ||
+                                    (
                                     x.app_document.filterby_tearminal == true &&
                                     x.id_terminal == TerminalID
                                     ))

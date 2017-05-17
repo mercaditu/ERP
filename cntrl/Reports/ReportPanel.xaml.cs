@@ -362,7 +362,7 @@ namespace cntrl
 
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
-            Fill();
+            //Fill();
             RefreshPanel = false;
             string filter = "";
 
@@ -398,7 +398,8 @@ namespace cntrl
                     }
                 }
             }
-
+             if (ReportDt.!=null)
+            {
             if (ReportDt.Rows.Count > 0)
             {
                 if (ReportDt.Select(filter).Any())
@@ -408,6 +409,7 @@ namespace cntrl
             }
 
             Filter();
+}
         }
 
         private void Filter_Cancel(object sender, RoutedEventArgs e)

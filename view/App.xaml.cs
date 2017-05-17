@@ -36,7 +36,7 @@ namespace Cognitivo
         private void HotkeyPressed(object sender, ExecutedRoutedEventArgs e)
         {
             //Code To Affect Current Window Only
-            Menu.ApplicationWindow AppWin = Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive && x.Name == "winApplicationWindow") as Menu.ApplicationWindow;
+            Menu.ApplicationWindow AppWin = Current.MainWindow as Menu.ApplicationWindow;
             if (AppWin != null)
             {
                 System.Windows.Controls.Page contentPage = AppWin.mainFrame.Content as System.Windows.Controls.Page;

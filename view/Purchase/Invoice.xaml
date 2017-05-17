@@ -7,7 +7,7 @@
 		xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	    xmlns:pref="clr-namespace:Cognitivo.Purchase"
 		xmlns:Clss="clr-namespace:Cognitivo.Class"
-       xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
+        xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
 		xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 		xmlns:converter="clr-namespace:Cognitivo.Converters"
 		xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -83,6 +83,8 @@
                     <DatePicker x:Name="trans_dateDatePicker" Style="{StaticResource input_datepicker}"
 								SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true,
 								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                    <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                     <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}" />
                     <AdornerDecorator>
                         <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"

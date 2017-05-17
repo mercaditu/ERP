@@ -71,19 +71,19 @@ namespace entity
 
                                 if (db.app_branch.Where(x => x.id_branch == id_branch).Any())
                                 {
-                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
+                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).Select(x => x.code).FirstOrDefault();
                                 }
                                 if (db.app_terminal.Where(x => x.id_terminal == id_terminal).Any())
                                 {
-                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).Select(x => x.code).FirstOrDefault();
                                 }
                                 if (db.security_user.Where(x => x.id_user == id_user).Any())
                                 {
-                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).Select(x => x.code).FirstOrDefault();
                                 }
                                 if (db.projects.Where(x => x.id_project == id_project).Any())
                                 {
-                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).Select(x => x.code).FirstOrDefault();
                                 }
 
                                 NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);

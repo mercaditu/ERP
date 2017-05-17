@@ -112,8 +112,17 @@ namespace Cognitivo.Production
                 {
                     entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == _production_order.id_terminal).FirstOrDefault().code;
                 }
+				
+				if (_production_order.id_user>0)
+				{
+					entity.Brillo.Logic.Range.user_Code = OrderDB.db.security_user.Where(x => x.id_user == _production_order.id_user).Select(x => x.code).FirstOrDefault();
+				}
+				if (_production_order.id_project>0)
+				{
+					entity.Brillo.Logic.Range.project_Code = OrderDB.db.projects.Where(x => x.id_project == _production_order.id_project).Select(x => x.code).FirstOrDefault();
+				}
 
-                app_document_range app_document_range = OrderDB.db.app_document_range.Where(x => x.id_range == _production_order.id_range).FirstOrDefault();
+				app_document_range app_document_range = OrderDB.db.app_document_range.Where(x => x.id_range == _production_order.id_range).FirstOrDefault();
                 _production_order.work_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                 _production_order.RaisePropertyChanged("work_number");
             }

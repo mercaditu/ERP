@@ -7,9 +7,27 @@ using System.Windows;
 
 namespace entity.Controller.Sales
 {
-    public class InvoiceController : Base
-    {
-        public Brillo.Promotion.Start Promotions { get; set; }
+    public class InvoiceController : Base, IDisposable
+	{
+		public void Dispose()
+		{
+			// Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (this != null)
+			{
+				if (disposing)
+				{
+					this.Dispose();
+					// Dispose other managed resources.
+				}
+				//release unmanaged resources.
+			}
+		}
+		public Brillo.Promotion.Start Promotions { get; set; }
 
         #region Properties
 

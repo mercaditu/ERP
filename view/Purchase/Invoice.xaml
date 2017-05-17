@@ -88,9 +88,7 @@
                         <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"
 											   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </AdornerDecorator>
-                    <Label Content="{lex:Loc InvoiceNumber}" Style="{StaticResource input_label}" />
-                    <TextBox Style="{StaticResource input_textbox}" LostFocus="btnInvoiceNumber_LostFocus"
-						 Text="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                  
                     <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
                     <AdornerDecorator>
                         <ComboBox  Style="{StaticResource input_combobox}" x:Name="cbxCondition"

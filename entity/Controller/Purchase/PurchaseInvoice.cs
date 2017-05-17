@@ -5,9 +5,27 @@ using System.Linq;
 
 namespace entity.Controller.Purchase
 {
-    public class InvoiceController: Base
+    public class InvoiceController: Base,IDisposable
     {
-        public async void Load()
+		public void Dispose()
+		{
+			// Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (this != null)
+			{
+				if (disposing)
+				{
+					this.Dispose();
+					// Dispose other managed resources.
+				}
+				//release unmanaged resources.
+			}
+		}
+		public async void Load()
         {
             await db.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch && a.is_archived == false)
                 .Include(x => x.contact)

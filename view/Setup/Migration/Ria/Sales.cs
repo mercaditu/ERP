@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using entity.Controller.Sales;
 
 namespace Cognitivo.Setup.Migration
 {
@@ -78,21 +79,21 @@ namespace Cognitivo.Setup.Migration
             {
                 for (int i = FloorValue; i < j; i++)
                 {
-                    using (SalesInvoiceDB db = new SalesInvoiceDB())
+                    using (InvoiceController InvoiceController = new InvoiceController())
                     {
-                        db.Configuration.AutoDetectChangesEnabled = false;
+                        InvoiceController.db.Configuration.AutoDetectChangesEnabled = false;
 
-                        List<entity.app_vat_group> VATGroupList = db.app_vat_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.contact> ContactList = db.contacts.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.sales_rep> sales_repList = db.sales_rep.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_branch> BranchList = db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_location> LocationList = db.app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_terminal> TerminalList = db.app_terminal.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.item> ItemList = db.items.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_currencyfx> app_currencyfxList = db.app_currencyfx.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.app_vat_group> VATGroupList = InvoiceController.db.app_vat_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.contact> ContactList = InvoiceController.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.sales_rep> sales_repList = InvoiceController.db.sales_rep.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.app_branch> BranchList = InvoiceController.db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.app_location> LocationList = InvoiceController.db.app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.app_terminal> TerminalList = InvoiceController.db.app_terminal.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.item> ItemList = InvoiceController.db.items.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                        List<entity.app_currencyfx> app_currencyfxList = InvoiceController.db.app_currencyfx.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-                        app_condition app_conditionCrédito = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
-                        app_condition app_conditionContado = db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
+                        app_condition app_conditionCrédito = InvoiceController.db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
+                        app_condition app_conditionContado = InvoiceController.db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
                         app_currencyfx app_currencyfx = null;
                         if (app_currencyfxList.Where(x => x.is_active).FirstOrDefault() != null)
                         {
@@ -138,7 +139,7 @@ namespace Cognitivo.Setup.Migration
                                 //Contract...
 
                                 app_contract_detail app_contract_detail =
-                                    db.app_contract_detail.Where(x => x.id_company == id_company &&
+                                    InvoiceController.db.app_contract_detail.Where(x => x.id_company == id_company &&
                                     x.app_contract.id_condition == app_conditionContado.id_condition)
                                         .FirstOrDefault();
 
@@ -150,7 +151,7 @@ namespace Cognitivo.Setup.Migration
                                 else
                                 {
                                     app_contract app_contract = GenerateDefaultContrat(app_conditionContado, 0);
-                                    db.app_contract.Add(app_contract);
+                                    InvoiceController.db.app_contract.Add(app_contract);
                                     sales_invoice.app_contract = app_contract;
                                     sales_invoice.id_contract = app_contract.id_contract;
                                 }
@@ -166,7 +167,7 @@ namespace Cognitivo.Setup.Migration
                                     int interval = (_due_date - sales_invoice.trans_date).Days;
 
                                     app_contract_detail app_contract_detail =
-                                        db.app_contract_detail.Where(x =>
+                                        InvoiceController.db.app_contract_detail.Where(x =>
                                             x.app_contract.id_condition == sales_invoice.id_condition &&
                                             x.app_contract.id_company == id_company &&
                                             x.interval == interval).FirstOrDefault();
@@ -179,23 +180,23 @@ namespace Cognitivo.Setup.Migration
                                     else
                                     {
                                         app_contract app_contract = GenerateDefaultContrat(app_conditionCrédito, interval);
-                                        db.app_contract.Add(app_contract);
+                                        InvoiceController.db.app_contract.Add(app_contract);
                                         sales_invoice.app_contract = app_contract;
                                         sales_invoice.id_contract = app_contract.id_contract;
                                     }
                                 }
                                 else
                                 {
-                                    if (db.app_contract.Where(x => x.name == "0 Días").Count() == 0)
+                                    if (InvoiceController.db.app_contract.Where(x => x.name == "0 Días").Count() == 0)
                                     {
                                         app_contract app_contract = GenerateDefaultContrat(app_conditionCrédito, 0);
-                                        db.app_contract.Add(app_contract);
+                                        InvoiceController.db.app_contract.Add(app_contract);
                                         sales_invoice.app_contract = app_contract;
                                         sales_invoice.id_contract = app_contract.id_contract;
                                     }
                                     else
                                     {
-                                        app_contract app_contract = db.app_contract.Where(x => x.name == "0 Días").FirstOrDefault();
+                                        app_contract app_contract = InvoiceController.db.app_contract.Where(x => x.name == "0 Días").FirstOrDefault();
                                         sales_invoice.app_contract = app_contract;
                                         sales_invoice.id_contract = app_contract.id_contract;
                                     }
@@ -205,16 +206,16 @@ namespace Cognitivo.Setup.Migration
                             {
                                 sales_invoice.id_condition = app_conditionContado.id_condition;
 
-                                if (db.app_contract.Where(x => x.name == "0 Días").Count() == 0)
+                                if (InvoiceController.db.app_contract.Where(x => x.name == "0 Días").Count() == 0)
                                 {
                                     app_contract app_contract = GenerateDefaultContrat(app_conditionContado, 0);
-                                    db.app_contract.Add(app_contract);
+                                    InvoiceController.db.app_contract.Add(app_contract);
                                     sales_invoice.app_contract = app_contract;
                                     sales_invoice.id_contract = app_contract.id_contract;
                                 }
                                 else
                                 {
-                                    app_contract app_contract = db.app_contract.Where(x => x.name == "0 Días").FirstOrDefault();
+                                    app_contract app_contract = InvoiceController.db.app_contract.Where(x => x.name == "0 Días").FirstOrDefault();
                                     sales_invoice.app_contract = app_contract;
                                     sales_invoice.id_contract = app_contract.id_contract;
                                 }
@@ -322,7 +323,7 @@ namespace Cognitivo.Setup.Migration
                             {
                                 sales_invoice.State = EntityState.Added;
                                 sales_invoice.IsSelected = true;
-                                db.sales_invoice.Add(sales_invoice);
+                                InvoiceController.db.sales_invoice.Add(sales_invoice);
 
                                 if (!(InnerRow["ESTADO"] is DBNull))
                                 {
@@ -334,13 +335,13 @@ namespace Cognitivo.Setup.Migration
                                     }
                                     else if (status == 1)
                                     {
-                                        db.Approve();
+                                        InvoiceController.Approve();
                                         
                                         sales_invoice.State = EntityState.Modified;
                                         sales_invoice.status = Status.Documents_General.Approved;
                                         sales_invoice.IsSelected = true;
 
-                                        add_paymnet_detail(db, sales_invoice, InnerRow["SALDOCUOTA"], InnerRow["IMPORTE"]);
+                                        add_paymnet_detail(InvoiceController.db, sales_invoice, InnerRow["SALDOCUOTA"], InnerRow["IMPORTE"]);
                                     }
                                     else if (status == 2)
                                     {
@@ -352,7 +353,7 @@ namespace Cognitivo.Setup.Migration
                                         }
                                     }
 
-                                    db.SaveChanges();
+                                    InvoiceController.db.SaveChanges();
                                     sales_invoice.IsSelected = false;
                                 }
                             }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
+using entity.Controller.Purchase;
 
 namespace Cognitivo.Setup.Migration
 {
@@ -66,15 +67,32 @@ namespace Cognitivo.Setup.Migration
             conn.Open();
             cmd.CommandType = CommandType.Text;
             DataTable dt_purchase = exeDT(sql);
-            //SqlDataReader reader = cmd.ExecuteReader();
+			//SqlDataReader reader = cmd.ExecuteReader();
 
-            foreach (DataRow purchaserow in dt_purchase.Rows)
+			//Sales Invoice Detail
+			string sqlDetail = "SELECT"
+			+ " dbo.PRODUCTOS.DESPRODUCTO as ITEM_DESPRODUCTO," //0
+			+ " dbo.COMPRASDETALLE.DESPRODUCTO," //1
+			+ " dbo.COMPRASDETALLE.CANTIDADCOMPRA, " //2
+			+ " dbo.COMPRASDETALLE.COSTOUNITARIO, " //3
+			+ " dbo.COMPRASDETALLE.IVA, " //4
+			+ " dbo.COMPRAS.COTIZACION1, " //5
+			+ " dbo.MONEDA.DESMONEDA " //6
+			+ " FROM dbo.COMPRAS LEFT OUTER JOIN"
+			+ " dbo.MONEDA ON dbo.COMPRAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
+			+ " dbo.COMPRASDETALLE ON dbo.COMPRAS.CODCOMPRA = dbo.COMPRASDETALLE.CODCOMPRA LEFT OUTER JOIN"
+			+ " dbo.PRODUCTOS ON dbo.COMPRASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO";
+			
+
+			DataTable dt = exeDT(sqlDetail);
+
+			foreach (DataRow purchaserow in dt_purchase.Rows)
             {
-                using (PurchaseInvoiceDB db = new PurchaseInvoiceDB())
+                using (InvoiceController InvoiceController = new InvoiceController())
                 {
-                    db.Configuration.AutoDetectChangesEnabled = false;
+                    InvoiceController.db.Configuration.AutoDetectChangesEnabled = false;
 
-                    purchase_invoice purchase_invoice = db.New(0);
+                    purchase_invoice purchase_invoice = InvoiceController.Create(0);
 
                     purchase_invoice.number = purchaserow["NUMCOMPRA"] is DBNull ? null : purchaserow["NUMCOMPRA"].ToString();
                     if (!(purchaserow["FECHACOMPRA"] is DBNull))
@@ -90,7 +108,7 @@ namespace Cognitivo.Setup.Migration
                     if (!(purchaserow["NOMBRE"] is DBNull))
                     {
                         string _customer = purchaserow["NOMBRE"].ToString();
-                        contact contact = db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
+                        contact contact = InvoiceController.db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
                         purchase_invoice.contact = contact;
                         purchase_invoice.id_contact = contact.id_contact;
                     }
@@ -98,11 +116,11 @@ namespace Cognitivo.Setup.Migration
                     //Condition (Cash or Credit)
                     if (!(purchaserow["MODALIDADPAGO"] is DBNull) && Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 0)
                     {
-                        app_condition app_condition = db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
+                        app_condition app_condition = InvoiceController.db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
                         purchase_invoice.id_condition = app_condition.id_condition;
                         //Contract...
 
-                        app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company).FirstOrDefault();
+                        app_contract_detail app_contract_detail = InvoiceController.db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company).FirstOrDefault();
                         if (app_contract_detail != null)
                         {
                             purchase_invoice.id_contract = app_contract_detail.id_contract;
@@ -110,7 +128,7 @@ namespace Cognitivo.Setup.Migration
                         else
                         {
                             app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
-                            db.app_contract.Add(app_contract);
+                            InvoiceController.db.app_contract.Add(app_contract);
 
                             purchase_invoice.app_contract = app_contract;
                             purchase_invoice.id_contract = app_contract.id_contract;
@@ -118,14 +136,14 @@ namespace Cognitivo.Setup.Migration
                     }
                     else if (!(purchaserow["MODALIDADPAGO"] is DBNull) && Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 1)
                     {
-                        app_condition app_condition = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
+                        app_condition app_condition = InvoiceController.db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
                         purchase_invoice.id_condition = app_condition.id_condition;
                         //Contract...
                         if (!(purchaserow["FECHAVCTO"] is DBNull))
                         {
                             DateTime _due_date = Convert.ToDateTime(purchaserow["FECHAVCTO"]);
                             int interval = (_due_date - purchase_invoice.trans_date).Days;
-                            app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company && x.interval == interval).FirstOrDefault();
+                            app_contract_detail app_contract_detail = InvoiceController.db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company && x.interval == interval).FirstOrDefault();
                             if (app_contract_detail != null)
                             {
                                 purchase_invoice.id_contract = app_contract_detail.id_contract;
@@ -133,7 +151,7 @@ namespace Cognitivo.Setup.Migration
                             else
                             {
                                 app_contract app_contract = GenerateDefaultContrat(app_condition, interval);
-                                db.app_contract.Add(app_contract);
+                                InvoiceController.db.app_contract.Add(app_contract);
 
                                 purchase_invoice.app_contract = app_contract;
                                 purchase_invoice.id_contract = app_contract.id_contract;
@@ -147,35 +165,20 @@ namespace Cognitivo.Setup.Migration
                     {
                         //Branch
                         string _branch = purchaserow["DESSUCURSAL"].ToString();
-                        app_branch app_branch = db.app_branch.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
+                        app_branch app_branch = InvoiceController.db.app_branch.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
                         purchase_invoice.id_branch = app_branch.id_branch;
 
                         //Location
-                        id_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
+                        id_location = InvoiceController.db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
 
                         //Terminal
-                        purchase_invoice.id_terminal = db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
+                        purchase_invoice.id_terminal = InvoiceController.db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
                     }
 
                     string _desMoneda = string.Empty;
-
-                    //Sales Invoice Detail
-                    string sqlDetail = "SELECT"
-                    + " dbo.PRODUCTOS.DESPRODUCTO as ITEM_DESPRODUCTO," //0
-                    + " dbo.COMPRASDETALLE.DESPRODUCTO," //1
-                    + " dbo.COMPRASDETALLE.CANTIDADCOMPRA, " //2
-                    + " dbo.COMPRASDETALLE.COSTOUNITARIO, " //3
-                    + " dbo.COMPRASDETALLE.IVA, " //4
-                    + " dbo.COMPRAS.COTIZACION1, " //5
-                    + " dbo.MONEDA.DESMONEDA " //6
-                    + " FROM dbo.COMPRAS LEFT OUTER JOIN"
-                    + " dbo.MONEDA ON dbo.COMPRAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
-                    + " dbo.COMPRASDETALLE ON dbo.COMPRAS.CODCOMPRA = dbo.COMPRASDETALLE.CODCOMPRA LEFT OUTER JOIN"
-                    + " dbo.PRODUCTOS ON dbo.COMPRASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO"
-                    + " WHERE (dbo.COMPRASDETALLE.CODCOMPRA = " + purchaserow["CODCOMPRA"].ToString() + ")";
-
-                    DataTable dt = exeDT(sqlDetail);
-                    foreach (DataRow row in dt.Rows)
+					string filter="(dbo.COMPRASDETALLE.CODCOMPRA = " + purchaserow["CODCOMPRA"].ToString() + ")";
+					dt = dt.Select(filter).CopyToDataTable();
+					foreach (DataRow row in dt.Rows)
                     {
                         //db Related Insertion.
                         purchase_invoice.id_currencyfx = 1;
@@ -183,10 +186,10 @@ namespace Cognitivo.Setup.Migration
                         purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
 
                         string _prod_Name = row["ITEM_DESPRODUCTO"].ToString();
-                        if (db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault() != null)
+                        if (InvoiceController.db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault() != null)
                         {
                             //Only if Item Exists
-                            item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
+                            item item = InvoiceController.db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
                             purchase_invoice_detail.id_item = item.id_item;
                         }
 
@@ -204,17 +207,17 @@ namespace Cognitivo.Setup.Migration
                         string _iva = row["IVA"].ToString();
                         if (_iva == "10.00")
                         {
-                            purchase_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
+                            purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
                         }
                         else if (_iva == "5.00")
                         {
-                            purchase_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault().id_vat_group;
+                            purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault().id_vat_group;
                         }
                         else
                         {
-                            if (db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
+                            if (InvoiceController.db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
                             {
-                                purchase_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
+                                purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
                             }
                         }
 
@@ -238,13 +241,13 @@ namespace Cognitivo.Setup.Migration
                         purchase_invoice.State = System.Data.Entity.EntityState.Added;
                         purchase_invoice.IsSelected = true;
 
-                        db.purchase_invoice.Add(purchase_invoice);
-                        IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
+                        InvoiceController.db.purchase_invoice.Add(purchase_invoice);
+                        IEnumerable<DbEntityValidationResult> validationresult = InvoiceController.db.GetValidationErrors();
                         if (validationresult.Count() == 0)
                         {
                             try
                             {
-                                db.SaveChanges();
+                                InvoiceController.db.SaveChanges();
                             }
                             catch (Exception ex)
                             {

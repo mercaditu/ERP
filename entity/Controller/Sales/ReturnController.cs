@@ -70,7 +70,9 @@ namespace entity.Controller.Sales
 
                 //Navigation Properties
                 app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx),
+                id_branch = CurrentSession.Id_Branch,
                 app_branch = db.app_branch.Find(CurrentSession.Id_Branch),
+                id_terminal = CurrentSession.Id_Terminal,
                 app_terminal = db.app_terminal.Find(CurrentSession.Id_Terminal)
             };
 

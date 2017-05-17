@@ -80,7 +80,7 @@ namespace Cognitivo.Sales
         {
             try
             {
-                MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (res == MessageBoxResult.Yes)
                 {
                     SalesReturnDB.db.sales_return.Remove((sales_return)sales_returnDataGrid.SelectedItem);
@@ -101,7 +101,7 @@ namespace Cognitivo.Sales
             {
                 sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
                 sales_return.IsSelected = true;
-                sales_return.State = System.Data.Entity.EntityState.Modified;
+                sales_return.State = EntityState.Modified;
                 SalesReturnDB.db.Entry(sales_return).State = EntityState.Modified;
             }
             else

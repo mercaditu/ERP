@@ -620,7 +620,11 @@ namespace entity.Brillo.Logic
             {
                 item_product item_product = sales_return_detail.item.item_product.FirstOrDefault();
 
-                sales_return_detail.id_location = CurrentSession.Locations.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault().id_location;
+                sales_return_detail.id_location = 
+                    CurrentSession.Locations
+                    .Where(x => x.id_branch == sales_return.id_branch && x.is_default)
+                    .FirstOrDefault()
+                    .id_location;
 
                 decimal unit_cost = 0;
                 if (sales_return_detail.sales_invoice_detail != null)

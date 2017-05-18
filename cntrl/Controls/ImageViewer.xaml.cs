@@ -6,115 +6,137 @@ using System.Windows.Data;
 
 namespace cntrl.Controls
 {
-    public partial class ImageViewer : UserControl, INotifyPropertyChanged
-    {
-        public ImageViewer()
-        {
-            InitializeComponent();
-        }
+	public partial class ImageViewer : UserControl, INotifyPropertyChanged
+	{
+		public ImageViewer()
+		{
+			InitializeComponent();
+		}
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged(string prop)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
+		public void RaisePropertyChanged(string prop)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+		}
 
-        public static DependencyProperty ApplicationNameProperty = DependencyProperty.Register("ApplicationName", typeof(entity.App.Names), typeof(ImageViewer));
+		public static DependencyProperty ApplicationNameProperty = DependencyProperty.Register("ApplicationName", typeof(entity.App.Names), typeof(ImageViewer));
 
-        public entity.App.Names ApplicationName
-        {
-            get { return (entity.App.Names)GetValue(ApplicationNameProperty); }
-            set { SetValue(ApplicationNameProperty, value); }
-        }
+		public entity.App.Names ApplicationName
+		{
+			get { return (entity.App.Names)GetValue(ApplicationNameProperty); }
+			set { SetValue(ApplicationNameProperty, value); }
+		}
 
-        public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer), new PropertyMetadata(GetImageCallBack));
+		public static readonly DependencyProperty ReferenceIDProperty = DependencyProperty.Register("ReferenceID", typeof(int), typeof(ImageViewer), new PropertyMetadata(GetImageCallBack));
 
-        public int ReferenceID
-        {
-            get { return (int)GetValue(ReferenceIDProperty); }
-            set { SetValue(ReferenceIDProperty, value); }
-        }
+		public int ReferenceID
+		{
+			get { return (int)GetValue(ReferenceIDProperty); }
+			set { SetValue(ReferenceIDProperty, value); }
+		}
 
-        private static void GetImageCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            ImageViewer c = sender as ImageViewer;
-            if (c != null)
-            {
-                c.GetImage();
-            }
-        }
+		private static void GetImageCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+		{
+			ImageViewer c = sender as ImageViewer;
+			if (c != null)
+			{
+				c.GetImage();
+			}
+		}
 
-        private void GetImage()
-        {
-            CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
-            app_attachmentViewSource.Source = null;
+		private void GetImage()
+		{
+			CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+			app_attachmentViewSource.Source = null;
 
-            if (ReferenceID > 0)
-            {
-                using (entity.db db = new entity.db())
-                {
-                    if (db.app_attachment.Where(x => x.application == ApplicationName && x.reference_id == ReferenceID && x.mime.Contains("image")).Any())
-                    {
-                        app_attachmentViewSource.Source = db.app_attachment
-                            .Where(x => x.application == ApplicationName && x.reference_id == ReferenceID && x.mime.Contains("image")).ToList();
-                        app_attachmentViewSource.View.Refresh();
-                    }
-                }
-            }
-        }
+			if (ReferenceID > 0)
+			{
+				using (entity.db db = new entity.db())
+				{
+					if (db.app_attachment.Where(x => x.application == ApplicationName && x.reference_id == ReferenceID && x.mime.Contains("image")).Any())
+					{
+						app_attachmentViewSource.Source = db.app_attachment
+							.Where(x => x.application == ApplicationName && x.reference_id == ReferenceID && x.mime.Contains("image")).ToList();
+						app_attachmentViewSource.View.Refresh();
+					}
+				}
+			}
+		}
 
-        private void MenuItem_Delete(object sender, RoutedEventArgs e)
-        {
-            CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
-            if (app_attachmentViewSource.View != null)
-            {
-                if (app_attachmentViewSource.View.CurrentItem != null)
-                {
-                    entity.app_attachment app_attachment = app_attachmentViewSource.View.CurrentItem as entity.app_attachment;
+		private void MenuItem_Delete(object sender, RoutedEventArgs e)
+		{
+			CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+			if (app_attachmentViewSource.View != null)
+			{
+				if (app_attachmentViewSource.View.CurrentItem != null)
+				{
+					entity.app_attachment app_attachment = app_attachmentViewSource.View.CurrentItem as entity.app_attachment;
 
-                    if (app_attachment != null)
-                    {
-                        using (entity.db db = new entity.db())
-                        {
-                            entity.app_attachment _app_attachment = db.app_attachment.Where(x => x.id_attachment == app_attachment.id_attachment).FirstOrDefault();
-                            if (_app_attachment != null)
-                            {
-                                db.app_attachment.Remove(_app_attachment);
-                                db.SaveChanges();
-                            }
+					if (app_attachment != null)
+					{
+						using (entity.db db = new entity.db())
+						{
+							entity.app_attachment _app_attachment = db.app_attachment.Where(x => x.id_attachment == app_attachment.id_attachment).FirstOrDefault();
+							if (_app_attachment != null)
+							{
 
-                            GetImage();
-                        }
-                    }
-                }
-            }
+								db.app_attachment.Remove(_app_attachment);
+								db.SaveChanges();
+							}
 
-            imgContext.IsOpen = false;
-        }
+							GetImage();
+						}
+					}
+				}
+			}
 
-        private void MenuItem_New(object sender, RoutedEventArgs e)
-        {
-        }
+			imgContext.IsOpen = false;
+		}
 
-        private void Grid_Drop(object sender, DragEventArgs e)
-        {
-            if (ReferenceID > 0)
-            {
-                var Data = e.Data as DataObject;
-                entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
-                Attachment.SaveFile(Data, ApplicationName, ReferenceID);
-                GetImage();
-            }
-            else
-            {
-                MessageBox.Show("Please Save Item before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
+		private void MenuItem_New(object sender, RoutedEventArgs e)
+		{
+		}
 
-        private void Image_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            imgContext.IsOpen = true;
-        }
-    }
+		private void Grid_Drop(object sender, DragEventArgs e)
+		{
+			if (ReferenceID > 0)
+			{
+				var Data = e.Data as DataObject;
+				entity.Brillo.Attachment Attachment = new entity.Brillo.Attachment();
+				Attachment.SaveFile(Data, ApplicationName, ReferenceID);
+				GetImage();
+			}
+			else
+			{
+				MessageBox.Show("Please Save Item before inserting an Image", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
+			}
+		}
+
+		private void Image_MouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			imgContext.IsOpen = true;
+		}
+
+		private void FlipView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+			entity.app_attachment app_attachment = app_attachmentViewSource.View.CurrentItem as entity.app_attachment;
+
+			if (app_attachment != null)
+			{
+				ImageControl ImageControl = new ImageControl();
+
+				ImageControl.file = app_attachment.file; // Path of the rdlc file
+				ImageControl.RaisePropertyChanged("file");
+				Window window = new Window
+				{
+					Title = "Image",
+					Content = ImageControl
+				};
+
+				window.ShowDialog();
+			}
+		}
+	}
 }

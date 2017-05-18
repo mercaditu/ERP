@@ -335,6 +335,9 @@
     <Compile Include="Controls\CustomField.xaml.cs">
       <DependentUpon>CustomField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImageControl.xaml.cs">
+      <DependentUpon>ImageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageViewer.xaml.cs">
       <DependentUpon>ImageViewer.xaml</DependentUpon>
     </Compile>
@@ -944,6 +947,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CustomField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

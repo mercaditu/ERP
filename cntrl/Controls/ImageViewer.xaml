@@ -16,7 +16,7 @@
         <CollectionViewSource x:Key="app_attachmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_attachment}, CreateList=True}" />
     </UserControl.Resources>
     <Grid Drop="Grid_Drop" Background="WhiteSmoke">
-        <metro:FlipView  IsBannerEnabled="False" ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}">
+        <metro:FlipView  IsBannerEnabled="False" ItemsSource="{Binding Source={StaticResource app_attachmentViewSource}}" MouseDoubleClick="FlipView_MouseDoubleClick">
             <metro:FlipView.ContextMenu>
                 <ContextMenu x:Name="imgContext" IsOpen="False">
                     <MenuItem Header="New" Click="MenuItem_New"></MenuItem>

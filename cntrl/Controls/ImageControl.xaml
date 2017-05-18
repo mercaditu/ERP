@@ -6,12 +6,22 @@
 			    xmlns:convert="clr-namespace:Cognitivo.Converters"
              xmlns:local="clr-namespace:cntrl.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="520" d:DesignWidth="520">
+             d:DesignHeight="520" d:DesignWidth="520" >
+	
+	
 	<UserControl.Resources>
 		<convert:ImageConverter x:Key="ConvertImage" />
 	</UserControl.Resources>
 	<Grid x:Name="crud_modal" Background="#7FC0C0C0" Width="500" Height="500">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="50" />
+		</Grid.RowDefinitions>
+		<Grid x:Name="image">
 			<Image Source="{Binding file,ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}" Margin="0,0,194,196"  />
 		</Grid>
+	
+		<Button Content="Print" Grid.Row="1" Click="Button_Click"/>
+	</Grid>
 	
 </UserControl>

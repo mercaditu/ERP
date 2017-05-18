@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,6 +33,18 @@ namespace cntrl.Controls
 		public ImageControl()
 		{
 			InitializeComponent();
+		}
+		
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			PrintDialog printDlg = new System.Windows.Controls.PrintDialog();
+
+			
+
+
+			//now print the visual to printer to fit on the one page.
+			printDlg.PrintVisual(this, "Print Page");
 		}
 	}
 }

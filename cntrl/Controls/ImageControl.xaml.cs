@@ -44,7 +44,7 @@ namespace cntrl.Controls
 
 
 			//now print the visual to printer to fit on the one page.
-			printDlg.PrintVisual(this, "Print Page");
+			printDlg.PrintVisual(image, "Print Page");
 		}
 	}
 }

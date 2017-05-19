@@ -40,11 +40,12 @@ namespace cntrl.Controls
 		{
 			PrintDialog printDlg = new System.Windows.Controls.PrintDialog();
 
-			
+
 
 
 			//now print the visual to printer to fit on the one page.
 			printDlg.PrintVisual(image, "Print Page");
+			
 		}
 	}
 }

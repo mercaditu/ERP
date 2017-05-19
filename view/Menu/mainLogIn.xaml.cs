@@ -68,6 +68,7 @@ namespace Cognitivo.Menu
                 if (User != null)
                 {
                     Role = User.security_role;
+					User.trans_date = DateTime.Now;
                 }
                 else
                 {
@@ -81,6 +82,7 @@ namespace Cognitivo.Menu
                     taskAuth = null;
                     return;
                 }
+				db.SaveChanges();
             }
 
             try

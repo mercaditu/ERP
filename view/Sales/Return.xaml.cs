@@ -413,7 +413,8 @@ namespace Cognitivo.Sales
                         sales_return_detail.id_vat_group = _sales_invoice_detail.id_vat_group;
                         sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
                         sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
-                        _sales_return.sales_return_detail.Add(sales_return_detail);
+						sales_return_detail.unit_cost = _sales_invoice_detail.unit_cost;
+						_sales_return.sales_return_detail.Add(sales_return_detail);
 
                         SalesReturnDB.db.Entry(_sales_return).Entity.State = EntityState.Added;
                         crud_modal.Children.Clear();
@@ -448,7 +449,9 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = false;
         }
 
-        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+		
+
+		private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             popupCustomize.StaysOpen = false;

@@ -386,12 +386,14 @@ namespace Cognitivo.Sales
         private void Promotion_Click(object sender, EventArgs e)
         {
             sales_invoice Invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            if (Invoice != null)
+            {
+                SalesDB.Check_Promotions(Invoice);
 
-            SalesDB.Check_Promotions(Invoice);
-
-            CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
-            sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            Invoice.RaisePropertyChanged("GrandTotal");
+                CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                Invoice.RaisePropertyChanged("GrandTotal");
+            }
         }
 
         private void Expire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

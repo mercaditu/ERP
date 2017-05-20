@@ -28,10 +28,13 @@ namespace entity.Controller.Finance
         }
         public payment_detail NewPaymentDetail(ref payment payment)
         {
-            payment_detail payment_detail = new payment_detail();
-            payment_detail.State = EntityState.Added;
-            payment_detail.id_payment_type = db.payment_type.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).Select(y => y.id_payment_type).FirstOrDefault();
-            payment_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+            payment_detail payment_detail = new payment_detail()
+            {
+                State = EntityState.Added,
+                id_payment_type = db.payment_type.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).Select(y => y.id_payment_type).FirstOrDefault(),
+                id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx
+            };
+
             payment.payment_detail.Add(payment_detail);
 
             return payment_detail;
@@ -49,62 +52,25 @@ namespace entity.Controller.Finance
                 MakePayment(payment_schedualList, payment, IsRecievable, is_print);
             }
         }
-        //public int SaveChanges_and_Validate()
-        //{
-        //    NumberOfRecords = 0;
-        //    foreach (payment payment in db.payments.Local.Where(x => x.IsSelected))
-        //    {
 
-        //        if (payment.State == EntityState.Added)
-        //        {
-        //            payment.timestamp = DateTime.Now;
-        //            payment.State = EntityState.Unchanged;
-        //            db.Entry(payment).State = EntityState.Added;
-
-        //        }
-        //        else if (payment.State == EntityState.Modified)
-        //        {
-        //            payment.timestamp = DateTime.Now;
-        //            payment.State = EntityState.Unchanged;
-        //            db.Entry(payment).State = EntityState.Modified;
-        //        }
-        //        else if (payment.State == EntityState.Deleted)
-        //        {
-        //            payment.timestamp = DateTime.Now;
-        //            payment.is_head = false;
-        //            payment.State = EntityState.Deleted;
-        //            db.Entry(payment).State = EntityState.Modified;
-        //        }
-        //        NumberOfRecords += 1;
-
-        //        if (payment.State > 0)
-        //        {
-        //            if (payment.State != EntityState.Unchanged)
-        //            {
-        //                db.Entry(payment).State = EntityState.Unchanged;
-        //            }
-        //        }
-        //    }
-
-        //    return db.SaveChanges();
-        //}
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
-
-
+            
             foreach (var error in db.GetValidationErrors())
             {
                 db.Entry(error.Entry.Entity).State = EntityState.Detached;
             }
 
             db.SaveChanges();
+
             foreach (payment payment in db.payments.Local)
             {
                 payment.State = EntityState.Unchanged;
             }
             return true;
         }
+
         public async void MakePayment(List<payment_schedual> payment_schedualList, payment payment, bool IsRecievable, bool is_print)
         {
             string ModuleName = string.Empty;

@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WPFLocalizeExtension.Extensions;
 
 namespace entity.Controller.Purchase
@@ -241,24 +239,28 @@ namespace entity.Controller.Purchase
                             decimal PaymentValue = payment_schedual.AccountPayableBalance < Return_GrandTotal_ByInvoice ? payment_schedual.AccountPayableBalance : Return_GrandTotal_ByInvoice;
                             Return_GrandTotal_ByInvoice -= PaymentValue;
 
-                            payment_schedual Schedual = new payment_schedual();
-                            Schedual.debit = PaymentValue;
-                            Schedual.credit = 0;
-                            Schedual.id_currencyfx = purchase_return.id_currencyfx;
-                            Schedual.purchase_return = purchase_return;
-                            Schedual.trans_date = purchase_return.trans_date;
-                            Schedual.expire_date = purchase_return.trans_date;
-                            Schedual.status = Status.Documents_General.Approved;
-                            Schedual.id_contact = purchase_return.id_contact;
-                            Schedual.can_calculate = true;
-                            Schedual.parent = payment_schedual; //base.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).FirstOrDefault();
+                            payment_schedual Schedual = new payment_schedual()
+                            {
+                                debit = PaymentValue,
+                                credit = 0,
+                                id_currencyfx = purchase_return.id_currencyfx,
+                                purchase_return = purchase_return,
+                                trans_date = purchase_return.trans_date,
+                                expire_date = purchase_return.trans_date,
+                                status = Status.Documents_General.Approved,
+                                id_contact = purchase_return.id_contact,
+                                can_calculate = true,
+                                parent = payment_schedual //base.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).FirstOrDefault();
+                            };
 
-                            payment_detail payment_detail = new payment_detail();
-                            payment_detail.id_currencyfx = purchase_return.id_currencyfx;
-                            payment_detail.id_purchase_return = purchase_return.id_purchase_return;
-                            payment_detail.payment_type = payment_type != null ? payment_type : Fix_PaymentType();
+                            payment_detail payment_detail = new payment_detail()
+                            {
+                                id_currencyfx = purchase_return.id_currencyfx,
+                                id_purchase_return = purchase_return.id_purchase_return,
+                                payment_type = payment_type != null ? payment_type : Fix_PaymentType(),
+                                value = PaymentValue
+                            };
 
-                            payment_detail.value = PaymentValue;
                             payment_detail.payment_schedual.Add(Schedual);
 
                             payment.payment_detail.Add(payment_detail);
@@ -276,9 +278,12 @@ namespace entity.Controller.Purchase
         private payment_type Fix_PaymentType()
         {
             //In case Payment type doesn not exist, this will create it and try to fix the error.
-            payment_type payment_type = new payment_type();
-            payment_type.payment_behavior = entity.payment_type.payment_behaviours.CreditNote;
-            payment_type.name = LocExtension.GetLocalizedValue<string>("Cognitivo:local:PurchaseReturn");
+            payment_type payment_type = new payment_type()
+            {
+                payment_behavior = entity.payment_type.payment_behaviours.CreditNote,
+                name = LocExtension.GetLocalizedValue<string>("Cognitivo:local:PurchaseReturn")
+            };
+
             db.payment_type.Add(payment_type);
 
             return payment_type;

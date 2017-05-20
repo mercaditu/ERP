@@ -18,16 +18,11 @@ namespace entity.Controller.Purchase
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_archived == false);
 
-
-
             await db.purchase_return.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
                     .ThenBy(x => x.number)
                     .LoadAsync();
 
-
-
-           
             await db.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
 
         }
@@ -193,7 +188,7 @@ namespace entity.Controller.Purchase
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(db, purchase_return);
+                        item_movementList = _Stock.PurchaseReturn_Approve(db, purchase_return);
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             db.item_movement.AddRange(item_movementList);

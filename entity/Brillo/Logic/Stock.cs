@@ -370,7 +370,7 @@ namespace entity.Brillo.Logic
                     {
                         //Due to lack of special field, use Is Read to know if we should discount item or not.
                         Invoice_WithProducts.AddRange(purchase_return.purchase_return_detail
-                            .Where(x => x.item.item_product.Count() > 0 && x.is_read == true).ToList());
+                            .Where(x => x.item != null && x.is_read == true).ToList());
                     }
                 }
             }
@@ -379,16 +379,21 @@ namespace entity.Brillo.Logic
                 return item_movementList;
             }
 
-            //SALES RETURN
+            //PURCHASE RETURN
             foreach (purchase_return_detail purchase_return_detail in Invoice_WithProducts)
             {
                 item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
-                purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
-                purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
+                if (item_product != null)
+                {
+                    purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
+                    purchase_return_detail.app_location = db.app_location.Find(purchase_return_detail.id_location);
+                }
+
                 if (purchase_return.id_purchase_invoice > 0)
                 {
                     Brillo.Stock stock = new Brillo.Stock();
                     List<StockList> Items_InStockLIST = new List<StockList>();
+
                     foreach (item_movement _item_movement in purchase_return_detail.purchase_invoice_detail.item_movement)
                     {
                         StockList Stock = new StockList();

@@ -164,7 +164,6 @@ namespace entity
 				_barcode = value;
 				BarcodeGenerator.BarcodeGenerate BG = new BarcodeGenerator.BarcodeGenerate();
 				BarCode_Number = BG.Decodestring(value);
-
 			}
 		}
 		private string _barcode="";

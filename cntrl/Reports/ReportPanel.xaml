@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:cntrl"
+              xmlns:rv="clr-namespace:Syncfusion.Windows.Reports.Viewer.Utils;assembly=Syncfusion.ReportViewer.Wpf"
              xmlns:reporting="clr-namespace:cntrl.Class"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-    	     xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
-            xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d" Foreground="White"
@@ -23,19 +23,17 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
-            <TabItem Header="{lex:Loc Reports}">
-                <WindowsFormsHost>
-                    <rv:ReportViewer x:Name="reportViewer" />
-                </WindowsFormsHost>
+            <TabItem Header="{lex:Loc Reports}" Background="Transparent">
+                <rv:ReportViewer x:Name="reportViewer" />
             </TabItem>
-            <TabItem Header="Data">
+            <TabItem Header="Data" Background="Transparent">
                 <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch"
                                        NavigationMode="Cell" HideEmptyGridViewDefinition="True" EnableDataVirtualization="True"
                                        SelectionMode="Multiple" Background="White"
                                        AllowGrouping="True" AllowFiltering="True"
                                        ShowGroupDropArea="True" />
             </TabItem>
-            <TabItem Header="Matrix">
+            <TabItem Header="Matrix" Background="Transparent">
                 <syncfusion:PivotGridControl x:Name="sfPivotTable" VisualStyle="Metro" />
             </TabItem>
         </TabControl>

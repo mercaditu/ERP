@@ -151,8 +151,21 @@ namespace Cognitivo.Menu
                 }
             }
 
-            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
-            Dispatcher.BeginInvoke((Action)(() => myWindow.mainFrame.Content = null));
+            Dispatcher.BeginInvoke((Action)(() => 
+            {
+                //progBar.IsIndeterminate = false;
+                MainWindow myWindow = Window.GetWindow(this) as MainWindow;
+                if (myWindow != null)
+                {
+                    Dispatcher.BeginInvoke((Action)(() => myWindow.mainFrame.Content = null));
+                }
+                else
+                {
+                    //Restart if Window is incorrect.
+                    System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                    Application.Current.Shutdown();
+                }
+            }));
         }
 
         private void createCompany_Click(object sender, RoutedEventArgs e)

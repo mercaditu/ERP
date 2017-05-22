@@ -128,8 +128,9 @@ namespace Cognitivo
                     {
                         //If database does not exist, then send to StartUp Page to decide if to change connection string or create database.
                         //MainWin.mainFrame.Navigate(new StartUp());
-                        db.Database.CreateIfNotExists();
-                        MainWin.mainFrame.Navigate(new MainSetup());
+                        //MessageBox.Show("Creating Database: " + db.Database.Connection.Database.ToString());
+                        //MainWin.mainFrame.Navigate(new MainSetup());  //db.Database.CreateIfNotExists();
+                        MainWin.mainFrame.Navigate(new StartUp());
                     }
                     else
                     {
@@ -140,7 +141,7 @@ namespace Cognitivo
                         }
                         else //IF company count is zero, direct to MainSetup
                         {
-                            MainWin.mainFrame.Navigate(new MainSetup());
+                            MainWin.mainFrame.Navigate(new StartUp());
                         }
                     }
                 }
@@ -148,7 +149,8 @@ namespace Cognitivo
             catch
             {
                 //If Server cannot be found, launch the ConnectionBuilder page to set it up.
-                MainWin.mainFrame.Navigate(new Configs.ConnectionBuilder());
+                MainWin.mainFrame.Navigate(new StartUp());
+                //MainWin.mainFrame.Navigate(new Configs.ConnectionBuilder());
             }
 
 

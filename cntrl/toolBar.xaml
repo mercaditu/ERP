@@ -125,9 +125,9 @@
                 <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
                 <StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" >
                     <metro:DropDownButton ArrowPressedBrush="Orange" ArrowMouseOverBrush="Red"
-                                   ArrowBrush="LightSteelBlue"
-    FontSize="16" BorderThickness="0" Orientation="Horizontal"
-    VerticalAlignment="Center" >
+                                          ArrowBrush="LightSteelBlue"
+                                          FontSize="16" BorderThickness="0" Orientation="Horizontal"
+                                          VerticalAlignment="Center" >
                         <metro:DropDownButton.Items>
                             <Button Content="Approve Edit" />
                         </metro:DropDownButton.Items>

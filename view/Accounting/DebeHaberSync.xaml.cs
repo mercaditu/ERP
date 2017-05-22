@@ -840,6 +840,7 @@ namespace Cognitivo.Accounting
         {
             Settings SalesSettings = new Settings();
 
+            SalesSettings.DebeHaberConnString = tbxServer.Content as string;
             Settings.Default.Save();
             SalesSettings = Settings.Default;
         }

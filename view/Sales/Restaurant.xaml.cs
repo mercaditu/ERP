@@ -44,7 +44,7 @@ namespace Cognitivo.Sales
         /// </summary>
         private void Client_Click(object sender, EventArgs e)
         {
-            tabContact.IsSelected = true;
+            tabTable.IsSelected = true;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Cognitivo.Sales
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
             if (sales_invoice.contact == null)
             {
-                tabContact.Focus();
+                tabPayment.Focus();
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace Cognitivo.Sales
                 SalesDB.Approve();
 
                 List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
-                PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
+                PaymentDB.Approve(payment_schedualList, true, false);
 
                 //Start New Sale
                 New_Sale_Payment();
@@ -146,7 +146,7 @@ namespace Cognitivo.Sales
                 paymentViewSource.Source = SalesDB.db.payments.Local;
                 paymentViewSource.View.MoveCurrentTo(payment);
 
-                tabContact.Focus();
+                tabTable.Focus();
                 sbxContact.Text = "";
             }));
         }
@@ -239,7 +239,7 @@ namespace Cognitivo.Sales
         {
             if (e.Key == Key.F1)
             {
-                tabContact.IsSelected = true;
+                tabTable.IsSelected = true;
             }
             else if (e.Key == Key.F2)
             {
@@ -253,23 +253,6 @@ namespace Cognitivo.Sales
             {
                 Save_Click(sender, e);
             }
-        }
-
-        private void Cancel_MouseDown(object sender, EventArgs e)
-        {
-            SalesDB.CancelAllChanges();
-            PaymentDB.CancelAllChanges();
-
-            New_Sale_Payment();
-
-            //Clean up Contact Data.
-            sbxContact.Text = "";
-            sbxContact.ContactID = 0;
-
-            sbxItem.Text = "";
-            sbxItem.ItemID = 0;
-
-            tabContact.IsSelected = true;
         }
 
         #region Details

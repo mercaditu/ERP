@@ -1,5 +1,4 @@
-﻿using Cognitivo.Menu;
-using entity;
+﻿using entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +31,7 @@ namespace Cognitivo.Sales
                 SalesDB.Initialize();
                 SalesDB.LoadPromotion();
             }
+
             PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
             //Share DB to increase efficiency.
             PaymentDB.db = SalesDB.db;
@@ -133,8 +133,7 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }));
-
-
+            
             ///Creating new PAYMENT for upcomming sale.
             payment payment = PaymentDB.New(true);
             payment.id_currencyfx = sales_invoice.id_currencyfx;

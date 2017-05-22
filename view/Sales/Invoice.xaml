@@ -95,8 +95,6 @@
 												Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium"
 												Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"
-												Binding="{Binding number, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Condition}"
 												Binding="{Binding app_condition.name, UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contract}"

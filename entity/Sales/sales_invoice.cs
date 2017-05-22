@@ -216,6 +216,9 @@ namespace entity
         [NotMapped]
         public decimal vatwithholdingpercentage { get; set; }
 
+        [NotMapped]
+        public app_location Location { get; set; }
+
         //TimeCapsule
         public ICollection<sales_invoice> older { get; set; }
 

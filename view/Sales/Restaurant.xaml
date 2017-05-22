@@ -134,7 +134,6 @@
                                     <Label Content="+"/>
                                     <Label Content="{lex:Loc Create}"/>
                                 </StackPanel>
-                                
                             </Button>
                             <DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16"
                                       ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">

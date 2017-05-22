@@ -126,7 +126,19 @@
                 </TabItem>
                 <!-- TABLE -->
                 <TabItem x:Name="tabTable">
-                    
+                    <Grid>
+                        <StackPanel>
+                            <DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16">
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn/>
+                                    <DataGridTextColumn />
+                                    <DataGridTextColumn />
+                                    <DataGridTextColumn />
+                                    <DataGridTextColumn />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
                 <!-- SALES -->
                 <TabItem x:Name="tabSales">

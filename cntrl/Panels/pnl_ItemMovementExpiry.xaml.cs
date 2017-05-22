@@ -85,13 +85,15 @@ namespace cntrl.Panels
         private List<ExpiryInStock> BatchCodeLoader(DataTable dt)
         {
             List<ExpiryInStock> ListOfStock = new List<ExpiryInStock>();
+			BarcodeGenerator.BarcodeGenerate BG = new BarcodeGenerator.BarcodeGenerate();
+			
 
-            foreach (DataRow DataRow in dt.Rows)
+			foreach (DataRow DataRow in dt.Rows)
             {
                 ExpiryInStock ExpiryInStock = new ExpiryInStock()
                 {
                     MovementID = Convert.ToInt32(DataRow["MovementID"]),
-                    BarCode = Convert.ToString(DataRow["BarCode"]),
+                    BarCode = Convert.ToString(BG.Decodestring(Convert.ToString(DataRow["BarCode"]))),
                     Location = Convert.ToString(DataRow["Location"]),
                     Branch = Convert.ToString(DataRow["Branch"]),
                     Code = Convert.ToString(DataRow["Code"]),

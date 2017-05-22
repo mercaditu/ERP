@@ -762,6 +762,10 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <EmbeddedResource Include="Reports\Sales\CostOfGoodsSold1.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Resources\Entypo.ttf" />
     <Resource Include="Resources\cognitivo.ttf" />
     <None Include="Controls\smartBoxContactSetting.settings">
@@ -1384,6 +1388,10 @@
     <Resource Include="Images\Outline_White\trash-25.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BarcodeGenerator\BarcodeGenerator.vbproj">
+      <Project>{528dcb9e-11a0-4ede-81e6-54671ad6fbeb}</Project>
+      <Name>BarcodeGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\entity\Entity.csproj">
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>

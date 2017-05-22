@@ -54,7 +54,12 @@ namespace cntrl
 
         #endregion NotifyPropertyChanged
 
-        public int TotalPending { get { return _TotalPending; } set { _TotalPending = value; RaisePropertyChanged("TotalPending"); RaisePropertyChanged("Total_PendingApproved"); } }
+        public DateTime StartDate { get { return _StartDate; } set { _StartDate = value; RaisePropertyChanged("StartDate"); } }
+        private DateTime _StartDate;
+        public DateTime EndDate { get { return _EndDate; } set { _EndDate = value; RaisePropertyChanged("EndDate"); } }
+        private DateTime _EndDate;
+
+        public int TotalPending { get { return _TotalPending; } set { _TotalPending = value; RaisePropertyChanged("TotalPending"); } }
         private int _TotalPending = 0;
 
         public int TotalApproved { get { return _TotalApproved; } set { _TotalApproved = value; RaisePropertyChanged("TotalApproved"); RaisePropertyChanged("Total_PendingApproved"); } }

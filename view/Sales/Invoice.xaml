@@ -75,7 +75,7 @@
                                         </TextBlock>
                                     </Label>
                                     <DatePicker x:Name="grid_dateEnd" Width="124"
-												SelectedDate="{Binding End_Range,Source={StaticResource SalesInvoice},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+												SelectedDate="{Binding End_Range, Source={StaticResource SalesInvoice}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                                 </StackPanel>
                             </StackPanel>
 

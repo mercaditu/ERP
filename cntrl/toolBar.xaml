@@ -88,14 +88,13 @@
 						 metro:TextBoxHelper.SelectAllOnFocus="True"
 						 metro:ControlsHelper.MouseOverBorderBrush="Transparent"
 						 metro:ControlsHelper.FocusBorderBrush="Transparent"
-
                          CaretBrush="RoyalBlue" />
-
-                <TextBlock Text="L" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="White" Opacity="0.75" />
-                    </TextBlock.Foreground>
-                </TextBlock>
+                <ToggleButton x:Name="btnDateRange"
+                              Content="L" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="#BFFFFFFF" FontSize="24"
+                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                              BorderThickness="0" Margin="4" Cursor="Hand" BorderBrush="Transparent"
+                              Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                </ToggleButton>
 
                 <TextBlock x:Name="btnSync" Text="w" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"
                            MouseUp="btnSync_MouseUp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"
@@ -111,6 +110,22 @@
                     </TextBlock.RenderTransform>
                 </TextBlock>
             </Grid>
+
+            <Popup IsOpen="{Binding ElementName=btnDateRange, Path=IsChecked}" Grid.Column="0">
+                <StackPanel Orientation="Horizontal" Width="256" Background="WhiteSmoke">
+                    <StackPanel>
+                        <Label Content="{lex:Loc StartDate}" FontWeight="Medium" FontSize="10"/>
+                        <DatePicker SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="{lex:Loc EndDate}" FontWeight="Medium" FontSize="10"/>
+                        <DatePicker SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="8"/>
+                    </StackPanel.Effect>
+                </StackPanel>
+            </Popup>
 
             <Grid Grid.Column="1">
                 <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
@@ -133,7 +148,7 @@
         <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2"
 					Visibility="{Binding ElementName=this, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
 					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
-            <StackPanel x:Name="borderForm" Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
+            <!--<StackPanel x:Name="borderForm" Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
                 <Label x:Name="lblForm" Foreground="OrangeRed" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0" />
                 <Label Content="{lex:Loc Form}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
             </StackPanel>
@@ -141,7 +156,7 @@
             <StackPanel x:Name="borderGrid" Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
                 <Label x:Name="lblGrid" Foreground="Gold" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0" />
                 <Label Content="{lex:Loc Grid}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
-            </StackPanel>
+            </StackPanel>-->
         </StackPanel>
     </Grid>
 </UserControl>

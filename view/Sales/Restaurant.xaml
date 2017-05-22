@@ -269,7 +269,7 @@
                 </TabItem>
                 <!-- PAYMENT -->
                 <TabItem x:Name="tabPayment">
-                    <StackPanel>
+                    <Grid>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
                                 <StackPanel.Effect>
@@ -367,7 +367,33 @@
                                 </TextBlock>
                             </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                        <!-- Approve -->
+                        <Viewbox Margin="0" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
+                            <Grid Cursor="Hand" MouseDown="Save_Click" TouchDown="Save_Click" ToolTip="{lex:Loc Approve}">
+                                <Border CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                BorderBrush="White" BorderThickness="1" Margin="4,0,5,0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="White" Opacity="0.64" />
+                                    </Border.Background>
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,24,0">
+                                        <TextBlock Style="{StaticResource text_Label}" Margin="4" FontSize="10" 
+                                           FontWeight="Medium" Foreground="Black">
+                                    <Run Text="{lex:LocTextUpper Save}" />
+                                    <Run Text="&amp;" />
+                                    <Run Text="{lex:LocTextUpper Approve}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <Border CornerRadius="32" Background="{StaticResource AccentColor_Brush2}" Width="32" Height="32" 
+                                VerticalAlignment="Top" HorizontalAlignment="Right"
+						        BorderBrush="White" BorderThickness="1">
+                                    <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="20"
+							        VerticalAlignment="Center" HorizontalAlignment="Center"
+							        Foreground="White" />
+                                </Border>
+                            </Grid>
+                        </Viewbox>
+                    </Grid>
                 </TabItem>
             </TabControl>
 
@@ -444,7 +470,7 @@
                         Margin="8,40">
 
                 <!-- Cancel -->
-                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
+                <!--<Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
 				      Cursor="Hand" MouseDown="Cancel_MouseDown" TouchDown="Cancel_MouseDown" ToolTip="{lex:Loc Cancel}">
                     <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <Border.Background>
@@ -460,35 +486,8 @@
                                FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"
 						       Foreground="White" />
                     </Border>
-                </Grid>
-
-                <!-- Approve -->
-                <Viewbox Margin="0" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <Grid Cursor="Hand" MouseDown="Save_Click" TouchDown="Save_Click" ToolTip="{lex:Loc Approve}">
-                        <Border CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="Left"
-                                BorderBrush="White" BorderThickness="1" Margin="4,0,5,0">
-                            <Border.Background>
-                                <SolidColorBrush Color="White" Opacity="0.64" />
-                            </Border.Background>
-                            <StackPanel Orientation="Horizontal" Margin="2,0,24,0">
-                                <TextBlock Style="{StaticResource text_Label}" Margin="4" FontSize="10" 
-                                           FontWeight="Medium" Foreground="Black">
-                                    <Run Text="{lex:LocTextUpper Save}" />
-                                    <Run Text="&amp;" />
-                                    <Run Text="{lex:LocTextUpper Approve}" />
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
-                        <Border CornerRadius="32" Background="{StaticResource AccentColor_Brush2}" Width="32" Height="32" 
-                                VerticalAlignment="Top" HorizontalAlignment="Right"
-						        BorderBrush="White" BorderThickness="1">
-                            <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="20"
-							        VerticalAlignment="Center" HorizontalAlignment="Center"
-							        Foreground="White" />
-                        </Border>
-                    </Grid>
-                </Viewbox>
-
+                </Grid>-->
+                
                 <!-- Account Utility -->
                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
 				Cursor="Hand" MouseDown="Account_Click" TouchDown="Account_Click"

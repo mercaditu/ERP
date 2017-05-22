@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace cntrl.Controls
 {
@@ -125,18 +127,40 @@ namespace cntrl.Controls
 
 			if (app_attachment != null)
 			{
-				ImageControl ImageControl = new ImageControl();
 
-				ImageControl.file = app_attachment.file; // Path of the rdlc file
-				ImageControl.RaisePropertyChanged("file");
-				Window window = new Window
-				{
-					Title = "Image",
-					Content = ImageControl
-				};
+                ImageControl ImageControl = new ImageControl();
 
-				window.ShowDialog();
-			}
-		}
-	}
+                ImageControl.file = app_attachment.file; // Path of the rdlc file
+                ImageControl.RaisePropertyChanged("file");
+                Window window = new Window
+                {
+                    Title = "Image",
+                    Content = ImageControl
+                };
+
+                window.ShowDialog();
+
+                //FlowDocumentWindow Flow = new FlowDocumentWindow();
+
+                //Flow.Browser.Source = GetBitmapImage(app_attachment.file).BaseUri; // Path of the rdlc file
+                ////ImageControl.RaisePropertyChanged("file");
+                //Window window = new Window
+                //{
+                //    Title = "PDF",
+                //    Content = Flow
+                //};
+
+                //window.ShowDialog();
+            }
+        }
+
+        public BitmapImage GetBitmapImage(byte[] imageBytes)
+        {
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = new MemoryStream(imageBytes);
+            bitmapImage.EndInit();
+            return bitmapImage;
+        }
+    }
 }

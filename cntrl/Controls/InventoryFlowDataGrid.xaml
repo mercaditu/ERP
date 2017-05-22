@@ -41,8 +41,8 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
                         <Label Content="Image" Style="{StaticResource input_label}" Width="auto" />
-                        <local:ImageViewer   ApplicationName="{Binding ElementName=this,Path=ApplicationName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AllowDrop="True"
-                                            IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <local:ImageViewer ApplicationName="{Binding ElementName=this,Path=ApplicationName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AllowDrop="True"
+                                           IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
 

@@ -335,6 +335,9 @@
     <Compile Include="Controls\CustomField.xaml.cs">
       <DependentUpon>CustomField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FlowDocumentWindow.xaml.cs">
+      <DependentUpon>FlowDocumentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageControl.xaml.cs">
       <DependentUpon>ImageControl.xaml</DependentUpon>
     </Compile>
@@ -951,6 +954,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CustomField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FlowDocumentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

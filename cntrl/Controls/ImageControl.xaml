@@ -12,13 +12,13 @@
 	<UserControl.Resources>
 		<convert:ImageConverter x:Key="ConvertImage" />
 	</UserControl.Resources>
-	<Grid x:Name="crud_modal" Background="#7FC0C0C0" Width="500" Height="500">
+	<Grid x:Name="crud_modal" Background="#7FC0C0C0">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="50" />
 		</Grid.RowDefinitions>
 		<Grid x:Name="image">
-			<Image Source="{Binding file,ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}" Margin="0,0,194,196"  />
+			<Image Source="{Binding file,ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}" />
 		</Grid>
 	
 		<Button Content="Print" Grid.Row="1" Click="Button_Click"/>

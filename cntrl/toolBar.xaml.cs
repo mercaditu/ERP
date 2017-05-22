@@ -55,9 +55,9 @@ namespace cntrl
         #endregion NotifyPropertyChanged
 
         public DateTime StartDate { get { return _StartDate; } set { _StartDate = value; RaisePropertyChanged("StartDate"); } }
-        private DateTime _StartDate;
+        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
         public DateTime EndDate { get { return _EndDate; } set { _EndDate = value; RaisePropertyChanged("EndDate"); } }
-        private DateTime _EndDate;
+        private DateTime _EndDate = DateTime.Now;
 
         public int TotalPending { get { return _TotalPending; } set { _TotalPending = value; RaisePropertyChanged("TotalPending"); } }
         private int _TotalPending = 0;

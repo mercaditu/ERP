@@ -19,14 +19,12 @@ namespace Cognitivo.Sales
     {
         //Global Variables
         private CollectionViewSource sales_invoiceViewSource;
-
         private CollectionViewSource sales_invoicesales_invoice_detailViewSource;
         private CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
 
         //private db db = new db();
         private entity.Controller.Sales.InvoiceController SalesDB;
        
-
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
@@ -42,10 +40,6 @@ namespace Cognitivo.Sales
                 SalesDB.Initialize();
                 SalesDB.LoadPromotion();
             }
-          
-            
-
-          
         }
 
         #region DataLoad
@@ -132,15 +126,6 @@ namespace Cognitivo.Sales
         private void Save_Click(object sender)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-
-            //if (cbxDocument.SelectedItem is app_document_range app_document_range)
-            //{
-            //    if (app_document_range.range_current > app_document_range.range_end)
-            //    {
-            //        toolBar.msgWarning("Document Range is finished");
-            //        return;
-            //    }
-            //}
 
             if (SalesDB.SaveChanges_WithValidation())
             {

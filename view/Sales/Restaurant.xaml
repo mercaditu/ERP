@@ -124,24 +124,9 @@
                 <TabItem x:Name="tabAccount">
                     <Frame x:Name="frmaccount" NavigationUIVisibility="Hidden" Content="AccountActive" />
                 </TabItem>
-                <!-- CONTACT -->
-                <TabItem x:Name="tabContact">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
-                            <StackPanel.Effect>
-                                <DropShadowEffect ShadowDepth="0" Color="White" />
-                            </StackPanel.Effect>
-                            <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32"
-							                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" />
-                            <Label Content="{lex:LocTextUpper Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White" />
-                        </StackPanel>
-                        <Viewbox StretchDirection="Both" Stretch="Uniform" Width="256">
-                            <cntrl:SmartBox_Contact x:Name="sbxContact" CanCreate="True" AutoShow="True"
-							                                HorizontalAlignment="Center"
-							                                Get_Customers="True"
-							                                Select="Contact_Select"/>
-                        </Viewbox>
-                    </StackPanel>
+                <!-- TABLE -->
+                <TabItem x:Name="tabTable">
+                    
                 </TabItem>
                 <!-- SALES -->
                 <TabItem x:Name="tabSales">
@@ -269,21 +254,37 @@
                 </TabItem>
                 <!-- PAYMENT -->
                 <TabItem x:Name="tabPayment">
-                    <Grid>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
-                                <StackPanel.Effect>
-                                    <DropShadowEffect ShadowDepth="0" Color="White" />
-                                </StackPanel.Effect>
-                                <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32"
+                    <ScrollViewer>
+                        <Grid>
+                            <StackPanel>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
+                                        <StackPanel.Effect>
+                                            <DropShadowEffect ShadowDepth="0" Color="White" />
+                                        </StackPanel.Effect>
+                                        <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32"
+							                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" />
+                                        <Label Content="{lex:LocTextUpper Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White" />
+                                    </StackPanel>
+                                    <Viewbox StretchDirection="Both" Stretch="Uniform" Width="256">
+                                        <cntrl:SmartBox_Contact x:Name="sbxContact" CanCreate="True" AutoShow="True"
+							                                HorizontalAlignment="Center"
+							                                Get_Customers="True"
+							                                Select="Contact_Select"/>
+                                    </Viewbox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
+                                    <StackPanel.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Color="White" />
+                                    </StackPanel.Effect>
+                                    <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32"
 								VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" />
-                                <Label Content="{lex:LocTextUpper Payment}" Style="{StaticResource H1}" Foreground="White" />
-                            </StackPanel>
+                                    <Label Content="{lex:LocTextUpper Payment}" Style="{StaticResource H1}" Foreground="White" />
+                                </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-
-                                <!-- PRINT PAYMENT -->
-                                <!--
+                                <StackPanel HorizontalAlignment="Center">
+                                    <!-- PRINT PAYMENT -->
+                                    <!--
                                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Center" ToolTip="{lex:Loc Print}"
 								MouseUp="NewPayment_MouseUp">
                                     <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -302,8 +303,8 @@
                                     </Border>
                                 </Grid>-->
 
-                                <!-- PRINT PAYMENT -->
-                                <Grid Margin="8" ToolTip="{lex:Loc Print}">
+                                    <!-- PRINT PAYMENT -->
+                                    <!--<Grid Margin="8" ToolTip="{lex:Loc Print}">
                                     <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Border.Background>
                                             <SolidColorBrush Color="#FF004867" Opacity="0.32" />
@@ -321,79 +322,82 @@
 										Foreground="White" />
                                     </Border>
                                 </Grid>
-                            </StackPanel>
+                            </StackPanel>-->
 
-                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16" CanUserDeleteRows="False"
+                                    <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16" CanUserDeleteRows="False"
 							ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="PaymentDetail_InitializingNewItem">
-                                <DataGrid.Columns>
-                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"
+                                        <DataGrid.Columns>
+                                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"
 									ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
 									DisplayMemberPath="name" SelectedValuePath="id_payment_type"
 									SelectedValueBinding="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" />
 
-                                    <DataGridTextColumn MaxWidth="1"  Binding="{Binding ValueInDefaultCurrency, Mode=TwoWay, StringFormat=\{0:N2\}, UpdateSourceTrigger=PropertyChanged}"
+                                            <DataGridTextColumn MaxWidth="1"  Binding="{Binding ValueInDefaultCurrency, Mode=TwoWay, StringFormat=\{0:N2\}, UpdateSourceTrigger=PropertyChanged}"
 									ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True" CanUserResize="False"
 									Header="En Dolar"  FontWeight="Bold" />
-                                    <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, StringFormat=\{0:N2\}, UpdateSourceTrigger=PropertyChanged}"
+                                            <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, StringFormat=\{0:N2\}, UpdateSourceTrigger=PropertyChanged}"
 									ElementStyle="{StaticResource RightAlignStyle}"
 									Header="{lex:Loc Cognitivo:local:Value}" Width="256" FontWeight="Bold" />
 
-                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="128"
+                                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="128"
 									ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
 									DisplayMemberPath="name" SelectedValuePath="id_currency"
 									SelectedValueBinding="{Binding id_currency, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
-                                    <DataGridTemplateColumn Width="Auto" Header="">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Command="customcmd:CustomCommands.Delete"
+                                            <DataGridTemplateColumn Width="Auto" Header="">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Command="customcmd:CustomCommands.Delete"
 												Style="{StaticResource btnDeleteChildStyle}"
 												CommandParameter="{Binding}" />
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="128,0">
-                                <TextBlock  FontSize="30" Foreground="White" HorizontalAlignment="Center">
-                                    <TextBlock.Effect>
-                                        <DropShadowEffect Color="White" ShadowDepth="0" />
-                                    </TextBlock.Effect><Run Text="{lex:Loc Total}" /><Run Text=" " /><Run Text="{lex:Loc Payment}" /></TextBlock>
-                                <Label Content=" " />
-                                <TextBlock FontSize="30" Foreground="White"
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="128,0">
+                                        <TextBlock  FontSize="30" Foreground="White" HorizontalAlignment="Center">
+                                            <TextBlock.Effect>
+                                                <DropShadowEffect Color="White" ShadowDepth="0" />
+                                            </TextBlock.Effect><Run Text="{lex:Loc Total}" /><Run Text=" " /><Run Text="{lex:Loc Payment}" /></TextBlock>
+                                        <Label Content=" " />
+                                        <TextBlock FontSize="30" Foreground="White"
 								Text="{Binding GrandTotalDetail, Mode=TwoWay, Source={StaticResource paymentViewSource}, UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBlock.Effect>
-                                        <DropShadowEffect Color="White" ShadowDepth="0" />
-                                    </TextBlock.Effect>
-                                </TextBlock>
+                                            <TextBlock.Effect>
+                                                <DropShadowEffect Color="White" ShadowDepth="0" />
+                                            </TextBlock.Effect>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                        <!-- Approve -->
-                        <Viewbox Margin="0" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
-                            <Grid Cursor="Hand" MouseDown="Save_Click" TouchDown="Save_Click" ToolTip="{lex:Loc Approve}">
-                                <Border CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="Left"
+
+                            <!-- Approve -->
+                            <Viewbox Margin="0" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <Grid Cursor="Hand" MouseDown="Save_Click" TouchDown="Save_Click" ToolTip="{lex:Loc Approve}">
+                                    <Border CornerRadius="5" VerticalAlignment="Center" HorizontalAlignment="Left"
                                 BorderBrush="White" BorderThickness="1" Margin="4,0,5,0">
-                                    <Border.Background>
-                                        <SolidColorBrush Color="White" Opacity="0.64" />
-                                    </Border.Background>
-                                    <StackPanel Orientation="Horizontal" Margin="2,0,24,0">
-                                        <TextBlock Style="{StaticResource text_Label}" Margin="4" FontSize="10" 
+                                        <Border.Background>
+                                            <SolidColorBrush Color="White" Opacity="0.64" />
+                                        </Border.Background>
+                                        <StackPanel Orientation="Horizontal" Margin="2,0,24,0">
+                                            <TextBlock Style="{StaticResource text_Label}" Margin="4" FontSize="10" 
                                            FontWeight="Medium" Foreground="Black">
                                     <Run Text="{lex:LocTextUpper Save}" />
                                     <Run Text="&amp;" />
                                     <Run Text="{lex:LocTextUpper Approve}" />
-                                        </TextBlock>
-                                    </StackPanel>
-                                </Border>
-                                <Border CornerRadius="32" Background="{StaticResource AccentColor_Brush2}" Width="32" Height="32" 
-                                VerticalAlignment="Top" HorizontalAlignment="Right"
-						        BorderBrush="White" BorderThickness="1">
-                                    <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="20"
-							        VerticalAlignment="Center" HorizontalAlignment="Center"
-							        Foreground="White" />
-                                </Border>
-                            </Grid>
-                        </Viewbox>
-                    </Grid>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border CornerRadius="32" Background="{StaticResource AccentColor_Brush2}" Width="32" Height="32" 
+                                        VerticalAlignment="Top" HorizontalAlignment="Right"
+						                BorderBrush="White" BorderThickness="1">
+                                        <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="20"
+							                VerticalAlignment="Center" HorizontalAlignment="Center"
+							                Foreground="White" />
+                                    </Border>
+                                </Grid>
+                            </Viewbox>
+                        </Grid>
+                    </ScrollViewer>
                 </TabItem>
             </TabControl>
 

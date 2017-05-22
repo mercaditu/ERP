@@ -33,7 +33,7 @@ namespace Cognitivo.Accounting
         public DateTime StartDate
         {
             get { return AbsoluteDate.Start(_StartDate); }
-            set { _StartDate = value; fill(); }
+            set { _StartDate = value; } //fill(); }
         }
 
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
@@ -41,7 +41,7 @@ namespace Cognitivo.Accounting
         public DateTime EndDate
         {
             get { return AbsoluteDate.End(_EndDate); }
-            set { _EndDate = value; fill(); }
+            set { _EndDate = value; } // fill(); }
         }
 
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
@@ -82,7 +82,6 @@ namespace Cognitivo.Accounting
                 Get_PurchaseReturnInvoice();
                 Get_SalesReturn();
                 Get_Payment();
-                //Get_ItemAsset();
                 Get_ProductionExecution();
             }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));

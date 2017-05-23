@@ -12,7 +12,7 @@ namespace Cognitivo.Sales {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
     public sealed partial class ReturnSetting : global::System.Configuration.ApplicationSettingsBase {
         
         private static ReturnSetting defaultInstance = ((ReturnSetting)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ReturnSetting())));

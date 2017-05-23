@@ -24,8 +24,10 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <TabItem Header="{lex:Loc Reports}" Background="Transparent">
-                <rv:ReportViewer x:Name="reportViewer" />
-            </TabItem>
+				<WindowsFormsHost>
+					<rv:ReportViewer x:Name="reportViewer" />
+					</WindowsFormsHost>
+			</TabItem>
             <TabItem Header="Data" Background="Transparent">
                 <syncfusion:SfDataGrid x:Name="sfdatagrid" VerticalAlignment="Stretch"
                                        NavigationMode="Cell" HideEmptyGridViewDefinition="True" EnableDataVirtualization="True"

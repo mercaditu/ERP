@@ -52,12 +52,68 @@ namespace cntrl
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        #endregion NotifyPropertyChanged
+		#endregion NotifyPropertyChanged
+		public DateTime StartDate
+		{
+			get
+			{
+				return (DateTime)GetValue(StartDateProperty);
+			}
+			set
+			{
+				SetValue(StartDateProperty, value);
+			}
+		}
 
-        public DateTime StartDate { get { return _StartDate; } set { _StartDate = value; RaisePropertyChanged("StartDate"); } }
-        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
-        public DateTime EndDate { get { return _EndDate; } set { _EndDate = value; RaisePropertyChanged("EndDate"); } }
-        private DateTime _EndDate = DateTime.Now;
+		public static DependencyProperty StartDateProperty = DependencyProperty.Register("StartDate", typeof(DateTime), typeof(toolBar), new PropertyMetadata(OnStartDateChangeCallBack));
+
+		public DateTime EndDate
+		{
+			get
+			{
+				return (DateTime)GetValue(EndDateProperty);
+			}
+			set
+			{
+				SetValue(EndDateProperty, value);
+			}
+		}
+
+		public static DependencyProperty EndDateProperty = DependencyProperty.Register("EndDate", typeof(DateTime), typeof(toolBar), new PropertyMetadata(OnEndDateChangeCallBack));
+
+		#region "INotifyPropertyChanged"
+
+		private static void OnStartDateChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+		{
+			toolBar c = sender as toolBar;
+			if (c != null)
+			{
+				c.OnStartDateChange((DateTime)e.NewValue);
+			}
+		}
+
+		protected virtual void OnStartDateChange(DateTime newvalue)
+		{
+			StartDate = DateTime.Now.AddMonths(-1);
+		}
+		private static void OnEndDateChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+		{
+			toolBar c = sender as toolBar;
+			if (c != null)
+			{
+				c.OnEndDateChange((DateTime)e.NewValue);
+			}
+		}
+
+		protected virtual void OnEndDateChange(DateTime newvalue)
+		{
+			EndDate = DateTime.Now;
+		}
+
+		#endregion "INotifyPropertyChanged"
+
+
+		
 
         public int TotalPending { get { return _TotalPending; } set { _TotalPending = value; RaisePropertyChanged("TotalPending"); } }
         private int _TotalPending = 0;

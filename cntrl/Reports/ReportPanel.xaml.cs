@@ -12,10 +12,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Xml.Linq;
-using Syncfusion.Windows.Reports;
-using System.Collections.Generic;
-
-//using System.Windows.Forms;
 
 namespace cntrl
 {
@@ -187,7 +183,7 @@ namespace cntrl
 		{
 			this.reportViewer.Reset();
 
-			Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+			ReportDataSource reportDataSource1 = new ReportDataSource();
 			Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
 			reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
@@ -199,21 +195,21 @@ namespace cntrl
 			reportStream = RdlcReportHelper.TranslateReport(reportStream);
 			reportViewer.LocalReport.LoadReportDefinition(reportStream);
 
-			Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter()
+			ReportParameter ParametersCost = new ReportParameter()
 			{
 				Name = "ParameterCost"
 			};
 
 			ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
 
-			Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter()
+			ReportParameter Parameters = new ReportParameter()
 			{
 				Name = "Parameters"
 			};
 
 			Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
-			reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
+			reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
 
 			reportViewer.Refresh();
 			reportViewer.RefreshReport();
@@ -223,7 +219,7 @@ namespace cntrl
 		{
 			reportViewer.Reset();
 
-			Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+			ReportDataSource reportDataSource1 = new ReportDataSource();
 			Class.Report Report = ReportViewSource.View.CurrentItem as Class.Report;
 
 			if (Report.Parameters.Where(x => x == Class.Report.Types.Project).Count() > 0)
@@ -267,11 +263,6 @@ namespace cntrl
 			ReportDt = dt;
 			sfdatagrid.ItemsSource = dt;
 			sfPivotTable.ItemSource = dt;
-			//Iterate through the list of Columns and localize the names.
-			//foreach (Syncfusion.UI.Xaml.Grid.GridColumn item in sfdatagrid.Columns)
-			//{
-			//    item.HeaderText = entity.Brillo.Localize.StringText(item.HeaderText);
-			//}
 
 			reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
 			reportDataSource1.Value = dt; //SalesDB.SalesByDate;
@@ -287,14 +278,14 @@ namespace cntrl
 				reportViewer.LocalReport.LoadReportDefinition(reportStream);
 			}
 
-			Microsoft.Reporting.WinForms.ReportParameter ParametersCost = new Microsoft.Reporting.WinForms.ReportParameter();
+			ReportParameter ParametersCost = new ReportParameter();
 			ParametersCost.Name = "ParameterCost";
 			ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
-			Microsoft.Reporting.WinForms.ReportParameter Parameters = new Microsoft.Reporting.WinForms.ReportParameter();
+			ReportParameter Parameters = new ReportParameter();
 			Parameters.Name = "Parameters";
 			Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
-			reportViewer.LocalReport.SetParameters(new Microsoft.Reporting.WinForms.ReportParameter[] { Parameters, ParametersCost });
+			reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
 
 			reportViewer.Refresh();
 			reportViewer.RefreshReport();
@@ -424,7 +415,8 @@ namespace cntrl
 			{
 				var options = new ExcelExportingOptions()
 				{
-					AllowOutlining = false
+                    
+					//AllowOutlining = false
 				};
 				var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
 				var workBook = excelEngine.Excel.Workbooks[0];

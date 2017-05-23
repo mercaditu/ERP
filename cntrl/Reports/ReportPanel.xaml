@@ -66,10 +66,10 @@
                 <Expander IsExpanded="True">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="&#xE81D;" Width="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
+                            <Button Content="" Width="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"
                                     FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="16"
                                     Style="{DynamicResource MetroCircleButtonStyle}" />
-                            <Label Content="{lex:Loc Parameters}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                            <Label Content="{lex:Loc Range}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
                         </StackPanel>
                     </Expander.Header>
                     <local:DateRange x:Name="DateRange" StartDate="{Binding StartDate, ElementName=this, Mode=TwoWay}"
@@ -86,10 +86,7 @@
                         </StackPanel>
                     </Expander.Header>
                     <StackPanel>
-                        <StackPanel.Background>
-                            <SolidColorBrush Color="White" Opacity="0.64" />
-                        </StackPanel.Background>
-                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Project}" />
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Project}" Foreground="White"/>
                         <ComboBox SelectedValuePath="id_project" DisplayMemberPath="name" SelectedValue="{Binding ProjectID, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   x:Name="ComboProject" Style="{StaticResource input_combobox}" />
                     </StackPanel>
@@ -130,13 +127,13 @@
                 </Expander>
                 <Expander>
                     <Expander.Header>
-                        <Label Content="{lex:Loc Share}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
+                        <Label Content="{lex:Loc Export}" FontWeight="Light" HorizontalAlignment="Center" Style="{StaticResource H3}" />
                     </Expander.Header>
                     <Button Content="Excel" Style="{StaticResource btn_green}" Click="Export_Click" />
                 </Expander>
             </StackPanel>
         </ScrollViewer>
         <local:toolIcon Click="Edit_Click" Grid.Column="1" icoName="{lex:Loc Designer}" imgSource="" Margin="4"
-                        VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                        VerticalAlignment="Top" HorizontalAlignment="Right" />
     </Grid>
 </UserControl>

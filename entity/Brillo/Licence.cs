@@ -136,7 +136,7 @@ namespace entity.Brillo
             }
             catch
             {
-
+                //Do nothing for now.
             }
         }
     }

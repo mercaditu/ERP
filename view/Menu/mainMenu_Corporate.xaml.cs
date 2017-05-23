@@ -17,7 +17,7 @@ namespace Cognitivo.Menu
     public partial class mainMenu_Corporate : Page
     {
         private AppList appList = new AppList();
-        private MainWindow rootWindow;// = Application.Current.MainWindow as MainWindow;
+        private MainWindow rootWindow;
 
         public bool SearchMode
         {
@@ -57,15 +57,60 @@ namespace Cognitivo.Menu
 
             using (db db = new db())
             {
-                string Version = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).Select(x => x.version).FirstOrDefault();
-                security_user security_user = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+                string SerialKey = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).Select(x => x.version).FirstOrDefault();
+                security_user UserInfo = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+                app_company CompanyInfo = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
-                if (string.IsNullOrEmpty(Version) == false && security_user != null)
+                if (string.IsNullOrEmpty(SerialKey) == false && UserInfo != null)
                 {
-                    Licence.VerifyCompanyLicence(Version, (int)security_user.security_role.Version, db.security_user.Where(x => x.security_role.version == security_user.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
-                    // check current role version and see if limit is not exceeded.
-                    // if exceded, figure out what to do.maybe message box reduce automatically to lite ???
-                    //if not continue without trouble.
+                    Licence.VerifyCompanyLicence(SerialKey, (int)UserInfo.security_role.Version, db.security_user.Where(x => x.security_role.version == UserInfo.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
+                    
+                    //Check if Company Name and data is correct.
+                    if (Licence.CompanyLicence.company_name == CompanyInfo.name && 
+                        Licence.CompanyLicence.company_code == CompanyInfo.gov_code)
+                    {
+                        //Check if Version is Lite. If it is, do nothing because it's free.
+                        if (UserInfo.security_role.Version != CurrentSession.Versions.Lite)
+                        {
+                            //Check if Version is Expired Online.
+                            if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault()
+                                .date_expiry >= DateTime.Now)
+                            {
+                                //Not Expired. Check for UserCount.
+                                int LocalCount = db.security_user.Where(x => x.security_role.Version == UserInfo.security_role.Version && x.is_active).Count();
+                                if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault()
+                                    .web_user_count < LocalCount)
+                                {
+                                    //Local Count exceeds Reigstered Count. Inactivate old users automatically.
+
+                                }
+                                else
+                                {
+                                    //WebUser Count less than or equal Local User Count. Do Nothing
+
+                                }
+                            }
+                            else
+                            {
+                                //Expired. Change to Lite Version
+                                UserInfo.security_role.Version = CurrentSession.Versions.Lite;
+                                db.SaveChangesAsync();
+                            }
+                        }
+                        else
+                        {
+
+                            //Do Nothing
+                        }
+                    }
+                    else
+                    {
+                        //Register new company. 
+
+                        //and update Version back into database. Save Changes.
+                        CompanyInfo.version = "abc";
+                        db.SaveChangesAsync();
+                    }
                 }
             }
         }

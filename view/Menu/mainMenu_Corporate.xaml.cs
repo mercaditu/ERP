@@ -64,59 +64,62 @@ namespace Cognitivo.Menu
                 if (string.IsNullOrEmpty(SerialKey) == false && UserInfo != null)
                 {
                     Licence.VerifyCompanyLicence(SerialKey, (int)UserInfo.security_role.Version, db.security_user.Where(x => x.security_role.version == UserInfo.security_role.version && x.id_company == CurrentSession.Id_Company).Count());
-                    
-                    //Check if Company Name and data is correct.
-                    if (Licence.CompanyLicence.company_name == CompanyInfo.name && 
-                        Licence.CompanyLicence.company_code == CompanyInfo.gov_code)
+
+                    if (Licence.CompanyLicence != null)
                     {
-                        //Check if Version is Lite. If it is, do nothing because it's free.
-                        if (UserInfo.security_role.Version != CurrentSession.Versions.Lite)
+                        //Check if Company Name and data is correct.
+                        if (Licence.CompanyLicence.company_name == CompanyInfo.name &&
+                            Licence.CompanyLicence.company_code == CompanyInfo.gov_code)
                         {
-                            //Check if Version is Expired Online.
-                            if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault()
-                                .date_expiry >= DateTime.Now)
+                            //Check if Version is Lite. If it is, do nothing because it's free.
+                            if (UserInfo.security_role.Version != CurrentSession.Versions.Lite)
                             {
-                                //Not Expired. Check for UserCount.
-                                int Local_UserCount = db.security_user.Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active).Count();
-                                int Web_UserCount = Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault().web_user_count;
-
-                                if (Web_UserCount < Local_UserCount)
+                                //Check if Version is Expired Online.
+                                if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault()
+                                    .date_expiry >= DateTime.Now)
                                 {
-                                    //Local Count exceeds Reigstered Count. Inactivate old users automatically.
-                                    List<security_user> UserList = db.security_user
-                                        .Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active)
-                                        .OrderBy(x => x.trans_date).Take(Web_UserCount - Local_UserCount).ToList();
-                                    foreach (var user in UserList)
-                                    {
-                                        user.is_active = false;
-                                    }
+                                    //Not Expired. Check for UserCount.
+                                    int Local_UserCount = db.security_user.Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active).Count();
+                                    int Web_UserCount = Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault().web_user_count;
 
-                                    db.SaveChangesAsync();
+                                    if (Web_UserCount < Local_UserCount)
+                                    {
+                                        //Local Count exceeds Reigstered Count. Inactivate old users automatically.
+                                        List<security_user> UserList = db.security_user
+                                            .Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active)
+                                            .OrderBy(x => x.trans_date).Take(Web_UserCount - Local_UserCount).ToList();
+                                        foreach (var user in UserList)
+                                        {
+                                            user.is_active = false;
+                                        }
+
+                                        db.SaveChangesAsync();
+                                    }
+                                    else
+                                    {
+                                        //WebUser Count less than or equal Local User Count. 
+                                        //Do Nothing
+                                    }
                                 }
                                 else
                                 {
-                                    //WebUser Count less than or equal Local User Count. 
-                                    //Do Nothing
+                                    //Expired. Change to Lite Version
+                                    UserInfo.security_role.Version = CurrentSession.Versions.Lite;
+                                    db.SaveChangesAsync();
                                 }
                             }
                             else
                             {
-                                //Expired. Change to Lite Version
-                                UserInfo.security_role.Version = CurrentSession.Versions.Lite;
-                                db.SaveChangesAsync();
+                                //Do Nothing
                             }
                         }
                         else
                         {
-                            //Do Nothing
+                            //Register new company. 
+                            //and update Version back into database. Save Changes.
+                            CompanyInfo.version = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
+                            db.SaveChangesAsync();
                         }
-                    }
-                    else
-                    {
-                        //Register new company. 
-                        //and update Version back into database. Save Changes.
-                        CompanyInfo.version = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
-                        db.SaveChangesAsync();
                     }
                 }
             }

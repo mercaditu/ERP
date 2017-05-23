@@ -42,6 +42,8 @@
                         <TextBox x:Name="txtalias" Style="{StaticResource input_textbox}" />
                         <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}" />
                         <TextBox  x:Name="txtGovID" Style="{StaticResource input_textbox}" />
+                        <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}" />
+                        <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}" />
                     </StackPanel>
 
                     <Rectangle Style="{StaticResource line_Bar}" />

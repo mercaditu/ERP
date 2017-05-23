@@ -77,17 +77,26 @@ namespace Cognitivo.Menu
                                 .date_expiry >= DateTime.Now)
                             {
                                 //Not Expired. Check for UserCount.
-                                int LocalCount = db.security_user.Where(x => x.security_role.Version == UserInfo.security_role.Version && x.is_active).Count();
-                                if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault()
-                                    .web_user_count < LocalCount)
+                                int Local_UserCount = db.security_user.Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active).Count();
+                                int Web_UserCount = Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault().web_user_count;
+
+                                if (Web_UserCount < Local_UserCount)
                                 {
                                     //Local Count exceeds Reigstered Count. Inactivate old users automatically.
+                                    List<security_user> UserList = db.security_user
+                                        .Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active)
+                                        .OrderBy(x => x.trans_date).Take(Web_UserCount - Local_UserCount).ToList();
+                                    foreach (var user in UserList)
+                                    {
+                                        user.is_active = false;
+                                    }
 
+                                    db.SaveChangesAsync();
                                 }
                                 else
                                 {
-                                    //WebUser Count less than or equal Local User Count. Do Nothing
-
+                                    //WebUser Count less than or equal Local User Count. 
+                                    //Do Nothing
                                 }
                             }
                             else
@@ -99,16 +108,14 @@ namespace Cognitivo.Menu
                         }
                         else
                         {
-
                             //Do Nothing
                         }
                     }
                     else
                     {
                         //Register new company. 
-
                         //and update Version back into database. Save Changes.
-                        CompanyInfo.version = "abc";
+                        CompanyInfo.version = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
                         db.SaveChangesAsync();
                     }
                 }

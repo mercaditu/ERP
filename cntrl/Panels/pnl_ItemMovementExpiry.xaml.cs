@@ -132,9 +132,17 @@ namespace cntrl.Panels
                 }
             }
         }
-    }
 
-    public class ExpiryInStock
+		private void txtsearch_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+			{
+				TextBox_TextChanged(null, null);
+			}
+		}
+	}
+
+	public class ExpiryInStock
     {
         public int MovementID { get; set; }
         public string Location { get; set; }

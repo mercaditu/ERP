@@ -149,7 +149,7 @@
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Effects">
-      <HintPath>..\..\..\..\..\Desktop\Microsoft.Expression.Effects.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Expression.Effects.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl.WPF">
       <HintPath>..\packages\Microsoft.Maps.MapControl.WPF.1.0.0.3\lib\net40-Client\Microsoft.Maps.MapControl.WPF.dll</HintPath>

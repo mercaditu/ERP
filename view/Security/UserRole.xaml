@@ -38,7 +38,7 @@
 				 ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentColor_Brush}"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.RowSpan="2"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-				 ItemsSource="{Binding Source={StaticResource security_roleViewSource}}" SelectionChanged="Security_roleDataGrid_SelectionChanged">
+				 ItemsSource="{Binding Source={StaticResource security_roleViewSource}}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordSecondaryName="{Binding is_master}"

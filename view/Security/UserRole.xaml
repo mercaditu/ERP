@@ -67,7 +67,7 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <StackPanel Orientation="Horizontal" Height="101">
+                <StackPanel Orientation="Horizontal" Height="101" Visibility="Hidden">
                     <DataGrid x:Name="VersionGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
 							 CanUserAddRows="False" IsReadOnly="True" 
 							  RowDetailsVisibilityMode="VisibleWhenSelected" Width="284">

@@ -122,7 +122,14 @@ namespace Cognitivo.Menu
                         }
                     }
                 }
-            }
+				else
+				{
+					//Register new company. 
+					//and update Version back into database. Save Changes.
+					CompanyInfo.version = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
+					db.SaveChangesAsync();
+				}
+			}
         }
 
         private void Add2Favorites(object sender, RoutedEventArgs e)

@@ -105,7 +105,12 @@ namespace entity.Brillo.Document
                 item_request item_request = (item_request)Document;
                 return ItemRequest(item_request);
             }
-            else if (AppName == typeof(production_execution_detail).ToString() || BaseName == typeof(production_execution_detail).ToString())
+			else if (AppName == typeof(item_recepie).ToString() || BaseName == typeof(item_recepie).ToString())
+			{
+				item_recepie item_recepie = (item_recepie)Document;
+				return ItemRecepie(item_recepie);
+			}
+			else if (AppName == typeof(production_execution_detail).ToString() || BaseName == typeof(production_execution_detail).ToString())
             {
                 if ((production_order)Document != null)
                 {
@@ -699,7 +704,26 @@ namespace entity.Brillo.Document
 
             return reportDataSource;
         }
-        public ReportDataSource ProductionExecutionDetail(production_order production_order)
+		public ReportDataSource ItemRecepie(item_recepie item_recepie)
+		{
+			reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+			List<item_recepie_detail> item_recepie_detail = item_recepie.item_recepie_detail.ToList();
+
+			reportDataSource.Value = item_recepie_detail
+				.Select(g => new
+				{
+					receipe_item_code =g.item_recepie!=null?g.item_recepie.item != null ? g.item_recepie.item.code :"": "",
+					receipe_item_name =g.item_recepie != null ? g.item_recepie.item != null ? g.item_recepie.item.name : "" : "",
+					item_code = g.item != null ? g.item.code : "",
+					item_name = g.item != null ? g.item.name : "",
+					quantity = g.quantity,
+					
+					
+				}).ToList();
+
+			return reportDataSource;
+		}
+		public ReportDataSource ProductionExecutionDetail(production_order production_order)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             //List<production_execution_detail> Listproduction_execution_detail = new List<entity.production_execution_detail>();

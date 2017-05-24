@@ -96,6 +96,7 @@ namespace cntrl.Class
                 ReplaceWithString="sales_return"
             },
 
+
             /// Sales (Invoice, Order, and Budget) ByCustomer Reports
 
             new Report
@@ -386,6 +387,15 @@ namespace cntrl.Class
                 Query = Reports.Stock.TransferSummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
+										 new Report
+			{
+				Application = entity.App.Names.Recipe,
+				Name =entity.Brillo.Localize.StringText("Recipe")!= string.Empty ? entity.Brillo.Localize.StringText("Recipe") :"Recipe",
+				Path = "cntrl.Reports.Stocks.ItemReceipe.rdlc",
+				Query =  Reports.Stock.ItemReceipe.query,
+				Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+				
+			},
 
               //CONTACTS
                  new Report

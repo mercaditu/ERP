@@ -416,7 +416,7 @@ namespace cntrl
 				var options = new ExcelExportingOptions()
 				{
                     
-					//AllowOutlining = false
+					AllowOutlining = false
 				};
 				var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
 				var workBook = excelEngine.Excel.Workbooks[0];

@@ -12,26 +12,6 @@
 			 lex:ResxLocalizationProvider.DefaultDictionary="local"
 			 Height="40" MinWidth="600" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <!--<Storyboard x:Key="FormClick">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.32" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderGrid">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.32" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="GridClick">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.32" />
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderGrid">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.32" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>-->
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <Storyboard x:Key="SyncActivate">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="btnSync">
@@ -57,9 +37,6 @@
         </Storyboard>
     </UserControl.Resources>
     <UserControl.Triggers>
-        <!--<EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard x:Name="FormClick_BeginStoryboard" Storyboard="{StaticResource FormClick}" />
-        </EventTrigger>-->
         <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="btnSync">
             <BeginStoryboard x:Name="SyncDeactivate_BeginStoryboard" Storyboard="{StaticResource SyncDeactivate}" />
         </EventTrigger>
@@ -72,9 +49,6 @@
     </UserControl.Triggers>
     <Grid x:Name="gridButtons">
         <Grid Background="White">
-            <!--<Grid.Effect>
-				<DropShadowEffect ShadowDepth="2" Color="#232f3c" Direction="270" Opacity="0.32" BlurRadius="4" />
-			</Grid.Effect>-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="3*" />

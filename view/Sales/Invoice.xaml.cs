@@ -39,6 +39,9 @@ namespace Cognitivo.Sales
                 //Load Controller.
                 SalesDB.Initialize();
                 SalesDB.LoadPromotion();
+
+                SalesDB.RaisePropertyChanged("Start_Range");
+                SalesDB.RaisePropertyChanged("End_Range");
             }
         }
 

@@ -48,58 +48,6 @@ namespace entity
         public DateTime? expire_date { get; set; }
         public string batch_code { get; set; }
 
-        [NotMapped]
-        public bool AllowedQuantity
-        {
-            get
-            {
-                if (CurrentSession.Allow_UpdateSalesDetail == false)
-                {
-                    return true;
-                }
-                else
-                {
-                    if (sales_packing_relation.Count() > 0)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            set
-            {
-                _AllowedQuantity = value;
-            }
-        }
-
-        private bool _AllowedQuantity;
-
-        [NotMapped]
-        public bool AllowedPrice
-        {
-            get
-            {
-                if (CurrentSession.Allow_UpdateSalesDetail == false)
-                {
-                    return true;
-                }
-                else
-                {
-                    if (this.sales_order_detail != null)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            set
-            {
-                _AllowedPrice = value;
-            }
-        }
-
-        private bool _AllowedPrice;
-
         #region "Nav Properties"
 
         public virtual sales_invoice sales_invoice
@@ -164,17 +112,28 @@ namespace entity
                 if (columnName == "id_item")
                 {
                     if (id_item == 0)
+                    {
                         return Brillo.Localize.PleaseSelect;
+                    }
                 }
                 if (columnName == "quantity")
                 {
                     if (quantity == 0)
+                    {
                         return "Quantity can not be zero";
+                    }
+                    else if (Quantity_InStockLot != null)
+                    {
+                        if (Quantity_InStockLot < quantity)
+                        {
+                            return "Stock Exceeded";
+                        }
+                    }
                 }
                 if (columnName == "unit_price")
                 {
                     if (unit_price < 0)
-                        return "Cannot be less than Zero";
+                        return "Cannot be less than zero";
                 }
                 return "";
             }

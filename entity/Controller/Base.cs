@@ -1,13 +1,24 @@
 ﻿using entity.Brillo;
 using System;
+using System.ComponentModel;
 using System.Data.Entity;
-using System.Linq;
 using System.Windows;
 
 namespace entity.Controller
 {
-    public class Base
+    public class Base: INotifyPropertyChanged
     {
+        #region RaiseProperty
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        #endregion
+        
         public db db { get; set; }
 
         public int NumberOfRecords;
@@ -20,10 +31,11 @@ namespace entity.Controller
                 if (_start_Range != value)
                 {
                     _start_Range = value;
+                    RaisePropertyChanged("Start_Range");
                 }
             }
         }
-        private DateTime _start_Range = DateTime.Now.AddDays(-7);
+        private DateTime _start_Range = DateTime.Now.AddMonths(-1);
 
         public DateTime End_Range
         {
@@ -33,6 +45,7 @@ namespace entity.Controller
                 if (_end_Range != value)
                 {
                     _end_Range = value;
+                    RaisePropertyChanged("End_Range");
                 }
             }
         }

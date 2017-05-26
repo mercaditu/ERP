@@ -182,12 +182,14 @@ namespace Cognitivo.Sales
 
                     if (item_product != null && item_product.can_expire)
                     {
+                        //If Item can Expire, then show panel
                         crud_modalExpire.Visibility = Visibility.Visible;
                         cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_invoice.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
                         crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                     }
                     else
                     {
+                        //If Item is normal, then directly insert with QuantityInStock.
                         decimal QuantityInStock = sbxItem.QuantityInStock;
                         sales_invoice_detail _sales_invoice_detail =
                               SalesDB.Create_Detail(ref sales_invoice, item, null,
@@ -413,13 +415,16 @@ namespace Cognitivo.Sales
                         Settings SalesSettings = new Settings();
 
                         item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-                        decimal QuantityInStock = sbxItem.QuantityInStock;
+                        decimal QuantityInStock = item_movement.avlquantity;
 
                         sales_invoice_detail _sales_invoice_detail =
                               SalesDB.Create_Detail(ref sales_invoice, item, null,
                                 SalesSettings.AllowDuplicateItem,
                                 sbxItem.QuantityInStock,
                                 sbxItem.Quantity);
+                        _sales_invoice_detail.Quantity_InStockLot = QuantityInStock;
+
+                        //Update Grand Total
                         (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
                     }
                 }

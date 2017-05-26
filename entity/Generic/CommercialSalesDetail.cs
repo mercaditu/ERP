@@ -113,6 +113,9 @@ namespace entity
         public decimal? Quantity_InStock { get; set; }
 
         [NotMapped]
+        public decimal? Quantity_InStockLot { get; set; }
+
+        [NotMapped]
         public bool InStock { get; set; }
 
 		[NotMapped]

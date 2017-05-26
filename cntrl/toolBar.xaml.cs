@@ -519,10 +519,12 @@ namespace cntrl
 
         private toolIcon bind_toolIcon(toolIcon toolIcon, string property, bool do_opposite)
         {
-            Binding Binding = new Binding();
-            Binding.Source = this;
-            Binding.Path = new PropertyPath(property);
-            Binding.Mode = BindingMode.TwoWay;
+            Binding Binding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath(property),
+                Mode = BindingMode.TwoWay
+            };
 
             if (do_opposite)
             {
@@ -537,12 +539,14 @@ namespace cntrl
 
         private toolIcon bindNumber_toolIcon(toolIcon toolIcon, string property)
         {
-            Binding Binding = new Binding();
-            Binding.Source = this;
-            Binding.Path = new PropertyPath(property);
-            Binding.Mode = BindingMode.TwoWay;
+            Binding Binding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath(property),
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
 
-            Binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             toolIcon.SetBinding(toolIcon.qtyNotificationProperty, Binding);
             return toolIcon;
         }
@@ -685,24 +689,6 @@ namespace cntrl
         private void remove_Message(toolMessage toolMessage)
         {
             stackMessages.Children.Remove(toolMessage);
-        }
-
-        /// <summary>
-        /// Updates the IsSelected_GridView = True, this is used by the forms to update tab control.
-        /// </summary>
-        private void btnGridView_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            IsSelected_GridView = true;
-            IsSelected_FormView = false;
-        }
-
-        /// <summary>
-        /// Updates the IsSelected_FormView = True, this is used by the forms to update tab control.
-        /// </summary>
-        private void btnFormView_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            IsSelected_GridView = false;
-            IsSelected_FormView = true;
         }
     }
 }

@@ -115,10 +115,13 @@ namespace entity
         [NotMapped]
         public bool InStock { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        [Required]
+		[NotMapped]
+		public decimal? Max_Stock { get; set; }
+
+		/// <summary>
+		///
+		/// </summary>
+		[Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int? id_vat_group
         {

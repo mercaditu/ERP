@@ -31,7 +31,6 @@ namespace Cognitivo.Configs
 
         private CollectionViewSource app_accountViewSource
             , app_account_listViewSource
-            , app_account_detail_adjustViewSource
             , app_accountapp_account_detailViewSource
             , app_account_detailViewSource
             , amount_transferViewSource = null;
@@ -189,7 +188,6 @@ namespace Cognitivo.Configs
             amount_transferViewSource.View.Refresh();
             app_accountViewSource.View.Refresh();
             app_accountapp_account_detailViewSource.View.Refresh();
-            app_account_detail_adjustViewSource.View.Refresh();
             toolBar.msgSaved(1);
         }
 

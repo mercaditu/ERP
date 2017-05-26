@@ -128,7 +128,7 @@
                 <TabItem x:Name="tabTable">
                     <Grid>
                         <StackPanel>
-                            <Button FontSize="16"
+                            <Button FontSize="16" Click="Button_Click"
                                 Margin="16" Style="{StaticResource btn_green}">
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="+"/>

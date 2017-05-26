@@ -59,7 +59,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder", entity.CurrentSession.Versions.Medium, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Invoice", entity.App.Names.SalesInvoice, "Sales", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.PointofSale", entity.App.Names.PointOfSale, "PointofSale", entity.CurrentSession.Versions.Lite, "0");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Return", entity.App.Names.SalesReturn, "SalesReturn", entity.CurrentSession.Versions.Basic, "1");
+			dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Restaurant", entity.App.Names.Resturant, "PointofSale", entity.CurrentSession.Versions.Lite, "0");
+			dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Transaction, "Sales.Return", entity.App.Names.SalesReturn, "SalesReturn", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Financial, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespaces.Inventory, "Sales.PackingList", entity.App.Names.PackingList, "PackingListSend", entity.CurrentSession.Versions.Medium, "0");

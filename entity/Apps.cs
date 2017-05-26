@@ -442,7 +442,9 @@ namespace entity
             [LocalizedDescription("Version")]
             Version = 128,
 
-            TechnicalReport = 137
-        }
+            TechnicalReport = 137,
+			[LocalizedDescription("Resturant")]
+			Resturant = 144
+		}
     }
 }

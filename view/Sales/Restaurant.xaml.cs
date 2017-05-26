@@ -428,7 +428,7 @@ namespace Cognitivo.Sales
 				sales_invoiceViewSource.View.Refresh();
 				CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
 				sales_invoicesales_invoice_detailViewSource.View.Refresh();
-				paymentViewSource.View.Refresh();
+				//paymentViewSource.View.Refresh();
 
 				//Cleans for reuse.
 				crud_modalExpire.Children.Clear();

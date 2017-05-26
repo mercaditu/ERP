@@ -73,30 +73,35 @@ namespace cntrl.Controls
 
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            if (contactViewSource.View != null)
-            {
-                if (contactViewSource.View.CurrentItem is entity.BrilloQuery.Contact Contact)
-                {
-                    ContactID = Contact.ID;
-                    Text = Contact.Name;
+			if (contactViewSource != null)
+			{
 
-                    //If Autoshow is true, then the contact information will show automatically.
-                    if (AutoShow)
-                    {
-                        OpenContactCRUD(null, null);
-                    }
 
-                    //This helps close the popup to make way for other data.
-                    popContact.IsOpen = false;
+				if (contactViewSource.View != null)
+				{
+					if (contactViewSource.View.CurrentItem is entity.BrilloQuery.Contact Contact)
+					{
+						ContactID = Contact.ID;
+						Text = Contact.Name;
 
-                    Select?.Invoke(this, new RoutedEventArgs());
-                }
-                else
-                {
-                    //This will allow user to create a new Contact with pressing enter.
-                    OpenContactCRUD(null, null);
-                }
-            }
+						//If Autoshow is true, then the contact information will show automatically.
+						if (AutoShow)
+						{
+							OpenContactCRUD(null, null);
+						}
+
+						//This helps close the popup to make way for other data.
+						popContact.IsOpen = false;
+
+						Select?.Invoke(this, new RoutedEventArgs());
+					}
+					else
+					{
+						//This will allow user to create a new Contact with pressing enter.
+						OpenContactCRUD(null, null);
+					}
+				}
+			}
         }
 
         public IQueryable<entity.BrilloQuery.Contact> ContactList { get; set; }

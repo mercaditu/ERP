@@ -177,7 +177,7 @@ namespace Cognitivo.Sales
 					paymentViewSource.Source = PaymentDB.db.payments.Local;
 					paymentViewSource.View.MoveCurrentTo(payment);
 
-					tabTable.Focus();
+					
 					
 
 					
@@ -227,7 +227,7 @@ namespace Cognitivo.Sales
 			//  New_Sale_Payment();
 
 			sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-			SalesDB.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.id_branch == CurrentSession.Id_Branch).Load();
+			SalesDB.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.id_branch == CurrentSession.Id_Branch && x.status==Status.Documents_General.Pending && x.is_archived==false && x.is_head).Load();
 			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
 

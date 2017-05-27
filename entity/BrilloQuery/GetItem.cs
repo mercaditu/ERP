@@ -55,7 +55,7 @@ namespace entity.BrilloQuery
                     }
 
                     Item Item = new Item();
-                    Item.ID = Convert.ToInt16(DataRow["ID"]);
+                    Item.ID = Convert.ToInt32(DataRow["ID"]);
                     Item.Type = (item.item_type)type;
                     Item.IsProduct = Is_Product;
                     Item.IsActive = Convert.ToBoolean(DataRow["IsActive"]);

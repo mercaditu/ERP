@@ -56,9 +56,9 @@ namespace Cognitivo.Setup.Migration
         private void basic()
         {
             Dispatcher.BeginInvoke((Action)(() => progBasic.IsIndeterminate = true));
+
             //Company, Branch, Terminal, & Location
             sync_Company();
-            //Users;
 
             //Contact Role
             sync_ContactRole();
@@ -79,9 +79,7 @@ namespace Cognitivo.Setup.Migration
             //??Contract??
             sync_Contracts();
             sync_SalesRep();
-
-            sync_MeasureList();
-
+            
             sync_country();
             sync_state();
             sync_city();
@@ -117,14 +115,20 @@ namespace Cognitivo.Setup.Migration
 
         public app_contract GenerateDefaultContrat(app_condition app_condition, int interval)
         {
-            app_contract app_contract = new app_contract();
-            app_contract.app_condition = app_condition;
-            app_contract.name = interval.ToString() + " Días";
-            app_contract_detail _app_contract_detail = new app_contract_detail();
-            _app_contract_detail.coefficient = 1;
-            _app_contract_detail.app_contract = app_contract;
-            _app_contract_detail.interval = (short)interval;
-            _app_contract_detail.is_order = false;
+            app_contract app_contract = new app_contract()
+            {
+                app_condition = app_condition,
+                name = interval.ToString() + " Días"
+            };
+
+            app_contract_detail _app_contract_detail = new app_contract_detail()
+            {
+                coefficient = 1,
+                app_contract = app_contract,
+                interval = (short)interval,
+                is_order = false
+            };
+
             app_contract.app_contract_detail.Add(_app_contract_detail);
             return app_contract;
         }
@@ -197,16 +201,42 @@ namespace Cognitivo.Setup.Migration
 
                 sync_Users();
 
-                id_user = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
-                CurrentSession.Id_User = id_company;
+                if (CurrentSession.Id_User == 0)
+                {
+                    security_role Role = new security_role()
+                    {
+                        name = "Master",
+                        is_master = true,
+                        id_company = CurrentSession.Id_Company
+                    };
+
+                    dbContext.security_role.Add(Role);
+                    dbContext.SaveChanges();
+
+                    security_user User = new security_user()
+                    {
+                        name = "RIA Asistant",
+                        name_full = "RIA Migration Asistant",
+                        password = "2010MigrationAsistant",
+                        id_role = Role.id_role
+                    };
+
+                    dbContext.security_user.Add(User);
+                    dbContext.SaveChanges();
+                    id_user = User.id_user;
+                    CurrentSession.Id_User = User.id_user;
+                }
 
                 foreach (DataRow row_Branch in dt_Branch.Rows)
                 {
-                    app_branch _app_branch = new app_branch();
-                    _app_branch.id_company = id_company;
-                    _app_branch.name = row_Branch["DESSUCURSAL"].ToString();
-                    _app_branch.code = row_Branch["SUCURSALTIMBRADO"].ToString();
-                    _app_branch.can_invoice = (row_Branch["TIPOSUCURSAL"].ToString().Contains("Factura")) ? true : false;
+                    app_branch _app_branch = new app_branch()
+                    {
+                        id_company = id_company,
+                        name = row_Branch["DESSUCURSAL"].ToString(),
+                        code = row_Branch["SUCURSALTIMBRADO"].ToString(),
+                        can_invoice = (row_Branch["TIPOSUCURSAL"].ToString().Contains("Factura")) ? true : false
+                    };
+
                     if (_DataBase.ToLower() == "fiparsa" || _DataBase.ToLower() == "fipar")
                     {
                         _app_branch.can_stock = true;
@@ -229,10 +259,12 @@ namespace Cognitivo.Setup.Migration
 
                     foreach (DataRow row_Terminal in dt_Terminal.Select("CODSUCURSAL = " + id_branchString))
                     {
-                        app_terminal app_terminal = new app_terminal();
-                        app_terminal.is_active = true;
-                        app_terminal.code = row_Terminal["NUMMAQUINA"].ToString();
-                        app_terminal.name = row_Terminal["NOMBRE"].ToString();
+                        app_terminal app_terminal = new app_terminal()
+                        {
+                            is_active = true,
+                            code = row_Terminal["NUMMAQUINA"].ToString(),
+                            name = row_Terminal["NOMBRE"].ToString()
+                        };
                         _app_branch.app_terminal.Add(app_terminal);
                     }
 
@@ -262,12 +294,15 @@ namespace Cognitivo.Setup.Migration
         {
             using (db db = new db())
             {
-                contact_role contact_role = new contact_role();
-                contact_role.id_company = id_company;
-                contact_role.is_active = true;
-                contact_role.is_principal = true;
-                contact_role.can_transact = true;
-                contact_role.name = "Contacto Principal";
+                contact_role contact_role = new contact_role()
+                {
+                    id_company = id_company,
+                    is_active = true,
+                    is_principal = true,
+                    can_transact = true,
+                    name = "Contacto Principal"
+                };
+
                 db.contact_role.Add(contact_role);
                 db.SaveChanges();
             }
@@ -470,33 +505,6 @@ namespace Cognitivo.Setup.Migration
             dbContext.SaveChanges();
         }
 
-        private void sync_MeasureList()
-        {
-            //DataTable dt = exeDT("SELECT * FROM UNIDADMEDIDA");
-
-            //app_measurement_type measure_type = new app_measurement_type();
-            //measure_type.id_company = id_company;
-            //measure_type.id_user = id_user;
-            //measure_type.name = "Unit";
-
-            //foreach (DataRow row in dt.Rows)
-            //{
-            //    app_measurement app_measurement = new app_measurement();
-            //    app_measurement.name = (string)row["DESMEDIDA"];
-            //    app_measurement.id_company = id_company;
-            //    app_measurement.id_user = id_user;
-            //    app_measurement.code_iso = (row["SIMBOLO"] == null) ? " " : row["SIMBOLO"].ToString();
-            //    //app_measurement.app_measurement_type = measure_type;
-
-            //    measure_type.app_measurement.Add(app_measurement);
-            //}
-
-            //dbContext.app_measurement_type.Add(measure_type);
-
-            //dt.Clear();
-            //dbContext.SaveChanges();
-        }
-
         private void sync_TagsList()
         {
             DataTable dt = new DataTable();
@@ -579,10 +587,13 @@ namespace Cognitivo.Setup.Migration
             DataTable dt = exeDT("SELECT * FROM PAIS");
             foreach (DataRow row in dt.Rows)
             {
-                app_geography app_geography = new app_geography();
-                app_geography.code = (string)row["DESPAIS"];
-                app_geography.name = (string)row["DESPAIS"];
-                app_geography.type = Status.geo_types.Country;
+                app_geography app_geography = new app_geography()
+                {
+                    code = (string)row["DESPAIS"],
+                    name = (string)row["DESPAIS"],
+                    type = Status.geo_types.Country
+                };
+
                 dbContext.app_geography.Add(app_geography);
             }
             dt.Clear();
@@ -676,10 +687,13 @@ namespace Cognitivo.Setup.Migration
         {
             try
             {
-                security_role security_role = new security_role();
-                security_role.is_active = true;
-                security_role.name = "Administrador";
-                security_role.id_company = id_company;
+                security_role security_role = new security_role()
+                {
+                    is_active = true,
+                    name = "Administrador",
+                    id_company = id_company
+                };
+
                 dbContext.security_role.Add(security_role);
                 dbContext.SaveChanges();
                 DataTable dt = exeDT("SELECT * FROM USUARIO");

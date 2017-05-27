@@ -14,7 +14,7 @@ namespace Cognitivo.Setup.Migration
 {
     public partial class MigrationAssistant : Page
     {
-        public entity.db dbContext { get; set; }
+        public db dbContext { get; set; }
 
         public bool SalesInvoice;
         public bool SalesReturn;
@@ -48,20 +48,10 @@ namespace Cognitivo.Setup.Migration
         {
             InitializeComponent();
             dbContext = new db();
-            id_company = CurrentSession.Id_Company;
 
             //Sets the DatePicker to the first day of current year.
             int year = DateTime.Now.Year;
             dtpStartDate.SelectedDate = new DateTime(year, 1, 1);
-
-            if (CurrentSession.Id_User == 0)
-            {
-                if (dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault() != null)
-                {
-                    id_user = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
-                    CurrentSession.Id_User = id_user;
-                }
-            }
 
             _cogent_State = false;
         }

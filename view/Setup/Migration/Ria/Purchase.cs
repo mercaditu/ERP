@@ -77,11 +77,14 @@ namespace Cognitivo.Setup.Migration
 			+ " dbo.COMPRASDETALLE.COSTOUNITARIO, " //3
 			+ " dbo.COMPRASDETALLE.IVA, " //4
 			+ " dbo.COMPRAS.COTIZACION1, " //5
-			+ " dbo.MONEDA.DESMONEDA " //6
+			+ " dbo.MONEDA.DESMONEDA, " //6
+			+ " dbo.COMPRASDETALLE.CODCOMPRA, "//7
+			+ " dbo.CENTROCOSTO.DESCENTRO "
 			+ " FROM dbo.COMPRAS LEFT OUTER JOIN"
 			+ " dbo.MONEDA ON dbo.COMPRAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
 			+ " dbo.COMPRASDETALLE ON dbo.COMPRAS.CODCOMPRA = dbo.COMPRASDETALLE.CODCOMPRA LEFT OUTER JOIN"
-			+ " dbo.PRODUCTOS ON dbo.COMPRASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO";
+			+ " dbo.PRODUCTOS ON dbo.COMPRASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO"
+			+ " LEFT OUTER JOIN dbo.CENTROCOSTO ON dbo.COMPRASDETALLE.CODCENTRO = dbo.CENTROCOSTO.CODCENTRO"; 
 			
 
 			DataTable dt = exeDT(sqlDetail);
@@ -90,7 +93,8 @@ namespace Cognitivo.Setup.Migration
             {
                 using (InvoiceController InvoiceController = new InvoiceController())
                 {
-                    InvoiceController.db.Configuration.AutoDetectChangesEnabled = false;
+					InvoiceController.Initialize();
+					InvoiceController.db.Configuration.AutoDetectChangesEnabled = false;
 
                     purchase_invoice purchase_invoice = InvoiceController.Create(0);
 
@@ -114,50 +118,55 @@ namespace Cognitivo.Setup.Migration
                     }
 
                     //Condition (Cash or Credit)
-                    if (!(purchaserow["MODALIDADPAGO"] is DBNull) && Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 0)
+                    if (!(purchaserow["MODALIDADPAGO"] is DBNull))
                     {
-                        app_condition app_condition = InvoiceController.db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
-                        purchase_invoice.id_condition = app_condition.id_condition;
-                        //Contract...
+						if (Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 0)
+						{
+							app_condition app_condition = InvoiceController.db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
+							purchase_invoice.id_condition = app_condition.id_condition;
+							//Contract...
 
-                        app_contract_detail app_contract_detail = InvoiceController.db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company).FirstOrDefault();
-                        if (app_contract_detail != null)
-                        {
-                            purchase_invoice.id_contract = app_contract_detail.id_contract;
-                        }
-                        else
-                        {
-                            app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
-                            InvoiceController.db.app_contract.Add(app_contract);
+							app_contract_detail app_contract_detail = InvoiceController.db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company).FirstOrDefault();
+							if (app_contract_detail != null)
+							{
+								purchase_invoice.id_contract = app_contract_detail.id_contract;
+							}
+							else
+							{
+								app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
+								InvoiceController.db.app_contract.Add(app_contract);
 
-                            purchase_invoice.app_contract = app_contract;
-                            purchase_invoice.id_contract = app_contract.id_contract;
-                        }
+								purchase_invoice.app_contract = app_contract;
+								purchase_invoice.id_contract = app_contract.id_contract;
+							}
+						}
+						else if (Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 1)
+						{
+							app_condition app_condition = InvoiceController.db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
+							purchase_invoice.id_condition = app_condition.id_condition;
+							//Contract...
+							if (!(purchaserow["FECHAVCTO"] is DBNull))
+							{
+								DateTime _due_date = Convert.ToDateTime(purchaserow["FECHAVCTO"]);
+								int interval = (_due_date - purchase_invoice.trans_date).Days;
+								app_contract_detail app_contract_detail = InvoiceController.db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company && x.interval == interval).FirstOrDefault();
+								if (app_contract_detail != null)
+								{
+									purchase_invoice.id_contract = app_contract_detail.id_contract;
+								}
+								else
+								{
+									app_contract app_contract = GenerateDefaultContrat(app_condition, interval);
+									InvoiceController.db.app_contract.Add(app_contract);
+
+									purchase_invoice.app_contract = app_contract;
+									purchase_invoice.id_contract = app_contract.id_contract;
+								}
+							}
+						}
+                      
                     }
-                    else if (!(purchaserow["MODALIDADPAGO"] is DBNull) && Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 1)
-                    {
-                        app_condition app_condition = InvoiceController.db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
-                        purchase_invoice.id_condition = app_condition.id_condition;
-                        //Contract...
-                        if (!(purchaserow["FECHAVCTO"] is DBNull))
-                        {
-                            DateTime _due_date = Convert.ToDateTime(purchaserow["FECHAVCTO"]);
-                            int interval = (_due_date - purchase_invoice.trans_date).Days;
-                            app_contract_detail app_contract_detail = InvoiceController.db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company && x.interval == interval).FirstOrDefault();
-                            if (app_contract_detail != null)
-                            {
-                                purchase_invoice.id_contract = app_contract_detail.id_contract;
-                            }
-                            else
-                            {
-                                app_contract app_contract = GenerateDefaultContrat(app_condition, interval);
-                                InvoiceController.db.app_contract.Add(app_contract);
-
-                                purchase_invoice.app_contract = app_contract;
-                                purchase_invoice.id_contract = app_contract.id_contract;
-                            }
-                        }
-                    }
+                   
 
                     int id_location = 0;
                     //Branch
@@ -176,65 +185,83 @@ namespace Cognitivo.Setup.Migration
                     }
 
                     string _desMoneda = string.Empty;
-					string filter="(dbo.COMPRASDETALLE.CODCOMPRA = " + purchaserow["CODCOMPRA"].ToString() + ")";
-					dt = dt.Select(filter).CopyToDataTable();
-					foreach (DataRow row in dt.Rows)
-                    {
-                        //db Related Insertion.
-                        purchase_invoice.id_currencyfx = 1;
+					string filter="(CODCOMPRA = " + purchaserow["CODCOMPRA"].ToString() + ")";
+					DataTable dtDetail=null;
+					if (dt!=null)
+					{
+						dtDetail = dt.Select(filter).Count() > 0 ? dt.Select(filter).CopyToDataTable() : null;
+					}
+					
+					if (dtDetail != null)
+					{
+						foreach (DataRow row in dtDetail.Rows)
+						{
+							//db Related Insertion.
+							purchase_invoice.id_currencyfx = 1;
 
-                        purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
+							purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
 
-                        string _prod_Name = row["ITEM_DESPRODUCTO"].ToString();
-                        if (InvoiceController.db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault() != null)
-                        {
-                            //Only if Item Exists
-                            item item = InvoiceController.db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
-                            purchase_invoice_detail.id_item = item.id_item;
-                        }
+							string _cost_Name = row["DESCENTRO"].ToString();
+							if (InvoiceController.db.app_cost_center.Where(x => x.name == _cost_Name && x.id_company == id_company).FirstOrDefault() != null)
+							{
+								//Only if Item Exists
+								app_cost_center app_cost_center = InvoiceController.db.app_cost_center.Where(x => x.name == _cost_Name && x.id_company == id_company).FirstOrDefault();
+								purchase_invoice_detail.id_cost_center = app_cost_center.id_cost_center;
+							}
 
-                        if (row["DESPRODUCTO"] is DBNull)
-                        {
-                            //If not Item Description, then just continue out of this loop.
-                            continue;
-                        }
+							string _prod_Name = row["ITEM_DESPRODUCTO"].ToString();
+							if (InvoiceController.db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault() != null)
+							{
+								//Only if Item Exists
+								item item = InvoiceController.db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
+								purchase_invoice_detail.id_item = item.id_item;
+							}
 
-                        purchase_invoice_detail.item_description = row["DESPRODUCTO"].ToString();
-                        purchase_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADCOMPRA"]);
+							if (row["DESPRODUCTO"] is DBNull)
+							{
+								//If not Item Description, then just continue out of this loop.
+								continue;
+							}
 
-                        purchase_invoice_detail.id_location = id_location;
+							purchase_invoice_detail.item_description = row["DESPRODUCTO"].ToString();
+							purchase_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADCOMPRA"]);
 
-                        string _iva = row["IVA"].ToString();
-                        if (_iva == "10.00")
-                        {
-                            purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
-                        }
-                        else if (_iva == "5.00")
-                        {
-                            purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault().id_vat_group;
-                        }
-                        else
-                        {
-                            if (InvoiceController.db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
-                            {
-                                purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
-                            }
-                        }
+							purchase_invoice_detail.id_location = id_location;
 
-                        decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
-                        // purchase_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / purchase_invoice_detail.quantity) / cotiz1;
+							string _iva = row["IVA"].ToString();
+							if (_iva == "10.00")
+							{
+								purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
+							}
+							else if (_iva == "5.00")
+							{
+								purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault().id_vat_group;
+							}
+							else
+							{
+								if (InvoiceController.db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
+								{
+									purchase_invoice_detail.id_vat_group = InvoiceController.db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
+								}
+							}
 
-                        if (row["COSTOUNITARIO"] is DBNull)
-                        {
-                            purchase_invoice_detail.unit_cost = 0;
-                        }
-                        else
-                        {
-                            purchase_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOUNITARIO"]);
-                        }
-                        //Commit Sales Invoice Detail
-                        purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
-                    }
+							decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
+							// purchase_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / purchase_invoice_detail.quantity) / cotiz1;
+
+							if (row["COSTOUNITARIO"] is DBNull)
+							{
+								purchase_invoice_detail.unit_cost = 0;
+							}
+							else
+							{
+								purchase_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOUNITARIO"]);
+							}
+							//Commit Sales Invoice Detail
+							purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
+							InvoiceController.db.purchase_invoice_detail.Add(purchase_invoice_detail);
+						}
+					}
+				
 
                     if (purchase_invoice.Error == null)
                     {

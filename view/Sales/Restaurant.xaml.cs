@@ -114,6 +114,8 @@ namespace Cognitivo.Sales
 				List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
 				PaymentDB.Approve(payment_schedualList, true, false);
 
+				paymentViewSource.Source = null;
+				tabTable.Focus();
 				//Start New Sale
 				New_Sale_Payment();
 			}

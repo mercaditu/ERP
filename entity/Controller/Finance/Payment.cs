@@ -271,7 +271,7 @@ namespace entity.Controller.Finance
                     ///Comment with Module Name and Contact.
                     ///Insert AccountDetail into Context.
 
-                    app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
+                    app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact!=null? Parent_Schedual.contact.name:"";
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                     db.app_account_detail.Add(app_account_detail);
                 }

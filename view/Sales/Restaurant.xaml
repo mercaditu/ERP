@@ -126,7 +126,7 @@
                 </TabItem>
                 <!-- TABLE -->
                 <TabItem x:Name="tabTable">
-                    <Grid>
+                    <Grid >
                         <StackPanel>
                             <Button FontSize="16" Click="Button_Click"
                                 Margin="16" Style="{StaticResource btn_green}">
@@ -135,24 +135,26 @@
                                     <Label Content="{lex:Loc Create}"/>
                                 </StackPanel>
                             </Button>
-                            <DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16"
+							<Grid Height="350" Width="765">
+								<DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"
                                       ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">
-                                <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+									<DataGrid.Columns>
+										<DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="180" Foreground="Silver"
+										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="180" Foreground="Silver"
 												Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Location}" Width="128"/>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium" Width="232"
+										<DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Location}" Width="128"/>
+										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium" Width="232"
 												Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" FontWeight="Medium" Width="128"
+										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" FontWeight="Medium" Width="128"
 												Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged, StringFormat=N}" ElementStyle="{StaticResource RightAlignStyle}" />
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="128" Foreground="Silver"
+										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="128" Foreground="Silver"
 												Binding="{Binding app_currencyfx.app_currency.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
+									</DataGrid.Columns>
+								</DataGrid>
+							</Grid>
+						</StackPanel>
                     </Grid>
                 </TabItem>
                 <!-- SALES -->

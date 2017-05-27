@@ -105,6 +105,7 @@ namespace Cognitivo.Sales
 			/// If all validation is met, then we can start Sales Process.
 			if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
 			{
+				sales_invoice.IsSelected = true;
 				///Approve Sales Invoice.
 				///Note> Approve includes Save Logic. No need to seperately Save.
 				///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
@@ -164,7 +165,6 @@ namespace Cognitivo.Sales
 				if (contact != null)
 				{
 					sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-
 					sales_invoice.id_contact = contact.id_contact;
 					sales_invoice.contact = contact;
 					// Creating new PAYMENT for upcomming sale.
@@ -177,10 +177,10 @@ namespace Cognitivo.Sales
 					paymentViewSource.Source = PaymentDB.db.payments.Local;
 					paymentViewSource.View.MoveCurrentTo(payment);
 
-					
-					
+					GrandTotalsales_DataContextChanged(null, null);
 
-					
+
+
 				}
 			}
 		}
@@ -227,7 +227,7 @@ namespace Cognitivo.Sales
 			//  New_Sale_Payment();
 
 			sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-			SalesDB.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.id_branch == CurrentSession.Id_Branch && x.status==Status.Documents_General.Pending && x.is_archived==false && x.is_head).Load();
+			SalesDB.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.id_branch == CurrentSession.Id_Branch && x.status == Status.Documents_General.Pending && x.is_archived == false && x.is_head).Load();
 			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
 
@@ -439,5 +439,6 @@ namespace Cognitivo.Sales
 		{
 			New_Sale_Payment();
 		}
+
 	}
 }

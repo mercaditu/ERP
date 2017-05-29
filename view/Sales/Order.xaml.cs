@@ -336,7 +336,8 @@ namespace Cognitivo.Sales
                     _sales_order_detail.batch_code = item_movement.code;
                     _sales_order_detail.expire_date = item_movement.expire_date;
                     _sales_order_detail.movement_id = (int)item_movement.id_movement;
-                }
+					_sales_order_detail.Quantity_InStockLot = item_movement.avlquantity;
+				}
 
                 sales_order.sales_order_detail.Add(_sales_order_detail);
             }

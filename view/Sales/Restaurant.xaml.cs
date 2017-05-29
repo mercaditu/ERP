@@ -425,6 +425,7 @@ namespace Cognitivo.Sales
 								sbxItem.QuantityInStock,
 								sbxItem.Quantity);
 						(sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+						_sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
 					}
 				}
 				sales_invoiceViewSource.View.Refresh();

@@ -823,8 +823,9 @@ namespace Cognitivo.Sales
                         item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
                         Settings SalesSettings = new Settings();
-                        SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
-                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
+						sales_invoice_detail _sales_invoice_detail =SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
+						_sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
+						sales_invoicesales_invoice_detailViewSource.View.Refresh();
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }
                     else

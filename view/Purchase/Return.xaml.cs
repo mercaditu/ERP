@@ -276,6 +276,7 @@ namespace Cognitivo.Purchase
                     _purchase_return_detail.batch_code = item_movement.code;
                     _purchase_return_detail.expire_date = item_movement.expire_date;
                     _purchase_return_detail.movement_id = (int)item_movement.id_movement;
+					
                 }
 
                 _purchase_return_detail.purchase_return = purchase_return;

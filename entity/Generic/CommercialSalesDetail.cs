@@ -118,8 +118,7 @@ namespace entity
         [NotMapped]
         public bool InStock { get; set; }
 
-		[NotMapped]
-		public decimal? Max_Stock { get; set; }
+
 
 		/// <summary>
 		///

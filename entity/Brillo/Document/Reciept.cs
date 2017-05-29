@@ -108,15 +108,13 @@
             string TransNumber = i.number;
             DateTime TransDate = i.trans_date;
             string BranchName = string.Empty;
-			string BranchAddress = string.Empty;
-
-			if (i.app_location_origin != null)
+            if (i.app_location_origin != null)
             {
                 if (i.app_location_origin.app_branch != null)
                 {
                     BranchName = i.app_location_origin.app_branch.name;
-					BranchAddress= i.app_location_origin.app_branch.address;
-				}
+
+                }
             }
 
             string UserGiven = string.Empty;
@@ -143,8 +141,7 @@
                 + "Registro de PMD. Transaccion: " + TransNumber + "\n"
                 + "Fecha y Hora: " + TransDate.ToString() + "\n"
                 + "Local Expendido: " + BranchName + "\n"
-				+ "Local Expendido Address: " + BranchAddress + "\n"
-				+ "\n"
+                + "\n"
                 + "Entrega: " + UserGiven + "\n"
                 + "Sector: " + DepartmentName + "\n"
                 + "Project: " + ProjectCode + " - " + ProjectName + "\n"
@@ -386,8 +383,8 @@
             string Footer = string.Empty;
             string BranchName = string.Empty;
             string TerminalName = string.Empty;
-
-            app_company app_company = null;
+			string BranchAddress = string.Empty;
+			app_company app_company = null;
 
             if (sales_invoice.app_company != null)
             {
@@ -408,7 +405,8 @@
             if (app_branch != null)
             {
                 BranchName = app_branch.name;
-            }
+				BranchAddress = app_branch.address;
+			}
 
             string UserGiven = "";
             if (sales_invoice.security_user != null)
@@ -475,7 +473,7 @@
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
                 + "Timbrado    : " + sales_invoice.app_document_range.code + "\n"
-                + "Vencimiento : " + sales_invoice.app_document_range.expire_date + "\n"
+                + "Vencimiento : " + String.Format("{0:dd-MM-yyyy}", sales_invoice.app_document_range.expire_date)  + "\n"
                 + "-------------------------------- \n"
                 + "Descripcion, Cantiad, Precio" + "\n"
                 + "--------------------------------" + "\n"
@@ -543,7 +541,8 @@
             Footer += "Condicion  : " + ConditionName + "\n";
             Footer += "------------------------------- \n";
             Footer += "Sucursal   : " + BranchName + "\n";
-            Footer += "Terminal   : " + TerminalName;
+			Footer += "Sucursal Address  : " + BranchAddress + "\n";
+			Footer += "Terminal   : " + TerminalName;
 
             if (sales_invoice.id_sales_rep > 0)
             {

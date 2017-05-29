@@ -2,10 +2,12 @@ namespace entity
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel;
+	using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+	using System.Text;
 
-    public partial class item_transfer_detail : Audit
+	public partial class item_transfer_detail : Audit
     {
         public item_transfer_detail()
         {
@@ -69,8 +71,10 @@ namespace entity
 
         [NotMapped]
         public bool InStock { get; set; }
+		[NotMapped]
+		public decimal? Quantity_InStockLot { get; set; }
 
-        public decimal quantity_destination
+		public decimal quantity_destination
         {
             get { return _quantity_destination; }
             set
@@ -103,8 +107,56 @@ namespace entity
         public virtual app_measurement measurement_volume { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<item_transfer_dimension> item_transfer_dimension { get; set; }
+		#region "Validation"
 
-        public void Calulate_Stock()
+		public string Error
+		{
+			get
+			{
+				StringBuilder error = new StringBuilder();
+				// iterate over all of the properties
+				// of this object - aggregating any validation errors
+				PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
+				foreach (PropertyDescriptor prop in props)
+				{
+					String propertyError = this[prop.Name];
+					if (propertyError != string.Empty)
+					{
+						error.Append((error.Length != 0 ? ", " : "") + propertyError);
+					}
+				}
+				return error.Length == 0 ? null : error.ToString();
+			}
+		}
+
+		public string this[string columnName]
+		{
+			get
+			{
+				// apply property level validation rules
+				
+				if (columnName == "quantity_destination")
+				{
+					if (quantity_destination == 0)
+					{
+						return "Quantity can not be zero";
+					}
+					else if (quantity_origin ==0)
+					{
+						if (Quantity_InStockLot < quantity_origin)
+						{
+							return "Stock Exceeded";
+						}
+					}
+					
+				}
+				
+				return "";
+			}
+		}
+
+		#endregion "Validation"
+		public void Calulate_Stock()
         {
             //entity.Brillo.
         }

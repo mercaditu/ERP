@@ -104,9 +104,18 @@ namespace entity
                 }
                 if (columnName == "quantity")
                 {
-                    if (quantity == 0)
-                        return "Quantity can not be zero";
-                }
+					if (quantity == 0)
+					{
+						return "Quantity can not be zero";
+					}
+					else if (Quantity_InStockLot != null)
+					{
+						if (Quantity_InStockLot < quantity)
+						{
+							return "Stock Exceeded";
+						}
+					}
+				}
                 if (columnName == "unit_price")
                 {
                     if (unit_price < 0)

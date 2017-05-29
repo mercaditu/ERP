@@ -71,7 +71,10 @@ namespace entity
 
         public int? id_branch { get; set; }
 
-        public bool user_verified
+		[NotMapped]
+		public decimal? Quantity_InStockLot { get; set; }
+
+		public bool user_verified
         {
             get { return _user_verified; }
             set { _user_verified = value; RaisePropertyChanged("user_verified"); }
@@ -158,7 +161,8 @@ namespace entity
                             return "Quantity exceded";
                         }
                     }
-                }
+					
+				}
                 return "";
             }
         }

@@ -401,7 +401,8 @@ namespace Cognitivo.Product
                         item_transfer_detail.movement_id = (int)item_movement.id_movement;
                         item_transfer_detail.batch_code = item_movement.code;
                         item_transfer_detail.expire_date = item_movement.expire_date;
-                    }
+						item_transfer_detail.Quantity_InStockLot = item_movement.avlquantity;
+					}
 
                     item_transfer_detail.status = Status.Documents_General.Pending;
                     item_transfer_detail.quantity_origin = 1;

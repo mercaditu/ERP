@@ -129,7 +129,14 @@ namespace entity
                             return "Stock Exceeded";
                         }
                     }
-                }
+					else if (Quantity_InStockLot != null)
+					{
+						if (Quantity_InStockLot < quantity)
+						{
+							return "Stock Exceeded";
+						}
+					}
+				}
                 if (columnName == "unit_price")
                 {
                     if (unit_price < 0)

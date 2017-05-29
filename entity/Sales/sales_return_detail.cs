@@ -111,10 +111,19 @@ namespace entity
                 }
                 if (columnName == "quantity")
                 {
-                    if (quantity == 0)
-                        return "Quantity cannot be zero";
+					if (quantity == 0)
+					{
+						return "Quantity cannot be zero";
+					}
+					else if (Quantity_InStockLot != null)
+					{
+						if (Quantity_InStockLot < quantity)
+						{
+							return "Stock Exceeded";
+						}
+					}
 
-                    if (sales_invoice_detail != null)
+					if (sales_invoice_detail != null)
                     {
                         if (Balance < quantity)
                         {

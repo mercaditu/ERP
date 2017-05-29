@@ -436,8 +436,13 @@
             {
                 ConditionName = app_condition.name;
             }
+			app_terminal app_terminal = CurrentSession.Terminals.Where(x => x.id_terminal == sales_invoice.id_terminal).FirstOrDefault();
+			if (app_terminal != null)
+			{
+				TerminalName = app_terminal.name;
+			}
 
-            string CurrencyName = "";
+			string CurrencyName = "";
             if (sales_invoice.app_currencyfx != null)
             {
                 if (sales_invoice.app_currencyfx.app_currency != null)
@@ -479,7 +484,7 @@
                 decimal? Qty = d.quantity;
                 string TaskName = d.item_description;
 
-                Detail = Detail
+                Detail = Detail + (string.IsNullOrEmpty(Detail)?"\n":"")
                     + ItemName + "\n"
                     + Qty.ToString() + "\t" + ItemCode + "\t" + Math.Round((d.UnitPrice_Vat + d.DiscountVat), 2) + "\n";
             }

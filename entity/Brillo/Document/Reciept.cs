@@ -108,12 +108,15 @@
             string TransNumber = i.number;
             DateTime TransDate = i.trans_date;
             string BranchName = string.Empty;
-            if (i.app_location_origin != null)
+			string BranchAddress = string.Empty;
+
+			if (i.app_location_origin != null)
             {
                 if (i.app_location_origin.app_branch != null)
                 {
                     BranchName = i.app_location_origin.app_branch.name;
-                }
+					BranchAddress= i.app_location_origin.app_branch.address;
+				}
             }
 
             string UserGiven = string.Empty;
@@ -140,7 +143,8 @@
                 + "Registro de PMD. Transaccion: " + TransNumber + "\n"
                 + "Fecha y Hora: " + TransDate.ToString() + "\n"
                 + "Local Expendido: " + BranchName + "\n"
-                + "\n"
+				+ "Local Expendido Address: " + BranchAddress + "\n"
+				+ "\n"
                 + "Entrega: " + UserGiven + "\n"
                 + "Sector: " + DepartmentName + "\n"
                 + "Project: " + ProjectCode + " - " + ProjectName + "\n"
@@ -481,7 +485,7 @@
             {
                 string ItemName = d.item.name;
                 string ItemCode = d.item.code;
-                decimal? Qty = d.quantity;
+                decimal? Qty = Math.Round(d.quantity,2);
                 string TaskName = d.item_description;
 
                 Detail = Detail + (string.IsNullOrEmpty(Detail)?"\n":"")

@@ -7,7 +7,7 @@ namespace entity
 	using System.ComponentModel.DataAnnotations.Schema;
 	using System.Text;
 
-	public partial class item_transfer_detail : Audit
+	public partial class item_transfer_detail : Audit, IDataErrorInfo
 	{
 		public item_transfer_detail()
 		{
@@ -32,6 +32,7 @@ namespace entity
 		public decimal? net_weight { get; set; }
 		public decimal? volume { get; set; }
 
+		[CustomValidation(typeof(Class.EntityValidation), "CheckId")]
 		public decimal quantity_origin
 		{
 			get { return _quantity_origin; }

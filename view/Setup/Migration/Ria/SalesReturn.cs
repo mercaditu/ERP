@@ -47,9 +47,10 @@ namespace Cognitivo.Setup.Migration
                        + " MONEDA ON DEVOLUCION.CODMONEDA = MONEDA.CODMONEDA INNER JOIN"
                        + " SUCURSAL ON DEVOLUCION.CODSUCURSAL = SUCURSAL.CODSUCURSAL LEFT OUTER JOIN"
                        + " VENDEDOR ON DEVOLUCION.CODVENDEDOR = VENDEDOR.CODVENDEDOR LEFT OUTER JOIN"
-                       + " VENTAS ON CLIENTES.CODCLIENTE = VENTAS.CODCLIENTE AND DEVOLUCION.CODVENTA = VENTAS.CODVENTA ";
+                       + " VENTAS ON CLIENTES.CODCLIENTE = VENTAS.CODCLIENTE AND DEVOLUCION.CODVENTA = VENTAS.CODVENTA "
+			           + "	WHERE convert(datetime, DEVOLUCION.FECHADEVOLUCION,103) >=  convert(datetime,'" + StartDate.ToString("dd/MM/yyyy") + "', 103)";
 
-            SqlConnection conn = new SqlConnection(_connString);
+			SqlConnection conn = new SqlConnection(_connString);
 
             //Counts Total number of Rows we have to process
             SqlCommand cmd = new SqlCommand(sql, conn);
@@ -150,7 +151,11 @@ namespace Cognitivo.Setup.Migration
                     {
                         string _salesNumber = reader["NUMVENTA"].ToString();
                         sales_invoice sales_invoice = db.sales_invoice.Where(x => x.number == _salesNumber).FirstOrDefault();
-                        sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
+						if (sales_invoice!=null)
+						{
+							sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
+						}
+                    
                         //   sales_return.sales_invoice = sales_invoice;
                     }
 

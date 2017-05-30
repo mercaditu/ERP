@@ -381,7 +381,7 @@ namespace Cognitivo.Sales
                         string customer = "";
                         string cust_code = "";
                         string cust_gov_code = "";
-
+						string trans_date = Invoice.trans_date.Date.ToString("dd/MM/yyyy") ?? "";
                         if (contact != null)
                         {
                             if (contact.name != null)
@@ -396,6 +396,7 @@ namespace Cognitivo.Sales
                             {
                                 cust_gov_code = contact.gov_code.ToLower();
                             }
+							
 
                             if (customer.Contains(query.ToLower())
                                 ||
@@ -403,7 +404,9 @@ namespace Cognitivo.Sales
                                 ||
                                 cust_gov_code.Contains(query.ToLower())
                                 ||
-                                number.Contains(query))
+                                number.Contains(query)
+								||
+								trans_date==query)
                             {
                                 return true;
                             }

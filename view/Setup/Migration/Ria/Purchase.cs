@@ -44,9 +44,10 @@ namespace Cognitivo.Setup.Migration
             " FROM  COMPRAS RIGHT OUTER JOIN " +
             " PROVEEDOR ON COMPRAS.CODPROVEEDOR = PROVEEDOR.CODPROVEEDOR" +
             " LEFT OUTER JOIN FACTURAPAGAR ON COMPRAS.CODCOMPRA = FACTURAPAGAR.CODCOMPRA" +
-             " RIGHT OUTER JOIN SUCURSAL ON COMPRAS.CODSUCURSAL = SUCURSAL.CODSUCURSAL";
+             " RIGHT OUTER JOIN SUCURSAL ON COMPRAS.CODSUCURSAL = SUCURSAL.CODSUCURSAL" +
+			 "	WHERE convert(datetime, COMPRAS.FECHACOMPRA,103) >=  convert(datetime,'" + StartDate.ToString("dd/MM/yyyy") + "', 103)";
 
-            SqlConnection conn = new SqlConnection(_connString);
+			SqlConnection conn = new SqlConnection(_connString);
 
             //Counts Total number of Rows we have to process
             SqlCommand cmd = new SqlCommand(sql, conn);

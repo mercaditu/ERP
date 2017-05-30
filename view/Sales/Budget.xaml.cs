@@ -291,8 +291,9 @@ namespace Cognitivo.Sales
                     sales_budget Budget = i as sales_budget;
                     string Name = Budget.contact != null ? Budget.contact.name : "";
                     string Number = Budget.number != null ? Budget.number : "";
+					string trans_date = Budget.trans_date.Date.ToString("dd/MM/yyyy") ?? "";
 
-                    if (Name.ToLower().Contains(query.ToLower()) || Number.ToLower().Contains(query.ToLower()))
+					if (Name.ToLower().Contains(query.ToLower()) || Number.ToLower().Contains(query.ToLower()) || trans_date==query)
                     {
                         return true;
                     }

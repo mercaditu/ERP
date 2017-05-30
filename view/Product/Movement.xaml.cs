@@ -476,13 +476,16 @@ namespace Cognitivo.Product
                         item_transfer_detail.expire_date = item_movement.expire_date;
 
                         item_transfer_detail.movement_id = (int)item_movement.id_movement;
-                    }
+						item_transfer_detail.Quantity_InStockLot = item_movement.avlquantity;
+					}
 
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
 
                     CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
                     item_transferitem_transfer_detailViewSource.View.Refresh();
                 }
+
+
             }
         }
     }

@@ -365,9 +365,11 @@ namespace Cognitivo.Sales
 
                     string number = Order.number ?? "";
                     string customer = Order.contact != null ? Order.contact.name : "";
+					string trans_date = Order.trans_date.Date.ToString("dd/MM/yyyy") ?? "";
 
-                    if (customer.ToLower().Contains(query.ToLower())
-                        || number.ToLower().Contains(query.ToLower()))
+					if (customer.ToLower().Contains(query.ToLower())
+                        || number.ToLower().Contains(query.ToLower())
+						||trans_date==query)
                     {
                         return true;
                     }

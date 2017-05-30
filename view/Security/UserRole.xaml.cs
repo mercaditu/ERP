@@ -283,85 +283,91 @@ namespace Cognitivo.Security
             }
             else
             {
-                CurrentSession.Versions NewVersion =
-                    (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions),
-                    Convert.ToString(cbxVersion.Text));
 
-                if (CurrentVersion < NewVersion)
-                {
-                    List<entity.App.Names> dtApplication = new List<entity.App.Names>();
-                    string condition = "";
+				if (Convert.ToString(cbxVersion.Text) != null)
+				{
 
-                    if (NewVersion == CurrentSession.Versions.Full)
-                    {
-                        condition = "1=1";
-                    }
-                    else if (NewVersion == CurrentSession.Versions.Medium)
-                    {
-                        condition = "Version='" + NewVersion + "' and Version ='Lite' and Version='Basic'";
-                    }
-                    else if (NewVersion == CurrentSession.Versions.Basic)
-                    {
-                        condition = "Version='" + NewVersion + "' and Version ='Lite' ";
-                    }
-                    else if (NewVersion == CurrentSession.Versions.Lite)
-                    {
-                        condition = "Version='" + NewVersion + "'";
-                    }
-                    foreach (DataRow item in appList.dtApp.Select(condition))
-                    {
-                        if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
-                        {
-                            dtApplication.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
-                        }
-                    }
 
-                    List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();
-                    List<entity.App.Names> AddList = Enumerable.Except(dtApplication, _security_curdApplication).ToList();
-                    foreach (entity.App.Names AppName in AddList)
-                    {
-                        security_crud _rolesecurity_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
-                        if (_rolesecurity_curd == null)
-                        {
-                            security_crud _security_curd = new security_crud()
-                            {
-                                id_application = AppName,
-                                can_update = false,
-                                can_read = false,
-                                can_delete = false,
-                                can_create = false,
-                                can_approve = false,
-                                can_annul = false
-                            };
-                            security_role.security_curd.Add(_security_curd);
-                        }
-                    }
-                }
-                else if (CurrentVersion > NewVersion)
-                {
-                    List<entity.App.Names> dtApplication = new List<entity.App.Names>();
-                    foreach (DataRow item in appList.dtApp.Select("Version = '" + NewVersion + "'"))
-                    {
-                        if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
-                        {
-                            dtApplication.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
-                        }
-                    }
+					CurrentSession.Versions NewVersion =
+						(CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions),
+						Convert.ToString(cbxVersion.Text));
 
-                    List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();
-                    List<entity.App.Names> AddList = Enumerable.Except(_security_curdApplication, dtApplication).ToList();
+					if (CurrentVersion < NewVersion)
+					{
+						List<entity.App.Names> dtApplication = new List<entity.App.Names>();
+						string condition = "";
 
-                    foreach (entity.App.Names AppName in AddList)
-                    {
-                        security_crud _security_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
-                        if (_security_curd != null)
-                        {
-                            //  UserRoleDB.Entry(_security_curd).State = EntityState.Deleted;
-                            security_role.security_curd.Remove(_security_curd);
-                        }
-                    }
-                }
-                CurrentVersion = NewVersion;
+						if (NewVersion == CurrentSession.Versions.Full)
+						{
+							condition = "1=1";
+						}
+						else if (NewVersion == CurrentSession.Versions.Medium)
+						{
+							condition = "Version='" + NewVersion + "' and Version ='Lite' and Version='Basic'";
+						}
+						else if (NewVersion == CurrentSession.Versions.Basic)
+						{
+							condition = "Version='" + NewVersion + "' and Version ='Lite' ";
+						}
+						else if (NewVersion == CurrentSession.Versions.Lite)
+						{
+							condition = "Version='" + NewVersion + "'";
+						}
+						foreach (DataRow item in appList.dtApp.Select(condition))
+						{
+							if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
+							{
+								dtApplication.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
+							}
+						}
+
+						List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();
+						List<entity.App.Names> AddList = Enumerable.Except(dtApplication, _security_curdApplication).ToList();
+						foreach (entity.App.Names AppName in AddList)
+						{
+							security_crud _rolesecurity_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
+							if (_rolesecurity_curd == null)
+							{
+								security_crud _security_curd = new security_crud()
+								{
+									id_application = AppName,
+									can_update = false,
+									can_read = false,
+									can_delete = false,
+									can_create = false,
+									can_approve = false,
+									can_annul = false
+								};
+								security_role.security_curd.Add(_security_curd);
+							}
+						}
+					}
+					else if (CurrentVersion > NewVersion)
+					{
+						List<entity.App.Names> dtApplication = new List<entity.App.Names>();
+						foreach (DataRow item in appList.dtApp.Select("Version = '" + NewVersion + "'"))
+						{
+							if (Enum.IsDefined(typeof(entity.App.Names), Convert.ToString(item["name"])) == true)
+							{
+								dtApplication.Add((entity.App.Names)Enum.Parse(typeof(entity.App.Names), Convert.ToString(item["name"])));
+							}
+						}
+
+						List<entity.App.Names> _security_curdApplication = security_curd.Select(x => x.id_application).ToList();
+						List<entity.App.Names> AddList = Enumerable.Except(_security_curdApplication, dtApplication).ToList();
+
+						foreach (entity.App.Names AppName in AddList)
+						{
+							security_crud _security_curd = security_role.security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
+							if (_security_curd != null)
+							{
+								//  UserRoleDB.Entry(_security_curd).State = EntityState.Deleted;
+								security_role.security_curd.Remove(_security_curd);
+							}
+						}
+					}
+					CurrentVersion = NewVersion;
+				}
             }
             security_roleViewSource.View.Refresh();
             security_rolesecurity_curdViewSource.View.Refresh();
@@ -391,25 +397,26 @@ namespace Cognitivo.Security
             }
         }
 
-        //private void Security_roleDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (security_roleViewSource.View.CurrentItem is security_role security_role)
-        //    {
-        //        cbxVersion.SelectedItem = security_role.Version;
-        //        CurrentVersion = security_role.Version;
-        //        lblVersionlocal.Content = UserRoleDB.security_role.Local.Where(x => x.Version == security_role.Version).Sum(x => x.security_user.Count);
+		private void Security_roleDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (security_roleViewSource.View.CurrentItem is security_role security_role)
+			{
+				cbxVersion.SelectedItem = security_role.Version;
+				
+				//CurrentVersion = security_role.Version;
+				//lblVersionlocal.Content = UserRoleDB.security_role.Local.Where(x => x.Version == security_role.Version).Sum(x => x.security_user.Count);
 
-        //        if (Licence.CompanyLicence != null)
-        //        {
-        //            versions versions = Licence.CompanyLicence.versions.Where(x => x.version == security_role.Version).FirstOrDefault();
+				//if (Licence.CompanyLicence != null)
+				//{
+				//	versions versions = Licence.CompanyLicence.versions.Where(x => x.version == security_role.Version).FirstOrDefault();
 
-        //            if (versions != null)
-        //            {
-        //                //Exists = Yes.
-        //                lblVersionInternet.Content = versions.web_user_count;
-        //            }
-        //        }
-        //    }
-        //}
-    }
+				//	if (versions != null)
+				//	{
+				//		//Exists = Yes.
+				//		lblVersionInternet.Content = versions.web_user_count;
+				//	}
+				//}
+			}
+		}
+	}
 }

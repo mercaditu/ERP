@@ -437,10 +437,12 @@ namespace Cognitivo.Sales
                 MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                    dgvSalesDetail.CancelEdit();
-                    SalesDB.db.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
-                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                    if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
+                    {
+                        dgvSalesDetail.CancelEdit();
+                        SalesDB.db.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
+                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                    }
                 }
             }
             catch (Exception ex)
@@ -891,7 +893,5 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource.View.Refresh();
             SalesDB.db.SaveChanges();
         }
-
-       
     }
 }

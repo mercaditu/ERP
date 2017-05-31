@@ -87,8 +87,15 @@ namespace Cognitivo.Security
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             if (security_role != null)
             {
-                CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
-                security_role.Version = Version;
+                if (string.IsNullOrEmpty(cbxVersion.Text) == false)
+                {
+                    CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(cbxVersion.Text));
+                    security_role.Version = Version;
+                }
+                else if (string.IsNullOrEmpty(security_role.version))
+                {
+                    security_role.Version = CurrentSession.Versions.Lite;
+                }
 
                 List<security_role> security_roleList = UserRoleDB.security_role.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
@@ -135,7 +142,7 @@ namespace Cognitivo.Security
                 //    }
                 //}
 
-                //UserRoleDB.SaveChanges();
+                UserRoleDB.SaveChanges();
 
                 CurrentSession.Load_Security();
                 security_roleViewSource.View.Refresh();
@@ -284,13 +291,13 @@ namespace Cognitivo.Security
             else
             {
 
-				if (Convert.ToString(cbxVersion.Text) != null)
+				if (Convert.ToString(security_role.Version) != null)
 				{
 
 
 					CurrentSession.Versions NewVersion =
 						(CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions),
-						Convert.ToString(cbxVersion.Text));
+						Convert.ToString(security_role.Version));
 
 					if (CurrentVersion < NewVersion)
 					{

@@ -365,10 +365,10 @@
 									  SelectedValue="{Binding id_bank, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 									  Style="{StaticResource input_combobox}" />
                         <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}">
-                            <Label Content="{lex:Loc TransCode}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
                             <TextBox x:Name="txttransCode" Style="{StaticResource input_textbox}"  Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
 									 Text="{Binding trans_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-                            <Label Content="{lex:Loc TransCodeExpiry}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc ExpirationDate}" Style="{StaticResource input_label}" />
                             <DatePicker Style="{StaticResource input_datepicker}"
 										Text="{Binding trans_code_exp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>

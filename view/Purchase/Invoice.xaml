@@ -293,7 +293,7 @@
                         <StackPanel Margin="2" Orientation="Horizontal"  HorizontalAlignment="Left">
                             <Label Content="" Style="{StaticResource ico_Label}" />
                             <TextBlock Text="{lex:Loc Code}" Style="{StaticResource text_Label}" />
-                            <TextBox Text="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            <TextBox Text="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="128"
 								 Style="{StaticResource TextToLabelStyle}" LostFocus="lblTransCode_LostFocus" />
                         </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal"  HorizontalAlignment="Left"

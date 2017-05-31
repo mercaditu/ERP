@@ -11,28 +11,28 @@ namespace entity.Controller.Commercial
         public async void LoadCustomers()
         {
             await db.contacts.Where(a => (a.is_supplier == false || a.is_customer == true) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
-            LoadSecondary();
+            //LoadSecondary();
         }
 
         public async void LoadSuppliers()
         {
             await db.contacts.Where(a => (a.is_supplier == true || a.is_customer == false) && (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
-            LoadSecondary();
+            //LoadSecondary();
         }
 
         public async void Load()
         {
             await db.contacts.Where(a => (a.id_company == CurrentSession.Id_Company || a.id_company == null) && a.is_employee == false).OrderBy(a => a.name).LoadAsync();
-            LoadSecondary();
+            //LoadSecondary();
         }
 
-        private async void LoadSecondary()
+        private void LoadSecondary()
         {
-            await db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
-            await db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
-            await db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
-            await db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().LoadAsync();
-            await db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).LoadAsync();
+             db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+             db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+             db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().Load();
+             db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().Load();
+             db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).Load();
         }
 
         public contact Create()

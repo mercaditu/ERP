@@ -59,6 +59,10 @@ namespace Cognitivo.Commercial
             contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
             contactViewSource.Source = ContactDB.db.contacts.Local;
 
+            //db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+            //db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            //db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).Load();
+
             CollectionViewSource contactParentViewSource = FindResource("contactParentViewSource") as CollectionViewSource;
             contactParentViewSource.Source = ContactDB.db.contacts.Local;
 
@@ -72,7 +76,7 @@ namespace Cognitivo.Commercial
 
             //AppCostCenter
             CollectionViewSource appCostCenterViewSource = FindResource("appCostCenterViewSource") as CollectionViewSource;
-            appCostCenterViewSource.Source = ContactDB.db.app_cost_center.Local.OrderBy(a => a.name);
+            appCostCenterViewSource.Source = ContactDB.db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //ItemPriceList
             CollectionViewSource itemPriceListViewSource = FindResource("itemPriceListViewSource") as CollectionViewSource;
@@ -90,7 +94,7 @@ namespace Cognitivo.Commercial
 
             //AppBank
             CollectionViewSource bankViewSource = FindResource("bankViewSource") as CollectionViewSource;
-            bankViewSource.Source = ContactDB.db.app_bank.Local;
+            bankViewSource.Source = ContactDB.db.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             app_fieldemailViewSource = FindResource("app_fieldemailViewSource") as CollectionViewSource;
             app_fieldphoneViewSource = FindResource("app_fieldphoneViewSource") as CollectionViewSource;

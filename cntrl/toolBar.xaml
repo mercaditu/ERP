@@ -87,13 +87,18 @@
             </Grid>
 
             <Popup IsOpen="{Binding ElementName=btnDateRange, Path=IsChecked}" Grid.Column="0">
-                <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				<StackPanel>
+					<local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <local:DateRange.Effect>
-                        <DropShadowEffect ShadowDepth="0" Opacity="0.75"/>
-                    </local:DateRange.Effect>
-                </local:DateRange>
-            </Popup>
+						<local:DateRange.Effect>
+							<DropShadowEffect ShadowDepth="0" Opacity="0.75"/>
+						</local:DateRange.Effect>
+					</local:DateRange>
+					<Button Content="search" Click="Button_Click"/>
+				</StackPanel>
+              
+				
+			</Popup>
 
             <Grid Grid.Column="1">
                 <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />

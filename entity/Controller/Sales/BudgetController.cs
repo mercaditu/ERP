@@ -231,25 +231,28 @@ namespace entity.Controller.Sales
 
             foreach (sales_budget sales_budget in db.sales_budget.Local.Where(x => x.IsSelected && x.id_contact > 0))
             {
-                if (sales_budget.IsSelected && sales_budget.Error == null)
-                {
-                    if (sales_budget.State == EntityState.Added)
-                    {
-                        sales_budget.timestamp = DateTime.Now;
-                        sales_budget.State = EntityState.Unchanged;
-                        db.Entry(sales_budget).State = EntityState.Added;
-                        sales_budget.IsSelected = false;
-                        Add_CRM(sales_budget);
-                    }
-                    else if (sales_budget.State == EntityState.Modified)
-                    {
-                        sales_budget.timestamp = DateTime.Now;
-                        sales_budget.State = EntityState.Unchanged;
-                        db.Entry(sales_budget).State = EntityState.Modified;
-                        sales_budget.IsSelected = false;
-                    }
-                    NumberOfRecords += 1;
-                }
+				int count = sales_budget.sales_budget_detail.Where(x => x.Error != null).Count();
+				if (sales_budget.IsSelected && sales_budget.Error == null && count == 0)
+				{
+					if (sales_budget.State == EntityState.Added)
+					{
+						sales_budget.timestamp = DateTime.Now;
+						sales_budget.State = EntityState.Unchanged;
+						db.Entry(sales_budget).State = EntityState.Added;
+						sales_budget.IsSelected = false;
+						Add_CRM(sales_budget);
+					}
+					else if (sales_budget.State == EntityState.Modified)
+					{
+						sales_budget.timestamp = DateTime.Now;
+						sales_budget.State = EntityState.Unchanged;
+						db.Entry(sales_budget).State = EntityState.Modified;
+						sales_budget.IsSelected = false;
+					}
+					NumberOfRecords += 1;
+				}
+				else
+				{ return false; }
 
                 if (sales_budget.State > 0)
                 {

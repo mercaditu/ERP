@@ -450,8 +450,14 @@ namespace cntrl
             btnSearch_Click?.Invoke(sender, tbxSearch.Text.Trim());
         }
 
-        //Sync Data (Brings new data into view.)
-        public event btnSync_ClickedEventHandler btnSync_Click;
+		public event btnSearchDate_ClickedEventHandler btnSearchDate_Click;
+
+		public delegate void btnSearchDate_ClickedEventHandler(object sender, string query);
+
+		
+
+		//Sync Data (Brings new data into view.)
+		public event btnSync_ClickedEventHandler btnSync_Click;
 
         public delegate void btnSync_ClickedEventHandler(object sender, EventArgs e);
 
@@ -690,5 +696,10 @@ namespace cntrl
         {
             stackMessages.Children.Remove(toolMessage);
         }
-    }
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			btnSearch_Click?.Invoke(sender, null);
+		}
+	}
 }

@@ -57,6 +57,24 @@ namespace Cognitivo.Sales
 			tabAccount.Focus();
 		}
 
+		private void Ticket_Click(object sender, EventArgs e)
+		{
+			if (sales_invoiceViewSource.View != null)
+			{
+				sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+				if (sales_invoice != null)
+				{
+					app_document_range app_document_range = SalesDB.db.app_document_range.Where(x => x.id_range == sales_invoice.id_range).FirstOrDefault();
+					if (app_document_range!=null)
+					{
+						entity.Brillo.Document.Start.Automatic(sales_invoice, app_document_range);
+					}
+					
+				}
+			}
+		}
+
+
 		private void Sales_Click(object sender, EventArgs e)
 		{
 			tabSales.IsSelected = true;
@@ -105,19 +123,25 @@ namespace Cognitivo.Sales
 			/// If all validation is met, then we can start Sales Process.
 			if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
 			{
+				bool ApprovalStatus;
+
 				sales_invoice.IsSelected = true;
 				///Approve Sales Invoice.
 				///Note> Approve includes Save Logic. No need to seperately Save.
 				///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
-				SalesDB.Approve();
+				ApprovalStatus = SalesDB.Approve();
 
-				List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
-				PaymentDB.Approve(payment_schedualList, true, false);
+				if (ApprovalStatus)
+				{
+					List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+					PaymentDB.Approve(payment_schedualList, true, false);
 
-				paymentViewSource.Source = null;
-				tabTable.Focus();
-				//Start New Sale
-				New_Sale_Payment();
+					paymentViewSource.Source = null;
+					tabTable.Focus();
+					//Start New Sale
+					New_Sale_Payment();
+				}
+
 			}
 		}
 
@@ -169,17 +193,6 @@ namespace Cognitivo.Sales
 					sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 					sales_invoice.id_contact = contact.id_contact;
 					sales_invoice.contact = contact;
-					// Creating new PAYMENT for upcomming sale.
-
-					payment payment = PaymentDB.New(true);
-					payment.id_contact = contact.id_contact;
-					payment.id_currencyfx = sales_invoice.id_currencyfx;
-					PaymentDB.db.payments.Add(payment);
-					paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
-					paymentViewSource.Source = PaymentDB.db.payments.Local;
-					paymentViewSource.View.MoveCurrentTo(payment);
-
-					GrandTotalsales_DataContextChanged(null, null);
 
 
 
@@ -443,5 +456,43 @@ namespace Cognitivo.Sales
 			New_Sale_Payment();
 		}
 
+		private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sales_invoiceViewSource.View != null)
+			{
+				sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+				if (sales_invoice != null)
+				{
+
+					contact contact = SalesDB.db.contacts.Find(sales_invoice.id_contact);
+					if (contact != null)
+					{
+						sbxContact.ContactID = contact.id_contact;
+						sbxContact.Text = contact.name;
+						sbxContact.ContactID = contact.id_contact;
+						// Creating new PAYMENT for upcomming sale.
+						payment payment = PaymentDB.New(true);
+						payment.id_contact = contact.id_contact;
+						payment.id_currencyfx = sales_invoice.id_currencyfx;
+						PaymentDB.db.payments.Add(payment);
+						paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
+						paymentViewSource.Source = PaymentDB.db.payments.Local;
+						paymentViewSource.View.MoveCurrentTo(payment);
+
+						GrandTotalsales_DataContextChanged(null, null);
+					}
+
+
+
+
+
+
+
+
+
+				}
+			}
+
+		}
 	}
 }

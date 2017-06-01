@@ -137,7 +137,7 @@
                             </Button>
 							<Grid Height="350" Width="765">
 								<DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                                      ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">
+                                      ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
 									<DataGrid.Columns>
 										<DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -540,7 +540,25 @@
                                FontSize="18" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
                 </Grid>
-            </StackPanel>
+				<Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
+				Cursor="Hand" MouseDown="Ticket_Click" TouchDown="Ticket_Click"
+				ToolTip="{lex:Loc Print}">
+					<Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
+						<Border.Background>
+							<SolidColorBrush Color="White" Opacity="0.64" />
+						</Border.Background>
+						<StackPanel Orientation="Horizontal" Margin="2,0,32,0">
+							<Label Content="{lex:LocTextUpper Print}" 
+                                   Foreground="Black" Style="{StaticResource input_label}" />
+						</StackPanel>
+					</Border>
+					<Border CornerRadius="32" Background="#FF004867" Width="32" Height="32"
+                            VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="White" BorderThickness="1">
+						<Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
+                               FontSize="18" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
+					</Border>
+				</Grid>
+			</StackPanel>
 
             <Grid x:Name="gridStart" Background="White" Visibility="Collapsed">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">

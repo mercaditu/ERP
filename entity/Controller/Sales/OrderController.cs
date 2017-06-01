@@ -282,7 +282,8 @@ namespace entity.Controller.Sales
 
             foreach (sales_order sales_order in db.sales_order.Local.Where(x => x.IsSelected && x.id_contact > 0))
             {
-                if (sales_order.IsSelected && sales_order.Error == null)
+				int count = sales_order.sales_order_detail.Where(x => x.Error != null).Count();
+				if (sales_order.IsSelected && sales_order.Error == null && count == 0)
                 {
                     if (sales_order.State == EntityState.Added)
                     {
@@ -301,8 +302,10 @@ namespace entity.Controller.Sales
                     }
                     NumberOfRecords += 1;
                 }
+				else
+				{ return false; }
 
-                if (sales_order.State > 0)
+				if (sales_order.State > 0)
                 {
                     if (sales_order.State != EntityState.Unchanged && sales_order.Error != null)
                     {

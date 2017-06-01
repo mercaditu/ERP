@@ -212,25 +212,31 @@ namespace entity.Controller.Sales
 
             foreach (sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
             {
-                if (sales_invoice.IsSelected && sales_invoice.Error == null)
-                {
-                    if (sales_invoice.State == EntityState.Added)
-                    {
-                        sales_invoice.timestamp = DateTime.Now;
-                        sales_invoice.State = EntityState.Unchanged;
-                        db.Entry(sales_invoice).State = EntityState.Added;
-                        sales_invoice.IsSelected = false;
-                        Add_CRM(sales_invoice);
-                    }
-                    else if (sales_invoice.State == EntityState.Modified)
-                    {
-                        sales_invoice.timestamp = DateTime.Now;
-                        sales_invoice.State = EntityState.Unchanged;
-                        db.Entry(sales_invoice).State = EntityState.Modified;
-                        sales_invoice.IsSelected = false;
-                    }
-                    NumberOfRecords += 1;
-                }
+				int count = sales_invoice.sales_invoice_detail.Where(x => x.Error != null).Count();
+
+				if (sales_invoice.IsSelected && sales_invoice.Error == null && count == 0)
+				{
+					if (sales_invoice.State == EntityState.Added)
+					{
+						sales_invoice.timestamp = DateTime.Now;
+						sales_invoice.State = EntityState.Unchanged;
+						db.Entry(sales_invoice).State = EntityState.Added;
+						sales_invoice.IsSelected = false;
+						Add_CRM(sales_invoice);
+					}
+					else if (sales_invoice.State == EntityState.Modified)
+					{
+						sales_invoice.timestamp = DateTime.Now;
+						sales_invoice.State = EntityState.Unchanged;
+						db.Entry(sales_invoice).State = EntityState.Modified;
+						sales_invoice.IsSelected = false;
+					}
+					NumberOfRecords += 1;
+				}
+				else
+				{
+					return  false;
+				}
 
                 if (sales_invoice.State != EntityState.Unchanged && sales_invoice.Error != null)
                 {
@@ -356,10 +362,12 @@ namespace entity.Controller.Sales
                         db.SaveChanges();
 
                         Brillo.Document.Start.Automatic(invoice, app_document_range);
-                    }
+						ApprovalStatus = true;
+					}
                     else
                     {
-                        invoice.is_issued = false;
+						ApprovalStatus = true;
+						invoice.is_issued = false;
 
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
@@ -372,11 +380,12 @@ namespace entity.Controller.Sales
                 }
                 else
                 {
-                    //Credit Not Approved Message.
-                    Msg.Add(Messages.CreditLimit_Exceeded);
+					ApprovalStatus = false;
+					//Credit Not Approved Message.
+					Msg.Add(Messages.CreditLimit_Exceeded);
                 }
 
-                ApprovalStatus = true;
+               
             }
 
             return ApprovalStatus;

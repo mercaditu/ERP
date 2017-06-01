@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:pref="clr-namespace:entity.Properties;assembly=entity"
       mc:Ignorable="d"
 
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -49,64 +50,50 @@
         </ListBox>
         <StackPanel x:Name="stackMain" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" HorizontalAlignment="Left"
                     Grid.Column="1" Grid.Row="1" Margin="8" Background="White">
-            <Button Content="Print" Click="Button_Click" Visibility="Collapsed" />
             <Label Content="{lex:Loc Name}" Style="{DynamicResource input_label}" />
             <TextBox Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}" />
             <Label Content="{lex:Loc Module}" Style="{DynamicResource input_label}" />
             <ComboBox x:Name="cbxApplication" Style="{StaticResource input_combobox}"
-                      SelectedValue="{Binding id_application, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                      SelectionChanged="cbxApplication_SelectionChanged" />
+                      SelectedValue="{Binding id_application, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
             <Label Content="{lex:Loc RowLimit}" Style="{DynamicResource input_label}" />
             <TextBox Text="{Binding line_limit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}" />
             <Label Content="{lex:Loc Document}" Style="{DynamicResource input_label}" />
             <RadioButton Content="{lex:Loc StylePrinter}" x:Name="rbtnStylePrinter"
                       IsChecked="{Binding style_printer, Mode=TwoWay, FallbackValue=false, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_radiobutton}" />
             <RadioButton Content="{lex:Loc StyleReceipt}" x:Name="rbtnStyleReciept"
-                      IsChecked="{Binding style_reciept, Mode=TwoWay, FallbackValue=true, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_radiobutton}" />
+                      IsChecked="{Binding style_reciept, FallbackValue=True, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_radiobutton}" />
 
             <Label Content="{lex:Loc Filter}" Style="{DynamicResource input_label}" />
             <CheckBox Content="{lex:Loc Branch}" IsChecked="{Binding filterby_branch, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}" />
             <CheckBox Content="{lex:Loc Terminal}" IsChecked="{Binding filterby_tearminal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    Visibility="{Binding ElementName=rbtnStyleReciept, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
-                    HorizontalAlignment="Right">
-            <Label Content="{lex:Loc Reciept Style}" Style="{StaticResource H2}" Foreground="White" />
+        <StackPanel Grid.Row="1" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Right">
+            <Label Content="{lex:Loc StyleReceipt}" Style="{StaticResource H2}"/>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Margin="5,5,2,5">
-                    <Label Content="{lex:Loc Font}" Style="{StaticResource input_label}" Foreground="White" />
+                    <Label Content="Font" Style="{StaticResource input_label}" />
                     <ComboBox x:Name="cbxFonts" ItemsSource="{Binding Source={StaticResource SortedFontsCollection}}"
-                              Width="128" Style="{StaticResource input_combobox}" />
+                              Width="128" Style="{StaticResource input_combobox}" 
+                              SelectedValue="{Binding Source={x:Static pref:Settings.Default}, Path=Reciept_FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </StackPanel>
                 <StackPanel Margin="2,5,5,5">
-                    <Label Content="{lex:Loc FontSize}" Style="{StaticResource input_label}" Foreground="White" />
-                    <ComboBox Width="128" IsEditable="True" Style="{StaticResource input_combobox}" x:Name="cbxfontsize">
-                        <ComboBoxItem>6</ComboBoxItem>
-                        <ComboBoxItem>8</ComboBoxItem>
-                        <ComboBoxItem>10</ComboBoxItem>
-                        <ComboBoxItem>12</ComboBoxItem>
-                        <ComboBoxItem>14</ComboBoxItem>
-                        <ComboBoxItem>16</ComboBoxItem>
-                        <ComboBoxItem>18</ComboBoxItem>
-                    </ComboBox>
+                    <Label Content="Size" Style="{StaticResource input_label}" />
+                    <TextBox Width="128"
+                        Text="{Binding Source={x:Static pref:Settings.Default}, Mode=TwoWay, Path=Reciept_FontSize, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </StackPanel>
             </StackPanel>
-            <Label Content="{lex:Loc columns}" Style="{StaticResource input_label}" Foreground="White" />
-            <ListBox x:Name="lstfield" MouseDoubleClick="lstfield_MouseDoubleClick">
-            </ListBox>
-            <Label Content="{lex:Loc Header}" Style="{StaticResource input_label}" Foreground="White" />
-            <TextBox x:Name="rtfheader" AcceptsReturn="True" TextWrapping="Wrap" Height="100" Text="{Binding reciept_header,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-            </TextBox>
-            <Label Content="{lex:Loc Row}" Style="{StaticResource input_label}" Foreground="White" />
-            <TextBox x:Name="rtfrow" AcceptsReturn="True" TextWrapping="Wrap" Height="100" Text="{Binding reciept_body,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-            </TextBox>
-            <Label Content="{lex:Loc Footer}" Style="{StaticResource input_label}" Foreground="White" />
-            <TextBox x:Name="rtffooter" AcceptsReturn="True" TextWrapping="Wrap" Height="100" Text="{Binding reciept_footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-            </TextBox>
-            <TextBlock Margin="8" Foreground="White" Text="Hi there" />
-            <TextBlock Margin="8,0" Foreground="White">
-                <Run />
-            </TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="5,5,2,5">
+                    <Label Content="Min Width" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding Source={x:Static pref:Settings.Default}, Mode=TwoWay, Path=Reciept_MinWidth, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        Style="{StaticResource input_textbox}" Width="128"/>
+                </StackPanel>
+                <StackPanel Margin="2,5,5,5">
+                    <Label Content="Max Width" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding Source={x:Static pref:Settings.Default}, Mode=TwoWay, Path=Reciept_MaxWidth, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        Style="{StaticResource input_textbox}" Width="128"/>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1"

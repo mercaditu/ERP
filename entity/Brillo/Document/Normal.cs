@@ -24,18 +24,7 @@ namespace entity.Brillo.Document
         {
             if (app_range.app_document != null ? app_range.app_document.style_reciept : false || app_range.app_document != null ? app_range.app_document.id_application == App.Names.PointOfSale : false)
             {
-				Pnl_Receipt pnl_Receipt = new Pnl_Receipt();
-
-				pnl_Receipt.RangeID = app_range.id_range;
-				pnl_Receipt.Document = Document;
-				Window window = new Window
-				{
-					Title = "Ticket Setting",
-					Content = pnl_Receipt
-				};
-
-				window.ShowDialog();
-				
+                TicketPrint.Document_Print(app_range.id_range, Document);
             }
             else
             {

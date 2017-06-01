@@ -297,8 +297,7 @@
 														<Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
 														<WrapPanel>
 															<TextBox Width="30" HorizontalAlignment="Left"
-																	 Text="{Binding Source={x:Static pref:Settings.Default}, Path=TransDate_Offset, Mode=TwoWay}"
-																	 Margin="6,2,2,2" />
+																	 Text="{Binding Source={x:Static pref:Settings.Default}, Path=TransDate_Offset, Mode=TwoWay}" Margin="6,2,2,2" />
 															<Label Content="{lex:Loc DifferenceinDate}" Style="{StaticResource generic_Label}" />
 														</WrapPanel>
 														<Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />

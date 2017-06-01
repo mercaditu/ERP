@@ -91,33 +91,6 @@ namespace Cognitivo.Configs
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            FlowDocument doc = new FlowDocument(new Paragraph(new Run(rtfheader.Text)))
-            {
-                Name = "FlowDoc"
-            };
-            IDocumentPaginatorSource idpSource = doc;
-            new PrintDialog().PrintDocument(idpSource.DocumentPaginator, "Hello WPF Printing.");
-        }
-
-        private void cbxApplication_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxApplication.SelectedItem != null)
-            {
-                if ((entity.App.Names)cbxApplication.SelectedItem == entity.App.Names.Movement)
-                {
-                    lstfield.Items.Add("<<item>>");
-                    lstfield.Items.Add("<<quantity>>");
-                }
-            }
-        }
-
-        private void lstfield_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            rtfrow.Text += lstfield.SelectedItem.ToString();
-        }
-
         private void toolBar_btnSearch_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query) && app_documentViewSource != null)

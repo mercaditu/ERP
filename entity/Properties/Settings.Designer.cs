@@ -178,5 +178,53 @@ namespace entity.Properties {
                 this["account_ID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Reciept_FontName {
+            get {
+                return ((string)(this["Reciept_FontName"]));
+            }
+            set {
+                this["Reciept_FontName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Reciept_FontSize {
+            get {
+                return ((int)(this["Reciept_FontSize"]));
+            }
+            set {
+                this["Reciept_FontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Reciept_MaxWidth {
+            get {
+                return ((double)(this["Reciept_MaxWidth"]));
+            }
+            set {
+                this["Reciept_MaxWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Reciept_MinWidth {
+            get {
+                return ((double)(this["Reciept_MinWidth"]));
+            }
+            set {
+                this["Reciept_MinWidth"] = value;
+            }
+        }
     }
 }

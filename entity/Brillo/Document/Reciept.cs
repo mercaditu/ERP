@@ -22,20 +22,30 @@
 			string Content = "";
 			if (FontName == null)
 			{
-				FontName =new FontFamily("Courier New");
+                if (string.IsNullOrEmpty(Properties.Settings.Default.Reciept_FontName))
+                {
+                    FontName = new FontFamily("Courier New");
+                }
+                else
+                {
+                    FontName = new FontFamily(Properties.Settings.Default.Reciept_FontName);
+                }
 			}
+
 			if (FontSize == 0)
 			{
-				FontSize = 11.00;
-			}
+                FontSize = Properties.Settings.Default.Reciept_FontSize;
+            }
+
 			if (MinPageWidth == 0)
 			{
-				MinPageWidth = 283;
-			}
+                MinPageWidth = Properties.Settings.Default.Reciept_MinWidth;
+            }
+
 			if (MaxPageWidth == 0)
 			{
-				MaxPageWidth = 300;
-			}
+				MaxPageWidth = Properties.Settings.Default.Reciept_MaxWidth;
+            }
 
 
 			using (db db = new db())

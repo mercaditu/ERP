@@ -73,6 +73,31 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel Margin="5,5,2,5">
                     <Label Content="Font" Style="{StaticResource input_label}" />
+                    <ComboBox xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+                              ItemTemplate="{DynamicResource FontTemplate}">
+                        <ComboBox.Resources>
+                            <CollectionViewSource x:Key="myFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                                <CollectionViewSource.SortDescriptions>
+                                    <ComponentModel:SortDescription PropertyName="Source" />
+                                </CollectionViewSource.SortDescriptions>
+                            </CollectionViewSource>
+                            <Style x:Key="FontStyle">
+                                <Setter Property="Control.FontFamily" Value="{Binding Source}" />
+                                <Setter Property="Control.FontSize" Value="16" />
+                            </Style>
+                            <DataTemplate x:Key="FontTemplate">
+                                <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+                                    <TextBlock Style="{StaticResource FontStyle}"
+                                               Text="{Binding Source}"
+                                               ToolTip="{Binding Source}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.Resources>
+                        <ComboBox.ItemsSource>
+                            <Binding Source="{StaticResource myFonts}" />
+                        </ComboBox.ItemsSource>
+                    </ComboBox>
+
                     <ComboBox x:Name="cbxFonts" ItemsSource="{Binding Source={StaticResource SortedFontsCollection}}"
                               Width="128" Style="{StaticResource input_combobox}" 
                               SelectedValuePath="{Binding Source={x:Static pref:Settings.Default}, Path=Reciept_FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

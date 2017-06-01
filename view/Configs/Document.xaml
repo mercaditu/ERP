@@ -67,14 +67,15 @@
             <CheckBox Content="{lex:Loc Branch}" IsChecked="{Binding filterby_branch, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}" />
             <CheckBox Content="{lex:Loc Terminal}" IsChecked="{Binding filterby_tearminal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="1" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Right"
+                    Visibility="{Binding ElementName=rbtnStyleReciept, Path=IsChecked, Converter={StaticResource Bool2Visibility}}">
             <Label Content="{lex:Loc StyleReceipt}" Style="{StaticResource H2}"/>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Margin="5,5,2,5">
                     <Label Content="Font" Style="{StaticResource input_label}" />
                     <ComboBox x:Name="cbxFonts" ItemsSource="{Binding Source={StaticResource SortedFontsCollection}}"
                               Width="128" Style="{StaticResource input_combobox}" 
-                              SelectedValue="{Binding Source={x:Static pref:Settings.Default}, Path=Reciept_FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                              SelectedValuePath="{Binding Source={x:Static pref:Settings.Default}, Path=Reciept_FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </StackPanel>
                 <StackPanel Margin="2,5,5,5">
                     <Label Content="Size" Style="{StaticResource input_label}" />

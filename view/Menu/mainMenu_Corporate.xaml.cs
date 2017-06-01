@@ -47,7 +47,6 @@ namespace Cognitivo.Menu
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             rootWindow = Window.GetWindow(this) as MainWindow;
-
             Task taskCheckOnline = Task.Factory.StartNew(() => OnlineRegistration());
         }
 

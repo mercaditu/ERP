@@ -75,37 +75,39 @@ namespace Cognitivo.Menu
                             if (UserInfo.security_role.Version != CurrentSession.Versions.Lite)
                             {
                                 //Check if Version is Expired Online.
-                                if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault()
-                                    .date_expiry >= DateTime.Now)
+                                if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault() != null)
                                 {
-                                    //Not Expired. Check for UserCount.
-                                    int Local_UserCount = db.security_user.Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active).Count();
-                                    int Web_UserCount = Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault().web_user_count;
-
-                                    if (Web_UserCount < Local_UserCount)
+                                    if (Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault().date_expiry >= DateTime.Now)
                                     {
-                                        //Local Count exceeds Reigstered Count. Inactivate old users automatically.
-                                        List<security_user> UserList = db.security_user
-                                            .Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active)
-                                            .OrderBy(x => x.trans_date).Take(Web_UserCount - Local_UserCount).ToList();
-                                        foreach (var user in UserList)
-                                        {
-                                            user.is_active = false;
-                                        }
+                                        //Not Expired. Check for UserCount.
+                                        int Local_UserCount = db.security_user.Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active).Count();
+                                        int Web_UserCount = Licence.CompanyLicence.versions.Where(x => x.version == UserInfo.security_role.Version).FirstOrDefault().web_user_count;
 
-                                        db.SaveChangesAsync();
+                                        if (Web_UserCount < Local_UserCount)
+                                        {
+                                            //Local Count exceeds Reigstered Count. Inactivate old users automatically.
+                                            List<security_user> UserList = db.security_user
+                                                .Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active)
+                                                .OrderBy(x => x.trans_date).Take(Web_UserCount - Local_UserCount).ToList();
+                                            foreach (var user in UserList)
+                                            {
+                                                user.is_active = false;
+                                            }
+
+                                            db.SaveChangesAsync();
+                                        }
+                                        else
+                                        {
+                                            //WebUser Count less than or equal Local User Count. 
+                                            //Do Nothing
+                                        }
                                     }
                                     else
                                     {
-                                        //WebUser Count less than or equal Local User Count. 
-                                        //Do Nothing
+                                        //Expired. Change to Lite Version
+                                        UserInfo.security_role.Version = CurrentSession.Versions.Lite;
+                                        db.SaveChangesAsync();
                                     }
-                                }
-                                else
-                                {
-                                    //Expired. Change to Lite Version
-                                    UserInfo.security_role.Version = CurrentSession.Versions.Lite;
-                                    db.SaveChangesAsync();
                                 }
                             }
                             else

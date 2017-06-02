@@ -374,8 +374,16 @@ namespace cntrl.Class
                   new Report
             {
                 Application = entity.App.Names.Inventory,
-                Name =entity.Brillo.Localize.StringText("Inventory")!= string.Empty ? entity.Brillo.Localize.StringText("Inventory") :"Inventory",
+                Name =entity.Brillo.Localize.StringText("Inventory"),
                 Path = "cntrl.Reports.Stocks.Inventory.rdlc",
+                Query = Reports.Stock.InventorySummary.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+             new Report
+            {
+                Application = entity.App.Names.Inventory,
+                Name =entity.Brillo.Localize.StringText("Batch"),
+                Path = "cntrl.Reports.Stocks.InventoryByBatch.rdlc",
                 Query = Reports.Stock.InventorySummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },

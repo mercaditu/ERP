@@ -17,5 +17,7 @@ namespace entity.Reporting
         public string Comment { get; set; }
         public string Branch { get; set; }
         public string Location { get; set; }
+        public string Batch { get; set; }
+        public DateTime ExpirationDate { get; set; }
     }
 }

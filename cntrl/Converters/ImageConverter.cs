@@ -11,16 +11,23 @@ namespace Cognitivo.Converters
         {
             if (value != null)
             {
-                byte[] imageData = value as byte[];
-                if (imageData == null || imageData.Length == 0) return null;
-                using (var ms = new MemoryStream(imageData))
+                try
                 {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad; // here
-                    image.StreamSource = ms;
-                    image.EndInit();
-                    return image;
+                    byte[] imageData = value as byte[];
+                    if (imageData == null || imageData.Length == 0) return null;
+                    using (var ms = new MemoryStream(imageData))
+                    {
+                        var image = new BitmapImage();
+                        image.BeginInit();
+                        image.CacheOption = BitmapCacheOption.OnLoad; // here
+                        image.StreamSource = ms;
+                        image.EndInit();
+                        return image;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
 

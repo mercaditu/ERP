@@ -699,6 +699,7 @@
     <EmbeddedResource Include="Reports\Sales\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\InventoryByBatch.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\ItemReceipe.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Items.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Movement.rdlc" />

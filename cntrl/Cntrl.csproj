@@ -626,6 +626,7 @@
     </Compile>
     <Compile Include="Reports\Sales\Sales.cs" />
     <Compile Include="Reports\Sales\SalesAnalysis.cs" />
+    <Compile Include="Reports\Stocks\Item.cs" />
     <Compile Include="Reports\Stocks\ItemReceipe.cs" />
     <Compile Include="Reports\Stocks\CostBreakDown.cs" />
     <Compile Include="Reports\Stocks\InventorySummary.cs" />
@@ -699,6 +700,7 @@
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\ItemReceipe.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\Items.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Movement.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\PriceList.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockAnalysis.rdlc">
@@ -824,6 +826,7 @@
     <None Include="Properties\DataSources\entity.Reporting.Inventory.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.InventoryAnalysis.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.InventoryValue.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Item.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ItemReceipe.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Merchandise.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PaymentsReceivable.datasource" />

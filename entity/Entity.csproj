@@ -419,6 +419,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Reporting\ContactSubscription.cs" />
+    <Compile Include="Reporting\Item.cs" />
     <Compile Include="Reporting\Inventory.cs" />
     <Compile Include="Reporting\ItemReceipe.cs" />
     <Compile Include="Reporting\PaymentsReceivable.cs" />

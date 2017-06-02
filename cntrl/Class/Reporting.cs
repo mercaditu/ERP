@@ -315,7 +315,7 @@ namespace cntrl.Class
                   new Report
             {
                 Application = entity.App.Names.PurchaseTender,
-                Name =entity.Brillo.Localize.StringText("PurchaseTender")!= string.Empty ? entity.Brillo.Localize.StringText("PurchaseTender") :"PurchaseTender",
+                Name =entity.Brillo.Localize.StringText("PurchaseTender"),
                 Path = "cntrl.Reports.Purchases.PurchaseTender.rdlc",
                 Query = Reports.Purchase.PurchaseTender.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -326,15 +326,23 @@ namespace cntrl.Class
                 new Report
             {
                 Application = entity.App.Names.PriceList,
-                Name =entity.Brillo.Localize.StringText("PriceList")!= string.Empty ? entity.Brillo.Localize.StringText("PriceList") :"PriceList",
+                Name =entity.Brillo.Localize.StringText("PriceList"),
                 Path = "cntrl.Reports.Stocks.PriceList.rdlc",
                 Query = Reports.Stock.PriceList.query,
+                Parameters = new List<Report.Types> { }
+            },
+            new Report
+            {
+                Application = entity.App.Names.Stock,
+                Name = entity.Brillo.Localize.StringText("Items"),
+                Path = "cntrl.Reports.Stocks.Items.rdlc",
+                Query = Reports.Stock.Item.query,
                 Parameters = new List<Report.Types> { }
             },
                 new Report
             {
                 Application = entity.App.Names.Stock,
-                Name =entity.Brillo.Localize.StringText("StockMovement")!= string.Empty ? entity.Brillo.Localize.StringText("StockMovement") :"StockMovement",
+                Name =entity.Brillo.Localize.StringText("StockMovement"),
                 Path = "cntrl.Reports.Stocks.StockMovement.rdlc",
                 Query = Reports.Stock.Stock.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},

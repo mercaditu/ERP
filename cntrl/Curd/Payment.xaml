@@ -206,13 +206,12 @@
 									 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" />
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64"
-									 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
+									 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="WrapWithOverflow" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
             <Grid Background="WhiteSmoke" Height="32" VerticalAlignment="Bottom">
-                <!--<Button Content="{lex:Loc Delete}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" Foreground="Crimson" FontWeight="Medium"></Button>-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Click="SaveChanges" HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue"
 							BorderThickness="0" FontWeight="Medium">

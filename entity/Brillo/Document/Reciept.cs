@@ -402,7 +402,10 @@
 			Footer += "Condicion : " + sales_return.app_condition.name + "\n";
 			Footer += "------------------------------- \n";
 			Footer += "Sucursal    : " + sales_return.app_branch.name + " Terminal: " + sales_return.app_terminal.name + "\n";
-			Footer += "Cajero/a    : " + UserGiven;
+			Footer += "Cajero/a    : " + UserGiven + "/n";
+            Footer += "/n";
+            Footer += "Factura impresa utilizando Cognitivo ERP /n" +
+                      "-- http://www.cognitivo.in --";
 
 			string Text = Header + Detail + Footer;
 			return Text;

@@ -70,7 +70,8 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnApprove_Click(object sender, RoutedEventArgs e)
         {
-            app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
+			dgvAccountDetail.CommitEdit();
+			app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
 
             if (app_account != null)
             {

@@ -11,41 +11,12 @@
 
 	public class Reciept
 	{
-		public FontFamily FontName { get; set; }
-		public double FontSize { get; set; }
-		public double MinPageWidth { get; set; }
-		public double MaxPageWidth { get; set; }
 
 		public void Document_Print(int RangeID, object obj)
 		{
 			string PrinterName;
 			string Content = "";
-			if (FontName == null)
-			{
-                if (string.IsNullOrEmpty(Properties.Settings.Default.Reciept_FontName))
-                {
-                    FontName = new FontFamily("Courier New");
-                }
-                else
-                {
-                    FontName = new FontFamily(Properties.Settings.Default.Reciept_FontName);
-                }
-			}
-
-			if (FontSize == 0)
-			{
-                FontSize = Properties.Settings.Default.Reciept_FontSize;
-            }
-
-			if (MinPageWidth == 0)
-			{
-                MinPageWidth = Properties.Settings.Default.Reciept_MinWidth;
-            }
-
-			if (MaxPageWidth == 0)
-			{
-				MaxPageWidth = Properties.Settings.Default.Reciept_MaxWidth;
-            }
+			
 
 
 			using (db db = new db())
@@ -84,6 +55,7 @@
 
 		private void Print(string Content, app_document app_document, string PrinterName)
 		{
+			entity.Properties.Settings Setting = new Properties.Settings();
 			if (Content != "")
 			{
 				if (app_document != null && PrinterName != string.Empty)
@@ -95,8 +67,8 @@
 
 						FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
 						document.Name = "CognitivoERP_Ticket";
-						document.FontFamily =FontName;
-						document.FontSize = FontSize;
+						document.FontFamily = new FontFamily(Setting.Reciept_FontName);
+						document.FontSize = Setting.Reciept_FontSize;
 						document.FontStretch = FontStretches.Normal;
 						document.FontWeight = FontWeights.Normal;
 
@@ -107,9 +79,9 @@
 						//document.
 
 						//Specify minimum page sizes. Origintally 283, but was too small.
-						document.MinPageWidth = MinPageWidth;
+						document.MinPageWidth = Setting.Reciept_MinWidth;
 						//Specify maximum page sizes.
-						document.MaxPageWidth = MaxPageWidth;
+						document.MaxPageWidth = Setting.Reciept_MaxWidth;
 
 						IDocumentPaginatorSource idpSource = document;
 						try

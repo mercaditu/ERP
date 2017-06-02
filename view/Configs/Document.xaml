@@ -73,8 +73,8 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel Margin="5,5,2,5">
                     <Label Content="Font" Style="{StaticResource input_label}" />
-                    <ComboBox xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-                              ItemTemplate="{DynamicResource FontTemplate}">
+					<ComboBox xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"  Text="{Binding Source={x:Static pref:Settings.Default}, Path=Reciept_FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                              ItemTemplate="{DynamicResource FontTemplate}" >
                         <ComboBox.Resources>
                             <CollectionViewSource x:Key="myFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
                                 <CollectionViewSource.SortDescriptions>
@@ -100,7 +100,7 @@
 
                     <ComboBox x:Name="cbxFonts" ItemsSource="{Binding Source={StaticResource SortedFontsCollection}}"
                               Width="128" Style="{StaticResource input_combobox}" 
-                              SelectedValuePath="{Binding Source={x:Static pref:Settings.Default}, Path=Reciept_FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                              Text="{Binding Source={x:Static pref:Settings.Default}, Path=Reciept_FontName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </StackPanel>
                 <StackPanel Margin="2,5,5,5">
                     <Label Content="Size" Style="{StaticResource input_label}" />

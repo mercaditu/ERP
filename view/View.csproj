@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ashah\Desktop\ERP15.119\</PublishUrl>
+    <PublishUrl>C:\Users\SMART\Desktop\ERP15.122\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -38,7 +38,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>119</ApplicationRevision>
+    <ApplicationRevision>122</ApplicationRevision>
     <ApplicationVersion>2.1.15.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -172,8 +172,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="MoreLinq, Version=2.5.20831.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\packages\morelinq.2.5.0\lib\net40\MoreLinq.dll</HintPath>
+    <Reference Include="MoreLinq, Version=2.4.20801.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\morelinq.2.4.1\lib\net40\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

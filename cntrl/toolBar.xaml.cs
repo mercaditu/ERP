@@ -94,7 +94,7 @@ namespace cntrl
 
 		protected virtual void OnStartDateChange(DateTime newvalue)
 		{
-			StartDate = DateTime.Now.AddMonths(-1);
+			StartDate = newvalue;
 		}
 		private static void OnEndDateChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
 		{
@@ -107,7 +107,7 @@ namespace cntrl
 
 		protected virtual void OnEndDateChange(DateTime newvalue)
 		{
-			EndDate = DateTime.Now;
+			EndDate = newvalue;
 		}
 
 		#endregion "INotifyPropertyChanged"
@@ -450,10 +450,7 @@ namespace cntrl
             btnSearch_Click?.Invoke(sender, tbxSearch.Text.Trim());
         }
 
-		public event btnSearchDate_ClickedEventHandler btnSearchDate_Click;
-
-		public delegate void btnSearchDate_ClickedEventHandler(object sender, string query);
-
+		
 		
 
 		//Sync Data (Brings new data into view.)
@@ -697,9 +694,6 @@ namespace cntrl
             stackMessages.Children.Remove(toolMessage);
         }
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			btnSearch_Click?.Invoke(sender, null);
-		}
+		
 	}
 }

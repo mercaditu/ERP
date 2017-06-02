@@ -94,7 +94,7 @@
 							<DropShadowEffect ShadowDepth="0" Opacity="0.75"/>
 						</local:DateRange.Effect>
 					</local:DateRange>
-					<Button Content="search" Click="Button_Click"/>
+					
 				</StackPanel>
               
 				

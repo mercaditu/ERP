@@ -124,29 +124,32 @@
                             <Label Content="{lex:Loc Adjust}" />
                             <Button Content="Open Drawer" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right" />
                         </Grid>
-                        <DataGrid x:Name="app_account_detailAdjustDataGrid" Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
-									AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource app_account_detail_adjustViewSource}}"
-									EnableRowVirtualization="True" Margin="10" Height="Auto"
-									RowDetailsVisibilityMode="VisibleWhenSelected">
-                            <DataGrid.Columns>
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Account}" Width="*"
-														ItemsSource="{Binding Source={StaticResource app_account_listViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_account"
-														SelectedValueBinding="{Binding id_account, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*"
-														ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_payment_type"
-														SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn Binding="{Binding debit, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridTextColumn Binding="{Binding credit, UpdateSourceTrigger=PropertyChanged}" Header="credit" Width="*" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="*"
-														ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_currencyfx"
-														SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+						<StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10">
+							<StackPanel>
+								<Label Content="Account"/>
+								<Label Content="PaymentType"/>
+								<Label Content="Debit"/>
+								<Label Content="Credit"/>
+								<Label Content="Currency"/>
+							</StackPanel>
+							<StackPanel >
+							
+								<ComboBox x:Name="cmbaccount" ItemsSource="{Binding Source={StaticResource app_account_listViewSource}}"
+														DisplayMemberPath="name" SelectedValuePath="id_account" 
+										 />
+								<ComboBox x:Name="cmbpayment" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
+														DisplayMemberPath="name" SelectedValuePath="id_payment_type" 
+										  />
+								<TextBox x:Name="txtdebit"/>
+								<TextBox  x:Name="txtcredit"/>
+								<ComboBox x:Name="cmbcurrency" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
+														DisplayMemberPath="name" SelectedValuePath="id_currency"
+														/>
+							</StackPanel>
+						</StackPanel>
+                    
                         <Grid Margin="5">
-                            <TextBox x:Name="tbxCommentAdjust" Margin="0,0,105,0" Text="" />
+                            <TextBox x:Name="tbxCommentAdjust" Margin="0,0,105,0" Text="{Binding comment,Source={StaticResource app_account_detail_adjustViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <Button x:Name="btnAdjust" Content="{lex:Loc Adjust}" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Click="btnAdjust_Click" />
                         </Grid>
                     </StackPanel>

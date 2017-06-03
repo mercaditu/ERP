@@ -31,9 +31,10 @@ namespace Cognitivo.Sales
         public Invoice()
         {
             InitializeComponent();
-
-            //Load Controller.
-            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
+			toolBar.StartDate = DateTime.Now.AddMonths(-1);
+			toolBar.EndDate = DateTime.Now;
+			//Load Controller.
+			SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.
@@ -62,7 +63,7 @@ namespace Cognitivo.Sales
             SalesDB.Load(Settings.FilterByBranch);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-            sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
+			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local.Where(x => x.trans_date >= toolBar.StartDate && x.trans_date <= toolBar.EndDate).ToList();
 
             if (SalesDB.db.sales_invoice.Local.Count() > 0)
             {
@@ -93,8 +94,9 @@ namespace Cognitivo.Sales
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             SalesDB.db.sales_invoice.Add(sales_invoice);
+			SalesInvoice_Loaded(null,null);
 
-            sales_invoiceViewSource.View.MoveCurrentToLast();
+			sales_invoiceViewSource.View.MoveCurrentToLast();
             sbxContact.Text = "";
             sbxItem.Text = "";
         }

@@ -142,15 +142,15 @@ namespace Cognitivo.Configs
 
         private void btnActivateAccount_Click(object sender, RoutedEventArgs e)
         {
-            if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+            if (db.app_account.Where(x => x.id_account == id_account).FirstOrDefault() != null)
             {
                 //Get the correct Account.
-                app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+                app_account app_account = db.app_account.Where(x => x.id_account == id_account).FirstOrDefault();
                 app_account_session app_account_session = null;
 
-                if (db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).FirstOrDefault() != null)
+                if (db.app_account_session.Where(x => x.id_account == id_account && x.is_active).FirstOrDefault() != null)
                 {
-                    app_account_session = db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).FirstOrDefault();
+                    app_account_session = db.app_account_session.Where(x => x.id_account == id_account && x.is_active).FirstOrDefault();
                 }
 
                 if (app_account_session != null && app_account_session.is_active)

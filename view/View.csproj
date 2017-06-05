@@ -20,10 +20,10 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ashah\Desktop\ERP15.142\</PublishUrl>
+    <PublishUrl>C:\Users\ashah\Desktop\ERP15.151\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
@@ -38,7 +38,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>143</ApplicationRevision>
+    <ApplicationRevision>152</ApplicationRevision>
     <ApplicationVersion>2.1.15.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -86,7 +86,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -118,12 +118,14 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>View_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.7.1\lib\net45\DocumentFormat.OpenXml.dll</HintPath>
@@ -903,7 +905,10 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="View_TemporaryKey.pfx" />
+    <None Include="Properties\app.manifest" />
+    <None Include="View_TemporaryKey.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Resource Include="Images\Application\128\Inventory.png" />
     <Resource Include="Images\Cognitivo-128.png" />
     <Resource Include="Images\Application\128\MobileBranch.png" />
@@ -1079,10 +1084,6 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Costing.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Properties\app.manifest" />
-    <None Include="Properties\DataSources\entity.Class.clsMovement.datasource" />
-    <None Include="Properties\DataSources\entity.Class.CostDetail.datasource" />
-    <None Include="Properties\DataSources\entity.Class.Impex_ItemDetail.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1778,7 +1779,6 @@
     <Folder Include="bin\Debug\Inventory\" />
     <Folder Include="bin\Debug\Sales\" />
     <Folder Include="Images\People\" />
-    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Menu\modAccounting.png" />

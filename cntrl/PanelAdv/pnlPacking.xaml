@@ -19,8 +19,8 @@
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="16" />
     </UserControl.Effect>
-    <StackPanel DataContext="{StaticResource sales_packingViewSource}">
-        <Grid Background="{StaticResource appConfig}">
+    <Grid DataContext="{StaticResource sales_packingViewSource}">
+        <Grid Background="{StaticResource appConfig}" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
                 <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" VerticalAlignment="Center" Select="sbxContact_Select" Width="256" />
                 <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp" />
@@ -30,7 +30,7 @@
 				HorizontalAlignment="Right" MouseUp="btnCancel_Click"
 				FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
-        <DataGrid x:Name="sales_packingDataGrid" AutoGenerateColumns="False" Margin="8"
+        <DataGrid x:Name="sales_packingDataGrid" AutoGenerateColumns="False" Margin="8,36,8,8"
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding selected}" />
@@ -38,5 +38,5 @@
                 <DataGridTextColumn Binding="{Binding number}" Header="packing number" Width="SizeToHeader" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </Grid>
 </UserControl>

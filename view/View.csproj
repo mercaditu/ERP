@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\SMART\Desktop\ERP15.165\</PublishUrl>
+    <PublishUrl>C:\Users\SMART\Desktop\ERP15.166\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,10 +37,8 @@
     <PublisherName>Cognitivo Paraguay</PublisherName>
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>166</ApplicationRevision>
+    <ApplicationRevision>167</ApplicationRevision>
     <ApplicationVersion>2.1.15.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -2718,7 +2716,7 @@
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Auto</PublishState>
+      <PublishState>Exclude</PublishState>
       <IncludeHash>False</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>

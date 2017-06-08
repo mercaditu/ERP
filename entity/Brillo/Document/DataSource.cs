@@ -296,15 +296,21 @@ namespace entity.Brillo.Document
                 sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment : "",
                 packingList = g.sales_invoice != null ? g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()) : "" : "",
                 sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
-                AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
+                unit_price_discount = g.discount,
 
                 // Text -> Words
+                AmountWordsCost = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
+                NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))
+                :
+                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))) : "" : "" : "",
+                
+                // Text -> Words
+                AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
                 NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
                 :
                 NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "" : "" : "",
 
-                HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false,
-                unit_price_discount = g.discount,
+                HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false
             }).ToList();
 
             return reportDataSource;
@@ -312,7 +318,7 @@ namespace entity.Brillo.Document
 
         private string GetBarcode(string number)
         {
-            entity.Class.clsBarcode clsbarcode = new Class.clsBarcode();
+            clsBarcode clsbarcode = new clsBarcode();
             return clsbarcode.ConvertToBarcode(number);
         }
 

@@ -123,6 +123,25 @@ namespace entity
         private decimal _GrandTotal;
 
         /// <summary>
+        /// Grand Total of the Sale including VAT.
+        /// </summary>
+        [NotMapped]
+        public decimal GrandTotalCost
+        {
+            get
+            {
+                _GrandTotalCost = sales_invoice_detail.Sum(x => x.SubTotalUnitCost_Vat);
+                return _GrandTotalCost;
+            }
+            set
+            {
+                _GrandTotalCost = value;
+                RaisePropertyChanged("GrandTotalCost");
+            }
+        }
+        private decimal _GrandTotalCost;
+
+        /// <summary>
         /// Gets total value of VAT for each detail.
         /// </summary>
         [NotMapped]

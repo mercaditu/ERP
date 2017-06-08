@@ -59,7 +59,9 @@ namespace Cognitivo.Sales
 
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
-            Settings Settings = new Settings();
+			SalesDB.Start_Range = toolBar.StartDate;
+			SalesDB.End_Range = toolBar.EndDate;
+			Settings Settings = new Settings();
             SalesDB.Load(Settings.FilterByBranch);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;

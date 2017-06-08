@@ -317,6 +317,11 @@ namespace entity
             }
         }
 		private decimal _SubTotal_Vat;
+
+		/// <summary>
+		///
+		/// </summary>
+		[NotMapped]
 		public decimal SubTotalUnitCost
 		{
 			get { return _SubTotalUnitCost; }

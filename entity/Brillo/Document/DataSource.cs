@@ -247,10 +247,19 @@ namespace entity.Brillo.Document
             {
                 for (int i = sales_invoice_detail.Count; i < sales_invoice.app_document_range.app_document.line_limit; i++)
                 {
-                    sales_invoice_detail _sales_invoice_detail = new entity.sales_invoice_detail();
+                    sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                     sales_invoice_detail.Add(_sales_invoice_detail);
                 }
             }
+
+            bool HasRounding = 
+                sales_invoice != null ? 
+                sales_invoice.app_currencyfx != null ? 
+                sales_invoice.app_currencyfx.app_currency != null ? 
+                sales_invoice.app_currencyfx.app_currency.has_rounding 
+                : false 
+                : false 
+                : false;
 
             reportDataSource.Value = sales_invoice_detail.Select(g => new
             {
@@ -298,19 +307,19 @@ namespace entity.Brillo.Document
                 sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
                 unit_price_discount = g.discount,
 
+                HasRounding = HasRounding,
+
                 // Text -> Words
-                AmountWordsCost = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
+                AmountWordsCost = HasRounding ?
                 NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))
                 :
-                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))) : "" : "" : "",
+                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))),
                 
                 // Text -> Words
-                AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
+                AmountWords = HasRounding ?
                 NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
                 :
-                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "" : "" : "",
-
-                HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false
+                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
             }).ToList();
 
             return reportDataSource;

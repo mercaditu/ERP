@@ -202,15 +202,12 @@ namespace entity
 
         private decimal _unit_price;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public decimal unit_cost { get; set; }
+     
 
-        /// <summary>
-        ///
-        /// </summary>
-        [NotMapped]
+			/// <summary>
+			///
+			/// </summary>
+			[NotMapped]
         public decimal UnitPrice_Vat
         {
             get { return _UnitPrice_Vat; }
@@ -236,10 +233,56 @@ namespace entity
 
         private decimal _UnitPrice_Vat;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public string comment { get; set; }
+		/// <summary>
+		///
+		/// </summary>
+		public decimal unit_cost
+		{
+			get { return _unit_cost; }
+			set
+			{
+				if (_unit_cost != value)
+				{
+					_unit_cost = value;
+					RaisePropertyChanged("unit_cost");
+
+					update_UnitCostVAT();
+					update_SubTotal();
+				}
+			}
+		}
+		private decimal _unit_cost;
+
+		[NotMapped]
+		public decimal UnitCost_Vat
+		{
+			get { return UnitCost_Vat; }
+			set
+			{
+				if (UnitCost_Vat != value)
+				{
+					if (value == 0)
+					{
+						_UnitCost_Vat = value;
+						RaisePropertyChanged("UnitCost_Vat");
+					}
+					else
+					{
+						_UnitCost_Vat = value;
+						RaisePropertyChanged("UnitCost_Vat");
+						update_UnitCost_WithoutVAT();
+						update_UnitCostSubTotal();
+					}
+				}
+			}
+		}
+
+		private decimal _UnitCost_Vat;
+
+		/// <summary>
+		///
+		/// </summary>
+		public string comment { get; set; }
 
         /// <summary>
         ///
@@ -273,8 +316,36 @@ namespace entity
                 RaisePropertyChanged("Total_Vat");
             }
         }
+		private decimal _SubTotal_Vat;
+		public decimal SubTotalUnitCost
+		{
+			get { return _SubTotalUnitCost; }
+			set
+			{
+				_SubTotalUnitCost = value;
+				RaisePropertyChanged("SubTotal");
+				update_UnitCostSubTotalVAT();
+			}
+		}
 
-        private decimal _SubTotal_Vat;
+		private decimal _SubTotalUnitCost;
+
+		/// <summary>
+		///
+		/// </summary>
+		[NotMapped]
+		public decimal SubTotalUnitCost_Vat
+		{
+			get { return _SubTotalUnitCost_Vat; }
+			set
+			{
+				_SubTotalUnitCost_Vat = value;
+				RaisePropertyChanged("SubTotalUnitCost_Vat");
+			
+			}
+		}
+
+		private decimal _SubTotalUnitCost_Vat;
 
         [NotMapped]
         public decimal Total_Vat
@@ -364,11 +435,49 @@ namespace entity
             RaisePropertyChanged("SubTotal_Vat");
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        private decimal get_SalesPrice()
+
+
+		/// <summary>
+		///
+		/// </summary>
+		private void update_UnitCost_WithoutVAT()
+		{
+			unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
+			RaisePropertyChanged("unit_cost");
+		}
+
+		/// <summary>
+		///
+		/// </summary>
+		private void update_UnitCostVAT()
+		{
+			UnitCost_Vat = Vat.return_ValueWithVAT((int)id_vat_group, unit_cost);
+			RaisePropertyChanged("UnitCost_Vat");
+		}
+
+		/// <summary>
+		///
+		/// </summary>
+		private void update_UnitCostSubTotal()
+		{
+			SubTotalUnitCost = _unit_cost * _quantity;
+			RaisePropertyChanged("SubTotalUnitCost");
+		}
+
+		/// <summary>
+		///
+		/// </summary>
+		private void update_UnitCostSubTotalVAT()
+		{
+			SubTotalUnitCost_Vat = _UnitCost_Vat * _quantity;
+			RaisePropertyChanged("SubTotalUnitCost_Vat");
+		}
+
+		/// <summary>
+		///
+		/// </summary>
+		/// <returns></returns>
+		private decimal get_SalesPrice()
         {
             if (id_item > 0)
             {

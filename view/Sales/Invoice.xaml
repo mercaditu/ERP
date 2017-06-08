@@ -661,7 +661,28 @@
                                                             IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}, Converter={StaticResource TrueToFalse}}" />
 									<DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
 														Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />
+									<!--UnitCost-->
+									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Width="100"
+														ElementStyle="{StaticResource RightAlignStyle}"
+														Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
+                                                       />
 
+									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:CostVat}" Width="100"
+														ElementStyle="{StaticResource RightAlignStyle}"
+														Binding="{Binding UnitCost_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
+                                                       />
+
+
+
+									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotalCost}" Width="100"
+														ElementStyle="{StaticResource RightAlignStyle}"
+														Binding="{Binding SubTotalUnitCost, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
+                                                       />
+
+									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotalCostVat}" Width="100"
+														ElementStyle="{StaticResource RightAlignStyle}"
+														Binding="{Binding SubTotalUnitCost_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
+                                                       />
 									<!-- UnitPrice -->
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"

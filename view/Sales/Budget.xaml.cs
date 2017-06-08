@@ -23,7 +23,9 @@ namespace Cognitivo.Sales
         public Budget()
         {
             InitializeComponent();
-            SalesBudgetDB = FindResource("SalesBudget") as entity.Controller.Sales.BudgetController;
+			toolBar.StartDate = DateTime.Now.AddMonths(-1);
+			toolBar.EndDate = DateTime.Now;
+			SalesBudgetDB = FindResource("SalesBudget") as entity.Controller.Sales.BudgetController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.
@@ -33,7 +35,9 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, EventArgs e)
         {
-            Settings SalesSettings = new Settings();
+			SalesBudgetDB.Start_Range = toolBar.StartDate;
+			SalesBudgetDB.End_Range = toolBar.EndDate;
+			Settings SalesSettings = new Settings();
 
             if (SalesSettings.FilterByBranch)
             {
@@ -45,7 +49,7 @@ namespace Cognitivo.Sales
             }
 
             sales_budgetViewSource = FindResource("sales_budgetViewSource") as CollectionViewSource;
-            sales_budgetViewSource.Source = SalesBudgetDB.db.sales_budget.Local;
+            sales_budgetViewSource.Source = SalesBudgetDB.db.sales_budget.Local.Where(x => x.trans_date >= toolBar.StartDate && x.trans_date <= toolBar.EndDate).ToList(); ;
             sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;

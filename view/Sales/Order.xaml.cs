@@ -25,9 +25,11 @@ namespace Cognitivo.Sales
 
         public Order()
         {
-            InitializeComponent();
 
-           SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
+            InitializeComponent();
+			toolBar.StartDate = DateTime.Now.AddMonths(-1);
+			toolBar.EndDate = DateTime.Now;
+			SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.
@@ -39,13 +41,15 @@ namespace Cognitivo.Sales
 
         private async void Load_PrimaryDataThread()
         {
-            //Load Base Class
-            SalesDB.Load(new Settings().FilterByBranch);
+			SalesDB.Start_Range = toolBar.StartDate;
+			SalesDB.End_Range = toolBar.EndDate;
+			//Load Base Class
+			SalesDB.Load(new Settings().FilterByBranch);
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
-                sales_orderViewSource.Source = SalesDB.db.sales_order.Local;
+                sales_orderViewSource.Source = SalesDB.db.sales_order.Local.Where(x => x.trans_date >= toolBar.StartDate && x.trans_date <= toolBar.EndDate).ToList(); 
 
                 CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
                 if (SalesDB.db.sales_invoice.Local.Count() > 0)
@@ -70,7 +74,8 @@ namespace Cognitivo.Sales
 
         private void Page_Loaded(object sender, EventArgs e)
         {
-            Load_PrimaryDataThread();
+			
+			Load_PrimaryDataThread();
             Load_SecondaryDataThread();
         }
 

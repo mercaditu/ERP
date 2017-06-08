@@ -46,8 +46,6 @@ namespace entity
             }
             set
             {
-                //if (_id_currencyfx != value)
-                //{
                 _id_currencyfx = value;
                 RaisePropertyChanged("id_currencyfx");
 
@@ -60,7 +58,6 @@ namespace entity
                     }
                     RaisePropertyChanged("GrandTotal");
                 }
-                //}
             }
         }
 
@@ -240,8 +237,28 @@ namespace entity
                 }
             }
         }
-
         private string _GroupBatchCode;
+
+        [NotMapped]
+        public DateTime GroupExpirationDate
+        {
+            get { return _GroupExpirationDate; }
+            set
+            {
+                if (_GroupExpirationDate != value)
+                {
+                    _GroupExpirationDate = value;
+
+                    foreach (purchase_invoice_detail detail in purchase_invoice_detail)
+                    {
+                        detail.expire_date = _GroupExpirationDate;
+                        detail.RaisePropertyChanged("expire_date");
+                    }
+                }
+            }
+        }
+
+        private DateTime _GroupExpirationDate;
 
         #region "Navigation Properties"
 

@@ -281,6 +281,14 @@
                         <CheckBox Content="{lex:Loc LotNumber}" x:Name="cbxBatchCode" />
                         <TextBox Text="{Binding GroupBatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ElementName=cbxBatchCode, Path=IsChecked, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource input_textbox}" Width="64" VerticalAlignment="Center" />
                     </StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" 
+                                Visibility="{Binding ElementName=cbxBatchCode, Path=IsChecked, Converter={StaticResource BoolToVisibility}}"
+                                IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="" Style="{StaticResource ico_Label}" />
+                        <Label Content="{lex:Loc ExpirationDate}" x:Name="cbxExpirationDate" />
+                        <DatePicker SelectedDate="{Binding GroupExpirationDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource input_datepicker}" Width="128" VerticalAlignment="Center" />
+                    </StackPanel>
                     <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
                     <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"

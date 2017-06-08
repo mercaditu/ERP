@@ -207,43 +207,6 @@ namespace entity
         public static void Start(security_user Sec_User, security_role Role)
         {
             UserRole = Role;
-            // Brillo.Licence Licence = new Brillo.Licence();
-            
-            // string licensekey = "";
-            //app_company app_company;
-
-            //using (db db = new db())
-            //{
-            //    app_company = db.app_company.Where(x => x.id_company == _Id_Company).FirstOrDefault();
-            //    try
-            //    {
-            //        if (app_company != null)
-            //        {
-            //            Licence.VerifyCompanyLicence(app_company.version);
-            //            if (Licence.CompanyLicence.versions.Count() == 0)
-            //            {
-            //                licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)Versions.Full);
-            //                app_company.version = licensekey;
-            //                db.SaveChanges();
-
-            //                if (app_company.version == null || app_company.version != "")
-            //                {
-            //                    licensekey = Licence.CreateLicence(app_company.name, app_company.alias, app_company.name + "-" + app_company.gov_code, "", (int)Versions.Full);
-            //                    app_company.version = licensekey;
-            //                    db.SaveChanges();
-            //                }
-            //            }
-
-            //            Licence.VerifyCompanyLicence(licensekey);
-            //        }
-            //    }
-            //    catch (Exception)
-            //    {
-            //        Version = Versions.Lite;
-            //    }
-            //}
-            
-            //Remvoe this code by Wednesday/Thursday
 
             Version = Versions.Full;
 
@@ -255,40 +218,6 @@ namespace entity
                 User = Sec_User;
                 Id_User = User.id_user;
                 UserRole = Role;
-
-                //using (db db = new db())
-                //{
-                //    security_role security_role = db.security_role.Where(x => x.id_role == Role.id_role).FirstOrDefault();
-
-                //    if (Licence != null)
-                //    {
-                //        if (Licence.CompanyLicence != null)
-                //        {
-                //            if (Licence.CompanyLicence.versions.Where(x => x.version >= Role.Version).Count() > 0)
-                //            {
-                //                if (Licence.CompanyLicence.versions.Where(x => x.version >= Role.Version).FirstOrDefault() != null)
-                //                {
-                //                    security_role.Version = (Versions)Licence.CompanyLicence.versions.Where(x => x.version >= Role.Version).FirstOrDefault().version;
-                //                    Version = Role.Version;
-                //                }
-                //            }
-                //        }
-                //        else
-                //        {
-                //            Version = Role.Version;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        security_role.Version = Versions.Lite;
-                //        Version = Versions.Lite;
-                //        MessageBox.Show("You have trial period expired for " + Role.Version.ToString() + " Plan. /n" +
-                //                        "If you feel this is a mistake, please contact Cognitivo at hello@cognitivo.in. For now, we will revert you to the Free Plan."
-                //                        , "Cognitivo");
-                //    }
-
-                //    db.SaveChanges();
-                //}
 
                 if (Id_Branch == 0)
                 {

@@ -24,15 +24,10 @@
         <Controller:InvoiceController x:Key="PurchaseInvoice"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
-        <!--<converter:Status2Enable x:Key="Status2Enable" />-->
-
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
-        <!--<converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />-->
-        <!--<converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />-->
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_invoicepurchase_invoice_detailViewSource" Source="{Binding purchase_invoice_detail, Source={StaticResource purchase_invoiceViewSource}}" />
         <CollectionViewSource x:Key="purchase_invoice_detailpurchase_invoice_dimensionViewSource" Source="{Binding purchase_invoice_dimension, Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" />
-        <!--<CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}" />-->
         <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}" />
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
@@ -127,8 +122,6 @@
 										  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
 										  LostFocus="cbxCurrency_LostFocus" />
                     </AdornerDecorator>
-                    <!--<Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}" />
-				<TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
                 </StackPanel>
 
                 <!-- SideBar -->
@@ -268,7 +261,7 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
-									   Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+							    Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                         <Label Content="Z" Style="{StaticResource ico_Label}" />
                         <CheckBox Content="{lex:Loc Details}" Checked="chbxRowDetail_Checked" Unchecked="chbxRowDetail_Checked" />
                     </StackPanel>
@@ -279,7 +272,9 @@
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="" Style="{StaticResource ico_Label}" />
                         <CheckBox Content="{lex:Loc LotNumber}" x:Name="cbxBatchCode" />
-                        <TextBox Text="{Binding GroupBatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ElementName=cbxBatchCode, Path=IsChecked, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource input_textbox}" Width="64" VerticalAlignment="Center" />
+                        <TextBox Text="{Binding GroupBatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Visibility="{Binding ElementName=cbxBatchCode, Path=IsChecked, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource input_textbox}" 
+                                 Width="128" VerticalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" 
                                 Visibility="{Binding ElementName=cbxBatchCode, Path=IsChecked, Converter={StaticResource BoolToVisibility}}"

@@ -345,15 +345,12 @@ namespace entity.Brillo.Document
                             PackingList = PackingList + ", " + _sales_packing_relation.sales_packing_detail.sales_packing.number;
                         }
                     }
-
                 }
                 if (PackingList != "")
                 {
                     return PackingList.Remove(0, 1);
                 }
-
             }
-
             return PackingList;
         }
 

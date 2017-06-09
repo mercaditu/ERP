@@ -665,24 +665,25 @@
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"
 														Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                       />
+														Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                                     
 
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:CostVat}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"
 														Binding="{Binding UnitCost_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                       />
+                                                      	Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
 
 
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotalCost}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"
 														Binding="{Binding SubTotalUnitCost, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                       />
+                                                    	Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotalCostVat}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"
 														Binding="{Binding SubTotalUnitCost_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                       />
+                                                     	Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 									<!-- UnitPrice -->
 									<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"

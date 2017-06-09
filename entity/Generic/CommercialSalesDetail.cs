@@ -92,8 +92,9 @@ namespace entity
                     RaisePropertyChanged("quantity");
 
                     update_SubTotal();
+					update_UnitCostSubTotal();
 
-                    if (Quantity_InStock != null)
+					if (Quantity_InStock != null)
                     {
                         if (quantity > Quantity_InStock)
                         {
@@ -256,7 +257,7 @@ namespace entity
 		[NotMapped]
 		public decimal UnitCost_Vat
 		{
-			get { return UnitCost_Vat; }
+			get { return _UnitCost_Vat; }
 			set
 			{
 				if (UnitCost_Vat != value)

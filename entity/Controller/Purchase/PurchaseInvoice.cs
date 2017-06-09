@@ -25,12 +25,12 @@ namespace entity.Controller.Purchase
 				//release unmanaged resources.
 			}
 		}
-		public async void Load()
+		public async void Load(int PageIndex)
         {
             await db.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch && a.is_archived == false)
                 .Include(x => x.contact)
-                .OrderByDescending(x => x.trans_date)
-                .LoadAsync();
+                .OrderByDescending(x => x.trans_date).Take(100).Skip(PageIndex)
+				.LoadAsync();
 
             await db.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
             await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();

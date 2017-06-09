@@ -64,8 +64,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
-        <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
+										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
+		<ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <Grid Background="White">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />

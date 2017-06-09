@@ -54,7 +54,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Grid.Column="1" Grid.Row="1" Background="White" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
+		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
+										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
+		<Grid Grid.Column="1" Grid.Row="1" Background="White" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="380" />

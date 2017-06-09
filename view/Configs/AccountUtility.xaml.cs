@@ -58,17 +58,17 @@ namespace Cognitivo.Configs
 			OnDemandLoading(e.StartIndex, e.PageSize);
 		}
 
-		private async void OnDemandLoading(int StartIndex, int PageSize)
+		private void OnDemandLoading(int StartIndex, int PageSize)
 		{
 			app_account app_account = app_accountDataGrid.SelectedItem as app_account;
 			if (app_account != null)
 			{
-				List<app_account_detail> ListDetails = await db.app_account_detail
+				List<app_account_detail> ListDetails = db.app_account_detail
 					.Where(x => x.id_account == app_account.id_account)
 					.Include(y => y.app_currencyfx.app_currency)
 					.OrderByDescending(y => y.trans_date)
 					.Skip(StartIndex)
-					.Take(PageSize).ToListAsync();
+					.Take(PageSize).ToList();
 
 				dataPager.LoadDynamicItems(StartIndex, ListDetails);
 				(dataPager.PagedSource as PagedCollectionView).ResetCache();

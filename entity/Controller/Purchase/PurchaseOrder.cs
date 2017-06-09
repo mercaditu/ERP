@@ -9,7 +9,7 @@ namespace entity.Controller.Purchase
 {
     public class OrderController : Base
     {
-        public async void Load(bool filterbyBranch)
+        public async void Load(bool filterbyBranch,int PageIndex)
         {
             var predicate = PredicateBuilder.True<purchase_order>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
@@ -23,8 +23,8 @@ namespace entity.Controller.Purchase
           
             await db.purchase_order.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
-                    .ThenBy(x => x.number)
-                    .LoadAsync();
+                    .ThenBy(x => x.number).Take(100).Skip(PageIndex)
+					.LoadAsync();
 
            
 

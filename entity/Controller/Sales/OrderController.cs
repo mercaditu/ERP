@@ -61,7 +61,7 @@ namespace entity.Controller.Sales
 
         #region Load
 
-        public async void Load(bool FilterByTerminal)
+        public async void Load(bool FilterByTerminal,int PageIndex)
         {
             var predicate = PredicateBuilder.True<sales_order>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
@@ -75,20 +75,20 @@ namespace entity.Controller.Sales
                 predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Terminal);
             }
 
-            if (Start_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date >= Start_Range.Date);
-            }
+            //if (Start_Range != Convert.ToDateTime("1/1/0001"))
+            //{
+            //    predicate = predicate.And(x => x.trans_date >= Start_Range.Date);
+            //}
 
-            if (End_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date <= End_Range.Date);
-            }
+            //if (End_Range != Convert.ToDateTime("1/1/0001"))
+            //{
+            //    predicate = predicate.And(x => x.trans_date <= End_Range.Date);
+            //}
 
             await db.sales_order.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
-                    .ThenBy(x => x.number)
-                    .LoadAsync();
+                    .ThenBy(x => x.number).Take(100).Skip(PageIndex)
+					.LoadAsync();
         }
 
         #endregion

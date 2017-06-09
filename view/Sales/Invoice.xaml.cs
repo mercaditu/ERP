@@ -27,12 +27,12 @@ namespace Cognitivo.Sales
        
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
+		public int PageIndex=0;
 
-        public Invoice()
+		public Invoice()
         {
             InitializeComponent();
-			toolBar.StartDate = DateTime.Now.AddMonths(-1);
-			toolBar.EndDate = DateTime.Now;
+			
 			//Load Controller.
 			SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
@@ -59,13 +59,12 @@ namespace Cognitivo.Sales
 
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
-			SalesDB.Start_Range = toolBar.StartDate;
-			SalesDB.End_Range = toolBar.EndDate;
+			
 			Settings Settings = new Settings();
-            SalesDB.Load(Settings.FilterByBranch);
+            SalesDB.Load(Settings.FilterByBranch,PageIndex);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local.Where(x => x.trans_date >= toolBar.StartDate && x.trans_date <= toolBar.EndDate).ToList();
+			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
             if (SalesDB.db.sales_invoice.Local.Count() > 0)
             {
@@ -898,6 +897,28 @@ namespace Cognitivo.Sales
             SalesDB.db.SaveChanges();
         }
 
+		
+
+		private void navPagination_btnNextPage_Click(object sender)
+		{
+			PageIndex = PageIndex + 100;
+			Load_PrimaryDataThread(null, null);
+		}
+
+		private void navPagination_btnPreviousPage_Click(object sender)
+		{
+			PageIndex = PageIndex - 100;
+			Load_PrimaryDataThread(null, null);
+		}
+
+		private void navPagination_btnFirstPage_Click(object sender)
+		{
+			PageIndex =0;
+			Load_PrimaryDataThread(null, null);
+		}
+
 	
+
+		
 	}
 }

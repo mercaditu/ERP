@@ -77,7 +77,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+			
+			
         </ScrollViewer>
+		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
+										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
         <Grid Grid.Column="1" Grid.Row="1"
 					Background="{StaticResource winBackground}"
 					IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">

@@ -18,8 +18,8 @@ namespace Cognitivo.Purchase
         private CollectionViewSource purchase_orderViewSource;
         private CollectionViewSource purchase_orderpurchase_order_detailViewSource;
         private entity.Controller.Purchase.OrderController PurchaseDB;
-
-        public Order()
+		public int PageIndex = 0;
+		public Order()
         {
             InitializeComponent();
             PurchaseDB = FindResource("PurchaseOrder") as entity.Controller.Purchase.OrderController;
@@ -47,7 +47,7 @@ namespace Cognitivo.Purchase
         {
             OrderSetting OrderSetting = new OrderSetting();
 
-            PurchaseDB.Load(OrderSetting.filterbyBranch);
+            PurchaseDB.Load(OrderSetting.filterbyBranch,PageIndex);
 
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -707,5 +707,23 @@ namespace Cognitivo.Purchase
                 toolBar.msgWarning("Please check that Order is Approved.");
             }
         }
-    }
+
+		private void navPagination_btnNextPage_Click(object sender)
+		{
+			PageIndex = PageIndex + 100;
+			load_PrimaryDataThread();
+		}
+
+		private void navPagination_btnPreviousPage_Click(object sender)
+		{
+			PageIndex = PageIndex - 100;
+			load_PrimaryDataThread();
+		}
+
+		private void navPagination_btnFirstPage_Click(object sender)
+		{
+			PageIndex = 0;
+			load_PrimaryDataThread();
+		}
+	}
 }

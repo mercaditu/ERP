@@ -16,7 +16,8 @@ namespace Cognitivo.Sales
 {
     public partial class Order : Page
     {
-        private CollectionViewSource sales_orderViewSource;
+		public int PageIndex = 0;
+		private CollectionViewSource sales_orderViewSource;
 
         //private db db = new db();
         private entity.Controller.Sales.OrderController SalesDB;
@@ -27,8 +28,7 @@ namespace Cognitivo.Sales
         {
 
             InitializeComponent();
-			toolBar.StartDate = DateTime.Now.AddMonths(-1);
-			toolBar.EndDate = DateTime.Now;
+		
 			SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
@@ -41,17 +41,16 @@ namespace Cognitivo.Sales
 
         private async void Load_PrimaryDataThread()
         {
-			SalesDB.Start_Range = toolBar.StartDate;
-			SalesDB.End_Range = toolBar.EndDate;
+		
 			//Load Base Class
-			SalesDB.Load(new Settings().FilterByBranch);
+			SalesDB.Load(new Settings().FilterByBranch,PageIndex);
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
-                sales_orderViewSource.Source = SalesDB.db.sales_order.Local.Where(x => x.trans_date >= toolBar.StartDate && x.trans_date <= toolBar.EndDate).ToList(); 
+                sales_orderViewSource.Source = SalesDB.db.sales_order.Local;
 
-                CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
+				CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
                 if (SalesDB.db.sales_invoice.Local.Count() > 0)
                 {
                     if (sales_ordersales_order_detailViewSource.View != null)
@@ -602,5 +601,22 @@ namespace Cognitivo.Sales
                 }
             }
         }
-    }
+		private void navPagination_btnNextPage_Click(object sender)
+		{
+			PageIndex = PageIndex + 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnPreviousPage_Click(object sender)
+		{
+			PageIndex = PageIndex - 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnFirstPage_Click(object sender)
+		{
+			PageIndex = 0;
+			Page_Loaded(null, null);
+		}
+	}
 }

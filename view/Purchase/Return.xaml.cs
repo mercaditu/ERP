@@ -13,8 +13,8 @@ namespace Cognitivo.Purchase
 {
     public partial class Return : Page
     {
-        
-        private entity.Controller.Purchase.ReturnController PurchaseReturnDB;
+		public int PageIndex = 0;
+		private entity.Controller.Purchase.ReturnController PurchaseReturnDB;
         private CollectionViewSource
             purchaseReturnViewSource,
             purchase_returnpurchase_return_detailViewSource;
@@ -35,14 +35,14 @@ namespace Cognitivo.Purchase
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            PurchaseReturnDB.Load();
+            PurchaseReturnDB.Load(PageIndex);
             
             //PurchaseReturn
             purchaseReturnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
            
             purchaseReturnViewSource.Source = PurchaseReturnDB.db.purchase_return.Local;
 
-            purchase_returnpurchase_return_detailViewSource = FindResource("purchase_returnpurchase_return_detailViewSource") as CollectionViewSource;
+			purchase_returnpurchase_return_detailViewSource = FindResource("purchase_returnpurchase_return_detailViewSource") as CollectionViewSource;
 
             CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
             app_cost_centerViewSource.Source = PurchaseReturnDB.db.app_cost_center.Local;
@@ -508,5 +508,22 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-    }
+		private void navPagination_btnNextPage_Click(object sender)
+		{
+			PageIndex = PageIndex + 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnPreviousPage_Click(object sender)
+		{
+			PageIndex = PageIndex - 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnFirstPage_Click(object sender)
+		{
+			PageIndex = 0;
+			Page_Loaded(null, null);
+		}
+	}
 }

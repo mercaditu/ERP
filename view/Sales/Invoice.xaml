@@ -198,7 +198,8 @@
 						</ListBox.ItemTemplate>
 					</ListBox>
 
-					<cntrl:navPagination VerticalAlignment="Bottom"/>
+					<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
+										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
 					<!-- Sales Invoice Form -->
 					<Grid Grid.Column="1" Grid.Row="1">
 						<Grid.RowDefinitions>

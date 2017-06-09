@@ -10,7 +10,7 @@ namespace entity.Controller.Purchase
    public class ReturnController:Base
     {
 
-        public async void Load()
+        public async void Load(int PageIndex)
         {
             var predicate = PredicateBuilder.True<purchase_return>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
@@ -18,8 +18,8 @@ namespace entity.Controller.Purchase
 
             await db.purchase_return.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
-                    .ThenBy(x => x.number)
-                    .LoadAsync();
+                    .ThenBy(x => x.number).Take(100).Skip(PageIndex)
+					.LoadAsync();
 
             await db.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
 

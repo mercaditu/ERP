@@ -110,7 +110,7 @@
                                 <syncfusion:GridTextColumn MappingName="app_currencyfx.app_currency.name" HeaderText="{lex:Loc Currency}" />
                             </syncfusion:SfDataGrid.Columns>
                         </syncfusion:SfDataGrid>
-                        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="2" PageSize="100" 
+                        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="2" PageSize="100"  
                                                 UseOnDemandPaging="True" OnDemandLoading="dataPager_OnDemandLoading"/>
                     </Grid>
                 </TabItem>

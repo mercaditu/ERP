@@ -12,7 +12,8 @@ namespace Cognitivo.Purchase
 {
     public partial class PackingList : Page
     {
-        private PurchasePackingListDB PurchasePackingListDB = new PurchasePackingListDB();
+		public int PageIndex = 0;
+		private PurchasePackingListDB PurchasePackingListDB = new PurchasePackingListDB();
         private CollectionViewSource purchase_packingViewSource, purchase_packingpurchase_packinglist_detailViewSource, purchase_packingpurchase_packing_detailApprovedViewSource;
         private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
 
@@ -26,7 +27,7 @@ namespace Cognitivo.Purchase
             //entity.Properties.Settings _setting = new entity.Properties.Settings();
 
             purchase_packingViewSource = FindResource("purchase_packingViewSource") as CollectionViewSource;
-            await PurchasePackingListDB.purchase_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).LoadAsync(); //.Include("purchase_packing_detail").LoadAsync();
+            await PurchasePackingListDB.purchase_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).Take(100).Skip(PageIndex).LoadAsync(); //.Include("purchase_packing_detail").LoadAsync();
             purchase_packingViewSource.Source = PurchasePackingListDB.purchase_packing.Local;
             purchase_packingpurchase_packinglist_detailViewSource = FindResource("purchase_packingpurchase_packing_detailViewSource") as CollectionViewSource;
             purchase_packingpurchase_packing_detailApprovedViewSource = FindResource("purchase_packingpurchase_packing_detailApprovedViewSource") as CollectionViewSource;
@@ -459,5 +460,22 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-    }
+		private void navPagination_btnNextPage_Click(object sender)
+		{
+			PageIndex = PageIndex + 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnPreviousPage_Click(object sender)
+		{
+			PageIndex = PageIndex - 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnFirstPage_Click(object sender)
+		{
+			PageIndex = 0;
+			Page_Loaded(null, null);
+		}
+	}
 }

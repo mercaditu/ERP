@@ -23,7 +23,7 @@ namespace entity.Controller.Sales
 
         #region Load
 
-        public async void Load(bool FilterByTerminal)
+        public async void Load(bool FilterByTerminal,int PageIndex)
         {
             var predicate = PredicateBuilder.True<sales_return>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
@@ -49,8 +49,8 @@ namespace entity.Controller.Sales
 
             await db.sales_return.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
-                    .ThenBy(x => x.number)
-                    .LoadAsync();
+                    .ThenBy(x => x.number).Take(100).Skip(PageIndex)
+					.LoadAsync();
         }
 
         #endregion

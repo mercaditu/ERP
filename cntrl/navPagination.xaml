@@ -11,15 +11,15 @@
     <Grid Background="{DynamicResource AccentColor_Brush}">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" UseLayoutRounding="False" Grid.ColumnSpan="2" Margin="3">
             <Label Content=""  Cursor="Hand" Opacity="0.64" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="Black"
-                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnFirstPage_Click" />
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnFirstPage_mouseup" />
             <Label Content="" Style="{StaticResource ico_Label}" Opacity="1" Cursor="Hand" FontFamily="/cntrl;component/Resources/#cognitivo"
-                   Foreground="Black" HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnPreviousPage_Click" />
+                   Foreground="Black" HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnPreviousPage_mouseup" />
             <Label Name="lblPageIndex" Content="{Binding ElementName=root, Path=PageIndex, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
             <Label Content="-" />
             <Label Name="lblNumberOfPages" Content="{Binding ElementName=root, Path=NumberOfPages, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
             <Label Content="" Style="{StaticResource ico_Label}" Opacity="1"  Cursor="Hand" Foreground="Black" FontFamily="/cntrl;component/Resources/#cognitivo"
-                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnNextPage_Click" />
-            <Label Content="" Style="{StaticResource ico_Label}" Opacity="0.64"  Cursor="Hand" Foreground="Black" MouseUp="btnLastPage_Click" FontFamily="/cntrl;component/Resources/#cognitivo"
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnNextPage_mouseup" />
+			<Label Content="" Style="{StaticResource ico_Label}" Opacity="0.64"  Cursor="Hand" Foreground="Black" MouseUp="btnLastPage_mouseup" FontFamily="/cntrl;component/Resources/#cognitivo"
                    HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" />
         </StackPanel>
     </Grid>

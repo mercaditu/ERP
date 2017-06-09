@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -31,21 +32,53 @@ namespace cntrl
             InitializeComponent();
         }
 
-        private void btnFirstPage_Click(object sender, MouseButtonEventArgs e)
-        {
-        }
+		public event btnFirstPage_ClickedEventHandler btnFirstPage_Click;
 
-        private void btnPreviousPage_Click(object sender, MouseButtonEventArgs e)
-        {
-        }
+		public delegate void btnFirstPage_ClickedEventHandler(object sender);
 
-        private void btnNextPage_Click(object sender, MouseButtonEventArgs e)
-        {
-        }
+		public void btnFirstPage_mouseup(object sender, EventArgs e)
+		{
 
-        private void btnLastPage_Click(object sender, MouseButtonEventArgs e)
-        {
-        }
+
+			btnFirstPage_Click?.Invoke(this);
+		}
+
+		public event btnNextPage_ClickedEventHandler btnNextPage_Click;
+
+		public delegate void btnNextPage_ClickedEventHandler(object sender);
+
+		public void btnNextPage_mouseup(object sender, EventArgs e)
+		{
+
+
+			btnNextPage_Click?.Invoke(this);
+		}
+
+		public event btnPreviousPage_ClickedEventHandler btnPreviousPage_Click;
+
+		public delegate void btnPreviousPage_ClickedEventHandler(object sender);
+
+		public void btnPreviousPage_mouseup(object sender, EventArgs e)
+		{
+
+
+			btnPreviousPage_Click?.Invoke(this);
+		}
+
+
+		public event btnLastPage_ClickedEventHandler btnLastPage_Click;
+
+		public delegate void btnLastPage_ClickedEventHandler(object sender);
+
+		public void btnLastPage_mouseup(object sender, EventArgs e)
+		{
+
+
+			btnLastPage_Click?.Invoke(this);
+		}
+
+
+
 
         public static readonly RoutedEvent NextPageClick = EventManager.RegisterRoutedEvent("Next", RoutingStrategy.Bubble,
         typeof(RoutedEventHandler), typeof(navPagination));

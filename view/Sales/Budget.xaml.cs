@@ -19,12 +19,11 @@ namespace Cognitivo.Sales
 
         private entity.Controller.Sales.BudgetController SalesBudgetDB;
         private CollectionViewSource sales_budgetViewSource, sales_budgetsales_budget_detailViewSource;
-
-        public Budget()
+		public int PageIndex = 0;
+		public Budget()
         {
             InitializeComponent();
-			toolBar.StartDate = DateTime.Now.AddMonths(-1);
-			toolBar.EndDate = DateTime.Now;
+			
 			SalesBudgetDB = FindResource("SalesBudget") as entity.Controller.Sales.BudgetController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
@@ -35,22 +34,21 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, EventArgs e)
         {
-			SalesBudgetDB.Start_Range = toolBar.StartDate;
-			SalesBudgetDB.End_Range = toolBar.EndDate;
+		
 			Settings SalesSettings = new Settings();
 
             if (SalesSettings.FilterByBranch)
             {
-                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
+                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).Take(100).Skip(PageIndex).LoadAsync();
             }
             else
             {
-                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).LoadAsync();
+                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).Take(100).Skip(PageIndex).LoadAsync();
             }
 
             sales_budgetViewSource = FindResource("sales_budgetViewSource") as CollectionViewSource;
-            sales_budgetViewSource.Source = SalesBudgetDB.db.sales_budget.Local.Where(x => x.trans_date >= toolBar.StartDate && x.trans_date <= toolBar.EndDate).ToList(); ;
-            sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
+            sales_budgetViewSource.Source = SalesBudgetDB.db.sales_budget.Local;
+			sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
             app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB.db, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
@@ -507,5 +505,23 @@ namespace Cognitivo.Sales
                 MessageBox.Show("Order already created or status is not Approved..");
             }
         }
-    }
+
+		private void navPagination_btnNextPage_Click(object sender)
+		{
+			PageIndex = PageIndex + 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnPreviousPage_Click(object sender)
+		{
+			PageIndex = PageIndex - 100;
+			Page_Loaded(null, null);
+		}
+
+		private void navPagination_btnFirstPage_Click(object sender)
+		{
+			PageIndex = 0;
+			Page_Loaded(null, null);
+		}
+	}
 }

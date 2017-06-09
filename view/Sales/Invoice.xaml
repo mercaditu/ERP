@@ -11,6 +11,7 @@
       xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 		  xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		  lex:LocalizeDictionary.DesignCulture="en-US"
 		  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -180,26 +181,29 @@
 						</Grid>
 					</Grid>
 					<!-- Navigation ListBox -->
-					<ListBox x:Name="sales_invoiceDataGrid" Style="{StaticResource nav_List}"
+                    <ListBox x:Name="sales_invoiceDataGrid" Style="{StaticResource nav_List}"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}"
 							 ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="Invoice_SelectionChanged">
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
 											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											   recordSecondaryName="{Binding number, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											   recordName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 											   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 											   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" CheckedChanged="navList_CheckedChanged" />
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-					</ListBox>
-
-					<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
-										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <!--<syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="2" PageSize="50" PageCount="50"
+                                                UseOnDemandPaging="True" OnDemandLoading="dataPager_OnDemandLoading"/>-->
+                    <cntrl:navPagination VerticalAlignment="Bottom" 
+                                         btnNextPage_Click="navPagination_btnNextPage_Click" 
+                                         btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
+										 btnFirstPage_Click="navPagination_btnFirstPage_Click" />
 					<!-- Sales Invoice Form -->
 					<Grid Grid.Column="1" Grid.Row="1">
 						<Grid.RowDefinitions>
@@ -506,15 +510,14 @@
 										</StackPanel>
 
 										<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
-									   Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+									                Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
 											<Label Content="" Style="{StaticResource ico_Label}" />
 											<TextBlock Margin="5,0" Text="{lex:Loc Exports}" VerticalAlignment="Center" Style="{StaticResource text_Label}" />
 											<CheckBox IsChecked="{Binding is_impex,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 										</StackPanel>
 
-										<StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-
-											<Label Content="O" Style="{StaticResource ico_Label}" HorizontalContentAlignment="Center" />
+                                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Label Content="O" Style="{StaticResource ico_Label}" HorizontalContentAlignment="Center" />
 											<TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
 												<Hyperlink PreviewMouseUp="PackingList_Click">
 													<Run Text="{lex:Loc PackingList}" />

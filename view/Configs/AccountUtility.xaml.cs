@@ -63,15 +63,14 @@ namespace Cognitivo.Configs
 			app_account app_account = app_accountDataGrid.SelectedItem as app_account;
 			if (app_account != null)
 			{
-				List<app_account_detail> ListDetails =  db.app_account_detail
+                List<app_account_detail> ListDetails =  db.app_account_detail
 					.Where(x => x.id_account == app_account.id_account)
 					.Include(y => y.app_currencyfx.app_currency)
 					.OrderByDescending(y => y.trans_date)
 					.Skip(StartIndex)
 					.Take(PageSize).ToList();
-
-				dataPager.LoadDynamicItems(StartIndex+1, ListDetails);
-				
+                
+                dataPager.LoadDynamicItems(StartIndex, ListDetails);
 			}
 		}
 
@@ -111,8 +110,8 @@ namespace Cognitivo.Configs
 			//List of 100 Latest Transactions.
 			dataPager.OnDemandLoading += dataPager_OnDemandLoading;
 
-			//Transfer
-			listTransferAmt = new List<Class.clsTransferAmount>();
+            //Transfer
+            listTransferAmt = new List<Class.clsTransferAmount>();
 			amount_transferViewSource = this.FindResource("amount_transferViewSource") as CollectionViewSource;
 			amount_transferViewSource.Source = listTransferAmt;
 		}
@@ -173,8 +172,13 @@ namespace Cognitivo.Configs
 
 				frmActive.Children.Add(AccountActive);
 
-				dataPager.PageCount = app_account.app_account_detail.Count() / dataPager.PageSize;
-				OnDemandLoading(0, dataPager.PageSize);
+                var count = app_account.app_account_detail.Count() / dataPager.PageSize;
+                if (app_account.app_account_detail.Count() % dataPager.PageSize == 0)
+                    dataPager.PageCount = count;
+                else
+                    dataPager.PageCount = count + 1;
+
+                OnDemandLoading(0, dataPager.PageSize);
 			}
 		}
 
@@ -220,6 +224,7 @@ namespace Cognitivo.Configs
 					{
 						app_account_detail.debit = Convert.ToInt32(txtcredit.Text);
 					}
+
 					app_account_detail.comment = tbxCommentAdjust.Text;
 					app_account_detail.id_account = app_account.id_account;
 					db.app_account_detail.Add(app_account_detail);
@@ -240,9 +245,6 @@ namespace Cognitivo.Configs
 					toolBar.msgWarning("Open Your Session...");
 				}
 			}
-			
-
-			
 		}
 
 		private void btnTransfer_Click(object sender, RoutedEventArgs e)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace cntrl
 {
@@ -38,8 +37,6 @@ namespace cntrl
 
 		public void btnFirstPage_mouseup(object sender, EventArgs e)
 		{
-
-
 			btnFirstPage_Click?.Invoke(this);
 		}
 
@@ -49,8 +46,6 @@ namespace cntrl
 
 		public void btnNextPage_mouseup(object sender, EventArgs e)
 		{
-
-
 			btnNextPage_Click?.Invoke(this);
 		}
 
@@ -60,8 +55,6 @@ namespace cntrl
 
 		public void btnPreviousPage_mouseup(object sender, EventArgs e)
 		{
-
-
 			btnPreviousPage_Click?.Invoke(this);
 		}
 
@@ -72,14 +65,9 @@ namespace cntrl
 
 		public void btnLastPage_mouseup(object sender, EventArgs e)
 		{
-
-
 			btnLastPage_Click?.Invoke(this);
 		}
-
-
-
-
+        
         public static readonly RoutedEvent NextPageClick = EventManager.RegisterRoutedEvent("Next", RoutingStrategy.Bubble,
         typeof(RoutedEventHandler), typeof(navPagination));
 

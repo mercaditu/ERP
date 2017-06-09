@@ -1,5 +1,4 @@
-﻿using cntrl.Class;
-using entity;
+﻿using entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

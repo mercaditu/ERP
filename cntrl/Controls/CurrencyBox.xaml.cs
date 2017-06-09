@@ -72,24 +72,27 @@ namespace cntrl.Controls
             RaisePropertyChanged("id_currency");
             app_currencyfx app_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == id_currency).FirstOrDefault();
 
-            HasRounding = app_currencyfx.app_currency.has_rounding;
-            RaisePropertyChanged("HasRounding");
-
             if (app_currencyfx != null)
             {
-                Rate_Previous = Rate_Current;
-
-                if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
+                if (app_currencyfx.app_currency != null)
                 {
-                    Rate_Current = app_currencyfx.sell_value;
-                }
-                else
-                {
-                    Rate_Current = app_currencyfx.buy_value;
-                }
+                    HasRounding = app_currencyfx.app_currency.has_rounding;
+                    RaisePropertyChanged("HasRounding");
 
-                RaisePropertyChanged("Rate_Current");
-                SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
+                    Rate_Previous = Rate_Current;
+
+                    if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder || appName == App.Names.PurchaseTender)
+                    {
+                        Rate_Current = app_currencyfx.sell_value;
+                    }
+                    else
+                    {
+                        Rate_Current = app_currencyfx.buy_value;
+                    }
+
+                    RaisePropertyChanged("Rate_Current");
+                    SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
+                }
             }
             else
             { Rate_Current = 0.0M; }

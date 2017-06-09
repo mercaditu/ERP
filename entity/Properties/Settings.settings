@@ -42,16 +42,16 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Reciept_FontName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Arial</Value>
     </Setting>
     <Setting Name="Reciept_FontSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">11</Value>
     </Setting>
     <Setting Name="Reciept_MaxWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">283</Value>
     </Setting>
     <Setting Name="Reciept_MinWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">300</Value>
     </Setting>
   </Settings>
 </SettingsFile>

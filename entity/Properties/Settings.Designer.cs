@@ -181,7 +181,7 @@ namespace entity.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arial")]
         public string Reciept_FontName {
             get {
                 return ((string)(this["Reciept_FontName"]));
@@ -193,7 +193,7 @@ namespace entity.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("11")]
         public int Reciept_FontSize {
             get {
                 return ((int)(this["Reciept_FontSize"]));
@@ -205,7 +205,7 @@ namespace entity.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("283")]
         public double Reciept_MaxWidth {
             get {
                 return ((double)(this["Reciept_MaxWidth"]));
@@ -217,7 +217,7 @@ namespace entity.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
         public double Reciept_MinWidth {
             get {
                 return ((double)(this["Reciept_MinWidth"]));

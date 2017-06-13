@@ -128,7 +128,7 @@
                         </Grid>
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10">
                             <StackPanel>
-                                <Label Content="Account"/>
+                                <!--<Label Content="Account"/>-->
                                 <Label Content="PaymentType"/>
                                 <Label Content="Debit"/>
                                 <Label Content="Credit"/>
@@ -136,9 +136,9 @@
                             </StackPanel>
                             <StackPanel >
 
-                                <ComboBox x:Name="cmbaccount" ItemsSource="{Binding Source={StaticResource app_account_listViewSource}}"
+                                <!--<ComboBox x:Name="cmbaccount" ItemsSource="{Binding Source={StaticResource app_account_listViewSource}}"
 														DisplayMemberPath="name" SelectedValuePath="id_account" 
-										 />
+										 />-->
                                 <ComboBox x:Name="cmbpayment" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
 														DisplayMemberPath="name" SelectedValuePath="id_payment_type" 
 										  />

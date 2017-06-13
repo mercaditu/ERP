@@ -90,7 +90,7 @@ namespace Cognitivo.Configs
 			app_accountapp_account_detailViewSource = this.FindResource("app_accountapp_account_detailViewSource") as CollectionViewSource;
 
 			app_account_listViewSource = this.FindResource("app_account_listViewSource") as CollectionViewSource;
-			app_account_listViewSource.Source = db.app_account.Local.Where(a => a.id_account_type == app_account.app_account_type.Terminal).ToList();
+			app_account_listViewSource.Source = db.app_account.Local.Where(a => a.id_account_type == app_account.app_account_type.Terminal && a.id_account_type==app_account.app_account_type.Bank).ToList();
 
 			CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
 			CollectionViewSource app_accountOriginViewSource = this.FindResource("app_accountOriginViewSource") as CollectionViewSource;
@@ -194,10 +194,9 @@ namespace Cognitivo.Configs
 				if (app_account.app_account_session.Where(x => x.is_active).Count() > 0)
 				{
 					app_account_detail app_account_detail = new app_account_detail();
-					if (cmbaccount.SelectedItem != null)
-					{
-						app_account_detail.id_account = (int)cmbaccount.SelectedValue;
-					}
+					
+						app_account_detail.id_account = (int)app_account.id_account;
+					
 					if (cmbpayment.SelectedItem != null)
 					{
 						app_account_detail.id_payment_type = (int)cmbpayment.SelectedValue;
@@ -229,7 +228,7 @@ namespace Cognitivo.Configs
 					app_account_detail.id_account = app_account.id_account;
 					db.app_account_detail.Add(app_account_detail);
 					db.SaveChanges();
-					cmbaccount.Text = "";
+					
 					cmbpayment.Text = "";
 					cmbcurrency.Text = "";
 					txtcredit.Text = "";

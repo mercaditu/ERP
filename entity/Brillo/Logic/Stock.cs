@@ -569,28 +569,43 @@ namespace entity.Brillo.Logic
                         }
 
                         List<StockList> Items_InStockLIST = null;
+                        decimal quantity = 0;
                         if (detail.movement_id != null && detail.movement_id > 0)
                         {
                             Brillo.Stock stockBrillo = new Brillo.Stock();
                             Items_InStockLIST = stockBrillo.ScalarMovement((long)detail.movement_id);
+                         
+                            if (detail.quantity> Items_InStockLIST.FirstOrDefault().QtyBalance)
+                            {
+                                quantity = Items_InStockLIST.FirstOrDefault().QtyBalance;
+                            }
+                            else
+                            {
+                                quantity = detail.quantity;
+                            }
                         }
                         else
                         {
+                            quantity = detail.quantity;
                             Brillo.Stock stock = new Brillo.Stock();
                             Items_InStockLIST = stock.List(detail.sales_invoice.id_branch, detail.id_location, item_product.id_item_product);
                         }
 
-                        item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
-                                                    App.Names.SalesInvoice,
-                                                    detail.id_sales_invoice,
-                                                    detail.id_sales_invoice_detail,
-                                                    sales_invoice.id_currencyfx,
-                                                    item_product,
-                                                    LocationID,
-                                                    detail.quantity,
-                                                    sales_invoice.trans_date,
-                                                    comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact != null ? sales_invoice.contact.name : "")
-                                                    ));
+                        if (quantity>0)
+                        {
+                            item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                                   App.Names.SalesInvoice,
+                                                   detail.id_sales_invoice,
+                                                   detail.id_sales_invoice_detail,
+                                                   sales_invoice.id_currencyfx,
+                                                   item_product,
+                                                   LocationID,
+                                                   quantity,
+                                                   sales_invoice.trans_date,
+                                                   comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact != null ? sales_invoice.contact.name : "")
+                                                   ));
+                        }
+                       
                     }
                 }
             }

@@ -715,9 +715,13 @@ namespace Cognitivo.Purchase
 		}
 
 		private void navPagination_btnPreviousPage_Click(object sender)
-		{
-			PageIndex = PageIndex - 100;
-			load_PrimaryDataThread();
+        {
+            if (PageIndex >= 0)
+            {
+                PageIndex = PageIndex - 100;
+                load_PrimaryDataThread();
+            }
+           
 		}
 
 		private void navPagination_btnFirstPage_Click(object sender)

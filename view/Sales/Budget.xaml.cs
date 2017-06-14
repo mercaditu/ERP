@@ -514,8 +514,11 @@ namespace Cognitivo.Sales
 
 		private void navPagination_btnPreviousPage_Click(object sender)
 		{
-			PageIndex = PageIndex - 100;
-			Page_Loaded(null, null);
+            if (PageIndex >= 0)
+            {
+                PageIndex = PageIndex - 100;
+                Page_Loaded(null, null);
+            }
 		}
 
 		private void navPagination_btnFirstPage_Click(object sender)

@@ -69,6 +69,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <cntrl:navPagination Grid.Row="2" VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
+										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
         <Grid Grid.Column="1" Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200" />

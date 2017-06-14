@@ -22,7 +22,7 @@ namespace Cognitivo.Purchase
             app_contractViewSource;
 
         private CollectionViewSource app_measurementViewSource, app_dimensionViewSource;
-
+        public int PageIndex = 0;
         public Tender()
         {
             InitializeComponent();
@@ -79,7 +79,7 @@ namespace Cognitivo.Purchase
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             TenderDB.Load();
-               purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
+            purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
             purchase_tenderViewSource.Source = TenderDB.db.purchase_tender.Local;
 
             purchase_tenderpurchase_tender_contact_detailViewSource = FindResource("purchase_tenderpurchase_tender_contact_detailViewSource") as CollectionViewSource;
@@ -144,7 +144,7 @@ namespace Cognitivo.Purchase
                             {
                                 purchase_tender_dimension.app_dimension = TenderDB.db.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();
                             }
-                            
+
                             purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
                         }
 
@@ -585,6 +585,27 @@ namespace Cognitivo.Purchase
             {
                 purchase_tender_item_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
+        }
+        private void navPagination_btnNextPage_Click(object sender)
+        {
+            PageIndex = PageIndex + 100;
+            Page_Loaded(null,null);
+        }
+
+        private void navPagination_btnPreviousPage_Click(object sender)
+        {
+            if (PageIndex>=0)
+            {
+                PageIndex = PageIndex - 100;
+                Page_Loaded(null, null);
+            }
+           
+        }
+
+        private void navPagination_btnFirstPage_Click(object sender)
+        {
+            PageIndex = 0;
+            Page_Loaded(null, null);
         }
     }
 }

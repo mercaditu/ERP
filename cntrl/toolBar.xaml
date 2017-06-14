@@ -86,7 +86,7 @@
                 </TextBlock>
             </Grid>
 
-            <Popup IsOpen="{Binding ElementName=btnDateRange, Path=IsChecked}" Grid.Column="0">
+            <Popup IsOpen="False" Grid.Column="0">
 				<StackPanel>
 					<local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">

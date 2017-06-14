@@ -55,7 +55,10 @@ namespace cntrl
 
 		public void btnPreviousPage_mouseup(object sender, EventArgs e)
 		{
-			btnPreviousPage_Click?.Invoke(this);
+            if (PageIndex > 0)
+            {
+                btnPreviousPage_Click?.Invoke(this);
+            }
 		}
 
 
@@ -65,8 +68,11 @@ namespace cntrl
 
 		public void btnLastPage_mouseup(object sender, EventArgs e)
 		{
-			btnLastPage_Click?.Invoke(this);
-		}
+            if (PageIndex > 0)
+            {
+                btnLastPage_Click?.Invoke(this);
+            }
+        }
         
         public static readonly RoutedEvent NextPageClick = EventManager.RegisterRoutedEvent("Next", RoutingStrategy.Bubble,
         typeof(RoutedEventHandler), typeof(navPagination));

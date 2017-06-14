@@ -38,7 +38,7 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void Page_Loaded(object sender, EventArgs e)
+        private async void Page_Loaded(object sender, EventArgs e)
         {
             contactChildListViewSource = FindResource("contactChildListViewSource") as CollectionViewSource;
             contactcontact_field_valueViewSource = FindResource("contactcontact_field_valueViewSource") as CollectionViewSource;
@@ -59,16 +59,12 @@ namespace Cognitivo.Commercial
             contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
             contactViewSource.Source = ContactDB.db.contacts.Local;
 
-            //db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-            //db.app_field.Where(x => x.id_company == CurrentSession.Id_Company).Load();
-            //db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).OrderBy(x => x.name).Load();
-
             CollectionViewSource contactParentViewSource = FindResource("contactParentViewSource") as CollectionViewSource;
             contactParentViewSource.Source = ContactDB.db.contacts.Local;
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = FindResource("contactRoleViewSource") as CollectionViewSource;
-            contactRoleViewSource.Source = ContactDB.db.contact_role.Local.OrderBy(a => a.name);
+            contactRoleViewSource.Source = await ContactDB.db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
 
             //AppContract
             CollectionViewSource appContractViewSource = FindResource("appContractViewSource") as CollectionViewSource;

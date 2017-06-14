@@ -221,7 +221,7 @@ namespace Cognitivo.Configs
 					}
 					else
 					{
-						app_account_detail.debit = Convert.ToInt32(txtcredit.Text);
+						app_account_detail.credit = Convert.ToInt32(txtcredit.Text);
 					}
 
 					app_account_detail.comment = tbxCommentAdjust.Text;

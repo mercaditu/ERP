@@ -301,6 +301,7 @@ namespace cntrl
 			{
 				IsEditable = true;
 				Edit_IsEnabled = false;
+               
 			}
 			else
 			{

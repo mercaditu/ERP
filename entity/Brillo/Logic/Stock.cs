@@ -235,7 +235,7 @@ namespace entity.Brillo.Logic
                                          CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                          item_product,
                                          LocationID,
-                                         (int)packing_detail.verified_quantity,
+                                         (decimal)packing_detail.verified_quantity,
                                          sales_packing.trans_date,
                                          comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
                                          ));

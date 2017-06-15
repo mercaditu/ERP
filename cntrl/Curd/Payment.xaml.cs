@@ -44,8 +44,9 @@ namespace cntrl.Curd
             paymentViewSource.Source = PaymentDB.payments.Local;
 
             int id_contact = payment_schedualList.Select(x => x.id_contact).FirstOrDefault();
-            sbxReturn.ContactID = id_contact;
 
+            sbxReturn.ContactID = id_contact;
+            sbxPurchaseReturn.ContactID = id_contact;
             entity.contact contacts = PaymentDB.contacts.Find(id_contact);
             if (contacts != null)
             {

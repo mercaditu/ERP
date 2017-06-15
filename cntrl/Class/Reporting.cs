@@ -413,10 +413,10 @@ namespace cntrl.Class
 				
 			},
 
-              //CONTACTS
+              //Customers
                  new Report
             {
-                Application = entity.App.Names.Contact,
+                Application = entity.App.Names.Customer,
                 Name =entity.Brillo.Localize.StringText("ContactsByBank")!= string.Empty ? entity.Brillo.Localize.StringText("ContactsByBank") :"ContactsByBank",
                 Path = "cntrl.Reports.Commercials.ContactsByBank.rdlc",
                 Query = Reports.Commercial.Customer.query,
@@ -424,7 +424,7 @@ namespace cntrl.Class
             },
             new Report
             {
-                Application = entity.App.Names.Contact,
+                Application = entity.App.Names.Customer,
                 Name =entity.Brillo.Localize.StringText("ContactsByGeography")!= string.Empty ? entity.Brillo.Localize.StringText("ContactsByGeography") :"ContactsByGeography",
                 Path = "cntrl.Reports.Commercials.ContactsByGeography.rdlc",
                 Query = Reports.Commercial.Customer.query,
@@ -432,7 +432,33 @@ namespace cntrl.Class
             },
                new Report
             {
-                Application = entity.App.Names.Contact,
+                Application = entity.App.Names.Customer,
+                Name =entity.Brillo.Localize.StringText("ContactsByTag")!= string.Empty ? entity.Brillo.Localize.StringText("ContactsByTag") :"ContactsByTag",
+                Path = "cntrl.Reports.Commercials.ContactsByTag.rdlc",
+                Query = Reports.Commercial.Customer.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+
+               //supplier
+                     new Report
+            {
+                Application = entity.App.Names.Supplier,
+                Name =entity.Brillo.Localize.StringText("ContactsByBank")!= string.Empty ? entity.Brillo.Localize.StringText("ContactsByBank") :"ContactsByBank",
+                Path = "cntrl.Reports.Commercials.ContactsByBank.rdlc",
+                Query = Reports.Commercial.Customer.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+            new Report
+            {
+                Application = entity.App.Names.Supplier,
+                Name =entity.Brillo.Localize.StringText("ContactsByGeography")!= string.Empty ? entity.Brillo.Localize.StringText("ContactsByGeography") :"ContactsByGeography",
+                Path = "cntrl.Reports.Commercials.ContactsByGeography.rdlc",
+                Query = Reports.Commercial.Customer.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+               new Report
+            {
+                Application = entity.App.Names.Supplier,
                 Name =entity.Brillo.Localize.StringText("ContactsByTag")!= string.Empty ? entity.Brillo.Localize.StringText("ContactsByTag") :"ContactsByTag",
                 Path = "cntrl.Reports.Commercials.ContactsByTag.rdlc",
                 Query = Reports.Commercial.Customer.query,

@@ -256,7 +256,7 @@ namespace Cognitivo.Menu
 
                     if (app_company != null)
                     {
-                        app_company.version = licensekey;
+                        app_company.serial = licensekey;
                     }
                     db.SaveChanges();
                 }

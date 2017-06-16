@@ -177,7 +177,7 @@ namespace Cognitivo.Sales
                 //Creates relationship with Sales Invoice.
                 sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
                 sales_packing_relation.sales_packing_detail = sales_packing_detail;
-                sales_packing_relation.id_sales_invoice_detail = (long)_item_movement.id_sales_invoice_detail;
+                sales_packing_relation.sales_invoice_detail = _item_movement.sales_invoice_detail;
                 sales_packing.id_opportunity = _item_movement.sales_invoice_detail.sales_invoice.id_opportunity;
 
                 dbContext.sales_packing_relation.Add(sales_packing_relation);

@@ -7,31 +7,28 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    public partial class app_measurement : AuditGeneric, IDataErrorInfo
+    public partial class app_comment : Audit, IDataErrorInfo
     {
-        public app_measurement()
+        public app_comment()
         {
+          
             id_company = CurrentSession.Id_Company;
-            is_active = true;
             id_user = CurrentSession.Id_User;
             is_head = true;
-            item_conversion_factor = new List<item_conversion_factor>();
-            item_dimension = new List<item_dimension>();
-            item_movement_dimension = new List<item_movement_dimension>();
-            item_inventory_dimension = new List<item_inventory_dimension>();
+            is_active = true;
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_measurement { get; set; }
-
-        [CustomValidation(typeof(entity.Class.EntityValidation), "CheckId")]
-        public short id_measurement_type { get; set; }
+        public int id_comment { get; set; }
 
         [Required]
-        public string name { get; set; }
+        public App.Names id_application { get; set; }
 
-        public string code_iso { get; set; }
+        [Required]
+        public string comment { get; set; }
+
+    
 
         public bool is_active
         {
@@ -47,15 +44,7 @@ namespace entity
         }
 
         private bool _is_active;
-        public virtual app_measurement_type app_measurement_type { get; set; }
-        public virtual IEnumerable<project_task_dimension> project_task_dimension { get; set; }
-        public virtual ICollection<item_dimension> item_dimension { get; set; }
-        public virtual ICollection<item_conversion_factor> item_conversion_factor { get; set; }
-        public virtual ICollection<item_request_dimension> item_request_dimension { get; set; }
-        public virtual ICollection<purchase_tender_dimension> purchase_tender_dimension { get; set; }
-        public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
-        public virtual ICollection<item_inventory_dimension> item_inventory_dimension { get; set; }
-
+        
         public string Error
         {
             get
@@ -83,16 +72,21 @@ namespace entity
             get
             {
                 // apply property level validation rules
-                if (columnName == "name")
+                if (columnName == "comment")
                 {
-                    if (string.IsNullOrEmpty(name))
-                        return "Name needs to be filled";
+                    if (string.IsNullOrEmpty(comment))
+                        return "Comment needs to be filled";
                 }
-                if (columnName == "id_measurement_type")
+                if (columnName == "id_application")
                 {
-                    if (id_measurement_type == 0)
-                        return "Measurement type needs to be selected";
+                    if (id_application == 0)
+                        return "Application needs to be Selected";
                 }
+                //if (columnName == "designer_name")
+                //{
+                //    if (string.IsNullOrEmpty(designer_name))
+                //        return "Designer name needs to be filled";
+                //}
                 return "";
             }
         }

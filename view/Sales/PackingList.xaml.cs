@@ -344,7 +344,7 @@ namespace Cognitivo.Sales
                         sales_packing_relation PackingRelation = sales_packing_detail.sales_packing_relation.FirstOrDefault();
                         sales_packing_relation sales_packing_relation = new sales_packing_relation()
                         {
-                            id_sales_invoice_detail = PackingRelation.id_sales_invoice_detail,
+                            //id_sales_invoice_detail = PackingRelation.id_sales_invoice_detail,
                             sales_invoice_detail = PackingRelation.sales_invoice_detail,
                             id_sales_packing_detail = PackingRelation.id_sales_packing_detail,
                             sales_packing_detail = PackingRelation.sales_packing_detail
@@ -542,7 +542,7 @@ namespace Cognitivo.Sales
                     };
                         sales_packing_relation sales_packing_relation = new sales_packing_relation()
                         {
-                            id_sales_invoice_detail = detail.id_sales_invoice_detail,
+                            //id_sales_invoice_detail = detail.id_sales_invoice_detail,
                             sales_invoice_detail = detail,
                             id_sales_packing_detail = PackingDetail.id_sales_packing_detail,
                             sales_packing_detail = PackingDetail

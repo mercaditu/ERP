@@ -16,8 +16,8 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_packing_relation { get; set; }
 
-        [Required]
-        public long id_sales_invoice_detail { get; set; }
+        //[Required]
+        //public int id_sales_invoice_detail { get; set; }
 
         [Required]
         public int id_sales_packing_detail { get; set; }

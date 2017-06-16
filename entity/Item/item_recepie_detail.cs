@@ -20,11 +20,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_recepie_detail { get; set; }
 
-        [Required]
-        public decimal id_recepie { get; set; }
-
-        [Required]
-        public decimal id_item { get; set; }
+        
 
         [Required]
         public decimal quantity

@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
+
     public partial class security_role : IDataErrorInfo, INotifyPropertyChanged
     {
         private Brillo.Activation Activation = new Brillo.Activation();

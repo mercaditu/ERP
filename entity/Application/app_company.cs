@@ -48,7 +48,7 @@ namespace entity
         }
 
         private bool _is_active;
-        public string version { get; set; }
+        public string serial { get; set; }
         public string seats { get; set; }
         public bool has_interest { get; set; }
 

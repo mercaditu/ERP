@@ -5,10 +5,11 @@
     using System.Data.Entity;
     using System.Data.Entity.Core.EntityClient;
 
-    public class db : DbContext
+    public class db :TrackerEnabledDbContext.TrackerContext
     {
         public db() : base("name = Cognitivo.Properties.Settings.MySQLconnString")
         {
+            
             Configuration.LazyLoadingEnabled = true;
         }
 
@@ -67,6 +68,7 @@
         public virtual DbSet<app_terminal> app_terminal { get; set; }
         public virtual DbSet<app_location> app_location { get; set; }
         public virtual DbSet<app_configuration> app_configuration { get; set; }
+        public virtual DbSet<app_comment> app_comment { get; set; }
         public virtual DbSet<contact> contacts { get; set; }
         public virtual DbSet<contact_field_value> contact_field_value { get; set; }
         public virtual DbSet<contact_role> contact_role { get; set; }

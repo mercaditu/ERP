@@ -80,7 +80,7 @@ namespace Cognitivo.Security
 
                         if (app_company != null)
                         {
-                            Licence.VerifyCompanyLicence(app_company.version, (int)security_user.security_role.Version, security_user.security_role.security_user.Count());
+                            Licence.VerifyCompanyLicence(app_company.serial, (int)security_user.security_role.Version, security_user.security_role.security_user.Count());
                         }
 
                     }

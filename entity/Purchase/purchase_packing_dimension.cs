@@ -16,7 +16,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_packing_property { get; set; }
 
-        public long id_purchase_packing_detail { get; set; }
+     
         public int id_dimension { get; set; }
         public decimal value { get; set; }
         public int id_measurement { get; set; }

@@ -32,6 +32,8 @@ namespace entity
         public decimal? stock_max { get; set; }
         public bool can_expire { get; set; }
         public bool is_weigted { get; set; }
+        public string variation { get; set; }
+        public string code { get; set; }
         public COGS_Types cogs_type { get; set; }
 
         public bool show_batch { get; set; }

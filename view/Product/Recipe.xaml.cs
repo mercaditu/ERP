@@ -26,10 +26,10 @@ namespace Cognitivo.Product
             {
                 item item = ProductRecipeDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                if (ProductRecipeDB.item_recepie.Where(x => x.id_item == item.id_item).Count() == 0)
+                if (ProductRecipeDB.item_recepie.Where(x => x.item == item).Count() == 0)
                 {
                     item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
-                    item_recepie.id_item = item.id_item;
+                  //item_recepie.id_item = item.id_item;
                     item_recepie.item = item;
                 }
                 else
@@ -49,7 +49,7 @@ namespace Cognitivo.Product
                 if (item_recepie != null)
                 {
                     item_recepie_detail item_recepie_detail = new item_recepie_detail();
-                    item_recepie_detail.id_item = item.id_item;
+                   // item_recepie_detail.id_item = item.id_item;
                     item_recepie_detail.item = item;
                     item_recepie_detail.quantity = 1;
                     item_recepie_detail.item_recepie = item_recepie;

@@ -16,7 +16,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_invoice_property { get; set; }
 
-        public long id_purchase_invoice_detail { get; set; }
+       
         public int id_dimension { get; set; }
         public decimal value { get; set; }
         public int id_measurement { get; set; }

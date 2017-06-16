@@ -101,7 +101,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5" PageCount="{Binding ElementName=SalesInvoice,Path=PageCount}"
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
                                                 UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
             <!-- Sales Invoice Form -->
             <Grid Grid.Column="1" Grid.Row="1">

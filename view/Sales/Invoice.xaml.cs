@@ -60,6 +60,31 @@ namespace Cognitivo.Sales
             Load_PrimaryDataThread(null, null);
         }
 
+        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                Load_PrimaryDataThread(null, null);
+                //Brings data into view.
+                Search_Click(sender, query);
+            }
+            else
+            {
+                sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+                sales_invoiceViewSource.Source = await SalesDB.db.sales_invoice
+                    .Where
+                    (
+                    x =>
+                    x.contact.name.Contains(query) ||
+                    x.contact.gov_code.Contains(query) ||
+                    x.number.Contains(query)
+                    )
+                .OrderByDescending(x => x.trans_date)
+                .ThenBy(x => x.number)
+                .ToListAsync();
+            }
+        }
+
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
 			Settings Settings = new Settings();
@@ -68,13 +93,7 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
 			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
-            //if (SalesDB.db.sales_invoice.Local.Count() > 0)
-            //{
-            //    if (sales_invoicesales_invoice_detailViewSource.View != null)
-            //    {
-            //        sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            //    }
-            //}
+            dataPager.PageCount = SalesDB.PageCount;
         }
 
         private async void Load_SecondaryDataThread()
@@ -424,30 +443,6 @@ namespace Cognitivo.Sales
             else
             {
                 sales_invoiceViewSource.View.Filter = null;
-            }
-        }
-
-        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
-        {
-            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-            sales_invoiceViewSource.Source = await SalesDB.db.sales_invoice
-                .Where
-                (
-                x =>
-                x.contact.name.Contains(query) ||
-                x.contact.gov_code.Contains(query) ||
-                x.number.Contains(query)
-                )
-            .OrderByDescending(x => x.trans_date)
-            .ThenBy(x => x.number)
-            .Skip(dataPager.PageIndex).Take(SalesDB.PageCount).ToListAsync();
-
-            if (SalesDB.db.sales_invoice.Local.Count() > 0)
-            {
-                if (sales_invoicesales_invoice_detailViewSource.View != null)
-                {
-                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                }
             }
         }
 

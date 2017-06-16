@@ -63,11 +63,11 @@ namespace Cognitivo.Sales
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
 			Settings Settings = new Settings();
-            SalesDB.Load(Settings.FilterByBranch, dataPager.PageIndex);  //
+            SalesDB.Load(Settings.FilterByBranch, dataPager.PageIndex);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
 			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
-            dataPager.PageCount = (SalesDB.db.sales_invoice.Local.Count() / dataPager.PageSize) < 1 ? 1 : (SalesDB.db.sales_invoice.Local.Count() / dataPager.PageSize);
+
             //if (SalesDB.db.sales_invoice.Local.Count() > 0)
             //{
             //    if (sales_invoicesales_invoice_detailViewSource.View != null)
@@ -429,7 +429,8 @@ namespace Cognitivo.Sales
 
         private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
         {
-            await SalesDB.db.sales_invoice
+            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+            sales_invoiceViewSource.Source = await SalesDB.db.sales_invoice
                 .Where
                 (
                 x =>
@@ -439,11 +440,7 @@ namespace Cognitivo.Sales
                 )
             .OrderByDescending(x => x.trans_date)
             .ThenBy(x => x.number)
-            .Skip(dataPager.PageIndex).Take(100)
-            .LoadAsync();
-
-            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-            sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
+            .Skip(dataPager.PageIndex).Take(SalesDB.PageCount).ToListAsync();
 
             if (SalesDB.db.sales_invoice.Local.Count() > 0)
             {

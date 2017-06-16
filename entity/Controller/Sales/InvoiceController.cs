@@ -39,6 +39,19 @@ namespace entity.Controller.Sales
 
         public List<Messages> Msg { get; set; }
 
+        public int Count { get; set; }
+
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 5;
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
+
         #endregion
 
         #region Load
@@ -61,13 +74,15 @@ namespace entity.Controller.Sales
             //If FilterByTerminal is true, then will add aditional Where into query.
             if (FilterByTerminal)
             {
-                predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Terminal);
+                predicate = predicate.And(x => x.id_terminal == CurrentSession.Id_Terminal);
             }
+
+            Count = db.sales_invoice.Where(predicate).Count();
 
             await db.sales_invoice.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
                     .ThenBy(x => x.number)
-                    .Skip(PageIndex).Take(100)
+                    .Skip(PageIndex).Take(PageSize)
                     .LoadAsync();
         }
 

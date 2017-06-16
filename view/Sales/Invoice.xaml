@@ -35,23 +35,18 @@
 		<CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}" />
 		<CollectionViewSource x:Key="sales_invoicesales_invoice_detailsales_packinglist_relationViewSource" Source="{Binding sales_packinglist_relation, Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" />
 	</Page.Resources>
-	<Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="67*" />
-			<ColumnDefinition Width="733*" />
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
+    <Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
+        <Grid.RowDefinitions>
 			<RowDefinition Height="40" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
 			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged" />
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="3*" />
-            </Grid.ColumnDefinitions>
-            <!-- CRUD Modal -->
+        <!-- CRUD Modal -->
             <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
 				  Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
             <Grid Name="crud_modalAnull" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed"
@@ -106,7 +101,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="100"
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5" PageCount="{Binding ElementName=SalesInvoice,Path=PageCount}"
                                                 UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
             <!-- Sales Invoice Form -->
             <Grid Grid.Column="1" Grid.Row="1">
@@ -576,24 +571,6 @@
 														ElementStyle="{StaticResource RightAlignStyle}"
 														Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
 														Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-
-
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:CostVat}" Width="100"
-														ElementStyle="{StaticResource RightAlignStyle}"
-														Binding="{Binding UnitCost_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                      	Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-
-
-
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotalCost}" Width="100"
-														ElementStyle="{StaticResource RightAlignStyle}"
-														Binding="{Binding SubTotalUnitCost, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                    	Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotalCostVat}" Width="100"
-														ElementStyle="{StaticResource RightAlignStyle}"
-														Binding="{Binding SubTotalUnitCost_Vat, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
-                                                     	Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             <!-- UnitPrice -->
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"
@@ -675,7 +652,6 @@
                     </DataGrid>
                 </Grid>
             </Grid>
-        </Grid>
 
         <cntrl:toolBar x:Name="toolBar" appName="SalesInvoice"
 					   btnNew_Click="New_Click"

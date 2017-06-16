@@ -201,8 +201,12 @@ namespace Cognitivo.Configs
 					if (cmbcurrency.SelectedItem != null)
 					{
 						int id_curreny = (int)cmbcurrency.SelectedValue;
-						app_account_detail.id_currencyfx = db.app_currencyfx.Where(x => x.is_active && x.id_currency == id_curreny).FirstOrDefault().id_currencyfx;
-					}
+                        app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.is_active && x.id_currency == id_curreny).FirstOrDefault();
+                        if (app_currencyfx != null)
+                        {
+                            app_account_detail.id_currencyfx = app_currencyfx.id_currencyfx;
+                        }
+                    }
 					if (txtdebit.Text == "")
 					{
 						app_account_detail.debit = 0;

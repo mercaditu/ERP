@@ -202,7 +202,16 @@ namespace cntrl
 			set { SetValue(Archived_IsEnabledProperty, value); }
 		}
 
-		private static readonly DependencyProperty Edit_IsEnabledProperty
+        private static readonly DependencyProperty New_IsEnabledProperty
+            = DependencyProperty.Register("New_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
+
+        public bool New_IsEnabled
+        {
+            get { return (bool)GetValue(New_IsEnabledProperty); }
+            set { SetValue(New_IsEnabledProperty, value); }
+        }
+
+        private static readonly DependencyProperty Edit_IsEnabledProperty
 			= DependencyProperty.Register("Edit_IsEnabled", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
 
 		public bool Edit_IsEnabled
@@ -301,12 +310,13 @@ namespace cntrl
 			{
 				IsEditable = true;
 				Edit_IsEnabled = false;
-               
+                New_IsEnabled = false;
 			}
 			else
 			{
 				IsEditable = false;
 				Edit_IsEnabled = true;
+                New_IsEnabled = true;
 			}
 		}
 

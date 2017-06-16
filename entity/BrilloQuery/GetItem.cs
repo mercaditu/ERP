@@ -22,7 +22,7 @@ namespace entity.BrilloQuery
 								 item.id_item_type,
 								 loc.name as Location,
                                  branch.name as Branch,
-								 (sum(mov.credit) - sum(mov.debit)) as Quantity
+								 sum(mov.credit - mov.debit) as Quantity
 
 								 from items as item
 
@@ -45,20 +45,17 @@ namespace entity.BrilloQuery
             {
                 foreach (DataRow DataRow in dt.Rows)
                 {
-                    bool Is_Product = false;
-
                     //Item Type will determine if it can stock (Is Product) or not.
                     int type = Convert.ToInt16(DataRow["id_item_type"]);
-                    if (type == 1 || type == 2 || type == 6)
-                    {
-                        Is_Product = true;
-                    }
 
-                    Item Item = new Item();
-                    Item.ID = Convert.ToInt32(DataRow["ID"]);
-                    Item.Type = (item.item_type)type;
-                    Item.IsProduct = Is_Product;
-                    Item.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
+                    Item Item = new Item()
+                    {
+                        ID = Convert.ToInt32(DataRow["ID"]),
+                        Type = (item.item_type)type,
+                        IsProduct = type == 1 || type == 2 || type == 6 ? true : false,
+                        IsActive = Convert.ToBoolean(DataRow["IsActive"])
+                    };
+
                     if (!(DataRow["CompanyID"] is DBNull))
                     {
                         Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);

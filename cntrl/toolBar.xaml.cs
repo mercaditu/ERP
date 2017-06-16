@@ -457,10 +457,21 @@ namespace cntrl
 		}
 
 
+        //SEARCH - Filtering Entity Framework as DataView
+        public event btnSearchInSource_ClickedEventHandler btnSearchInSource_Click;
 
+        public delegate void btnSearchInSource_ClickedEventHandler(object sender, KeyEventArgs e, string query);
 
-		//Sync Data (Brings new data into view.)
-		public event btnSync_ClickedEventHandler btnSync_Click;
+        private void tbxSearchKeypress(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                btnSearchInSource_Click?.Invoke(sender, e, tbxSearch.Text.Trim());
+            }
+        }
+
+        //Sync Data (Brings new data into view.)
+        public event btnSync_ClickedEventHandler btnSync_Click;
 
 		public delegate void btnSync_ClickedEventHandler(object sender, EventArgs e);
 

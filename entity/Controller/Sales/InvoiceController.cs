@@ -50,7 +50,7 @@ namespace entity.Controller.Sales
             Promotions = new Brillo.Promotion.Start(true);
         }
 
-        public async void Load(bool FilterByTerminal,int PageIndex)
+        public async void Load(bool FilterByTerminal, int PageIndex)
         {
             var predicate = PredicateBuilder.True<sales_invoice>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
@@ -64,14 +64,11 @@ namespace entity.Controller.Sales
                 predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Terminal);
             }
 
-            if (PageIndex >= 0)
-            {
-                await db.sales_invoice.Where(predicate)
+            await db.sales_invoice.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
                     .ThenBy(x => x.number)
                     .Skip(PageIndex).Take(100)
                     .LoadAsync();
-            }
         }
 
         #endregion

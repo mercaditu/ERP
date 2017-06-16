@@ -1,6 +1,5 @@
 ﻿
 using entity;
-using Syncfusion.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -183,8 +182,6 @@ namespace Cognitivo.Configs
 		}
 
 		#endregion Load and Initilize
-
-
 
 		private void btnAdjust_Click(object sender, RoutedEventArgs e)
 		{

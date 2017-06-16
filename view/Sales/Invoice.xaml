@@ -185,6 +185,7 @@
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
 							 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 							 ItemContainerStyle="{StaticResource nav_ListSelection}"
+                             Margin="0,0,0,30"
 							 ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="Invoice_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -198,12 +199,13 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <!--<syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="2" PageSize="50" PageCount="50"
-                                                UseOnDemandPaging="True" OnDemandLoading="dataPager_OnDemandLoading"/>-->
-                    <cntrl:navPagination VerticalAlignment="Bottom" 
+                    <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="100"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
+                    <!--<cntrl:navPagination VerticalAlignment="Bottom" 
+                    ItemsSource="{Binding ElementName=dataPager, Path=PagedSource}"
                                          btnNextPage_Click="navPagination_btnNextPage_Click" 
                                          btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
-										 btnFirstPage_Click="navPagination_btnFirstPage_Click" />
+										 btnFirstPage_Click="navPagination_btnFirstPage_Click" />-->
 					<!-- Sales Invoice Form -->
 					<Grid Grid.Column="1" Grid.Row="1">
 						<Grid.RowDefinitions>
@@ -748,7 +750,7 @@
 											<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 												<Grid Height="130" Width="130" AllowDrop="True" Background="White" Margin="4">
 													<TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
-											FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal" />
+											                    FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal" />
 													<Image x:Name="imageViewer" Margin="4" />
 												</Grid>
 												<StackPanel>
@@ -761,8 +763,8 @@
 						                                    Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 													<Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
 													<DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
-								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
-								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+								                            SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
+								                            ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 												</StackPanel>
 											</StackPanel>
 										</Grid>
@@ -781,13 +783,11 @@
 					   btnSave_Click="Save_Click"
 					   btnEdit_Click="Edit_Click"
 					   btnSearch_Click="Search_Click"
-					  
+					   btnSearchInSource_Click="SearchInSource_Click"
 					   btnApprove_Click="Approve_Click"
 					   btnAnull_Click="Anull_Click"
 					   btnCancel_Click="Cancel_Click"
                        btnSync_Click="SalesInvoice_Loaded"
-                       btnApproveEdit_Click="ApproveEdit_Click"
-                       btnReApprove_Click="ReApprove_Click"
 					   MultipleStyleForm="True"
 
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

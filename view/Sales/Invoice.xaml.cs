@@ -26,7 +26,6 @@ namespace Cognitivo.Sales
        
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
-		public int PageIndex=0;
 
 		public Invoice()
         {
@@ -56,22 +55,26 @@ namespace Cognitivo.Sales
             Load_SecondaryDataThread();
         }
 
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Load_PrimaryDataThread(null, null);
+        }
+
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
-			
 			Settings Settings = new Settings();
-            SalesDB.Load(Settings.FilterByBranch,PageIndex);
+            SalesDB.Load(Settings.FilterByBranch, dataPager.PageIndex);  //
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
 			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
-
-            if (SalesDB.db.sales_invoice.Local.Count() > 0)
-            {
-                if (sales_invoicesales_invoice_detailViewSource.View != null)
-                {
-                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                }
-            }
+            dataPager.PageCount = (SalesDB.db.sales_invoice.Local.Count() / dataPager.PageSize) < 1 ? 1 : (SalesDB.db.sales_invoice.Local.Count() / dataPager.PageSize);
+            //if (SalesDB.db.sales_invoice.Local.Count() > 0)
+            //{
+            //    if (sales_invoicesales_invoice_detailViewSource.View != null)
+            //    {
+            //        sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            //    }
+            //}
         }
 
         private async void Load_SecondaryDataThread()
@@ -421,6 +424,33 @@ namespace Cognitivo.Sales
             else
             {
                 sales_invoiceViewSource.View.Filter = null;
+            }
+        }
+
+        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            await SalesDB.db.sales_invoice
+                .Where
+                (
+                x =>
+                x.contact.name.Contains(query) ||
+                x.contact.gov_code.Contains(query) ||
+                x.number.Contains(query)
+                )
+            .OrderByDescending(x => x.trans_date)
+            .ThenBy(x => x.number)
+            .Skip(dataPager.PageIndex).Take(100)
+            .LoadAsync();
+
+            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+            sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
+
+            if (SalesDB.db.sales_invoice.Local.Count() > 0)
+            {
+                if (sales_invoicesales_invoice_detailViewSource.View != null)
+                {
+                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                }
             }
         }
 
@@ -884,43 +914,5 @@ namespace Cognitivo.Sales
         {
 
         }
-
-        private void ReApprove_Click(object sender)
-        {
-            if (sales_invoiceDataGrid.SelectedItem is sales_invoice Invoice)
-            {
-                SalesDB.ReApprove_Click(Invoice);
-            }
-
-            sales_invoiceViewSource.View.Refresh();
-            SalesDB.db.SaveChanges();
-        }
-
-		
-
-		private void navPagination_btnNextPage_Click(object sender)
-		{
-			PageIndex = PageIndex + 100;
-			Load_PrimaryDataThread(null, null);
-		}
-
-		private void navPagination_btnPreviousPage_Click(object sender)
-		{
-            if (PageIndex >= 0)
-            {
-                PageIndex = PageIndex - 100;
-                Load_PrimaryDataThread(null, null);
-            }
-		}
-
-		private void navPagination_btnFirstPage_Click(object sender)
-		{
-			PageIndex =0;
-			Load_PrimaryDataThread(null, null);
-		}
-
-	
-
-		
-	}
+    }
 }

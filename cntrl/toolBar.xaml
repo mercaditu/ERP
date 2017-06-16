@@ -6,7 +6,7 @@
 			 xmlns:lex="http://wpflocalizeextension.codeplex.com"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:cntrl"
-        mc:Ignorable="d" 
+             mc:Ignorable="d" 
 			 lex:LocalizeDictionary.DesignCulture="en-US"
 			 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 			 lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -63,6 +63,8 @@
 						 metro:TextBoxHelper.SelectAllOnFocus="True"
 						 metro:ControlsHelper.MouseOverBorderBrush="Transparent"
 						 metro:ControlsHelper.FocusBorderBrush="Transparent"
+                         metro:TextBoxHelper.ClearTextButton="True"
+                         KeyUp="tbxSearchKeypress"
                          CaretBrush="RoyalBlue" />
                 <ToggleButton x:Name="btnDateRange"
                               Content="L" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="#BFFFFFFF" FontSize="24"
@@ -71,7 +73,7 @@
                               Style="{DynamicResource MetroCircleToggleButtonStyle}">
                 </ToggleButton>
 
-                <TextBlock x:Name="btnSync" Text="w" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"
+                <!--<TextBlock x:Name="btnCancel" Text="x" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"
                            MouseUp="btnSync_MouseUp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"
                            Margin="8" Foreground="White" Opacity="0.1" RenderTransformOrigin="0.5,0.5"
                            ToolTip="{lex:Loc Refresh}">
@@ -83,22 +85,22 @@
                             <TranslateTransform />
                         </TransformGroup>
                     </TextBlock.RenderTransform>
-                </TextBlock>
+                </TextBlock>-->
             </Grid>
 
             <Popup IsOpen="False" Grid.Column="0">
-				<StackPanel>
-					<local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <StackPanel>
+                    <local:DateRange StartDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  EndDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-						<local:DateRange.Effect>
-							<DropShadowEffect ShadowDepth="0" Opacity="0.75"/>
-						</local:DateRange.Effect>
-					</local:DateRange>
-					
-				</StackPanel>
-              
-				
-			</Popup>
+                        <local:DateRange.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.75"/>
+                        </local:DateRange.Effect>
+                    </local:DateRange>
+
+                </StackPanel>
+
+
+            </Popup>
 
             <Grid Grid.Column="1">
                 <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
@@ -111,6 +113,19 @@
                             <Button Content="Approve Edit" />
                         </metro:DropDownButton.Items>
                     </metro:DropDownButton>
+                    <TextBlock x:Name="btnSync" Text="w" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"
+                           MouseUp="btnSync_MouseUp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"
+                           Margin="8" Foreground="Black" Opacity="0.9" RenderTransformOrigin="0.5,0.5"
+                           ToolTip="{lex:Loc Refresh}">
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
                 </StackPanel>
             </Grid>
 
@@ -118,18 +133,5 @@
                 <StackPanel x:Name="stackMessages" Margin="0,5" Width="{Binding ActualWidth, ElementName=gridButtons, Mode=OneWay}" />
             </Popup>
         </Grid>
-        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.ColumnSpan="2"
-					Visibility="{Binding ElementName=this, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
-					HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,-30,4,0">
-            <!--<StackPanel x:Name="borderForm" Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
-                <Label x:Name="lblForm" Foreground="OrangeRed" Content="" FontSize="14" VerticalAlignment="Center" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0" />
-                <Label Content="{lex:Loc Form}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
-            </StackPanel>
-
-            <StackPanel x:Name="borderGrid" Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
-                <Label x:Name="lblGrid" Foreground="Gold" Content="&#xE80D;" FontSize="14" FontFamily="/cntrl;component/Resources/#cognitivo" Margin="0,0,-5,0" />
-                <Label Content="{lex:Loc Grid}" Style="{StaticResource input_label}" Foreground="WhiteSmoke" FontSize="10" VerticalAlignment="Center" Margin="0,-1,4,0" />
-            </StackPanel>-->
-        </StackPanel>
     </Grid>
 </UserControl>

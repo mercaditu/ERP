@@ -1509,6 +1509,12 @@
   <data name="StockMinimum" xml:space="preserve">
     <value>Stock Minimum</value>
   </data>
+  <data name="String" xml:space="preserve">
+    <value>#VALUE!</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>#VALUE!</value>
+  </data>
   <data name="StylePrinter" xml:space="preserve">
     <value>Style De L'Imprimante</value>
   </data>
@@ -1527,8 +1533,14 @@
   <data name="Supplier" xml:space="preserve">
     <value>Fournisseur</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>Code Fournisseur</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>Fournisseur Compte Courant</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>Nom Du Fournisseur</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>Provisions</value>

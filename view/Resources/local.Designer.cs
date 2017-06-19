@@ -313,11 +313,11 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @Archived.
+        ///   Looks up a localized string similar to @Archive.
         /// </summary>
-        public static string Archived {
+        public static string Archive {
             get {
-                return ResourceManager.GetString("Archived", resourceCulture);
+                return ResourceManager.GetString("Archive", resourceCulture);
             }
         }
         
@@ -2059,6 +2059,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Importance.
+        /// </summary>
+        public static string Importance {
+            get {
+                return ResourceManager.GetString("Importance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Importation.
         /// </summary>
         public static string Importation {
@@ -3697,6 +3706,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @RowLimit.
+        /// </summary>
+        public static string RowLimit {
+            get {
+                return ResourceManager.GetString("RowLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Sale.
         /// </summary>
         public static string Sale {
@@ -4273,11 +4291,29 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SupplierCode.
+        /// </summary>
+        public static string SupplierCode {
+            get {
+                return ResourceManager.GetString("SupplierCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @SupplierCurrentAccount.
         /// </summary>
         public static string SupplierCurrentAccount {
             get {
                 return ResourceManager.GetString("SupplierCurrentAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SupplierName.
+        /// </summary>
+        public static string SupplierName {
+            get {
+                return ResourceManager.GetString("SupplierName", resourceCulture);
             }
         }
         

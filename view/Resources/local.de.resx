@@ -127,7 +127,7 @@
     <value>Kontostand</value>
   </data>
   <data name="Accounted" xml:space="preserve">
-    <value>Entfielen</value>
+    <value>Accounted</value>
   </data>
   <data name="Accounting" xml:space="preserve">
     <value>Buchhaltung</value>
@@ -136,7 +136,7 @@
     <value>Accounting Journal</value>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Konten</value>
   </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>Abbrechnungsverbindlichkeiten</value>
@@ -187,7 +187,7 @@
     <value>Betrag Bezahlt</value>
   </data>
   <data name="AnalisysofAccountsReceivable" xml:space="preserve">
-    <value>Analisys Von Debitoren</value>
+    <value>Analisys Von Debitoren-</value>
   </data>
   <data name="Annul" xml:space="preserve">
     <value>Annullieren</value>
@@ -200,6 +200,9 @@
   </data>
   <data name="Approve" xml:space="preserve">
     <value>Genehmigen</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>Archivieren</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>Bereich</value>
@@ -307,7 +310,7 @@
     <value>Kategorie</value>
   </data>
   <data name="ChartofAccount" xml:space="preserve">
-    <value>Kontenplan</value>
+    <value>Konten</value>
   </data>
   <data name="Children" xml:space="preserve">
     <value>Kinder</value>
@@ -352,7 +355,7 @@
     <value>Verbinden</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
-    <value>Anschluss Builder</value>
+    <value>Verbindung Builder</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
     <value>Connection String</value>
@@ -361,7 +364,7 @@
     <value>Verbrauchen</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
-    <value>Verbrauchen Nächsten Bereich</value>
+    <value>Verbrauchen Next Bereich</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>Kontakt</value>
@@ -424,10 +427,10 @@
     <value>Strom</value>
   </data>
   <data name="CurrentAccountCustomer" xml:space="preserve">
-    <value>Girokonto Kunden</value>
+    <value>Kontokorrent Kunden</value>
   </data>
   <data name="CurrentAccountEvent" xml:space="preserve">
-    <value>Girokonto-Ereignis</value>
+    <value>Kontokorrent Ereignis</value>
   </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>Aktuell Im Konto</value>
@@ -439,7 +442,7 @@
     <value>Kunde</value>
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
-    <value>Kundengirokonto</value>
+    <value>Kunden Kontokorrent</value>
   </data>
   <data name="CustomerDeliveryList" xml:space="preserve">
     <value>Kundenlieferliste</value>
@@ -451,7 +454,7 @@
     <value>Zoll</value>
   </data>
   <data name="DailyGoal" xml:space="preserve">
-    <value>Tagesziel</value>
+    <value>Täglich Tor</value>
   </data>
   <data name="Database" xml:space="preserve">
     <value>Datenbank</value>
@@ -496,13 +499,13 @@
     <value>Konten Verfolgen Alle Finanztransaktionen</value>
   </data>
   <data name="desc_AccountsPayable" xml:space="preserve">
-    <value>Legen Sie Die Zahlungen Und Berechnen, Was Ist Links</value>
+    <value>Legen Sie Zahlungen Und Berechnen, Was Ist Links</value>
   </data>
   <data name="desc_AccountsReceivable" xml:space="preserve">
     <value>Legen Sie Zahlungen Erleichtert Und Berechnen, Was Ist Links</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>Erstellen Und Transact Mit Ihrem Finanzkonten</value>
+    <value>Erstellen Und Transact Mit Ihren Finanzkonten</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
     <value>Die Banken Haben Die Fähigkeit, Mehrere Konten Zu Halten</value>
@@ -514,19 +517,19 @@
     <value>Definieren Sie Rollen Und Rechte Für Unsere Kontakte</value>
   </data>
   <data name="desc_contactTag" xml:space="preserve">
-    <value>Stichworte Hilfe Suchen &amp; Sortieren Kontakte Schnell</value>
+    <value>Tags Helfen Suchen Und Sortieren Kontakte Schnell</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
-    <value>Ermöglicht Transaktionen In Unterschiedlichen Währungen Und Preise</value>
+    <value>Ermöglicht Transaktionen In Verschiedenen Währungen Und Preise</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
     <value>Alle Elemente, Die Vermarktet Werden, Werden</value>
   </data>
   <data name="desc_ItemTag" xml:space="preserve">
-    <value>Stichworte Hilfe Suchen &amp; Artikel Schnell Sortieren</value>
+    <value>Tags Helfen Suchen &amp; Artikel Schnell Sortieren</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
-    <value>Standorte Halten Inventar Innerhalb Einer Filiale</value>
+    <value>Standorte Halten Inventar Innerhalb Einer Niederlassung</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
     <value>Steuerung Und Schedual Wartung Für Ihr Vermögen</value>
@@ -535,7 +538,7 @@
     <value>Verschieben Von Objekten Aus Verschiedenen Orten</value>
   </data>
   <data name="desc_PriceList" xml:space="preserve">
-    <value>Gleiche Element In Verschiedenen Preisklassen Kommerzialisieren</value>
+    <value>Gleiches Element In Verschiedenen Preisklassen Kommerzialisieren</value>
   </data>
   <data name="desc_Stock" xml:space="preserve">
     <value>Die Lagerbestände Von Zweig Und Standort Gruppiert</value>
@@ -559,13 +562,13 @@
     <value>Reiseziel</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Einzelheiten</value>
+    <value>Details</value>
   </data>
   <data name="DeveloperMode" xml:space="preserve">
     <value>Entwicklermodus</value>
   </data>
   <data name="DifferenceinDate" xml:space="preserve">
-    <value>Differenz Datum</value>
+    <value>Unterschied In Datum</value>
   </data>
   <data name="Dimension" xml:space="preserve">
     <value>Dimension</value>
@@ -628,16 +631,16 @@
     <value>Eingeben</value>
   </data>
   <data name="Equity" xml:space="preserve">
-    <value>Gerechtigkeit</value>
+    <value>Billigkeit</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Fehler</value>
   </data>
   <data name="EstimatedDateofArrival" xml:space="preserve">
-    <value>Geschätzte Datum Der Ankunft</value>
+    <value>Geschätztes Datum Der Ankunft</value>
   </data>
   <data name="EstimatedDateofDeparture" xml:space="preserve">
-    <value>Geschätzte Datum Der Abreise</value>
+    <value>Geschätztes Datum Der Abreise</value>
   </data>
   <data name="EstimatedTimeofArrival" xml:space="preserve">
     <value>Voraussichtliche Ankunftszeit</value>
@@ -763,7 +766,7 @@
     <value>Hallo</value>
   </data>
   <data name="HistoricStockLevels" xml:space="preserve">
-    <value>Historische Bestandsmengen</value>
+    <value>Historische Aktien Levels</value>
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
     <value>Historische Aktienwerte</value>
@@ -772,13 +775,16 @@
     <value>Stunde</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
-    <value>Stunden Coeficient</value>
+    <value>Stunde Coeficient</value>
   </data>
   <data name="HumanResources" xml:space="preserve">
     <value>Humanressourcen</value>
   </data>
   <data name="Humidity" xml:space="preserve">
     <value>Feuchtigkeit</value>
+  </data>
+  <data name="Importance" xml:space="preserve">
+    <value>Bedeutung</value>
   </data>
   <data name="Importation" xml:space="preserve">
     <value>Einfuhr</value>
@@ -790,7 +796,7 @@
     <value>Inactivate</value>
   </data>
   <data name="Incomes" xml:space="preserve">
-    <value>Incomes</value>
+    <value>Einkommen</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
     <value>Incoterm</value>
@@ -819,8 +825,8 @@
   <data name="Integration" xml:space="preserve">
     <value>Integration</value>
   </data>
-  <data name="Interest" xml:space="preserve">
-    <value>Interessieren</value>
+  <data name="Interests" xml:space="preserve">
+    <value>Interessen</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
     <value>Internationaler Kommerz</value>
@@ -940,7 +946,7 @@
     <value>Chargennummer</value>
   </data>
   <data name="Maintainance" xml:space="preserve">
-    <value>Maintainance</value>
+    <value>Wartung</value>
   </data>
   <data name="MakeaGroupPayment" xml:space="preserve">
     <value>Machen Sie Eine Gruppe Zahlung</value>
@@ -976,7 +982,7 @@
     <value>Messart</value>
   </data>
   <data name="MerchandisewithCredits" xml:space="preserve">
-    <value>Verkaufen Sie Mit Credits</value>
+    <value>Waren Mit Credits</value>
   </data>
   <data name="MerchandisewithDebits" xml:space="preserve">
     <value>Waren Mit Debet</value>
@@ -985,7 +991,7 @@
     <value>Migration Typ</value>
   </data>
   <data name="MobilePointofSale" xml:space="preserve">
-    <value>Mobil Point Of Sale</value>
+    <value>Mobile Point Of Sale</value>
   </data>
   <data name="Module" xml:space="preserve">
     <value>Modul</value>
@@ -1006,7 +1012,7 @@
     <value>Staatsangehörigkeit</value>
   </data>
   <data name="NeededbyDate" xml:space="preserve">
-    <value>Erforderlich Datum</value>
+    <value>Erforderlich Für Datum</value>
   </data>
   <data name="NetWeight" xml:space="preserve">
     <value>Nettogewicht</value>
@@ -1072,16 +1078,16 @@
     <value>Zahlungen</value>
   </data>
   <data name="PaymentsRecieved" xml:space="preserve">
-    <value>Zahlungen Empfing</value>
+    <value>Zahlungen Empfingen</value>
   </data>
   <data name="PaymentType" xml:space="preserve">
     <value>Zahlungsart</value>
   </data>
   <data name="PendingDocuments" xml:space="preserve">
-    <value>Bis Dokumente</value>
+    <value>Schwebende Dokumente</value>
   </data>
   <data name="PendingPayables" xml:space="preserve">
-    <value>Bis Kreditoren</value>
+    <value>Ausstehende Verbindlichkeiten</value>
   </data>
   <data name="PendingReceivables" xml:space="preserve">
     <value>Ausstehende Forderungen</value>
@@ -1132,7 +1138,7 @@
     <value>Drucker-Werte</value>
   </data>
   <data name="PrintingCheques" xml:space="preserve">
-    <value>Drucken Schecks</value>
+    <value>Drucken Von Schecks</value>
   </data>
   <data name="PrintingPress" xml:space="preserve">
     <value>Druckerpresse</value>
@@ -1180,10 +1186,10 @@
     <value>Projektfinanzierung</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
-    <value>Schuldschein</value>
+    <value>Eigenwechsel</value>
   </data>
   <data name="Promoted" xml:space="preserve">
-    <value>Gefördert</value>
+    <value>Promoted</value>
   </data>
   <data name="Properties" xml:space="preserve">
     <value>Eigenschaften</value>
@@ -1225,7 +1231,7 @@
     <value>Kauf Return</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
-    <value>Kaufangebots</value>
+    <value>Kaufangebot</value>
   </data>
   <data name="PurchaseTenderSummary" xml:space="preserve">
     <value>Purchase Angebot Zusammenfassung</value>
@@ -1273,7 +1279,7 @@
     <value>Eingang</value>
   </data>
   <data name="Receivable" xml:space="preserve">
-    <value>Forderungen</value>
+    <value>Receivable</value>
   </data>
   <data name="RecievePayment" xml:space="preserve">
     <value>Recieve Zahlung</value>
@@ -1291,7 +1297,7 @@
     <value>Bezüglich</value>
   </data>
   <data name="RelatetoInvoice" xml:space="preserve">
-    <value>Relate Auf Der Rechnung</value>
+    <value>Beziehen Sich Auf Fakturieren</value>
   </data>
   <data name="Relationship" xml:space="preserve">
     <value>Beziehung</value>
@@ -1309,7 +1315,7 @@
     <value>Abdruck</value>
   </data>
   <data name="Requested" xml:space="preserve">
-    <value>Gewünscht</value>
+    <value>Angeforderte</value>
   </data>
   <data name="RequestManagement" xml:space="preserve">
     <value>Request Management</value>
@@ -1325,6 +1331,9 @@
   </data>
   <data name="Rounding" xml:space="preserve">
     <value>Runden</value>
+  </data>
+  <data name="RowLimit" xml:space="preserve">
+    <value>Row-Grenze</value>
   </data>
   <data name="Sale" xml:space="preserve">
     <value>Verkauf</value>
@@ -1500,11 +1509,17 @@
   <data name="StockMinimum" xml:space="preserve">
     <value>Auf Mindest</value>
   </data>
+  <data name="String" xml:space="preserve">
+    <value>#VALUE!</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>#VALUE!</value>
+  </data>
   <data name="StylePrinter" xml:space="preserve">
     <value>Style-Drucker</value>
   </data>
   <data name="StyleReceipt" xml:space="preserve">
-    <value>Style-Empfang</value>
+    <value>Style-Receipt</value>
   </data>
   <data name="Subscription" xml:space="preserve">
     <value>Abonnement</value>
@@ -1518,8 +1533,14 @@
   <data name="Supplier" xml:space="preserve">
     <value>Lieferant</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>Lieferantencode</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
-    <value>Lieferant Girokonto</value>
+    <value>Lieferant Kontokorrent</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>Name Des Anbieters</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>Vorräte</value>
@@ -1576,7 +1597,7 @@
     <value>Übertragung</value>
   </data>
   <data name="TransferbetweenWarehouse" xml:space="preserve">
-    <value>Der Transfer Zwischen Lager</value>
+    <value>Transfer Zwischen Lager</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Art</value>
@@ -1609,7 +1630,7 @@
     <value>Ohne Mwst</value>
   </data>
   <data name="VATGrouping" xml:space="preserve">
-    <value>Mwst-Gruppen</value>
+    <value>Mwst Gruppierung</value>
   </data>
   <data name="VATIncluded" xml:space="preserve">
     <value>Inkl. Mwst</value>

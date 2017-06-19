@@ -201,8 +201,8 @@
   <data name="Approve" xml:space="preserve">
     <value>@Approve</value>
   </data>
-  <data name="Archived" xml:space="preserve">
-    <value>@Archived</value>
+  <data name="Archive" xml:space="preserve">
+    <value>@Archive</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>@Area</value>
@@ -783,6 +783,9 @@
   <data name="Humidity" xml:space="preserve">
     <value>@Humidity</value>
   </data>
+  <data name="Importance" xml:space="preserve">
+    <value>@Importance</value>
+  </data>
   <data name="Importation" xml:space="preserve">
     <value>@Importation</value>
   </data>
@@ -1329,6 +1332,9 @@
   <data name="Rounding" xml:space="preserve">
     <value>@Rounding</value>
   </data>
+  <data name="RowLimit" xml:space="preserve">
+    <value>@RowLimit</value>
+  </data>
   <data name="Sale" xml:space="preserve">
     <value>@Sale</value>
   </data>
@@ -1521,8 +1527,14 @@
   <data name="Supplier" xml:space="preserve">
     <value>@Supplier</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>@SupplierCode</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>@SupplierCurrentAccount</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>@SupplierName</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>@Supplies</value>

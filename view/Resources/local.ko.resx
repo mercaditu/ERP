@@ -1509,6 +1509,9 @@
   <data name="StockMinimum" xml:space="preserve">
     <value>증권 최소</value>
   </data>
+  <data name="String" xml:space="preserve">
+    <value>#VALUE!</value>
+  </data>
   <data name="StylePrinter" xml:space="preserve">
     <value>스타일 프린터</value>
   </data>
@@ -1527,8 +1530,14 @@
   <data name="Supplier" xml:space="preserve">
     <value>공급</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>공급 업체 코드</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>공급 업체 당좌 계정</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>공급 업체 이름</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>용품</value>

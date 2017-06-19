@@ -15,7 +15,6 @@
 			 mc:Ignorable="d" VerticalAlignment="Center"
 			 Width="550" Height="660" Loaded="UserControl_Loaded"
 			 BorderBrush="RoyalBlue" BorderThickness="2">
-
     <UserControl.Resources>
         <Converters:ActiveValueConverter x:Key="ActiveValueConverter" />
         <Converters:TrueToFalseConverter x:Key="True2False" />
@@ -27,7 +26,6 @@
         <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
         <CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}" />
     </UserControl.Resources>
-
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
@@ -204,8 +202,9 @@
 									 Text="{Binding value, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource},
 									 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" />
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64"
-									 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+                            <TextBox Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" AcceptsReturn="True"
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+									 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="256" TextWrapping="Wrap"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

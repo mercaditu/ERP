@@ -1,4 +1,5 @@
-﻿using System;
+﻿using entity.Brillo;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -7,7 +8,21 @@ namespace entity.Controller.Purchase
 {
     public class InvoiceController: Base,IDisposable
     {
-		public void Dispose()
+        public int Count { get; set; }
+
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 5;
+
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
+
+        public void Dispose()
 		{
 			// Dispose(true);
 			GC.SuppressFinalize(this);
@@ -27,10 +42,22 @@ namespace entity.Controller.Purchase
 		}
 		public async void Load(int PageIndex)
         {
-            await db.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch && a.is_archived == false)
+
+            var predicate = PredicateBuilder.True<purchase_invoice>();
+            predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
+            predicate = predicate.And(x => x.is_archived == false);
+            predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Branch);
+
+            if (Count == 0)
+            {
+                Count = db.purchase_invoice.Where(predicate).Count();
+            }
+
+            await db.purchase_invoice.Where(predicate)
                 .Include(x => x.contact)
-                .OrderByDescending(x => x.trans_date).Take(100).Skip(PageIndex)
-				.LoadAsync();
+                .OrderByDescending(x => x.trans_date)
+                  .Skip(PageIndex * PageSize).Take(PageSize)
+                .LoadAsync();
 
             await db.app_department.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToListAsync();
             await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();

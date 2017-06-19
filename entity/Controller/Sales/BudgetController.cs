@@ -9,9 +9,23 @@ using System.Windows;
 namespace entity.Controller.Sales
 {
     public class BudgetController : Base
-    { 
+    {
         public Brillo.Promotion.Start Promotions { get; set; }
-        
+        public int Count { get; set; }
+
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 5;
+
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
+
+
         public BudgetController()
         {
 
@@ -19,13 +33,16 @@ namespace entity.Controller.Sales
 
         #region Load
 
-        public async void Load(bool FilterByTerminal)
+        public async void Load(bool FilterByTerminal, bool FilterByBranch, int PageIndex)
         {
             var predicate = PredicateBuilder.True<sales_budget>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
             predicate = predicate.And(x => x.is_archived == false);
-            predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Branch);
+            if (FilterByBranch)
+            {
+                predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Branch);
+            }
 
             //If FilterByTerminal is true, then will add aditional Where into query.
             if (FilterByTerminal)
@@ -43,9 +60,15 @@ namespace entity.Controller.Sales
                 predicate = predicate.And(x => x.trans_date <= End_Range.Date);
             }
 
+            if (Count == 0)
+            {
+                Count = db.sales_budget.Where(predicate).Count();
+            }
+
             await db.sales_budget.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
                     .ThenBy(x => x.number)
+                    .Skip(PageIndex * PageSize).Take(PageSize)
                     .LoadAsync();
         }
 
@@ -231,28 +254,28 @@ namespace entity.Controller.Sales
 
             foreach (sales_budget sales_budget in db.sales_budget.Local.Where(x => x.IsSelected && x.id_contact > 0))
             {
-				int count = sales_budget.sales_budget_detail.Where(x => x.Error != null).Count();
-				if (sales_budget.IsSelected && sales_budget.Error == null && count == 0)
-				{
-					if (sales_budget.State == EntityState.Added)
-					{
-						sales_budget.timestamp = DateTime.Now;
-						sales_budget.State = EntityState.Unchanged;
-						db.Entry(sales_budget).State = EntityState.Added;
-						sales_budget.IsSelected = false;
-						Add_CRM(sales_budget);
-					}
-					else if (sales_budget.State == EntityState.Modified)
-					{
-						sales_budget.timestamp = DateTime.Now;
-						sales_budget.State = EntityState.Unchanged;
-						db.Entry(sales_budget).State = EntityState.Modified;
-						sales_budget.IsSelected = false;
-					}
-					NumberOfRecords += 1;
-				}
-				else
-				{ return false; }
+                int count = sales_budget.sales_budget_detail.Where(x => x.Error != null).Count();
+                if (sales_budget.IsSelected && sales_budget.Error == null && count == 0)
+                {
+                    if (sales_budget.State == EntityState.Added)
+                    {
+                        sales_budget.timestamp = DateTime.Now;
+                        sales_budget.State = EntityState.Unchanged;
+                        db.Entry(sales_budget).State = EntityState.Added;
+                        sales_budget.IsSelected = false;
+                        Add_CRM(sales_budget);
+                    }
+                    else if (sales_budget.State == EntityState.Modified)
+                    {
+                        sales_budget.timestamp = DateTime.Now;
+                        sales_budget.State = EntityState.Unchanged;
+                        db.Entry(sales_budget).State = EntityState.Modified;
+                        sales_budget.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+                else
+                { return false; }
 
                 if (sales_budget.State > 0)
                 {
@@ -263,8 +286,8 @@ namespace entity.Controller.Sales
                             db.sales_budget_detail.RemoveRange(sales_budget.sales_budget_detail);
                         }
 
-                     
-                       
+
+
 
                     }
                 }
@@ -287,7 +310,7 @@ namespace entity.Controller.Sales
 
         }
 
-    
+
 
         #endregion
 

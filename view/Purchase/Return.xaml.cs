@@ -13,7 +13,7 @@ namespace Cognitivo.Purchase
 {
     public partial class Return : Page
     {
-		public int PageIndex = 0;
+	
 		private entity.Controller.Purchase.ReturnController PurchaseReturnDB;
         private CollectionViewSource
             purchaseReturnViewSource,
@@ -35,8 +35,12 @@ namespace Cognitivo.Purchase
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            PurchaseReturnDB.Load(PageIndex);
-            
+            PurchaseReturnDB.Load(dataPager.PagedSource.PageIndex);
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = PurchaseReturnDB.PageCount;
+            }
             //PurchaseReturn
             purchaseReturnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
            

@@ -13,6 +13,19 @@ namespace entity.Controller.Sales
     {
 
         public Brillo.Promotion.Start Promotions { get; set; }
+        public int Count { get; set; }
+
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 5;
+
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
 
 
 
@@ -46,11 +59,17 @@ namespace entity.Controller.Sales
             {
                 predicate = predicate.And(x => x.trans_date <= End_Range.Date);
             }
+            if (Count == 0)
+            {
+                Count = db.sales_return.Where(predicate).Count();
+            }
+
 
             await db.sales_return.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
-                    .ThenBy(x => x.number).Take(100).Skip(PageIndex)
-					.LoadAsync();
+                    .ThenBy(x => x.number)
+                      .Skip(PageIndex * PageSize).Take(PageSize)
+                    .LoadAsync();
         }
 
         #endregion

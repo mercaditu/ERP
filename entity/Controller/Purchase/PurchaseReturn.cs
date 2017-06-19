@@ -9,17 +9,35 @@ namespace entity.Controller.Purchase
 {
    public class ReturnController:Base
     {
+        public int Count { get; set; }
 
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 5;
+
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
         public async void Load(int PageIndex)
         {
             var predicate = PredicateBuilder.True<purchase_return>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_archived == false);
 
+            if (Count == 0)
+            {
+                Count = db.purchase_return.Where(predicate).Count();
+            }
+
             await db.purchase_return.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
-                    .ThenBy(x => x.number).Take(100).Skip(PageIndex)
-					.LoadAsync();
+                    .ThenBy(x => x.number)
+                        .Skip(PageIndex * PageSize).Take(PageSize)
+                    .LoadAsync();
 
             await db.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).OrderBy(a => a.name).ToListAsync();
 

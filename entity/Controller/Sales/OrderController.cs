@@ -50,6 +50,20 @@ namespace entity.Controller.Sales
 
         public List<Messages> Msg { get; set; }
 
+        public int Count { get; set; }
+
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 5;
+
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
+
         #endregion
 
         public OrderController()
@@ -85,10 +99,15 @@ namespace entity.Controller.Sales
             //    predicate = predicate.And(x => x.trans_date <= End_Range.Date);
             //}
 
+            if (Count == 0)
+            {
+                Count = db.sales_order.Where(predicate).Count();
+            }
             await db.sales_order.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
-                    .ThenBy(x => x.number).Take(100).Skip(PageIndex)
-					.LoadAsync();
+                    .ThenBy(x => x.number)
+                    .Skip(PageIndex * PageSize).Take(PageSize)
+                    .LoadAsync();
         }
 
         #endregion

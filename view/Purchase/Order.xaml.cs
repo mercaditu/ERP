@@ -18,8 +18,8 @@ namespace Cognitivo.Purchase
         private CollectionViewSource purchase_orderViewSource;
         private CollectionViewSource purchase_orderpurchase_order_detailViewSource;
         private entity.Controller.Purchase.OrderController PurchaseDB;
-		public int PageIndex = 0;
-		public Order()
+
+        public Order()
         {
             InitializeComponent();
             PurchaseDB = FindResource("PurchaseOrder") as entity.Controller.Purchase.OrderController;
@@ -43,18 +43,20 @@ namespace Cognitivo.Purchase
             load_SecondaryDataThread();
         }
 
-        private async void load_PrimaryDataThread()
+        private void load_PrimaryDataThread()
         {
             OrderSetting OrderSetting = new OrderSetting();
 
-            PurchaseDB.Load(OrderSetting.filterbyBranch,PageIndex);
+            PurchaseDB.Load(OrderSetting.filterbyBranch, dataPager.PagedSource.PageIndex);
 
 
-            await Dispatcher.InvokeAsync(new Action(() =>
+
+            purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
+            purchase_orderViewSource.Source = PurchaseDB.db.purchase_order.Local;
+            if (dataPager.PageCount == 0)
             {
-                purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
-                purchase_orderViewSource.Source = PurchaseDB.db.purchase_order.Local;
-            }));
+                dataPager.PageCount = PurchaseDB.PageCount;
+            }
         }
 
         private async void load_SecondaryDataThread()

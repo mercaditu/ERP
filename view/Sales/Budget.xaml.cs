@@ -19,7 +19,7 @@ namespace Cognitivo.Sales
 
         private entity.Controller.Sales.BudgetController SalesBudgetDB;
         private CollectionViewSource sales_budgetViewSource, sales_budgetsales_budget_detailViewSource;
-		public int PageIndex = 0;
+	
 		public Budget()
         {
             InitializeComponent();
@@ -32,18 +32,15 @@ namespace Cognitivo.Sales
             }
         }
 
-        private async void Page_Loaded(object sender, EventArgs e)
+        private void Page_Loaded(object sender, EventArgs e)
         {
 		
 			Settings SalesSettings = new Settings();
+            SalesBudgetDB.Load(false, SalesSettings.FilterByBranch, dataPager.PagedSource.PageIndex);
 
-            if (SalesSettings.FilterByBranch)
+            if (dataPager.PageCount == 0)
             {
-                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).Take(100).Skip(PageIndex).LoadAsync();
-            }
-            else
-            {
-                await SalesBudgetDB.db.sales_budget.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).ThenBy(x => x.number).Take(100).Skip(PageIndex).LoadAsync();
+                dataPager.PageCount = SalesBudgetDB.PageCount;
             }
 
             sales_budgetViewSource = FindResource("sales_budgetViewSource") as CollectionViewSource;

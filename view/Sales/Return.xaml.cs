@@ -15,7 +15,7 @@ namespace Cognitivo.Sales
     public partial class Return : Page
     {
         private entity.Controller.Sales.ReturnController SalesReturnDB;
-		public int PageIndex = 0;
+	
 		private CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
         private cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
 
@@ -34,10 +34,15 @@ namespace Cognitivo.Sales
 
         private void load_PrimaryDataThread()
         {
-            SalesReturnDB.Load(false,PageIndex);
+            SalesReturnDB.Load(false, dataPager.PagedSource.PageIndex);
 
             salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-            salesReturnViewSource.Source = SalesReturnDB.db.sales_return.Local; 
+            salesReturnViewSource.Source = SalesReturnDB.db.sales_return.Local;
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = SalesReturnDB.PageCount;
+            }
         }
 
         private void load_SecondaryDataThread()

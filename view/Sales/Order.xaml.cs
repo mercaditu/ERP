@@ -16,8 +16,8 @@ namespace Cognitivo.Sales
 {
     public partial class Order : Page
     {
-		public int PageIndex = 0;
-		private CollectionViewSource sales_orderViewSource;
+
+        private CollectionViewSource sales_orderViewSource;
 
         //private db db = new db();
         private entity.Controller.Sales.OrderController SalesDB;
@@ -28,8 +28,8 @@ namespace Cognitivo.Sales
         {
 
             InitializeComponent();
-		
-			SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
+
+            SalesDB = FindResource("SalesOrder") as entity.Controller.Sales.OrderController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.
@@ -39,26 +39,29 @@ namespace Cognitivo.Sales
 
         #region DataLoad
 
-        private async void Load_PrimaryDataThread()
+        private void Load_PrimaryDataThread()
         {
-		
-			//Load Base Class
-			SalesDB.Load(new Settings().FilterByBranch,PageIndex);
 
-            await Dispatcher.InvokeAsync(new Action(() =>
+            //Load Base Class
+            SalesDB.Load(new Settings().FilterByBranch, dataPager.PagedSource.PageIndex);
+
+            sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
+            sales_orderViewSource.Source = SalesDB.db.sales_order.Local;
+
+            CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
+            if (SalesDB.db.sales_invoice.Local.Count() > 0)
             {
-                sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
-                sales_orderViewSource.Source = SalesDB.db.sales_order.Local;
-
-				CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
-                if (SalesDB.db.sales_invoice.Local.Count() > 0)
+                if (sales_ordersales_order_detailViewSource.View != null)
                 {
-                    if (sales_ordersales_order_detailViewSource.View != null)
-                    {
-                        sales_ordersales_order_detailViewSource.View.Refresh();
-                    }
+                    sales_ordersales_order_detailViewSource.View.Refresh();
                 }
-            }));
+            }
+
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = SalesDB.PageCount;
+            }
         }
 
         private async void Load_SecondaryDataThread()
@@ -73,8 +76,8 @@ namespace Cognitivo.Sales
 
         private void Page_Loaded(object sender, EventArgs e)
         {
-			
-			Load_PrimaryDataThread();
+
+            Load_PrimaryDataThread();
             Load_SecondaryDataThread();
         }
 
@@ -210,7 +213,7 @@ namespace Cognitivo.Sales
                     //Contract
                     if (objContact.id_contract != null)
                         cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
-                    
+
                     //Currency Selection
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
 
@@ -364,8 +367,8 @@ namespace Cognitivo.Sales
                     _sales_order_detail.batch_code = item_movement.code;
                     _sales_order_detail.expire_date = item_movement.expire_date;
                     _sales_order_detail.movement_id = (int)item_movement.id_movement;
-					_sales_order_detail.Quantity_InStockLot = item_movement.avlquantity;
-				}
+                    _sales_order_detail.Quantity_InStockLot = item_movement.avlquantity;
+                }
 
                 sales_order.sales_order_detail.Add(_sales_order_detail);
             }
@@ -393,11 +396,11 @@ namespace Cognitivo.Sales
 
                     string number = Order.number ?? "";
                     string customer = Order.contact != null ? Order.contact.name : "";
-					string trans_date = Order.trans_date.Date.ToString("dd/MM/yyyy") ?? "";
+                    string trans_date = Order.trans_date.Date.ToString("dd/MM/yyyy") ?? "";
 
-					if (customer.ToLower().Contains(query.ToLower())
+                    if (customer.ToLower().Contains(query.ToLower())
                         || number.ToLower().Contains(query.ToLower())
-						||trans_date==query)
+                        || trans_date == query)
                     {
                         return true;
                     }

@@ -16,7 +16,7 @@ namespace Cognitivo.Purchase
 {
     public partial class Invoice : Page, IDisposable
     {
-		public int PageIndex = 0;
+	
 		private CollectionViewSource purchase_invoiceViewSource;
         private CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
 
@@ -42,12 +42,17 @@ namespace Cognitivo.Purchase
 
         private void Load_PrimaryDataThread()
         {
-            PurchaseDB.Load(PageIndex);
+            PurchaseDB.Load(dataPager.PagedSource.PageIndex);
 
             purchase_invoicepurchase_invoice_detailViewSource = FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource;
             purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
 
             purchase_invoiceViewSource.Source = PurchaseDB.db.purchase_invoice.Local;
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = PurchaseDB.PageCount;
+            }
         }
 
         private void Load_SecondaryDataThread()

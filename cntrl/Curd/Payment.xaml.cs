@@ -48,6 +48,7 @@ namespace cntrl.Curd
             sbxReturn.ContactID = id_contact;
             sbxPurchaseReturn.ContactID = id_contact;
             entity.contact contacts = PaymentDB.contacts.Find(id_contact);
+
             if (contacts != null)
             {
                 payment.id_contact = contacts.id_contact;
@@ -100,8 +101,12 @@ namespace cntrl.Curd
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
             app_accountViewSource = this.FindResource("app_accountViewSource") as CollectionViewSource;
-            await PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company &&
-            (a.id_account_type == app_account.app_account_type.Bank || a.id_account == CurrentSession.Id_Account)).LoadAsync();
+
+            await PaymentDB.app_account
+                .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company &&
+                    (a.id_account_type == app_account.app_account_type.Bank || 
+                    a.id_terminal == CurrentSession.Id_Terminal))
+            .LoadAsync();
 
             //Fix if Payment Type not inserted.
             if (PaymentDB.app_account.Local.Count == 0)
@@ -154,6 +159,7 @@ namespace cntrl.Curd
         {
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
+
             foreach (var id in payment_schedualList.GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
             {
                 Decimal TotalPayable = 0;
@@ -174,7 +180,7 @@ namespace cntrl.Curd
                 if (Math.Round(TotalPaid) > Math.Round(TotalPayable))
                 {
                     String Currency = PaymentDB.app_currency.Where(x => x.id_currency == id.id_currency).FirstOrDefault().name;
-                    MessageBox.Show("Your Amount Is Higher Than :-" + TotalPayable + Currency);
+                    MessageBox.Show("Your amount is higher than : -" + TotalPayable + " " + Currency);
                     return;
                 }
             }
@@ -233,15 +239,7 @@ namespace cntrl.Curd
                     {
                         //If paymentbehaviour is not WithHoldingVAT & CreditNote, it must be Normal, so only show Account.
                         stpaccount.Visibility = Visibility.Visible;
-                        if (payment_type.is_direct)
-                        {
-                            stptransdate.Visibility = Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            stptransdate.Visibility = Visibility.Visible;
-                        }
-
+                        stptransdate.Visibility = payment_type.is_direct ? Visibility.Collapsed : Visibility.Visible;
                         stpcreditpurchase.Visibility = Visibility.Collapsed;
                         stpcreditsales.Visibility = Visibility.Collapsed;
                     }
@@ -305,8 +303,8 @@ namespace cntrl.Curd
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.payment = payment;
                 //Get current Active Rate of selected Currency.
-                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
 
+                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
                 if (app_currencyfx != null)
                 {
                     payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
@@ -362,9 +360,17 @@ namespace cntrl.Curd
         private void DeleteDetail_Click(object sender, RoutedEventArgs e)
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-            PaymentDB.payment_detail.Remove(payment_detail);
-            paymentpayment_detailViewSource.View.Refresh();
+
+            if (payment != null)
+            {
+                payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+
+                if (payment_detail != null)
+                {
+                    PaymentDB.payment_detail.Remove(payment_detail);
+                    paymentpayment_detailViewSource.View.Refresh();
+                }
+            }
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

@@ -79,7 +79,11 @@ namespace Cognitivo.Product
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
             await ProductTransferDB.item_transfer.Where(a =>
                     a.id_company == CurrentSession.Id_Company &&
-                    a.transfer_type == item_transfer.Transfer_Types.Transfer).Include(x => x.app_branch_destination).Include(y => y.app_branch_origin).OrderByDescending(x => x.trans_date)
+                    a.transfer_type == item_transfer.Transfer_Types.Transfer &&
+                    a.is_archived == false)
+                    .Include(x => x.app_branch_destination)
+                    .Include(y => y.app_branch_origin)
+                    .OrderByDescending(x => x.trans_date)
                     .LoadAsync();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
@@ -372,16 +376,17 @@ namespace Cognitivo.Product
             }
         }
 
-        private void sbxItemAsset_Select(object sender, RoutedEventArgs e)
+        private void toolBar_btnDelete_Click(object sender)
         {
-            //if (sbxItemAsset.ItemID>0)
-            //{
-            //    item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            //    if (item_transfer!=null)
-            //    {
-            //        item_transfer.id_item_asset = sbxItemAsset.ItemID;
-            //    }
-            //}
+            if (ProductTransferDB.item_transfer.Local.Where(x => x.IsSelected).Count() > 0)
+            {
+                foreach (item_transfer item_transfer in ProductTransferDB.item_transfer.Local.Where(x => x.IsSelected))
+                {
+                    item_transfer.is_archived = true;
+                }
+
+                ProductTransferDB.SaveChanges();
+            }
         }
 
         private async void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

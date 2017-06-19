@@ -1,8 +1,6 @@
-﻿<Page x:Class="Cognitivo.Product.Transfer"  Title="ItemTransfer"
-      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+﻿<Page x:Class="Cognitivo.Product.Transfer" Title="ItemTransfer"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:pref="clr-namespace:Cognitivo.Product"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:entity="clr-namespace:entity;assembly=entity"
@@ -10,8 +8,6 @@
       xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
 
       xmlns:converter="clr-namespace:Cognitivo.Converters"
-      xmlns:converters="clr-namespace:Cognitivo.Converters;assembly=cntrl"
-      xmlns:cls ="clr-namespace:Cognitivo.Class"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       mc:Ignorable="d"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -80,13 +76,13 @@
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="68,0" Width="264">
                 <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" />
-                <DatePicker Style="{StaticResource input_datepicker }"
+                <DatePicker Style="{StaticResource input_datepicker}"
                             SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="{lex:Loc ArrivalDate}" Style="{StaticResource text_Label}" />
-                <DatePicker Style="{StaticResource input_datepicker }"
+                <DatePicker Style="{StaticResource input_datepicker}"
                             SelectedDate="{Binding eta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="{lex:Loc DepartureDate}" Style="{StaticResource text_Label}" />
-                <DatePicker Style="{StaticResource input_datepicker }"
+                <DatePicker Style="{StaticResource input_datepicker}"
                         SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
                 <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
@@ -315,6 +311,7 @@
                        btnSave_Click="toolBar_btnSave_Click"
                        btnCancel_Click="toolBar_btnCancel_Click"
                        btnEdit_Click="toolBar_btnEdit_Click"
+                       btnDelete_Click="toolBar_btnDelete_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

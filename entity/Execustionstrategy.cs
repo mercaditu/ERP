@@ -52,7 +52,7 @@ namespace entity
                         {
                             AboutBox1 box = new AboutBox1();
                             box.Show();
-
+						
                             IsHandeled = true;
                         }
 

@@ -170,14 +170,6 @@ namespace Cognitivo.Menu
             }
         }
 
-        private void Settings_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (is_LoggedIn)
-            {
-                cbxBranch.ItemsSource = entity.CurrentSession.Branches;
-            }
-        }
-
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.cognitivo.in/support/");

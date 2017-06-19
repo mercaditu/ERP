@@ -118,38 +118,6 @@
                             </RadioButton>
                         </WrapPanel>
                     </Expander>
-                    <Expander IsEnabled="{Binding ElementName=winMain, Path=is_LoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                              IsEnabledChanged="Settings_IsEnabledChanged">
-                        <Expander.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/Cognitivo;component/Images/Menu/modConfig.png" Height="32" />
-                                <Label Content="{lex:Loc Settings}" Style="{StaticResource H3}" Foreground="White" />
-                            </StackPanel>
-                        </Expander.Header>
-                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
-                            <Label Style="{StaticResource H3}" Content="{Binding company_Name, Source={x:Static my:Settings.Default}}" HorizontalAlignment="Center" />
-
-                            <Label Style="{StaticResource input_label}" Content="{lex:Loc Branch}" HorizontalAlignment="Center" />
-                            <ComboBox x:Name="cbxBranch" Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
-									  SelectedValue="{Binding branch_ID, Mode=TwoWay, Source={x:Static my:Settings.Default}}"
-									  Width="128"
-									  
-										Text="{Binding branch_Name, Mode=OneWayToSource, Source={x:Static my:Settings.Default}}"
-										DisplayMemberPath="name"  SelectedValuePath="id_branch" />
-
-                            <Label Style="{StaticResource input_label}" Content="{lex:Loc Terminal}" HorizontalAlignment="Center" />
-                            <ComboBox x:Name="cbxTerminal" Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
-								DisplayMemberPath="name" SelectedValuePath="id_terminal" Width="128"
-								SelectedValue="{Binding terminal_ID, Mode=TwoWay, Source={x:Static my:Settings.Default}}"
-								Text="{Binding terminal_Name, Mode=OneWayToSource, Source={x:Static my:Settings.Default}}" />
-
-                            <Label Style="{StaticResource input_label}" Content="{lex:Loc Account}" HorizontalAlignment="Center" />
-                            <ComboBox x:Name="cbxAccount" Style="{StaticResource input_combobox}" HorizontalAlignment="Center" Width="128"
-										DisplayMemberPath="name" SelectedValuePath="id_account"
-										Text="{Binding account_Name, Mode=OneWayToSource, Source={x:Static my:Settings.Default}}"
-										SelectedValue="{Binding account_ID, Mode=TwoWay, Source={x:Static my:Settings.Default}}" />
-                        </StackPanel>
-                    </Expander>
                 </StackPanel>
             </Controls:Flyout>
         </Controls:FlyoutsControl>

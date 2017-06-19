@@ -53,7 +53,8 @@
             <TextBlock Text="All transactions with Directly be inserted into Accounts" Style="{StaticResource text_Instructions}" />
             <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc IsDirect}"
                       IsChecked="{Binding is_direct, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox x:Name="cbxPrint" Content="{lex:Loc Print}" Style="{StaticResource input_checkbox}" Checked="CheckBox_Checked" />
+            <CheckBox x:Name="cbxPrint" Content="{lex:Loc Print}" Style="{StaticResource input_checkbox}" 
+                      Checked="CheckBox_Checked" IsChecked="{Binding PrintDocument, Mode=OneWay}" />
             <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center" Visibility="{Binding ElementName=cbxPrint, Path=IsChecked, Converter={StaticResource Bool2Vis}}"
                           SelectedValuePath="id_document" DisplayMemberPath="name" ItemsSource="{Binding Source={StaticResource app_documentViewSource}}"
                           Width="228"

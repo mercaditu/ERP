@@ -62,6 +62,12 @@ namespace entity
         private bool _is_active;
         public bool has_bank { get; set; }
 
+        [NotMapped]
+        public bool PrintDocument
+        {
+            get { return id_document != null ? true : false; }
+        }
+
         public virtual app_document app_document { get; set; }
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
 

@@ -135,11 +135,16 @@ namespace Cognitivo.Configs
 					//Sets the SessionID.
 					if (app_account_session.is_active)
 					{
-						SessionID = app_account.app_account_session.Where(y => y.is_active).Select(x => x.id_session).FirstOrDefault();
+						SessionID = app_account.app_account_session
+                            .OrderByDescending(x => x.op_date)
+                            .Select(x => x.id_session)
+                            .FirstOrDefault();
 					}
 
 					app_account_detailDataGrid.ItemsSource = app_account.app_account_detail
-					.Where(x => x.id_session == SessionID)
+					.Where
+                    (x => x.id_session == SessionID && //Gets Current Session Items Only.
+                    (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
 					.GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
 					.Select(s => new
 					{
@@ -191,17 +196,33 @@ namespace Cognitivo.Configs
 				if (app_account.app_account_session.Where(x => x.is_active).Count() > 0)
 				{
 					app_account_detail app_account_detail = new app_account_detail();
-					
-						app_account_detail.id_account = (int)app_account.id_account;
-					
+					app_account_detail.id_account = app_account.id_account;
+
 					if (cmbpayment.SelectedItem != null)
 					{
-						app_account_detail.id_payment_type = (int)cmbpayment.SelectedValue;
+                        payment_type payment_type = db.payment_type.Find((int)cmbpayment.SelectedValue);
+                        if (payment_type != null)
+                        {
+                            app_account_detail.id_payment_type = payment_type.id_payment_type;
+                            app_account_detail.payment_type = payment_type;
+
+                            //If payment type is Direct, then Detail should be Approved Status.
+                            if (payment_type.is_direct)
+                            {
+                                app_account_detail.status = Status.Documents_General.Approved;
+                            }
+                            else //Else it should be pending to be fixed with Bank Reconcilization.
+                            {
+                                app_account_detail.status = Status.Documents_General.Pending;
+                            }
+                        }
 					}
+
 					if (cmbcurrency.SelectedItem != null)
 					{
 						int id_curreny = (int)cmbcurrency.SelectedValue;
                         app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.is_active && x.id_currency == id_curreny).FirstOrDefault();
+
                         if (app_currencyfx != null)
                         {
                             app_account_detail.id_currencyfx = app_currencyfx.id_currencyfx;

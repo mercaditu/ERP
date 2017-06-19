@@ -178,7 +178,9 @@ namespace Cognitivo.Commercial
         private void toolBar_btnAnull_Click(object sender)
         {
 			payment_schedualDataGrid.CommitEdit();
-			int Payments2Anull = PaymentDB.payments.Local.Where(x => x.IsSelected).Count();
+            payment_schedualReceiveDataGrid.CommitEdit();
+
+            int Payments2Anull = PaymentDB.payments.Local.Where(x => x.IsSelected).Count();
 
             if (MessageBox.Show("Are you sure you want to remove " + Payments2Anull + " Payments?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {

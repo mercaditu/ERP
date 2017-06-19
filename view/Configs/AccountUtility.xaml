@@ -121,32 +121,20 @@
                 </TabItem>
                 <TabItem Header="{lex:Loc Adjust}" Height="39" VerticalAlignment="Top">
                     <StackPanel Background="WhiteSmoke">
-                        <!--IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">-->
-                        <Grid Margin="5">
-                            <Label Content="{lex:Loc Adjust}" />
-                            <Button Content="Open Drawer" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                        </Grid>
                         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10">
                             <StackPanel>
-                                <!--<Label Content="Account"/>-->
-                                <Label Content="PaymentType"/>
-                                <Label Content="Debit"/>
-                                <Label Content="Credit"/>
-                                <Label Content="Currency"/>
-                            </StackPanel>
-                            <StackPanel >
-
-                                <!--<ComboBox x:Name="cmbaccount" ItemsSource="{Binding Source={StaticResource app_account_listViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_account" 
-										 />-->
+                                <Label Content="{lex:Loc PaymentType}" Style="{StaticResource input_label}"/>
                                 <ComboBox x:Name="cmbpayment" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_payment_type" 
-										  />
-                                <TextBox x:Name="txtdebit"/>
-                                <TextBox  x:Name="txtcredit"/>
+														DisplayMemberPath="name" SelectedValuePath="id_payment_type"
+                                          Style="{StaticResource input_combobox}"/>
+                                <Label Content="{lex:Loc Debit}" Style="{StaticResource input_label}"/>
+                                <TextBox x:Name="txtdebit" Style="{StaticResource input_textbox}"/>
+                                <Label Content="{lex:Loc Credit}" Style="{StaticResource input_label}"/>
+                                <TextBox  x:Name="txtcredit" Style="{StaticResource input_textbox}"/>
+                                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                                 <ComboBox x:Name="cmbcurrency" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_currency"
-														/>
+										    DisplayMemberPath="name" SelectedValuePath="id_currency"
+                                          Style="{StaticResource input_combobox}"/>
                             </StackPanel>
                         </StackPanel>
 

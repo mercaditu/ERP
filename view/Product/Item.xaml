@@ -159,7 +159,7 @@
                 <TabItem Header="{lex:Loc Basic}">
                     <ScrollViewer>
                         <StackPanel HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc Supplier Code}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
                                 <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
 							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -177,7 +177,7 @@
 							 metro:TextBoxHelper.SelectAllOnFocus="True"
 							 Text="{Binding sku, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
                             </AdornerDecorator>
-                            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                            <Label Content="{lex:Loc Supplier Name}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
                                 <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
 							 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

@@ -2,6 +2,7 @@
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:my="clr-namespace:entity.Properties;assembly=entity"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:entity="clr-namespace:entity;assembly=entity"
 		xmlns:main="clr-namespace:Cognitivo.Properties"
 		xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -11,6 +12,7 @@
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		WindowState="Maximized" GlowBrush="Black" KeyUp="Window_KeyUp"
 		Style="{DynamicResource MyCleanWindowStyle}" Closing="winMain_Closing">
+
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
             <Controls:Flyout x:Name="flyout_Panel" Header="Flyout" Background="{StaticResource AccentColor_Introvert}" Theme="Dark" Position="Right" Width="256">
@@ -131,7 +133,7 @@
                             <ComboBox x:Name="cbxBranch" Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
 									  SelectedValue="{Binding branch_ID, Mode=TwoWay, Source={x:Static my:Settings.Default}}"
 									  Width="128"
-									  ItemsSource="{Binding Source={x:Static entity:CurrentSession.Branches}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+									  
 										Text="{Binding branch_Name, Mode=OneWayToSource, Source={x:Static my:Settings.Default}}"
 										DisplayMemberPath="name"  SelectedValuePath="id_branch" />
 
@@ -160,6 +162,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Resources>
+        
         <Style x:Key="MyCleanWindowStyle"
 			   TargetType="{x:Type Controls:MetroWindow}"
 			   BasedOn="{StaticResource CleanWindowStyleKey}" />

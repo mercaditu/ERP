@@ -163,10 +163,13 @@ namespace Cognitivo.Sales
 
         private void Cancel_Click(object sender)
         {
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
             if (SalesDB.CancelAllChanges())
             {
+
                 if (sales_invoiceViewSource.View != null)
                 {
+                    sales_invoice.State = EntityState.Unchanged;
                     sales_invoiceViewSource.View.MoveCurrentToFirst();
                     sales_invoiceViewSource.View.Refresh();
                 }
@@ -389,7 +392,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void Search_Click(object sender, string query)
+        private void Search_Click(object sender,string query)
         {
             if (!string.IsNullOrEmpty(query) && sales_invoiceViewSource != null)
             {

@@ -360,11 +360,9 @@ namespace cntrl.Curd
         private void DeleteDetail_Click(object sender, RoutedEventArgs e)
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
-
             if (payment != null)
             {
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-
                 if (payment_detail != null)
                 {
                     PaymentDB.payment_detail.Remove(payment_detail);
@@ -388,6 +386,18 @@ namespace cntrl.Curd
                 if (app_accountList.Count() > 0)
                 {
                     app_accountViewSource.Source = app_accountList;
+                }
+            }
+        }
+
+        private void cbxAccount_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
+            if (app_account != null)
+            {
+                if (app_account.id_currency != null || app_account.id_currency > 0)
+                {   
+                    sbxCurrency.id_currency = (int)app_account.id_currency;
                 }
             }
         }

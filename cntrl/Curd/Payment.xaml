@@ -154,11 +154,12 @@
                                           IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}}"
 										  Style="{StaticResource input_combobox}"
 										  ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
-										  SelectedValue="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged}">
+										  SelectedValue="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectionChanged="cbxAccount_SelectionChanged">
                                 </ComboBox>
 
                                 <Label Content="{lex:Loc Currency}" Style="{DynamicResource input_label}" />
-                                <Controls:CurrencyBox HorizontalAlignment="Left" Width="256" appName="PaymentUtility"
+                                <Controls:CurrencyBox x:Name="sbxCurrency" HorizontalAlignment="Left" Width="256" appName="PaymentUtility"
                                                       IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}}"
 													  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             </StackPanel>

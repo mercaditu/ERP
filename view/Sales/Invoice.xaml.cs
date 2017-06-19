@@ -97,7 +97,6 @@ namespace Cognitivo.Sales
             {
                 dataPager.PageCount = SalesDB.PageCount;
             }
-        
         }
 
         private async void Load_SecondaryDataThread()
@@ -170,7 +169,6 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
             if (SalesDB.CancelAllChanges())
             {
-
                 if (sales_invoiceViewSource.View != null)
                 {
                     sales_invoice.State = EntityState.Unchanged;
@@ -200,7 +198,7 @@ namespace Cognitivo.Sales
 
         private void Anull_Click(object sender)
         {
-            MessageBoxResult result = MessageBox.Show("Anull?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Archive, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 SalesDB.Annull();

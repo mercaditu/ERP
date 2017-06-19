@@ -88,12 +88,16 @@ namespace Cognitivo.Sales
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
 			Settings Settings = new Settings();
-            SalesDB.Load(Settings.FilterByBranch, dataPager.PageIndex);
+            SalesDB.Load(Settings.FilterByBranch,dataPager.PagedSource.PageIndex);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
 			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
-            dataPager.PageCount = SalesDB.PageCount;
+            if (dataPager.PageCount==0)
+            {
+                dataPager.PageCount = SalesDB.PageCount;
+            }
+        
         }
 
         private async void Load_SecondaryDataThread()

@@ -317,6 +317,30 @@ namespace Cognitivo.Purchase
 
             popupCustomize.IsOpen = false;
         }
+        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                load_PrimaryData();
+                //Brings data into view.
+                toolBar_btnSearch_Click(sender, query);
+            }
+            else
+            {
+                purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
+                purchase_orderViewSource.Source = PurchaseDB.db.purchase_order
+                    .Where
+                    (
+                    x =>
+                    x.contact.name.Contains(query) ||
+                    x.contact.gov_code.Contains(query) ||
+                    x.number.Contains(query)
+                    )
+                .OrderByDescending(x => x.trans_date)
+                .ThenBy(x => x.number)
+                .ToListAsync();
+            }
+        }
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -708,26 +732,10 @@ namespace Cognitivo.Purchase
             }
         }
 
-		private void navPagination_btnNextPage_Click(object sender)
-		{
-			PageIndex = PageIndex + 100;
-			load_PrimaryDataThread();
-		}
 
-		private void navPagination_btnPreviousPage_Click(object sender)
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
-            if (PageIndex >= 0)
-            {
-                PageIndex = PageIndex - 100;
-                load_PrimaryDataThread();
-            }
-           
-		}
-
-		private void navPagination_btnFirstPage_Click(object sender)
-		{
-			PageIndex = 0;
-			load_PrimaryDataThread();
-		}
-	}
+            load_PrimaryDataThread();
+        }
+    }
 }

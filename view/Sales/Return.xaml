@@ -4,6 +4,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:entity="clr-namespace:entity;assembly=entity"
+         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
@@ -52,6 +53,7 @@
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnDelete_Click="toolBar_btnDelete_Click"
 					   btnSearch_Click="toolBar_btnSearch_Click"
+                         btnSearchInSource_Click="SearchInSource_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
 					   btnNew_Click="toolBar_btnNew_Click"
 					   btnSave_Click="toolBar_btnSave_Click"
@@ -80,8 +82,8 @@
 			
 			
         </ScrollViewer>
-		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
-										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
         <Grid Grid.Column="1" Grid.Row="1"
 					Background="{StaticResource winBackground}"
 					IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">

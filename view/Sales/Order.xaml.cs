@@ -155,6 +155,30 @@ namespace Cognitivo.Sales
         #endregion toolbar Events
 
         #region Filter Data
+        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                Page_Loaded(null, null);
+                //Brings data into view.
+                Search_Click(sender, query);
+            }
+            else
+            {
+                sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
+                sales_orderViewSource.Source = await SalesDB.db.sales_order
+                    .Where
+                    (
+                    x =>
+                    x.contact.name.Contains(query) ||
+                    x.contact.gov_code.Contains(query) ||
+                    x.number.Contains(query)
+                    )
+                .OrderByDescending(x => x.trans_date)
+                .ThenBy(x => x.number)
+                .ToListAsync();
+            }
+        }
 
         private void Set_ContactPref(object sender, EventArgs e)
         {
@@ -601,25 +625,10 @@ namespace Cognitivo.Sales
                 }
             }
         }
-		private void navPagination_btnNextPage_Click(object sender)
-		{
-			PageIndex = PageIndex + 100;
-			Page_Loaded(null, null);
-		}
 
-		private void navPagination_btnPreviousPage_Click(object sender)
-		{
-            if (PageIndex >= 0)
-            {
-                PageIndex = PageIndex - 100;
-                Page_Loaded(null, null);
-            }
-		}
-
-		private void navPagination_btnFirstPage_Click(object sender)
-		{
-			PageIndex = 0;
-			Page_Loaded(null, null);
-		}
-	}
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Page_Loaded(null, null);
+        }
+    }
 }

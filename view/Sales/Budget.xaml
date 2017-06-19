@@ -8,6 +8,7 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
          xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
@@ -62,9 +63,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
-										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
-		<Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource winBackground}" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
+        <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource winBackground}" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="390" />
                 <RowDefinition Height="*" />
@@ -432,6 +433,7 @@
 					   btnApprove_Click="Approve_Click"
 					   btnAnull_Click="Anull_Click"
                        btnSync_Click="Page_Loaded"
+                       btnSearchInSource_Click="SearchInSource_Click"
 					   Grid.ColumnSpan="2"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

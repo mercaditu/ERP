@@ -120,6 +120,30 @@ namespace Cognitivo.Purchase
 
         #endregion Datagrid Events
 
+        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                Page_Loaded(null,null);
+                //Brings data into view.
+                toolBar_btnSearch_Click(sender, query);
+            }
+            else
+            {
+                purchaseReturnViewSource = FindResource("purchaseReturnViewSource") as CollectionViewSource;
+                purchaseReturnViewSource.Source = PurchaseReturnDB.db.purchase_return
+                    .Where
+                    (
+                    x =>
+                    x.contact.name.Contains(query) ||
+                    x.contact.gov_code.Contains(query) ||
+                    x.number.Contains(query)
+                    )
+                .OrderByDescending(x => x.trans_date)
+                .ThenBy(x => x.number)
+                .ToListAsync();
+            }
+        }
         private void toolBar_btnSearch_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query))
@@ -508,22 +532,11 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-		private void navPagination_btnNextPage_Click(object sender)
-		{
-			PageIndex = PageIndex + 100;
-			Page_Loaded(null, null);
-		}
+		
 
-		private void navPagination_btnPreviousPage_Click(object sender)
-		{
-			PageIndex = PageIndex - 100;
-			Page_Loaded(null, null);
-		}
-
-		private void navPagination_btnFirstPage_Click(object sender)
-		{
-			PageIndex = 0;
-			Page_Loaded(null, null);
-		}
-	}
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Page_Loaded(null, null);
+        }
+    }
 }

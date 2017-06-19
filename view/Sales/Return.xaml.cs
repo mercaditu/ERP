@@ -145,7 +145,30 @@ namespace Cognitivo.Sales
                 calculate_vat(sender, e);
             }
         }
-
+        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                Page_Loaded(null, null);
+                //Brings data into view.
+                toolBar_btnSearch_Click(sender, query);
+            }
+            else
+            {
+                salesReturnViewSource = FindResource("salesReturnViewSource") as CollectionViewSource;
+                salesReturnViewSource.Source = await SalesReturnDB.db.sales_budget
+                    .Where
+                    (
+                    x =>
+                    x.contact.name.Contains(query) ||
+                    x.contact.gov_code.Contains(query) ||
+                    x.number.Contains(query)
+                    )
+                .OrderByDescending(x => x.trans_date)
+                .ThenBy(x => x.number)
+                .ToListAsync();
+            }
+        }
         private void toolBar_btnSearch_Click(object sender, string query)
         {
             try
@@ -457,25 +480,12 @@ namespace Cognitivo.Sales
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
-		private void navPagination_btnNextPage_Click(object sender)
-		{
-			PageIndex = PageIndex + 100;
-			load_PrimaryDataThread();
-		}
+		
 
-		private void navPagination_btnPreviousPage_Click(object sender)
-		{
-            if (PageIndex >= 0)
-            {
-                PageIndex = PageIndex - 100;
-                load_PrimaryDataThread();
-            }
-		}
-
-		private void navPagination_btnFirstPage_Click(object sender)
-		{
-			PageIndex = 0;
-			load_PrimaryDataThread();
-		}
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            load_PrimaryDataThread();
+        }
+        
 	}
 }

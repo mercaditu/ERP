@@ -11,6 +11,7 @@
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
        xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
 	  xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -62,9 +63,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <cntrl:navPagination Grid.Row="2" VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
-										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
-		<Grid Grid.Column="1" Grid.Row="1" Background="White" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
+        <Grid Grid.Column="1" Grid.Row="1" Background="White" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="400" />
                 <RowDefinition Height="1*" />
@@ -444,6 +445,7 @@
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnEdit_Click="toolBar_btnEdit_Click"
 					   btnDelete_Click="toolBar_btnDelete_Click"
+                         btnSearchInSource_Click="SearchInSource_Click"
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   btnAnull_Click="toolBar_btnAnull_Click"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

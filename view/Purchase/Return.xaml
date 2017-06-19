@@ -9,6 +9,7 @@
     xmlns:Controller="clr-namespace:entity.Controller.Purchase;assembly=entity"
 	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+           xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	xmlns:pref="clr-namespace:Cognitivo.Purchase"
 	xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	xmlns:converter ="clr-namespace:Cognitivo.Converters"
@@ -63,8 +64,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
-										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
+ 
 		<Grid IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}"
 					Grid.Row="1" Grid.Column="1" Background="White">
             <Grid>
@@ -240,6 +242,7 @@
 					   btnSave_Click="toolBar_btnSave_Click"
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   btnAnull_Click="toolBar_btnAnull_Click"
+                          btnSearchInSource_Click="SearchInSource_Click"
 					   Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

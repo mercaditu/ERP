@@ -134,7 +134,30 @@ namespace Cognitivo.Purchase
         #endregion Toolbar events
 
         #region Filter Data
-
+        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                Load_PrimaryDataThread();
+                //Brings data into view.
+                Search_Click(sender, query);
+            }
+            else
+            {
+                purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
+                purchase_invoiceViewSource.Source = PurchaseDB.db.purchase_invoice
+                    .Where
+                    (
+                    x =>
+                    x.contact.name.Contains(query) ||
+                    x.contact.gov_code.Contains(query) ||
+                    x.number.Contains(query)
+                    )
+                .OrderByDescending(x => x.trans_date)
+                .ThenBy(x => x.number)
+                .ToListAsync();
+            }
+        }
         private void set_ContactPref(object sender, EventArgs e)
         {
             if (sbxContact.ContactID > 0)
@@ -931,25 +954,13 @@ namespace Cognitivo.Purchase
             }
         }
 
-		private void navPagination_btnNextPage_Click(object sender)
-		{
-			PageIndex = PageIndex + 100;
-			Load_PrimaryDataThread();
-		}
+		
 
-		private void navPagination_btnPreviousPage_Click(object sender)
-		{
-            if (PageIndex >= 0)
-            {
-                PageIndex = PageIndex - 100;
-                Load_PrimaryDataThread();
-            }
-		}
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Load_PrimaryDataThread();
+        }
 
-		private void navPagination_btnFirstPage_Click(object sender)
-		{
-			PageIndex = 0;
-			Load_PrimaryDataThread();
-		}
-	}
+       
+    }
 }

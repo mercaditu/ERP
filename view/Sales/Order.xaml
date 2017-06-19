@@ -10,6 +10,7 @@
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:pref="clr-namespace:Cognitivo.Sales"
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  mc:Ignorable="d" MinHeight="600" MinWidth="800"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -54,8 +55,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
-										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
+     
 		<Grid Grid.Column="1" Grid.Row="1" Background="White" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
@@ -462,6 +464,7 @@
 
         <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" appName="SalesOrder"
 					   btnSearch_Click="Search_Click"
+                            btnSearchInSource_Click="SearchInSource_Click"
 					   btnNew_Click="New_Click"
 					   btnSave_Click="Save_Click"
 					   btnDelete_Click="Delete_Click"

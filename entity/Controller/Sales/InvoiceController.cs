@@ -7,26 +7,26 @@ using System.Linq;
 namespace entity.Controller.Sales
 {
     public class InvoiceController : Base, IDisposable
-	{
-		public void Dispose()
-		{
-			// Dispose(true);
-			GC.SuppressFinalize(this);
-		}
+    {
+        public void Dispose()
+        {
+            // Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-		protected virtual void Dispose(bool disposing)
-		{
-			if (this != null)
-			{
-				if (disposing)
-				{
-					this.Dispose();
-					// Dispose other managed resources.
-				}
-				//release unmanaged resources.
-			}
-		}
-		public Brillo.Promotion.Start Promotions { get; set; }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this != null)
+            {
+                if (disposing)
+                {
+                    this.Dispose();
+                    // Dispose other managed resources.
+                }
+                //release unmanaged resources.
+            }
+        }
+        public Brillo.Promotion.Start Promotions { get; set; }
 
         #region Properties
 
@@ -43,6 +43,7 @@ namespace entity.Controller.Sales
 
         public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
         public int _PageSize = 5;
+
 
         public int PageCount
         {
@@ -65,6 +66,9 @@ namespace entity.Controller.Sales
 
         public async void Load(bool FilterByTerminal, int PageIndex)
         {
+
+
+
             var predicate = PredicateBuilder.True<sales_invoice>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
@@ -77,13 +81,20 @@ namespace entity.Controller.Sales
                 predicate = predicate.And(x => x.id_terminal == CurrentSession.Id_Terminal);
             }
 
-            Count = db.sales_invoice.Where(predicate).Count();
+            if (Count==0)
+            {
+                Count = db.sales_invoice.Where(predicate).Count();
+            }
+
+
+
 
             await db.sales_invoice.Where(predicate)
                     .OrderByDescending(x => x.trans_date)
                     .ThenBy(x => x.number)
-                    .Skip(PageIndex).Take(PageSize)
+                    .Skip(PageIndex * PageSize).Take(PageSize)
                     .LoadAsync();
+
         }
 
         #endregion
@@ -218,31 +229,31 @@ namespace entity.Controller.Sales
 
             foreach (sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.id_contact > 0))
             {
-				int count = sales_invoice.sales_invoice_detail.Where(x => x.Error != null).Count();
+                int count = sales_invoice.sales_invoice_detail.Where(x => x.Error != null).Count();
 
-				if (sales_invoice.IsSelected && sales_invoice.Error == null && count == 0)
-				{
-					if (sales_invoice.State == EntityState.Added)
-					{
-						sales_invoice.timestamp = DateTime.Now;
-						sales_invoice.State = EntityState.Unchanged;
-						db.Entry(sales_invoice).State = EntityState.Added;
-						sales_invoice.IsSelected = false;
-						Add_CRM(sales_invoice);
-					}
-					else if (sales_invoice.State == EntityState.Modified)
-					{
-						sales_invoice.timestamp = DateTime.Now;
-						sales_invoice.State = EntityState.Unchanged;
-						db.Entry(sales_invoice).State = EntityState.Modified;
-						sales_invoice.IsSelected = false;
-					}
-					NumberOfRecords += 1;
-				}
-				else
-				{
-					return  false;
-				}
+                if (sales_invoice.IsSelected && sales_invoice.Error == null && count == 0)
+                {
+                    if (sales_invoice.State == EntityState.Added)
+                    {
+                        sales_invoice.timestamp = DateTime.Now;
+                        sales_invoice.State = EntityState.Unchanged;
+                        db.Entry(sales_invoice).State = EntityState.Added;
+                        sales_invoice.IsSelected = false;
+                        Add_CRM(sales_invoice);
+                    }
+                    else if (sales_invoice.State == EntityState.Modified)
+                    {
+                        sales_invoice.timestamp = DateTime.Now;
+                        sales_invoice.State = EntityState.Unchanged;
+                        db.Entry(sales_invoice).State = EntityState.Modified;
+                        sales_invoice.IsSelected = false;
+                    }
+                    NumberOfRecords += 1;
+                }
+                else
+                {
+                    return false;
+                }
 
                 if (sales_invoice.State != EntityState.Unchanged && sales_invoice.Error != null)
                 {
@@ -368,12 +379,12 @@ namespace entity.Controller.Sales
                         db.SaveChanges();
 
                         Brillo.Document.Start.Automatic(invoice, app_document_range);
-						ApprovalStatus = true;
-					}
+                        ApprovalStatus = true;
+                    }
                     else
                     {
-						ApprovalStatus = true;
-						invoice.is_issued = false;
+                        ApprovalStatus = true;
+                        invoice.is_issued = false;
 
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
@@ -386,12 +397,12 @@ namespace entity.Controller.Sales
                 }
                 else
                 {
-					ApprovalStatus = false;
-					//Credit Not Approved Message.
-					Msg.Add(Messages.CreditLimit_Exceeded);
+                    ApprovalStatus = false;
+                    //Credit Not Approved Message.
+                    Msg.Add(Messages.CreditLimit_Exceeded);
                 }
 
-               
+
             }
 
             return ApprovalStatus;

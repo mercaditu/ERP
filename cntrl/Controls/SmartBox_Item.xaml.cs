@@ -52,6 +52,8 @@ namespace cntrl.Controls
                 entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
                 _Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly) ? value : false;
                 RaisePropertyChanged("Exclude_OutOfStock");
+
+                LoadData();
             }
         }
 
@@ -196,7 +198,7 @@ namespace cntrl.Controls
         private void LoadData_Thread()
         {
             Items = null;
-            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
+            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(Exclude_OutOfStock))
             {
                 Items = Execute.Items.AsQueryable();
             }

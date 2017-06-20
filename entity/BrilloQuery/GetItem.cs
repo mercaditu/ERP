@@ -8,7 +8,7 @@ namespace entity.BrilloQuery
     {
         public ICollection<Item> Items { get; set; }
 
-        public GetItems()
+        public GetItems(bool Exclude_OutOfStock)
         {
             Items = new List<Item>();
             string query = @"SET sql_mode = '';
@@ -33,7 +33,7 @@ namespace entity.BrilloQuery
 								 left outer join app_branch as branch on loc.id_branch = branch.id_branch
 
 								 where (item.id_company = {0} or item.id_company is null)
-									and (loc.id_branch = {1} or mov.id_location is null or prod.id_item_product is null)
+									and (loc.id_branch = {1} or loc.id_branch is null)
 									and item.is_active = 1
 
 								 group by item.id_item
@@ -54,20 +54,28 @@ namespace entity.BrilloQuery
                         Is_Product = true;
                     }
 
-                    Item Item = new Item();
-                    Item.ID = Convert.ToInt32(DataRow["ID"]);
-                    Item.Type = (item.item_type)type;
-                    Item.IsProduct = Is_Product;
-                    Item.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
+                    Item Item = new Item()
+                    {
+                        ID = Convert.ToInt32(DataRow["ID"]),
+                        Type = (item.item_type)type,
+                        IsProduct = Is_Product,
+                        IsActive = Convert.ToBoolean(DataRow["IsActive"]),
+                        Name = Convert.ToString(DataRow["Name"]),
+                        Code = Convert.ToString(DataRow["Code"]),
+                        Brand = Convert.ToString(DataRow["Brand"]),
+                        InStock = Convert.ToDecimal(DataRow["Quantity"] is DBNull ? 0 : DataRow["Quantity"])
+                    };
+
                     if (!(DataRow["CompanyID"] is DBNull))
                     {
                         Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
                     }
 
-                    Item.Name = Convert.ToString(DataRow["Name"]);
-                    Item.Code = Convert.ToString(DataRow["Code"]);
-                    Item.Brand = Convert.ToString(DataRow["Brand"]);
-                    Item.InStock = Convert.ToDecimal(DataRow["Quantity"] is DBNull ? 0 : DataRow["Quantity"]);
+                    //If True, then don't insert into list of items.
+                    if (Exclude_OutOfStock && (type == 1 || type == 2 || type == 6))
+                    {
+                        continue;  
+                    }
 
                     Items.Add(Item);
                 }

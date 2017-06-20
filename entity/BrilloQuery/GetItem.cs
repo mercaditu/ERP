@@ -33,7 +33,7 @@ namespace entity.BrilloQuery
 								 left outer join app_branch as branch on loc.id_branch = branch.id_branch
 
 								 where (item.id_company = {0} or item.id_company is null)
-									and (loc.id_branch = {1} or loc.id_branch is null)
+									and (loc.id_branch = {1} or mov.id_location is null or prod.id_item_product is null)
 									and item.is_active = 1
 
 								 group by item.id_item
@@ -71,11 +71,11 @@ namespace entity.BrilloQuery
                         Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
                     }
 
-                    //If True, then don't insert into list of items.
-                    if (Exclude_OutOfStock && (type == 1 || type == 2 || type == 6))
-                    {
-                        continue;  
-                    }
+                    ////If True, then don't insert into list of items.
+                    //if (Exclude_OutOfStock && (type == 1 || type == 2 || type == 6))
+                    //{
+                    //    continue;  
+                    //}
 
                     Items.Add(Item);
                 }

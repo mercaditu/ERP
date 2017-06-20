@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -56,10 +57,10 @@ namespace cntrl.Controls
 			{
 				using (entity.db db = new entity.db())
 				{
-					if (db.app_attachment.Where(x => x.application == ApplicationName && x.reference_id == ReferenceID && x.mime.Contains("image")).Any())
+					if (db.app_attachment.Where(x => x.application == ApplicationName && x.reference_id == ReferenceID).Any())
 					{
 						app_attachmentViewSource.Source = db.app_attachment
-							.Where(x => x.application == ApplicationName && x.reference_id == ReferenceID && x.mime.Contains("image")).ToList();
+							.Where(x => x.application == ApplicationName && x.reference_id == ReferenceID).ToList();
 						app_attachmentViewSource.View.Refresh();
 					}
 				}
@@ -122,36 +123,41 @@ namespace cntrl.Controls
 
 		private void FlipView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
-			entity.app_attachment app_attachment = app_attachmentViewSource.View.CurrentItem as entity.app_attachment;
+            CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
+            entity.app_attachment app_attachment = app_attachmentViewSource.View.CurrentItem as entity.app_attachment;
 
-			if (app_attachment != null)
-			{
+            if (app_attachment != null)
+            {
+                string mime = app_attachment.mime;
+               string Path= Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\" + app_attachment.id_attachment + "." + mime.Substring(mime.IndexOf("/")+1);
+                File.WriteAllBytes(Path, app_attachment.file);
+                System.Diagnostics.Process.Start(@Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\" + app_attachment.id_attachment + "." + mime.Substring(mime.IndexOf("/")+1));                
+                //             ImageControl ImageControl = new ImageControl();
 
-                ImageControl ImageControl = new ImageControl();
+                //             ImageControl.file = app_attachment.file; // Path of the rdlc file
+                //             ImageControl.RaisePropertyChanged("file");
+                //             Window window = new Window
+                //             {
+                //                 Title = "Image",
+                //                 Content = ImageControl
+                //             };
 
-                ImageControl.file = app_attachment.file; // Path of the rdlc file
-                ImageControl.RaisePropertyChanged("file");
-                Window window = new Window
-                {
-                    Title = "Image",
-                    Content = ImageControl
-                };
+                //             window.ShowDialog();
 
-                window.ShowDialog();
+                //             //FlowDocumentWindow Flow = new FlowDocumentWindow();
 
-                //FlowDocumentWindow Flow = new FlowDocumentWindow();
+                //             //Flow.Browser.Source = GetBitmapImage(app_attachment.file).BaseUri; // Path of the rdlc file
+                //             ////ImageControl.RaisePropertyChanged("file");
+                //             //Window window = new Window
+                //             //{
+                //             //    Title = "PDF",
+                //             //    Content = Flow
+                //             //};
 
-                //Flow.Browser.Source = GetBitmapImage(app_attachment.file).BaseUri; // Path of the rdlc file
-                ////ImageControl.RaisePropertyChanged("file");
-                //Window window = new Window
-                //{
-                //    Title = "PDF",
-                //    Content = Flow
-                //};
-
-                //window.ShowDialog();
+                //             //window.ShowDialog();
             }
+             
+
         }
 
         public BitmapImage GetBitmapImage(byte[] imageBytes)

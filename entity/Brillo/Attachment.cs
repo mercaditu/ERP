@@ -26,6 +26,7 @@ namespace entity.Brillo
                     else if (extension.ToLower() == ".pdf")
                     {
                         app_attachment.mime = "application/" + extension.Substring(1);
+                        app_attachment.file = System.IO.File.ReadAllBytes(files[0].ToString());
                     }
 
                     app_attachment.reference_id = reference_id;

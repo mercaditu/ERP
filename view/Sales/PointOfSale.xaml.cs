@@ -70,6 +70,7 @@ namespace Cognitivo.Sales
 
         private void Save_Click(object sender, EventArgs e)
         {
+            CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
 
@@ -96,11 +97,11 @@ namespace Cognitivo.Sales
                 return;
             }
 
-            if (payment.GrandTotalDetail > Math.Round(sales_invoice.GrandTotal, 2))
-            {
-                tabPayment.Focus();
-                return;
-            }
+            //if (payment.GrandTotalDetail > Math.Round(sales_invoice.GrandTotal, 2))
+            //{
+            //    tabPayment.Focus();
+            //    return;
+            //}
 
             /// If all validation is met, then we can start Sales Process.
             if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
@@ -109,6 +110,10 @@ namespace Cognitivo.Sales
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesDB.Approve();
+
+                sales_invoice.TotalChanged = payment.GrandTotalDetail - sales_invoice.GrandTotal;
+                payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
 
                 List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
                 PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
@@ -437,5 +442,7 @@ namespace Cognitivo.Sales
                 crud_modalExpire.Children.Clear();
             }
         }
+
+     
     }
 }

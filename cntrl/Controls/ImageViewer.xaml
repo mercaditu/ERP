@@ -25,8 +25,9 @@
             </metro:FlipView.ContextMenu>
             <metro:FlipView.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}" 
-                           MouseRightButtonUp="Image_MouseRightButtonUp" />
+                    <!--<Image Source="{Binding file, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource ConvertImage}}" 
+                           MouseRightButtonUp="Image_MouseRightButtonUp" />-->
+                    <Label Content="{Binding FileName,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </DataTemplate>
             </metro:FlipView.ItemTemplate>
         </metro:FlipView>

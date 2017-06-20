@@ -111,6 +111,7 @@ namespace entity
             get
             {
                 _GrandTotal = sales_invoice_detail.Sum(x => x.SubTotal_Vat);
+                
                 return _GrandTotal;
             }
             set
@@ -237,6 +238,9 @@ namespace entity
 
         [NotMapped]
         public app_location Location { get; set; }
+
+        [NotMapped]
+        public decimal TotalChanged { get; set; }
 
         //TimeCapsule
         public ICollection<sales_invoice> older { get; set; }

@@ -23,7 +23,7 @@ namespace entity
             }
             set
             {
-                _reference_id =value; FileName = id_attachment + mime;
+                _reference_id =value; FileName = id_attachment + "." + mime.Substring(mime.IndexOf("/") + 1);
             }
         }
         int _reference_id;

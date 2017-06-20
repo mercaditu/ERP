@@ -324,7 +324,7 @@
                             </StackPanel>
 
                             <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16" CanUserDeleteRows="False"
-							ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="PaymentDetail_InitializingNewItem" >
+							ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="PaymentDetail_InitializingNewItem"  CellEditEnding="dgvPaymentDetail_CellEditEnding">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"
 									ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"

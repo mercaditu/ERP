@@ -111,7 +111,7 @@ namespace Cognitivo.Sales
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesDB.Approve();
 
-                sales_invoice.TotalChanged = payment.GrandTotalDetail - sales_invoice.GrandTotal;
+             
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
                 payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
 
@@ -443,6 +443,15 @@ namespace Cognitivo.Sales
             }
         }
 
-     
+        private void dgvPaymentDetail_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+            if (payment!=null && sales_invoice!=null)
+            {
+                sales_invoice.TotalChanged = payment.GrandTotalDetail - sales_invoice.GrandTotal;
+            }
+           
+        }
     }
 }

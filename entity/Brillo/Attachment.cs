@@ -23,7 +23,7 @@ namespace entity.Brillo
                         Byte2FileConverter ByteConverter = new Byte2FileConverter();
                         app_attachment.file = ByteConverter.ResizeImage(files[0].ToString());
                     }
-                    else if (extension.ToLower() == ".pdf")
+                    else
                     {
                         app_attachment.mime = "application/" + extension.Substring(1);
                         app_attachment.file = System.IO.File.ReadAllBytes(files[0].ToString());

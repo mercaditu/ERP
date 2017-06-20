@@ -504,7 +504,7 @@
             Footer += "Total Bruto       : " + Math.Round((sales_invoice.GrandTotal + DiscountTotal), 2) + "\n";
 			Footer += "Total Descuento   : -" + Math.Round(sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat), 2) + "\n";
 			Footer += "Total " + CurrencyName + " : " + Math.Round(sales_invoice.GrandTotal, 2) + "\n";
-            Footer += "Total Change       : " + Math.Round((sales_invoice.TotalChanged), 2) + "\n";
+            Footer += "Total Cambio       : " + Math.Round((sales_invoice.TotalChanged), 2) + "\n";
             Footer += "Fecha & Hora      : " + sales_invoice.trans_date + "\n";
 			Footer += "Numero de Factura : " + sales_invoice.number + "\n";
 			Footer += "-------------------------------" + "\n";

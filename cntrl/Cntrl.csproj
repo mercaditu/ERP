@@ -470,6 +470,7 @@
     <Compile Include="Panels\pnl_ProductionAccount.xaml.cs">
       <DependentUpon>pnl_ProductionAccount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Finances\Payments.cs" />
     <Compile Include="Reports\Commercials\Customer.cs" />
     <Compile Include="Reports\Commercials\CustomerSubscription.cs" />
     <Compile Include="Reports\DateRange.xaml.cs">

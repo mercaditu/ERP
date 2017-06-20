@@ -1,4 +1,4 @@
-﻿namespace cntrl.Reports.Finances
+﻿namespace cntrl.Reports.Finance
 {
     public static class SalesPayments
     {

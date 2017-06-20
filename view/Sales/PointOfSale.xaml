@@ -366,13 +366,13 @@
                                     </TextBlock.Effect>
                                 </TextBlock>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="128,0">
-                                <TextBlock  FontSize="30" Foreground="White" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="128,0">
+                                <TextBlock  FontSize="24" Foreground="White" HorizontalAlignment="Center">
                                     <TextBlock.Effect>
                                         <DropShadowEffect Color="White" ShadowDepth="0" />
-                                    </TextBlock.Effect><Run Text="{lex:Loc Total}" /><Run Text=" " /><Run Text="{lex:Loc Changed}" /></TextBlock>
+                                    </TextBlock.Effect><Run Text="{lex:Loc Total}" /><Run Text=" " /><Run Text="Change" /></TextBlock>
                                 <Label Content=" " />
-                                <TextBlock FontSize="30" Foreground="White" 
+                                <TextBlock FontSize="24" Foreground="White" 
 									Text="{Binding TotalChanged, Mode=TwoWay, Source={StaticResource sales_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBlock.Effect>
                                         <DropShadowEffect Color="White" ShadowDepth="0" />

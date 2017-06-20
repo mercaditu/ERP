@@ -184,8 +184,6 @@ namespace Cognitivo.Commercial
 
             if (MessageBox.Show("Are you sure you want to remove " + Payments2Anull + " Payments?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-				
-
 				PaymentDB.Anull();
                 toolBar.msgAnnulled(Payments2Anull);
                 payment_detailReceive.View.Refresh();

@@ -34,7 +34,7 @@ namespace cntrl
 			dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "a", "Edit", "e");
 			dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "b", "Save", "s");
 			dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "b", "Cancel", "c");
-			dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "a", "Archived", "Y");
+			dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "m", "a", "Archive", "Y");
 
 			dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "s", "a", "Approve", "j");
 			dtIconList.Rows.Add(ToolBarIcons.Basic.ToString(), "s", "a", "Annul", "k");

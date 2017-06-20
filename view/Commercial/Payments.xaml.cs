@@ -64,17 +64,17 @@ namespace Cognitivo.Commercial
         {
             try
             {
-                List<int?> paymentid = PaymentDB.payment_detail.Where(x => x.id_company == CurrentSession.Id_Company
-                          && (
+                List<int?> paymentid = PaymentDB.payment_detail
+                    .Where(x => x.id_company == CurrentSession.Id_Company
+                          && 
+                          (
                              x.payment_schedual.Where(y => y.id_purchase_invoice != null).Count() > 0
-                          )
-                          ).Select(x => x.id_payment).ToList();
+                          ))
+                          .Select(x => x.id_payment).ToList();
                 payment_detailMadeViewSource.View.Filter = i =>
                 {
                     payment payment = i as payment;
-                    if (
-                        paymentid.Contains(payment.id_payment)
-                       )
+                    if ( paymentid.Contains(payment.id_payment) )
                     {
                         if (id_contact > 0)
                         {

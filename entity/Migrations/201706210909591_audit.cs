@@ -3,7 +3,7 @@ namespace entity.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class StructureandAuditTable : DbMigration
+    public partial class audit : DbMigration
     {
         public override void Up()
         {
@@ -28,44 +28,33 @@ namespace entity.Migrations
                 .Index(t => t.id_user);
             
             CreateTable(
-                "AuditLogs",
+                "AuditEntries",
                 c => new
                     {
-                        AuditLogId = c.Long(nullable: false, identity: true),
-                        UserName = c.String(unicode: false),
-                        EventDateUTC = c.DateTime(nullable: false, precision: 0),
-                        EventType = c.Int(nullable: false),
-                        TypeFullName = c.String(nullable: false, maxLength: 512, storeType: "nvarchar"),
-                        RecordId = c.String(nullable: false, maxLength: 256, storeType: "nvarchar"),
+                        AuditEntryID = c.Int(nullable: false, identity: true),
+                        EntitySetName = c.String(maxLength: 255, storeType: "nvarchar"),
+                        EntityTypeName = c.String(maxLength: 255, storeType: "nvarchar"),
+                        State = c.Int(nullable: false),
+                        StateName = c.String(maxLength: 255, storeType: "nvarchar"),
+                        CreatedBy = c.String(maxLength: 255, storeType: "nvarchar"),
+                        CreatedDate = c.DateTime(nullable: false, precision: 0),
                     })
-                .PrimaryKey(t => t.AuditLogId)                ;
+                .PrimaryKey(t => t.AuditEntryID)                ;
             
             CreateTable(
-                "AuditLogDetails",
+                "AuditEntryProperties",
                 c => new
                     {
-                        Id = c.Long(nullable: false, identity: true),
-                        PropertyName = c.String(nullable: false, maxLength: 256, storeType: "nvarchar"),
-                        OriginalValue = c.String(unicode: false),
+                        AuditEntryPropertyID = c.Int(nullable: false, identity: true),
+                        AuditEntryID = c.Int(nullable: false),
+                        RelationName = c.String(maxLength: 255, storeType: "nvarchar"),
+                        PropertyName = c.String(maxLength: 255, storeType: "nvarchar"),
+                        OldValue = c.String(unicode: false),
                         NewValue = c.String(unicode: false),
-                        AuditLogId = c.Long(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)                
-                .ForeignKey("AuditLogs", t => t.AuditLogId, cascadeDelete: true)
-                .Index(t => t.AuditLogId);
-            
-            CreateTable(
-                "LogMetadata",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        AuditLogId = c.Long(nullable: false),
-                        Key = c.String(unicode: false),
-                        Value = c.String(unicode: false),
-                    })
-                .PrimaryKey(t => t.Id)                
-                .ForeignKey("AuditLogs", t => t.AuditLogId, cascadeDelete: true)
-                .Index(t => t.AuditLogId);
+                .PrimaryKey(t => t.AuditEntryPropertyID)                
+                .ForeignKey("AuditEntries", t => t.AuditEntryID, cascadeDelete: true)
+                .Index(t => t.AuditEntryID);
             
             AddColumn("app_company", "serial", c => c.String(unicode: false));
             AddColumn("item_product", "variation", c => c.String(unicode: false));
@@ -92,20 +81,17 @@ namespace entity.Migrations
             AddColumn("purchase_order_dimension", "id_purchase_order_detail", c => c.Long(nullable: false));
             AddColumn("purchase_invoice_dimension", "id_purchase_invoice_detail", c => c.Long(nullable: false));
             AddColumn("app_company", "version", c => c.String(unicode: false));
-            DropForeignKey("LogMetadata", "AuditLogId", "AuditLogs");
-            DropForeignKey("AuditLogDetails", "AuditLogId", "AuditLogs");
+            DropForeignKey("AuditEntryProperties", "AuditEntryID", "AuditEntries");
             DropForeignKey("app_comment", "id_user", "security_user");
             DropForeignKey("app_comment", "id_company", "app_company");
-            DropIndex("LogMetadata", new[] { "AuditLogId" });
-            DropIndex("AuditLogDetails", new[] { "AuditLogId" });
+            DropIndex("AuditEntryProperties", new[] { "AuditEntryID" });
             DropIndex("app_comment", new[] { "id_user" });
             DropIndex("app_comment", new[] { "id_company" });
             DropColumn("item_product", "code");
             DropColumn("item_product", "variation");
             DropColumn("app_company", "serial");
-            DropTable("LogMetadata");
-            DropTable("AuditLogDetails");
-            DropTable("AuditLogs");
+            DropTable("AuditEntryProperties");
+            DropTable("AuditEntries");
             DropTable("app_comment");
         }
     }

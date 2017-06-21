@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class StructureandAuditTable : IMigrationMetadata
+    public sealed partial class audit : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(StructureandAuditTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(audit));
         
         string IMigrationMetadata.Id
         {
-            get { return "201706161353112_StructureandAuditTable"; }
+            get { return "201706210909591_audit"; }
         }
         
         string IMigrationMetadata.Source

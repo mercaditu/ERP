@@ -258,12 +258,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TrackerEnabledDbContext, Version=3.6.1.0, Culture=neutral, PublicKeyToken=4f92af0b908c4a0a, processorArchitecture=MSIL">
-      <HintPath>..\packages\TrackerEnabledDbContext.3.6.1\lib\net45\TrackerEnabledDbContext.dll</HintPath>
-    </Reference>
-    <Reference Include="TrackerEnabledDbContext.Common, Version=3.6.1.0, Culture=neutral, PublicKeyToken=4f92af0b908c4a0a, processorArchitecture=MSIL">
-      <HintPath>..\packages\TrackerEnabledDbContext.Common.3.6.1\lib\net45\TrackerEnabledDbContext.Common.dll</HintPath>
-    </Reference>
     <Reference Include="UIAutomationClient" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />

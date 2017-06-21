@@ -166,12 +166,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TrackerEnabledDbContext, Version=3.6.1.0, Culture=neutral, PublicKeyToken=4f92af0b908c4a0a, processorArchitecture=MSIL">
-      <HintPath>..\packages\TrackerEnabledDbContext.3.6.1\lib\net45\TrackerEnabledDbContext.dll</HintPath>
-    </Reference>
-    <Reference Include="TrackerEnabledDbContext.Common, Version=3.6.1.0, Culture=neutral, PublicKeyToken=4f92af0b908c4a0a, processorArchitecture=MSIL">
-      <HintPath>..\packages\TrackerEnabledDbContext.Common.3.6.1\lib\net45\TrackerEnabledDbContext.Common.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WPFLocalizeExtension, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -181,6 +175,9 @@
     <Reference Include="XAMLMarkupExtensions, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\XAMLMarkupExtensions.1.2.2\lib\net40\XAMLMarkupExtensions.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.Audit.EF6, Version=1.6.0.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Plus.Audit.EF6.1.6.0\lib\net45\Z.EntityFramework.Plus.Audit.EF6.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +291,7 @@
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="DebeHaber\Sync.cs" />
     <Compile Include="Execustionstrategy.cs" />
+    <Compile Include="Generic\Audit.cs" />
     <Compile Include="Generic\AuditGeneric.cs" />
     <Compile Include="Generic\CommercialVAT.cs" />
     <Compile Include="Item\item_asset_maintainance_detail.cs" />
@@ -343,9 +341,9 @@
     <Compile Include="Migrations\201704201323120_ContractPositionFix.Designer.cs">
       <DependentUpon>201704201323120_ContractPositionFix.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706161353112_StructureandAuditTable.cs" />
-    <Compile Include="Migrations\201706161353112_StructureandAuditTable.Designer.cs">
-      <DependentUpon>201706161353112_StructureandAuditTable.cs</DependentUpon>
+    <Compile Include="Migrations\201706210909591_audit.cs" />
+    <Compile Include="Migrations\201706210909591_audit.Designer.cs">
+      <DependentUpon>201706210909591_audit.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
@@ -374,7 +372,6 @@
     <Compile Include="Generic\CommercialSalesDetail.cs" />
     <Compile Include="Generic\Discount.cs" />
     <Compile Include="Generic\Email.cs" />
-    <Compile Include="Generic\Audit.cs" />
     <Compile Include="Application\app_geography.cs" />
     <Compile Include="Application\app_account.cs" />
     <Compile Include="Application\app_account_detail.cs" />
@@ -807,8 +804,8 @@
     <EmbeddedResource Include="Migrations\201704201323120_ContractPositionFix.resx">
       <DependentUpon>201704201323120_ContractPositionFix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706161353112_StructureandAuditTable.resx">
-      <DependentUpon>201706161353112_StructureandAuditTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706210909591_audit.resx">
+      <DependentUpon>201706210909591_audit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

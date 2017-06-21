@@ -7,7 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Text;
-    [TrackChanges]
+    
     public partial class sales_invoice : CommercialHead, IDataErrorInfo
     {
         public sales_invoice()

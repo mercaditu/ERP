@@ -259,7 +259,7 @@ namespace entity.Controller.Sales
             {
                 try
                 {
-                    db.SaveChanges(CurrentSession.User.name);
+                    db.SaveChanges();
                 }
                catch (Exception ex)
                 {

@@ -57,7 +57,7 @@ namespace entity
 
         public virtual purchase_order_detail purchase_order_detail { get; set; }
 
-        public virtual purchase_packing_detail purchase_packing_detail { get; set; }
+        public virtual List<purchase_packing_detail> purchase_packing_detail { get; set; }
 
         public virtual purchase_invoice purchase_invoice
         {

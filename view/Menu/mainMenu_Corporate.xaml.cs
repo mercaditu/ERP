@@ -56,7 +56,7 @@ namespace Cognitivo.Menu
 
             using (db db = new db())
             {
-                string SerialKey = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).Select(x => x.version).FirstOrDefault();
+                string SerialKey = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).Select(x => x.serial).FirstOrDefault();
                 security_user UserInfo = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                 app_company CompanyInfo = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
@@ -118,7 +118,7 @@ namespace Cognitivo.Menu
                         {
                             //Register new company. 
                             //and update Version back into database. Save Changes.
-                            CompanyInfo.version = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
+                            CompanyInfo.serial = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
                             db.SaveChangesAsync();
                         }
                     }
@@ -127,7 +127,7 @@ namespace Cognitivo.Menu
 				{
 					//Register new company. 
 					//and update Version back into database. Save Changes.
-					CompanyInfo.version = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
+					CompanyInfo.serial = Licence.CreateLicence(UserInfo.name_full, CompanyInfo.gov_code, CompanyInfo.name, UserInfo.email, (int)CurrentSession.Versions.Full);
 					db.SaveChangesAsync();
 				}
 			}

@@ -767,7 +767,7 @@ namespace entity.Controller.Sales
                 {
                     id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail,
                     sales_packing_detail = _sales_packing_detail,
-                    id_sales_invoice_detail = Detail.id_sales_invoice_detail,
+                    //id_sales_invoice_detail = Detail.id_sales_invoice_detail,
                     sales_invoice_detail = Detail
                 };
 

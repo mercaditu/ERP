@@ -4,9 +4,54 @@
     using System.Data.Common;
     using System.Data.Entity;
     using System.Data.Entity.Core.EntityClient;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Z.EntityFramework.Plus;
 
     public class db : DbContext
     {
+
+        public override int SaveChanges()
+        {
+            var audit = new Z.EntityFramework.Plus.Audit();
+            if (CurrentSession.User != null)
+            {
+                audit.CreatedBy = CurrentSession.User.name;
+            }
+            audit.PreSaveChanges(this);
+            var rowAffecteds = base.SaveChanges();
+            audit.PostSaveChanges();
+
+            if (audit.Configuration.AutoSavePreAction != null)
+            {
+                audit.Configuration.AutoSavePreAction(this, audit);
+                base.SaveChanges();
+            }
+
+            return rowAffecteds;
+        }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            return SaveChangesAsync(CancellationToken.None);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            var audit = new Z.EntityFramework.Plus.Audit();
+            audit.PreSaveChanges(this);
+            var rowAffecteds = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            audit.PostSaveChanges();
+
+            if (audit.Configuration.AutoSavePreAction != null)
+            {
+                audit.Configuration.AutoSavePreAction(this, audit);
+                await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            return rowAffecteds;
+        }
+
         public db() : base("name = Cognitivo.Properties.Settings.MySQLconnString")
         {
             Configuration.LazyLoadingEnabled = true;
@@ -35,6 +80,9 @@
         {
             modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 9));
         }
+
+        public DbSet<AuditEntry> AuditEntries { get; set; }
+        public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; }
 
         public virtual DbSet<app_account> app_account { get; set; }
         public virtual DbSet<app_account_detail> app_account_detail { get; set; }

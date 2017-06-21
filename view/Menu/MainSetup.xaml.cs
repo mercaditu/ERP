@@ -59,7 +59,7 @@ namespace Cognitivo.Menu
                 try
                 {
                     entity.Brillo.Licence Licence = new entity.Brillo.Licence();
-                    app_company.version = Licence.CreateLicence(txtFullName.Text, txtGovID.Text, txtcomapnyname.Text, txtEmail.Text, (int)CurrentSession.Versions.Full);
+                    app_company.serial = Licence.CreateLicence(txtFullName.Text, txtGovID.Text, txtcomapnyname.Text, txtEmail.Text, (int)CurrentSession.Versions.Full);
                 }
                 catch (Exception)
                 {

@@ -173,8 +173,8 @@
       <HintPath>..\packages\XAMLMarkupExtensions.1.2.2\lib\net40\XAMLMarkupExtensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.6.2.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Z.EntityFramework.Plus.EF6.1.6.2\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    <Reference Include="Z.EntityFramework.Plus.Audit.EF6, Version=1.6.0.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Plus.Audit.EF6.1.6.0\lib\net45\Z.EntityFramework.Plus.Audit.EF6.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +335,10 @@
     <Compile Include="Migrations\201704201323120_ContractPositionFix.cs" />
     <Compile Include="Migrations\201704201323120_ContractPositionFix.Designer.cs">
       <DependentUpon>201704201323120_ContractPositionFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706211207083_auditandstructurechange.cs" />
+    <Compile Include="Migrations\201706211207083_auditandstructurechange.Designer.cs">
+      <DependentUpon>201706211207083_auditandstructurechange.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
@@ -796,6 +800,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704201323120_ContractPositionFix.resx">
       <DependentUpon>201704201323120_ContractPositionFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706211207083_auditandstructurechange.resx">
+      <DependentUpon>201706211207083_auditandstructurechange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

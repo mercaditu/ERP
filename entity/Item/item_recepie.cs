@@ -22,8 +22,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_recepie { get; set; }
 
-        [Required]
-        public decimal id_item { get; set; }
+      
 
         [Required]
         public bool is_active { get; set; }
@@ -58,8 +57,8 @@ namespace entity
                 // apply property level validation rules
                 if (columnName == "id_item")
                 {
-                    if (id_item == 0)
-                        return "Value needs to be filled";
+                    //if (id_item == 0)
+                    //    return "Value needs to be filled";
                 }
 
                 return "";

@@ -215,6 +215,7 @@
         public virtual DbSet<purchase_packing> purchase_packing { get; set; }
         public virtual DbSet<purchase_packing_detail> purchase_packing_detail { get; set; }
         public virtual DbSet<purchase_packing_relation> purchase_packing_relation { get; set; }
+        public virtual DbSet<purchase_packing_detail_relation> purchase_packing_detail_relation { get; set; }
         public virtual DbSet<purchase_tender> purchase_tender { get; set; }
         public virtual DbSet<purchase_tender_contact> purchase_tender_contact_detail { get; set; }
         public virtual DbSet<purchase_tender_item> purchase_tender_item_detail { get; set; }

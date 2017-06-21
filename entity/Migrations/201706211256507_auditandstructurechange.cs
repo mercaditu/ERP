@@ -7,8 +7,6 @@ namespace entity.Migrations
     {
         public override void Up()
         {
-            DropForeignKey("purchase_invoice_detail", "id_purchase_packing_detail", "purchase_packing_detail");
-            DropIndex("purchase_invoice_detail", new[] { "id_purchase_packing_detail" });
             CreateTable(
                 "app_comment",
                 c => new
@@ -59,17 +57,18 @@ namespace entity.Migrations
                 .Index(t => t.AuditEntryID);
             
             CreateTable(
-                "purchase_invoice_detailpurchase_packing_detail",
+                "purchase_packing_detail_relation",
                 c => new
                     {
-                        purchase_invoice_detail_id_purchase_invoice_detail = c.Int(nullable: false),
-                        purchase_packing_detail_id_purchase_packing_detail = c.Int(nullable: false),
+                        id_purchase_packing_detail_relation = c.Int(nullable: false, identity: true),
+                        id_purchase_invoice_detail = c.Int(nullable: false),
+                        id_purchase_packing_detail = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.purchase_invoice_detail_id_purchase_invoice_detail, t.purchase_packing_detail_id_purchase_packing_detail })                
-                .ForeignKey("purchase_invoice_detail", t => t.purchase_invoice_detail_id_purchase_invoice_detail, cascadeDelete: true)
-                .ForeignKey("purchase_packing_detail", t => t.purchase_packing_detail_id_purchase_packing_detail, cascadeDelete: true)
-                .Index(t => t.purchase_invoice_detail_id_purchase_invoice_detail)
-                .Index(t => t.purchase_packing_detail_id_purchase_packing_detail);
+                .PrimaryKey(t => t.id_purchase_packing_detail_relation)                
+                .ForeignKey("purchase_invoice_detail", t => t.id_purchase_invoice_detail, cascadeDelete: true)
+                .ForeignKey("purchase_packing_detail", t => t.id_purchase_packing_detail, cascadeDelete: true)
+                .Index(t => t.id_purchase_invoice_detail)
+                .Index(t => t.id_purchase_packing_detail);
             
             AddColumn("app_company", "serial", c => c.String(unicode: false));
             AddColumn("item_product", "variation", c => c.String(unicode: false));
@@ -96,25 +95,23 @@ namespace entity.Migrations
             AddColumn("purchase_order_dimension", "id_purchase_order_detail", c => c.Long(nullable: false));
             AddColumn("purchase_invoice_dimension", "id_purchase_invoice_detail", c => c.Long(nullable: false));
             AddColumn("app_company", "version", c => c.String(unicode: false));
+            DropForeignKey("purchase_packing_detail_relation", "id_purchase_packing_detail", "purchase_packing_detail");
+            DropForeignKey("purchase_packing_detail_relation", "id_purchase_invoice_detail", "purchase_invoice_detail");
             DropForeignKey("AuditEntryProperties", "AuditEntryID", "AuditEntries");
             DropForeignKey("app_comment", "id_user", "security_user");
             DropForeignKey("app_comment", "id_company", "app_company");
-            DropForeignKey("purchase_invoice_detailpurchase_packing_detail", "FK_purchase_invoice_detailpurchase_packing_detail_purchase_packing_detail_purchase_packing_detail_id_purchase_packing_de");
-            DropForeignKey("purchase_invoice_detailpurchase_packing_detail", "FK_purchase_invoice_detailpurchase_packing_detail_purchase_invoice_detail_purchase_invoice_detail_id_purchase_invoice_de");
-            DropIndex("purchase_invoice_detailpurchase_packing_detail", new[] { "purchase_packing_detail_id_purchase_packing_detail" });
-            DropIndex("purchase_invoice_detailpurchase_packing_detail", new[] { "purchase_invoice_detail_id_purchase_invoice_detail" });
+            DropIndex("purchase_packing_detail_relation", new[] { "id_purchase_packing_detail" });
+            DropIndex("purchase_packing_detail_relation", new[] { "id_purchase_invoice_detail" });
             DropIndex("AuditEntryProperties", new[] { "AuditEntryID" });
             DropIndex("app_comment", new[] { "id_user" });
             DropIndex("app_comment", new[] { "id_company" });
             DropColumn("item_product", "code");
             DropColumn("item_product", "variation");
             DropColumn("app_company", "serial");
-            DropTable("purchase_invoice_detailpurchase_packing_detail");
+            DropTable("purchase_packing_detail_relation");
             DropTable("AuditEntryProperties");
             DropTable("AuditEntries");
             DropTable("app_comment");
-            CreateIndex("purchase_invoice_detail", "id_purchase_packing_detail");
-            AddForeignKey("purchase_invoice_detail", "id_purchase_packing_detail", "purchase_packing_detail", "id_purchase_packing_detail");
         }
     }
 }

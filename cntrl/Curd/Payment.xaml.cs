@@ -201,6 +201,8 @@ namespace cntrl.Curd
                 entity.payment_type payment_type = cbxPamentType.SelectedItem as entity.payment_type;
                 if (payment_type != null)
                 {
+                    typeNumber.Visibility = Visibility.Collapsed;
+
                     if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.WithHoldingVAT)
                     {
                         //If payment behaviour is WithHoldingVAT, hide everything.
@@ -237,6 +239,12 @@ namespace cntrl.Curd
                     }
                     else
                     {
+                        //If payment type is not direct, like check or transfer, then show number. Show both in Payments and Receivables.
+                        if (payment_type.is_direct == false)
+                        {
+                            typeNumber.Visibility = Visibility.Visible;
+                        }
+
                         //If paymentbehaviour is not WithHoldingVAT & CreditNote, it must be Normal, so only show Account.
                         stpaccount.Visibility = Visibility.Visible;
                         stptransdate.Visibility = payment_type.is_direct ? Visibility.Collapsed : Visibility.Visible;

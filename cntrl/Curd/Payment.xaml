@@ -196,7 +196,10 @@
 								</cntrl:SearchableTextbox>-->
                                 <Controls:SmartBox_SalesReturn x:Name="sbxReturn" Select="Return_Select" />
                             </StackPanel>
-
+                            <StackPanel x:Name="typeNumber">
+                                <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
+                                <TextBox Text="{Binding payment_type_number}" Style="{StaticResource input_textbox}"/>
+                            </StackPanel>
                             <Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}" />
                             <TextBox Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"
                                      IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource True2False}}"

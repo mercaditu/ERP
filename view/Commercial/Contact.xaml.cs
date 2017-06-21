@@ -50,10 +50,12 @@ namespace Cognitivo.Commercial
             if (Win.Title == entity.Brillo.Localize.StringText("Customer"))
             {
                 ContactDB.LoadCustomers();
+                toolBar.appName = entity.App.Names.Customer;
             }
             else if (Win.Title == entity.Brillo.Localize.StringText("Supplier"))
             {
                 ContactDB.LoadSuppliers();
+                toolBar.appName = entity.App.Names.Supplier;
             }
           
             contactViewSource = FindResource("contactViewSource") as CollectionViewSource;

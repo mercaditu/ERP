@@ -104,7 +104,7 @@ namespace entity.Controller.Sales
             //This is to skip query code in case of Migration. Helps speed up migrations.
             if (IsMigration == false)
             {
-                Return.app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+                Return.app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
                 Return.id_condition = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_condition).FirstOrDefault();
                 Return.id_contract = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_contract).FirstOrDefault();
             }

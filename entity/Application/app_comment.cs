@@ -44,7 +44,8 @@ namespace entity
         }
 
         private bool _is_active;
-        
+       
+
         public string Error
         {
             get

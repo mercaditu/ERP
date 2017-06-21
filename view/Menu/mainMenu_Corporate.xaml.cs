@@ -87,7 +87,7 @@ namespace Cognitivo.Menu
                                             //Local Count exceeds Reigstered Count. Inactivate old users automatically.
                                             List<security_user> UserList = db.security_user
                                                 .Where(x => x.security_role.version == UserInfo.security_role.version && x.is_active)
-                                                .OrderBy(x => x.trans_date).Take(Web_UserCount - Local_UserCount).ToList();
+                                                .OrderBy(x => x.trans_date).Take(Local_UserCount - Web_UserCount).ToList();
                                             foreach (var user in UserList)
                                             {
                                                 user.is_active = false;

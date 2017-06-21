@@ -16,6 +16,7 @@ namespace Cognitivo.Sales
 	{
 		private CollectionViewSource sales_invoiceViewSource;
 		private CollectionViewSource paymentViewSource;
+        private CollectionViewSource app_locationViewSource;
 
 		private entity.Controller.Sales.InvoiceController SalesDB;
 		private entity.Controller.Finance.Payment PaymentDB;
@@ -64,12 +65,12 @@ namespace Cognitivo.Sales
 				sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 				if (sales_invoice != null)
 				{
-					app_document_range app_document_range = SalesDB.db.app_document_range.Where(x => x.id_range == sales_invoice.id_range).FirstOrDefault();
-					if (app_document_range!=null)
+                    app_document_range app_document_range = sales_invoice.app_document_range; //SalesDB.db.app_document_range.Where(x => x.id_range == sales_invoice.id_range).FirstOrDefault();
+
+                    if (app_document_range!=null)
 					{
 						entity.Brillo.Document.Start.Automatic(sales_invoice, app_document_range);
 					}
-					
 				}
 			}
 		}
@@ -131,52 +132,44 @@ namespace Cognitivo.Sales
 				///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
 				ApprovalStatus = SalesDB.Approve();
 
-				if (ApprovalStatus)
-				{
-					List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
-					PaymentDB.Approve(payment_schedualList, true, false);
+                if (ApprovalStatus)
+                {
+                    List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+                    PaymentDB.Approve(payment_schedualList, true, false);
 
-					paymentViewSource.Source = null;
-					tabTable.Focus();
-					//Start New Sale
-					New_Sale_Payment();
-				}
-
+                    paymentViewSource.Source = null;
+                    tabTable.Focus();
+                    //Start New Sale
+                    New_Sale_Payment();
+                }
 			}
 		}
 
-		private void New_Sale_Payment()
+		private async void New_Sale_Payment()
 		{
 			///Creating new SALES INVOICE for upcomming sale.
 			///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
 			Settings SalesSettings = new Settings();
 
 			sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
-			sales_invoice.id_contact = SalesDB.db.contacts.Where(x => x.is_customer && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_contact;
-			sales_invoice.contact = SalesDB.db.contacts.Where(x => x.is_customer && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-			SalesDB.db.sales_invoice.Add(sales_invoice);
-			SalesDB.SaveChanges_WithValidation();
-			Dispatcher.BeginInvoke((Action)(() =>
-			{
-				sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-				sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
-				sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
-			}));
 
-			///Creating new PAYMENT for upcomming sale.
-			//         payment payment = PaymentDB.New(true);
-			//         payment.id_currencyfx = sales_invoice.id_currencyfx;
-			//PaymentDB.db.payments.Add(payment);
+            contact contact = await SalesDB.db.contacts.FindAsync(1);
+            if (contact != null)
+            {
+                sales_invoice.id_contact = contact.id_contact;
+                sales_invoice.contact = contact;
 
-			//         Dispatcher.BeginInvoke((Action)(() =>
-			//         {
-			//             paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
-			//             paymentViewSource.Source = SalesDB.db.payments.Local;
-			//             paymentViewSource.View.MoveCurrentTo(payment);
+                SalesDB.db.sales_invoice.Add(sales_invoice);
 
-			//             tabTable.Focus();
-			//             sbxContact.Text = "";
-			//         }));
+                SalesDB.SaveChanges_WithValidation();
+
+                await Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+                    sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local.Where(x => x.status == Status.Documents_General.Pending);
+                    sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
+                }));
+            }
 		}
 
 		#endregion ActionButtons
@@ -193,9 +186,6 @@ namespace Cognitivo.Sales
 					sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 					sales_invoice.id_contact = contact.id_contact;
 					sales_invoice.contact = contact;
-
-
-
 				}
 			}
 		}
@@ -223,12 +213,11 @@ namespace Cognitivo.Sales
 								new Settings().AllowDuplicateItem,
 								sbxItem.QuantityInStock,
 								sbxItem.Quantity);
-					}
 
-					sales_invoiceViewSource.View.Refresh();
-					CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-					sales_invoicesales_invoice_detailViewSource.View.Refresh();
-					// paymentViewSource.View.Refresh();
+                        sales_invoiceViewSource.View.Refresh();
+                        //CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                        //sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                    }
 				}
 			}
 		}
@@ -239,15 +228,15 @@ namespace Cognitivo.Sales
 		{
 			SalesDB.Initialize();
 
-			//  New_Sale_Payment();
-
 			sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
 			SalesDB.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.id_branch == CurrentSession.Id_Branch && x.status == Status.Documents_General.Pending && x.is_archived == false && x.is_head).Load();
 			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
+            app_locationViewSource = FindResource("app_locationViewSource") as CollectionViewSource;
+            app_locationViewSource.Source = SalesDB.db.app_location.Where(x => x.id_company == CurrentSession.Id_Company && x.id_branch == CurrentSession.Id_Branch && x.is_active == true).ToList();
 
-			//PAYMENT TYPE
-			await SalesDB.db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
+            //PAYMENT TYPE
+            await SalesDB.db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
 			CollectionViewSource payment_typeViewSource = FindResource("payment_typeViewSource") as CollectionViewSource;
 			payment_typeViewSource.Source = SalesDB.db.payment_type.Local;
 
@@ -442,8 +431,9 @@ namespace Cognitivo.Sales
 					}
 				}
 				sales_invoiceViewSource.View.Refresh();
-				CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-				sales_invoicesales_invoice_detailViewSource.View.Refresh();
+
+                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
 				//paymentViewSource.View.Refresh();
 
 				//Cleans for reuse.
@@ -463,7 +453,6 @@ namespace Cognitivo.Sales
 				sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 				if (sales_invoice != null)
 				{
-
 					contact contact = SalesDB.db.contacts.Find(sales_invoice.id_contact);
 					if (contact != null)
 					{
@@ -481,18 +470,8 @@ namespace Cognitivo.Sales
 
 						GrandTotalsales_DataContextChanged(null, null);
 					}
-
-
-
-
-
-
-
-
-
 				}
 			}
-
 		}
-	}
+    }
 }

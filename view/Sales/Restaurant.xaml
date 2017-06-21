@@ -137,7 +137,8 @@
                                 </StackPanel>
                             </Button>
 							<Grid Height="350" Width="765">
-								<DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"
+								<DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16" CanUserAddRows="False" CanUserDeleteRows="False"
+                                          ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"
                                       ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
 									<DataGrid.Columns>
 										<DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -146,8 +147,8 @@
 										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="180" Foreground="Silver"
 												Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}" />
                                         <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" 
-                                                                ItemsSource="{Binding Source={StaticResource app_locationViewSource}}
-                                                                SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                                ItemsSource="{Binding Source={StaticResource app_locationViewSource}}"
+                                                                SelectedValueBinding="{Binding id_location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 															DisplayMemberPath="name" SelectedValuePath="id_location" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium" Width="232"
 												Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />

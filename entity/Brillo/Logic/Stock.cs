@@ -483,6 +483,7 @@ namespace entity.Brillo.Logic
                                         foreach (item_movement mov in MovementList)
                                         {
                                             mov.id_sales_invoice_detail = detail.id_sales_invoice_detail;
+                                            mov.sales_invoice_detail = detail;
                                             detail.batch_code = mov.code;
                                             detail.expire_date = mov.expire_date;
                                         }
@@ -490,7 +491,6 @@ namespace entity.Brillo.Logic
                                 }
                             }
                         }
-
                     }
                 }
             }
@@ -514,7 +514,6 @@ namespace entity.Brillo.Logic
                                 if (detail.id_location == null)
                                 {
                                     LocationID = FindNFix_Location(item_productSub, detail.app_location, sales_invoice.app_branch);
-                                    //detail.app_location = db.app_location.Find(detail.id_location);
                                 }
                                 else
                                 {

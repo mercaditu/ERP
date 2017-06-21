@@ -115,9 +115,8 @@
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
-
-                            <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
+                        <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
                             <DatePicker x:Name="dtpTrans_Date" 
 												metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 												metro:ControlsHelper.MouseOverBorderBrush="Silver"

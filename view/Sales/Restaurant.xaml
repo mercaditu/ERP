@@ -40,6 +40,7 @@
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}" />
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
         <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}" />
+        <CollectionViewSource x:Key="app_locationViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_location}, CreateList=True}"/>
     </Page.Resources>
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete"
@@ -144,8 +145,11 @@
 													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
 										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="180" Foreground="Silver"
 												Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}" />
-										<DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Location}" Width="128"/>
-										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium" Width="232"
+                                        <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" 
+                                                                ItemsSource="{Binding Source={StaticResource app_locationViewSource}}
+                                                                SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															DisplayMemberPath="name" SelectedValuePath="id_location" />
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium" Width="232"
 												Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
 										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" FontWeight="Medium" Width="128"
 												Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged, StringFormat=N}" ElementStyle="{StaticResource RightAlignStyle}" />

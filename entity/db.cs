@@ -14,10 +14,8 @@
         public override int SaveChanges()
         {
             var audit = new Z.EntityFramework.Plus.Audit();
-            if (CurrentSession.User != null)
-            {
-                audit.CreatedBy = CurrentSession.User.name;
-            }
+
+            audit.CreatedBy = CurrentSession.User != null ? CurrentSession.User.name : "Unkown" ;
             audit.PreSaveChanges(this);
             var rowAffecteds = base.SaveChanges();
             audit.PostSaveChanges();

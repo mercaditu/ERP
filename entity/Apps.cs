@@ -180,8 +180,8 @@ namespace entity
             [LocalizedDescription("Transfer")]
             Transfer = 30,
 
-            [LocalizedDescription("MobileBranch")]
-            MobileBranch = 139,
+            [LocalizedDescription("MobilePointofSale")]
+            MobilePointofSale = 139,
 
             [LocalizedDescription("Recipe")]
             Recipe = 32,
@@ -443,8 +443,8 @@ namespace entity
             Version = 128,
 
             TechnicalReport = 137,
-			[LocalizedDescription("Resturant")]
-			Resturant = 144
+			[LocalizedDescription("Restaurant")]
+            Restaurant = 144
 		}
     }
 }

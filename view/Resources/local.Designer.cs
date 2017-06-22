@@ -3688,6 +3688,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Restaurant.
+        /// </summary>
+        public static string Restaurant {
+            get {
+                return ResourceManager.GetString("Restaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ReturnNumber.
         /// </summary>
         public static string ReturnNumber {
@@ -4336,6 +4345,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Table.
+        /// </summary>
+        public static string Table {
+            get {
+                return ResourceManager.GetString("Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Tags.
         /// </summary>
         public static string Tags {
@@ -4656,6 +4674,15 @@ namespace Cognitivo.Resources {
         public static string Volume {
             get {
                 return ResourceManager.GetString("Volume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Waiter.
+        /// </summary>
+        public static string Waiter {
+            get {
+                return ResourceManager.GetString("Waiter", resourceCulture);
             }
         }
         

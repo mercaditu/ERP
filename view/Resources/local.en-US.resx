@@ -1326,6 +1326,9 @@
   <data name="Required" xml:space="preserve">
     <value>Required</value>
   </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>Restaurant</value>
+  </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>Return Number</value>
   </data>

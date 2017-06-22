@@ -136,16 +136,17 @@ namespace Cognitivo.Product
                         item.id_item_type != item.item_type.Service &&
                         item.id_item_type != item.item_type.ServiceContract)
                     {
-                        if (item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault() == null)
+                        if (item.item_product.FirstOrDefault().can_expire)
                         {
-                            if (item.item_product.FirstOrDefault() != null && item.item_product.FirstOrDefault().can_expire)
+                            crud_modalExpire.Visibility = Visibility.Visible;
+                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_transfer.app_branch_origin.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
+                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                        }
+                        else
+                        {
+                            if (item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault() == null)
                             {
-                                crud_modalExpire.Visibility = Visibility.Visible;
-                                pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_transfer.app_branch_origin.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
-                                crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
-                            }
-                            else
-                            {
+
                                 item_transfer_detail item_transfer_detail = new item_transfer_detail();
 
                                 item_transfer_detail.status = Status.Documents_General.Pending;
@@ -160,12 +161,13 @@ namespace Cognitivo.Product
                                 item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
                                 item_transfer_detail.RaisePropertyChanged("item_product");
                                 item_transfer.item_transfer_detail.Add(item_transfer_detail);
+
                             }
-                        }
-                        else
-                        {
-                            item_transfer_detail item_transfer_detail = item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault();
-                            item_transfer_detail.quantity_origin += 1;
+                            else
+                            {
+                                item_transfer_detail item_transfer_detail = item_transfer.item_transfer_detail.Where(a => a.id_item_product == item.item_product.FirstOrDefault().id_item_product).FirstOrDefault();
+                                item_transfer_detail.quantity_origin += 1;
+                            }
                         }
                     }
                     else
@@ -231,7 +233,7 @@ namespace Cognitivo.Product
             if (MessageBox.Show(entity.Brillo.Localize.PleaseSelect, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-                
+
                 //DeleteDetailGridRow
                 item_transfer_detailDataGrid.CancelEdit();
                 ProductTransferDB.item_transfer_detail.Remove(e.Parameter as item_transfer_detail);
@@ -330,7 +332,7 @@ namespace Cognitivo.Product
                             {
                                 item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Find(item_movement_dimension.id_dimension);
                             }
-                            
+
                             item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                         }
                     }
@@ -406,8 +408,8 @@ namespace Cognitivo.Product
                         item_transfer_detail.movement_id = (int)item_movement.id_movement;
                         item_transfer_detail.batch_code = item_movement.code;
                         item_transfer_detail.expire_date = item_movement.expire_date;
-						item_transfer_detail.Quantity_InStockLot = item_movement.avlquantity;
-					}
+                        item_transfer_detail.Quantity_InStockLot = item_movement.avlquantity;
+                    }
 
                     item_transfer_detail.status = Status.Documents_General.Pending;
                     item_transfer_detail.quantity_origin = 1;

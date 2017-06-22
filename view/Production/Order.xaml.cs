@@ -210,15 +210,19 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            if (production_order != null)
+            if (MessageBox.Show("FINALIZAR PROYECTO: Está seguro de finalizarlo?") ==MessageBoxResult.Yes)
             {
-                production_order.status = Status.Production.Executed;
-                if (OrderDB.SaveChanges_WithValidation() )
+                production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+                if (production_order != null)
                 {
-                    toolBar.msgApproved(1);
+                    production_order.status = Status.Production.Executed;
+                    if (OrderDB.SaveChanges_WithValidation())
+                    {
+                        toolBar.msgApproved(1);
+                    }
                 }
             }
+            
          
         }
 

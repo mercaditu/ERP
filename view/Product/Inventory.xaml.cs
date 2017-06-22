@@ -1,4 +1,5 @@
 ﻿using entity;
+using Syncfusion.UI.Xaml.Grid.Converter;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -336,6 +337,37 @@ namespace Cognitivo.Product
 
             item_inventory.IsSelected = true;
             InventoryDB.SaveChanges();
+
+            //Syncfusion.UI.Xaml.Grid.SfDataGrid sfdatagrid = new Syncfusion.UI.Xaml.Grid.SfDataGrid();
+            //sfdatagrid.ItemsSource = item_inventory.item_inventory_detail.ToList();
+
+            //if (sfdatagrid.View != null)
+            //{
+            //    var options = new ExcelExportingOptions()
+            //    {
+
+            //        AllowOutlining = false
+            //    };
+            //    var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
+            //    var workBook = excelEngine.Excel.Workbooks[0];
+            //    // Add code to show save panel.
+            //    System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog()
+            //    {
+            //        FileName = "Excel", // Default file name
+            //        DefaultExt = ".xlsx", // Default file extension
+            //        Filter = "Text documents (.xlsx)|*.xlsx" // Filter files by extension
+            //    };
+
+            //    //Show save file dialog box
+            //    System.Windows.Forms.DialogResult result = dlg.ShowDialog();
+
+            //    //  Process save file dialog box results
+            //    if (result == System.Windows.Forms.DialogResult.OK)
+            //    {
+            //        // Save document
+            //        workBook.SaveAs(dlg.FileName);
+            //    }
+            //}
 
             if (Inv2Excel.Create(item_inventory))
             {

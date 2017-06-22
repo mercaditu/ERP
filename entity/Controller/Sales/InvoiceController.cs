@@ -42,7 +42,7 @@ namespace entity.Controller.Sales
         public int Count { get; set; }
 
         public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
-        public int _PageSize = 5;
+        public int _PageSize = 100;
 
 
         public int PageCount

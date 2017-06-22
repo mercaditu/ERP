@@ -132,11 +132,11 @@
                             <Button FontSize="16" Click="Button_Click"
                                 Margin="16" Style="{StaticResource btn_green}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="+"/>
+                                    <Label Content="+" />
                                     <Label Content="{lex:Loc Create}"/>
                                 </StackPanel>
                             </Button>
-							<Grid Height="350" Width="765">
+							<Grid Height="350" MinWidth="765" MaxWidth="1024">
 								<DataGrid Style="{StaticResource detail_Datagrid}" FontSize="16" CanUserAddRows="False" CanUserDeleteRows="False"
                                           ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"
                                       ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}" SelectionChanged="DataGrid_SelectionChanged">

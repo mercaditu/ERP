@@ -545,17 +545,20 @@ namespace entity.Controller.Sales
             if (item_movementList.Count() > 0)
             {
                 db.item_movement.AddRange(item_movementList);
+                                
+            }
+            db.SaveChanges();
 
-                foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+            foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
+            {
+                item_movement item_movement = db.item_movement.Where(x => x.id_sales_invoice_detail == sales_detail.id_sales_invoice_detail).FirstOrDefault();
+                if (item_movement != null)
                 {
-                    if (sales_detail.item_movement.FirstOrDefault() != null)
+                    if (item_movement.item_movement_value != null)
                     {
-                        if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
-                        {
-                            sales_detail.unit_cost = Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-                            sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                            sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
-                        }
+                        sales_detail.unit_cost = Currency.convert_Values(item_movement.item_movement_value.Sum(x => x.unit_value),
+                        item_movement.item_movement_value.FirstOrDefault().id_currencyfx,
+                        sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
                     }
                 }
             }

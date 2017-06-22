@@ -32,7 +32,7 @@ namespace entity
 		public decimal? net_weight { get; set; }
 		public decimal? volume { get; set; }
 
-		[CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+		[CustomValidation(typeof(Class.EntityValidation), "CheckIddecimal")]
 		public decimal quantity_origin
 		{
 			get { return _quantity_origin; }

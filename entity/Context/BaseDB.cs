@@ -15,7 +15,7 @@ namespace entity
             {
                 return base.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //try to go through possible Validation Errors and remove before trying to re-attempt save.
                 foreach (var error in base.GetValidationErrors())

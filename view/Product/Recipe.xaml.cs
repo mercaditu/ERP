@@ -26,15 +26,21 @@ namespace Cognitivo.Product
             {
                 item item = ProductRecipeDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                if (ProductRecipeDB.item_recepie.Where(x => x.item == item).Count() == 0)
+                if (item != null)
                 {
-                    item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
-                   // item_recepie.id_item = item.id_item;
-                    item_recepie.item = item;
+                    if (ProductRecipeDB.item_recepie.Where(x => x.item.id_item == item.id_item).Count() == 0)
+                    {
+                        item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
+                        item_recepie.item = item;
+                    }
+                    else
+                    {
+                        toolBar.msgWarning("Item Already Used....");
+                    }
                 }
                 else
                 {
-                    toolBar.msgWarning("Item Already Used....");
+                    toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
                 }
             }
         }

@@ -1545,6 +1545,9 @@
   <data name="Surcharge" xml:space="preserve">
     <value>Surcharge</value>
   </data>
+  <data name="Table" xml:space="preserve">
+    <value>Table</value>
+  </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
@@ -1652,6 +1655,9 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>Waiter</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>

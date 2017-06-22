@@ -473,5 +473,10 @@ namespace Cognitivo.Sales
 				}
 			}
 		}
+
+        private void cbxSalesRep_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

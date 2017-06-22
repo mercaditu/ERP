@@ -146,7 +146,11 @@
 													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
 										<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="180" Foreground="Silver"
 												Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}" />
-                                        <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" 
+                                        <DataGridComboBoxColumn x:Name="cbxWaiter" Header="{lex:Loc Cognitivo:local:Waiter}"
+                                                                ItemsSource="{Binding Source={x:Static entity:CurrentSession.SalesReps}}"
+                                                                SelectedValueBinding="{Binding id_sales_rep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                DisplayMemberPath="name" SelectedValuePath="id_sales_rep"/>
+                                        <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Table}" 
                                                                 ItemsSource="{Binding Source={StaticResource app_locationViewSource}}"
                                                                 SelectedValueBinding="{Binding id_location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 															DisplayMemberPath="name" SelectedValuePath="id_location" />
@@ -247,7 +251,6 @@
                                 <DataTemplate>
                                     <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-
                                             <StackPanel>
                                                 <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                                 <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
@@ -255,11 +258,11 @@
                                             <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
                                                 <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                                 <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+						                                 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
                                                 <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
-								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
-								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+								                            SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
+								                            ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
@@ -267,8 +270,8 @@
                             </DataGrid.RowDetailsTemplate>
                         </DataGrid>
                         <Grid Margin="8" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-						Cursor="Hand" MouseDown="Promotion_Click" TouchDown="Promotion_Click"
-						ToolTip="{lex:Loc Promotion}">
+						      Cursor="Hand" MouseDown="Promotion_Click" TouchDown="Promotion_Click"
+						      ToolTip="{lex:Loc Promotion}"> 
                             <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                                 <Border.Background>
                                     <SolidColorBrush Color="#FF004867" Opacity="0.32" />
@@ -278,10 +281,10 @@
                                 </StackPanel>
                             </Border>
                             <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
-							BorderBrush="White" BorderThickness="1">
+							        BorderBrush="White" BorderThickness="1">
                                 <Label Content="&#xE89F;" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-								VerticalAlignment="Center" HorizontalAlignment="Center"
-								Foreground="White" />
+								        VerticalAlignment="Center" HorizontalAlignment="Center"
+								        Foreground="White" />
                             </Border>
                         </Grid>
                     </Grid>
@@ -480,19 +483,14 @@
                             <SolidColorBrush Color="White" Opacity="0.64" />
                         </Border.Background>
                         <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
-                            <Label Content="{lex:LocTextUpper Salesman}" Style="{StaticResource input_label}" Foreground="Black" />
+                            <Label Content="{lex:LocTextUpper Waiter}" Style="{StaticResource input_label}" Foreground="Black" />
                             <ComboBox x:Name="cbxSalesRep" Style="{StaticResource ComboToLabelStyle}"
-							metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-							metro:ControlsHelper.MouseOverBorderBrush="Silver"
-							DisplayMemberPath="name" Width="Auto"
-							SelectedValuePath="id_sales_rep"
-							SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
-                            </ComboBox>
+							          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+							          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+							          DisplayMemberPath="name" Width="Auto"
+							          SelectedValuePath="id_sales_rep"
+							          SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                                      SelectionChanged="cbxSalesRep_SelectionChanged"/>
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"

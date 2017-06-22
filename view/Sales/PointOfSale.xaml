@@ -6,8 +6,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:cntrl="clr-namespace:cntrl.Controls;assembly=cntrl"
-      xmlns:Salescontroller="clr-namespace:entity.Controller.Sales;assembly=entity"
-      xmlns:Financecontroller="clr-namespace:entity.Controller.Finance;assembly=entity"
+      xmlns:SalesController="clr-namespace:entity.Controller.Sales;assembly=entity"
+      xmlns:FinanceController="clr-namespace:entity.Controller.Finance;assembly=entity"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
@@ -27,8 +27,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Salescontroller:InvoiceController x:Key="SalesDB"/>
-        <Financecontroller:Payment x:Key="PaymentDB"/>
+        <SalesController:InvoiceController x:Key="SalesDB"/>
+        <FinanceController:Payment x:Key="PaymentDB"/>
 
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Bool2Color x:Key="Bool2Color" />
@@ -119,7 +119,7 @@
 					                VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Border>
             </StackPanel>
-            <TabControl x:Name="postab"  Margin="10,150,10,10">
+            <TabControl x:Name="postab"  Margin="10,150,10,10" TabStripPlacement="Bottom">
                 <!-- ACCOUNT-->
                 <TabItem x:Name="tabAccount">
                     <Frame x:Name="frmaccount" NavigationUIVisibility="Hidden" Content="AccountActive" />
@@ -407,7 +407,7 @@
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" Foreground="Silver" 
                        Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontWeight="Bold"/>
                     <Label Style="{StaticResource generic_Label}" VerticalAlignment="Center" 
-                       Content="{Binding app_terminal.name, Mode=OneWay}" Foreground="WhiteSmoke" />
+                       Content="{Binding app_terminal.name, Mode=OneWay}" Foreground="WhiteSmoke" FontWeight="Bold"/>
                 </StackPanel>
 
             </Grid>

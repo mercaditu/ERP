@@ -120,7 +120,7 @@
 					                VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Border>
             </StackPanel>
-            <TabControl x:Name="postab"  Margin="10,150,10,10">
+            <TabControl x:Name="postab" TabStripPlacement="Bottom" Margin="10,150,10,10">
                 <!-- ACCOUNT-->
                 <TabItem x:Name="tabAccount">
                     <Frame x:Name="frmaccount" NavigationUIVisibility="Hidden" Content="AccountActive" />

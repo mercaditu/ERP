@@ -106,12 +106,13 @@ namespace Cognitivo.Sales
             /// If all validation is met, then we can start Sales Process.
             if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
             {
+                sales_invoice.trans_date = DateTime.Now;
+
                 ///Approve Sales Invoice.
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesDB.Approve();
-
-             
+                
                 payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
                 payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
 

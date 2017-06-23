@@ -482,7 +482,7 @@
                                         </ComboBox.ItemsPanel>
                                     </ComboBox>
                                     <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
-                                    <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxDocument" DisplayMemberPath="name"
+                                    <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxDocument" DisplayMemberPath="app_document.name"
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  SelectedValuePath="id_range"

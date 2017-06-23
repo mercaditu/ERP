@@ -69,7 +69,7 @@
 						PrintDialog pd = new PrintDialog();
 
 						FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
-						document.Name = "Cognitivo ERP Ticket";
+						document.Name = "CognitivoERP_PrintJob";
 						document.FontFamily = new FontFamily(Setting.Reciept_FontName);
 						document.FontSize = Setting.Reciept_FontSize;
 						document.FontStretch = FontStretches.Normal;

@@ -531,7 +531,7 @@ namespace entity.Brillo.Logic
                                 else
                                 {
                                     Brillo.Stock stock = new Brillo.Stock();
-                                    Items_InStockLIST = stock.List(detail.sales_invoice.id_branch, LocationID, item_productSub.id_item_product);
+                                    Items_InStockLIST = stock.List(detail.sales_invoice.id_branch, null, item_productSub.id_item_product);
                                 }
 
                                 item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
@@ -903,6 +903,10 @@ namespace entity.Brillo.Logic
             int id_movement = 0;
             decimal Unitcost = 0;
 
+            ///Will create new Item Movements
+            ///if split from Parents is needed.
+            List<StockList> Concat_MovementList = new List<StockList>();
+
             if (item_product.cogs_type == item_product.COGS_Types.LIFO && Items_InStockLIST != null)
             {
                 Items_InStockLIST = Items_InStockLIST.OrderByDescending(x => x.TranDate).ToList();
@@ -912,9 +916,18 @@ namespace entity.Brillo.Logic
                 Items_InStockLIST = Items_InStockLIST.OrderBy(x => x.TranDate).ToList();
             }
 
-            ///Will create new Item Movements
-            ///if split from Parents is needed.
-            foreach (StockList parent_Movement in Items_InStockLIST)
+            //This code will first add all Locations specified by user, then it will try to load from other locations. If location is not specified, then it will take the default list.
+            if (LocationID > 0)
+            {
+                Concat_MovementList.AddRange(Items_InStockLIST.Where(x => x.LocationID == LocationID));
+                Concat_MovementList.AddRange(Items_InStockLIST.Where(x => x.LocationID != LocationID));
+            }
+            else
+            {
+                Concat_MovementList = Items_InStockLIST;
+            }
+
+            foreach (StockList parent_Movement in Concat_MovementList)
             {
                 List<item_movement_dimension> parent_movement_dimension = db.item_movement_dimension.Where(x => x.id_movement == parent_Movement.MovementID).ToList();
                 if (Quantity > 0)
@@ -1083,6 +1096,10 @@ namespace entity.Brillo.Logic
             ///In case Parent does not exist, will enter this code.
             if (Quantity > 0)
             {
+                // Call Query Again or Do Where on current Object.
+                // Check other locations based on FIFO/LIFO.
+                // Run Code Again.
+
                 id_movement = 0;
                 item_movement item_movement = new item_movement()
                 {

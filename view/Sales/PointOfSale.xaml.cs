@@ -136,6 +136,7 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
 
             sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
+            sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == )
             SalesDB.db.sales_invoice.Add(sales_invoice);
 
             Dispatcher.BeginInvoke((Action)(() =>

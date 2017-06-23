@@ -250,5 +250,29 @@ namespace Cognitivo.Sales {
                 this["SpiltReturn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Location {
+            get {
+                return ((int)(this["Location"]));
+            }
+            set {
+                this["Location"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Contract {
+            get {
+                return ((int)(this["Contract"]));
+            }
+            set {
+                this["Contract"] = value;
+            }
+        }
     }
 }

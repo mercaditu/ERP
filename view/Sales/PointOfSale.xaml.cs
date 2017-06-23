@@ -455,5 +455,11 @@ namespace Cognitivo.Sales
             }
            
         }
+
+        private void Expander_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Settings setting = new Settings();
+            setting.Save();
+        }
     }
 }

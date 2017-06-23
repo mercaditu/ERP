@@ -136,7 +136,7 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
 
             sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
-            sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == )
+            sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
             SalesDB.db.sales_invoice.Add(sales_invoice);
 
             Dispatcher.BeginInvoke((Action)(() =>
@@ -185,6 +185,7 @@ namespace Cognitivo.Sales
 
         private async void Item_Select(object sender, RoutedEventArgs e)
         {
+            Settings SalesSettings = new Settings();
             if (sbxItem.ItemID > 0)
             {
                 if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
@@ -208,6 +209,7 @@ namespace Cognitivo.Sales
                                 new Settings().AllowDuplicateItem,
                                 sbxItem.QuantityInStock,
                                 sbxItem.Quantity);
+                        _sales_invoice_detail.id_location = sales_invoice.Location.id_location;
                     }
 
                     sales_invoiceViewSource.View.Refresh();
@@ -464,8 +466,8 @@ namespace Cognitivo.Sales
 
         private void Expander_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Settings setting = new Settings();
-            setting.Save();
+             Settings.Default.Save();
+          
         }
     }
 }

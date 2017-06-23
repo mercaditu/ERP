@@ -333,46 +333,45 @@ namespace Cognitivo.Product
         private void Excel_Create(object sender, RoutedEventArgs e)
         {
             item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
-            entity.Brillo.Inventory2Excel Inv2Excel = new entity.Brillo.Inventory2Excel();
+           // entity.Brillo.Inventory2Excel Inv2Excel = new entity.Brillo.Inventory2Excel();
 
             item_inventory.IsSelected = true;
             InventoryDB.SaveChanges();
 
-            //Syncfusion.UI.Xaml.Grid.SfDataGrid sfdatagrid = new Syncfusion.UI.Xaml.Grid.SfDataGrid();
-            //sfdatagrid.ItemsSource = item_inventory.item_inventory_detail.ToList();
+           
 
-            //if (sfdatagrid.View != null)
-            //{
-            //    var options = new ExcelExportingOptions()
-            //    {
-
-            //        AllowOutlining = false
-            //    };
-            //    var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
-            //    var workBook = excelEngine.Excel.Workbooks[0];
-            //    // Add code to show save panel.
-            //    System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog()
-            //    {
-            //        FileName = "Excel", // Default file name
-            //        DefaultExt = ".xlsx", // Default file extension
-            //        Filter = "Text documents (.xlsx)|*.xlsx" // Filter files by extension
-            //    };
-
-            //    //Show save file dialog box
-            //    System.Windows.Forms.DialogResult result = dlg.ShowDialog();
-
-            //    //  Process save file dialog box results
-            //    if (result == System.Windows.Forms.DialogResult.OK)
-            //    {
-            //        // Save document
-            //        workBook.SaveAs(dlg.FileName);
-            //    }
-            //}
-
-            if (Inv2Excel.Create(item_inventory))
+            if (sfdatagrid.View != null)
             {
-                toolBar.msgSaved(1);
+                var options = new ExcelExportingOptions()
+                {
+
+                    AllowOutlining = false
+                };
+                var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
+                var workBook = excelEngine.Excel.Workbooks[0];
+                // Add code to show save panel.
+                System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog()
+                {
+                    FileName = "Excel", // Default file name
+                    DefaultExt = ".xlsx", // Default file extension
+                    Filter = "Text documents (.xlsx)|*.xlsx" // Filter files by extension
+                };
+
+                //Show save file dialog box
+                System.Windows.Forms.DialogResult result = dlg.ShowDialog();
+
+                //  Process save file dialog box results
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    // Save document
+                    workBook.SaveAs(dlg.FileName);
+                }
             }
+
+            //if (Inv2Excel.Create(item_inventory))
+            //{
+                toolBar.msgSaved(1);
+            //}
 
             toolBar_btnEdit_Click(null);
         }

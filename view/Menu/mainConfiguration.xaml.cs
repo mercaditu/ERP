@@ -12,6 +12,9 @@ namespace Cognitivo.Menu
         public MainConfiguration()
         {
             InitializeComponent();
+
+            //This ensures that non-masters cannot change location.
+            setting.Visibility = entity.CurrentSession.UserRole.is_master ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void config_MouseUp(object sender, EventArgs e)

@@ -62,15 +62,12 @@ namespace Cognitivo.Sales
 		{
 			if (sales_invoiceViewSource.View != null)
 			{
-				sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-				if (sales_invoice != null)
-				{
-                    app_document_range app_document_range = sales_invoice.app_document_range; //SalesDB.db.app_document_range.Where(x => x.id_range == sales_invoice.id_range).FirstOrDefault();
+                app_document_range document = SalesDB.db.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.Restaurant && x.is_active).FirstOrDefault();
+                sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
-                    if (app_document_range!=null)
-					{
-						entity.Brillo.Document.Start.Automatic(sales_invoice, app_document_range);
-					}
+                if (sales_invoice != null && document != null)
+				{
+                    entity.Brillo.Document.Start.Automatic(sales_invoice, document);
 				}
 			}
 		}
@@ -478,5 +475,6 @@ namespace Cognitivo.Sales
         {
 
         }
+       
     }
 }

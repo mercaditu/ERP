@@ -44,7 +44,13 @@
 					Content = SalesInvoice(sales_invoice);
 					Print(Content, app_document, PrinterName);
 				}
-				else if (app_document.id_application == App.Names.PaymentUtility)
+                else if (app_document.id_application == App.Names.Restaurant)
+                {
+                    sales_invoice sales_invoice = (sales_invoice)obj;
+                    Content = SalesInvoice(sales_invoice);
+                    Print(Content, app_document, PrinterName);
+                }
+                else if (app_document.id_application == App.Names.PaymentUtility)
 				{
 					payment payment = (payment)obj;
 					Content = Payment(payment);
@@ -62,11 +68,10 @@
 				{
 					if (app_document.style_reciept == true)
 					{
-					
 						PrintDialog pd = new PrintDialog();
 
 						FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
-						document.Name = "CognitivoERP_Ticket";
+						document.Name = "Cognitivo ERP Ticket";
 						document.FontFamily = new FontFamily(Setting.Reciept_FontName);
 						document.FontSize = Setting.Reciept_FontSize;
 						document.FontStretch = FontStretches.Normal;
@@ -572,7 +577,194 @@
 			return Text;
 		}
 
-		public string Payment(payment payment)
+        public string Restaurant(sales_invoice sales_invoice)
+        {
+            string Header = string.Empty;
+            string Detail = string.Empty;
+            string Footer = string.Empty;
+            string BranchName = string.Empty;
+            string TerminalName = string.Empty;
+            string BranchAddress = string.Empty;
+            app_company app_company = null;
+
+            if (sales_invoice.app_company != null)
+            {
+                app_company = sales_invoice.app_company;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.app_company.Find(sales_invoice.id_company) != null)
+                    {
+                        app_company = db.app_company.Find(sales_invoice.id_company);
+                    }
+                }
+            }
+
+            app_branch app_branch = CurrentSession.Branches.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
+            if (app_branch != null)
+            {
+                BranchName = app_branch.name;
+                BranchAddress = app_branch.address;
+            }
+
+            string UserGiven = "";
+            if (sales_invoice.security_user != null)
+            {
+                UserGiven = sales_invoice.security_user.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    security_user security_user = db.security_user.Find(sales_invoice.id_user);
+                    if (security_user != null)
+                    {
+                        UserGiven = security_user.name;
+                    }
+                }
+            }
+
+            string ContractName = "";
+            app_contract app_contract = CurrentSession.Contracts.Where(x => x.id_contract == sales_invoice.id_contract).FirstOrDefault();
+            if (app_contract != null)
+            {
+                ContractName = app_contract.name;
+            }
+
+            string ConditionName = "";
+            app_condition app_condition = CurrentSession.Conditions.Where(x => x.id_condition == sales_invoice.id_condition).FirstOrDefault();
+            if (app_condition != null)
+            {
+                ConditionName = app_condition.name;
+            }
+            app_terminal app_terminal = CurrentSession.Terminals.Where(x => x.id_terminal == sales_invoice.id_terminal).FirstOrDefault();
+            if (app_terminal != null)
+            {
+                TerminalName = app_terminal.name;
+            }
+
+            string CurrencyName = "";
+            if (sales_invoice.app_currencyfx != null)
+            {
+                if (sales_invoice.app_currencyfx.app_currency != null)
+                {
+                    CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
+                }
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    app_currencyfx app_currencyfx = db.app_currencyfx.Find(sales_invoice.id_currencyfx);
+                    if (app_currencyfx != null)
+                    {
+                        CurrencyName = app_currencyfx.app_currency.name;
+                    }
+                }
+            }
+
+            string TransNumber = sales_invoice.number;
+            DateTime TransDate = sales_invoice.trans_date;
+
+            Header =
+                app_company.name + "\n"
+                + "RUC:" + app_company.gov_code + "\n"
+                + app_company.address + "\n"
+                + "***" + app_company.alias + "***" + "\n"
+                + "-------------------------------- \n"
+                + "Descripcion, Cantiad, Precio" + "\n"
+                + "--------------------------------" + "\n"
+                + "\n";
+
+            foreach (sales_invoice_detail d in sales_invoice.sales_invoice_detail)
+            {
+                string ItemName = d.item.name;
+                string ItemCode = d.item.code;
+                decimal? Qty = Math.Round(d.quantity, 2);
+                string TaskName = d.item_description;
+
+                Detail = Detail + (string.IsNullOrEmpty(Detail) ? "\n" : "")
+                    + ItemName + "\n"
+                    + Qty.ToString() + "\t" + ItemCode + "\t" + Math.Round((d.UnitPrice_Vat + d.DiscountVat), 2) + "\n";
+            }
+
+            decimal DiscountTotal = sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
+
+            Footer = "--------------------------------" + "\n";
+            Footer += "Total Bruto       : " + Math.Round((sales_invoice.GrandTotal + DiscountTotal), 2) + "\n";
+            Footer += "Total Descuento   : -" + Math.Round(sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat), 2) + "\n";
+            Footer += "Total " + CurrencyName + " : " + Math.Round(sales_invoice.GrandTotal, 2) + "\n";
+            Footer += "Fecha & Hora      : " + DateTime.Now + "\n";
+            Footer += "Numero de Factura : " + sales_invoice.number + "\n";
+            Footer += "-------------------------------" + "\n";
+
+            if (sales_invoice != null)
+            {
+                List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
+                if (sales_invoice_detail.Count > 0)
+                {
+                    using (db db = new db())
+                    {
+                        var listvat = sales_invoice_detail
+                          .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                              , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
+                              .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                      .Select(g => new
+                      {
+                          vatname = g.Key.ad.app_vat_group.name,
+                          id_vat = g.Key.id_vat,
+                          name = g.Key.name,
+                          value = g.Sum(a => a.value * a.ad.quantity)
+                      }).ToList();
+                        var VAtList = listvat.GroupBy(x => x.id_vat).Select(g => new
+                        {
+                            vatname = g.Max(y => y.vatname),
+                            id_vat = g.Max(y => y.id_vat),
+                            name = g.Max(y => y.name),
+                            value = g.Sum(a => a.value)
+                        }).ToList();
+                        foreach (dynamic item in VAtList)
+                        {
+                            Footer += item.vatname + "   : " + Math.Round(item.value, 2) + "\n";
+                        }
+                        Footer += "Total IVA : " + CurrencyName + " " + Math.Round(VAtList.Sum(x => x.value), 2) + "\n";
+                    }
+                }
+            }
+
+            
+            Footer += "------------------------------- \n";
+            Footer += "Sucursal   : " + BranchName + "\n";
+            Footer += "Sucursal Address  : " + BranchAddress + "\n";
+            Footer += Localize.StringText("Terminal") + ": " + TerminalName;
+            Footer += "------------------------------- \n \n";
+            Footer += Localize.StringText("Client") + " : ................... \n \n";
+            Footer += Localize.StringText("GovernmentID") + " : ................... \n";
+
+            if (sales_invoice.id_sales_rep > 0)
+            {
+                string SalesRep_Name = "";
+                int RepID = (int)sales_invoice.id_sales_rep;
+                sales_rep sales_rep = CurrentSession.SalesReps.Where(x => x.id_sales_rep == RepID).FirstOrDefault();
+                if (sales_rep != null)
+                {
+                    SalesRep_Name = sales_rep.name;
+                }
+
+                Footer += "\n";
+                Footer += Localize.StringText("Waiter") + ": " + SalesRep_Name;
+            }
+
+            Footer += "\n";
+            Footer += "Cajero/a : " + UserGiven;
+
+            string Text = Header + Detail + Footer;
+            return Text;
+        }
+
+        public string Payment(payment payment)
 		{
 			string Header = string.Empty;
 			string Detail = string.Empty;

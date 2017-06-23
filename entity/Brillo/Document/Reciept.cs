@@ -16,8 +16,6 @@
 		{
 			string PrinterName;
 			string Content = "";
-			
-
 
 			using (db db = new db())
 			{

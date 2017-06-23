@@ -66,9 +66,6 @@ namespace entity.Controller.Sales
 
         public async void Load(bool FilterByTerminal, int PageIndex)
         {
-
-
-
             var predicate = PredicateBuilder.True<sales_invoice>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
@@ -85,9 +82,6 @@ namespace entity.Controller.Sales
             {
                 Count = db.sales_invoice.Where(predicate).Count();
             }
-
-
-
 
             await db.sales_invoice.Where(predicate)
                     .OrderByDescending(x => x.trans_date)

@@ -31,7 +31,12 @@ namespace Cognitivo.Sales
                 //Load Controller.
                 SalesDB.Initialize();
                 SalesDB.LoadPromotion();
+
+                cbxLocation.IsEnabled = CurrentSession.UserRole.is_master ? true : false;
+                cbxLocation.ItemsSource = CurrentSession.Locations.Where(x => x.id_branch == CurrentSession.Id_Branch).ToList();
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesDB.db, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }
+
             PaymentDB = FindResource("PaymentDB") as entity.Controller.Finance.Payment;
             //Share DB to increase efficiency.
             PaymentDB.db = SalesDB.db;

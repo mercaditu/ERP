@@ -84,9 +84,12 @@ namespace entity.Controller.Production
                                 }
                             }
                         }
+
                         NumberOfRecords += 1;
                     }
                 }
+
+                db.SaveChanges();
             }
 
             foreach (production_order_detail production_order_detail in db.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved))

@@ -39,6 +39,8 @@ namespace entity.Controller.Production
 
         public bool Approve(production_order.ProductionOrderTypes Type)
         {
+            NumberOfRecords = 0;
+
             foreach (production_order_detail production_order_detail in db.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
             {
                 if (production_order_detail.production_order != null)

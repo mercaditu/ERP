@@ -205,13 +205,12 @@ namespace Cognitivo.Production
         private void toolBar_btnApprove_Click(object sender)
         {
             toolBar_btnSave_Click(sender);
-
-
+            
             if (MessageBox.Show("FINALIZAR PRODUCCION: Está seguro de finalizarlo?") == MessageBoxResult.Yes)
             {
                 if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Production))
                 {
-                    toolBar.msgApproved(1);
+                    toolBar.msgApproved(ExecutionDB.NumberOfRecords);
                 }
             }
         }

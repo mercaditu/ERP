@@ -214,21 +214,18 @@ namespace Cognitivo.Menu
 
         private void migrate_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
-            myWindow.mainFrame.Navigate(new Setup.Migration.MigrationAssistant());
+            (Window.GetWindow(this) as MainWindow).mainFrame.Navigate(new Setup.Migration.MigrationAssistant());
         }
 
         private void Image_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainWindow myWindow = Window.GetWindow(this) as MainWindow;
-            Frame myFrame = myWindow.mainFrame;
+            Frame myFrame = (Window.GetWindow(this) as MainWindow).mainFrame;
             myFrame.Navigate(new MainLogIn());
         }
 
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            string PASsWORD = Microsoft.VisualBasic.Interaction.InputBox("Password", "Cognitivo");
-            if (PASsWORD == "DOCOMO")
+            if (Microsoft.VisualBasic.Interaction.InputBox("Password", "Cognitivo") == "DOCOMO")
             {
                 Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
             }

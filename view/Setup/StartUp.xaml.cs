@@ -273,13 +273,7 @@ namespace Cognitivo.Menu
                     if (item_product != null)
                     {
                         /// Check for movement that have credit and no parents (Purchase or Inventory). Also that has value in Item Movement Value.
-                        item_movement item_movement = db.item_movement
-                            .Where(x =>
-                                x.id_item_product == item_product.id_item_product &&
-                                (x.credit - x.child.Sum(y => y.debit)) > 0 &&
-                                x.item_movement_value.Sum(y => y.unit_value) > 0)
-                                .OrderBy(x => x.trans_date)
-                                .Include(x => x.item_movement_value).FirstOrDefault();
+                        item_movement item_movement = item_product.item_movement.LastOrDefault();
 
                         if (item_movement != null)
                         {

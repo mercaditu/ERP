@@ -24,23 +24,16 @@ namespace Cognitivo.Product
 
         private void toolBar_btnNew_Click(object sender)
         {
-            try
-            {
-                item_transfer item_transfer = new item_transfer();
-                item_transfer.State = EntityState.Added;
-                item_transfer.trans_date = DateTime.Now;
-                item_transfer.transfer_type = entity.item_transfer.Transfer_Types.Movement;
-                item_transfer.IsSelected = true;
-                item_transfer.status = Status.Transfer.Pending;
-                ProductTransferDB.item_transfer.Add(item_transfer);
+            item_transfer item_transfer = new item_transfer();
+            item_transfer.State = EntityState.Added;
+            item_transfer.trans_date = DateTime.Now;
+            item_transfer.transfer_type = entity.item_transfer.Transfer_Types.Movement;
+            item_transfer.IsSelected = true;
+            item_transfer.status = Status.Transfer.Pending;
+            ProductTransferDB.item_transfer.Add(item_transfer);
 
-                item_transferViewSource.View.MoveCurrentToLast();
-                cbxBranch_SelectionChanged(sender, null);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            item_transferViewSource.View.MoveCurrentToLast();
+            cbxBranch_SelectionChanged(sender, null);
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -49,30 +42,22 @@ namespace Cognitivo.Product
             {
                 e.CanExecute = true;
             }
-
         }
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
+            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+                //DeleteDetailGridRow
+                if (e.Parameter as item_transfer_detail != null)
                 {
-                    //DeleteDetailGridRow
-                    if (e.Parameter as item_transfer_detail != null)
-                    {
-                        //ontact_field_valueDataGrid.CancelEdit();
-                        ProductTransferDB.item_transfer_detail.Remove(e.Parameter as item_transfer_detail);
-                        CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
-                        item_transferitem_transfer_detailViewSource.View.Refresh();
-                    }
-
+                    //ontact_field_valueDataGrid.CancelEdit();
+                    ProductTransferDB.item_transfer_detail.Remove(e.Parameter as item_transfer_detail);
+                    CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
+                    item_transferitem_transfer_detailViewSource.View.Refresh();
                 }
-            }
-            catch (Exception)
-            {
-                //throw;
+
             }
         }
 
@@ -127,8 +112,15 @@ namespace Cognitivo.Product
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            item_transferViewSource = ((CollectionViewSource)(FindResource("item_transferViewSource")));
-            await ProductTransferDB.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company && a.transfer_type == item_transfer.Transfer_Types.Movement).OrderByDescending(x => x.trans_date).LoadAsync();
+            item_transferViewSource = FindResource("item_transferViewSource") as CollectionViewSource;
+            await ProductTransferDB.item_transfer
+                .Where(a => 
+                    a.id_company == CurrentSession.Id_Company && 
+                    a.id_branch == CurrentSession.Id_Branch && 
+                    a.transfer_type == item_transfer.Transfer_Types.Movement
+                )
+                .OrderByDescending(x => x.trans_date)
+                .LoadAsync();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
             await ProductTransferDB.app_document_range.Where(d => d.is_active == true
@@ -139,8 +131,6 @@ namespace Cognitivo.Product
 
             await ProductTransferDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxDepartment.ItemsSource = ProductTransferDB.app_department.Local;
-
-            //;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             await ProductTransferDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();

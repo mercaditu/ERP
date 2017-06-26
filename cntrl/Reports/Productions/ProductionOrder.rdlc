@@ -2405,9 +2405,6 @@ Fields!Status.Value=7,"Red"
             <Top>0.00521in</Top>
             <Height>1.02432in</Height>
             <Width>12.8073in</Width>
-            <Visibility>
-              <Hidden>=iif(Parameters!ParameterCost.Value,true,false)</Hidden>
-            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>

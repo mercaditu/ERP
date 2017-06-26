@@ -677,7 +677,9 @@
     <EmbeddedResource Include="Reports\Finances\PaymentRecievablesBySalesman.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reports\Productions\HR.rdlc" />
-    <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc" />
+    <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Productions\ProductionStatus.rdlc" />
     <EmbeddedResource Include="Reports\Projects\Project.rdlc">
       <SubType>Designer</SubType>

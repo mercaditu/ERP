@@ -132,15 +132,15 @@ namespace Cognitivo.Product
             await ProductTransferDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             cbxDepartment.ItemsSource = ProductTransferDB.app_department.Local;
 
-            CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+            CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
             await ProductTransferDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
             app_dimensionViewSource.Source = ProductTransferDB.app_dimension.Local;
 
-            CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+            CollectionViewSource app_measurementViewSource = FindResource("app_measurementViewSource") as CollectionViewSource;
             await ProductTransferDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToListAsync();
             app_measurementViewSource.Source = ProductTransferDB.app_measurement.Local;
 
-            CollectionViewSource branchViewSource = ((CollectionViewSource)(FindResource("branchViewSource")));
+            CollectionViewSource branchViewSource = FindResource("branchViewSource") as CollectionViewSource;
             await ProductTransferDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
             branchViewSource.Source = ProductTransferDB.app_branch.Local; //ProductTransferDB.app_branch.Local;
 
@@ -155,7 +155,7 @@ namespace Cognitivo.Product
                 if (item_transfer.State == EntityState.Added || item_transfer.State == EntityState.Modified)
                 {
                     app_location app_location = ProductTransferDB.app_location.Where(x => x.is_default && x.id_branch == item_transfer.id_branch).FirstOrDefault();
-                    CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
+                    CollectionViewSource location_originViewSource = FindResource("location_originViewSource") as CollectionViewSource;
                     location_originViewSource.View.MoveCurrentTo(app_location);
                 }
             }

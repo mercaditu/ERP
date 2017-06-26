@@ -498,7 +498,7 @@
 
 				Detail = Detail + (string.IsNullOrEmpty(Detail) ? "\n" : "")
 					+ ItemName + "\n"
-					+ Qty.ToString() + "\t" + ItemCode + "\t" + Math.Round((d.UnitPrice_Vat + d.DiscountVat), 2) + "\n";
+					+ Qty.ToString() + "\t" + ItemCode + "\t" + Math.Round((d.SubTotal_Vat), 2) + "\n";
 			}
 
 			decimal DiscountTotal = sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);

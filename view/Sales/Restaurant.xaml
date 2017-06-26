@@ -66,6 +66,13 @@
                         </Ellipse.Fill>
                     </Ellipse>
                     <Label Style="{StaticResource H3}" VerticalAlignment="Center" Content="Cognitivo ERP" Foreground="White" />
+                    <Label VerticalAlignment="Center" Content="|" Foreground="White" />
+                    <TextBlock FontSize="16" Foreground="Gainsboro" Margin="4,0" VerticalAlignment="Center"
+					                    Text="{Binding app_location.name, FallbackValue=Table, Mode=OneWay, Source={StaticResource sales_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="Gainsboro" ShadowDepth="0" />
+                        </TextBlock.Effect>
+                    </TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,-6, 4, 0">
                     <Label x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"

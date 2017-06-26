@@ -274,5 +274,17 @@ namespace Cognitivo.Sales {
                 this["Contract"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Default_Customer {
+            get {
+                return ((int)(this["Default_Customer"]));
+            }
+            set {
+                this["Default_Customer"] = value;
+            }
+        }
     }
 }

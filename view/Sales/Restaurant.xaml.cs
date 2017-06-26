@@ -150,7 +150,7 @@ namespace Cognitivo.Sales
 
 			sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
 
-            contact contact = await SalesDB.db.contacts.FindAsync(1);
+            contact contact = await SalesDB.db.contacts.FindAsync(Settings.Default.Default_Customer);
             if (contact != null)
             {
                 sales_invoice.id_contact = contact.id_contact;
@@ -166,6 +166,10 @@ namespace Cognitivo.Sales
                     sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local.Where(x => x.status == Status.Documents_General.Pending);
                     sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
                 }));
+            }
+            else
+            {
+                MessageBox.Show("Please select a Default Customer");
             }
 		}
 

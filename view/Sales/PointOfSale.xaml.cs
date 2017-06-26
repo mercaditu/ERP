@@ -429,19 +429,24 @@ namespace Cognitivo.Sales
                         Settings SalesSettings = new Settings();
 
                         item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
-                        decimal QuantityInStock = item_movement.avlquantity;
+                        if (item_movement != null)
+                        {
+                            decimal QuantityInStock = item_movement.avlquantity;
 
-                        sales_invoice_detail _sales_invoice_detail =
-                              SalesDB.Create_Detail(ref sales_invoice, item, null,
-                                SalesSettings.AllowDuplicateItem,
-                                sbxItem.QuantityInStock,
-                                sbxItem.Quantity);
-                        _sales_invoice_detail.Quantity_InStockLot = QuantityInStock;
-
-                        //Update Grand Total
-                        (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+                            sales_invoice_detail _sales_invoice_detail =
+                                  SalesDB.Create_Detail(ref sales_invoice, item, null,
+                                    SalesSettings.AllowDuplicateItem,
+                                    sbxItem.QuantityInStock,
+                                    sbxItem.Quantity);
+                            _sales_invoice_detail.Quantity_InStockLot = QuantityInStock;
+                            _sales_invoice_detail.batch_code = item_movement.code;
+                            _sales_invoice_detail.expire_date = item_movement.expire_date;
+                            //Update Grand Total
+                            (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+                        }
                     }
                 }
+
                 sales_invoiceViewSource.View.Refresh();
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();

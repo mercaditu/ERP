@@ -20,7 +20,7 @@ namespace entity
             payment_schedual = new List<payment_schedual>();
             sales_return = new List<sales_return>();
             payment_withholding_detail = new List<payment_withholding_detail>();
-
+            
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }

@@ -659,7 +659,7 @@ namespace Cognitivo.Production
             }
         }
 
-     
+      
 
         public event PropertyChangedEventHandler PropertyChanged;
 

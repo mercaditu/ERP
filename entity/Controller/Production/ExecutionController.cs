@@ -52,6 +52,11 @@ namespace entity.Controller.Production
                         ///Fraction: Takes a Fraction of the parent.
                         ///TODO: Fraction only takes cost of parent. We need to include other things as well.
 
+                        using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(false))
+                        {
+                           
+                        }
+                       
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
                         item_movementList = _Stock.insert_Stock(db, production_execution_detail);

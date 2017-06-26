@@ -151,6 +151,73 @@ namespace entity.BrilloQuery
             return ItemsLocation;
         }
 
+        public List<Item> GetItemByLocation(int ItemID,int LocationID)
+        {
+            List<Item> ItemsLocation = new List<Item>();
+            string query = @"SET sql_mode = '';
+							select
+								 item.id_item as ID,
+								 item.code as Code,
+								 item.name as Name,
+								 brand.name as Brand,
+								 item.id_company as CompanyID,
+								 item.is_active as IsActive,
+								 item.id_item_type,
+								 loc.name as Location,
+                                 loc.id_location as LocationID,
+								 branch.name as Branch,
+								 (sum(mov.credit) - sum(mov.debit)) as Quantity
+
+								 from items as item
+
+								 join item_product as prod on prod.id_item = item.id_item
+								 left outer join item_brand as brand on brand.id_brand = item.id_brand
+								 join item_movement as mov on mov.id_item_product = prod.id_item_product
+							     join app_location as loc on mov.id_location = loc.id_location
+								 join app_branch as branch on loc.id_branch = branch.id_branch
+
+								 where item.id_company = {0}
+									and mov.id_location = {1}
+									and item.is_active = 1 and id_item={2} 
+								 group by item.id_item";
+
+            query = string.Format(query, CurrentSession.Id_Company, LocationID, ItemID);
+
+            using (DataTable dt = QueryExecutor.DT(query))
+            {
+                foreach (DataRow DataRow in dt.Rows)
+                {
+                    bool Is_Product = false;
+
+                    //Item Type will determine if it can stock (Is Product) or not.
+                    int type = Convert.ToInt16(DataRow["id_item_type"]);
+                    if (type == 1 || type == 2 || type == 6)
+                    {
+                        Is_Product = true;
+                    }
+
+                    Item Item = new Item();
+                    Item.ID = Convert.ToInt16(DataRow["ID"]);
+                    Item.Type = (item.item_type)type;
+                    Item.IsProduct = Is_Product;
+                    Item.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
+                    if (!(DataRow["CompanyID"] is DBNull))
+                    {
+                        Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
+                    }
+
+                    Item.Name = Convert.ToString(DataRow["Name"]);
+                    Item.Code = Convert.ToString(DataRow["Code"]);
+                    Item.Brand = Convert.ToString(DataRow["Brand"]);
+                    Item.InStock = Convert.ToDecimal(DataRow["Quantity"] is DBNull ? 0 : DataRow["Quantity"]);
+                    Item.LocationID = Convert.ToInt32(DataRow["LocationID"]); ;
+
+                    ItemsLocation.Add(Item);
+                }
+            }
+            return ItemsLocation;
+        }
+
         public void Dispose()
         {
             // Dispose(true);

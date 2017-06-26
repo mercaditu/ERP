@@ -179,6 +179,8 @@ namespace Cognitivo.Sales
             {
                 MessageBox.Show("Please select a Default Customer");
             }
+
+            SalesDB.SaveChanges_WithValidation();
 		}
 
 		#endregion ActionButtons
@@ -224,12 +226,14 @@ namespace Cognitivo.Sales
 								sbxItem.Quantity);
 
                         sales_invoiceViewSource.View.Refresh();
-                        //CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                        //sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                        CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
                     }
 				}
 			}
-		}
+
+            SalesDB.SaveChanges_WithValidation();
+        }
 
 		#endregion SmartBox Selection
 
@@ -439,7 +443,10 @@ namespace Cognitivo.Sales
 						_sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
 					}
 				}
-				sales_invoiceViewSource.View.Refresh();
+
+                SalesDB.SaveChanges_WithValidation();
+
+                sales_invoiceViewSource.View.Refresh();
 
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();

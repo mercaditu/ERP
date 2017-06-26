@@ -579,7 +579,7 @@ namespace cntrl
 			{
 				toolIcon.Click += btnNew_MouseUp;
 			}
-			else if (btnDelete_Click != null & iconName == "Archived" && security.delete)
+			else if (btnDelete_Click != null & iconName == "Archive" && security.delete)
 			{
 				toolIcon.Click += btnDelete_MouseUp;
 				toolIcon = bindNumber_toolIcon(toolIcon, "Total_PendingApproved");

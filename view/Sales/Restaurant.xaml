@@ -474,7 +474,7 @@
             </Grid>
 
             <!-- SalesMan -->
-            <StackPanel x:Name="stackLeft" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,40" RenderTransformOrigin="0.5,0.5">
+            <StackPanel x:Name="stackLeft" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,40" RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -503,6 +503,23 @@
                     <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
 					        BorderBrush="White" BorderThickness="1">
                         <Label Content="S" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
+                               FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"
+						       Foreground="White" />
+                    </Border>
+                </Grid>
+                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.64" />
+                        </Border.Background>
+                        <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
+                            <Label Content="{lex:LocTextUpper Customer}" Style="{StaticResource input_label}" Foreground="Black" />
+                            <TextBox x:Name="tbxDefaultCustomer" Style="{StaticResource TextToLabelStyle}" Text="{Binding Source={x:Static pref:Settings.Default}, Path=Default_Customer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
+					        BorderBrush="White" BorderThickness="1">
+                        <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
                                FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"
 						       Foreground="White" />
                     </Border>

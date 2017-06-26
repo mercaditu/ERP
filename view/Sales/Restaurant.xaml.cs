@@ -150,7 +150,13 @@ namespace Cognitivo.Sales
 
 			sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
 
-            contact contact = await SalesDB.db.contacts.FindAsync(Settings.Default.Default_Customer);
+            if (SalesSettings.Default_Customer == 0)
+            {
+                SalesSettings.Default_Customer = Convert.ToInt32(tbxDefaultCustomer.Text);
+                SalesSettings.Save();
+            }
+
+            contact contact = await SalesDB.db.contacts.FindAsync(SalesSettings.Default_Customer);
             if (contact != null)
             {
                 sales_invoice.id_contact = contact.id_contact;
@@ -166,6 +172,8 @@ namespace Cognitivo.Sales
                     sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local.Where(x => x.status == Status.Documents_General.Pending);
                     sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
                 }));
+
+                dgvSalesDetail.CommitEdit();
             }
             else
             {

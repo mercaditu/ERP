@@ -204,6 +204,8 @@ namespace entity
 
         [NotMapped]
         public string percent { get; set; }
+        [NotMapped]
+        public bool OutOfStock { get; set; }
 
         //Self Referencing
         public virtual production_order_detail parent { get; set; }

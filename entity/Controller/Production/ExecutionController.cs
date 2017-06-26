@@ -12,7 +12,7 @@ namespace entity.Controller.Production
         {
             if (ProductionOrderTypes == production_order.ProductionOrderTypes.Fraction)
             {
-                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == ProductionOrderTypes && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).Include(x=>x.production_order_detail).OrderByDescending(x => x.trans_date).LoadAsync();
+                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == ProductionOrderTypes && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).Include(x => x.production_order_detail).OrderByDescending(x => x.trans_date).LoadAsync();
             }
             else
             {
@@ -52,11 +52,17 @@ namespace entity.Controller.Production
                         ///Fraction: Takes a Fraction of the parent.
                         ///TODO: Fraction only takes cost of parent. We need to include other things as well.
 
-                        using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(false))
+                        using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems((int)production_execution_detail.id_item, production_order_detail.production_order.production_line.id_location))
                         {
-                           
+                            BrilloQuery.Item Item = Execute.Items.Where(x => x.InStock == 0).FirstOrDefault();
+                            if (Item == null || Item.InStock <= 0)
+                            {
+                                //show error for this item.
+                                production_order_detail.OutOfStock = true;
+                                continue;
+                            }
                         }
-                       
+
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
                         item_movementList = _Stock.insert_Stock(db, production_execution_detail);

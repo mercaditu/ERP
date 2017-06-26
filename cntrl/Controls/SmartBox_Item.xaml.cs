@@ -104,6 +104,38 @@ namespace cntrl.Controls
             set { SetValue(TextProperty, value); }
         }
 
+        public static readonly DependencyProperty LocationIDProperty = DependencyProperty.Register("LocationID", typeof(int), typeof(SmartBox_Item), new FrameworkPropertyMetadata(
+            0,
+            new PropertyChangedCallback(OnLocationChangeCallBack)));
+
+        public int LocationID
+        {
+            get { return (int)GetValue(LocationIDProperty); }
+            set { SetValue(LocationIDProperty, value); }
+        }
+
+
+        #region "INotifyPropertyChanged"
+
+        private static void OnLocationChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            SmartBox_Item c = sender as SmartBox_Item;
+            if (c != null)
+            {
+
+                c.OnLocationChange((int)e.NewValue);
+            }
+        }
+        
+        protected virtual void OnLocationChange(int newvalue)
+        {
+
+            var task = Task.Factory.StartNew(() => LoadData_Thread(newvalue));
+
+        }
+       
+
+        #endregion "INotifyPropertyChanged"
         public event RoutedEventHandler Select;
 
         private void ItemGrid_MouseDoubleClick(object sender, EventArgs e)
@@ -145,6 +177,7 @@ namespace cntrl.Controls
         }
 
         public int ItemID { get; set; }
+    
         public entity.item.item_type? item_types { get; set; }
 
         public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
@@ -158,12 +191,13 @@ namespace cntrl.Controls
 
         public SmartBox_Item()
         {
+          
             InitializeComponent();
 
             ///Exists code if in design view.
             if (DesignerProperties.GetIsInDesignMode(this))
             {
-                return;
+              
             }
 
             smartBoxItemSetting Settings = new smartBoxItemSetting();
@@ -177,10 +211,8 @@ namespace cntrl.Controls
             }
 
             if (entity.CurrentSession.Allow_BarCodeSearchOnly)
-            {
-               
-                Settings.ExactSearch = true;
-                
+            {    
+                Settings.ExactSearch = true;            
             }
             smartBoxItemSetting.Default.Save();
             LoadData();
@@ -192,16 +224,29 @@ namespace cntrl.Controls
         {
             progBar.Visibility = Visibility.Visible;
             tbxSearch.IsEnabled = false;
-            Task task = Task.Factory.StartNew(() => LoadData_Thread());
+            int LocId = LocationID;
+            var task = Task.Factory.StartNew(() => LoadData_Thread(LocId));
         }
 
-        private void LoadData_Thread()
+        private void LoadData_Thread(int LocID)
         {
             Items = null;
-            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(Exclude_OutOfStock))
+
+            if (LocID == 0)
             {
-                Items = Execute.Items.AsQueryable();
+                using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(Exclude_OutOfStock))
+                {
+                    Items = Execute.Items.AsQueryable();
+                }
             }
+            else
+            {
+                using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(LocID))
+                {
+                    Items = Execute.Items.AsQueryable();
+                }
+            }
+           
 
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () 
             {

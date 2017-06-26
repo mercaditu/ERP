@@ -120,6 +120,17 @@ namespace cntrl.Panels
             set { SetValue(QuantityExecProperty, value); }
         }
 
+
+        public static readonly DependencyProperty OutOfStockProperty =
+        DependencyProperty.Register("OutOfStock", typeof(Boolean), typeof(TreeProduction),
+        new FrameworkPropertyMetadata(null));
+
+        public Boolean OutOfStock
+        {
+            get { return Convert.ToBoolean(GetValue(OutOfStockProperty)); }
+            set { SetValue(OutOfStockProperty, value); }
+        }
+
         public static readonly DependencyProperty project_taskProperty =
             DependencyProperty.Register("Project_task", typeof(List<project_task>), typeof(TreeProduction),
             new FrameworkPropertyMetadata(null));

@@ -213,12 +213,22 @@ namespace Cognitivo.Sales
                 if (result == MessageBoxResult.Yes)
                 {
                     //DeleteDetailGridRow
-                    sales_packinglist_detailDataGrid.CancelEdit();
-                    PackingListDB.sales_packing_detail.Remove(e.Parameter as sales_packing_detail);
-                    Refresh_GroupByGrid();
-                    GridVerifiedList.SelectedIndex = 0;
-                    sales_packingViewSource.View.Refresh();
-                    sales_packingsales_packinglist_detailViewSource.View.Refresh();
+                    sales_packinglist_detailDataGrid.CommitEdit();
+                    sales_packing_detail sales_packing_detail = e.Parameter as sales_packing_detail;
+                    if(sales_packing_detail.Error==null)
+                    {
+                        PackingListDB.sales_packing_detail.Remove(sales_packing_detail);
+                        Refresh_GroupByGrid();
+                        GridVerifiedList.SelectedIndex = 0;
+                        sales_packingViewSource.View.Refresh();
+                        sales_packingsales_packinglist_detailViewSource.View.Refresh();
+                    }
+                    else
+                    {
+                        toolBar.msgWarning(sales_packing_detail.Error);
+                    }
+                   
+
                 }
             }
             catch (Exception ex)

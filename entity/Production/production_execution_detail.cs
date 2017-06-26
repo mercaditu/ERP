@@ -121,6 +121,7 @@ namespace entity
         public string batch { get; set; }
         public DateTime? expiry_date { get; set; }
 
+     
         [NotMapped]
         public string DimensionString
         {

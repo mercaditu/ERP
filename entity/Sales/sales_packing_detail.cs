@@ -82,7 +82,7 @@ namespace entity
 
 		private bool _user_verified;
 
-		[CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+		[CustomValidation(typeof(Class.EntityValidation), "CheckIddecimal")]
 		public decimal? verified_quantity
 		{
 			get

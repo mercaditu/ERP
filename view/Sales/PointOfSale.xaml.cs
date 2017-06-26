@@ -401,8 +401,7 @@ namespace Cognitivo.Sales
 
         private void Promotion_Click(object sender, EventArgs e)
         {
-            sales_invoice Invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            if (Invoice != null)
+            if (sales_invoiceViewSource.View.CurrentItem is sales_invoice Invoice)
             {
                 SalesDB.Check_Promotions(Invoice);
 

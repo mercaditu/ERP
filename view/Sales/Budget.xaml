@@ -155,12 +155,12 @@
                                                     <Label Content="{lex:Loc VATIncluded}" Style="{StaticResource generic_Label}" />
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkPriceWithoutVAT"
-										  IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Mode=TwoWay}">
+										                  IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Mode=TwoWay}">
                                                     <Label Content="{lex:Loc VATExcluded}" Style="{StaticResource generic_Label}" />
                                                 </CheckBox>
                                                 <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkAvailCredit"
-										                    IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=AvailableCredit, Mode=TwoWay}">
+										                  IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=AvailableCredit, Mode=TwoWay}">
                                                     <Label Content="{lex:Loc AvailableCredit}" Style="{StaticResource generic_Label}" />
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkField"
@@ -357,10 +357,10 @@
 											Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
 
                         <!-- UnitPrice -->
-                        <DataGridTextColumn Binding="{Binding unit_price, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        <DataGridTextColumn Binding="{Binding unit_price, StringFormat={}{0:N9}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 											Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 											Header="{lex:Loc Cognitivo:local:Price}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
-                        <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N9}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 											 Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 											Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
 

@@ -573,11 +573,11 @@
                             <!-- UnitPrice -->
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100"
 														ElementStyle="{StaticResource RightAlignStyle}"
-														Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
+														Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N9}, ValidatesOnDataErrors=True}"
                                                         IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}, Converter={StaticResource TrueToFalse}}"
 														Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-                            <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                            <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N9}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 														Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
 														IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}, Converter={StaticResource TrueToFalse}}"
                                                         Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />

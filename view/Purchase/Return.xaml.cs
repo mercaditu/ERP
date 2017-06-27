@@ -124,7 +124,7 @@ namespace Cognitivo.Purchase
 
         #endregion Datagrid Events
 
-        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
         {
             if (string.IsNullOrEmpty(query))
             {
@@ -135,7 +135,7 @@ namespace Cognitivo.Purchase
             else
             {
                 purchaseReturnViewSource = FindResource("purchaseReturnViewSource") as CollectionViewSource;
-                purchaseReturnViewSource.Source = PurchaseReturnDB.db.purchase_return
+                purchaseReturnViewSource.Source = await PurchaseReturnDB.db.purchase_return
                     .Where
                     (
                     x =>

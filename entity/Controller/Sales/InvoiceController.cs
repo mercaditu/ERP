@@ -78,7 +78,7 @@ namespace entity.Controller.Sales
                 predicate = predicate.And(x => x.id_terminal == CurrentSession.Id_Terminal);
             }
 
-            if (Count==0)
+            if (Count == 0)
             {
                 Count = db.sales_invoice.Where(predicate).Count();
             }
@@ -131,6 +131,7 @@ namespace entity.Controller.Sales
         {
             int? i = null;
 
+
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail()
             {
                 State = EntityState.Added,
@@ -144,7 +145,12 @@ namespace entity.Controller.Sales
                 batch_code = ItemMovement != null ? ItemMovement.code : "",
                 expire_date = ItemMovement != null ? ItemMovement.expire_date : null,
                 movement_id = ItemMovement != null ? (int)ItemMovement.id_movement : i
+
             };
+            if (Invoice.Location != null)
+            {
+                sales_invoice_detail.id_location = Invoice.Location.id_location;
+            }
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
             sales_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
@@ -539,7 +545,7 @@ namespace entity.Controller.Sales
             if (item_movementList.Count() > 0)
             {
                 db.item_movement.AddRange(item_movementList);
-                                
+
             }
             db.SaveChanges();
 
@@ -676,8 +682,8 @@ namespace entity.Controller.Sales
                     {
                         //if (payment_schedual.Action == payment_schedual.Actions.Delete)
                         //{
-                            Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                            _Payment.DeletePaymentSchedual(db, payment_schedual.id_payment_schedual);
+                        Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                        _Payment.DeletePaymentSchedual(db, payment_schedual.id_payment_schedual);
                         //}
                     }
 

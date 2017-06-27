@@ -269,6 +269,16 @@ namespace Cognitivo.Sales
 					Account_Click(null, null);
 				}
 			}
+
+            //This code will help assign the necesary Location in Header based on last used from detail. Header Location is Not Mapped.
+            foreach (sales_invoice sales_invoice in SalesDB.db.sales_invoice.Local)
+            {
+                foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
+                {
+                    sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+                }
+            }
+
 		}
 
 		private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -337,9 +347,11 @@ namespace Cognitivo.Sales
 				{
 					if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
 					{
-						sales_invoice.sales_invoice_detail.Remove(sales_invoice_detail);
+						SalesDB.db.sales_invoice_detail.Remove(sales_invoice_detail);
 
-						if (FindResource("sales_invoicesales_invoice_detailViewSource") is CollectionViewSource sales_invoicesales_invoice_detailViewSource)
+                        SalesDB.SaveChanges_WithValidation();
+
+                        if (FindResource("sales_invoicesales_invoice_detailViewSource") is CollectionViewSource sales_invoicesales_invoice_detailViewSource)
 						{
 							if (sales_invoicesales_invoice_detailViewSource.View != null)
 							{
@@ -352,7 +364,8 @@ namespace Cognitivo.Sales
 				{
 					if (paymentViewSource.View.CurrentItem is payment payment)
 					{
-						payment.payment_detail.Remove(payment_detail);
+						PaymentDB.db.payment_detail.Remove(payment_detail);
+                        PaymentDB.SaveChanges_WithValidation();
 						paymentViewSource.View.Refresh();
 
 						if (FindResource("paymentpayment_detailViewSource") is CollectionViewSource paymentpayment_detailViewSource)

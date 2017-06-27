@@ -139,7 +139,7 @@ namespace Cognitivo.Purchase
         #endregion Toolbar events
 
         #region Filter Data
-        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        private async void  SearchInSource_Click(object sender, KeyEventArgs e, string query)
         {
             if (string.IsNullOrEmpty(query))
             {
@@ -150,7 +150,7 @@ namespace Cognitivo.Purchase
             else
             {
                 purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
-                purchase_invoiceViewSource.Source = PurchaseDB.db.purchase_invoice
+                purchase_invoiceViewSource.Source = await PurchaseDB.db.purchase_invoice
                     .Where
                     (
                     x =>

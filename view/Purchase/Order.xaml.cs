@@ -319,7 +319,7 @@ namespace Cognitivo.Purchase
 
             popupCustomize.IsOpen = false;
         }
-        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
         {
             if (string.IsNullOrEmpty(query))
             {
@@ -330,7 +330,7 @@ namespace Cognitivo.Purchase
             else
             {
                 purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
-                purchase_orderViewSource.Source = PurchaseDB.db.purchase_order
+                purchase_orderViewSource.Source = await PurchaseDB.db.purchase_order
                     .Where
                     (
                     x =>

@@ -300,8 +300,7 @@ namespace Cognitivo.Menu
         private void btnSalesCost_Clicked(object sender, RoutedEventArgs e)
         {
             Utilities.SalesInvoice SI = new Utilities.SalesInvoice();
-            SI.Update_SalesCost();
-            MessageBox.Show(SI.Update_SalesCost() + " Records Updated");
+            MessageBox.Show(SI.Update_SalesCost() + " Records Updated.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

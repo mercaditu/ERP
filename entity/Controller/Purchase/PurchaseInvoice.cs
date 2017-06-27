@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace entity.Controller.Purchase
 {
-    public class InvoiceController: Base,IDisposable
+    public class InvoiceController : Base, IDisposable
     {
         public int Count { get; set; }
 
@@ -18,29 +18,29 @@ namespace entity.Controller.Purchase
         {
             get
             {
-                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+                return (Count % PageSize) == 0 ? (Count % PageSize) : (Count / PageSize) + 1;
             }
         }
 
         public void Dispose()
-		{
-			// Dispose(true);
-			GC.SuppressFinalize(this);
-		}
+        {
+            // Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-		protected virtual void Dispose(bool disposing)
-		{
-			if (this != null)
-			{
-				if (disposing)
-				{
-					this.Dispose();
-					// Dispose other managed resources.
-				}
-				//release unmanaged resources.
-			}
-		}
-		public async void Load(int PageIndex)
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this != null)
+            {
+                if (disposing)
+                {
+                    this.Dispose();
+                    // Dispose other managed resources.
+                }
+                //release unmanaged resources.
+            }
+        }
+        public async void Load(int PageIndex)
         {
 
             var predicate = PredicateBuilder.True<purchase_invoice>();
@@ -86,7 +86,7 @@ namespace entity.Controller.Purchase
             db.purchase_invoice.Add(purchase_invoice);
             return purchase_invoice;
         }
-        
+
         public purchase_invoice Edit(purchase_invoice Invoice)
         {
             Invoice.IsSelected = true;
@@ -168,7 +168,7 @@ namespace entity.Controller.Purchase
         //}
 
         #endregion
-        
+
         #region Approve
         public void Approve()
         {
@@ -193,7 +193,7 @@ namespace entity.Controller.Purchase
                             invoice.contact.trans_code_exp = invoice.contact.trans_code_exp ?? DateTime.Now.AddMonths(1);
                         }
 
-                        List <payment_schedual> payment_schedualList = new List<payment_schedual>();
+                        List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
 
                         ///Insert Payment Schedual Logic
@@ -368,7 +368,7 @@ namespace entity.Controller.Purchase
         public bool SaveChanges_WithValidation()
         {
             NumberOfRecords = 0;
-            
+
             foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local)
             {
                 if (purchase_invoice.IsSelected && purchase_invoice.Error == null)

@@ -296,5 +296,12 @@ namespace Cognitivo.Menu
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
 
         }
+
+        private void btnSalesCost_Clicked(object sender, RoutedEventArgs e)
+        {
+            Utilities.SalesInvoice SI = new Utilities.SalesInvoice();
+            SI.Update_SalesCost();
+            MessageBox.Show(SI.Update_SalesCost() + " Records Updated");
+        }
     }
 }

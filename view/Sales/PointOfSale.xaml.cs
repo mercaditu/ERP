@@ -1,15 +1,16 @@
-﻿using Cognitivo.Menu;
-using entity;
+﻿using entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Cognitivo.Sales
 {
@@ -153,7 +154,7 @@ namespace Cognitivo.Sales
             ///Creating new PAYMENT for upcomming sale.
             payment payment = PaymentDB.New(true);
             payment.id_currencyfx = sales_invoice.id_currencyfx;
-			PaymentDB.db.payments.Add(payment);
+            PaymentDB.db.payments.Add(payment);
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
@@ -252,6 +253,26 @@ namespace Cognitivo.Sales
                     Account_Click(null, null);
                 }
             }
+
+            var task = Task.Factory.StartNew(() =>
+            {
+                System.Threading.Thread.Sleep(5000);
+                cbxContract_SelectionChanged(null, null);
+            }
+            );
+        }
+
+        private void cbxContract_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
+            {
+                if (Settings.Default.Location > 0)
+                {
+                    int Original = Settings.Default.Location;
+                    sbxItem.LocationID = 0;
+                    sbxItem.LocationID = Original;
+                }
+            }));
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -465,16 +486,40 @@ namespace Cognitivo.Sales
             payment payment = paymentViewSource.View.CurrentItem as payment;
             if (payment != null && sales_invoice != null)
             {
-                sales_invoice.TotalChanged = Math.Round(payment.GrandTotalDetail - sales_invoice.GrandTotal)<0?0 : Math.Round(payment.GrandTotalDetail - sales_invoice.GrandTotal);
+                sales_invoice.TotalChanged = Math.Round(payment.GrandTotalDetail - sales_invoice.GrandTotal) < 0 ? 0 : Math.Round(payment.GrandTotalDetail - sales_invoice.GrandTotal);
                 sales_invoice.RaisePropertyChanged("TotalChanged");
             }
-           
+
         }
 
         private void Expander_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-             Settings.Default.Save();
-          
+            Settings.Default.Save();
+
+        }
+
+        private void Qty_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
+            sales_invoice_detail detail = sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail;
+
+            if (detail != null)
+            {
+                if (detail.item != null && detail.Quantity_InStock > 0)
+                {
+                    if (detail.quantity > detail.Quantity_InStock &&
+                        (
+                        detail.item.id_item_type == item.item_type.Product || 
+                        detail.item.id_item_type == item.item_type.RawMaterial ||
+                        detail.item.id_item_type == item.item_type.Supplies)
+                        )
+                    {
+                        detail.quantity = (int)detail.Quantity_InStock;
+                        detail.RaisePropertyChanged("quantity");
+                        MessageBox.Show("Quantity Exceeded. Reverting back to " + detail.Quantity_InStock.ToString(), "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            }
         }
     }
 }

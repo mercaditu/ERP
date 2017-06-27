@@ -122,7 +122,6 @@ namespace cntrl.Controls
             SmartBox_Item c = sender as SmartBox_Item;
             if (c != null)
             {
-
                 c.OnLocationChange((int)e.NewValue);
             }
         }
@@ -188,7 +187,6 @@ namespace cntrl.Controls
 
         public SmartBox_Item()
         {
-          
             InitializeComponent();
 
             ///Exists code if in design view.

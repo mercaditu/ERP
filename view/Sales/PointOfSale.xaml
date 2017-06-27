@@ -156,7 +156,6 @@
                         </StackPanel>
                         <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60" VerticalAlignment="Top" Margin="0,80,0,0">
                             <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Exclude_OutOfStock="True" Select="Item_Select" 
-                                                 LocationID="{Binding Source={x:Static pref:Settings.Default}, Path=Location, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                  QuantityIntegration="{Binding QuantityIntegration, Source={x:Static pref:Settings.Default}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                         </Viewbox>
                         <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True" CanUserDeleteRows="False"
@@ -182,7 +181,14 @@
                                 <DataGridTextColumn Binding="{Binding vat_group.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"
 								    Header="{lex:Loc Cognitivo:local:VAT}" IsReadOnly="True" Width="*" Visibility="Hidden" />
                                 <DataGridTextColumn Binding="{Binding quantity, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-								    Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />
+								    Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style TargetType="{x:Type TextBox}">
+                                            <EventSetter Event="LostFocus" Handler="Qty_LostFocus" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+
+                                </DataGridTextColumn>
                                 <!-- UnitPrice -->
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"
 								    Binding="{Binding unit_price, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -439,6 +445,7 @@
                                               ItemsSource="{Binding Source={x:Static entity:CurrentSession.Contracts}}"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  SelectedValuePath="id_contract" x:Name="cbxContract"
+                                              SelectionChanged="cbxContract_SelectionChanged"
 											  SelectedValue="{Binding id_contract, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <ComboBox.ItemsPanel>
                                             <ItemsPanelTemplate>

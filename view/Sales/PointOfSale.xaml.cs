@@ -460,7 +460,7 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            if (payment!=null && sales_invoice!=null)
+            if (payment != null && sales_invoice != null)
             {
                 sales_invoice.TotalChanged = Math.Round(payment.GrandTotalDetail - sales_invoice.GrandTotal)<0?0 : Math.Round(payment.GrandTotalDetail - sales_invoice.GrandTotal);
                 sales_invoice.RaisePropertyChanged("TotalChanged");

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace entity.Brillo
 {
@@ -108,6 +109,11 @@ namespace entity.Brillo
                 }
             }
             return originalValue;
+        }
+
+        public static decimal convert_Values(decimal v, int id_currencyfx1, int id_currencyfx2, object sales)
+        {
+            throw new NotImplementedException();
         }
 
         private static decimal AwayFromDefault(decimal Rate, decimal OriginalValue, bool IsReverse)

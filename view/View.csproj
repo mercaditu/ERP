@@ -886,6 +886,7 @@
       <DependentUpon>Utilities.xaml</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Utilities\SalesInvoice.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

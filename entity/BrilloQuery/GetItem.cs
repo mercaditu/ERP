@@ -8,7 +8,7 @@ namespace entity.BrilloQuery
     {
         public ICollection<Item> Items { get; set; }
 
-        public GetItems(bool Exclude_OutOfStock)
+        public GetItems()
         {
             Items = new List<Item>();
             string query = @"SET sql_mode = '';

@@ -129,9 +129,7 @@ namespace cntrl.Controls
         
         protected virtual void OnLocationChange(int newvalue)
         {
-
             var task = Task.Factory.StartNew(() => LoadData_Thread(newvalue));
-
         }
        
 
@@ -156,7 +154,6 @@ namespace cntrl.Controls
                         {
                             Quantity = 1;
                         }
-                       
                     }
                     else
                     {
@@ -215,7 +212,7 @@ namespace cntrl.Controls
                 Settings.ExactSearch = true;            
             }
             smartBoxItemSetting.Default.Save();
-            LoadData();
+            //LoadData();
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
         }
@@ -234,16 +231,42 @@ namespace cntrl.Controls
 
             if (LocID == 0)
             {
-                using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(Exclude_OutOfStock))
+                using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
                 {
-                    Items = Execute.Items.AsQueryable();
+                    if (Exclude_OutOfStock)
+                    {
+                        Items = Execute.Items.AsQueryable().Where(x => 
+                        x.InStock > 0 && 
+                        (
+                        x.Type == entity.item.item_type.Product || 
+                        x.Type == entity.item.item_type.RawMaterial || 
+                        x.Type == entity.item.item_type.Supplies
+                        ));
+                    }
+                    else
+                    {
+                        Items = Execute.Items.AsQueryable();
+                    }
                 }
             }
             else
             {
                 using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(LocID))
                 {
-                    Items = Execute.Items.AsQueryable();
+                    if (Exclude_OutOfStock)
+                    {
+                        Items = Execute.Items.AsQueryable().Where(x =>
+                                                x.InStock > 0 &&
+                        (
+                        x.Type == entity.item.item_type.Product ||
+                        x.Type == entity.item.item_type.RawMaterial ||
+                        x.Type == entity.item.item_type.Supplies
+                        ));
+                    }
+                    else
+                    {
+                        Items = Execute.Items.AsQueryable();
+                    }
                 }
             }
            
@@ -283,7 +306,7 @@ namespace cntrl.Controls
         }
 
         private void StartSearch(object sender, KeyEventArgs e)
-        {
+       {
             if (e.Key == Key.Enter)
             {
                 if (QuantityIntegration)

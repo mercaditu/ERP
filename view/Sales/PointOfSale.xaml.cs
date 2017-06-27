@@ -117,9 +117,12 @@ namespace Cognitivo.Sales
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesDB.Approve();
-                
-                payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
-                payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+
+                //if (false)
+                //{
+                //    payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                //    payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+                //}
 
                 List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
                 PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);

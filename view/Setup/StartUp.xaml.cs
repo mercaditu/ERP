@@ -80,7 +80,7 @@ namespace Cognitivo.Menu
 
                 int int_update = int.Parse(str_update);
                 int_update = int_update * -1;
-                DateTime uptime_date = DateTime.Now.AddSeconds((int)int_update);
+                DateTime uptime_date = DateTime.Now.AddSeconds(int_update);
                 Dispatcher.BeginInvoke((Action)(() => { lbl_uptime.Content = uptime_date.ToLongDateString(); }));
 
                 _one = true;

@@ -1,7 +1,6 @@
 ﻿using entity;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -12,7 +11,6 @@ namespace Cognitivo.Production
 {
     public partial class ServiceContract : Page
     {
-
         private CollectionViewSource contactViewSource, production_service_accountViewSource;
         db db = new db();
 
@@ -88,7 +86,6 @@ namespace Cognitivo.Production
                 {
                     contactViewSource.Source = null;
                 }
-
             }
         }
 
@@ -112,22 +109,23 @@ namespace Cognitivo.Production
 
                             if (order != null)
                             {
-                                purchase_invoice invoice = new purchase_invoice();
-
-                                invoice.status = Status.Documents_General.Pending;
-                                invoice.id_purchase_order = order.id_purchase_order;
-                                invoice.id_contact = order.id_contact;
-                                invoice.contact = order.contact;
-                                invoice.id_project = order.id_project;
-                                invoice.id_currencyfx = order.id_currencyfx; //Bad
-                                invoice.id_contract = order.id_contract;
-                                invoice.id_condition = order.id_condition;
-                                invoice.comment = order.comment;
-                                invoice.is_impex = order.is_impex;
-                                invoice.trans_date = DateTime.Now;
-                                invoice.id_branch = order.id_branch;
-                                invoice.id_terminal = order.id_terminal;
-                                invoice.id_department = order.id_department;
+                                purchase_invoice invoice = new purchase_invoice()
+                                {
+                                    status = Status.Documents_General.Pending,
+                                    id_purchase_order = order.id_purchase_order,
+                                    id_contact = order.id_contact,
+                                    contact = order.contact,
+                                    id_project = order.id_project,
+                                    id_currencyfx = order.id_currencyfx, //Bad
+                                    id_contract = order.id_contract,
+                                    id_condition = order.id_condition,
+                                    comment = order.comment,
+                                    is_impex = order.is_impex,
+                                    trans_date = DateTime.Now,
+                                    id_branch = order.id_branch,
+                                    id_terminal = order.id_terminal,
+                                    id_department = order.id_department
+                                };
 
                                 db.purchase_invoice.Add(invoice);
                                 Invoice_List.Add(invoice);
@@ -146,20 +144,22 @@ namespace Cognitivo.Production
                         OrderDetail_List.Add(ParentAccount.purchase_order_detail);
                         purchase_order_detail purchase_order_detail = ParentAccount.purchase_order_detail;
 
-                        purchase_invoice_detail detail = new purchase_invoice_detail();
-                        detail.id_item = purchase_order_detail.id_item;
-                        detail.id_vat_group = purchase_order_detail.id_vat_group;
-                        detail.app_vat_group = purchase_order_detail.app_vat_group;
-                        detail.batch_code = purchase_order_detail.batch_code;
-                        detail.expire_date = purchase_order_detail.expire_date;
-                        detail.id_cost_center = purchase_order_detail.id_cost_center;
+                        purchase_invoice_detail detail = new purchase_invoice_detail()
+                        {
+                            id_item = purchase_order_detail.id_item,
+                            id_vat_group = purchase_order_detail.id_vat_group,
+                            app_vat_group = purchase_order_detail.app_vat_group,
+                            batch_code = purchase_order_detail.batch_code,
+                            expire_date = purchase_order_detail.expire_date,
+                            id_cost_center = purchase_order_detail.id_cost_center,
 
-                        detail.id_purchase_order_detail = ParentAccount.id_purchase_order_detail;
-                        detail.quantity = ParentAccount.child.Where(x => x.purchase_invoice_detail == null).Sum(x => x.debit);
-                        detail.unit_cost = purchase_order_detail.unit_cost;
-                        detail.UnitCost_Vat = purchase_order_detail.UnitCost_Vat;
-                        detail.SubTotal = purchase_order_detail.SubTotal;
-                        detail.SubTotal_Vat = purchase_order_detail.SubTotal_Vat;
+                            id_purchase_order_detail = ParentAccount.id_purchase_order_detail,
+                            quantity = ParentAccount.child.Where(x => x.purchase_invoice_detail == null).Sum(x => x.debit),
+                            unit_cost = purchase_order_detail.unit_cost,
+                            UnitCost_Vat = purchase_order_detail.UnitCost_Vat,
+                            SubTotal = purchase_order_detail.SubTotal,
+                            SubTotal_Vat = purchase_order_detail.SubTotal_Vat
+                        };
 
                         if (ParentAccount.purchase_order_detail != null)
                         {

@@ -361,6 +361,9 @@ namespace entity
 
         public int? id_sales_promotion { get; set; }
 
+        [NotMapped]
+        public string DecimalStringFormat { get; set; }
+
         #region "Foreign Key"
 
         public virtual app_vat_group app_vat_group { get; set; }

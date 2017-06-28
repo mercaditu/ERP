@@ -336,6 +336,7 @@
     </Compile>
     <Compile Include="Converters\Action2ColorConverter.cs" />
     <Compile Include="Converters\Bool2InputProduction.cs" />
+    <Compile Include="Converters\DecimalFormat.cs" />
     <Compile Include="Converters\FavoriteConverter.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Converters\sbxItem_CheckType.cs" />

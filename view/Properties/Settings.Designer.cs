@@ -180,5 +180,17 @@ namespace Cognitivo.Properties {
                 return ((string)(this["MySQLconnString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("N2")]
+        public string DecimalStringFormat {
+            get {
+                return ((string)(this["DecimalStringFormat"]));
+            }
+            set {
+                this["DecimalStringFormat"] = value;
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <CollectionViewSource x:Key="sales_packingViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_packing}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_terminalViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_terminal}, CreateList=True}" />
@@ -248,7 +249,15 @@
                                                 DisplayMemberPath="name" SelectedValuePath="id_location" />
                                 <DataGridTextColumn Binding="{Binding id_packinglist_detail, UpdateSourceTrigger=PropertyChanged}" Header="Id" IsReadOnly="True" Width="100" Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged}" />
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
-                                <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" />
+                                <DataGridTextColumn  Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding gross_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                             Header="{lex:Loc Cognitivo:local:GrossWeight}" Width="64" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTextColumn Binding="{Binding net_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"

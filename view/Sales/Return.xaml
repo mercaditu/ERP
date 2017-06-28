@@ -30,6 +30,7 @@
         <!--<Converter:BooleanToIsStatusConverter x:Key="BoolToIssued" />-->
         <!--<Converter:IsActive2ColorConverter x:Key="ActiveValueConverter" />-->
         <Converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <Converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_returnViewSource}}" />
@@ -303,21 +304,69 @@
 																			  ValidatesOnDataErrors=True}"
 													  ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}" />
 
-                                <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True,ValidatesOnNotifyDataErrors=True}" Header="{lex:Loc Cognitivo:local:Quantity}"
-													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
-                                <DataGridTextColumn Binding="{Binding unit_price, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto" />
-                                <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto" />
-                                <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}"
+													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
+													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="unit_price" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
+													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="UnitPrice_Vat" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
 													Header="{lex:Loc Cognitivo:local:SubTotal}"
-													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="True" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="SubTotal" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
 													Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}"
-													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="True" />
-                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Total_Vat, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=OneWay, StringFormat={}{0:N2}}"
+													ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" IsReadOnly="True" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="SubTotal_Vat" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn IsReadOnly="True" 
 													ElementStyle="{StaticResource RightAlignStyle}"
-													Header="{lex:Loc Cognitivo:local:VAT}" Width="Auto" />
+													Header="{lex:Loc Cognitivo:local:VAT}" Width="Auto" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="Total_Vat" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

@@ -26,13 +26,13 @@ namespace Cognitivo.Sales
        
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
-
-		public Invoice()
+      
+        public Invoice()
         {
             InitializeComponent();
-			
-			//Load Controller.
-			SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
+        
+            //Load Controller.
+            SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.
@@ -333,7 +333,7 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-
+            Cognitivo.Properties.Settings.Default.Save();
             Settings.Default.Save();
             SalesSettings = Settings.Default;
             popupCustomize.IsOpen = false;

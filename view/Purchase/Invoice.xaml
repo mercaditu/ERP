@@ -26,6 +26,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_invoicepurchase_invoice_detailViewSource" Source="{Binding purchase_invoice_detail, Source={StaticResource purchase_invoiceViewSource}}" />
         <CollectionViewSource x:Key="purchase_invoice_detailpurchase_invoice_dimensionViewSource" Source="{Binding purchase_invoice_dimension, Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" />

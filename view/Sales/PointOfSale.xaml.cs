@@ -253,26 +253,6 @@ namespace Cognitivo.Sales
                     Account_Click(null, null);
                 }
             }
-
-            var task = Task.Factory.StartNew(() =>
-            {
-                System.Threading.Thread.Sleep(5000);
-                cbxContract_SelectionChanged(null, null);
-            }
-            );
-        }
-
-        private void cbxContract_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
-            {
-                if (Settings.Default.Location > 0)
-                {
-                    int Original = Settings.Default.Location;
-                    sbxItem.LocationID = 0;
-                    sbxItem.LocationID = Original;
-                }
-            }));
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)

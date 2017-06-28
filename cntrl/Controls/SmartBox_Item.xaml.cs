@@ -268,7 +268,6 @@ namespace cntrl.Controls
                 }
             }
            
-
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () 
             {
                 tbxSearch.IsEnabled = true;

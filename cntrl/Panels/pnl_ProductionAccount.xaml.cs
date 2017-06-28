@@ -34,9 +34,8 @@ namespace cntrl.Panels
 			(
 				x =>
 				x.id_company == CurrentSession.Id_Company &&
-				x.id_item == production_execution_detail.id_item &&
-				x.id_order_detail == production_execution_detail.id_order_detail
-
+				x.id_item == production_execution_detail.id_item // &&
+				//x.id_order_detail == production_execution_detail.id_order_detail
 			)
 			.Include(x => x.item)
 			.ToList();

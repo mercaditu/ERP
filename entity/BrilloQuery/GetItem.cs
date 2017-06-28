@@ -105,7 +105,7 @@ namespace entity.BrilloQuery
 
 								 where item.id_company = {0}
 									and mov.id_location = {1}
-									and item.is_active = 1 and id_item={2} 
+									and item.is_active = 1 and item.id_item={2} 
 								 group by item.id_item";
 
             query = string.Format(query, CurrentSession.Id_Company, LocationID, ItemID);

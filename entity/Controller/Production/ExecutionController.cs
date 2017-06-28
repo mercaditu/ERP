@@ -52,16 +52,22 @@ namespace entity.Controller.Production
                         ///Fraction: Takes a Fraction of the parent.
                         ///TODO: Fraction only takes cost of parent. We need to include other things as well.
 
-                        using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems((int)production_execution_detail.id_item, production_order_detail.production_order.production_line.id_location))
+                        if (production_execution_detail.item.id_item_type==item.item_type.Product
+                            || production_execution_detail.item.id_item_type == item.item_type.RawMaterial
+                            || production_execution_detail.item.id_item_type == item.item_type.Supplies)
                         {
-                            BrilloQuery.Item Item = Execute.Items.Where(x => x.InStock == 0).FirstOrDefault();
-                            if (Item == null || Item.InStock <= 0)
+                            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems((int)production_execution_detail.id_item, production_order_detail.production_order.production_line.id_location))
                             {
-                                //show error for this item.
-                                production_order_detail.OutOfStock = true;
-                                continue;
+                                BrilloQuery.Item Item = Execute.Items.Where(x => x.InStock == 0).FirstOrDefault();
+                                if (Item == null || Item.InStock <= 0)
+                                {
+                                    //show error for this item.
+                                    production_order_detail.OutOfStock = true;
+                                    continue;
+                                }
                             }
                         }
+                     
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();

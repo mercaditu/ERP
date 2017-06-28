@@ -206,7 +206,7 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
             
-            if (MessageBox.Show("FINALIZAR PRODUCCION: Está seguro de finalizarlo?") == MessageBoxResult.Yes)
+            if (MessageBox.Show("FINALIZAR PRODUCCION: Está seguro de finalizarlo?","Cognitivo",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Production))
                 {

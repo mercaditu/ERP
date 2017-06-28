@@ -74,8 +74,8 @@
                 <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="220" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="277" />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1" Margin="8,0,68,0" Width="264">
                 <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}" HorizontalAlignment="Center" />
@@ -186,13 +186,15 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Grid Margin="15" Grid.Row="1" Grid.ColumnSpan="3">
-                <StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+            <Grid Margin="15,0" Grid.Row="1" Grid.ColumnSpan="3">
+                <StackPanel 
+                    Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" />
-                    <Controls:SmartBox_Item x:Name="sbxItem" Select="cbxItem_KeyDown" LocationID="{Binding ElementName=id_location_originComboBox,Path=SelectedValue,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                    <Controls:SmartBox_Item x:Name="sbxItem" Select="cbxItem_KeyDown" 
+                                            LocationID="{Binding ElementName=id_location_originComboBox,Path=SelectedValue,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                                             Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top" />
                 </StackPanel>
-                <Grid Grid.Row="1" Margin="0,64,0,0">
+                <Grid Grid.Row="1" Margin="0,58,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="1*" />
@@ -222,7 +224,6 @@
                             <DataTemplate>
                                 <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-
                                         <StackPanel>
                                             <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                             <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
@@ -230,10 +231,10 @@
                                         <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
                                             <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                             <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+						                             Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                             <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
                                             <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
-								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
+								                        {Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
 								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                         </StackPanel>
                                     </StackPanel>

@@ -448,7 +448,6 @@
                                               ItemsSource="{Binding Source={x:Static entity:CurrentSession.Contracts}}"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  SelectedValuePath="id_contract" x:Name="cbxContract"
-                                              SelectionChanged="cbxContract_SelectionChanged"
 											  SelectedValue="{Binding id_contract, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <ComboBox.ItemsPanel>
                                         <ItemsPanelTemplate>

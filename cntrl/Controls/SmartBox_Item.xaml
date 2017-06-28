@@ -11,7 +11,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
-             MinWidth="128" Focusable="True"
+             MinWidth="128" Focusable="True" Loaded="_SmartBox_Item_Loaded"
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
@@ -81,32 +81,32 @@
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}" />
 
-        <Border x:Name="border" Background="{StaticResource AccentColor_Brush}" CornerRadius="4"
+        <Border x:Name="border" CornerRadius="4"
                 HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-1" RenderTransformOrigin="0.5,0.5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding}">
-                <Button x:Name="button" Width="28" Height="28" Content="" ToolTip="{lex:Loc Refresh}" Foreground="Black" Background="Coral" BorderBrush="Black" BorderThickness="1"
+                <Button x:Name="button" Margin="1,0" Width="28" Height="28" Content="" ToolTip="{lex:Loc Refresh}" Foreground="Black" Background="Coral" BorderBrush="Black" BorderThickness="0.3"
                         FontFamily="/cntrl;component/Resources/#cognitivo"
                         PreviewMouseUp="Refresh_PreviewMouseUp" Visibility="Collapsed">
                     <Button.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </Button.Effect>
                 </Button>
-                <ToggleButton x:Name="toggleButton" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchonlyavailable}" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black" Margin="0"
-                              Visibility="{Binding Exclude_OutOfStock, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
+                <ToggleButton x:Name="toggleButton" Margin="1,0" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchonlyavailable}" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black"
+                              Visibility="{Binding Exclude_OutOfStock, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="0.3"
                               IsChecked="{Binding Exclude_OutOfStock, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </ToggleButton.Effect>
                 </ToggleButton>
-                <ToggleButton x:Name="toggleButton1" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchexactcode}" Foreground="Black" Background="Gold" BorderBrush="Black"
-                             Visibility="{Binding ExactSearch, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="1"
+                <ToggleButton x:Name="toggleButton1" Margin="1,0" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchexactcode}" Foreground="Black" Background="Gold" BorderBrush="Black" BorderThickness="0.3"
+                             Visibility="{Binding ExactSearch, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" FontFamily="/cntrl;component/Resources/#cognitivo"
                               IsChecked="{Binding ExactSearch,ElementName=_SmartBox_Item, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </ToggleButton.Effect>
                 </ToggleButton>
                 <StackPanel x:Name="stackPanel" Orientation="Horizontal">
-                    <ToggleButton Width="28" Height="28" Content="A"  Visibility="Collapsed" ToolTip="{lex:Loc Configuration}" Foreground="DimGray" Background="Silver" BorderBrush="DimGray" BorderThickness="1"
+                    <ToggleButton Margin="1,0" Width="28" Height="28" Content="A"  Visibility="Collapsed" ToolTip="{lex:Loc Configuration}" Foreground="DimGray" Background="Silver" BorderBrush="DimGray" BorderThickness="0.3"
                                   FontFamily="/cntrl;component/Resources/#cognitivo">
                         <ToggleButton.Effect>
                             <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
@@ -129,7 +129,7 @@
                         </Border>
                     </Popup>
                 </StackPanel>
-                <Button x:Name="button1" Width="28" Height="28" Content="+" ToolTip="{lex:Loc New}" Foreground="Black" Background="PaleGreen" BorderBrush="Black" BorderThickness="1"
+                <Button x:Name="button1" Margin="1,0" Width="28" Height="28" Content="+" ToolTip="{lex:Loc New}" Foreground="Black" Background="PaleGreen" BorderBrush="Black" BorderThickness="0.3"
                         FontFamily="/cntrl;component/Resources/#cognitivo"
                         PreviewMouseUp="Add_PreviewMouseUp"
                         Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">

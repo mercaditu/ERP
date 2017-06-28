@@ -71,12 +71,6 @@ namespace entity.BrilloQuery
                         Item.ComapnyID = Convert.ToInt16(DataRow["CompanyID"]);
                     }
 
-                    ////If True, then don't insert into list of items.
-                    //if (Exclude_OutOfStock && (type == 1 || type == 2 || type == 6))
-                    //{
-                    //    continue;  
-                    //}
-
                     Items.Add(Item);
                 }
             }

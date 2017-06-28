@@ -53,7 +53,7 @@ namespace cntrl.Controls
                 _Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly) ? value : false;
                 RaisePropertyChanged("Exclude_OutOfStock");
 
-                LoadData();
+                LoadData(LocationID);
             }
         }
 
@@ -128,7 +128,7 @@ namespace cntrl.Controls
         
         protected virtual void OnLocationChange(int newvalue)
         {
-            var task = Task.Factory.StartNew(() => LoadData_Thread(newvalue));
+            var task = Task.Factory.StartNew(() => LoadData(newvalue));
         }
        
 
@@ -210,16 +210,25 @@ namespace cntrl.Controls
                 Settings.ExactSearch = true;            
             }
             smartBoxItemSetting.Default.Save();
-            //LoadData();
+            
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
         }
 
-        private void LoadData()
+        private void _SmartBox_Item_Loaded(object sender, RoutedEventArgs e)
         {
-            progBar.Visibility = Visibility.Visible;
-            tbxSearch.IsEnabled = false;
             int LocId = LocationID;
+            LoadData(LocationID);
+        }
+
+        private void LoadData(int LocId)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
+            {
+                progBar.Visibility = Visibility.Visible;
+                tbxSearch.IsEnabled = false;
+            }));
+            
             var task = Task.Factory.StartNew(() => LoadData_Thread(LocId));
         }
 
@@ -227,47 +236,33 @@ namespace cntrl.Controls
         {
             Items = null;
 
+            entity.BrilloQuery.GetItems Execute = null;
+
             if (LocID == 0)
             {
-                using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems())
-                {
-                    if (Exclude_OutOfStock)
-                    {
-                        Items = Execute.Items.AsQueryable().Where(x => 
-                        x.InStock > 0 && 
-                        (
-                        x.Type == entity.item.item_type.Product || 
-                        x.Type == entity.item.item_type.RawMaterial || 
-                        x.Type == entity.item.item_type.Supplies
-                        ));
-                    }
-                    else
-                    {
-                        Items = Execute.Items.AsQueryable();
-                    }
-                }
+                Execute = new entity.BrilloQuery.GetItems();
             }
             else
             {
-                using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems(LocID))
-                {
-                    if (Exclude_OutOfStock)
-                    {
-                        Items = Execute.Items.AsQueryable().Where(x =>
-                                                x.InStock > 0 &&
-                        (
-                        x.Type == entity.item.item_type.Product ||
-                        x.Type == entity.item.item_type.RawMaterial ||
-                        x.Type == entity.item.item_type.Supplies
-                        ));
-                    }
-                    else
-                    {
-                        Items = Execute.Items.AsQueryable();
-                    }
-                }
+                Execute = new entity.BrilloQuery.GetItems(LocID);
             }
-           
+
+            if (Exclude_OutOfStock)
+            {
+                Items = Execute.Items.AsQueryable()
+                    .Where(x =>
+                x.InStock > 0 &&
+                (
+                x.Type == entity.item.item_type.Product ||
+                x.Type == entity.item.item_type.RawMaterial ||
+                x.Type == entity.item.item_type.Supplies
+                ));
+            }
+            else
+            {
+                Items = Execute.Items.AsQueryable();
+            }
+
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () 
             {
                 tbxSearch.IsEnabled = true;
@@ -427,7 +422,7 @@ namespace cntrl.Controls
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            LoadData();
+            LoadData(LocationID);
         }
 
         public void SmartBoxItem_Focus()

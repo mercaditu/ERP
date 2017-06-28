@@ -233,11 +233,13 @@ namespace Cognitivo.Sales
             New_Sale_Payment();
 
             //PAYMENT TYPE
-            await SalesDB.db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).LoadAsync();
+            await SalesDB.db.payment_type
+                .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal)
+                .LoadAsync();
             CollectionViewSource payment_typeViewSource = FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = SalesDB.db.payment_type.Local;
 
-            cbxSalesRep.ItemsSource = CurrentSession.SalesReps; //await SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToListAsync(); //CurrentSession.Get_SalesRep();
+            cbxSalesRep.ItemsSource = CurrentSession.SalesReps; 
 
             CollectionViewSource app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
             app_currencyViewSource.Source = CurrentSession.Currencies;

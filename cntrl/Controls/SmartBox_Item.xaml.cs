@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -219,6 +220,14 @@ namespace cntrl.Controls
         {
             int LocId = LocationID;
             LoadData(LocationID);
+
+            //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
+            //Load_BasicData(null, null);
+            //Load Basic Data into Timer.
+            //System.Timers.Timer myTimer = new System.Timers.Timer();
+            //myTimer.Elapsed += new ElapsedEventHandler(LoadData);
+            //myTimer.Interval = 60000;
+            //myTimer.Start();
         }
 
         private void LoadData(int LocId)

@@ -465,7 +465,7 @@ namespace Cognitivo.Production
                         {
                             //Summ all Executed Quantities, because they are not yet discounted from Stock. Once approved they will be discounted.
                             decimal QuantityExe = production_order_detail.production_execution_detail.Sum(x => x.quantity);
-                            decimal QuantityAvaiable = 0;
+                            decimal QuantityInStock = 0;
                             int LocationID = production_order_detail.production_order.production_line.id_location;
 
                             if (production_order_detail.item.item_product.Count() > 0)
@@ -476,20 +476,21 @@ namespace Cognitivo.Production
                                     x.id_item_product == ProductID &&
                                     x.id_location == LocationID).LoadAsync();
 
-                                QuantityAvaiable = ExecutionDB.db.item_movement.Local.Sum(x => x.credit) - ExecutionDB.db.item_movement.Local.Sum(x => x.debit);
+                                QuantityInStock = ExecutionDB.db.item_movement.Local.Sum(x => x.credit) - ExecutionDB.db.item_movement.Local.Sum(x => x.debit);
                             }
 
-                            if (QuantityAvaiable < (QuantityExe + Quantity))
+                            if (QuantityInStock < (QuantityExe + Quantity))
                             {
-                                toolBar.msgWarning("Item is not in Stock; Execution Quantity Is " + Math.Round(QuantityExe, 2) + ", Stock Quantity Is " + Math.Round(QuantityAvaiable, 2));
-                                Quantity = (QuantityAvaiable - QuantityExe);
+                                toolBar.msgWarning("Item is not in Stock; Execution Quantity Is " + Math.Round(QuantityExe, 2) + ", Stock Quantity Is " + Math.Round(QuantityInStock, 2));
+                                Quantity = (QuantityInStock - (QuantityExe + Quantity));
 
-                                //If quantity is zero, just ignore.
+                                //If quantity is zero or negative, just ignore.
                                 if (Quantity <= 0)
                                 {
                                     return;
                                 }
                             }
+
                             Insert_IntoDetail(production_order_detail, Quantity);
                             RefreshData();
                         }
@@ -659,7 +660,7 @@ namespace Cognitivo.Production
             }
         }
 
-      
+     
 
         public event PropertyChangedEventHandler PropertyChanged;
 

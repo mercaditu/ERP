@@ -161,11 +161,18 @@ namespace Cognitivo.Production
                             SubTotal_Vat = purchase_order_detail.SubTotal_Vat
                         };
 
+                        //If quantity is zero, then just continue to next product.
+                        if (detail.quantity == 0)
+                        {
+                            continue;
+                        }
+
                         if (ParentAccount.purchase_order_detail != null)
                         {
                             if (ParentAccount.purchase_order_detail.purchase_order != null)
                             {
-                                if (Order_List.Contains(ParentAccount.purchase_order_detail.purchase_order) == false)
+                                int id_purchase_order = ParentAccount.purchase_order_detail.id_purchase_order;
+                                if (Order_List.Where(x => x.id_purchase_order == id_purchase_order).Count() > 0)
                                 {
                                     purchase_invoice invoice = Invoice_List.Where(x => x.id_purchase_order == ParentAccount.purchase_order_detail.id_purchase_order).FirstOrDefault();
                                     invoice.purchase_invoice_detail.Add(detail);
@@ -180,6 +187,12 @@ namespace Cognitivo.Production
                         }
                     }
                 }
+            }
+
+            //Cleanup code. Remove extra Invoice without Details.
+            if (db.purchase_invoice.Local.Where(x => x.purchase_invoice_detail.Count() == 0).Count() > 0)
+            {
+                db.purchase_invoice.RemoveRange(db.purchase_invoice.Local.Where(x => x.purchase_invoice_detail.Count() == 0).ToList());
             }
 
             toolbar.msgSaved(db.SaveChanges());

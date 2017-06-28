@@ -58,8 +58,8 @@ namespace entity.Controller.Production
                         {
                             using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems((int)production_execution_detail.id_item, production_order_detail.production_order.production_line.id_location))
                             {
-                                BrilloQuery.Item Item = Execute.Items.Where(x => x.InStock == 0).FirstOrDefault();
-                                if (Item == null || Item.InStock <= 0)
+                                BrilloQuery.Item Item = Execute.Items.Where(x => x.InStock <= 0).FirstOrDefault();
+                                if (Item != null)
                                 {
                                     //show error for this item.
                                     production_order_detail.OutOfStock = true;

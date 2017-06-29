@@ -197,7 +197,8 @@ namespace entity.Brillo.Logic
             //Just bring Sales Packing that has Item Product and No relation to Sales Invoice. This will help discount stock only for thse
             //that are not linked to Sales Invoice. If linked with Sales Invoice, the stock will get discounted there forcefully.
             foreach (sales_packing_detail packing_detail in
-                sales_packing.sales_packing_detail
+                sales_packing
+                .sales_packing_detail
                 .Where(x => x.item.item_product.Count() > 0 
                 && x.sales_packing_relation.Count() == 0 
                 && x.user_verified))

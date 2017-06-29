@@ -571,7 +571,10 @@ namespace Cognitivo.Sales
                             sales_invoice _sales_invoice = new sales_invoice()
                             {
                                 contact = packing.contact,
+                                id_contact = packing.id_contact,
                                 app_branch = packing.app_branch,
+                                app_contract=Order.app_contract,
+                                app_condition = Order.app_condition,
                                 id_contract = Order.id_contract,
                                 id_condition = Order.id_condition,
                                 id_currencyfx = Order.id_currencyfx,
@@ -585,7 +588,8 @@ namespace Cognitivo.Sales
                             }
                             PackingListDB.sales_invoice.Add(_sales_invoice);
                             crm_opportunity crm_opportunity = Order.crm_opportunity;
-                            crm_opportunity.sales_invoice.Add(_sales_invoice);
+                            _sales_invoice.crm_opportunity = crm_opportunity;
+                            //crm_opportunity.sales_invoice.Add(_sales_invoice);
 
                             try
                             {

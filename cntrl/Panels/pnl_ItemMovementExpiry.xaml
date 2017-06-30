@@ -48,7 +48,9 @@
                         </StackPanel>
                     </StackPanel>
                     <Grid HorizontalAlignment="Right">
-                        <TextBox Width="155" x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" KeyDown="txtsearch_KeyDown" />
+                        <TextBox Width="155" x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" 
+                                 HorizontalAlignment="Right" Padding="14,0,0,0"
+                                 KeyUp="txtsearch_KeyDown" />
                         <Label Content="L" Style="{StaticResource ico_Label}" HorizontalAlignment="Left" Margin="7,0" Foreground="Silver" />
                     </Grid>
                 </Grid>    

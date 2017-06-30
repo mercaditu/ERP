@@ -497,7 +497,10 @@ namespace Cognitivo.Purchase
                     if (items != null)
                     {
                         if (items.item_product.Count() > 0)
-                        { purchase_return_detail.IsSelected = true; }
+                        {
+                            purchase_return_detail.is_read = true;
+                            purchase_return_detail.RaisePropertyChanged("is_read");
+                        }
 
                         purchase_return_detail.id_item = _purchase_invoice_detail.id_item;
                         purchase_return_detail.item = items;

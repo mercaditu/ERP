@@ -135,10 +135,7 @@ namespace cntrl.Panels
 
 		private void txtsearch_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Key == Key.Enter)
-			{
-				TextBox_TextChanged(null, null);
-			}
+			TextBox_TextChanged(null, null);
 		}
 	}
 

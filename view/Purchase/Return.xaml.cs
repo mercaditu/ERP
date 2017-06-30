@@ -492,18 +492,21 @@ namespace Cognitivo.Purchase
                     }
 
                     purchase_return_detail.purchase_return = _purchase_return;
-                    if (PurchaseReturnDB.db.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault() != null)
+                    item items = PurchaseReturnDB.db.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault();
+
+                    if (items != null)
                     {
+                        if (items.item_product.Count() > 0)
+                        { purchase_return_detail.IsSelected = true; }
+
                         purchase_return_detail.id_item = _purchase_invoice_detail.id_item;
-                        purchase_return_detail.item = PurchaseReturnDB.db.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault();
+                        purchase_return_detail.item = items;
                     }
 
                     purchase_return_detail.item_description = _purchase_invoice_detail.item_description;
-
                     purchase_return_detail.quantity = _purchase_invoice_detail.quantity - PurchaseReturnDB.db.purchase_return_detail
                                                                                  .Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail)
                                                                                  .GroupBy(x => x.id_purchase_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
-
                     purchase_return_detail.id_vat_group = _purchase_invoice_detail.id_vat_group;
                     purchase_return_detail.unit_cost = _purchase_invoice_detail.unit_cost;
                     purchase_return_detail.CurrencyFX_ID = _purchase_return.id_currencyfx;
@@ -536,7 +539,8 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-		
+
+       
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {

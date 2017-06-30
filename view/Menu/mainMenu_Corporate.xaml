@@ -92,7 +92,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Label Content="{Binding Source={x:Static my:Settings.Default}, Path=branch_Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
                 <Label Content="{Binding Source={x:Static my:Settings.Default}, Path=terminal_Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
-                <TextBlock Text="G" ToolTip="{lex:Loc Setting}" Margin="4"
+                <TextBlock x:Name="location" Text="G" ToolTip="{lex:Loc Setting}" Margin="4"
                                         Foreground="Black" FontSize="18" Cursor="Hand" Tag="Settings" MouseUp="get_Apps"
                                         VerticalAlignment="Center" HorizontalAlignment="Center"
                                         FontFamily="/Cognitivo;component/Resources/#cognitivo" />

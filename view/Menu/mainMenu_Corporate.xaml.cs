@@ -50,7 +50,7 @@ namespace Cognitivo.Menu
             Task taskCheckOnline = Task.Factory.StartNew(() => OnlineRegistration());
 
             //This ensures that non-masters cannot change location.
-            setting.Visibility = CurrentSession.UserRole.is_master ? Visibility.Visible : Visibility.Collapsed;
+            location.Visibility = CurrentSession.UserRole.is_master ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void OnlineRegistration()

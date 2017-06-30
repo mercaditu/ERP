@@ -134,6 +134,7 @@ namespace Cognitivo.Purchase
                 {
                     purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
                     purchase_order.is_head = false;
+                    purchase_order.is_archived = true;
                     purchase_order.State = EntityState.Deleted;
                     purchase_order.IsSelected = true;
                     PurchaseDB.db.SaveChanges();
@@ -640,98 +641,103 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnInvoice_Click(object sender, MouseButtonEventArgs e)
         {
-            purchase_order purchase_order = purchase_orderViewSource.View.CurrentItem as purchase_order;
-            if (purchase_order != null && purchase_order.status == Status.Documents_General.Approved && purchase_order.purchase_invoice.Count() == 0)
+            if (MessageBox.Show("Do You Want To create Invoice...", "Cognitivo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                purchase_invoice purchase_invoice = new purchase_invoice();
-                purchase_invoice.barcode = purchase_order.barcode;
-                purchase_invoice.code = purchase_order.code;
-                purchase_invoice.trans_date = DateTime.Now;
-                purchase_invoice.comment = purchase_order.comment;
-                purchase_invoice.id_condition = purchase_order.id_condition;
-                purchase_invoice.id_contact = purchase_order.id_contact;
-                purchase_invoice.contact = purchase_order.contact;
-                purchase_invoice.id_contract = purchase_order.id_contract;
-                purchase_invoice.id_currencyfx = purchase_order.id_currencyfx;
-                purchase_invoice.id_project = purchase_order.id_project;
-                purchase_invoice.id_sales_rep = purchase_order.id_sales_rep;
-                purchase_invoice.id_weather = purchase_order.id_weather;
-                purchase_invoice.is_impex = purchase_order.is_impex;
-                purchase_invoice.purchase_order = purchase_order;
-                purchase_invoice.id_department = purchase_order.id_department;
-
-                foreach (purchase_order_detail detail in purchase_order.purchase_order_detail)
+                purchase_order purchase_order = purchase_orderViewSource.View.CurrentItem as purchase_order;
+                if (purchase_order != null && purchase_order.status == Status.Documents_General.Approved && purchase_order.purchase_invoice.Count() == 0)
                 {
-                    if (detail.item != null && detail.item.id_item_type == item.item_type.ServiceContract)
+                    purchase_invoice purchase_invoice = new purchase_invoice();
+                    purchase_invoice.barcode = purchase_order.barcode;
+                    purchase_invoice.code = purchase_order.code;
+                    purchase_invoice.trans_date = DateTime.Now;
+                    purchase_invoice.comment = purchase_order.comment;
+                    purchase_invoice.id_condition = purchase_order.id_condition;
+                    purchase_invoice.id_contact = purchase_order.id_contact;
+                    purchase_invoice.contact = purchase_order.contact;
+                    purchase_invoice.id_contract = purchase_order.id_contract;
+                    purchase_invoice.id_currencyfx = purchase_order.id_currencyfx;
+                    purchase_invoice.id_project = purchase_order.id_project;
+                    purchase_invoice.id_sales_rep = purchase_order.id_sales_rep;
+                    purchase_invoice.id_weather = purchase_order.id_weather;
+                    purchase_invoice.is_impex = purchase_order.is_impex;
+                    purchase_invoice.purchase_order = purchase_order;
+                    purchase_invoice.id_department = purchase_order.id_department;
+
+                    foreach (purchase_order_detail detail in purchase_order.purchase_order_detail)
                     {
-                        production_service_account production_service_account = PurchaseDB.db.production_service_account.Where(x => x.id_purchase_order_detail == detail.id_purchase_order_detail).FirstOrDefault();
-                        if (production_service_account != null)
+                        if (detail.item != null && detail.item.id_item_type == item.item_type.ServiceContract)
                         {
-                            List<production_service_account> production_service_accountList = production_service_account.child.
-                                                                Where(x => x.id_purchase_invoice_detail == null).ToList();
-                            foreach (production_service_account item in production_service_accountList)
+                            production_service_account production_service_account = PurchaseDB.db.production_service_account.Where(x => x.id_purchase_order_detail == detail.id_purchase_order_detail).FirstOrDefault();
+                            if (production_service_account != null)
                             {
-                                purchase_invoice_detail purchase_invoice_detailProdcution = new purchase_invoice_detail();
-                                purchase_invoice_detailProdcution.id_cost_center = detail.id_cost_center;
-                                purchase_invoice_detailProdcution.comment = detail.comment;
-                                purchase_invoice_detailProdcution.discount = detail.discount;
-                                purchase_invoice_detailProdcution.id_item = detail.id_item;
-                                purchase_invoice_detailProdcution.item_description = detail.item_description;
-                                purchase_invoice_detailProdcution.id_location = detail.id_location;
-                                purchase_invoice_detailProdcution.purchase_order_detail = detail;
-                                purchase_invoice_detailProdcution.id_vat_group = detail.id_vat_group;
-                                purchase_invoice_detailProdcution.quantity = item.debit;
-                                purchase_invoice_detailProdcution.unit_cost = item.unit_cost;
-                                purchase_invoice_detailProdcution.batch_code = detail.batch_code;
-                                purchase_invoice_detailProdcution.expire_date = detail.expire_date;
-                                purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detailProdcution);
+                                List<production_service_account> production_service_accountList = production_service_account.child.
+                                                                    Where(x => x.id_purchase_invoice_detail == null).ToList();
+                                foreach (production_service_account item in production_service_accountList)
+                                {
+                                    purchase_invoice_detail purchase_invoice_detailProdcution = new purchase_invoice_detail();
+                                    purchase_invoice_detailProdcution.id_cost_center = detail.id_cost_center;
+                                    purchase_invoice_detailProdcution.comment = detail.comment;
+                                    purchase_invoice_detailProdcution.discount = detail.discount;
+                                    purchase_invoice_detailProdcution.id_item = detail.id_item;
+                                    purchase_invoice_detailProdcution.item_description = detail.item_description;
+                                    purchase_invoice_detailProdcution.id_location = detail.id_location;
+                                    purchase_invoice_detailProdcution.purchase_order_detail = detail;
+                                    purchase_invoice_detailProdcution.id_vat_group = detail.id_vat_group;
+                                    purchase_invoice_detailProdcution.quantity = item.debit;
+                                    purchase_invoice_detailProdcution.unit_cost = item.unit_cost;
+                                    purchase_invoice_detailProdcution.batch_code = detail.batch_code;
+                                    purchase_invoice_detailProdcution.expire_date = detail.expire_date;
+                                    purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detailProdcution);
+                                }
                             }
+                            else
+                            {
+                                toolBar.msgWarning("Item Not Used");
+                                return;
+                            }
+
                         }
                         else
                         {
-                            toolBar.msgWarning("Item Not Used");
-                            return;
+                            purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
+                            purchase_invoice_detail.id_cost_center = detail.id_cost_center;
+                            purchase_invoice_detail.comment = detail.comment;
+                            purchase_invoice_detail.discount = detail.discount;
+                            purchase_invoice_detail.id_item = detail.id_item;
+                            purchase_invoice_detail.item_description = detail.item_description;
+                            purchase_invoice_detail.id_location = detail.id_location;
+                            purchase_invoice_detail.purchase_order_detail = detail;
+                            purchase_invoice_detail.id_vat_group = detail.id_vat_group;
+                            purchase_invoice_detail.quantity = detail.quantity - detail.purchase_invoice_detail.Sum(x => x.quantity);
+                            purchase_invoice_detail.unit_cost = detail.unit_cost;
+
+                            purchase_invoice_detail.batch_code = detail.batch_code;
+                            purchase_invoice_detail.expire_date = detail.expire_date;
+
+                            foreach (purchase_order_dimension dim in detail.purchase_order_dimension)
+                            {
+                                purchase_invoice_dimension dimension = new purchase_invoice_dimension();
+                                dimension.id_dimension = dim.id_dimension;
+                                dimension.id_measurement = dim.id_measurement;
+                                dimension.value = dim.value;
+
+                                purchase_invoice_detail.purchase_invoice_dimension.Add(dimension);
+                            }
+
+                            purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                         }
-
                     }
-                    else
-                    {
-                        purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
-                        purchase_invoice_detail.id_cost_center = detail.id_cost_center;
-                        purchase_invoice_detail.comment = detail.comment;
-                        purchase_invoice_detail.discount = detail.discount;
-                        purchase_invoice_detail.id_item = detail.id_item;
-                        purchase_invoice_detail.item_description = detail.item_description;
-                        purchase_invoice_detail.id_location = detail.id_location;
-                        purchase_invoice_detail.purchase_order_detail = detail;
-                        purchase_invoice_detail.id_vat_group = detail.id_vat_group;
-                        purchase_invoice_detail.quantity = detail.quantity - detail.purchase_invoice_detail.Sum(x => x.quantity);
-                        purchase_invoice_detail.unit_cost = detail.unit_cost;
 
-                        purchase_invoice_detail.batch_code = detail.batch_code;
-                        purchase_invoice_detail.expire_date = detail.expire_date;
-
-                        foreach (purchase_order_dimension dim in detail.purchase_order_dimension)
-                        {
-                            purchase_invoice_dimension dimension = new purchase_invoice_dimension();
-                            dimension.id_dimension = dim.id_dimension;
-                            dimension.id_measurement = dim.id_measurement;
-                            dimension.value = dim.value;
-
-                            purchase_invoice_detail.purchase_invoice_dimension.Add(dimension);
-                        }
-
-                        purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
-                    }
+                    PurchaseDB.db.purchase_invoice.Add(purchase_invoice);
+                    PurchaseDB.SaveChanges_WithValidation();
+                    toolBar.msgWarning("Invoice Created Sucessfully.");
                 }
-
-                PurchaseDB.db.purchase_invoice.Add(purchase_invoice);
-                PurchaseDB.SaveChanges_WithValidation();
+                else
+                {
+                    toolBar.msgWarning("Please check that Order is Approved.");
+                }
             }
-            else
-            {
-                toolBar.msgWarning("Please check that Order is Approved.");
-            }
+         
         }
 
 

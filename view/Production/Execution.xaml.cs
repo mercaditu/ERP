@@ -543,7 +543,7 @@ namespace Cognitivo.Production
             _production_execution_detail.unit_cost = production_order_detail.item.unit_cost != null ? (decimal)production_order_detail.item.unit_cost : 0;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution_detail.is_input = production_order_detail.is_input;
-            if (_production_execution_detail.item.id_item_type == item.item_type.Product || _production_execution_detail.item.id_item_type == item.item_type.RawMaterial)
+            if (_production_execution_detail.item.id_item_type == item.item_type.Product )
             {
                 if (_production_execution_detail.item.item_product.FirstOrDefault() != null)
                 {

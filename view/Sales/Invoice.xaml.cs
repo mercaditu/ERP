@@ -141,15 +141,19 @@ namespace Cognitivo.Sales
 
         private void Delete_Click(object sender)
         {
-            foreach (sales_invoice invoice in SalesDB.db.sales_invoice.Local.Where(x => x.IsSelected))
+            if (MessageBox.Show("Do You Want to Archived..","Cognitivo",MessageBoxButton.YesNo)==MessageBoxResult.Yes)
             {
-                if (invoice != null && invoice.State != EntityState.Added)
+                foreach (sales_invoice invoice in SalesDB.db.sales_invoice.Local.Where(x => x.IsSelected))
                 {
-                    invoice.is_archived = true;
+                    if (invoice != null && invoice.State != EntityState.Added)
+                    {
+                        invoice.is_archived = true;
+                    }
                 }
-            }
 
-            SalesDB.db.SaveChanges();
+                SalesDB.db.SaveChanges();
+            }
+          
             Load_PrimaryDataThread(null, null);
         }
 

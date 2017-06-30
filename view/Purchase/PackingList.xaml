@@ -335,7 +335,7 @@
 		<cntrl:navPagination VerticalAlignment="Bottom" btnNextPage_Click="navPagination_btnNextPage_Click" btnPreviousPage_Click="navPagination_btnPreviousPage_Click"
 										                            btnFirstPage_Click="navPagination_btnFirstPage_Click" />
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" appName="PackingList"
-                       btnCancel_Click="toolBar_btnCancel_Click" btnDelete_Click="toolBar_btnDelete_Click"
+                       btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click" btnNew_Click="toolBar_btnNew_Click"
                        btnSave_Click="toolBar_btnSave_Click"
                        btnApprove_Click="btnApprove_Click"

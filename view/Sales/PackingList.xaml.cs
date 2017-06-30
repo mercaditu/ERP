@@ -213,7 +213,7 @@ namespace Cognitivo.Sales
                 if (result == MessageBoxResult.Yes)
                 {
                     //DeleteDetailGridRow
-                    sales_packinglist_detailDataGrid.CommitEdit();
+                   
                     sales_packing_detail sales_packing_detail = e.Parameter as sales_packing_detail;
                     if(sales_packing_detail.Error==null)
                     {
@@ -378,7 +378,7 @@ namespace Cognitivo.Sales
                     _sales_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
                     _sales_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
                 }
-
+                sales_packing_detail.verified_quantity = 1;
                 sales_packing.sales_packing_detail.Add(_sales_packing_detail);
             }
             else

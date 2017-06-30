@@ -382,11 +382,11 @@
         </ListBox>
 
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" appName="PackingList"
-                       btnCancel_Click="toolBar_btnCancel_Click" btnDelete_Click="toolBar_btnDelete_Click"
+                       btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click" btnNew_Click="toolBar_btnNew_Click"
                        btnSave_Click="toolBar_btnSave_Click"
                        btnApprove_Click="btnApprove_Click"
-                          btnAnull_Click="toolBar_btnAnull_Click"
+                       btnAnull_Click="toolBar_btnAnull_Click"
                        btnSearch_Click="Search_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

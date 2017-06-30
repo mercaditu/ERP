@@ -149,9 +149,9 @@ namespace entity
 						return Brillo.Localize.PleaseSelect;
 				}
 
-				if (columnName == "quantity")
+				if (columnName == "quantity" )
 				{
-					if (quantity == 0)
+					if (quantity == 0 && user_verified==false)
 					{
 						return "Quantity cannot be zero";
 					}

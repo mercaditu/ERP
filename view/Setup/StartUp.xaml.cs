@@ -70,7 +70,7 @@ namespace Cognitivo.Menu
                 Dispatcher.BeginInvoke((Action)(() => { lbl_serverOS.Content = version_compile_os; }));
                 Dispatcher.BeginInvoke((Action)(() => { lbl_database_Version.Content = version_comment; }));
 
-                MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder(Properties.Settings.Default.MySQLconnString);
+                MySqlConnectionStringBuilder connString = new MySqlConnectionStringBuilder(entity.CurrentSession.ConnectionString);
                 Dispatcher.BeginInvoke((Action)(() => { lbl_database_Name.Content = connString.Database; }));
 
                 string str_update = (string)SQLQuery_ReturnScalar(
@@ -182,7 +182,7 @@ namespace Cognitivo.Menu
                 if (generic)
                 {
                     //Generic ConnectionString without Database
-                    MySqlConnectionStringBuilder specific_connString = new MySqlConnectionStringBuilder(Properties.Settings.Default.MySQLconnString);
+                    MySqlConnectionStringBuilder specific_connString = new MySqlConnectionStringBuilder(entity.CurrentSession.ConnectionString);
                     MySqlConnectionStringBuilder generic_connString = new MySqlConnectionStringBuilder();
                     generic_connString.Server = specific_connString.Server;
                     generic_connString.UserID = specific_connString.UserID;
@@ -193,7 +193,7 @@ namespace Cognitivo.Menu
                 else
                 {
                     //Specific ConnectionString with Database
-                    SQLConn = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
+                    SQLConn = new MySqlConnection(entity.CurrentSession.ConnectionString);
                 }
 
                 MySqlCommand SQLCmd = new MySqlCommand();

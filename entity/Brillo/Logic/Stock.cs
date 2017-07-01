@@ -199,8 +199,8 @@ namespace entity.Brillo.Logic
             foreach (sales_packing_detail packing_detail in
                 sales_packing
                 .sales_packing_detail
-                .Where(x => x.item.item_product.Count() > 0 
-                && x.sales_packing_relation.Count() == 0 
+                .Where(x => x.item.item_product.Count() > 0
+                && x.sales_packing_relation.Count() == 0
                 && x.user_verified))
             {
                 item_product item_product = FindNFix_ItemProduct(packing_detail.item);
@@ -250,7 +250,7 @@ namespace entity.Brillo.Logic
             List<item_movement> item_movementList = new List<item_movement>();
 
             foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
-                .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null))
+                .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null && x.purchase_packing_detail_relation.Count() == 0))
             {
                 item_product item_product = FindNFix_ItemProduct(packing_detail.item);
 
@@ -294,18 +294,17 @@ namespace entity.Brillo.Logic
             if (purchase_invoice != null)
             {
                 //If Purchase Invoice has Packing Relation, then skip the code. This is why if Count() = 0, then continue.
-                if (db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
+
+                //Only insert Details that are Products, RawMaterials or Supplies
+                foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail
+                                                            .Where(x => x.item != null && x.purchase_packing_detail_relation.Count() > 0 && (
+                                                                x.item.id_item_type == item.item_type.Product ||
+                                                                x.item.id_item_type == item.item_type.RawMaterial ||
+                                                                x.item.id_item_type == item.item_type.Supplies)))
                 {
-                    //Only insert Details that are Products, RawMaterials or Supplies
-                    foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail
-                                                                .Where(x => x.item != null && (
-                                                                    x.item.id_item_type == item.item_type.Product ||
-                                                                    x.item.id_item_type == item.item_type.RawMaterial ||
-                                                                    x.item.id_item_type == item.item_type.Supplies)))
-                    {
-                        Detail_Product_List.Add(purchase_invoice_detail);
-                    }
+                    Detail_Product_List.Add(purchase_invoice_detail);
                 }
+
             }
 
             //Always insert Location into Default Location.
@@ -574,8 +573,8 @@ namespace entity.Brillo.Logic
                         {
                             Brillo.Stock stockBrillo = new Brillo.Stock();
                             Items_InStockLIST = stockBrillo.ScalarMovement((long)detail.movement_id);
-                         
-                            if (detail.quantity> Items_InStockLIST.FirstOrDefault().QtyBalance)
+
+                            if (detail.quantity > Items_InStockLIST.FirstOrDefault().QtyBalance)
                             {
                                 quantity = Items_InStockLIST.FirstOrDefault().QtyBalance;
                             }
@@ -591,7 +590,7 @@ namespace entity.Brillo.Logic
                             Items_InStockLIST = stock.List(detail.sales_invoice.id_branch, null, item_product.id_item_product);
                         }
 
-                        if (quantity>0)
+                        if (quantity > 0)
                         {
                             item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                    App.Names.SalesInvoice,
@@ -605,7 +604,7 @@ namespace entity.Brillo.Logic
                                                    comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact != null ? sales_invoice.contact.name : "")
                                                    ));
                         }
-                       
+
                     }
                 }
             }
@@ -640,7 +639,7 @@ namespace entity.Brillo.Logic
             {
                 item_product item_product = sales_return_detail.item.item_product.FirstOrDefault();
 
-                sales_return_detail.id_location = 
+                sales_return_detail.id_location =
                     CurrentSession.Locations
                     .Where(x => x.id_branch == sales_return.id_branch && x.is_default)
                     .FirstOrDefault()
@@ -1025,7 +1024,7 @@ namespace entity.Brillo.Logic
                     }
 
                     item_movement.trans_date = TransDate;
-                  
+
                     if (ApplicationID == App.Names.ProductionExecution)
                     {
                         if (db.production_execution_detail.Find(TransactionDetailID) != null)

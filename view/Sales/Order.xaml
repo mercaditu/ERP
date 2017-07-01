@@ -237,6 +237,11 @@
 								</Hyperlink>
                             </TextBlock>
                         </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
+							    Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                            <Label Content="Z" Style="{StaticResource ico_Label}" />
+                            <CheckBox Content="{lex:Loc Details}" Checked="chbxRowDetail_Checked" Unchecked="chbxRowDetail_Checked" />
+                        </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                             <Label Content="" Style="{StaticResource ico_Label}" />
                             <CheckBox Content="{lex:Loc Exports}" IsChecked="{Binding is_impex,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -358,7 +363,7 @@
                             </StackPanel>
                             <DataGrid x:Name="dgvSalesDetail" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto" CanUserDeleteRows="False"
 								  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
-								  ItemsSource="{Binding Source={StaticResource sales_ordersales_order_detailViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="sales_order_detailDataGrid_RowEditEnding"
+								  ItemsSource="{Binding Source={StaticResource sales_ordersales_order_detailViewSource}}"  RowEditEnding="sales_order_detailDataGrid_RowEditEnding"
 								  InitializingNewItem="sales_order_detailDataGrid_InitializingNewItem" CellEditEnding="sales_order_detailDataGrid_CellEditEnding">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" Width="Auto" Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" />

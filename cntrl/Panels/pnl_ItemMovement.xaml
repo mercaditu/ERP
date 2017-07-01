@@ -11,7 +11,7 @@
 			 lex:LocalizeDictionary.DesignCulture="en-US"
 			 VerticalAlignment="Center"
 			 xmlns:entity="clr-namespace:entity;assembly=entity"
-			 mc:Ignorable="d" Width="512" Loaded="UserControl_Loaded"
+			 mc:Ignorable="d" Width="712" Loaded="UserControl_Loaded"
 			 BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_inventory_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory_detail}, CreateList=True}" />
@@ -38,7 +38,7 @@
                 <StackPanel x:Name="stpDisplay">
                     <Label Content="{Binding item_product.items.name}" Style="{StaticResource input_label}" />
                     
-                    <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid"
+                    <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="700"
 							  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
 							  EnableRowVirtualization="True" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem"
 							  Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">

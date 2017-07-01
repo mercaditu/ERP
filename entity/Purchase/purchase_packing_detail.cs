@@ -108,7 +108,8 @@ namespace entity
         public virtual app_measurement measurement_volume { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<purchase_packing_dimension> purchase_packing_dimension { get; set; }
-        
+        public virtual ICollection<purchase_packing_detail_relation> purchase_packing_detail_relation { get; set; }
+
 
         public string Error
         {

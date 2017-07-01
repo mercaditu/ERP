@@ -486,6 +486,14 @@ namespace Cognitivo.Product
                         }
                     }
                 }
+                else
+                {
+                    crud_modal.Visibility = Visibility.Visible;
+                    objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
+                    objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
+                    objpnl_ItemMovement.InventoryDB = InventoryDB;
+                    crud_modal.Children.Add(objpnl_ItemMovement);
+                }
                 if (item_inventory_detail.item_product.can_expire)
                 {
                     crud_modalExpire.Visibility = Visibility.Visible;

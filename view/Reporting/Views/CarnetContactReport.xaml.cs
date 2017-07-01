@@ -21,7 +21,7 @@ namespace Cognitivo.Reporting.Views
         {
             string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\CarnetContact.rdlc";
             createFile();
-            MySqlConnection con = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
+            MySqlConnection con = new MySqlConnection(entity.CurrentSession.ConnectionString);
             con.Open();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();

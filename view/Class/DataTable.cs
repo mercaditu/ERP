@@ -11,7 +11,7 @@ namespace Cognitivo.Class
             DataTable dt = new DataTable();
             try
             {
-                MySqlConnection sqlConn = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
+                MySqlConnection sqlConn = new MySqlConnection(entity.CurrentSession.ConnectionString);
                 sqlConn.Open();
                 MySqlCommand cmd = new MySqlCommand(SQL, sqlConn);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);

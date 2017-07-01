@@ -1,7 +1,8 @@
-﻿using entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using entity;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,22 +10,23 @@ using System.Windows.Input;
 
 namespace cntrl.PanelAdv
 {
-    public partial class pnlPacking : UserControl
+    /// <summary>
+    /// Interaction logic for pnlPurchasePacking.xaml
+    /// </summary>
+    public partial class pnlPurchasePacking : UserControl
     {
-        private CollectionViewSource sales_packingViewSource;
+        private CollectionViewSource purchase_packingViewSource;
 
-        private List<sales_packing> _selected_sales_packing = null;
-        public List<sales_packing> selected_sales_packing { get { return _selected_sales_packing; } set { _selected_sales_packing = value; } }
+        private List<purchase_packing> _selected_purchase_packing = null;
+        public List<purchase_packing> selected_purchase_packing { get { return _selected_purchase_packing; } set { _selected_purchase_packing = value; } }
 
         public contact _contact { get; set; }
         public db _entity { get; set; }
-        public sales_invoice _sales_invoice;
-
-        public pnlPacking()
+        public purchase_invoice _purchase_invoice;
+        public pnlPurchasePacking()
         {
             InitializeComponent();
         }
-
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             Grid parentGrid = (Grid)this.Parent;
@@ -41,8 +43,8 @@ namespace cntrl.PanelAdv
 
                 if (_contact != null)
                 {
-                    sales_packingViewSource = (CollectionViewSource)Resources["sales_packingViewSource"];
-                    sales_packingViewSource.Source = _entity.sales_packing.Where(x => x.id_contact == _contact.id_contact && x.status==Status.Documents_General.Approved).ToList();
+                    purchase_packingViewSource = (CollectionViewSource)Resources["purchase_packingViewSource"];
+                    purchase_packingViewSource.Source = _entity.purchase_packing.Where(x => x.id_contact == _contact.id_contact && x.status == Status.Documents_General.Approved).ToList();
                 }
             }
         }
@@ -54,7 +56,7 @@ namespace cntrl.PanelAdv
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             // List<sales_packing> sales_packing = sales_packingDataGrid.ItemsSource.OfType<sales_packing>().ToList();
-            selected_sales_packing = sales_packingDataGrid.ItemsSource.OfType<sales_packing>().Where(x => x.selected == true).ToList();
+            selected_purchase_packing = purchase_packingDataGrid.ItemsSource.OfType<purchase_packing>().Where(x => x.selected == true).ToList();
             if (Link_Click != null)
             {
                 Link_Click(sender);
@@ -69,8 +71,8 @@ namespace cntrl.PanelAdv
                 {
                     contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
-                    sales_packingViewSource = (CollectionViewSource)Resources["sales_packingViewSource"];
-                    sales_packingViewSource.Source = _entity.sales_packing.Where(x => x.id_contact == contact.id_contact).ToList();
+                    purchase_packingViewSource = (CollectionViewSource)Resources["purchase_packingViewSource"];
+                    purchase_packingViewSource.Source = _entity.sales_packing.Where(x => x.id_contact == contact.id_contact).ToList();
                 }
             }
             catch

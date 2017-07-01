@@ -87,6 +87,44 @@ namespace entity.Controller.Purchase
             return purchase_invoice;
         }
 
+        public purchase_invoice_detail Create_Detail(
+           ref purchase_invoice Invoice, item Item, item_movement ItemMovement,
+          decimal Quantity)
+        {
+          
+
+
+            purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail()
+            {
+                State = EntityState.Added,
+                CurrencyFX_ID = Invoice.id_currencyfx,
+                item_description = Item.name,
+                item = Item,
+                id_item = Item.id_item,
+                quantity = Quantity,
+                batch_code = ItemMovement != null ? ItemMovement.code : "",
+                expire_date = ItemMovement != null ? ItemMovement.expire_date : null,
+                
+
+            };
+         
+
+            int VatGroupID = (int)purchase_invoice_detail.id_vat_group;
+            purchase_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
+
+            if (Invoice.app_contract == null && Invoice.id_contract > 0)
+            {
+                Invoice.app_contract = db.app_contract.Find(Invoice.id_contract);
+            }
+
+           
+
+            Invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
+
+
+            return purchase_invoice_detail;
+        }
+
         public purchase_invoice Edit(purchase_invoice Invoice)
         {
             Invoice.IsSelected = true;
@@ -438,6 +476,72 @@ namespace entity.Controller.Purchase
                 db.SaveChanges();
                 return true;
             }
+        }
+
+
+        /// <summary>
+        /// Links a Sales Packing and brings items into Sales Invoice.
+        /// </summary>
+        /// <param name="Invoice">Sales Invoice</param>
+        /// <param name="PackingID">Sales Packing ID</param>
+        /// <returns>True if Correct. False if Error or Unfinsihed</returns>
+        /// 
+        public bool Link_PackingList(purchase_invoice Invoice, int PackingID)
+        {
+            //Bring into Context.
+            purchase_packing Packing = db.purchase_packing.Find(PackingID);
+
+            foreach (purchase_packing_detail _purchase_packing_detail in Packing.purchase_packing_detail.Where(x => x.verified_by!=null))
+            {
+                purchase_order_detail purchase_order_detail = _purchase_packing_detail.purchase_order_detail;
+
+                purchase_invoice_detail Detail = new purchase_invoice_detail()
+                {
+                    id_location = _purchase_packing_detail.id_location
+                };
+
+              purchase_packing_detail_relation purchase_packing_relation = new purchase_packing_detail_relation()
+                {
+                    id_purchase_packing_detail = _purchase_packing_detail.id_purchase_packing_detail,
+                  purchase_packing_detail = _purchase_packing_detail,
+                  //id_sales_invoice_detail = Detail.id_sales_invoice_detail,
+                  purchase_invoice_detail = Detail
+                };
+
+                Detail.purchase_packing_detail_relation.Add(purchase_packing_relation);
+
+                if (_purchase_packing_detail.expire_date != null || !string.IsNullOrEmpty(_purchase_packing_detail.batch_code))
+                {
+                    Detail.expire_date = _purchase_packing_detail.expire_date;
+                    Detail.batch_code = _purchase_packing_detail.batch_code;
+                }
+
+                //if SalesOrder Exists, use it for Price and VAT.
+                if (purchase_order_detail != null)
+                {
+                    Detail.purchase_invoice = Invoice;
+                    Detail.id_cost_center = purchase_order_detail.id_cost_center;
+                    Detail.item = _purchase_packing_detail.item;
+                    Detail.id_item = _purchase_packing_detail.id_item;
+                    Detail.quantity = Convert.ToDecimal(_purchase_packing_detail.verified_quantity);
+                    Detail.id_vat_group = purchase_order_detail.id_vat_group;
+                    Detail.State = EntityState.Added;
+                    Detail.unit_cost = purchase_order_detail.unit_cost + purchase_order_detail.discount;
+                    Detail.discount = purchase_order_detail.discount;
+             
+                    Invoice.purchase_invoice_detail.Add(Detail);
+                }
+                else
+                {
+                    //If Sales Order does not exist, use Price and VAT From standard of the company.
+                    Create_Detail(ref Invoice,
+                        _purchase_packing_detail.item,
+                        null,
+                        (decimal)_purchase_packing_detail.verified_quantity);
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -8,7 +8,7 @@
 
         //private ACME_Data()
         //{
-        //    string sqlConnectionString = Properties.Settings.Default.MySQLconnString;
+        //    string sqlConnectionString = entity.CurrentSession.ConnectionString;
 
         //    string script = File.ReadAllText(@"E:\Project Docs\MX462-PD\MX756_ModMappings1.sql");
 

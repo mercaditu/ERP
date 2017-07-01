@@ -385,6 +385,12 @@ namespace Cognitivo.Purchase
                             purchase_order_detail = PackingDetail.purchase_order_detail,
                             id_cost_center = PackingDetail.purchase_order_detail.id_cost_center
                         };
+                        purchase_packing_detail_relation purchase_packing_detail_relation = new entity.purchase_packing_detail_relation();
+                        purchase_packing_detail_relation.id_purchase_invoice_detail = detail.id_purchase_invoice_detail;
+                        purchase_packing_detail_relation.purchase_invoice_detail = detail;
+                        purchase_packing_detail_relation.id_purchase_packing_detail = PackingDetail.id_purchase_packing_detail;
+                        purchase_packing_detail_relation.purchase_packing_detail = PackingDetail;
+                        PurchasePackingListDB.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
                         DetailList.Add(detail);
                     }
 
@@ -405,16 +411,12 @@ namespace Cognitivo.Purchase
 
                             foreach (var item in DetailList)
                             {
+                             
                                 _purchase_invoice.purchase_invoice_detail.Add(item);
                             }
 
                             PurchasePackingListDB.purchase_invoice.Add(_purchase_invoice);
-                            purchase_packing_relation purchase_packing_relation = new entity.purchase_packing_relation();
-                            purchase_packing_relation.id_purchase_invoice = _purchase_invoice.id_purchase_invoice;
-                            purchase_packing_relation.purchase_invoice = _purchase_invoice;
-                            purchase_packing_relation.id_purchase_packing = packing.id_purchase_packing;
-                            purchase_packing_relation.purchase_packing = packing;
-                            PurchasePackingListDB.purchase_packing_relation.Add(purchase_packing_relation);
+                           
                             try
                             {
                                 PurchasePackingListDB.SaveChanges();

@@ -22,6 +22,7 @@ namespace Cognitivo.Purchase
 
         private entity.Controller.Purchase.InvoiceController PurchaseDB;
         private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
+        private cntrl.PanelAdv.pnlPurchasePacking pnlPacking;
 
         public Invoice()
         {
@@ -530,8 +531,8 @@ namespace Cognitivo.Purchase
                 purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
                 if (purchase_invoice != null)
                 {
-                    if (PurchaseDB.db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
-                    {
+                    //if (PurchaseDB.db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
+                    //{
                         MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
                         {
@@ -541,7 +542,7 @@ namespace Cognitivo.Purchase
                             PurchaseDB.db.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
                             purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
                         }
-                    }
+                    //}
                 }
                 purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
             }
@@ -964,6 +965,60 @@ namespace Cognitivo.Purchase
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
             Load_PrimaryDataThread();
+        }
+
+        private void PackingList_Click(object sender, MouseButtonEventArgs e)
+        {
+            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+
+            if (purchase_invoice != null)
+            {
+                crud_modal.Visibility = Visibility.Visible;
+
+                pnlPacking = new cntrl.PanelAdv.pnlPurchasePacking()
+                {
+                    _entity = PurchaseDB.db,
+                    _contact = PurchaseDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault() //sbxContact.Contact as contact;
+                };
+
+                pnlPacking.Link_Click += Link_Click;
+                crud_modal.Children.Add(pnlPacking);
+                (FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource).View.Refresh();
+            }
+            else
+            {
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
+            }
+        }
+        public void Link_Click(object sender)
+        {
+            purchase_invoice Invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+
+            foreach (purchase_packing Packing in pnlPacking.selected_purchase_packing)
+            {
+                //Creates or updates row based on Packing Information. If all is ok, then Refresh.
+                if (PurchaseDB.Link_PackingList(Invoice, Packing.id_purchase_packing))
+                {
+                    CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource = FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource;
+                    purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
+                    purchase_invoicepurchase_invoice_detailViewSource.View.MoveCurrentToFirst();
+                }
+            }
+
+            CollectionViewSource purchase_invoice_detailpurchase_packing_detail_relationViewSource = FindResource("purchase_invoice_detailpurchase_packing_detail_relationViewSource") as CollectionViewSource;
+
+            if (purchase_invoice_detailpurchase_packing_detail_relationViewSource != null)
+            {
+                purchase_invoice_detailpurchase_packing_detail_relationViewSource.Source = PurchaseDB.db.purchase_packing_detail_relation.Local.Where(x => x.purchase_invoice_detail.id_purchase_invoice == Invoice.id_purchase_invoice).ToList();
+            }
+            else
+            {
+                purchase_invoice_detailpurchase_packing_detail_relationViewSource.Source = null;
+            }
+
+            crud_modal.Children.Clear();
+            crud_modal.Visibility = Visibility.Collapsed;
+            Invoice.RaisePropertyChanged("GrandTotal");
         }
 
        

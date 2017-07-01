@@ -17,6 +17,7 @@ namespace entity
             is_head = true;
             quantity = 1;
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();
+            purchase_packing_detail_relation = new List<purchase_packing_detail_relation>();
             item_movement = new List<item_movement>();
             timestamp = DateTime.Now;
         }
@@ -101,6 +102,7 @@ namespace entity
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<production_service_account> production_service_account { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
+        public virtual ICollection<purchase_packing_detail_relation> purchase_packing_detail_relation { get; set; }
         public virtual project_task project_task { get; set; }
 
         #endregion "Navigation Properties"

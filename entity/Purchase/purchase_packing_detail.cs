@@ -14,6 +14,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
+            purchase_packing_detail_relation = new List<purchase_packing_detail_relation>();
         }
 
         [Key]

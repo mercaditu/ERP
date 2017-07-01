@@ -112,9 +112,15 @@ namespace entity.Brillo.Document
 			}
 			else if (AppName == typeof(production_execution_detail).ToString() || BaseName == typeof(production_execution_detail).ToString())
             {
-                if ((production_order)Document != null)
+                production_execution_detail production_execution_detail = (production_execution_detail)Document;
+                if (production_execution_detail != null)
                 {
-                    return ProductionExecutionDetail((production_order)Document);
+                    if (production_execution_detail.production_order_detail!=null)
+                    {
+                      
+                        return ProductionExecutionDetail(production_execution_detail.production_order_detail.production_order);
+                    }
+                   
                 }
             }
 

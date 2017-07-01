@@ -394,7 +394,7 @@ namespace entity.Brillo.Logic
                     purchase_packing_detail_relation purchase_packing_detail_relation = purchase_invoice_detail.purchase_packing_detail_relation.FirstOrDefault();
                     if (purchase_packing_detail_relation != null)
                     {
-                        List<item_movement> item_movement = purchase_packing_detail_relation.purchase_invoice_detail.item_movement.ToList();
+                        List<item_movement> item_movement = purchase_packing_detail_relation.purchase_packing_detail.item_movement.ToList();
                         foreach (item_movement _item_movement in item_movement)
                         {
                             if (_item_movement.id_purchase_invoice_detail == null)

@@ -250,37 +250,71 @@ namespace entity.Brillo.Logic
             List<item_movement> item_movementList = new List<item_movement>();
 
             foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
-                .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null && x.purchase_packing_detail_relation.Count() == 0))
+                .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null))
             {
-                item_product item_product = FindNFix_ItemProduct(packing_detail.item);
-
-                int LocationID = 0;
-                if (packing_detail.id_location == null)
+                if (packing_detail.purchase_packing_detail_relation.Count() == 0)
                 {
-                    LocationID = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
-                    packing_detail.app_location = db.app_location.Find(LocationID);
+
+
+                    item_product item_product = FindNFix_ItemProduct(packing_detail.item);
+
+                    int LocationID = 0;
+                    if (packing_detail.id_location == null)
+                    {
+                        LocationID = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
+                        packing_detail.app_location = db.app_location.Find(LocationID);
+                    }
+                    else
+                    {
+                        packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+                        LocationID = (int)packing_detail.id_location;
+                    }
+
+                    item_movementList.Add(
+                            CreditOnly_Movement(
+                                Status.Stock.InStock,
+                                App.Names.PurchasePacking,
+                                packing_detail.id_purchase_packing,
+                                packing_detail.id_purchase_packing_detail,
+                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                packing_detail.item.item_product.Select(x => x.id_item_product).FirstOrDefault(),
+                                LocationID,
+                                (decimal)packing_detail.verified_quantity,
+                                purchase_packing.trans_date,
+                                packing_detail.purchase_order_detail.unit_cost,
+                                comment_Generator(App.Names.PurchasePacking, purchase_packing.number ?? "", purchase_packing.contact.name), null,
+                                packing_detail.expire_date, packing_detail.batch_code
+                        ));
                 }
                 else
                 {
-                    packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
-                    LocationID = (int)packing_detail.id_location;
-                }
+                    purchase_packing_detail_relation purchase_packing_detail_relation = packing_detail.purchase_packing_detail_relation.FirstOrDefault();
+                    if (purchase_packing_detail_relation != null)
+                    {
+                        List<item_movement> item_movement = purchase_packing_detail_relation.purchase_invoice_detail.item_movement.ToList();
+                        foreach (item_movement _item_movement in item_movement)
+                        {
+                            if (_item_movement.id_purchase_packing_detail == null)
+                            {
+                                _item_movement.id_purchase_packing_detail = packing_detail.id_purchase_packing_detail;
+                            }
+                            if (packing_detail.item.item_product.FirstOrDefault() != null)
+                            {
+                                if (packing_detail.item.item_product.FirstOrDefault().can_expire)
+                                {
+                                    if (_item_movement.code == null)
+                                    {
+                                        _item_movement.code = packing_detail.batch_code;
+                                        _item_movement.expire_date = packing_detail.expire_date;
+                                    }
 
-                item_movementList.Add(
-                        CreditOnly_Movement(
-                            Status.Stock.InStock,
-                            App.Names.PurchasePacking,
-                            packing_detail.id_purchase_packing,
-                            packing_detail.id_purchase_packing_detail,
-                            CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                            packing_detail.item.item_product.Select(x => x.id_item_product).FirstOrDefault(),
-                            LocationID,
-                            (decimal)packing_detail.verified_quantity,
-                            purchase_packing.trans_date,
-                            packing_detail.purchase_order_detail.unit_cost,
-                            comment_Generator(App.Names.PurchasePacking, purchase_packing.number ?? "", purchase_packing.contact.name), null,
-                            packing_detail.expire_date, packing_detail.batch_code
-                    ));
+                                }
+                            }
+
+
+                        }
+                    }
+                }
             }
             //Return List so we can save into context.
             return item_movementList;
@@ -297,7 +331,7 @@ namespace entity.Brillo.Logic
 
                 //Only insert Details that are Products, RawMaterials or Supplies
                 foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail
-                                                            .Where(x => x.item != null && x.purchase_packing_detail_relation.Count() > 0 && (
+                                                            .Where(x => x.item != null && (
                                                                 x.item.id_item_type == item.item_type.Product ||
                                                                 x.item.id_item_type == item.item_type.RawMaterial ||
                                                                 x.item.id_item_type == item.item_type.Supplies)))
@@ -316,42 +350,75 @@ namespace entity.Brillo.Logic
 
             foreach (purchase_invoice_detail purchase_invoice_detail in Detail_Product_List)
             {
-                purchase_invoice_detail.id_location = LocationID;
-
-                List<item_movement_dimension> item_movement_dimensionLIST = null;
-                if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)
+                if (purchase_invoice_detail.purchase_packing_detail_relation.Count() == 0)
                 {
-                    item_movement_dimensionLIST = new List<item_movement_dimension>();
-                    foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
+                    purchase_invoice_detail.id_location = LocationID;
+
+                    List<item_movement_dimension> item_movement_dimensionLIST = null;
+                    if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)
                     {
-                        item_movement_dimension item_movement_dimension = new item_movement_dimension()
+                        item_movement_dimensionLIST = new List<item_movement_dimension>();
+                        foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
                         {
-                            id_dimension = purchase_invoice_dimension.id_dimension,
-                            value = purchase_invoice_dimension.value
-                        };
-                        item_movement_dimensionLIST.Add(item_movement_dimension);
+                            item_movement_dimension item_movement_dimension = new item_movement_dimension()
+                            {
+                                id_dimension = purchase_invoice_dimension.id_dimension,
+                                value = purchase_invoice_dimension.value
+                            };
+                            item_movement_dimensionLIST.Add(item_movement_dimension);
+                        }
+                    }
+
+                    //Improve Comment. More standarized.
+                    if (purchase_invoice_detail.item.item_product.FirstOrDefault() != null)
+                    {
+                        item_movementList.Add(
+                       CreditOnly_Movement(
+                            Status.Stock.InStock,
+                            App.Names.PurchaseInvoice,
+                            purchase_invoice_detail.id_purchase_invoice,
+                            purchase_invoice_detail.id_purchase_invoice_detail,
+                            purchase_invoice.id_currencyfx,
+                            purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product,
+                            (int)purchase_invoice_detail.id_location,
+                            purchase_invoice_detail.quantity,
+                            purchase_invoice.trans_date,
+                            purchase_invoice_detail.unit_cost,
+                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number ?? "", purchase_invoice.contact.name), item_movement_dimensionLIST,
+                            purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code
+                    ));
+                    }
+                }
+                else
+                {
+                    purchase_packing_detail_relation purchase_packing_detail_relation = purchase_invoice_detail.purchase_packing_detail_relation.FirstOrDefault();
+                    if (purchase_packing_detail_relation != null)
+                    {
+                        List<item_movement> item_movement = purchase_packing_detail_relation.purchase_invoice_detail.item_movement.ToList();
+                        foreach (item_movement _item_movement in item_movement)
+                        {
+                            if (_item_movement.id_purchase_invoice_detail == null)
+                            {
+                                _item_movement.id_purchase_invoice_detail = purchase_invoice_detail.id_purchase_invoice_detail;
+                            }
+                            if (purchase_invoice_detail.item.item_product.FirstOrDefault() != null)
+                            {
+                                if (purchase_invoice_detail.item.item_product.FirstOrDefault().can_expire)
+                                {
+                                    if (_item_movement.code == null)
+                                    {
+                                        _item_movement.code = purchase_invoice_detail.batch_code;
+                                        _item_movement.expire_date = purchase_invoice_detail.expire_date;
+                                    }
+
+                                }
+                            }
+
+
+                        }
                     }
                 }
 
-                //Improve Comment. More standarized.
-                if (purchase_invoice_detail.item.item_product.FirstOrDefault() != null)
-                {
-                    item_movementList.Add(
-                   CreditOnly_Movement(
-                        Status.Stock.InStock,
-                        App.Names.PurchaseInvoice,
-                        purchase_invoice_detail.id_purchase_invoice,
-                        purchase_invoice_detail.id_purchase_invoice_detail,
-                        purchase_invoice.id_currencyfx,
-                        purchase_invoice_detail.item.item_product.FirstOrDefault().id_item_product,
-                        (int)purchase_invoice_detail.id_location,
-                        purchase_invoice_detail.quantity,
-                        purchase_invoice.trans_date,
-                        purchase_invoice_detail.unit_cost,
-                        comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number ?? "", purchase_invoice.contact.name), item_movement_dimensionLIST,
-                        purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code
-                ));
-                }
             }
             //Return List so we can save into context.
             return item_movementList;

@@ -96,7 +96,12 @@ namespace entity
         public int? verified_by
         {
             get { return _verified_by; }
-            set { _verified_by = CurrentSession.Id_User; RaisePropertyChanged("verified_by"); }
+            set
+            {
+                // _verified_by = CurrentSession.Id_User;
+                _verified_by =value;
+                RaisePropertyChanged("verified_by");
+            }
         }
 
         private int? _verified_by;
@@ -144,7 +149,7 @@ namespace entity
                     if (id_item == 0)
                         return Brillo.Localize.PleaseSelect;
                 }
-                if (columnName == "quantity" )
+                if (columnName == "quantity")
                 {
                     if (quantity == 0)
                     {

@@ -12,8 +12,8 @@ namespace Cognitivo.Purchase
 {
     public partial class PackingList : Page
     {
-		public int PageIndex = 0;
-		private PurchasePackingListDB PurchasePackingListDB = new PurchasePackingListDB();
+        public int PageIndex = 0;
+        private PurchasePackingListDB PurchasePackingListDB = new PurchasePackingListDB();
         private CollectionViewSource purchase_packingViewSource, purchase_packingpurchase_packinglist_detailViewSource, purchase_packingpurchase_packing_detailApprovedViewSource;
         private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
 
@@ -73,14 +73,14 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
                         if (id_item > 0)
                         {
-                            if (purchase_packing_detail.verified_by != null && purchase_packing_detail.id_item == id_item)
+                            if (purchase_packing_detail.verified_by > 0 && purchase_packing_detail.id_item == id_item)
                                 return true;
                             else
                                 return false;
                         }
                         else
                         {
-                            if (purchase_packing_detail.verified_by != null)
+                            if (purchase_packing_detail.verified_by > 0)
                                 return true;
                             else
                                 return false;
@@ -260,7 +260,7 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.batch_code = _purchase_order_detail.batch_code;
                         purchase_packing_detail.expire_date = _purchase_order_detail.expire_date;
                         purchase_packing_detail.quantity = _purchase_order_detail.quantity;
-                      //  purchase_packing_detail.verified_by = CurrentSession.Id_User;
+                        //  purchase_packing_detail.verified_by = CurrentSession.Id_User;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
                         purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
@@ -403,23 +403,23 @@ namespace Cognitivo.Purchase
                         {
                             purchase_invoice _purchase_invoice = new purchase_invoice()
                             {
-                                id_contact= packing.contact.id_contact,
+                                id_contact = packing.contact.id_contact,
                                 contact = packing.contact,
                                 app_branch = packing.app_branch,
                                 id_contract = Order.id_contract,
                                 id_condition = Order.id_condition,
                                 id_currencyfx = Order.id_currencyfx,
-                                trans_date=packing.trans_date
+                                trans_date = packing.trans_date
                             };
 
                             foreach (var item in DetailList)
                             {
-                             
+
                                 _purchase_invoice.purchase_invoice_detail.Add(item);
                             }
 
                             PurchasePackingListDB.purchase_invoice.Add(_purchase_invoice);
-                           
+
                             try
                             {
                                 PurchasePackingListDB.SaveChanges();
@@ -465,22 +465,22 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-		private void navPagination_btnNextPage_Click(object sender)
-		{
-			PageIndex = PageIndex + 100;
-			Page_Loaded(null, null);
-		}
+        private void navPagination_btnNextPage_Click(object sender)
+        {
+            PageIndex = PageIndex + 100;
+            Page_Loaded(null, null);
+        }
 
-		private void navPagination_btnPreviousPage_Click(object sender)
-		{
-			PageIndex = PageIndex - 100;
-			Page_Loaded(null, null);
-		}
+        private void navPagination_btnPreviousPage_Click(object sender)
+        {
+            PageIndex = PageIndex - 100;
+            Page_Loaded(null, null);
+        }
 
-		private void navPagination_btnFirstPage_Click(object sender)
-		{
-			PageIndex = 0;
-			Page_Loaded(null, null);
-		}
-	}
+        private void navPagination_btnFirstPage_Click(object sender)
+        {
+            PageIndex = 0;
+            Page_Loaded(null, null);
+        }
+    }
 }

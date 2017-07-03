@@ -340,6 +340,7 @@ namespace Cognitivo.Purchase
         private void purchase_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh_GroupByGrid();
+            filterVerifiedDetail(0);
             GridVerifiedList.SelectedIndex = 0;
         }
 
@@ -372,7 +373,7 @@ namespace Cognitivo.Purchase
                     List<purchase_invoice_detail> DetailList = new List<purchase_invoice_detail>();
                     //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
                     //I would like to some how check for inconsistancies or let user check for them before approving.
-                    foreach (purchase_packing_detail PackingDetail in packing.purchase_packing_detail.Where(x => x.verified_by == null))
+                    foreach (purchase_packing_detail PackingDetail in packing.purchase_packing_detail.Where(x => x.verified_by != null))
                     {
                         purchase_invoice_detail detail = new purchase_invoice_detail()
                         {
@@ -402,11 +403,13 @@ namespace Cognitivo.Purchase
                         {
                             purchase_invoice _purchase_invoice = new purchase_invoice()
                             {
+                                id_contact= packing.contact.id_contact,
                                 contact = packing.contact,
                                 app_branch = packing.app_branch,
                                 id_contract = Order.id_contract,
                                 id_condition = Order.id_condition,
-                                id_currencyfx = Order.id_currencyfx
+                                id_currencyfx = Order.id_currencyfx,
+                                trans_date=packing.trans_date
                             };
 
                             foreach (var item in DetailList)

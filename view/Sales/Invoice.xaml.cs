@@ -915,5 +915,10 @@ namespace Cognitivo.Sales
         {
 
         }
+
+        private void PackingList_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

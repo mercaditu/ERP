@@ -252,10 +252,9 @@ namespace entity.Brillo.Logic
             foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
                 .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null))
             {
+                //If Packing has NO Invoice. Then run code for first time stock insertion.
                 if (packing_detail.purchase_packing_detail_relation.Count() == 0)
                 {
-
-
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
 
                     int LocationID = 0;
@@ -287,6 +286,7 @@ namespace entity.Brillo.Logic
                         ));
                 }
                 else
+                //Purchase Packing has Invoice linked.
                 {
                     purchase_packing_detail_relation purchase_packing_detail_relation = packing_detail.purchase_packing_detail_relation.FirstOrDefault();
                     if (purchase_packing_detail_relation != null)
@@ -298,6 +298,10 @@ namespace entity.Brillo.Logic
                             {
                                 _item_movement.id_purchase_packing_detail = packing_detail.id_purchase_packing_detail;
                             }
+                            if (packing_detail.quantity!= _item_movement.credit)
+                            {
+                                _item_movement.credit = packing_detail.quantity;
+                            }
                             if (packing_detail.item.item_product.FirstOrDefault() != null)
                             {
                                 if (packing_detail.item.item_product.FirstOrDefault().can_expire)
@@ -307,11 +311,8 @@ namespace entity.Brillo.Logic
                                         _item_movement.code = packing_detail.batch_code;
                                         _item_movement.expire_date = packing_detail.expire_date;
                                     }
-
                                 }
                             }
-
-
                         }
                     }
                 }
@@ -401,7 +402,7 @@ namespace entity.Brillo.Logic
                             {
                                 _item_movement.id_purchase_invoice_detail = purchase_invoice_detail.id_purchase_invoice_detail;
                             }
-                            if (purchase_invoice_detail.item.item_product.FirstOrDefault() != null)
+                                                 if (purchase_invoice_detail.item.item_product.FirstOrDefault() != null)
                             {
                                 if (purchase_invoice_detail.item.item_product.FirstOrDefault().can_expire)
                                 {

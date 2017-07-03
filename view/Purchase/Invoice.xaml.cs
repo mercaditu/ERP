@@ -969,57 +969,78 @@ namespace Cognitivo.Purchase
 
         private void PackingList_Click(object sender, MouseButtonEventArgs e)
         {
-            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
 
-            if (purchase_invoice != null)
+            purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
+
+            if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved)
             {
-                crud_modal.Visibility = Visibility.Visible;
-
-                pnlPacking = new cntrl.PanelAdv.pnlPurchasePacking()
+                purchase_packing purchase_packing = new purchase_packing();
+                purchase_packing.trans_date = DateTime.Now;
+                purchase_packing.comment = purchase_invoice.comment;
+                purchase_packing.id_contact = purchase_invoice.id_contact;
+                purchase_packing.contact = purchase_invoice.contact;
+                purchase_packing.id_branch = purchase_invoice.id_branch;
+                purchase_packing.status = Status.Documents_General.Pending;
+                foreach (purchase_invoice_detail detail in purchase_invoice.purchase_invoice_detail)
                 {
-                    _entity = PurchaseDB.db,
-                    _contact = PurchaseDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault() //sbxContact.Contact as contact;
-                };
+                    if (detail.purchase_packing_detail_relation.Count()==0)
+                    {
+                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
+                        purchase_packing_detail.id_item = (int)detail.id_item;
+                        purchase_packing_detail.id_location = detail.id_location;
+                        purchase_packing_detail.quantity = detail.quantity;
+                        purchase_packing_detail.batch_code = detail.batch_code;
+                        purchase_packing_detail.expire_date = detail.expire_date;
+                        purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
-                pnlPacking.Link_Click += Link_Click;
-                crud_modal.Children.Add(pnlPacking);
-                (FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource).View.Refresh();
-            }
-            else
-            {
-                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
-            }
-        }
-        public void Link_Click(object sender)
-        {
-            purchase_invoice Invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-
-            foreach (purchase_packing Packing in pnlPacking.selected_purchase_packing)
-            {
-                //Creates or updates row based on Packing Information. If all is ok, then Refresh.
-                if (PurchaseDB.Link_PackingList(Invoice, Packing.id_purchase_packing))
-                {
-                    CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource = FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource;
-                    purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
-                    purchase_invoicepurchase_invoice_detailViewSource.View.MoveCurrentToFirst();
+                        purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation();
+                        purchase_packing_detail_relation.id_purchase_invoice_detail = detail.id_purchase_invoice_detail;
+                        purchase_packing_detail_relation.id_purchase_packing_detail = purchase_packing_detail.id_purchase_packing_detail;
+                        PurchaseDB.db.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
+                    }
+                    
                 }
-            }
 
-            CollectionViewSource purchase_invoice_detailpurchase_packing_detail_relationViewSource = FindResource("purchase_invoice_detailpurchase_packing_detail_relationViewSource") as CollectionViewSource;
+                PurchaseDB.db.purchase_packing.Add(purchase_packing);
 
-            if (purchase_invoice_detailpurchase_packing_detail_relationViewSource != null)
-            {
-                purchase_invoice_detailpurchase_packing_detail_relationViewSource.Source = PurchaseDB.db.purchase_packing_detail_relation.Local.Where(x => x.purchase_invoice_detail.id_purchase_invoice == Invoice.id_purchase_invoice).ToList();
+                PurchaseDB.db.SaveChanges();
+                MessageBox.Show("Packing Created Successfully..");
             }
             else
             {
-                purchase_invoice_detailpurchase_packing_detail_relationViewSource.Source = null;
+                MessageBox.Show("Packing Already Created Or Status is Not Approved ..");
             }
-
-            crud_modal.Children.Clear();
-            crud_modal.Visibility = Visibility.Collapsed;
-            Invoice.RaisePropertyChanged("GrandTotal");
         }
+        //public void Link_Click(object sender)
+        //{
+        //    purchase_invoice Invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+
+        //    foreach (purchase_packing Packing in pnlPacking.selected_purchase_packing)
+        //    {
+        //        //Creates or updates row based on Packing Information. If all is ok, then Refresh.
+        //        if (PurchaseDB.Link_PackingList(Invoice, Packing.id_purchase_packing))
+        //        {
+        //            CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource = FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource;
+        //            purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
+        //            purchase_invoicepurchase_invoice_detailViewSource.View.MoveCurrentToFirst();
+        //        }
+        //    }
+
+        //    CollectionViewSource purchase_invoice_detailpurchase_packing_detail_relationViewSource = FindResource("purchase_invoice_detailpurchase_packing_detail_relationViewSource") as CollectionViewSource;
+
+        //    if (purchase_invoice_detailpurchase_packing_detail_relationViewSource != null)
+        //    {
+        //        purchase_invoice_detailpurchase_packing_detail_relationViewSource.Source = PurchaseDB.db.purchase_packing_detail_relation.Local.Where(x => x.purchase_invoice_detail.id_purchase_invoice == Invoice.id_purchase_invoice).ToList();
+        //    }
+        //    else
+        //    {
+        //        purchase_invoice_detailpurchase_packing_detail_relationViewSource.Source = null;
+        //    }
+
+        //    crud_modal.Children.Clear();
+        //    crud_modal.Visibility = Visibility.Collapsed;
+        //    Invoice.RaisePropertyChanged("GrandTotal");
+        //}
 
        
     }

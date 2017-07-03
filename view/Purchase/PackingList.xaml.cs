@@ -307,9 +307,9 @@ namespace Cognitivo.Purchase
                                 purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
                                 {
                                     id_purchase_invoice_detail = PackingRelation.id_purchase_invoice_detail,
-                                    purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
+                                  //  purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
                                     id_purchase_packing_detail = PackingRelation.id_purchase_packing_detail,
-                                    purchase_packing_detail = PackingRelation.purchase_packing_detail
+                                   // purchase_packing_detail = PackingRelation.purchase_packing_detail
                                 };
                                 purchase_packing_detail.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
 
@@ -467,6 +467,7 @@ namespace Cognitivo.Purchase
 
                             PurchasePackingListDB.purchase_invoice.Add(_purchase_invoice);
                             PurchasePackingListDB.SaveChanges();
+                            toolBar.msgSaved(1);
                         }
                     }
                 }

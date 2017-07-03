@@ -14,14 +14,11 @@ namespace entity
         {
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
-            //if (Properties.Settings.Default.terminal_ID > 0) { app_terminal.id_terminal = Properties.Settings.Default.terminal_ID; }
             is_head = true;
 
             purchase_packing_detail = new List<purchase_packing_detail>();
             purchase_packing_relation = new List<purchase_packing_relation>();
             trans_date = DateTime.Now;
-            // Properties.Settings _settings = new Properties.Settings();
-            //if (_settings.branch_ID > 0) { id_branch = _settings.branch_ID; }
         }
 
         [Key]
@@ -55,8 +52,8 @@ namespace entity
                             app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
                             if (app_document_range != null)
                             {
-                                Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).Select(x => x.code).FirstOrDefault();
-                                Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Select(x => x.code).FirstOrDefault();
+                                Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == id_branch).Select(x => x.code).FirstOrDefault();
+                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == CurrentSession.Id_Terminal).Select(x => x.code).FirstOrDefault();
                                 NumberWatermark = Brillo.Logic.Range.calc_Range(app_document_range, true);
                                 RaisePropertyChanged("NumberWatermark");
                             }

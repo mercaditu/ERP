@@ -83,14 +83,7 @@
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                                 <Border BorderThickness="1" BorderBrush="Gray">
                                     <StackPanel Background="WhiteSmoke" Width="180">
-                                        <Label Content="{lex:Loc PackingList}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
-                                        <WrapPanel>
-                                            <TextBox Width="30" HorizontalAlignment="Left"
-                                                     Text="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=TransDate_Offset, Mode=TwoWay}" Margin="6,2,2,2" />
-                                            <Label Content="{lex:Loc OffsetDate}" Style="{StaticResource generic_Label}" />
-                                        </WrapPanel>
                                         <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
-
                                         <CheckBox Margin="6,0,0,0" x:Name="chkField"
                                                   IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=Telephone, Mode=TwoWay}">
                                             <Label Content="{lex:Loc Telephone}" Style="{StaticResource generic_Label}" />
@@ -160,7 +153,8 @@
                             Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=Branch, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <Label Content="" Style="{StaticResource ico_Label}" />
                             <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}" />
-                            <ComboBox x:Name="cbxBranch" DisplayMemberPath="name" SelectedValuePath="id_branch" Width="Auto" Margin="0" Style="{StaticResource ComboToLabelStyle}" SelectionChanged="cbxBranch_SelectionChanged"
+                            <ComboBox x:Name="cbxBranch" DisplayMemberPath="name" SelectedValuePath="id_branch" Width="Auto" Margin="0"
+                                      Style="{StaticResource ComboToLabelStyle}" SelectionChanged="cbxBranch_SelectionChanged"
                               ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"
                               SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>

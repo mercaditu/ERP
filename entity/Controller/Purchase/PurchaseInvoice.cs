@@ -267,14 +267,12 @@ namespace entity.Controller.Purchase
                 //Block any annull if user is not Master.
                 if (Invoice.is_accounted == false || CurrentSession.UserRole.is_master)
                 {
+                    List<payment_schedual> SchedualList = Invoice.payment_schedual.ToList();
                     //Loop through the Payment Schedual. And remove payments made.
-                    foreach (payment_schedual payment_schedual in Invoice.payment_schedual)
+                    foreach (payment_schedual payment_schedual in SchedualList)
                     {
-                        if (payment_schedual.Action == payment_schedual.Actions.Delete)
-                        {
-                            Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
-                            _Payment.DeletePaymentSchedual(db, payment_schedual.id_payment_schedual);
-                        }
+                        Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                        _Payment.DeletePaymentSchedual(db, payment_schedual.id_payment_schedual);
                     }
 
                     ///Since the above Foreach will run through a mix of payment scheduals, we have no way of knowing if we will have

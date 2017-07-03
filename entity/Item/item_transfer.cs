@@ -196,6 +196,8 @@ namespace entity
                     if (app_branch_origin == app_branch_destination && transfer_type == Transfer_Types.Transfer)
                         return "Please select diffrent Origin and Destination";
                 }
+
+                
                 return "";
             }
         }

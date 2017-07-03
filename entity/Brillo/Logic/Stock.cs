@@ -252,8 +252,12 @@ namespace entity.Brillo.Logic
             foreach (purchase_packing_detail packing_detail in purchase_packing.purchase_packing_detail
                 .Where(x => x.item.item_product.Count() > 0 && x.verified_by != null))
             {
+                purchase_packing_detail_relation purchase_packing_detail_relation = packing_detail
+                    .purchase_packing_detail_relation
+                    .FirstOrDefault();
+
                 //If Packing has NO Invoice. Then run code for first time stock insertion.
-                if (packing_detail.purchase_packing_detail_relation.Count() == 0)
+                if (purchase_packing_detail_relation == null)
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
 
@@ -271,6 +275,7 @@ namespace entity.Brillo.Logic
 
                     decimal UnitCost = 0;
                     int FxRate = 0;
+
                     if (packing_detail.purchase_order_detail != null)
                     {
                         UnitCost = packing_detail.purchase_order_detail.unit_cost;
@@ -300,34 +305,96 @@ namespace entity.Brillo.Logic
                 else
                 //Purchase Packing has Invoice linked.
                 {
-                    purchase_packing_detail_relation purchase_packing_detail_relation = packing_detail.purchase_packing_detail_relation.FirstOrDefault();
-                    if (purchase_packing_detail_relation != null)
+                    purchase_invoice_detail purchase_invoice_detail = db.purchase_invoice_detail
+                        .Where(x => x.id_purchase_invoice_detail == purchase_packing_detail_relation.id_purchase_invoice_detail)
+                        .FirstOrDefault();
+
+                    if (purchase_invoice_detail != null)
                     {
-                        List<item_movement> item_movement = purchase_packing_detail_relation.purchase_invoice_detail.item_movement.ToList();
-                        foreach (item_movement _item_movement in item_movement)
+                        List<item_movement> item_movement = purchase_invoice_detail
+                            .item_movement
+                            .Where(x => x.id_purchase_packing_detail == null)
+                            .ToList();
+
+                        if (item_movement.Count() > 0)
                         {
-
-                            if (_item_movement.id_purchase_packing_detail == null)
+                            foreach (item_movement _item_movement in item_movement)
                             {
-                                _item_movement.id_purchase_packing_detail = packing_detail.id_purchase_packing_detail;
-                            }
-
-                            if (packing_detail.quantity != _item_movement.credit)
-                            {
-                                _item_movement.comment = _item_movement.comment + " | Update: Packing List Before " + _item_movement.credit + ", Now:" + packing_detail.quantity;
-                                _item_movement.credit = packing_detail.quantity;
-                            }
-
-                            if (packing_detail.item.item_product.FirstOrDefault() != null)
-                            {
-                                if (packing_detail.item.item_product.FirstOrDefault().can_expire)
+                                if (_item_movement.id_purchase_packing_detail == null)
                                 {
-                                    if (_item_movement.code == null)
+                                    _item_movement.id_purchase_packing_detail = packing_detail.id_purchase_packing_detail;
+                                }
+
+                                if (packing_detail.quantity != _item_movement.credit)
+                                {
+                                    _item_movement.comment = _item_movement.comment + " | Update: Packing List Before " + _item_movement.credit + ", Now:" + packing_detail.verified_quantity;
+                                    //We need to use verified quantity to update the movement. Quantity (simple) comes directly from purchase invoice.
+                                    _item_movement.credit = (decimal)packing_detail.verified_quantity;
+                                }
+
+                                if (packing_detail.item.item_product.FirstOrDefault() != null)
+                                {
+                                    if (packing_detail.item.item_product.FirstOrDefault().can_expire)
                                     {
-                                        _item_movement.code = packing_detail.batch_code;
-                                        _item_movement.expire_date = packing_detail.expire_date;
+                                        if (_item_movement.code == null)
+                                        {
+                                            _item_movement.code = packing_detail.batch_code;
+                                            _item_movement.expire_date = packing_detail.expire_date;
+                                        }
                                     }
                                 }
+                            }
+                        }
+                        else if (item_movement.Count() == 0)
+                        {
+                            //If Item Movement Count is zero, it is because Item Movement already has been issued to previous packing detail.
+                            item_product item_product = FindNFix_ItemProduct(packing_detail.item);
+
+                            int LocationID = 0;
+                            if (packing_detail.id_location == null)
+                            {
+                                LocationID = FindNFix_Location(item_product, packing_detail.app_location, purchase_packing.app_branch);
+                                packing_detail.app_location = db.app_location.Find(LocationID);
+                            }
+                            else
+                            {
+                                packing_detail.app_location = db.app_location.Find(packing_detail.id_location);
+                                LocationID = (int)packing_detail.id_location;
+                            }
+
+                            decimal UnitCost = 0;
+                            int FxRate = 0;
+
+                            if (packing_detail.purchase_order_detail != null)
+                            {
+                                UnitCost = packing_detail.purchase_order_detail.unit_cost;
+                                FxRate = packing_detail.purchase_order_detail.purchase_order.id_currencyfx;
+                            }
+                            else
+                            {
+                                UnitCost = purchase_packing_detail_relation.purchase_invoice_detail.unit_cost;
+                                FxRate = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+                            }
+
+                            item_movementList.Add(
+                                CreditOnly_Movement(
+                                    Status.Stock.InStock,
+                                    App.Names.PurchasePacking,
+                                    packing_detail.id_purchase_packing,
+                                    packing_detail.id_purchase_packing_detail,
+                                    FxRate,
+                                    packing_detail.item.item_product.Select(x => x.id_item_product).FirstOrDefault(),
+                                    LocationID,
+                                    (decimal)packing_detail.verified_quantity,
+                                    purchase_packing.trans_date,
+                                    UnitCost,
+                                    comment_Generator(App.Names.PurchasePacking, purchase_packing.number ?? "", purchase_packing.contact.name), null,
+                                    packing_detail.expire_date, packing_detail.batch_code
+                            ));
+
+                            foreach (var item in item_movementList)
+                            {
+                                item.id_purchase_invoice_detail = purchase_packing_detail_relation.id_purchase_invoice_detail;
                             }
                         }
                     }

@@ -9,7 +9,6 @@
         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
         xmlns:pref="clr-namespace:Cognitivo.Purchase"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
-      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:entity="clr-namespace:entity;assembly=entity"
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -258,25 +257,26 @@
                                     <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}"
                                                         Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                     <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}"
-                                                        Header="{lex:Loc Cognitivo:local:VerifiedQuantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+                                                        Header="{lex:Loc Cognitivo:local:quantityverified}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" />
-                            <DataGrid Grid.Column="2" CanUserDeleteRows="False"
+                            <DataGrid Grid.Column="2" CanUserDeleteRows="False" CanUserAddRows="False"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_location" />
-
                                     <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}"
                                                         Header="{lex:Loc Cognitivo:local:quantityverified}"
                                                         ElementStyle="{StaticResource RightAlignStyle}"
                                                         MinWidth="128" Width="Auto" />
-
+                                    <DataGridTextColumn Binding="{Binding batch_code, StringFormat={}{0:N}}"
+                                                        Header="{lex:Loc Cognitivo:local:LotNumber}"
+                                                        ElementStyle="{StaticResource RightAlignStyle}"
+                                                        MinWidth="128" Width="Auto" />
                                     <DataGridTextColumn Binding="{Binding security_user.name}" Header="{lex:Loc Cognitivo:local:User}" MinWidth="128" Width="Auto" />
-
                                     <DataGridTemplateColumn Width="1*" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -288,8 +288,7 @@
                                 <DataGrid.RowDetailsTemplate>
                                     <DataTemplate>
                                         <Grid Background="WhiteSmoke" Margin="4">
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-
+                                            <StackPanel HorizontalAlignment="Left">
                                                 <StackPanel>
                                                     <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                                     <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
@@ -297,11 +296,11 @@
                                                 <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}, Converter={StaticResource ExpireDate2Visible}}">
                                                     <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                                     <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+						                                        Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
                                                     <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
-								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
-								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+								                                SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
+								                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </Grid>

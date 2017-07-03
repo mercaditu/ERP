@@ -10,7 +10,7 @@ namespace Cognitivo.Converters
         {
             if (value != null)
             {
-                if (value.ToString() == entity.Status.Documents_General.Approved.ToString() || value.ToString() == entity.Status.Documents.Issued.ToString() || value.ToString() == entity.item_asset_maintainance.Status.Done.ToString())
+                if (value.ToString() == entity.Status.Documents_General.Approved.ToString() || value.ToString() == entity.Status.Production.Executed.ToString() || value.ToString() == entity.Status.Documents.Issued.ToString() || value.ToString() == entity.item_asset_maintainance.Status.Done.ToString())
                 {
                     return new SolidColorBrush(Colors.PaleGreen);
                 }

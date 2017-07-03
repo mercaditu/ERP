@@ -94,7 +94,15 @@ namespace Cognitivo.Production
                 _production_order.RaisePropertyChanged("work_number");
             }
 
-            OrderDB.db.SaveChanges();
+            try
+            {
+                OrderDB.db.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void Cancel_Click(object sender)

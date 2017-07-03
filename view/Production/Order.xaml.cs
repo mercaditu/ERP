@@ -210,7 +210,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            if (MessageBox.Show("FINALIZAR PROYECTO: Está seguro de finalizarlo?") ==MessageBoxResult.Yes)
+            if (MessageBox.Show("FINALIZAR PROYECTO: Está seguro de finalizarlo?","Cognitivo",MessageBoxButton.YesNo) ==MessageBoxResult.Yes)
             {
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 if (production_order != null)

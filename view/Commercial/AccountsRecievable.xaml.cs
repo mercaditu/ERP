@@ -39,25 +39,31 @@ namespace Cognitivo.Commercial
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            contact contact = contactViewSource.View.CurrentItem as contact;
-            if (contact.id_contact > 0 && payment_schedualViewSource != null)
+            if (contactViewSource.View != null)
             {
-                payment_schedualViewSource.View.Filter = i =>
+
+
+                contact contact = contactViewSource.View.CurrentItem as contact;
+               
+                if (contact!=null && payment_schedualViewSource != null)
                 {
-                    payment_schedual payment_schedual = i as payment_schedual;
-                    if (payment_schedual.id_contact == contact.id_contact && payment_schedual.AccountReceivableBalance > 0)
+                    payment_schedualViewSource.View.Filter = i =>
                     {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                };
-            }
-            else
-            {
-                contactViewSource.View.Filter = null;
+                        payment_schedual payment_schedual = i as payment_schedual;
+                        if (payment_schedual.id_contact == contact.id_contact && payment_schedual.AccountReceivableBalance > 0)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    contactViewSource.View.Filter = null;
+                }
             }
         }
 

@@ -58,7 +58,7 @@
 								   recordSecondaryName="{Binding trans_date, Mode=TwoWay, StringFormat=d, UpdateSourceTrigger=PropertyChanged}"
 								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-								   Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+								   Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

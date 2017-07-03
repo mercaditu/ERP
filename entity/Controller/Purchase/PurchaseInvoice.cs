@@ -86,14 +86,11 @@ namespace entity.Controller.Purchase
             db.purchase_invoice.Add(purchase_invoice);
             return purchase_invoice;
         }
-
+  
         public purchase_invoice_detail Create_Detail(
            ref purchase_invoice Invoice, item Item, item_movement ItemMovement,
           decimal Quantity)
         {
-          
-
-
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail()
             {
                 State = EntityState.Added,
@@ -104,10 +101,7 @@ namespace entity.Controller.Purchase
                 quantity = Quantity,
                 batch_code = ItemMovement != null ? ItemMovement.code : "",
                 expire_date = ItemMovement != null ? ItemMovement.expire_date : null,
-                
-
             };
-         
 
             int VatGroupID = (int)purchase_invoice_detail.id_vat_group;
             purchase_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
@@ -116,12 +110,8 @@ namespace entity.Controller.Purchase
             {
                 Invoice.app_contract = db.app_contract.Find(Invoice.id_contract);
             }
-
-           
-
+            
             Invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
-
-
             return purchase_invoice_detail;
         }
 
@@ -144,66 +134,6 @@ namespace entity.Controller.Purchase
 
             db.SaveChanges();
         }
-
-        #endregion
-
-        #region Save
-
-        //public int SaveChanges_and_Validate()
-        //{
-        //    NumberOfRecords = 0;
-
-        //    foreach (purchase_invoice purchase_invoice in db.purchase_invoice.Local)
-        //    {
-        //        if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
-        //        {
-        //            //Data Loading Code. If data is not set, then Cognitivo ERP should try to fill up.
-        //            if (purchase_invoice.contact.id_contract == 0)
-        //            {
-        //                purchase_invoice.contact.id_contract = purchase_invoice.id_contract;
-        //            }
-
-        //            if (purchase_invoice.contact.id_currency == 0)
-        //            {
-        //                purchase_invoice.contact.id_currency = purchase_invoice.app_currencyfx.id_currency;
-        //            }
-
-        //            if (purchase_invoice.contact.id_cost_center == 0 && purchase_invoice.purchase_invoice_detail.FirstOrDefault() != null)
-        //            {
-        //                purchase_invoice.contact.id_cost_center = purchase_invoice.purchase_invoice_detail.FirstOrDefault().id_cost_center;
-        //            }
-
-        //            if (purchase_invoice.State == EntityState.Added)
-        //            {
-        //                purchase_invoice.timestamp = DateTime.Now;
-        //                purchase_invoice.State = EntityState.Unchanged;
-        //                db.Entry(purchase_invoice).State = EntityState.Added;
-        //            }
-        //            else if (purchase_invoice.State == EntityState.Modified)
-        //            {
-        //                purchase_invoice.timestamp = DateTime.Now;
-        //                purchase_invoice.State = EntityState.Unchanged;
-        //                db.Entry(purchase_invoice).State = EntityState.Modified;
-        //            }
-        //            else if (purchase_invoice.State == EntityState.Deleted)
-        //            {
-        //                purchase_invoice.timestamp = DateTime.Now;
-        //                purchase_invoice.State = EntityState.Unchanged;
-        //                db.purchase_invoice.Remove(purchase_invoice);
-        //            }
-        //            NumberOfRecords += 1;
-        //        }
-        //        else if (purchase_invoice.State > 0)
-        //        {
-        //            if (purchase_invoice.State != EntityState.Unchanged)
-        //            {
-        //                db.Entry(purchase_invoice).State = EntityState.Unchanged;
-        //            }
-        //        }
-        //    }
-
-        //    return db.SaveChanges();
-        //}
 
         #endregion
 

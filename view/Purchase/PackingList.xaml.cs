@@ -285,7 +285,7 @@ namespace Cognitivo.Purchase
                 purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
                 if (purchase_packing != null)
                 {
-                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID && x.verified_by==null).FirstOrDefault();
                     if (_purchase_packing_detail != null)
                     {
                         purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
@@ -298,6 +298,24 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail.app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
                         purchase_packing_detail.verified_by = CurrentSession.Id_User;
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
+
+                        if (_purchase_packing_detail.purchase_packing_detail_relation.Count() > 0)
+                        {
+                            purchase_packing_detail_relation PackingRelation = _purchase_packing_detail.purchase_packing_detail_relation.FirstOrDefault();
+                            if (PackingRelation!=null)
+                            {
+                                purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
+                                {
+                                    id_purchase_invoice_detail = PackingRelation.id_purchase_invoice_detail,
+                                    purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
+                                    id_purchase_packing_detail = PackingRelation.id_purchase_packing_detail,
+                                    purchase_packing_detail = PackingRelation.purchase_packing_detail
+                                };
+                                purchase_packing_detail.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
+
+                            }
+                           
+                        }
 
                         purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
                         purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
@@ -370,6 +388,22 @@ namespace Cognitivo.Purchase
             {
                 if (packing.status == Status.Documents_General.Approved)
                 {
+                    app_cost_center app_cost_center = PurchasePackingListDB.app_cost_center.Where(x => x.id_company == CurrentSession.Id_Company && x.is_product).FirstOrDefault();
+                    if (app_cost_center == null)
+                    {
+                        app_cost_center = new app_cost_center()
+                        {
+                            name = entity.Brillo.Localize.StringText("Product"),
+                            is_product = true,
+                            id_company = CurrentSession.Id_Company,
+                            is_active = true
+                        };
+
+                        PurchasePackingListDB.app_cost_center.Add(app_cost_center);
+                        PurchasePackingListDB.SaveChanges();
+                    }
+
+
                     List<purchase_invoice_detail> DetailList = new List<purchase_invoice_detail>();
                     //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
                     //I would like to some how check for inconsistancies or let user check for them before approving.
@@ -378,19 +412,32 @@ namespace Cognitivo.Purchase
                         purchase_invoice_detail detail = new purchase_invoice_detail()
                         {
                             item = PackingDetail.item,
-                            item_description = PackingDetail.purchase_order_detail.item_description,
-                            quantity = PackingDetail.quantity,
-                            unit_cost = PackingDetail.purchase_order_detail.unit_cost,
-                            discount = PackingDetail.purchase_order_detail.discount,
-                            id_vat_group = PackingDetail.purchase_order_detail.id_vat_group,
-                            purchase_order_detail = PackingDetail.purchase_order_detail,
-                            id_cost_center = PackingDetail.purchase_order_detail.id_cost_center
+                            item_description = PackingDetail.item.name,
+                            quantity =(decimal) PackingDetail.verified_quantity,
+                            batch_code = PackingDetail.batch_code,
+                            expire_date = PackingDetail.expire_date,
+                            id_vat_group = PackingDetail.item.id_vat_group,
+                            id_cost_center = app_cost_center.id_cost_center
                         };
-                        purchase_packing_detail_relation purchase_packing_detail_relation = new entity.purchase_packing_detail_relation();
-                        purchase_packing_detail_relation.id_purchase_invoice_detail = detail.id_purchase_invoice_detail;
-                        purchase_packing_detail_relation.purchase_invoice_detail = detail;
-                        purchase_packing_detail_relation.id_purchase_packing_detail = PackingDetail.id_purchase_packing_detail;
-                        purchase_packing_detail_relation.purchase_packing_detail = PackingDetail;
+
+                        if (PackingDetail.purchase_order_detail != null)
+                        {
+                            detail.item_description = PackingDetail.purchase_order_detail.item_description;
+                            detail.unit_cost = PackingDetail.purchase_order_detail.unit_cost + PackingDetail.purchase_order_detail.discount;
+                            detail.discount = PackingDetail.purchase_order_detail.discount;
+                            detail.id_vat_group = PackingDetail.purchase_order_detail.id_vat_group;
+                            detail.purchase_order_detail = PackingDetail.purchase_order_detail;
+                            detail.id_cost_center = PackingDetail.purchase_order_detail.id_cost_center;
+                        }
+
+                        purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
+                        {
+                            id_purchase_invoice_detail = detail.id_purchase_invoice_detail,
+                            purchase_invoice_detail = detail,
+                            id_purchase_packing_detail = PackingDetail.id_purchase_packing_detail,
+                            purchase_packing_detail = PackingDetail
+                        };
+
                         PurchasePackingListDB.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
                         DetailList.Add(detail);
                     }
@@ -409,25 +456,17 @@ namespace Cognitivo.Purchase
                                 id_contract = Order.id_contract,
                                 id_condition = Order.id_condition,
                                 id_currencyfx = Order.id_currencyfx,
-                                trans_date = packing.trans_date
+                                trans_date = packing.trans_date,
+                                is_impex = Order.is_impex
                             };
 
                             foreach (var item in DetailList)
                             {
-
                                 _purchase_invoice.purchase_invoice_detail.Add(item);
                             }
 
                             PurchasePackingListDB.purchase_invoice.Add(_purchase_invoice);
-
-                            try
-                            {
-                                PurchasePackingListDB.SaveChanges();
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Windows.Forms.MessageBox.Show(ex.ToString());
-                            }
+                            PurchasePackingListDB.SaveChanges();
                         }
                     }
                 }

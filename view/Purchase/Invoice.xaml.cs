@@ -16,8 +16,8 @@ namespace Cognitivo.Purchase
 {
     public partial class Invoice : Page, IDisposable
     {
-	
-		private CollectionViewSource purchase_invoiceViewSource;
+
+        private CollectionViewSource purchase_invoiceViewSource;
         private CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
 
         private entity.Controller.Purchase.InvoiceController PurchaseDB;
@@ -140,7 +140,7 @@ namespace Cognitivo.Purchase
         #endregion Toolbar events
 
         #region Filter Data
-        private async void  SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        private async void SearchInSource_Click(object sender, KeyEventArgs e, string query)
         {
             if (string.IsNullOrEmpty(query))
             {
@@ -533,15 +533,15 @@ namespace Cognitivo.Purchase
                 {
                     //if (PurchaseDB.db.purchase_packing_relation.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).Count() == 0)
                     //{
-                        MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        if (result == MessageBoxResult.Yes)
-                        {
-                            //DeleteDetailGridRow
-                            dgvPurchaseDetail.CancelEdit();
+                    MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        //DeleteDetailGridRow
+                        dgvPurchaseDetail.CancelEdit();
 
-                            PurchaseDB.db.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
-                            purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
-                        }
+                        PurchaseDB.db.purchase_invoice_detail.Remove(e.Parameter as purchase_invoice_detail);
+                        purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
+                    }
                     //}
                 }
                 purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
@@ -680,8 +680,8 @@ namespace Cognitivo.Purchase
                                                                                  Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail).FirstOrDefault();
                         if (production_service_account != null)
                         {
-                            List< production_service_account> production_service_accountList = production_service_account.child.
-                                                                 Where(x => x.id_purchase_invoice_detail == null).ToList() ;
+                            List<production_service_account> production_service_accountList = production_service_account.child.
+                                                                 Where(x => x.id_purchase_invoice_detail == null).ToList();
                             foreach (production_service_account item in production_service_accountList)
                             {
                                 purchase_invoice_detail purchase_invoice_detailProdcution = new purchase_invoice_detail();
@@ -960,7 +960,7 @@ namespace Cognitivo.Purchase
             }
         }
 
-		
+
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
@@ -983,7 +983,7 @@ namespace Cognitivo.Purchase
                 purchase_packing.status = Status.Documents_General.Pending;
                 foreach (purchase_invoice_detail detail in purchase_invoice.purchase_invoice_detail)
                 {
-                    if (detail.purchase_packing_detail_relation.Count()==0)
+                    if (detail.purchase_packing_detail_relation.Count() == 0)
                     {
                         purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
                         purchase_packing_detail.id_item = (int)detail.id_item;
@@ -998,7 +998,7 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail_relation.id_purchase_packing_detail = purchase_packing_detail.id_purchase_packing_detail;
                         PurchaseDB.db.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
                     }
-                    
+
                 }
 
                 PurchaseDB.db.purchase_packing.Add(purchase_packing);
@@ -1042,6 +1042,6 @@ namespace Cognitivo.Purchase
         //    Invoice.RaisePropertyChanged("GrandTotal");
         //}
 
-       
+
     }
 }

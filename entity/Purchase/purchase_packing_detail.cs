@@ -71,13 +71,6 @@ namespace entity
 
         public int? id_branch { get; set; }
 
-        //public bool user_verified
-        //{
-        //    get { return _user_verified; }
-        //    set { _user_verified = value; RaisePropertyChanged("user_verified"); }
-        //}
-        //private bool _user_verified;
-
         public decimal? verified_quantity
         {
             get
@@ -98,8 +91,7 @@ namespace entity
             get { return _verified_by; }
             set
             {
-                // _verified_by = CurrentSession.Id_User;
-                _verified_by =value;
+                _verified_by = value;
                 RaisePropertyChanged("verified_by");
             }
         }

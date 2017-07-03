@@ -141,7 +141,16 @@ namespace entity
                     }
 
                     purchase_packing.status = Status.Documents_General.Approved;
-                    SaveChanges();
+                    try
+                    {
+                        SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        System.Windows.Forms.MessageBox.Show(ex.ToString());
+                    }
+                  
                 }
 
                 NumberOfRecords += 1;

@@ -59,7 +59,7 @@ namespace Cognitivo.Purchase
                     purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                 }
             }));
-            cbxBranch.SelectedIndex = 0;
+           // cbxBranch.SelectedIndex = 0;
         }
 
         private void filterVerifiedDetail(int id_item)

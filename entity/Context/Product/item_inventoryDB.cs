@@ -97,6 +97,7 @@ namespace entity
         public bool Approve()
         {
             NumberOfRecords = 0;
+            base.SaveChanges();
 
             foreach (item_inventory item_inventory in base.item_inventory.Local.Where(x => x.status != Status.Documents.Issued && x.IsSelected))
             {
@@ -107,10 +108,6 @@ namespace entity
                     base.item_inventory_detail.RemoveRange(null_detail);
                 }
 
-                if (item_inventory.id_inventory == 0)
-                {
-                    SaveChanges();
-                }
 
                 List<item_movement> item_movementLIST = new List<item_movement>();
 

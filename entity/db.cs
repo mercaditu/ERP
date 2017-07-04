@@ -10,7 +10,6 @@
 
     public class db : DbContext
     {
-
         public override int SaveChanges()
         {
             var audit = new Z.EntityFramework.Plus.Audit();

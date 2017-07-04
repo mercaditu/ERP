@@ -13,7 +13,7 @@ namespace cntrl.Panels
     public partial class pnl_ItemMovement : UserControl
     {
         private CollectionViewSource item_inventory_detailViewSource;
-        public InventoryDB InventoryDB { get; set; }
+        public db InventoryDB { get; set; }
         public List<item_inventory_detail> item_inventoryList { get; set; }
 
         public pnl_ItemMovement()

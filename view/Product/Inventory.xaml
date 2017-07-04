@@ -7,6 +7,7 @@
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:cls="clr-namespace:Cognitivo.Class"
+       xmlns:Controller="clr-namespace:entity.Controller.Product;assembly=entity"
         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  mc:Ignorable="d"
@@ -19,6 +20,7 @@
         <BooleanToVisibilityConverter x:Key="Bool2Visi" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        <Controller:InventoryController x:Key="InventoryController"/>
         <CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}" />

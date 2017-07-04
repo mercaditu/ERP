@@ -113,12 +113,16 @@ namespace entity.Brillo.Logic
                                             InputDimension *= item_movement_dimension.value;
                                         }
 
-                                        foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
+                                        foreach (production_execution_dimension production_execution_dimension in production_execution_detail
+                                            .production_execution_dimension)
                                         {
-                                            item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                                            item_movement_dimension.id_measurement = production_execution_dimension.id_measurement;
-                                            item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
-                                            item_movement_dimension.value = production_execution_dimension.value;
+                                            item_movement_dimension item_movement_dimension = new item_movement_dimension()
+                                            {
+                                                id_measurement = production_execution_dimension.id_measurement,
+                                                id_dimension = production_execution_dimension.id_dimension,
+                                                value = production_execution_dimension.value
+                                            };
+
                                             OutputMovementDimensionLIST.Add(item_movement_dimension);
 
                                             CostDimension = true;

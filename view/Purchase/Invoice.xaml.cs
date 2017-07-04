@@ -680,23 +680,29 @@ namespace Cognitivo.Purchase
                                                                                  Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail).FirstOrDefault();
                         if (production_service_account != null)
                         {
-                            List<production_service_account> production_service_accountList = production_service_account.child.
-                                                                 Where(x => x.id_purchase_invoice_detail == null).ToList();
+                            List<production_service_account> production_service_accountList = production_service_account
+                                .child
+                                .Where(x => x.id_purchase_invoice_detail == null)
+                                .ToList();
+
                             foreach (production_service_account item in production_service_accountList)
                             {
-                                purchase_invoice_detail purchase_invoice_detailProdcution = new purchase_invoice_detail();
-                                purchase_invoice_detailProdcution.id_cost_center = _purchase_order_detail.id_cost_center;
-                                purchase_invoice_detailProdcution.comment = _purchase_order_detail.comment;
-                                purchase_invoice_detailProdcution.discount = _purchase_order_detail.discount;
-                                purchase_invoice_detailProdcution.id_item = _purchase_order_detail.id_item;
-                                purchase_invoice_detailProdcution.item_description = _purchase_order_detail.item_description;
-                                purchase_invoice_detailProdcution.id_location = _purchase_order_detail.id_location;
-                                purchase_invoice_detailProdcution.purchase_order_detail = _purchase_order_detail;
-                                purchase_invoice_detailProdcution.id_vat_group = _purchase_order_detail.id_vat_group;
-                                purchase_invoice_detailProdcution.quantity = item.debit;
-                                purchase_invoice_detailProdcution.unit_cost = item.unit_cost;
-                                purchase_invoice_detailProdcution.batch_code = _purchase_order_detail.batch_code;
-                                purchase_invoice_detailProdcution.expire_date = _purchase_order_detail.expire_date;
+                                purchase_invoice_detail purchase_invoice_detailProdcution = new purchase_invoice_detail()
+                                {
+                                    id_cost_center = _purchase_order_detail.id_cost_center,
+                                    comment = _purchase_order_detail.comment,
+                                    discount = _purchase_order_detail.discount,
+                                    id_item = _purchase_order_detail.id_item,
+                                    item_description = _purchase_order_detail.item_description,
+                                    id_location = _purchase_order_detail.id_location,
+                                    purchase_order_detail = _purchase_order_detail,
+                                    id_vat_group = _purchase_order_detail.id_vat_group,
+                                    quantity = item.debit,
+                                    unit_cost = item.unit_cost,
+                                    batch_code = _purchase_order_detail.batch_code,
+                                    expire_date = _purchase_order_detail.expire_date
+                                };
+
                                 purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detailProdcution);
                             }
                         }

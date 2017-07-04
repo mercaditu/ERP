@@ -50,7 +50,7 @@ namespace entity.Controller.Purchase
             purchase_return purchase_return = new purchase_return()
             {
                 State = EntityState.Added,
-                app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault(),
+                app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.PurchaseReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault(),
                 id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition,
                 id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract,
                 status = Status.Documents_General.Pending,

@@ -16,6 +16,7 @@ namespace Cognitivo.Purchase
         private PurchasePackingListDB PurchasePackingListDB = new PurchasePackingListDB();
         private CollectionViewSource purchase_packingViewSource, purchase_packingpurchase_packinglist_detailViewSource, purchase_packingpurchase_packing_detailApprovedViewSource;
         private cntrl.PanelAdv.pnlPurchaseOrder pnlPurchaseOrder;
+        private cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
 
         public PackingList()
         {
@@ -214,6 +215,7 @@ namespace Cognitivo.Purchase
                     purchase_packinglist_detailDataGrid.CancelEdit();
                     PurchasePackingListDB.purchase_packing_detail.Remove(e.Parameter as purchase_packing_detail);
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                    purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                 }
             }
             catch (Exception ex)
@@ -521,6 +523,76 @@ namespace Cognitivo.Purchase
         {
             PageIndex = 0;
             Page_Loaded(null, null);
+        }
+
+        private void btnInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            crud_modal.Visibility = Visibility.Visible;
+            pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
+            pnlPurchaseInvoice._entity = new ImpexDB();
+
+            if (sbxContact.ContactID > 0)
+            {
+                contact contact = PurchasePackingListDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                pnlPurchaseInvoice._contact = contact;
+            }
+
+            pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
+            crud_modal.Children.Add(pnlPurchaseInvoice);
+        }
+
+        public void PurchaseInvoice_Click(object sender)
+        {
+            purchase_packing _purchase_packing = (purchase_packing)purchase_packingViewSource.View.CurrentItem;
+
+            sbxContact.Text = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact.name;
+            foreach (purchase_invoice item in pnlPurchaseInvoice.selected_purchase_invoice)
+            {
+               foreach (purchase_invoice_detail _purchase_invoice_detail in item.purchase_invoice_detail)
+                {
+                    purchase_packing_detail _purchase_packing_detail = new purchase_packing_detail();
+                    _purchase_packing_detail.id_location = _purchase_invoice_detail.id_location;
+
+                    app_location app_location = PurchasePackingListDB.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault();
+                    if (app_location != null)
+                    {
+                        _purchase_packing_detail.app_location = app_location;
+                    }
+
+                    _purchase_packing_detail.purchase_packing = _purchase_packing;
+                    item items = PurchasePackingListDB.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault();
+
+                    if (items != null)
+                    {
+                       
+
+                        _purchase_packing_detail.id_item = (int)_purchase_invoice_detail.id_item;
+                        _purchase_packing_detail.item = items;
+                        _purchase_invoice_detail.RaisePropertyChanged("item");
+                        _purchase_packing_detail.item.RaisePropertyChanged("supplier_name");
+                        _purchase_packing_detail.quantity = _purchase_invoice_detail.quantity;
+                        _purchase_packing_detail.batch_code = _purchase_invoice_detail.batch_code;
+                        _purchase_packing_detail.expire_date = _purchase_invoice_detail.expire_date;
+                        _purchase_packing.purchase_packing_detail.Add(_purchase_packing_detail);
+                        purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation();
+                        purchase_packing_detail_relation.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
+                        purchase_packing_detail_relation.id_purchase_packing_detail = _purchase_packing_detail.id_purchase_packing_detail;
+                        PurchasePackingListDB.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
+                    }
+
+                
+
+                    PurchasePackingListDB.Entry(_purchase_packing).Entity.State = EntityState.Added;
+                    crud_modal.Children.Clear();
+                    crud_modal.Visibility = Visibility.Collapsed;
+                    purchase_packingViewSource.View.Refresh();
+
+                    purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                    filterDetail();
+                    filterVerifiedDetail(0);
+                    purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                }
+            }
         }
     }
 }

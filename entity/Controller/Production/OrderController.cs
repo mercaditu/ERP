@@ -111,7 +111,16 @@ namespace entity.Controller.Production
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             db.item_movement.AddRange(item_movementList);
-                            db.SaveChanges();
+                            try
+                            {
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+
+                                throw ex;
+                            }
+                            
                         }
 
                         production_order_detail.status = Status.Production.Executed;

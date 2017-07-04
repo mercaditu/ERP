@@ -47,7 +47,7 @@ namespace cntrl.Curd
             {
                 List<payment_schedual> payment_sceduallist = dbContext.db.payment_schedual
                                                                         .Where(x => x.id_payment_detail == null
-                                                                            && x.id_purchase_invoice == purchase_invoice.id_purchase_invoice && (x.trans_date >= start_date && x.trans_date <= end_date)
+                                                                            && x.id_purchase_invoice == purchase_invoice.id_purchase_invoice 
                                                                             && (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0).ToList();
 
                 if (payment_sceduallist.Count > 0)
@@ -63,7 +63,7 @@ namespace cntrl.Curd
             {
                 List<payment_schedual> payment_sceduallist = dbContext.db.payment_schedual
                                                                         .Where(x => x.id_payment_detail == null
-                                                                            && x.id_sales_invoice == sales_invoice.id_sales_invoice && (x.trans_date >= start_date && x.trans_date <= end_date)
+                                                                            && x.id_sales_invoice == sales_invoice.id_sales_invoice 
                                                                             && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0).ToList();
 
                 if (payment_sceduallist.Count > 0)

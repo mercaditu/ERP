@@ -543,8 +543,6 @@ namespace Cognitivo.Purchase
             }
         }
 
-       
-
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
             Page_Loaded(null, null);

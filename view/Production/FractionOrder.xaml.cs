@@ -78,6 +78,7 @@ namespace Cognitivo.Production
         private void Save_Click(object sender)
         {
             production_order _production_order = (production_order)production_orderDataGrid.SelectedItem;
+            _production_order.State = EntityState.Unchanged;
             if ((_production_order.work_number == null || _production_order.work_number == string.Empty) && _production_order.id_range > 0)
             {
                 if (_production_order.id_branch > 0)
@@ -98,10 +99,10 @@ namespace Cognitivo.Production
             {
                 OrderDB.db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 

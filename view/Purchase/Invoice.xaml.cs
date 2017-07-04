@@ -1001,7 +1001,7 @@ namespace Cognitivo.Purchase
 
                         purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation();
                         purchase_packing_detail_relation.id_purchase_invoice_detail = detail.id_purchase_invoice_detail;
-                        purchase_packing_detail_relation.id_purchase_packing_detail = purchase_packing_detail.id_purchase_packing_detail;
+                        purchase_packing_detail_relation.purchase_packing_detail = purchase_packing_detail;
                         PurchaseDB.db.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
                     }
 

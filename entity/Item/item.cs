@@ -105,6 +105,7 @@ namespace entity
                 {
                     _code = value;
                     RaisePropertyChanged("code");
+                    RaisePropertyChanged("supplier_name");
                 }
             }
         }
@@ -115,7 +116,12 @@ namespace entity
         public string code
         {
             get { return _code; }
-            set { _code = value; RaisePropertyChanged("code"); }
+            set
+            {
+                _code = value;
+                RaisePropertyChanged("code");
+                RaisePropertyChanged("supplier_name");
+            }
         }
 
         private string _code;
@@ -144,6 +150,7 @@ namespace entity
                 if (string.IsNullOrEmpty(_supplier_name))
                 {
                     _supplier_name = name;
+                    RaisePropertyChanged("supplier_name");
                 }
 
                 return _supplier_name;
@@ -160,6 +167,7 @@ namespace entity
                 if (string.IsNullOrEmpty(_supplier_code))
                 {
                     _supplier_code = code;
+                    RaisePropertyChanged("supplier_code");
                 }
 
                 return _supplier_code;

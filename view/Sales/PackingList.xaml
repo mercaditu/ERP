@@ -6,15 +6,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:pref="clr-namespace:Cognitivo.Sales"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:entity="clr-namespace:entity;assembly=entity"
-        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
-        lex:ResxLocalizationProvider.DefaultDictionary="local"
-        lex:LocalizeDictionary.DesignCulture="en-US"
+       xmlns:entity="clr-namespace:entity;assembly=entity"
+       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+       lex:ResxLocalizationProvider.DefaultDictionary="local"
+       lex:LocalizeDictionary.DesignCulture="en-US"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Loaded="Page_Loaded">
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
@@ -35,7 +35,6 @@
         <CollectionViewSource x:Key="sales_packingsales_packing_detailVerifiedViewSource" Source="{Binding sales_packing_detail, Source={StaticResource sales_packingViewSource}}" />
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
     </Page.Resources>
-
     <Grid Background="White" DataContext="{StaticResource sales_packingViewSource}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />

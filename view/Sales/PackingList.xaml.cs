@@ -167,6 +167,10 @@ namespace Cognitivo.Sales
             PackingListDB.CancelAllChanges();
             if (sales_packingsales_packinglist_detailViewSource.View != null)
                 sales_packingsales_packinglist_detailViewSource.View.Refresh();
+
+            sbxContact.Text = "";
+            filterDetail();
+            filterVerifiedDetail(0);
         }
 
         #endregion Toolbar Events
@@ -174,7 +178,7 @@ namespace Cognitivo.Sales
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            Sales.Settings.Default.Save();
+            Settings.Default.Save();
             popupCustomize.IsOpen = false;
         }
 
@@ -213,7 +217,6 @@ namespace Cognitivo.Sales
                 if (result == MessageBoxResult.Yes)
                 {
                     //DeleteDetailGridRow
-                   
                     sales_packing_detail sales_packing_detail = e.Parameter as sales_packing_detail;
                     if(sales_packing_detail.Error==null)
                     {
@@ -227,8 +230,6 @@ namespace Cognitivo.Sales
                     {
                         toolBar.msgWarning(sales_packing_detail.Error);
                     }
-                   
-
                 }
             }
             catch (Exception ex)
@@ -267,15 +268,17 @@ namespace Cognitivo.Sales
                 {
                     foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
                     {
-                        sales_packing_detail sales_packing_detail = new sales_packing_detail();
-                        sales_packing_detail.id_sales_order_detail = sales_order_detail.id_sales_order_detail;
-                        sales_packing_detail.id_item = sales_order_detail.id_item;
-                        sales_packing_detail.app_location = PackingListDB.app_location.Where(x => x.id_branch == sales_packing.id_branch && x.is_active && x.is_default).FirstOrDefault();
-                        sales_packing_detail.id_location = PackingListDB.app_location.Where(x => x.id_branch == sales_packing.id_branch && x.is_active && x.is_default).FirstOrDefault().id_location;
-                        sales_packing_detail.item = sales_order_detail.item;
-                        sales_packing_detail.user_verified = false;
-                        sales_packing_detail.id_movement = sales_order_detail.movement_id;
-                        sales_packing_detail.quantity = sales_order_detail.quantity;
+                        sales_packing_detail sales_packing_detail = new sales_packing_detail()
+                        {
+                            id_sales_order_detail = sales_order_detail.id_sales_order_detail,
+                            id_item = sales_order_detail.id_item,
+                            app_location = PackingListDB.app_location.Where(x => x.id_branch == sales_packing.id_branch && x.is_active && x.is_default).FirstOrDefault(),
+                            id_location = PackingListDB.app_location.Where(x => x.id_branch == sales_packing.id_branch && x.is_active && x.is_default).FirstOrDefault().id_location,
+                            item = sales_order_detail.item,
+                            user_verified = false,
+                            id_movement = sales_order_detail.movement_id,
+                            quantity = sales_order_detail.quantity
+                        };
 
                         if (sales_order_detail.batch_code != "")
                         {

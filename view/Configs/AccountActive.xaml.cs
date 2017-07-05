@@ -73,26 +73,26 @@ namespace Cognitivo.Configs
                     x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal &&
                     x.id_company == CurrentSession.Id_Company &&
                     x.id_session == id_session)
-                     .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
+                     .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
                      .Select(s => new
                      {
                          id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
                          id_paymenttype = s.Max(ad => ad.id_payment_type),
                          cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
                          payType = s.Max(ad => ad.payment_type.name),
-                         amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
+                         amount = s.Sum(ad => (ad.credit - ad.debit))
                      }).ToList();
 
-                var app_account_detailFinalList = app_account_detailList
-                    .GroupBy(ad => new { ad.cur, ad.payType })
-                    .Select(s => new
-                {
-                    id_currencyfx = s.Max(x => x.id_currencyfx),
-                    id_paymenttype = s.Max(x => x.id_paymenttype),
-                    cur = s.Max(ad => ad.cur),
-                    payType = s.Max(ad => ad.payType),
-                    amount = s.Sum(ad => ad.amount)
-                }).ToList();
+                var app_account_detailFinalList = app_account_detailList;
+                //    .GroupBy(ad => new { ad.cur, ad.payType })
+                //    .Select(s => new
+                //{
+                //    id_currencyfx = s.Max(x => x.id_currencyfx),
+                //    id_paymenttype = s.Max(x => x.id_paymenttype),
+                //    cur = s.Max(ad => ad.cur),
+                //    payType = s.Max(ad => ad.payType),
+                //    amount = s.Sum(ad => ad.amount)
+                //}).ToList();
 
                 listOpenAmt = new List<Class.clsTransferAmount>();
 

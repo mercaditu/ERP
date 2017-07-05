@@ -47,7 +47,7 @@
         </Grid>
 
         <TabControl  Background="WhiteSmoke" Grid.Column="1" Grid.Row="1">
-            <TabItem Header="Payments Made">
+            <TabItem Header="{lex:Loc AccountsPaid}">
                 <Grid>
                     <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                               RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,26,0,0"
@@ -76,7 +76,7 @@
                                         VerticalAlignment="Top" HorizontalAlignment="Right"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Payments Recieved">
+            <TabItem Header="{lex:Loc AccountsRecieved}">
                 <Grid>
                     <DataGrid x:Name="payment_schedualReceiveDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,26,0,0"
                       RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_detailReceive}}" CanUserAddRows="False">

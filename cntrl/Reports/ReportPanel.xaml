@@ -41,7 +41,7 @@
         </TabControl>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <Expander>
+                <Expander IsExpanded="True">
                     <Expander.Header>
                         <Grid>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -78,7 +78,7 @@
                                  EndDate="{Binding EndDate, ElementName=this, Mode=TwoWay}" Visibility="Collapsed" />
                 </Expander>
 
-                <Expander x:Name="stpProject">
+                <Expander x:Name="stpProject" Visibility="Collapsed">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Content="T" Width="25" Height="25" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right"

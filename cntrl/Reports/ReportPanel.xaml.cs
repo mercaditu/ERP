@@ -240,6 +240,11 @@ namespace cntrl
 				query = query.Replace(Report.ReplaceString, Report.ReplaceWithString);
 			}
 
+            if (query.Contains("ProjectID") && stpProject.Visibility != Visibility.Visible)
+            {
+                stpProject.Visibility = Visibility.Visible;
+            }
+
 			query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
 			query = query.Replace("@ProjectID", ProjectID.ToString());
 

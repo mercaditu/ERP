@@ -280,7 +280,10 @@ namespace Cognitivo.Sales
                 }
             }
 
-		}
+            //This will only bring Products into view, not Raw Materials or Services.
+            sbxItem.item_types = item.item_type.Product;
+
+        }
 
 		private void Page_KeyDown(object sender, KeyEventArgs e)
 		{

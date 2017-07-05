@@ -700,33 +700,46 @@ namespace entity.Controller.Sales
                         List<item_movement> ItemMovementList = detail.item_movement.ToList();
                         foreach (item_movement item_movement in ItemMovementList)
                         {
-                            if (item_movement.Action == item_movement.Actions.Delete)
+                            if (item_movement.id_sales_packing_detail != null)
                             {
-                                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                                //Remove ref of sales. keep packing reference. this will allow you to reuse packing ref.
+                                item_movement.id_sales_invoice_detail = null;
+                                //delete relationship between detail and packing.
+                                db.sales_packing_relation.RemoveRange(detail.sales_packing_relation);
+                            }
+                            else
+                            {
+                                //Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                                 db.item_movement.Remove(item_movement);
                             }
-                            else if (item_movement.Action == item_movement.Actions.ReApprove)
-                            {
-                                foreach (var item in item_movement.child)
-                                {
-                                    List<item_movement> item_movementList = db.item_movement.Where(x =>
-                                    x.id_item_product == item_movement.id_item_product &&
-                                    x.id_movement != item_movement.id_movement &&
-                                    x.credit > 0).ToList();
-                                    foreach (item_movement _item_movement in item_movementList)
-                                    {
-                                        if (_item_movement.avlquantity > item.credit)
-                                        {
-                                            item.parent = _item_movement;
-                                        }
-                                        else
-                                        {
-                                            item.parent = null;
-                                        }
-                                    }
-                                }
-                                db.item_movement.Remove(item_movement);
-                            }
+
+                            //if (item_movement.Action == item_movement.Actions.Delete)
+                            //{
+                            //    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                            //    db.item_movement.Remove(item_movement);
+                            //}
+                            //else if (item_movement.Action == item_movement.Actions.ReApprove)
+                            //{
+                            //    foreach (var item in item_movement.child)
+                            //    {
+                            //        List<item_movement> item_movementList = db.item_movement.Where(x =>
+                            //        x.id_item_product == item_movement.id_item_product &&
+                            //        x.id_movement != item_movement.id_movement &&
+                            //        x.credit > 0).ToList();
+                            //        foreach (item_movement _item_movement in item_movementList)
+                            //        {
+                            //            if (_item_movement.avlquantity > item.credit)
+                            //            {
+                            //                item.parent = _item_movement;
+                            //            }
+                            //            else
+                            //            {
+                            //                item.parent = null;
+                            //            }
+                            //        }
+                            //    }
+                            //    db.item_movement.Remove(item_movement);
+                            //}
                         }
                     }
 

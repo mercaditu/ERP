@@ -369,6 +369,7 @@ namespace Cognitivo.Purchase
             dynamic obj = GridVerifiedList.SelectedItem;
             if (obj != null)
             {
+                dgApproved.CommitEdit();
                 filterVerifiedDetail(obj.id_item);
             }
         }

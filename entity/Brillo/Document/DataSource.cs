@@ -105,22 +105,22 @@ namespace entity.Brillo.Document
                 item_request item_request = (item_request)Document;
                 return ItemRequest(item_request);
             }
-			else if (AppName == typeof(item_recepie).ToString() || BaseName == typeof(item_recepie).ToString())
-			{
-				item_recepie item_recepie = (item_recepie)Document;
-				return ItemRecepie(item_recepie);
-			}
-			else if (AppName == typeof(production_execution_detail).ToString() || BaseName == typeof(production_execution_detail).ToString())
+            else if (AppName == typeof(item_recepie).ToString() || BaseName == typeof(item_recepie).ToString())
+            {
+                item_recepie item_recepie = (item_recepie)Document;
+                return ItemRecepie(item_recepie);
+            }
+            else if (AppName == typeof(production_execution_detail).ToString() || BaseName == typeof(production_execution_detail).ToString())
             {
                 production_execution_detail production_execution_detail = (production_execution_detail)Document;
                 if (production_execution_detail != null)
                 {
-                    if (production_execution_detail.production_order_detail!=null)
+                    if (production_execution_detail.production_order_detail != null)
                     {
-                      
+
                         return ProductionExecutionDetail(production_execution_detail.production_order_detail.production_order);
                     }
-                   
+
                 }
             }
 
@@ -258,13 +258,13 @@ namespace entity.Brillo.Document
                 }
             }
 
-            bool HasRounding = 
-                sales_invoice != null ? 
-                sales_invoice.app_currencyfx != null ? 
-                sales_invoice.app_currencyfx.app_currency != null ? 
-                sales_invoice.app_currencyfx.app_currency.has_rounding 
-                : false 
-                : false 
+            bool HasRounding =
+                sales_invoice != null ?
+                sales_invoice.app_currencyfx != null ?
+                sales_invoice.app_currencyfx.app_currency != null ?
+                sales_invoice.app_currencyfx.app_currency.has_rounding
+                : false
+                : false
                 : false;
 
             reportDataSource.Value = sales_invoice_detail.Select(g => new
@@ -279,6 +279,8 @@ namespace entity.Brillo.Document
                 item_code = g.item != null ? g.item.code : "",
                 item_name = g.item != null ? g.item.name : "",
                 item_description = g.item_description,
+                item_sku = g.item != null ? g.item.sku : "",
+                item_taxID = g.item != null ? g.item.supplier_code : "",
                 Description = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
                 currency = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.name : "",
                 currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,
@@ -303,6 +305,8 @@ namespace entity.Brillo.Document
                 sales_invoice_rep_name = g.sales_invoice != null ? g.sales_invoice.sales_rep != null ? g.sales_invoice.sales_rep.name : "" : "",
                 trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.ToString() : "",
                 id_vat_group = g.id_vat_group,
+                VATName = g.app_vat_group != null ? g.app_vat_group.name : "",
+                VATPercent = g.app_vat_group != null ? g.app_vat_group.app_vat_group_details.Count() > 0 ? g.app_vat_group.app_vat_group_details.Sum(x => x.app_vat != null ? x.app_vat.coefficient : 0) : 0 : 0,
                 gov_id = g.sales_invoice != null ? g.sales_invoice.contact.gov_code : "",
                 sales_invoice_contract = g.sales_invoice != null ? g.sales_invoice.app_contract.name : "",
                 sales_invoice_condition = g.sales_invoice != null ? g.sales_invoice.app_contract.app_condition.name : "",
@@ -326,7 +330,7 @@ namespace entity.Brillo.Document
                 NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))
                 :
                 NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))),
-                
+
                 // Text -> Words
                 AmountWords = HasRounding ?
                 NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
@@ -731,26 +735,26 @@ namespace entity.Brillo.Document
 
             return reportDataSource;
         }
-		public ReportDataSource ItemRecepie(item_recepie item_recepie)
-		{
-			reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-			List<item_recepie_detail> item_recepie_detail = item_recepie.item_recepie_detail.ToList();
+        public ReportDataSource ItemRecepie(item_recepie item_recepie)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<item_recepie_detail> item_recepie_detail = item_recepie.item_recepie_detail.ToList();
 
-			reportDataSource.Value = item_recepie_detail
-				.Select(g => new
-				{
-					receipe_item_code =g.item_recepie!=null?g.item_recepie.item != null ? g.item_recepie.item.code :"": "",
-					receipe_item_name =g.item_recepie != null ? g.item_recepie.item != null ? g.item_recepie.item.name : "" : "",
-					item_code = g.item != null ? g.item.code : "",
-					item_name = g.item != null ? g.item.name : "",
-					quantity = g.quantity,
-					
-					
-				}).ToList();
+            reportDataSource.Value = item_recepie_detail
+                .Select(g => new
+                {
+                    receipe_item_code = g.item_recepie != null ? g.item_recepie.item != null ? g.item_recepie.item.code : "" : "",
+                    receipe_item_name = g.item_recepie != null ? g.item_recepie.item != null ? g.item_recepie.item.name : "" : "",
+                    item_code = g.item != null ? g.item.code : "",
+                    item_name = g.item != null ? g.item.name : "",
+                    quantity = g.quantity,
 
-			return reportDataSource;
-		}
-		public ReportDataSource ProductionExecutionDetail(production_order production_order)
+
+                }).ToList();
+
+            return reportDataSource;
+        }
+        public ReportDataSource ProductionExecutionDetail(production_order production_order)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             //List<production_execution_detail> Listproduction_execution_detail = new List<entity.production_execution_detail>();
@@ -759,20 +763,20 @@ namespace entity.Brillo.Document
                 .Select(g => new
                 {
                     ProjectName = g.project_task != null ? g.project_task.project != null ? g.project_task.project.name : "" : "",
-                    Number = g.production_order != null ? g.production_order.work_number :"",
+                    Number = g.production_order != null ? g.production_order.work_number : "",
                     Name = g.name,
-                    Line = g.production_order != null ? g.production_order.production_line != null ? g.production_order.production_line.name : "" : "" ,
+                    Line = g.production_order != null ? g.production_order.production_line != null ? g.production_order.production_line.name : "" : "",
                     StartDate = g.production_execution_detail.FirstOrDefault() != null ? g.production_execution_detail.FirstOrDefault().start_date.ToString() : "",
                     EndDate = g.production_execution_detail.LastOrDefault() != null ? g.production_execution_detail.LastOrDefault().end_date.ToString() : "",
                     item_input = g.parent != null ? g.parent.item != null ? g.parent.item.name : "" : "",
-                    item_input_quantity = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Sum(x => x.quantity) : 0 ,
+                    item_input_quantity = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Sum(x => x.quantity) : 0,
                     ParentDimension = g.parent != null ? g.parent.production_execution_detail.Count() > 0 ? g.parent.production_execution_detail.FirstOrDefault().DimensionString : "" : "",
                     item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
                     Dimension = g.production_execution_detail.Count() > 0 ? g.parent.production_execution_detail.FirstOrDefault().DimensionString : "",
                     trans_date = g.trans_date,
-                    EmpName = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.FirstOrDefault().contact != null ? g.production_execution_detail.FirstOrDefault().contact.name : "" : "",
-                    Hours = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Sum(x => x.hours) : 0,
+                    EmpName = g.production_execution_detail.FirstOrDefault() != null ? g.production_execution_detail.FirstOrDefault().contact != null ? g.production_execution_detail.FirstOrDefault().contact.name : "" : "",
+                    Hours = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Where(x => x.hours > 0).Sum(x => x.hours) : 0,
 
                 }).ToList();
 
@@ -991,7 +995,7 @@ namespace entity.Brillo.Document
                                 AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
                     // Text -> Words
-                    NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.payment_detail.Sum(x=>x.value) : 0))
+                    NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.payment_detail.Sum(x => x.value) : 0))
                     :
                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.payment_detail.Sum(x => x.value) : 0))) : "" : "" : "",
 
@@ -1118,7 +1122,7 @@ namespace entity.Brillo.Document
                 }
                 return ContactList.Remove(0, 1);
             }
-            
+
 
             return ContactList;
         }

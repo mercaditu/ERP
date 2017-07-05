@@ -277,7 +277,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" />
-                            <DataGrid Grid.Column="2" CanUserDeleteRows="False" CanUserAddRows="False"
+                            <DataGrid Grid.Column="2" CanUserDeleteRows="False" CanUserAddRows="False" x:Name="dgApproved"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">

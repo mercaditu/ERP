@@ -1202,37 +1202,38 @@ namespace entity.Brillo.Logic
 
                     item_movement.trans_date = TransDate;
 
-                    if (ApplicationID == App.Names.ProductionExecution)
-                    {
-                        if (db.production_execution_detail.Find(TransactionDetailID) != null)
-                        {
-                            production_execution_detail production_execution_detail = db.production_execution_detail.Find(TransactionDetailID);
-                            if (production_execution_detail.production_order_detail.production_order.type == production_order.ProductionOrderTypes.Fraction)
-                            {
-                                if (parent_movement_dimension != null && item_movement.item_movement_dimension != null)
-                                {
-                                    decimal ParentDimesion = 1;
-                                    decimal ChildDimesion = 1;
+                    //if (ApplicationID == App.Names.ProductionExecution)
+                    //{
+                    //    if (db.production_execution_detail.Find(TransactionDetailID) != null)
+                    //    {
+                    //        production_execution_detail production_execution_detail = db.production_execution_detail.Find(TransactionDetailID);
+                    //        //Check if Type is Fraction
+                    //        if (production_execution_detail.production_order_detail.production_order.type == production_order.ProductionOrderTypes.Fraction)
+                    //        {
+                    //            if (parent_movement_dimension != null && item_movement.item_movement_dimension != null)
+                    //            {
+                    //                decimal ParentDimesion = 1;
+                    //                decimal MyDimension = 1;
 
-                                    foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
-                                    {
-                                        ParentDimesion = ParentDimesion * item_movement_dimension.value;
-                                    }
-                                    foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
-                                    {
-                                        ChildDimesion = ChildDimesion * item_movement_dimension.value;
-                                    }
+                    //                foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)
+                    //                {
+                    //                    ParentDimesion = ParentDimesion * item_movement_dimension.value;
+                    //                }
+                    //                foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                    //                {
+                    //                    MyDimension = MyDimension * item_movement_dimension.value;
+                    //                }
 
-                                    if (ParentDimesion > 0 && ChildDimesion > 0)
-                                    {
-                                        Unitcost = parent_Movement.Cost;
-                                        decimal ChildPaticipantion = (ParentDimesion / ChildDimesion);
-                                        Unitcost = Unitcost * ChildPaticipantion;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //                if (ParentDimesion > 0 && MyDimension > 0)
+                    //                {
+                    //                    Unitcost = parent_Movement.Cost;
+                    //                    decimal ChildPaticipantion = (ParentDimesion / MyDimension);
+                    //                    Unitcost = Unitcost * ChildPaticipantion;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
                     //Logic for Value
                     if (CurrencyFXID > 0)

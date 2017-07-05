@@ -146,6 +146,26 @@ namespace entity
         /// Gets total value of VAT for each detail.
         /// </summary>
         [NotMapped]
+        public decimal TotalVATCost
+        {
+            get
+            {
+                _TotalVatCost = sales_invoice_detail.Sum(x => x.SubTotalUnitCost_Vat - x.SubTotalUnitCost);
+                return Math.Round(_TotalVatCost, 2);
+            }
+            set
+            {
+                _TotalVatCost = value;
+                RaisePropertyChanged("TotalVATCost");
+            }
+        }
+
+        private decimal _TotalVatCost;
+
+        /// <summary>
+        /// Gets total value of VAT for each detail.
+        /// </summary>
+        [NotMapped]
         public decimal TotalVat
         {
             get

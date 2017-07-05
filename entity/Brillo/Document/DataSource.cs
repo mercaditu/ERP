@@ -321,9 +321,9 @@ namespace entity.Brillo.Document
 
                 // Text -> Words
                 AmountWordsCost = HasRounding ?
-                NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost - g.sales_invoice.TotalVat : 0))
+                NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.TotalVATCost : 0))
                 :
-                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost - g.sales_invoice.TotalVat : 0))),
+                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.TotalVATCost : 0))),
 
                 // Text -> Words
                 AmountWordsCostVAT = HasRounding ?

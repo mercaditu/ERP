@@ -436,6 +436,7 @@ namespace Cognitivo.Production
         {
             if (OrderDB.db.SaveChanges() > 0)
             {
+                toolBar.msgSaved(1);
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 production_order.State = EntityState.Modified;
                 stpcode.IsEnabled = false;

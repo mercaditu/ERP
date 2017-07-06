@@ -1570,21 +1570,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember>
-                  <Group Name="id_sales_order">
-                    <GroupExpressions>
-                      <GroupExpression>=Fields!id_sales_order.Value</GroupExpression>
-                    </GroupExpressions>
-                  </Group>
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!id_sales_order.Value</Value>
-                    </SortExpression>
-                  </SortExpressions>
-                  <TablixMembers>
-                    <TablixMember>
-                      <Group Name="Details" />
-                    </TablixMember>
-                  </TablixMembers>
+                  <Group Name="Details" />
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -1593,7 +1579,7 @@
             <Top>0.05in</Top>
             <Left>0.125in</Left>
             <Height>0.63622in</Height>
-            <Width>7.53496in</Width>
+            <Width>7.53495in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1807,10 +1793,6 @@
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value>=Fields!currency.Value</Value>
-                    <Style />
                   </TextRun>
                 </TextRuns>
                 <Style />

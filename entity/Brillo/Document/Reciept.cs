@@ -491,7 +491,7 @@
 
 			foreach (sales_invoice_detail d in sales_invoice.sales_invoice_detail)
 			{
-				string ItemName = d.item.name;
+				string ItemName = d.item_description;
 				string ItemCode = d.item.code;
 				decimal? Qty = Math.Round(d.quantity, 2);
 				string TaskName = d.item_description;
@@ -530,6 +530,7 @@
 						  name = g.Key.name,
 						  value = g.Sum(a => a.value * a.ad.quantity)
 					  }).ToList();
+
 						var VAtList = listvat.GroupBy(x => x.id_vat).Select(g => new
 						{
 							vatname = g.Max(y => y.vatname),
@@ -537,10 +538,12 @@
 							name = g.Max(y => y.name),
 							value = g.Sum(a => a.value)
 						}).ToList();
+
 						foreach (dynamic item in VAtList)
 						{
 							Footer += item.vatname + "   : " + Math.Round(item.value, 2) + "\n";
 						}
+
 						Footer += "Total IVA : " + CurrencyName + " " + Math.Round(VAtList.Sum(x => x.value), 2) + "\n";
 					}
 				}

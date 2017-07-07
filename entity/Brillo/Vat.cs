@@ -44,6 +44,23 @@ namespace entity.Brillo
             {
                 foreach (app_vat_group_details app_vat_group_detail in CurrentSession.VAT_GroupDetails.Where(x => x.id_vat_group == id_vat_group).ToList())
                 {
+                    //Run If based on VAT Type
+                    //if (app_vat_group_detail.app_vat != null)
+                    //{
+                    //    if (app_vat_group_detail.app_vat.on_product)
+                    //    {
+                    //        VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group_detail.percentage, app_vat_group_detail.app_vat.coefficient);
+                    //    }
+                    //    else if (app_vat_group_detail.app_vat.on_branch)
+                    //    {
+                    //        if (CurrentSession.Id_Branch > 0)
+                    //        {
+                    //            int? VatID = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().id_vat;
+
+                    //        }
+                    //    }
+                    //}
+
                     VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group_detail.percentage, app_vat_group_detail.app_vat.coefficient);
                 }
             }

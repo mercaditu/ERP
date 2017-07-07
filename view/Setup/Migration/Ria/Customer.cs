@@ -9,7 +9,7 @@ namespace Cognitivo.Setup.Migration
 {
     public partial class MigrationAssistant
     {
-        public List<entity.contact> Contact_ErrorList = new List<contact>();
+        public List<contact> Contact_ErrorList = new List<contact>();
 
         public void customer()
         {
@@ -214,7 +214,6 @@ namespace Cognitivo.Setup.Migration
                             if (contacts.parent != null)
                             {
                                 contact_subscription.id_item = contacts.parent.contact_subscription.FirstOrDefault().id_item;
-
                                 contact_subscription.id_vat_group = contacts.parent.contact_subscription.FirstOrDefault().id_vat_group;
                             }
                         }
@@ -231,20 +230,28 @@ namespace Cognitivo.Setup.Migration
                             {
                                 if (reader[37].ToString() != "")
                                 {
-                                    contact_tag contact_tag = new contact_tag();
-                                    contact_tag.name = reader[37].ToString();
+                                    contact_tag contact_tag = new contact_tag()
+                                    {
+                                        name = reader[37].ToString()
+                                    };
                                     db.contact_tag.Add(contact_tag);
-                                    contact_tag_detail contact_tag_detail = new contact_tag_detail();
-                                    contact_tag_detail.contact = contacts;
-                                    contact_tag_detail.contact_tag = contact_tag;
+
+                                    contact_tag_detail contact_tag_detail = new contact_tag_detail()
+                                    {
+                                        contact = contacts,
+                                        contact_tag = contact_tag
+                                    };
+
                                     db.contact_tag_detail.Add(contact_tag_detail);
                                 }
                             }
                             else
                             {
-                                contact_tag_detail contact_tag_detail = new contact_tag_detail();
-                                contact_tag_detail.contact = contacts;
-                                contact_tag_detail.contact_tag = db.contact_tag.Local.Where(x => x.name == name).FirstOrDefault();
+                                contact_tag_detail contact_tag_detail = new contact_tag_detail()
+                                {
+                                    contact = contacts,
+                                    contact_tag = db.contact_tag.Local.Where(x => x.name == name).FirstOrDefault()
+                                };
                                 db.contact_tag_detail.Add(contact_tag_detail);
                             }
                         }

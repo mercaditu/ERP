@@ -56,8 +56,11 @@ namespace entity.Brillo
                     //        if (CurrentSession.Id_Branch > 0)
                     //        {
                     //            int? VatID = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().id_vat;
-
                     //        }
+                    //    }
+                    //    else
+                    //    {
+                    //      
                     //    }
                     //}
 

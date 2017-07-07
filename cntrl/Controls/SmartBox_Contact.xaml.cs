@@ -191,7 +191,24 @@ namespace cntrl.Controls
                 ContactList = Execute.List.AsQueryable();
             }
 
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () { progBar.Visibility = Visibility.Collapsed; }));
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () 
+            {
+                progBar.Visibility = Visibility.Collapsed;
+
+                if (string.IsNullOrEmpty(Name) == false)
+                {
+                    //Once data is loaded, put name and set focus on search box to make things easier.
+                    tbxSearch.Focus();
+                    var key = Key.A;                       // Key to send
+                    var routedEvent = Keyboard.KeyUpEvent; // Event to send
+                    tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, key) { RoutedEvent = routedEvent });
+
+                    var _enter = Key.Enter;                // Key to send
+                    tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
+
+                    popContactInfo.IsOpen = false;
+                }
+            }));
         }
 
         private void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -595,17 +612,6 @@ namespace cntrl.Controls
             }
             
             LoadData();
-
-            //Once data is loaded, put name and set focus on search box to make things easier.
-            tbxSearch.Focus();
-            var key = Key.A;                       // Key to send
-            var routedEvent = Keyboard.KeyUpEvent; // Event to send
-            tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, key) { RoutedEvent = routedEvent });
-
-            var _enter = Key.Enter;                // Key to send
-            tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
-
-            popContactInfo.IsOpen = false;
         }
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)

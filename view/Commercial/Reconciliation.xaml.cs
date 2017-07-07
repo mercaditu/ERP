@@ -81,9 +81,10 @@ namespace Cognitivo.Commercial
                     app_account_detail.RaisePropertyChanged("status");
                 }
 
-                app_accountapp_account_detailViewSource.View.Refresh();
+               
                 db.SaveChanges();
             }
+         //   app_accountapp_account_detailViewSource.View.Refresh();
         }
 
         private void toolBar_btnAnull_Click(object sender, RoutedEventArgs e)
@@ -98,8 +99,9 @@ namespace Cognitivo.Commercial
                     app_account_detail.RaisePropertyChanged("status");
                 }
 
-                app_accountapp_account_detailViewSource.View.Refresh();
+              
                 db.SaveChanges();
+              //  app_accountapp_account_detailViewSource.View.Refresh();
             }
         }
     }

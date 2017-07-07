@@ -16,6 +16,7 @@
             is_head = true;
             status = Status.Documents_General.Pending;
             request_date = DateTime.Now;
+            timestamp = DateTime.Now;
         }
 
         [Key]

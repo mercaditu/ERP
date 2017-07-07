@@ -1180,6 +1180,7 @@ namespace entity.Brillo.Logic
                     {
                         item_movement.id_inventory_detail = TransactionDetailID;
                         decimal Unit_Value = db.item_inventory_detail.Where(x => x.id_inventory_detail == TransactionDetailID).Select(x => x.unit_value).FirstOrDefault();
+
                         if (Unit_Value > 0)
                         {
                             Unitcost = Unit_Value;

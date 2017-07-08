@@ -68,6 +68,17 @@ namespace Cognitivo.Configs
                     RaisePropertyChanged("is_active");
                 }
 
+                //Pankeel, use this query. IT is faster.
+        //select ptype.name, sum(accd.credit - accd.debit) as Balance, curr.name as Currency
+        //from app_account_detail as accd
+        //join app_currencyfx as fx on accd.id_currencyfx = fx.id_currencyfx
+        //join app_currency as curr on fx.id_currency = curr.id_currency
+        //join payment_type as ptype on ptype.id_payment_type = accd.id_payment_type
+        //join app_account as acc on accd.id_account = acc.id_account
+        //join app_account_session as sess on accd.id_session = sess.id_session
+        //where sess.is_active = true and acc.id_account = 7
+        //group by sess.id_session, fx.id_currency;
+
                 var app_account_detailList =
                     app_account.app_account_detail.Where(x =>
                     x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal &&
@@ -110,7 +121,7 @@ namespace Cognitivo.Configs
                         listOpenAmt.Add(clsTransferAmount);
                     }
                 }
-                else 
+                else
                 //If no previous data is in, then bring blank values for each type of currency and payment type.
                 {
                     List<app_currency> app_currencyList = new List<app_currency>();

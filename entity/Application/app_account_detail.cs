@@ -21,6 +21,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
+            timestamp = DateTime.Now;
         }
 
         [Key]

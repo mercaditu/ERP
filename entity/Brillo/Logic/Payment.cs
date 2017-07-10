@@ -47,32 +47,36 @@ namespace entity.Brillo.Logic
 
                 foreach (app_contract_detail app_contract_detail in app_contract_details)
                 {
-                    payment_schedual payment_schedual = new payment_schedual();
-                    payment_schedual.credit = 0;
-                    payment_schedual.debit = sales_invoice.GrandTotal * app_contract_detail.coefficient;
-                    payment_schedual.id_currencyfx = sales_invoice.id_currencyfx;
-                    payment_schedual.sales_invoice = sales_invoice;
-                    payment_schedual.trans_date = sales_invoice.trans_date;
-                    payment_schedual.expire_date = sales_invoice.trans_date.AddDays(app_contract_detail.interval);
-                    payment_schedual.status = Status.Documents_General.Approved;
-                    payment_schedual.id_contact = sales_invoice.id_contact;
+                    payment_schedual payment_schedual = new payment_schedual()
+                    {
+                        credit = 0,
+                        debit = sales_invoice.GrandTotal * app_contract_detail.coefficient,
+                        id_currencyfx = sales_invoice.id_currencyfx,
+                        sales_invoice = sales_invoice,
+                        trans_date = sales_invoice.trans_date,
+                        expire_date = sales_invoice.trans_date.AddDays(app_contract_detail.interval),
+                        status = Status.Documents_General.Approved,
+                        id_contact = sales_invoice.id_contact
+                    };
 
                     ///Checks if selected Contract has Promissory Note created.
                     if (IsPromisorry)
                     {
-                        payment_promissory_note payment_promissory_note = new payment_promissory_note();
-                        //Dates. Transactional (based on Sales Trans) and Expiry (based on Exp of Payment)...
-                        payment_promissory_note.trans_date = sales_invoice.trans_date;
-                        payment_promissory_note.expiry_date = sales_invoice.trans_date.AddDays(app_contract_detail.interval);
-                        //Navigational Properties...
-                        payment_promissory_note.id_branch = sales_invoice.id_branch;
-                        payment_promissory_note.id_terminal = sales_invoice.id_terminal;
-                        payment_promissory_note.id_company = sales_invoice.id_company;
-                        payment_promissory_note.id_contact = sales_invoice.id_contact;
-                        //Values...
-                        payment_promissory_note.value = sales_invoice.GrandTotal * app_contract_detail.coefficient;
-                        payment_promissory_note.id_currencyfx = sales_invoice.id_currencyfx;
-                        payment_promissory_note.status = Status.Documents.Pending;
+                        payment_promissory_note payment_promissory_note = new payment_promissory_note()
+                        {
+                            //Dates. Transactional (based on Sales Trans) and Expiry (based on Exp of Payment)...
+                            trans_date = sales_invoice.trans_date,
+                            expiry_date = sales_invoice.trans_date.AddDays(app_contract_detail.interval),
+                            //Navigational Properties...
+                            id_branch = sales_invoice.id_branch,
+                            id_terminal = sales_invoice.id_terminal,
+                            id_company = sales_invoice.id_company,
+                            id_contact = sales_invoice.id_contact,
+                            //Values...
+                            value = sales_invoice.GrandTotal * app_contract_detail.coefficient,
+                            id_currencyfx = sales_invoice.id_currencyfx,
+                            status = Status.Documents.Pending
+                        };
                         payment_promissory_noteLIST.Add(payment_promissory_note);
 
                         //Adding Payment Schedual into PromissoryNote
@@ -92,16 +96,19 @@ namespace entity.Brillo.Logic
             {
                 sales_return sales_return = (sales_return)obj_entity;
 
-                payment_schedual payment_schedual = new payment_schedual();
-                payment_schedual.debit = sales_return.GrandTotal;
-                payment_schedual.credit = 0;
-                payment_schedual.id_currencyfx = sales_return.id_currencyfx;
-                payment_schedual.sales_return = sales_return;
-                payment_schedual.trans_date = sales_return.trans_date;
-                payment_schedual.expire_date = sales_return.trans_date;
-                payment_schedual.status = Status.Documents_General.Approved;
-                payment_schedual.id_contact = sales_return.id_contact;
-                payment_schedual.can_calculate = false;
+                payment_schedual payment_schedual = new payment_schedual()
+                {
+                    debit = sales_return.GrandTotal,
+                    credit = 0,
+                    id_currencyfx = sales_return.id_currencyfx,
+                    sales_return = sales_return,
+                    trans_date = sales_return.trans_date,
+                    expire_date = sales_return.trans_date,
+                    status = Status.Documents_General.Approved,
+                    id_contact = sales_return.id_contact,
+                    can_calculate = false
+                };
+
                 payment_schedualList.Add(payment_schedual);
 
                 return payment_schedualList;
@@ -112,16 +119,19 @@ namespace entity.Brillo.Logic
             {
                 purchase_return purchase_return = (purchase_return)obj_entity;
 
-                payment_schedual payment_schedual = new payment_schedual();
-                payment_schedual.credit = purchase_return.GrandTotal;
-                payment_schedual.debit = 0;
-                payment_schedual.id_currencyfx = purchase_return.id_currencyfx;
-                payment_schedual.purchase_return = purchase_return;
-                payment_schedual.trans_date = purchase_return.trans_date;
-                payment_schedual.expire_date = purchase_return.trans_date;
-                payment_schedual.status = Status.Documents_General.Approved;
-                payment_schedual.id_contact = purchase_return.id_contact;
-                payment_schedual.can_calculate = false;
+                payment_schedual payment_schedual = new payment_schedual()
+                {
+                    credit = purchase_return.GrandTotal,
+                    debit = 0,
+                    id_currencyfx = purchase_return.id_currencyfx,
+                    purchase_return = purchase_return,
+                    trans_date = purchase_return.trans_date,
+                    expire_date = purchase_return.trans_date,
+                    status = Status.Documents_General.Approved,
+                    id_contact = purchase_return.id_contact,
+                    can_calculate = false
+                };
+
                 payment_schedualList.Add(payment_schedual);
 
                 return payment_schedualList;
@@ -134,15 +144,18 @@ namespace entity.Brillo.Logic
 
                 foreach (app_contract_detail app_contract_detail in sales_order.app_contract.app_contract_detail.Where(x => x.is_order))
                 {
-                    payment_schedual payment_schedual = new payment_schedual();
-                    payment_schedual.credit = 0;
-                    payment_schedual.debit = sales_order.GrandTotal * app_contract_detail.coefficient;
-                    payment_schedual.id_currencyfx = sales_order.id_currencyfx;
-                    payment_schedual.sales_order = sales_order;
-                    payment_schedual.trans_date = sales_order.trans_date;
-                    payment_schedual.expire_date = sales_order.trans_date.AddDays(app_contract_detail.interval);
-                    payment_schedual.status = Status.Documents_General.Approved;
-                    payment_schedual.id_contact = sales_order.id_contact;
+                    payment_schedual payment_schedual = new payment_schedual()
+                    {
+                        credit = 0,
+                        debit = sales_order.GrandTotal * app_contract_detail.coefficient,
+                        id_currencyfx = sales_order.id_currencyfx,
+                        sales_order = sales_order,
+                        trans_date = sales_order.trans_date,
+                        expire_date = sales_order.trans_date.AddDays(app_contract_detail.interval),
+                        status = Status.Documents_General.Approved,
+                        id_contact = sales_order.id_contact
+                    };
+
                     payment_schedualList.Add(payment_schedual);
                 }
                 return payment_schedualList;
@@ -172,32 +185,36 @@ namespace entity.Brillo.Logic
 
                 foreach (app_contract_detail app_contract_detail in app_contract_details)
                 {
-                    payment_schedual payment_schedual = new payment_schedual();
-                    payment_schedual.credit = purchase_invoice.GrandTotal * app_contract_detail.coefficient;
-                    payment_schedual.debit = 0;
-                    payment_schedual.id_currencyfx = purchase_invoice.id_currencyfx;
-                    payment_schedual.purchase_invoice = purchase_invoice;
-                    payment_schedual.trans_date = purchase_invoice.trans_date;
-                    payment_schedual.expire_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval);
-                    payment_schedual.status = Status.Documents_General.Pending;
-                    payment_schedual.id_contact = purchase_invoice.id_contact;
+                    payment_schedual payment_schedual = new payment_schedual()
+                    {
+                        credit = purchase_invoice.GrandTotal * app_contract_detail.coefficient,
+                        debit = 0,
+                        id_currencyfx = purchase_invoice.id_currencyfx,
+                        purchase_invoice = purchase_invoice,
+                        trans_date = purchase_invoice.trans_date,
+                        expire_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval),
+                        status = Status.Documents_General.Pending,
+                        id_contact = purchase_invoice.id_contact
+                    };
 
                     ///Checks if selected Contract has Promissory Note created.
                     if (IsPromisorry)
                     {
-                        payment_promissory_note payment_promissory_note = new payment_promissory_note();
-                        //Dates. Transactional (based on Sales Trans) and Expiry (based on Exp of Payment)...
-                        payment_promissory_note.trans_date = purchase_invoice.trans_date;
-                        payment_promissory_note.expiry_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval);
-                        //Navigational Properties...
-                        payment_promissory_note.id_branch = purchase_invoice.id_branch;
-                        payment_promissory_note.id_terminal = purchase_invoice.id_terminal;
-                        payment_promissory_note.id_company = purchase_invoice.id_company;
-                        payment_promissory_note.id_contact = purchase_invoice.id_contact;
-                        //Values...
-                        payment_promissory_note.value = purchase_invoice.GrandTotal * app_contract_detail.coefficient;
-                        payment_promissory_note.id_currencyfx = purchase_invoice.id_currencyfx;
-                        payment_promissory_note.status = Status.Documents.Pending;
+                        payment_promissory_note payment_promissory_note = new payment_promissory_note()
+                        {
+                            //Dates. Transactional (based on Sales Trans) and Expiry (based on Exp of Payment)...
+                            trans_date = purchase_invoice.trans_date,
+                            expiry_date = purchase_invoice.trans_date.AddDays(app_contract_detail.interval),
+                            //Navigational Properties...
+                            id_branch = purchase_invoice.id_branch,
+                            id_terminal = purchase_invoice.id_terminal,
+                            id_company = purchase_invoice.id_company,
+                            id_contact = purchase_invoice.id_contact,
+                            //Values...
+                            value = purchase_invoice.GrandTotal * app_contract_detail.coefficient,
+                            id_currencyfx = purchase_invoice.id_currencyfx,
+                            status = Status.Documents.Pending
+                        };
                         payment_promissory_noteLIST.Add(payment_promissory_note);
 
                         //Adding Payment Schedual into PromissoryNote
@@ -218,15 +235,17 @@ namespace entity.Brillo.Logic
 
                 foreach (app_contract_detail app_contract_detail in purchase_order.app_contract.app_contract_detail.Where(x => x.is_order))
                 {
-                    payment_schedual payment_schedual = new payment_schedual();
-                    payment_schedual.credit = purchase_order.GrandTotal * app_contract_detail.coefficient;
-                    payment_schedual.debit = 0;
-                    payment_schedual.id_currencyfx = purchase_order.id_currencyfx;
-                    payment_schedual.purchase_order = purchase_order;
-                    payment_schedual.trans_date = purchase_order.trans_date;
-                    payment_schedual.expire_date = purchase_order.trans_date.AddDays(app_contract_detail.interval);
-                    payment_schedual.status = Status.Documents_General.Pending;
-                    payment_schedual.id_contact = purchase_order.id_contact;
+                    payment_schedual payment_schedual = new payment_schedual()
+                    {
+                        credit = purchase_order.GrandTotal * app_contract_detail.coefficient,
+                        debit = 0,
+                        id_currencyfx = purchase_order.id_currencyfx,
+                        purchase_order = purchase_order,
+                        trans_date = purchase_order.trans_date,
+                        expire_date = purchase_order.trans_date.AddDays(app_contract_detail.interval),
+                        status = Status.Documents_General.Pending,
+                        id_contact = purchase_order.id_contact
+                    };
                     payment_schedualList.Add(payment_schedual);
                 }
                 return payment_schedualList;

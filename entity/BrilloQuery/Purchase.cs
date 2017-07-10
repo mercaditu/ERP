@@ -35,7 +35,6 @@ namespace entity.BrilloQuery
             query = string.Format(query, ReturnID);
 
             DataTable dt = QueryExecutor.DT(query);
-
             List<ReturnInvoice_Integration> ReturnList = new List<ReturnInvoice_Integration>();
 
             foreach (DataRow DataRow in dt.Rows)

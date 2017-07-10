@@ -246,7 +246,7 @@ namespace entity.Controller.Purchase
             {
                 if (item.InvoiceID > 0)
                 {
-                    //Purchase Invoice Integrated.
+                   //Purchase Invoice Integrated.
                     purchase_invoice purchase_invoice = db.purchase_invoice.Find(item.InvoiceID);
                     decimal Return_GrandTotal_ByInvoice = ReturnList.Where(x => x.InvoiceID == item.InvoiceID).Sum(x => x.SubTotalVAT);
 

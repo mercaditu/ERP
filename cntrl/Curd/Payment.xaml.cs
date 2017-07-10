@@ -224,7 +224,10 @@ namespace cntrl.Curd
 
                             CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
                             PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Include(x => x.payment_schedual).Load();
-                            purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.payment_schedual.Sum(y => y.debit) < x.payment_schedual.Sum(y => y.credit)));
+                            purchase_returnViewSource.Source = 
+                                PaymentDB.purchase_return.Local
+                                .Where(x => 
+                                (x.payment_schedual.Sum(y => y.debit) < x.payment_schedual.Sum(y => y.credit)));
                         }
                         else
                         {

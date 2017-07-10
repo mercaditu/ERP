@@ -97,7 +97,6 @@ sales_invoice_detail.id_sales_invoice_detail as DetailID,
 																inner join app_condition on app_condition.id_condition=sales_invoice.id_condition
 																left join projects on projects.id_project=sales_invoice.id_project
 											  where sales_invoice.trans_date between '@StartDate' and '@EndDate' and sales_invoice.id_company = @CompanyID
-
-												   order by sales_invoice.trans_date";
+                                              order by sales_invoice.trans_date";
     }
 }

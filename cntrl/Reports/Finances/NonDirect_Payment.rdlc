@@ -907,6 +907,7 @@
                           <rd:DefaultName>Value</rd:DefaultName>
                           <Style>
                             <Border>
+                              <Color>White</Color>
                               <Style>None</Style>
                             </Border>
                             <BackgroundColor>White</BackgroundColor>
@@ -916,6 +917,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -944,6 +946,7 @@
                           <rd:DefaultName>BuyRate</rd:DefaultName>
                           <Style>
                             <Border>
+                              <Color>White</Color>
                               <Style>None</Style>
                             </Border>
                             <BackgroundColor>White</BackgroundColor>
@@ -953,6 +956,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -978,6 +982,7 @@
                           <rd:DefaultName>Comment</rd:DefaultName>
                           <Style>
                             <Border>
+                              <Color>White</Color>
                               <Style>None</Style>
                             </Border>
                             <BackgroundColor>White</BackgroundColor>
@@ -987,6 +992,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1601,7 +1607,6 @@
                               <PaddingBottom>2pt</PaddingBottom>
                             </Style>
                           </Textbox>
-                          <rd:Selected>true</rd:Selected>
                         </CellContents>
                       </TablixHeader>
                       <TablixMembers>
@@ -2141,10 +2146,11 @@
                                         <rd:DefaultName>Contact</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>None</Style>
                                           </Border>
                                           <BottomBorder>
-                                            <Color>LightGrey</Color>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                             <Width>1pt</Width>
                                           </BottomBorder>
@@ -2183,10 +2189,11 @@
                                             <rd:DefaultName>Address</rd:DefaultName>
                                             <Style>
                                               <Border>
+                                                <Color>White</Color>
                                                 <Style>None</Style>
                                               </Border>
                                               <BottomBorder>
-                                                <Color>LightGrey</Color>
+                                                <Color>White</Color>
                                                 <Style>Solid</Style>
                                                 <Width>1pt</Width>
                                               </BottomBorder>

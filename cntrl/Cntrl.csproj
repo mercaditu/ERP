@@ -626,7 +626,7 @@
     <Compile Include="Reports\Finances\PendingPayables.cs" />
     <Compile Include="Reports\Finances\PaymentRecievables.cs" />
     <Compile Include="Reports\Finances\PendingRecievables.cs" />
-    <Compile Include="Reports\Finances\SalesPaymentsBycheque.cs" />
+    <Compile Include="Reports\Finances\NonDirect_Payment.cs" />
     <Compile Include="Reports\Finances\SalesPayments.cs" />
     <Compile Include="Reports\Productions\EmployeesInProduction.cs" />
     <Compile Include="Reports\Productions\Production.cs" />
@@ -686,6 +686,7 @@
     <EmbeddedResource Include="Reports\Commercials\ContactsByGeography.rdlc" />
     <EmbeddedResource Include="Reports\Commercials\ContactsByTag.rdlc" />
     <EmbeddedResource Include="Reports\Finances\AccountBalance.rdlc" />
+    <EmbeddedResource Include="Reports\Finances\NonDirect_Payment.rdlc" />
     <EmbeddedResource Include="Reports\Finances\PaymentRecievableByDate.rdlc" />
     <EmbeddedResource Include="Reports\Finances\PaymentRecievablesBySalesman.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
@@ -846,6 +847,8 @@
     <None Include="Properties\DataSources\entity.Reporting.Item.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ItemReceipe.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Merchandise.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.NonDirect_Payment.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.Payments.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PaymentsReceivable.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PendingPayable.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PendingReceivable.datasource" />

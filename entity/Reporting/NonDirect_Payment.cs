@@ -2,7 +2,7 @@
 
 namespace entity.Reporting
 {
-    public class SalesPaymentBycheque
+    public class NonDirect_Payment
     {
         public string Contact { get; set; }
         public string Code { get; set; }
@@ -14,12 +14,12 @@ namespace entity.Reporting
         public string PaymentType { get; set; }
         public string Number { get; set; }
         public string Account { get; set; }
-        public string PaymenTypeNumber { get; set; }
-        public string PaymentDate { get; set; }
-        public string PaymentDetailDate { get; set; }
+        public string PaymentTypeNumber { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public DateTime PaymentDetailDate { get; set; }
         public decimal Value { get; set; }
         public string Currency { get; set; }
         public decimal BuyRate { get; set; }
-        public string comment { get; set; }
+        public string Comment { get; set; }
     }
 }

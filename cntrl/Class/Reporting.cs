@@ -485,7 +485,7 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.AccountsReceivable,
-                Name = entity.Brillo.Localize.StringText("PaymentRecievableByDate") != string.Empty ? entity.Brillo.Localize.StringText("ReceivePayment") :"ReceivePayment",
+                Name = entity.Brillo.Localize.StringText("PaymentRecievableByDate"),
                 Path = "cntrl.Reports.Finances.PaymentRecievableByDate.rdlc",
                 Query = Reports.Finance.PaymentRecievables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
@@ -493,12 +493,19 @@ namespace cntrl.Class
             new Report
             {
                 Application = entity.App.Names.AccountsReceivable,
-                Name = entity.Brillo.Localize.StringText("PaymentRecievablesBySalesman")!= string.Empty ? entity.Brillo.Localize.StringText("ReceivePayment") :"ReceivePayment",
+                Name = entity.Brillo.Localize.StringText("PaymentRecievablesBySalesman"),
                 Path = "cntrl.Reports.Finances.PaymentRecievablesBySalesman.rdlc",
                 Query = Reports.Finance.PaymentRecievables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-
+            new Report
+            {
+                Application = entity.App.Names.AccountsReceivable,
+                Name = entity.Brillo.Localize.StringText("NonDirect_Payment"),
+                Path = "cntrl.Reports.Finances.NonDirect_Payment.rdlc",
+                Query = Reports.Finance.NonDirect_Payment.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
              //projects and Production
             new Report
             {

@@ -444,7 +444,7 @@
     <Compile Include="Reporting\Merchandise.cs" />
     <Compile Include="Reporting\InventoryValue.cs" />
     <Compile Include="Reporting\PurchaseTender.cs" />
-    <Compile Include="Reporting\SalesPaymentBycheque.cs" />
+    <Compile Include="Reporting\NonDirect_Payment.cs" />
     <Compile Include="Reporting\SalesPayment.cs" />
     <Compile Include="Reporting\SalesAnalysis.cs" />
     <Compile Include="Reporting\CostBreakDown.cs" />

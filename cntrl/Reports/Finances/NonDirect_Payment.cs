@@ -1,10 +1,10 @@
 ﻿namespace cntrl.Reports.Finance
 {
-    public static class SalesPaymentsBycheque
+    public static class NonDirect_Payment
     {
         public static string query = @"
   set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
             SELECT 
             c.name as Contact,
             c.code as Code,
@@ -18,8 +18,8 @@
             acc.name as Account,
             acc.code as AccountNumber,
             pd.payment_type_number as PaymentTypeNumber,
-            p.trans_date as Date,
-            pd.trans_date as Date,
+            Date(p.trans_date) as PaymentDate,
+            Date(pd.trans_date) as PaymentDetailDate,
             pd.value as Value,
             curr.code as Currency,
             fx.buy_value as BuyRate,
@@ -32,8 +32,10 @@
             inner join app_currency as curr on fx.id_currency = curr.id_currency
             inner join app_account as acc on pd.id_account = acc.id_account
             inner join app_branch as branch on p.id_branch = branch.id_branch
-            inner join sales_rep as rep on p.id_sales_rep = rep.id_sales_rep
+            left join sales_rep as rep on p.id_sales_rep = rep.id_sales_rep
             left join payment_schedual as sch on pd.id_payment_detail = sch.id_payment_detail
-            where p.trans_date between @StartDate and @EndDate";
+            where p.id_company = @CompanyID and 
+                p.trans_date between '@StartDate' and '@EndDate' 
+                and pt.is_direct = false";
     }
 }

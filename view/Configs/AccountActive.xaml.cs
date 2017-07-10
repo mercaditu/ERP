@@ -71,18 +71,23 @@ namespace Cognitivo.Configs
                 }
 
                 string query = "";
-                query = @"select ptype.id_payment_type, ptype.name, sum(accd.credit - accd.debit) as Balance, curr.name as Currency,fx.id_currencyfx
-        from app_account_detail as accd
-       join app_currencyfx as fx on accd.id_currencyfx = fx.id_currencyfx
-       join app_currency as curr on fx.id_currency = curr.id_currency
-        join payment_type as ptype on ptype.id_payment_type = accd.id_payment_type
-        join app_account as acc on accd.id_account = acc.id_account
-       join app_account_session as sess on accd.id_session = sess.id_session
-       where sess.is_active = true and acc.id_account ={0}
-        group by sess.id_session, fx.id_currency";
-                query = string.Format(query, app_account_session.id_account);
+                query = @"
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                    select ptype.id_payment_type, ptype.name, sum(accd.credit - accd.debit) as Balance, curr.name as Currency, fx.id_currencyfx
+                    from app_account_detail as accd
+                    join app_currencyfx as fx on accd.id_currencyfx = fx.id_currencyfx
+                    join app_currency as curr on fx.id_currency = curr.id_currency
+                    join payment_type as ptype on ptype.id_payment_type = accd.id_payment_type
+                    join app_account as acc on accd.id_account = acc.id_account
+                    join app_account_session as sess on accd.id_session = sess.id_session
+                    where sess.is_active = true and acc.id_account ={0}
+                    group by sess.id_session, fx.id_currency";
+                query = string.Format(query, app_account.id_account);
+
                 DataTable dt = new DataTable();
                 dt = QueryExecutor.DT(query);
+
                 if (dt.Rows.Count > 0)
                 {
                     listOpenAmt = new List<Class.clsTransferAmount>();
@@ -97,7 +102,6 @@ namespace Cognitivo.Configs
                         clsTransferAmount.id_currencyfxorigin = item["id_currencyfx"] != null ? Convert.ToInt32(item["id_currencyfx"]) : 0;
                         listOpenAmt.Add(clsTransferAmount);
                     }
-
                 }
 
                 //var app_account_detailList =

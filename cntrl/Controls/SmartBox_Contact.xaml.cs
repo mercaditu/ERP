@@ -75,8 +75,6 @@ namespace cntrl.Controls
         {
 			if (contactViewSource != null)
 			{
-
-
 				if (contactViewSource.View != null)
 				{
 					if (contactViewSource.View.CurrentItem is entity.BrilloQuery.Contact Contact)
@@ -203,8 +201,8 @@ namespace cntrl.Controls
                     var routedEvent = Keyboard.KeyUpEvent; // Event to send
                     tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, key) { RoutedEvent = routedEvent });
 
-                    var _enter = Key.Enter;                // Key to send
-                    tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
+                    //var _enter = Key.Enter;                // Key to send
+                    //tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
 
                     popContactInfo.IsOpen = false;
                 }
@@ -610,7 +608,8 @@ namespace cntrl.Controls
                     }
                 }
             }
-            
+            //Places and Replaces SearchBox Text with Name.
+            tbxSearch.Text = Name;
             LoadData();
         }
 

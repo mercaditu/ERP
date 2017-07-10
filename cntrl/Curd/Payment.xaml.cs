@@ -194,7 +194,6 @@ namespace cntrl.Curd
 
         private void PamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
             payment payment = paymentViewSource.View.CurrentItem as payment;
             if (cbxPamentType.SelectedItem != null)
             {
@@ -223,7 +222,8 @@ namespace cntrl.Curd
                             stpcreditsales.Visibility = Visibility.Collapsed;
                             stpcreditpurchase.Visibility = Visibility.Visible;
 
-                            PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact && x.id_purchase_invoice==null).Include(x => x.payment_schedual).Load();
+                            CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
+                            PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Include(x => x.payment_schedual).Load();
                             purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.payment_schedual.Sum(y => y.debit) < x.payment_schedual.Sum(y => y.credit)));
                         }
                         else

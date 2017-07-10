@@ -6,6 +6,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using entity.BrilloQuery;
+using System.Data;
 
 namespace Cognitivo.Configs
 {
@@ -68,84 +70,103 @@ namespace Cognitivo.Configs
                     RaisePropertyChanged("is_active");
                 }
 
-                //Pankeel, use this query. IT is faster.
-        //select ptype.name, sum(accd.credit - accd.debit) as Balance, curr.name as Currency
-        //from app_account_detail as accd
-        //join app_currencyfx as fx on accd.id_currencyfx = fx.id_currencyfx
-        //join app_currency as curr on fx.id_currency = curr.id_currency
-        //join payment_type as ptype on ptype.id_payment_type = accd.id_payment_type
-        //join app_account as acc on accd.id_account = acc.id_account
-        //join app_account_session as sess on accd.id_session = sess.id_session
-        //where sess.is_active = true and acc.id_account = 7
-        //group by sess.id_session, fx.id_currency;
-
-                var app_account_detailList =
-                    app_account.app_account_detail.Where(x =>
-                    x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal &&
-                    x.id_company == CurrentSession.Id_Company &&
-                    x.id_session == id_session)
-                     .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
-                     .Select(s => new
-                     {
-                         id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
-                         id_paymenttype = s.Max(ad => ad.id_payment_type),
-                         cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
-                         payType = s.Max(ad => ad.payment_type.name),
-                         amount = s.Sum(ad => (ad.credit - ad.debit))
-                     }).ToList();
-
-                var app_account_detailFinalList = app_account_detailList;
-                //    .GroupBy(ad => new { ad.cur, ad.payType })
-                //    .Select(s => new
-                //{
-                //    id_currencyfx = s.Max(x => x.id_currencyfx),
-                //    id_paymenttype = s.Max(x => x.id_paymenttype),
-                //    cur = s.Max(ad => ad.cur),
-                //    payType = s.Max(ad => ad.payType),
-                //    amount = s.Sum(ad => ad.amount)
-                //}).ToList();
-
-                listOpenAmt = new List<Class.clsTransferAmount>();
-
-                if (app_account_detailFinalList.Count > 0)
+                string query = "";
+                query = @"select ptype.id_payment_type, ptype.name, sum(accd.credit - accd.debit) as Balance, curr.name as Currency,fx.id_currencyfx
+        from app_account_detail as accd
+       join app_currencyfx as fx on accd.id_currencyfx = fx.id_currencyfx
+       join app_currency as curr on fx.id_currency = curr.id_currency
+        join payment_type as ptype on ptype.id_payment_type = accd.id_payment_type
+        join app_account as acc on accd.id_account = acc.id_account
+       join app_account_session as sess on accd.id_session = sess.id_session
+       where sess.is_active = true and acc.id_account ={0}
+        group by sess.id_session, fx.id_currency";
+                query = string.Format(query, app_account_session.id_account);
+                DataTable dt = new DataTable();
+                dt = QueryExecutor.DT(query);
+                if (dt.Rows.Count > 0)
                 {
-                    foreach (dynamic item in app_account_detailFinalList)
+                    listOpenAmt = new List<Class.clsTransferAmount>();
+                    foreach (DataRow item in dt.Rows)
                     {
                         Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
-                        clsTransferAmount.PaymentTypeName = item.payType;
-                        clsTransferAmount.amount = item.amount;
-                        clsTransferAmount.Currencyfxnameorigin = item.cur;
-                        clsTransferAmount.id_payment_type = item.id_paymenttype;
+                        clsTransferAmount.PaymentTypeName = item["name"] != null ? Convert.ToString(item["name"]) : "";
+                        clsTransferAmount.amount = item["Balance"] != null ? Convert.ToDecimal(item["Balance"]) : 0;
+                        clsTransferAmount.Currencyfxnameorigin = item["Currency"] != null ? Convert.ToString(item["Currency"]) : "";
+                        clsTransferAmount.id_payment_type = item["id_payment_type"] != null ? Convert.ToInt32(item["id_payment_type"]) : 0;
                         //Over write the CurrencyFXID with New FX ID that is currenty being used.
-                        clsTransferAmount.id_currencyfxorigin = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.app_currency.name == item.cur).FirstOrDefault().id_currencyfx;
+                        clsTransferAmount.id_currencyfxorigin = item["id_currencyfx"] != null ? Convert.ToInt32(item["id_currencyfx"]) : 0;
                         listOpenAmt.Add(clsTransferAmount);
                     }
-                }
-                else
-                //If no previous data is in, then bring blank values for each type of currency and payment type.
-                {
-                    List<app_currency> app_currencyList = new List<app_currency>();
-                    app_currencyList = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-                    foreach (app_currency app_currency in app_currencyList)
-                    {
-                        foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.id_company == CurrentSession.Id_Company).ToList())
-                        {
-                            Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount()
-                            {
-                                PaymentTypeName = payment_type.name,
-                                id_payment_type = payment_type.id_payment_type,
-                                amount = app_account.app_account_detail.Where(x =>
-                                    x.app_currencyfx.id_currency == app_currency.id_currency
-                                    && x.id_payment_type == payment_type.id_payment_type)
-                                .Sum(x => x.credit - x.debit),
-                                Currencyfxnameorigin = app_currency.name,
-                                id_currencyfxorigin = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault() != null ? db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx : 0
-                            };
-                            listOpenAmt.Add(clsTransferAmount);
-                        }
-                    }
                 }
+
+                //var app_account_detailList =
+                //    app_account.app_account_detail.Where(x =>
+                //    x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal &&
+                //    x.id_company == CurrentSession.Id_Company &&
+                //    x.id_session == id_session)
+                //     .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
+                //     .Select(s => new
+                //     {
+                //         id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
+                //         id_paymenttype = s.Max(ad => ad.id_payment_type),
+                //         cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+                //         payType = s.Max(ad => ad.payment_type.name),
+                //         amount = s.Sum(ad => (ad.credit - ad.debit))
+                //     }).ToList();
+
+                //var app_account_detailFinalList = app_account_detailList;
+                ////    .GroupBy(ad => new { ad.cur, ad.payType })
+                ////    .Select(s => new
+                ////{
+                ////    id_currencyfx = s.Max(x => x.id_currencyfx),
+                ////    id_paymenttype = s.Max(x => x.id_paymenttype),
+                ////    cur = s.Max(ad => ad.cur),
+                ////    payType = s.Max(ad => ad.payType),
+                ////    amount = s.Sum(ad => ad.amount)
+                ////}).ToList();
+
+                //listOpenAmt = new List<Class.clsTransferAmount>();
+
+                //if (app_account_detailFinalList.Count > 0)
+                //{
+                //    foreach (dynamic item in app_account_detailFinalList)
+                //    {
+                //        Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
+                //        clsTransferAmount.PaymentTypeName = item.payType;
+                //        clsTransferAmount.amount = item.amount;
+                //        clsTransferAmount.Currencyfxnameorigin = item.cur;
+                //        clsTransferAmount.id_payment_type = item.id_paymenttype;
+                //        //Over write the CurrencyFXID with New FX ID that is currenty being used.
+                //        clsTransferAmount.id_currencyfxorigin = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.app_currency.name == item.cur).FirstOrDefault().id_currencyfx;
+                //        listOpenAmt.Add(clsTransferAmount);
+                //    }
+                //}
+                //else
+                ////If no previous data is in, then bring blank values for each type of currency and payment type.
+                //{
+                //    List<app_currency> app_currencyList = new List<app_currency>();
+                //    app_currencyList = db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+
+                //    foreach (app_currency app_currency in app_currencyList)
+                //    {
+                //        foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.id_company == CurrentSession.Id_Company).ToList())
+                //        {
+                //            Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount()
+                //            {
+                //                PaymentTypeName = payment_type.name,
+                //                id_payment_type = payment_type.id_payment_type,
+                //                amount = app_account.app_account_detail.Where(x =>
+                //                    x.app_currencyfx.id_currency == app_currency.id_currency
+                //                    && x.id_payment_type == payment_type.id_payment_type)
+                //                .Sum(x => x.credit - x.debit),
+                //                Currencyfxnameorigin = app_currency.name,
+                //                id_currencyfxorigin = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault() != null ? db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx : 0
+                //            };
+                //            listOpenAmt.Add(clsTransferAmount);
+                //        }
+                //    }
+                //}
 
                 CashDataGrid.ItemsSource = listOpenAmt;
             }

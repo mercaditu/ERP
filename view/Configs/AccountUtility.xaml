@@ -105,9 +105,11 @@
 									           Grid.ColumnSpan="2" AllowEditing="False">
                             <syncfusion:SfDataGrid.Columns>
                                 <syncfusion:GridTextColumn MappingName="trans_date" HeaderText="{lex:Loc Date}"/>
-                                <syncfusion:GridTextColumn MappingName="comment" HeaderText="{lex:Loc Comment}" />
+                                <syncfusion:GridTextColumn MappingName="comment" HeaderText="{lex:Loc Comment}" Width="452"/>
                                 <syncfusion:GridNumericColumn MappingName="debit" HeaderTemplate="{lex:Loc Debit}" NumberDecimalSeparator="," NumberDecimalDigits="2" />
-                                <syncfusion:GridNumericColumn MappingName="credit" HeaderText="{lex:Loc Credit}" NumberDecimalSeparator="," NumberDecimalDigits="2"/>
+                                <syncfusion:GridNumericColumn MappingName="credit" HeaderText="{lex:Loc Credit}" NumberDecimalSeparator="." 
+                                NumberGroupSizes="3" 
+                                NumberGroupSeparator="," NumberDecimalDigits="2"/>
                                 <syncfusion:GridTextColumn MappingName="app_currencyfx.app_currency.name" HeaderText="{lex:Loc Currency}" />
                             </syncfusion:SfDataGrid.Columns>
                         </syncfusion:SfDataGrid>

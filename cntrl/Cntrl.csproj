@@ -626,6 +626,7 @@
     <Compile Include="Reports\Finances\PendingPayables.cs" />
     <Compile Include="Reports\Finances\PaymentRecievables.cs" />
     <Compile Include="Reports\Finances\PendingRecievables.cs" />
+    <Compile Include="Reports\Finances\SalesPaymentsBycheque.cs" />
     <Compile Include="Reports\Finances\SalesPayments.cs" />
     <Compile Include="Reports\Productions\EmployeesInProduction.cs" />
     <Compile Include="Reports\Productions\Production.cs" />

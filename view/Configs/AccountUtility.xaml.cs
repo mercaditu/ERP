@@ -186,9 +186,14 @@ namespace Cognitivo.Configs
 			}
 		}
 
-		#endregion Load and Initilize
+        #endregion Load and Initilize
 
-		private void btnAdjust_Click(object sender, RoutedEventArgs e)
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            app_accountDataGrid_SelectionChanged(null, null);
+        }
+
+        private void btnAdjust_Click(object sender, RoutedEventArgs e)
 		{
 			app_account app_account = app_accountDataGrid.SelectedItem as app_account;
 			if (app_account!=null)

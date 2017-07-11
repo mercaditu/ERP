@@ -15,6 +15,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             purchase_packing_detail_relation = new List<purchase_packing_detail_relation>();
+            timestamp = DateTime.Now;
         }
 
         [Key]

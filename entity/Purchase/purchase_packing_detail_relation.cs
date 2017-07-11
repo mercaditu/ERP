@@ -52,7 +52,7 @@ namespace entity
             {
                 // apply property level validation rules
 
-                if (columnName == "id_sales_packinglist")
+                if (columnName == "id_purchase_packing_detail")
                 {
                     if (id_purchase_packing_detail == 0)
                         return Brillo.Localize.PleaseSelect;

@@ -445,7 +445,8 @@ namespace entity
             {
                 if (item != null && item.unit_cost != null)
                 {
-                    _unit_cost = Currency.convert_Values((decimal)item.unit_cost, CurrentSession.Get_Currency_Default_Rate().id_currencyfx, id_currecyfx, App.Modules.Purchase);
+                    unit_cost = Currency.convert_Values((decimal)item.unit_cost, CurrentSession.Get_Currency_Default_Rate().id_currencyfx, id_currecyfx, App.Modules.Purchase);
+                    RaisePropertyChanged("unit_cost");
                 }
             }
         }

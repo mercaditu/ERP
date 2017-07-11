@@ -308,10 +308,10 @@ namespace Cognitivo.Purchase
                             {
                                 purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
                                 {
-                                    id_purchase_invoice_detail = PackingRelation.id_purchase_invoice_detail,
-                                  //  purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
+                                   // id_purchase_invoice_detail = PackingRelation.id_purchase_invoice_detail,
+                                    purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
                                     id_purchase_packing_detail = PackingRelation.id_purchase_packing_detail,
-                                   // purchase_packing_detail = PackingRelation.purchase_packing_detail
+                                    purchase_packing_detail = PackingRelation.purchase_packing_detail
                                 };
                                 purchase_packing_detail.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
 
@@ -435,7 +435,7 @@ namespace Cognitivo.Purchase
 
                         purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
                         {
-                            id_purchase_invoice_detail = detail.id_purchase_invoice_detail,
+                            //id_purchase_invoice_detail = detail.id_purchase_invoice_detail,
                             purchase_invoice_detail = detail,
                             id_purchase_packing_detail = PackingDetail.id_purchase_packing_detail,
                             purchase_packing_detail = PackingDetail
@@ -577,7 +577,8 @@ namespace Cognitivo.Purchase
                         _purchase_packing.purchase_packing_detail.Add(_purchase_packing_detail);
                         purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation();
                         purchase_packing_detail_relation.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
-                        purchase_packing_detail_relation.id_purchase_packing_detail = _purchase_packing_detail.id_purchase_packing_detail;
+                        // purchase_packing_detail_relation.id_purchase_packing_detail = _purchase_packing_detail.id_purchase_packing_detail;
+                        purchase_packing_detail_relation.purchase_packing_detail = _purchase_packing_detail;
                         PurchasePackingListDB.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
                     }
 

@@ -98,8 +98,9 @@ inner join contacts on sr.id_contact=contacts.id_contact
     pr.id_purchase_return AS ID,
     pr.code AS Code,
     pr.comment AS Comment,
-    pr.number AS Number
-   ,Round(sum((prd.quantity * prd.unit_cost * (vatco.vat + 1)))-sum(payment_schedual.debit),2) as Balance,  contacts.name as Name
+    pr.number AS Number,
+    (select sum(Credit) - sum(debit) from payment_schedual where id_purchase_return=prd.id_purchase_return) as Balance,
+    contacts.name as Name
 FROM
     purchase_return_detail as prd
 

@@ -12,7 +12,8 @@
 	  xmlns:data="clr-namespace:entity;assembly=entity"
 		xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
-		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 	  mc:Ignorable="d"
 	  MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
@@ -169,7 +170,7 @@
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}" />
                         <TextBox x:Name="txtUnitCost" Text="{Binding UnitPrice_Vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="txtQuantityExe" Text="{Binding quantity_exe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
+                        <TextBox x:Name="txtQuantityExe" Text="{Binding FinanceAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
 
                         <!--<Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}" />
 						<TextBox x:Name="txtPercentage" Style="{StaticResource input_textbox}" />-->

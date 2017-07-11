@@ -106,7 +106,7 @@ namespace Cognitivo.Commercial
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
             CollectionViewSource contact_tagViewSource = FindResource("contact_tagViewSource") as CollectionViewSource;
-            contact_tagViewSource.Source = ContactDB.db.contact_tag.Local;
+            contact_tagViewSource.Source = ContactDB.db.contact_tag.ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = CurrentSession.VAT_Groups.OrderBy(a => a.name);

@@ -129,14 +129,9 @@ namespace cntrl
 
                             sales_budget_detail.item_description = _project_task.item_description;
 
-                            if (project.is_Executable)
-                            {
-                                sales_budget_detail.quantity = _project_task.quantity_exe;
-                            }
-                            else
-                            {
-                                sales_budget_detail.quantity = (decimal)_project_task.quantity_est;
-                            }
+
+                            sales_budget_detail.quantity = _project_task.FinanceAmount;
+
 
                             sales_budget_detail.UnitPrice_Vat = UnitPrice_Vat;
 
@@ -207,15 +202,17 @@ namespace cntrl
 
                                 sales_order_detail.item_description = _project_task.item_description;
 
-                                if (project.is_Executable)
-                                {
-                                    sales_order_detail.quantity = (decimal)_project_task.quantity_exe;
-                                }
-                                else
-                                {
-                                    sales_order_detail.quantity = (decimal)_project_task.quantity_est;
-                                }
+                                //if (project.is_Executable)
+                                //{
+                                //    sales_order_detail.quantity = (decimal)_project_task.quantity_exe;
+                                //}
+                                //else
+                                //{
+                                //    sales_order_detail.quantity = (decimal)_project_task.quantity_est;
+                                //}
 
+
+                                sales_order_detail.quantity = _project_task.FinanceAmount;
                                 sales_order_detail.UnitPrice_Vat = UnitPrice_Vat;
 
                                 sales_order_detail.id_project_task = _project_task.id_project_task;
@@ -273,15 +270,17 @@ namespace cntrl
                                     sales_invoice_detail.id_item = (int)_project_task.id_item;
                                     sales_invoice_detail.item_description = _project_task.item_description;
 
-                                    if (project.is_Executable)
-                                    {
-                                        sales_invoice_detail.quantity = (decimal)_project_task.quantity_exe;
-                                    }
-                                    else
-                                    {
-                                        sales_invoice_detail.quantity = (decimal)_project_task.quantity_est;
-                                    }
+                                    //if (project.is_Executable)
+                                    //{
+                                    //    sales_invoice_detail.quantity = (decimal)_project_task.quantity_exe;
+                                    //}
+                                    //else
+                                    //{
+                                    //    sales_invoice_detail.quantity = (decimal)_project_task.quantity_est;
+                                    //}
 
+
+                                    sales_invoice_detail.quantity = _project_task.FinanceAmount;
                                     sales_invoice_detail.UnitPrice_Vat = UnitPrice_Vat;
 
                                     sales_invoice_detail.id_project_task = _project_task.id_project_task;
@@ -296,8 +295,11 @@ namespace cntrl
                                 crm_opportunity.sales_invoice.Add(sales_invoice);
                                 SalesOrderDB.crm_opportunity.Attach(crm_opportunity);
                                 SalesOrderDB.sales_invoice.Add(sales_invoice);
+
                                 SalesOrderDB.SaveChanges();
+
                             }
+
                         }
                     }
                 }

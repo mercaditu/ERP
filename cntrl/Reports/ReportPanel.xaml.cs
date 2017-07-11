@@ -290,7 +290,16 @@ namespace cntrl
 			Parameters.Name = "Parameters";
 			Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());
 
-			reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+            try
+            {
+                reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters, ParametersCost });
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+			
 
 			reportViewer.Refresh();
 			reportViewer.RefreshReport();

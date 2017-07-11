@@ -324,7 +324,7 @@ namespace cntrl
 
                 if (ico != null && row["placement"].ToString() == "m")
                 {
-                    if (_toolTip == "Archived")
+                    if (_toolTip == "Archive")
                     {
                         ico.btnColor = Brushes.Silver;
                         ico.iColor = Brushes.Black;
@@ -383,7 +383,7 @@ namespace cntrl
             {
                 toolIcon_Mini.Click += btnNew_MouseUp;
             }
-            else if (btnDelete_Click != null & iconName == "Archived" && security.delete)
+            else if (btnDelete_Click != null & iconName == "Archive" && security.delete)
             {
                 toolIcon_Mini.Click += btnDelete_MouseUp;
                 toolIcon_Mini = bind_toolIcon(toolIcon_Mini, "Delete_IsEnabled", false);

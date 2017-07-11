@@ -42,9 +42,11 @@ namespace Cognitivo.Commercial
             InitializeComponent();
         }
 
+
         private void toolBar_btnApprove_Click(object sender)
         {
             List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
+            
 
             if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
             {

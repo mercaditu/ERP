@@ -130,6 +130,29 @@ namespace entity
         { get; set; }
 
         [NotMapped]
+        public decimal FinanceAmount
+        {
+            get
+            {
+                if (_FinanceAmount == 0)
+                {
+                    if (quantity_exe > 0)
+                    {
+                        _FinanceAmount = quantity_exe;
+                    }
+                    else
+                    {
+                        _FinanceAmount = (decimal)quantity_est;
+                    }
+                }
+                return _FinanceAmount;
+            }
+            set
+            { _FinanceAmount = value; }
+        }
+        decimal _FinanceAmount = 0;
+
+        [NotMapped]
         public decimal Quantity_Factored
         {
             get { return _Quantity_Factored; }

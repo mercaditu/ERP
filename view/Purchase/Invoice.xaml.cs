@@ -348,6 +348,7 @@ namespace Cognitivo.Purchase
         private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact, bool AllowDuplicate, decimal quantity)
         {
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
+            purchase_invoice_detail.State = EntityState.Added;
             purchase_invoice_detail.purchase_invoice = purchase_invoice;
 
             //ItemLink
@@ -664,6 +665,7 @@ namespace Cognitivo.Purchase
                 purchase_invoice.app_contract = purchase_order.app_contract;
                 purchase_invoice.id_contract = purchase_order.id_contract;
                 purchase_invoice.is_impex = purchase_order.is_impex;
+                purchase_invoice.RaisePropertyChanged("is_impex");
 
                 if (purchase_order.id_project != null)
                 {
@@ -1027,5 +1029,6 @@ namespace Cognitivo.Purchase
                 MessageBox.Show("Packing Already Created Or Status is Not Approved ..");
             }
         }
+
     }
 }

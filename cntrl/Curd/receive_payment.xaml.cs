@@ -1,4 +1,5 @@
 ﻿using entity;
+using entity.Brillo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -150,6 +151,7 @@ namespace cntrl.Curd
                         app_account_detail.id_payment_type = payment_detail.id_payment_type;
                         app_account_detail.debit = Convert.ToDecimal(payment_detail.value);
                         app_account_detail.credit = 0;
+                        app_account_detail.comment = Localize.StringText("PurchaseInvoice") + " " + purchase_invoice.number + " | " + payment_schedual.contact.name;
                         dbContext.db.app_account_detail.Add(app_account_detail);
 
                         dbContext.db.payments.Add(payment);

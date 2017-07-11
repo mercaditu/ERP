@@ -229,7 +229,7 @@
 								</Hyperlink>
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
+                        <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left" 
 									Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_PurchaseOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
@@ -256,7 +256,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <StackPanel Orientation="Horizontal" >
                             <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center">
 										<Hyperlink FontWeight="Bold" PreviewMouseUp="toolBar_btnReturn_Click">

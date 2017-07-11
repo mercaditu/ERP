@@ -19,7 +19,7 @@
     <Page.Resources>
         <converters:Status2ColorConverter x:Key="Status2ColorConverter" />
         <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter" />
-        <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}" />
+        <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}" IsLiveSortingRequested="False" />
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
     </Page.Resources>
@@ -53,7 +53,7 @@
         </ListBox>
 
         <Grid Background="White" Grid.Column="1" Grid.Row="1">
-            <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+            <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                       RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

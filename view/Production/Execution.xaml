@@ -274,14 +274,18 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                                    <toolkit:DateTimeUpDown x:Name="dtpstartdate" Width="220" Format="FullDateTime" />
+                                    <!--<toolkit:DateTimeUpDown x:Name="dtpstartdate" Width="220" Format="FullDateTime" />-->
+                                    <syncfusion:SfMaskedEdit x:Name="dtpstartdate" MaskType="Simple" Mask="00/00/0000"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                    <syncfusion:SfMaskedEdit x:Name="dtpstarttime" MaskType="Simple" Mask="00:00:00"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
                                     <!--<syncfusion:SfDatePicker x:Name="dtpstartdate" Width="220" />-->
                                     <!--<DatePicker   Width="150" Height="27" />-->
                                     <!--<syncfusion:SfTimePicker  x:Name="dtpstarttime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm" />-->
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                    <toolkit:DateTimeUpDown x:Name="dtpenddate" Width="220" Format="FullDateTime" />
+                                    <syncfusion:SfMaskedEdit x:Name="dtpenddate" MaskType="Simple" Mask="00/00/0000"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                    <syncfusion:SfMaskedEdit x:Name="dtpendtime" MaskType="Simple" Mask="00:00:00"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
+                                    <!--<toolkit:DateTimeUpDown x:Name="dtpenddate" Width="220" Format="FullDateTime" />-->
                                     <!--<syncfusion:SfDatePicker x:Name="dtpenddate" Width="220" />-->
                                     <!--<DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
                                     <syncfusion:SfTimePicker  x:Name="dtpendtime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm"  />-->
@@ -379,14 +383,18 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                                        <toolkit:DateTimeUpDown x:Name="dtpscstartdate" Width="220" Format="FullDateTime" />
+                                        <syncfusion:SfMaskedEdit x:Name="dtpscstartdate" MaskType="Simple" Mask="00/00/0000"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                        <syncfusion:SfMaskedEdit x:Name="dtpscstarttime" MaskType="Simple" Mask="00:00:00"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
+                                        <!--<toolkit:DateTimeUpDown x:Name="dtpscstartdate" Width="220" Format="FullDateTime" />-->
                                         <!--<DatePicker x:Name="dtpscstartdate"  Width="150" Height="27" />-->
                                         <!--<syncfusion:SfTimePicker  x:Name="dtpscstarttime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm" />-->
 
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                        <toolkit:DateTimeUpDown x:Name="dtpscenddate" Width="220" Format="FullDateTime" />
+                                        <syncfusion:SfMaskedEdit x:Name="dtpscenddate" MaskType="Simple" Mask="00/00/0000"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                        <syncfusion:SfMaskedEdit x:Name="dtpscendtime" MaskType="Simple" Mask="00:00:00"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
+                                        <!--<toolkit:DateTimeUpDown x:Name="dtpscenddate" Width="220" Format="FullDateTime" />-->
                                         <!--<DatePicker x:Name="dtpscenddate"  Width="150" Height="27" />-->
                                         <!--<syncfusion:SfTimePicker  x:Name="dtpscendtime" Width="85"   FormatString="HH:mm" SelectorFormatString="HH:mm"/>-->
 

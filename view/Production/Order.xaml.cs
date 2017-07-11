@@ -814,6 +814,29 @@ namespace Cognitivo.Production
             }
         }
 
+        private void btnAnull_Click(object sender)
+        {
+
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            production_orderproduction_order_detailViewSource.View.Filter = null;
+
+            List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
+
+            foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true))
+            {
+                if (production_order_detail.item.id_item_type != item.item_type.Task)
+                {
+                    production_order_detail.status = Status.Production.Anull;
+                }
+            }
+
+            if (OrderDB.SaveChanges_WithValidation())
+            {
+                filter_task();
+                toolBar.msgSaved(OrderDB.NumberOfRecords);
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string prop)

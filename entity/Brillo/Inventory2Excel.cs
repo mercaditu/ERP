@@ -8,14 +8,14 @@ namespace entity.Brillo
 {
     public class Inventory2Excel
     {
-        public bool Create(item_inventory item_inventory)
+        public bool Create(item_inventory item_inventory,int id_location)
         {
             if (item_inventory != null)
             {
                 var wb = new XLWorkbook();
                 List<InventoryDetail> DetailList = new List<InventoryDetail>();
 
-                foreach (var inv_detail in item_inventory.item_inventory_detail.OrderBy(x => x.app_location.name).ToList())
+                foreach (var inv_detail in item_inventory.item_inventory_detail.Where(x=>x.id_location== id_location).OrderBy(x => x.app_location.name).ToList())
                 {
                     InventoryDetail Detail = new InventoryDetail()
                     {

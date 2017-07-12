@@ -373,10 +373,15 @@ namespace Cognitivo.Product
             //    }
             //}
 
-            if (Inv2Excel.Create(item_inventory))
+            app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+            if (app_location!=null)
             {
-                toolBar.msgSaved(1);
+                if (Inv2Excel.Create(item_inventory, app_location.id_location))
+                {
+                    toolBar.msgSaved(1);
+                }
             }
+          
 
             toolBar_btnEdit_Click(null);
         }

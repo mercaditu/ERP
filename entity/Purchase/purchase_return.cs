@@ -49,14 +49,6 @@ namespace entity
         {
             get
             {
-                //if (id_purchase_invoice > 0)
-                //{
-                //    return false;
-                //}
-                //else
-                //{
-                //    return true;
-                //}
                 return true;
             }
             set
@@ -245,18 +237,18 @@ namespace entity
                 if (columnName == "id_contact")
                 {
                     if (id_contact == 0)
-                        return "Contact needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
 
                 if (columnName == "id_currencyfx")
                 {
                     if (id_currencyfx == 0)
-                        return "Currency needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 if (columnName == "return_type")
                 {
                     if (return_type == 0)
-                        return "Sales Return needs to be selected";
+                        return Brillo.Localize.PleaseSelect;
                 }
                 return "";
             }

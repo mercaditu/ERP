@@ -229,7 +229,7 @@ namespace Cognitivo.Production
         private void toolBar_btnAnull_Click(object sender)
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            production_order.status = Status.Production.QA_Rejected;
+            production_order.status = Status.Production.Anull;
             OrderDB.SaveChanges_WithValidation();
         }
 

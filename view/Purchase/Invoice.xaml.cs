@@ -112,6 +112,17 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
+            foreach (purchase_invoice invoice in PurchaseDB.db.purchase_invoice.Local.Where(x => x.IsSelected))
+            {
+                bool DuplicateInvoice = false;
+                DuplicateInvoice = PurchaseDB.db.purchase_invoice.Where(x => x.number == invoice.number && x.id_contact == invoice.id_contact).Any();
+
+                if (DuplicateInvoice)
+                {
+                    toolBar.msgWarning("Factura de '" + invoice.contact.name + "', con numero de factura '" + invoice.number + "' esta duplicado.");
+                }
+            }
+
             if (PurchaseDB.SaveChanges_WithValidation())
             {
                 purchase_invoiceViewSource.View.Refresh();

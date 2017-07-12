@@ -84,13 +84,10 @@ namespace cntrl.Controls
             LoadData();
 
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
-            Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
-
-            Controls.smartBoxContactSetting.Default.SearchFilter.Add("code");
-
-            Controls.smartBoxContactSetting.Default.SearchFilter.Add("number");
-
-            Controls.smartBoxContactSetting.Default.SearchFilter.Add("comment");
+            smartBoxContactSetting.Default.SearchFilter.Add("Name");
+            smartBoxContactSetting.Default.SearchFilter.Add("code");
+            smartBoxContactSetting.Default.SearchFilter.Add("number");
+            smartBoxContactSetting.Default.SearchFilter.Add("comment");
         }
 
         public void LoadData()

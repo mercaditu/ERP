@@ -99,7 +99,7 @@ inner join contacts on sr.id_contact=contacts.id_contact
     pr.code AS Code,
     pr.comment AS Comment,
     pr.number AS Number,
-    (select sum(Credit) - sum(debit) from payment_schedual where id_purchase_return=prd.id_purchase_return) as Balance,
+    (select sum(credit) - sum(debit) from payment_schedual where id_purchase_return=prd.id_purchase_return) as Balance,
     contacts.name as Name
 FROM
     purchase_return_detail as prd
@@ -126,15 +126,20 @@ inner join contacts on pr.id_contact=contacts.id_contact
             {
                 foreach (DataRow DataRow in dt.Rows)
                 {
-                    Return Return = new Return();
 
+                    Return Return = new Return();
                     Return.ID = Convert.ToInt16(DataRow["ID"]);
                     Return.Code = Convert.ToString(DataRow["Code"]);
                     Return.Name = Convert.ToString(DataRow["Name"]);
                     Return.Comment = Convert.ToString(DataRow["Comment"]);
                     Return.Number = Convert.ToString(DataRow["Number"]);
                     Return.Balance = Convert.ToDecimal(DataRow["Balance"]);
-                    List.Add(Return);
+
+                    //This blocks 0 Balanced Returns from showing.
+                    if (Return.Balance > 0)
+                    {
+                        List.Add(Return);
+                    }
                 }
             }
         }

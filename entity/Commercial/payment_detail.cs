@@ -356,19 +356,19 @@ namespace entity
                     if (Max_Value > 0)
                     {
                         if (value > Max_Value)
-                            return "Amount is not Higher than Credit Note Balace: " + Math.Round(Max_Value, 2);
+                            return "Amount cannot be higher than Credit Note balace: " + Math.Round(Max_Value, 2);
                     }
                     if (payment.Balance > 0)
                     {
                         if (payment.GrandTotalDetail > payment.Balance)
-                            return "Amount is not Higher than Balace: " + Math.Round(payment.Balance, 2);
+                            return "Amount is higher than Payment Balance: " + Math.Round(payment.Balance, 2);
                     }
                 }
 
                 if (columnName == "id_payment_type")
                 {
                     if (id_payment_type == 0)
-                        return "Payment type needs to be selected";
+                        return "Payment Type needs to be selected";
                 }
                 return "";
             }

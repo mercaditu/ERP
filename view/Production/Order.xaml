@@ -21,7 +21,7 @@
         <Controller:OrderController x:Key="OrderDB"/>
         <Controller:ExecutionController x:Key="ExecutionDB"/>
         <converter:SecurityConverter x:Key="SecurityConverter" />
-        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color" />
+        <converter:Status_Production_2ColorConverter x:Key="ProductionStatus2Color" />
         <converter:ProuctionPending2BooleanConverter x:Key="ProuctionPending2BooleanConverter" />
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}" />
@@ -82,7 +82,7 @@
                             <Grid.Resources>
                                 <HierarchicalDataTemplate DataType="{x:Type entity:production_order_detail}"
 															  ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    <Panels:TreeProduction StatusColor="{Binding status, Converter={StaticResource ProductionStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														 IsChecked="{Binding IsSelected,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														 Code="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 														 HorizontalAlignment="Stretch"

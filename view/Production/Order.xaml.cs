@@ -693,7 +693,7 @@ namespace Cognitivo.Production
 
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
 
-            foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true))
+            foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true && x.status!=Status.Production.Anull))
             {
                 if (production_order_detail.item.id_item_type != item.item_type.Task)
                 {

@@ -572,8 +572,8 @@
                                                         MinWidth="128" />
                             <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="50"
 															ItemsSource="{Binding Source={x:Static entity:CurrentSession.VAT_Groups}}"
-															DisplayMemberPath="name" SelectedValuePath="id_vat_group"
-															SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True,
+															DisplayMemberPath="name" SelectedValuePath="id_vat_group" 
+                                                           SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True,
 															UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                             IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}, Converter={StaticResource TrueToFalse}}" />
                         <DataGridTextColumn 

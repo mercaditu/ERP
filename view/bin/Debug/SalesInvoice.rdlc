@@ -33,12 +33,28 @@
           <DataField>item_taxID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="VATName">
-          <DataField>VATName</DataField>
+        <Field Name="VATCGSTName">
+          <DataField>VATCGSTName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="VATPercent">
-          <DataField>VATPercent</DataField>
+        <Field Name="VATCGSTPercent">
+          <DataField>VATCGSTPercent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VATCGSTAmount">
+          <DataField>VATCGSTAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="VATSGSTName">
+          <DataField>VATSGSTName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VATSGSTPercent">
+          <DataField>VATSGSTPercent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VATSGSTAmount">
+          <DataField>VATSGSTAmount</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="sales_barcode">
@@ -129,9 +145,9 @@
           <DataField>id_sales_order_detail</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="sales_number">
+        <Field Name="Number">
           <DataField>sales_number</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="sales_invoice_Comment">
           <DataField>sales_invoice_Comment</DataField>
@@ -167,6 +183,10 @@
         </Field>
         <Field Name="customer_alias">
           <DataField>customer_alias</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="currency">
+          <DataField>currency</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -1364,7 +1384,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif( (Fields!VATName.Value Like "*CGST*"), Fields!VATPercent.Value, 0 )</Value>
+                                  <Value>=Fields!VATCGSTPercent.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1405,14 +1425,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox21">
+                        <Textbox Name="VATCGSTAmount">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif( (Fields!VATName.Value Like "*CGST*"), (Fields!sub_Total_vat.Value - Fields!sub_Total.Value), 0 )</Value>
+                                  <Value>=Fields!VATCGSTAmount.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1423,7 +1443,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox21</rd:DefaultName>
+                          <rd:DefaultName>VATCGSTAmount</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1453,14 +1473,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox48">
+                        <Textbox Name="VATSGSTPercent">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif( (Fields!VATName.Value Like "*SGST*"), Fields!VATPercent.Value, 0 )</Value>
+                                  <Value>=Fields!VATSGSTPercent.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1471,7 +1491,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox48</rd:DefaultName>
+                          <rd:DefaultName>VATSGSTPercent</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1501,14 +1521,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox28">
+                        <Textbox Name="VATSGSTAmount">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif( (Fields!VATName.Value Like "*SGST*"), (Fields!sub_Total_vat.Value - Fields!sub_Total.Value), 0 )</Value>
+                                  <Value>=Fields!VATSGSTAmount.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1519,7 +1539,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox28</rd:DefaultName>
+                          <rd:DefaultName>VATSGSTAmount</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1545,6 +1565,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1637,22 +1658,15 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox94">
+                        <Textbox Name="sub_Total_vat">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Sum(Fields!sub_Total_vat.Value),System.MidpointRounding.AwayFromZero),Sum(Fields!sub_Total_vat.Value)))</Value>
+                                  <Value>=Sum(Fields!sub_Total_vat.Value)</Value>
                                   <Style>
-                                    <Format>N2</Format>
-                                  </Style>
-                                </TextRun>
-                                <TextRun>
-                                  <Value xml:space="preserve"> </Value>
-                                  <Style>
-                                    <FontSize>8pt</FontSize>
                                     <Format>N2</Format>
                                   </Style>
                                 </TextRun>
@@ -1662,7 +1676,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox94</rd:DefaultName>
+                          <rd:DefaultName>sub_Total_vat</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1693,6 +1707,7 @@
                 <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
+            <DataSetName>DataSet1</DataSetName>
             <Top>5.98694in</Top>
             <Left>5.32093in</Left>
             <Height>0.21181in</Height>

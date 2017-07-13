@@ -141,6 +141,9 @@ namespace cntrl.Controls
             }
 
             LoadData();
+            
+            
+
 
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
 
@@ -200,18 +203,19 @@ namespace cntrl.Controls
                     var key = Key.A;                       // Key to send
                     var routedEvent = Keyboard.KeyUpEvent; // Event to send
                     PresentationSource source = PresentationSource.FromVisual(tbxSearch);
-                    if (source!=null)
+                    if (source != null)
                     {
                         tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = routedEvent });
                     }
-                      
-                  
-                   
+
+
+
 
                     //var _enter = Key.Enter;                // Key to send
                     //tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
 
                     popContactInfo.IsOpen = false;
+
                 }
             }));
         }

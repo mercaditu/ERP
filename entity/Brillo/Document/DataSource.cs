@@ -375,7 +375,7 @@ namespace entity.Brillo.Document
             {
                 if (app_vat_group_details.app_vat.name.ToUpper().Contains("CGST"))
                 {
-                    return Math.Round(subtotal * app_vat_group_details.app_vat.coefficient,2);
+                    return Math.Round(subtotal * app_vat_group_details.app_vat.coefficient * app_vat_group_details.percentage, 2);
                 }
             }
             return 0;
@@ -408,7 +408,7 @@ namespace entity.Brillo.Document
             {
                 if (app_vat_group_details.app_vat.name.ToUpper().Contains("SGST"))
                 {
-                    return Math.Round(subtotal * app_vat_group_details.app_vat.coefficient,2);
+                    return Math.Round(subtotal * app_vat_group_details.app_vat.coefficient * app_vat_group_details.percentage, 2);
                 }
             }
             return 0 ;

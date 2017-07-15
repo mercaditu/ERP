@@ -508,6 +508,7 @@ namespace Cognitivo.Production
 
                     RefreshData();
                     RefreshTree();
+                    filter_task();
                 }
                 catch { }
             }
@@ -1293,7 +1294,7 @@ namespace Cognitivo.Production
         }
         private void Print_Click(object sender, MouseButtonEventArgs e)
         {
-            if (production_orderDataGrid.SelectedItem is production_order production_order && production_order.status == Status.Production.Approved)
+            if (production_orderDataGrid.SelectedItem is production_order production_order)
             {
                 foreach (production_order_detail production_order_detail in production_order.production_order_detail.Where(x =>x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
                 {

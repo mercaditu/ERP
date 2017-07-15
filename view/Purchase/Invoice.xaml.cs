@@ -114,6 +114,10 @@ namespace Cognitivo.Purchase
         {
             foreach (purchase_invoice invoice in PurchaseDB.db.purchase_invoice.Local.Where(x => x.IsSelected))
             {
+                if (invoice.id_contact==0)
+                {
+                    toolBar.msgWarning("Select Contact...");
+                }
                 bool DuplicateInvoice = false;
                 DuplicateInvoice = PurchaseDB.db.purchase_invoice.Where(x => x.number == invoice.number && x.id_contact == invoice.id_contact).Any();
 
@@ -122,6 +126,7 @@ namespace Cognitivo.Purchase
                     toolBar.msgWarning("Factura de '" + invoice.contact.name + "', con numero de factura '" + invoice.number + "' esta duplicado.");
                 }
             }
+            
 
             if (PurchaseDB.SaveChanges_WithValidation())
             {

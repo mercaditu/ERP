@@ -193,7 +193,7 @@ namespace cntrl.Controls
             {
                 progBar.Visibility = Visibility.Collapsed;
 
-                if (string.IsNullOrEmpty(tbxSearch.Text) == false)
+                if (ContactID > 0)
                 {
                     //Once data is loaded, put name and set focus on search box to make things easier.
                     tbxSearch.Focus();

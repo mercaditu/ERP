@@ -1,17 +1,17 @@
 ﻿<UserControl x:Class="cntrl.Controls.SmartBox_Contact" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-              xmlns:entity="clr-namespace:entity;assembly=entity"
+             xmlns:entity="clr-namespace:entity;assembly=entity"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:pref="clr-namespace:cntrl.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Converter="clr-namespace:cntrl.Converters"
-                xmlns:entitybrillo="clr-namespace:entity.BrilloQuery;assembly=entity"
-                xmlns:lex="http://wpflocalizeextension.codeplex.com"
-                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
-                lex:ResxLocalizationProvider.DefaultDictionary="local"
-                lex:LocalizeDictionary.DesignCulture="en-US"
+             xmlns:entitybrillo="clr-namespace:entity.BrilloQuery;assembly=entity"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+             lex:ResxLocalizationProvider.DefaultDictionary="local"
+             lex:LocalizeDictionary.DesignCulture="en-US"
              Focusable="True"
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
     <UserControl.Resources>
@@ -84,7 +84,7 @@
 
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"
-               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}" />
+               HorizontalAlignment="Left"/>
 
         <Popup x:Name="popContact" IsOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Brush}" BorderThickness="2">

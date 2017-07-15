@@ -63,7 +63,7 @@ namespace Cognitivo.Menu
 
                 User = db.security_user.Where(x => x.name == u
                                                  && x.password == p
-                                                 && x.id_company == CurrentSession.Id_Company)
+                                                 && x.id_company == CurrentSession.Id_Company && x.is_active)
                                        .FirstOrDefault();
                 if (User != null)
                 {
@@ -129,5 +129,6 @@ namespace Cognitivo.Menu
         {
             myFrame.Navigate(new Configs.Settings());
         }
+
     }
 }

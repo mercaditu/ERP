@@ -185,7 +185,7 @@
                                         </CheckBox>
                                         <CheckBox Margin="6,0,0,0" x:Name="chkshowconversion"
 										  IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                            <Label Content="Show Purchase Detail" Foreground="MediumVioletRed" />
+                                            <Label Content="Show Factor" Foreground="MediumVioletRed" />
                                         </CheckBox>
                                         <CheckBox Margin="6,0,0,0" x:Name="chkshowbatch"
 										  IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=BatchCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">

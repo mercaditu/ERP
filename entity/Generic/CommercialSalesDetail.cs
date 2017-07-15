@@ -93,8 +93,10 @@ namespace entity
 
                     update_SubTotal();
 					update_UnitCostSubTotal();
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity,0);
+                    RaisePropertyChanged("_Quantity_Factored");
 
-					if (Quantity_InStock != null)
+                    if (Quantity_InStock != null)
                     {
                         if (quantity > Quantity_InStock)
                         {
@@ -109,6 +111,27 @@ namespace entity
         }
 
         private decimal _quantity;
+
+        /// <summary>
+        ///
+        /// </summary>
+        [NotMapped]
+        public decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+                    //quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored);
+                    //RaisePropertyChanged("quantity");
+                }
+            }
+        }
+
+        private decimal _Quantity_Factored;
 
         [NotMapped]
         public decimal? Quantity_InStock { get; set; }

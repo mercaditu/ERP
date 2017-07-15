@@ -286,5 +286,17 @@ namespace Cognitivo.Sales {
                 this["Default_Customer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowFactorQty {
+            get {
+                return ((bool)(this["ShowFactorQty"]));
+            }
+            set {
+                this["ShowFactorQty"] = value;
+            }
+        }
     }
 }

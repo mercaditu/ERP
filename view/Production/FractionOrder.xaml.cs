@@ -493,7 +493,7 @@ namespace Cognitivo.Production
 
                 if (OrderDB.db.SaveChanges() > 0)
                 {
-                    filter_task();
+                   
                     toolBar.msgSaved(1);
                 }
 
@@ -508,10 +508,11 @@ namespace Cognitivo.Production
 
                     RefreshData();
                     RefreshTree();
-                    filter_task();
+                   
                 }
                 catch { }
             }
+            filter_task();
         }
 
         private void toolIcon_Click_1(object sender)

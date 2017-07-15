@@ -158,10 +158,10 @@
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc CostCenter}" />
                             <Label Content="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55" />
                         </StackPanel>
-                        <!--<StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="Print_Click"><Run Text="{lex:Loc Document}" /></Hyperlink></TextBlock>
-                        </StackPanel>-->
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

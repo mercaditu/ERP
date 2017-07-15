@@ -61,7 +61,11 @@ inner join contacts on sr.id_contact=contacts.id_contact
                     Return.Comment = Convert.ToString(DataRow["Comment"]);
                     Return.Number = Convert.ToString(DataRow["Number"]);
                     Return.Balance = Convert.ToDecimal(DataRow["Balance"]);
-                    List.Add(Return);
+                    if (Return.Balance > 0)
+                    {
+                        List.Add(Return);
+                    }
+                   
                 }
             }
         }

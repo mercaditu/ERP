@@ -1291,17 +1291,25 @@ namespace Cognitivo.Production
                 RefreshExecution();
             }
         }
-        //private void Print_Click(object sender, MouseButtonEventArgs e)
-        //{
-        //    if (production_orderDataGrid.SelectedItem is production_order production_order && production_order.status == Status.Production.Approved)
-        //    {
-        //        Brillo.Document.Start.Automatic(production_execution_detail, production_execution_detail.production_order_detail.production_order.app_document_range);
-              
-        //    }
-        //    else
-        //    {
-        //        toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
-        //    }
-        //}
+        private void Print_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (production_orderDataGrid.SelectedItem is production_order production_order && production_order.status == Status.Production.Approved)
+            {
+                foreach (production_order_detail production_order_detail in production_order.production_order_detail.Where(x =>x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
+                {
+
+                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.status == null || x.status < Status.Production.Approved))
+                    {
+
+                        entity.Brillo.Document.Start.Automatic(production_execution_detail, production_execution_detail.production_order_detail.production_order.app_document_range);
+                    }
+                }
+
+            }
+            else
+            {
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
+            }
+        }
     }
 }

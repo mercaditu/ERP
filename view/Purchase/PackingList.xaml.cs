@@ -213,9 +213,15 @@ namespace Cognitivo.Purchase
                 {
                     //DeleteDetailGridRow
                     purchase_packinglist_detailDataGrid.CancelEdit();
-                    PurchasePackingListDB.purchase_packing_detail.Remove(e.Parameter as purchase_packing_detail);
-                    purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
-                    purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                    purchase_packing_detail purchase_packing_detail = e.Parameter as purchase_packing_detail;
+                    if (purchase_packing_detail!=null)
+                    {
+                        PurchasePackingListDB.purchase_packing_detail_relation.RemoveRange(purchase_packing_detail.purchase_packing_detail_relation);
+                        PurchasePackingListDB.purchase_packing_detail.Remove(e.Parameter as purchase_packing_detail);
+                        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                        purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                    }
+                   
                 }
             }
             catch (Exception ex)

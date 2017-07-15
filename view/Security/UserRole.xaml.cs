@@ -166,8 +166,7 @@ namespace Cognitivo.Security
             security_role security_role = new security_role();
             if (security_role != null)
             {
-                Add_Privallge();
-                Add_MissingRecords(security_role);
+              
                 security_role.State = EntityState.Added;
                 security_role.Version = CurrentSession.Versions.Lite;
 
@@ -176,6 +175,8 @@ namespace Cognitivo.Security
 
                 security_roleViewSource.View.Refresh();
                 security_roleViewSource.View.MoveCurrentToLast();
+                Add_Privallge();
+                Add_MissingRecords(security_role);
             }
         }
 

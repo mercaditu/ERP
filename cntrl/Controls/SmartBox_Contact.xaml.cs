@@ -142,9 +142,6 @@ namespace cntrl.Controls
 
             LoadData();
             
-            
-
-
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
 
             if (rbtnCode.IsChecked == true)
@@ -196,7 +193,7 @@ namespace cntrl.Controls
             {
                 progBar.Visibility = Visibility.Collapsed;
 
-                if (string.IsNullOrEmpty(Name) == false)
+                if (string.IsNullOrEmpty(tbxSearch.Text) == false)
                 {
                     //Once data is loaded, put name and set focus on search box to make things easier.
                     tbxSearch.Focus();
@@ -208,14 +205,7 @@ namespace cntrl.Controls
                         tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = routedEvent });
                     }
 
-
-
-
-                    //var _enter = Key.Enter;                // Key to send
-                    //tbxSearch.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, PresentationSource.FromVisual(tbxSearch), 0, _enter) { RoutedEvent = routedEvent });
-
                     popContactInfo.IsOpen = false;
-
                 }
             }));
         }

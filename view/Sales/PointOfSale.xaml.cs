@@ -119,7 +119,34 @@ namespace Cognitivo.Sales
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 SalesDB.Approve();
 
-                //if (false)
+                if (sales_invoice.TotalChanged > 0)
+                {
+                    if (true)
+                    {
+                        decimal ChangeAmount = sales_invoice.TotalChanged;
+
+                        List<payment_detail> SameCurrency_Payments = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).ToList();
+                        foreach (var detail in SameCurrency_Payments)
+                        {
+                            payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                            payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+
+                            //ChangeAmount -= ChangeAmount - 
+                        }
+
+                        //if (ChangeAmount > 0)
+                        //{
+                        //    List<payment_detail> DiffCurrency_Payments = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx != sales_invoice.id_currencyfx).ToList();
+                        //    foreach (var detail in SameCurrency_Payments)
+                        //    {
+                        //        payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                        //        payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+                        //    }
+                        //}
+                    }
+                }
+
+                //if (SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList())
                 //{
                 //    payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
                 //    payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;

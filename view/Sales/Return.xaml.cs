@@ -88,10 +88,14 @@ namespace Cognitivo.Sales
                 MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (res == MessageBoxResult.Yes)
                 {
-                    SalesReturnDB.db.sales_return.Remove((sales_return)sales_returnDataGrid.SelectedItem);
+                    sales_return s_return = (sales_return)sales_returnDataGrid.SelectedItem;
+                    s_return.is_archived = true;
+                    SalesReturnDB.db.SaveChanges();
                     salesReturnViewSource.View.MoveCurrentToFirst();
                     toolBar_btnSave_Click(sender);
                     sbxContact.Text = "";
+
+                    load_PrimaryDataThread();
                 }
             }
             catch (Exception ex)

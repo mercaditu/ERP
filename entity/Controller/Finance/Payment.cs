@@ -77,7 +77,6 @@ namespace entity.Controller.Finance
             string number = string.Empty;
             foreach (payment_detail payment_detail in payment.payment_detail.ToList())
             {
-
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 List<payment_schedual> schedualList = new List<payment_schedual>();
@@ -117,7 +116,7 @@ namespace entity.Controller.Finance
                 {
 
                     ///If PaymentDetail Value is Negative.
-                    decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
+                    decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {
 

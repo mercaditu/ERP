@@ -1,4 +1,5 @@
 ﻿using entity.Class;
+using System.ComponentModel;
 
 namespace entity
 {
@@ -43,7 +44,7 @@ namespace entity
             Report,
         }
 
-        // [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Names
         {
             /// <summary>

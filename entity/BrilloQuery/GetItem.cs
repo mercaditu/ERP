@@ -75,9 +75,7 @@ namespace entity.BrilloQuery
                 }
             }
         }
-
-
-
+        
         public GetItems(int ItemID, int LocationID)
         {
             Items = new List<Item>();
@@ -164,14 +162,14 @@ namespace entity.BrilloQuery
 
 								 from items as item
 
-								 join item_product as prod on prod.id_item = item.id_item
+                                 left outer join item_product as prod on prod.id_item = item.id_item
 								 left outer join item_brand as brand on brand.id_brand = item.id_brand
-								 join item_movement as mov on mov.id_item_product = prod.id_item_product
-							     join app_location as loc on mov.id_location = loc.id_location
-								 join app_branch as branch on loc.id_branch = branch.id_branch
+								 left outer join item_movement as mov on mov.id_item_product = prod.id_item_product
+								 left outer join app_location as loc on mov.id_location = loc.id_location
+								 left outer join app_branch as branch on loc.id_branch = branch.id_branch
 
 								 where item.id_company = {0}
-									and mov.id_location = {1}
+									and (mov.id_location = {1} or mov.id_location is null)
 									and item.is_active = 1 
 								 group by item.id_item";
 
@@ -204,7 +202,7 @@ namespace entity.BrilloQuery
                     Item.Code = Convert.ToString(DataRow["Code"]);
                     Item.Brand = Convert.ToString(DataRow["Brand"]);
                     Item.InStock = Convert.ToDecimal(DataRow["Quantity"] is DBNull ? 0 : DataRow["Quantity"]);
-                    Item.LocationID = Convert.ToInt32(DataRow["LocationID"]); ;
+                    Item.LocationID = Convert.ToInt32(DataRow["LocationID"] is DBNull ? 0 : DataRow["LocationID"]);
 
                     Items.Add(Item);
                 }
@@ -312,7 +310,7 @@ namespace entity.BrilloQuery
         public bool IsProduct { get; set; }
 
         public decimal Location { get; set; }
-        public int LocationID { get; set; }
+        public int? LocationID { get; set; }
         public decimal InStock { get; set; }
         public decimal Cost { get; set; }
 

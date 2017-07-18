@@ -50,11 +50,13 @@ namespace cntrl.Controls
             get { return _Exclude_OutOfStock; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                _Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly) ? value : false;
-                RaisePropertyChanged("Exclude_OutOfStock");
+                if (_Exclude_OutOfStock != value)
+                {
+                    _Exclude_OutOfStock = value;
+                    RaisePropertyChanged("Exclude_OutOfStock");
 
-                LoadData(LocationID);
+                    LoadData(LocationID);
+                }
             }
         }
 
@@ -190,20 +192,17 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
-            ///Exists code if in design view.
-            if (DesignerProperties.GetIsInDesignMode(this))
-            {
-              
-            }
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+            Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly);
 
             smartBoxItemSetting Settings = new smartBoxItemSetting();
             if (entity.CurrentSession.Show_InStockProductsOnly)
             {
-                Settings.Exclude_OutOfStock = true;
+                Settings.Exclude_OutOfStock = Exclude_OutOfStock;
             }
             else if (item_types == entity.item.item_type.Product || item_types == entity.item.item_type.RawMaterial)
             {
-                Settings.Exclude_OutOfStock = true;
+                Settings.Exclude_OutOfStock = Exclude_OutOfStock;
             }
 
             if (entity.CurrentSession.Allow_BarCodeSearchOnly)
@@ -259,13 +258,7 @@ namespace cntrl.Controls
             if (Exclude_OutOfStock)
             {
                 Items = Execute.Items.AsQueryable()
-                    .Where(x =>
-                x.InStock > 0 &&
-                (
-                x.Type == entity.item.item_type.Product ||
-                x.Type == entity.item.item_type.RawMaterial ||
-                x.Type == entity.item.item_type.Supplies
-                ));
+                    .Where(x => (x.InStock > 0 && x.IsProduct) || x.IsProduct == false);
             }
             else
             {
@@ -386,7 +379,7 @@ namespace cntrl.Controls
                 }
                 if (Exclude_OutOfStock == true)
                 {
-                    predicate = predicate.And(x => x.InStock > 0);
+                    predicate = predicate.And(x => x.InStock > 0 && x.IsProduct == true).Or(y => y.IsProduct == false);
                 }
             }
 

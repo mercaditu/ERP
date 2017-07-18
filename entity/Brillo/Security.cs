@@ -64,9 +64,7 @@
                             {
                                 return CurrentSession.Security_role_privilageList.Where(x => x.id_privilage == privilage.id_privilage).FirstOrDefault().has_privilage;
                             }
-
                         }
-                    
                     }
                 }
             }

@@ -36,7 +36,7 @@ namespace entity
             CanDisplaySupplies = 9,
             CanDisplayServiceContract = 10,
             ItemBarcodeSearchOnly = 11,
-            InStockSearchOnly = 12
+            Include_OutOfStock = 12
         }
     }
 }

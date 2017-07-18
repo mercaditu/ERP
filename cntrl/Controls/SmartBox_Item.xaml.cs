@@ -55,7 +55,11 @@ namespace cntrl.Controls
                     _Exclude_OutOfStock = value;
                     RaisePropertyChanged("Exclude_OutOfStock");
 
-                    LoadData(LocationID);
+                    //Filters Items list to only include InStock Items or Non-Products
+                    if (Items != null)
+                    {
+                        Items = Items.AsQueryable().Where(x => (x.InStock > 0 && x.IsProduct) || x.IsProduct == false);
+                    }
                 }
             }
         }
@@ -193,10 +197,10 @@ namespace cntrl.Controls
             InitializeComponent();
 
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-            Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.InStockSearchOnly);
+            Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.Include_OutOfStock) == true ? false : true;
 
             smartBoxItemSetting Settings = new smartBoxItemSetting();
-            if (entity.CurrentSession.Show_InStockProductsOnly)
+            if (Exclude_OutOfStock)
             {
                 Settings.Exclude_OutOfStock = Exclude_OutOfStock;
             }
@@ -258,7 +262,7 @@ namespace cntrl.Controls
             if (Exclude_OutOfStock)
             {
                 Items = Execute.Items.AsQueryable()
-                    .Where(x => (x.InStock > 0 && x.IsProduct) || x.IsProduct == false);
+        .Where(x => (x.InStock > 0 && x.IsProduct) || x.IsProduct == false);
             }
             else
             {

@@ -277,8 +277,8 @@ namespace entity
                         .Where(x => x.security_privilage.name == Privilage.Privilages.ItemBarcodeSearchOnly &&
                         x.has_privilage).FirstOrDefault() != null ? true : false;
 
-                    Show_InStockProductsOnly = Security_role_privilageList
-                        .Where(x => x.security_privilage.name == Privilage.Privilages.InStockSearchOnly &&
+                    Include_OutOfStock = Security_role_privilageList
+                        .Where(x => x.security_privilage.name == Privilage.Privilages.Include_OutOfStock &&
                         x.has_privilage).FirstOrDefault() != null ? true : false;
                 }
                 catch (Exception ex)
@@ -346,7 +346,7 @@ namespace entity
 
         public static bool Allow_UpdateSalesDetail { get; set; }
         public static bool Allow_BarCodeSearchOnly { get; set; }
-        public static bool Show_InStockProductsOnly { get; set; }
+        public static bool Include_OutOfStock { get; set; }
 
         public static string ApplicationFile_Path
         {

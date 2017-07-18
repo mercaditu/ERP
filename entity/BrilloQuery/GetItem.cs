@@ -207,11 +207,8 @@ namespace entity.BrilloQuery
                     Items.Add(Item);
                 }
             }
-
         }
-
-
-
+        
         public List<Item> GetItemsByLocation()
         {
             List<Item> ItemsLocation = new List<Item>();

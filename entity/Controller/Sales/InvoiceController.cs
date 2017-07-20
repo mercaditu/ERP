@@ -528,8 +528,8 @@ namespace entity.Controller.Sales
                 {
                     if (sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault() != null)
                     {
-                        if (sales_detail.unit_cost == 0)
-                        {
+                        //if (sales_detail.unit_cost == 0)
+                        //{
                             //item_movement item_movement = db.item_movement.Find()
                             sales_detail.unit_cost = Currency.convert_Values
                             (
@@ -538,7 +538,7 @@ namespace entity.Controller.Sales
                             sales_detail.sales_invoice.id_currencyfx,
                             App.Modules.Sales
                             );
-                        }
+                        //}
                     }
                 }
             }

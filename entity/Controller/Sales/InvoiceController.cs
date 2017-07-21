@@ -521,6 +521,7 @@ namespace entity.Controller.Sales
             Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
             item_movementList = _Stock.SalesInvoice_Approve(db, ref invoice);
 
+
             //Loop through each Item Movement and assign cost to detail for reporting purposes.
             foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item_movement.Count() > 0))
             {
@@ -528,8 +529,8 @@ namespace entity.Controller.Sales
                 {
                     if (sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault() != null)
                     {
-                        //if (sales_detail.unit_cost == 0)
-                        //{
+                        if (sales_detail.unit_cost == 0)
+                        {
                             //item_movement item_movement = db.item_movement.Find()
                             sales_detail.unit_cost = Currency.convert_Values
                             (
@@ -538,10 +539,14 @@ namespace entity.Controller.Sales
                             sales_detail.sales_invoice.id_currencyfx,
                             App.Modules.Sales
                             );
-                        //}
+                        }
                     }
                 }
             }
+
+
+
+
 
             if (item_movementList.Count() > 0)
             {
@@ -550,19 +555,9 @@ namespace entity.Controller.Sales
             }
             db.SaveChanges();
 
-            foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product.Count() > 0))
-            {
-                item_movement item_movement = db.item_movement.Where(x => x.id_sales_invoice_detail == sales_detail.id_sales_invoice_detail).FirstOrDefault();
-                if (item_movement != null)
-                {
-                    if (item_movement.item_movement_value != null)
-                    {
-                        sales_detail.unit_cost = Currency.convert_Values(item_movement.item_movement_value.Sum(x => x.unit_value),
-                        item_movement.item_movement_value.FirstOrDefault().id_currencyfx,
-                        sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
-                    }
-                }
-            }
+
+         
+         
         }
 
         /// <summary>

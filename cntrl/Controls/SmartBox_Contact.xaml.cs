@@ -337,10 +337,14 @@ namespace cntrl.Controls
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                if (popContact.IsOpen == false)
+                if (ContactID==0)
                 {
-                    popContact.IsOpen = true;
+                    if (popContact.IsOpen == false)
+                    {
+                        popContact.IsOpen = true;
+                    }
                 }
+              
 
                 contactViewSource.Source = ContactList.Where(predicate).ToList();
             }));

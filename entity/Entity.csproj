@@ -212,6 +212,7 @@
     <Compile Include="Brillo\Document\DataSource.cs" />
     <Compile Include="Brillo\Document\Normal.cs" />
     <Compile Include="Brillo\Document\NumToWords.cs" />
+    <Compile Include="Brillo\Document\NumToWordsEnglish.cs" />
     <Compile Include="Brillo\Document\Start.cs" />
     <Compile Include="Brillo\Email.cs" />
     <Compile Include="Brillo\EncryptDecrypt.cs" />

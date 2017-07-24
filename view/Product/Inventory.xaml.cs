@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Microsoft.VisualBasic;
 
 namespace Cognitivo.Product
 {
@@ -511,6 +512,28 @@ namespace Cognitivo.Product
                     crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (entity.CurrentSession.UserRole.is_master)
+            {
+                item_inventory_detail item_inventory_detail = item_inventoryitem_inventory_detailViewSource.View.CurrentItem as item_inventory_detail;
+                if (item_inventory_detail!=null)
+                {
+                    decimal cost = item_inventory_detail.unit_value;
+                    //string Originalcost = //Microsoft.VisualBasic.Interaction.InputBox(cost.ToString(), "Cognitivo");
+                    item_movement item_movement = InventoryController.db.item_movement.
+                        Where(x => x.id_inventory_detail == item_inventory_detail.id_inventory_detail).FirstOrDefault();
+                    if (item_movement != null)
+                    {
+                        item_movement.Update_ChildVales(Convert.ToDecimal(cost));
+                    }
+                }
+               
+            }
+            InventoryController.db.SaveChanges();
         }
 
         private void location_ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)

@@ -191,11 +191,12 @@ namespace Cognitivo.Accounting
             //Loop through
             foreach (sales_invoice sales_invoice in SalesList)
             {
-                DebeHaber.Integration Integration = new DebeHaber.Integration();
-                Integration.Key = RelationshipHash;
+                DebeHaber.Integration Integration = new DebeHaber.Integration()
+                {
+                    Key = RelationshipHash
+                };
 
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
-
                 DebeHaber.Commercial_Invoice Sales = new DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
@@ -213,7 +214,26 @@ namespace Cognitivo.Accounting
                 //Loop through payments made.
                 foreach (payment_schedual schedual in sales_invoice.payment_schedual)
                 {
-                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                    //If Detail exists but not Header, then create the header.
+                    if (schedual.payment_detail != null && schedual.payment_detail.payment == null)
+                    {
+                        payment payment = new payment();
+                        payment.id_contact = sales_invoice.id_contact;
+                        payment.id_company = CurrentSession.Id_Company;
+                        payment.status = Status.Documents_General.Approved;
+                        payment.trans_date = schedual.expire_date;
+                        payment.id_user = schedual.payment_detail.id_user;
+                        payment.is_archived = false;
+                        payment.is_read = false;
+                        payment.is_accounted = false;
+                        payment.timestamp = DateTime.Now;
+                        db.db.payments.Add(payment);
+                        db.db.SaveChanges();
+                        schedual.payment_detail.id_payment = payment.id_payment;
+                        db.db.SaveChanges();
+                    }
+
+                    if (schedual.payment_detail != null && schedual.payment_detail.payment != null && schedual.payment_detail.payment.is_accounted == false)
                     {
                         DebeHaber.Payments Payments = new DebeHaber.Payments();
                         //Fill and Add Payments
@@ -234,7 +254,7 @@ namespace Cognitivo.Accounting
                     sales_invoice.is_accounted = true;
                     foreach (payment_schedual schedual in sales_invoice.payment_schedual)
                     {
-                        if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                        if (schedual.payment_detail != null && schedual.payment_detail.payment != null && schedual.payment_detail.payment.is_accounted == false)
                         {
                             //This will make the Sales Invoice hide from the next load.
                             schedual.payment_detail.payment.is_accounted = true;

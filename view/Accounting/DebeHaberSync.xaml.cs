@@ -214,7 +214,8 @@ namespace Cognitivo.Accounting
                 //Loop through payments made.
                 foreach (payment_schedual schedual in sales_invoice.payment_schedual)
                 {
-                    //If Detail exists but not Header, then create the header.
+                    ///If Detail exists but not Header, then create the header (payment)
+                    ///This will help fix payment details that don't have header.
                     if (schedual.payment_detail != null && schedual.payment_detail.payment == null)
                     {
                         payment payment = new payment();
@@ -231,6 +232,8 @@ namespace Cognitivo.Accounting
                         db.db.SaveChanges();
                         schedual.payment_detail.id_payment = payment.id_payment;
                         db.db.SaveChanges();
+
+                        schedual.payment_detail.payment = payment;
                     }
 
                     if (schedual.payment_detail != null && schedual.payment_detail.payment != null && schedual.payment_detail.payment.is_accounted == false)

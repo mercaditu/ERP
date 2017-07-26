@@ -8,7 +8,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
-      mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1500">
+      mc:Ignorable="d" d:DesignHeight="1200" d:DesignWidth="1500">
     <Page.Resources>
         <converter:Text2Collapsed x:Key="Text2Collapsed" />
     </Page.Resources>
@@ -18,7 +18,7 @@
                       HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,0">
             <WrapPanel HorizontalAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningRatio="1"
                        ScrollViewer.VerticalScrollBarVisibility="Auto" Orientation="Horizontal">
-                <StackPanel Margin="16,8" Width="270">
+                <StackPanel Margin="16,8" Width="270" Height="479"  VerticalAlignment="Top">
                     <Label Content="{lex:Loc Preference}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -79,7 +79,7 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Margin="16,8" Width="270">
+                <StackPanel Margin="16,8" Width="270" Height="436"  VerticalAlignment="Top">
                     <Label Content="{lex:Loc Company}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -140,7 +140,7 @@
                            Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
                 </StackPanel>
-                <StackPanel>
+                <StackPanel Height="517" VerticalAlignment="Top">
                     <StackPanel Margin="16,8" Width="270">
                         <Label Content="{lex:Loc Sales}" Style="{StaticResource H2}" />
                         <StackPanel Margin="32,5">
@@ -211,7 +211,7 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Margin="16,8" Width="270">
+                <StackPanel Margin="16,8" VerticalAlignment="Top" Width="270" Height="548">
                     <Label Content="{lex:Loc Stock}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -405,7 +405,14 @@
                     <Label Content="{lex:Loc Security}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
-                            <Image Height="24" Source="/Cognitivo;component/Images/Application/128/UserRole.png" />
+                            <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Beta.png" />
+                            <TextBlock Text="Audit" Focusable="True" MouseUp="config_MouseUp" Tag="Audit"
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Margin="32,5">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Height="24" Source="/Cognitivo;component/Images/Application/128/UserSecurity.png" />
                             <TextBlock Text="{lex:Loc UserRole}" MouseUp="config_MouseUp" Tag="UserRole"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
                         </StackPanel>

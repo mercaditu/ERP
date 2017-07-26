@@ -330,6 +330,9 @@
       <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.6.7.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Plus.EF6.1.6.7\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -385,6 +388,9 @@
     </Compile>
     <Compile Include="Configs\AccountUtility.xaml.cs">
       <DependentUpon>AccountUtility.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configs\Audit.xaml.cs">
+      <DependentUpon>Audit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configs\Bank.xaml.cs">
       <DependentUpon>Bank.xaml</DependentUpon>
@@ -1225,6 +1231,10 @@
     <Page Include="Configs\AccountUtility.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configs\Audit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Configs\Bank.xaml">
       <Generator>MSBuild:Compile</Generator>

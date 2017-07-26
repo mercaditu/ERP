@@ -200,6 +200,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Sales, "Sales.Salesman", "Salesman", "SalesRep", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Sales, "Commercial.ContactRole", "ContactRole", "ContactRole", entity.CurrentSession.Versions.Lite, "0");
 
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Inventory, "Configs.Audit", "Audit", "Beta", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Inventory, "Configs.Location", "Location", "BranchLocation", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Inventory, "Configs.MeasurementType", "MeasurementType", "Measurement", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Inventory, "Configs.Measurement", "Measurement", "Measurement", entity.CurrentSession.Versions.Lite, "0");

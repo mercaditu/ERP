@@ -393,6 +393,7 @@ namespace entity.Controller.Purchase
                         db.purchase_invoice.Remove(purchase_invoice);
                     }
 
+                    purchase_invoice.IsSelected = false;
                     NumberOfRecords += 1;
                 }
                 else if (purchase_invoice.State > 0)

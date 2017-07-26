@@ -556,7 +556,7 @@
 									  CanUserAddRows="False" CanUserDeleteRows="False"
 									  ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
 									  InitializingNewItem="Detail_InitializingNewItem"
-									  RowEditEnding="Detail_RowEditEnding"
+									  RowEditEnding="Detail_RowEditEnding" RowDetailsVisibilityMode="Collapsed"
 									  CellEditEnding="Detail_CellEditEnding">
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">

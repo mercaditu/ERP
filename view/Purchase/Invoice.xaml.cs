@@ -112,14 +112,28 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
+            bool Reject = false;
             foreach (purchase_invoice invoice in PurchaseDB.db.purchase_invoice.Local.Where(x => x.IsSelected))
             {
-                if (invoice.id_contact==0)
+                if (invoice.id_contact == 0)
                 {
-                    toolBar.msgWarning("Select Contact...");
+                    toolBar.msgWarning("Select Contact on Invoice:" + invoice.number);
+                    Reject = true;
                 }
+
+                //If Contact is not inserted, get out of Save Function.
+                if (Reject == true)
+                {
+                    return;
+                }
+
                 bool DuplicateInvoice = false;
-                DuplicateInvoice = PurchaseDB.db.purchase_invoice.Where(x => x.number == invoice.number && x.id_contact == invoice.id_contact).Any();
+                DuplicateInvoice = PurchaseDB.db.purchase_invoice
+                    .Where( x => 
+                    x.number == invoice.number && 
+                    x.id_contact == invoice.id_contact &&
+                    x.id_purchase_invoice != invoice.id_purchase_invoice
+                    ).Any();
 
                 if (DuplicateInvoice)
                 {

@@ -287,11 +287,14 @@ namespace entity.Brillo.Document
                 currency = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.name : "",
                 currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,
                 quantity = g.quantity,
+                Quantity_Factored = g.Quantity_Factored,
                 BatchCode = g.batch_code,
                 ExpirationDate = g.expire_date,
                 sub_Total = g.SubTotal,
                 sub_Total_vat = g.SubTotal_Vat,
                 sub_Total_Vat_Discount = g.Discount_SubTotal_Vat,
+                sub_Total_Factored =Math.Round(g.Quantity_Factored * g.unit_price,2),
+                sub_Total_Factoredvat = Math.Round(g.Quantity_Factored * g.UnitPrice_Vat,2),
                 unit_cost = g.unit_cost,
                 unit_price = g.unit_price,
                 unit_price_vat = g.UnitPrice_Vat,
@@ -305,14 +308,17 @@ namespace entity.Brillo.Document
                 customer_alias = g.sales_invoice != null ? g.sales_invoice.contact.alias : "",
                 project_name = g.sales_invoice != null ? g.sales_invoice.project != null ? g.sales_invoice.project.name : "" : "",
                 sales_invoice_rep_name = g.sales_invoice != null ? g.sales_invoice.sales_rep != null ? g.sales_invoice.sales_rep.name : "" : "",
-                trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.ToString() : "",
+                trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.Date.ToString() : "",
                 id_vat_group = g.id_vat_group,
                 VATCGSTName = g.app_vat_group != null ? GetVatCGST(g.app_vat_group) : "",
                 VATCGSTPercent = g.app_vat_group != null ? GetVatCGSTPer(g.app_vat_group) : "",
-                VATCGSTAmount = g.app_vat_group != null ? GetVatCGSTAmt(g.app_vat_group, g.SubTotal) : 0,
+                VATCGSTAmount = g.app_vat_group != null ? GetVatCGSTAmt(g.app_vat_group, g.Quantity_Factored * g.unit_price) : 0,
                 VATSGSTName = g.app_vat_group != null ? GetVatSGST(g.app_vat_group) : "",
                 VATSGSTPercent = g.app_vat_group != null ? GetVatSGSTPer(g.app_vat_group) : "",
-                VATSGSTAmount = g.app_vat_group != null ? GetVatSGSTAmt(g.app_vat_group,g.SubTotal) : 0,
+                VATSGSTAmount = g.app_vat_group != null ? GetVatSGSTAmt(g.app_vat_group, g.Quantity_Factored * g.unit_price) : 0,
+                VATIGSTName = g.app_vat_group != null ? GetVatIGST(g.app_vat_group) : "",
+                VATIGSTPercent = g.app_vat_group != null ? GetVatIGSTPer(g.app_vat_group) : "",
+                VATIGSTAmount = g.app_vat_group != null ? GetVatIGSTAmt(g.app_vat_group, g.Quantity_Factored * g.unit_price) : 0,
                 gov_id = g.sales_invoice != null ? g.sales_invoice.contact.gov_code : "",
                 sales_invoice_contract = g.sales_invoice != null ? g.sales_invoice.app_contract.name : "",
                 sales_invoice_condition = g.sales_invoice != null ? g.sales_invoice.app_contract.app_condition.name : "",
@@ -366,7 +372,7 @@ namespace entity.Brillo.Document
             {
                 if (app_vat_group_details.app_vat.name.ToUpper().Contains("CGST"))
                 {
-                    return app_vat_group_details.app_vat.coefficient *100 + "%"; 
+                    return Math.Round(app_vat_group_details.app_vat.coefficient *100,2) + "%"; 
                 }
             }
             return 0 + "%";
@@ -399,7 +405,7 @@ namespace entity.Brillo.Document
             {
                 if (app_vat_group_details.app_vat.name.ToUpper().Contains("SGST"))
                 {
-                    return app_vat_group_details.app_vat.coefficient * 100 + "%";
+                    return Math.Round(app_vat_group_details.app_vat.coefficient,2) * 100 + "%";
                 }
             }
             return 0 + "%";
@@ -414,6 +420,39 @@ namespace entity.Brillo.Document
                 }
             }
             return 0 ;
+        }
+        private string GetVatIGST(app_vat_group app_vat_group)
+        {
+            foreach (app_vat_group_details app_vat_group_details in app_vat_group.app_vat_group_details)
+            {
+                if (app_vat_group_details.app_vat.name.ToUpper().Contains("IGST"))
+                {
+                    return app_vat_group_details.app_vat.name;
+                }
+            }
+            return "";
+        }
+        private string GetVatIGSTPer(app_vat_group app_vat_group)
+        {
+            foreach (app_vat_group_details app_vat_group_details in app_vat_group.app_vat_group_details)
+            {
+                if (app_vat_group_details.app_vat.name.ToUpper().Contains("IGST"))
+                {
+                    return Math.Round(app_vat_group_details.app_vat.coefficient * 100,2) + "%";
+                }
+            }
+            return 0 + "%";
+        }
+        private decimal GetVatIGSTAmt(app_vat_group app_vat_group, decimal subtotal)
+        {
+            foreach (app_vat_group_details app_vat_group_details in app_vat_group.app_vat_group_details)
+            {
+                if (app_vat_group_details.app_vat.name.ToUpper().Contains("IGST"))
+                {
+                    return Math.Round(subtotal * app_vat_group_details.app_vat.coefficient * app_vat_group_details.percentage, 2);
+                }
+            }
+            return 0;
         }
 
         private string GetBarcode(string number)

@@ -264,46 +264,54 @@ namespace Cognitivo.Commercial
             {
                 try
                 {
-                    contactViewSource.View.Filter = i =>
+                    if (contactViewSource!=null)
                     {
-                        contact contact = i as contact;
-                        if (contact != null)
+                        if (contactViewSource.View!=null)
                         {
-                            string name = "";
-                            string code = "";
-                            string gov_code = "";
+                            contactViewSource.View.Filter = i =>
+                            {
+                                contact contact = i as contact;
+                                if (contact != null)
+                                {
+                                    string name = "";
+                                    string code = "";
+                                    string gov_code = "";
 
-                            if (contact.name != null)
-                            {
-                                name = contact.name.ToLower();
-                            }
+                                    if (contact.name != null)
+                                    {
+                                        name = contact.name.ToLower();
+                                    }
 
-                            if (contact.code != null)
-                            {
-                                code = contact.code.ToLower();
-                            }
+                                    if (contact.code != null)
+                                    {
+                                        code = contact.code.ToLower();
+                                    }
 
-                            if (contact.gov_code != null)
-                            {
-                                gov_code = contact.gov_code.ToLower();
-                            }
+                                    if (contact.gov_code != null)
+                                    {
+                                        gov_code = contact.gov_code.ToLower();
+                                    }
 
-                            if (name.Contains(query.ToLower())
-                                || code.Contains(query.ToLower())
-                                || gov_code.Contains(query.ToLower()))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
+                                    if (name.Contains(query.ToLower())
+                                        || code.Contains(query.ToLower())
+                                        || gov_code.Contains(query.ToLower()))
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            };
                         }
-                        else
-                        {
-                            return false;
-                        }
-                    };
+
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -312,7 +320,17 @@ namespace Cognitivo.Commercial
             }
             else
             {
-                contactViewSource.View.Filter = null;
+                if (contactViewSource != null)
+                {
+                    if (contactViewSource.View != null)
+                    {
+                        if (contactViewSource.View.Filter!=null)
+                        {
+                            contactViewSource.View.Filter = null;
+                        }
+                        
+                    }
+                }
             }
         }
 

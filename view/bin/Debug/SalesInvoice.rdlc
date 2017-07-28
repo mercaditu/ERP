@@ -2050,7 +2050,7 @@
             <Top>0.05in</Top>
             <Left>0.125in</Left>
             <Height>0.63622in</Height>
-            <Width>9.4093in</Width>
+            <Width>9.40931in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2115,7 +2115,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!sub_Total_Factoredvat.Value)</Value>
+                                  <Value>=Round(Sum(Fields!sub_Total_Factoredvat.Value),System.MidpointRounding.AwayFromZero)</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -2327,7 +2327,7 @@
         <Height>18.55643cm</Height>
         <Style />
       </Body>
-      <Width>24.21713cm</Width>
+      <Width>24.21715cm</Width>
       <Page>
         <PageHeader>
           <Height>8.60211cm</Height>
@@ -2610,7 +2610,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Fields!trans_date.Value</Value>
+                      <Value>=CDate(Fields!trans_date.Value).ToString("dd-MMM-yyyy")</Value>
                       <Style>
                         <FontFamily>arial</FontFamily>
                         <FontWeight>Bold</FontWeight>

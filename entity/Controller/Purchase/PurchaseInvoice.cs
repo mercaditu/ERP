@@ -277,7 +277,9 @@ namespace entity.Controller.Purchase
 
                     ///Since the above Foreach will run through a mix of payment scheduals, we have no way of knowing if we will have
                     ///payment headers. So we run this code to clean.
-                    List<payment> EmptyPayments = db.payments.Where(x => x.payment_detail.Count() == 0).ToList();
+                    ///
+                    List<payment> PaymentList = db.payments.Include(x => x.payment_detail).ToList();
+                    List<payment> EmptyPayments = PaymentList.Where(x => x.payment_detail.Count() == 0).ToList();
                     if (EmptyPayments.Count() > 0)
                     {
                         db.payments.RemoveRange(EmptyPayments);

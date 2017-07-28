@@ -94,7 +94,7 @@ namespace Cognitivo.Configs
                     join app_account as acc on accd.id_account = acc.id_account
                     join app_account_session as sess on accd.id_session = sess.id_session
                     where sess.is_active = true and acc.id_account ={0}
-                    group by sess.id_session, fx.id_currency";
+                    group by accd.id_payment_type,sess.id_session, fx.id_currency";
                 query = string.Format(query, app_account.id_account);
 
                 DataTable dt = new DataTable();

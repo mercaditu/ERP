@@ -155,7 +155,7 @@ namespace cntrl.Controls
                         ItemID = Item.ID;
                         QuantityInStock = Item.InStock;
                         ItemPopUp.IsOpen = false;
-                        Text = Item.Name;
+                      //  Text = Item.Name;
                         if (Quantity<=1)
                         {
                             Quantity = 1;
@@ -168,9 +168,9 @@ namespace cntrl.Controls
                         {
                             Quantity = 1;
                         }
-                        Text = tbxSearch.Text;
+                      //  Text = tbxSearch.Text;
                     }
-
+                    Text = "";
                     tbxSearch.Focus();
                     tbxSearch.SelectAll();
                 }

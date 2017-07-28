@@ -63,11 +63,11 @@ namespace cntrl
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-                entity.CancelChanges();
-                sales_promotionViewSource.View.Refresh();
-                Grid parentGrid = (Grid)Parent;
-                parentGrid.Children.Clear();
-                parentGrid.Visibility = Visibility.Hidden;
+            entity.CancelChanges();
+            sales_promotionViewSource.View.Refresh();
+            Grid parentGrid = (Grid)Parent;
+            parentGrid.Children.Clear();
+            parentGrid.Visibility = Visibility.Hidden;
         }
 
         private void sbxRefItem_Select(object sender, RoutedEventArgs e)
@@ -121,7 +121,7 @@ namespace cntrl
                 {
                     if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
                     {
-                        if (cbxparatag.SelectionBoxItem.ToString() == "")
+                        if (cbxparatag.SelectedValue.ToString() == "0")
                         {
                             cbxparatag.SelectedValue = sales_promotion.reference;
                         }
@@ -129,6 +129,7 @@ namespace cntrl
                         {
                             sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
                         }
+
                     }
                 }
             }

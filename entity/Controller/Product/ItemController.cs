@@ -138,9 +138,9 @@ namespace entity.Controller.Product
         {
             NumberOfRecords = 0;
 
-            foreach (item item in db.items.Local)
+            foreach (item item in db.items.Local.Where(x=>x.IsSelected))
             {
-                if (item.IsSelected && item.Error == null)
+                if ( item.Error == null)
                 {
                     if (item.State == EntityState.Added)
                     {

@@ -217,6 +217,18 @@
           <DataField>currency</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="consignee_name">
+          <DataField>consignee_name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="consignee_address">
+          <DataField>consignee_address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="consignee_gov_code">
+          <DataField>consignee_gov_code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>entity</rd:DataSetName>
@@ -2327,10 +2339,10 @@
         <Height>18.55643cm</Height>
         <Style />
       </Body>
-      <Width>24.21715cm</Width>
+      <Width>24.2723cm</Width>
       <Page>
         <PageHeader>
-          <Height>8.60211cm</Height>
+          <Height>9.34151cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -2395,10 +2407,10 @@
               </Style>
             </Textbox>
             <Line Name="Line17">
-              <Top>1.95494in</Top>
-              <Left>7.657in</Left>
+              <Top>2.07994in</Top>
+              <Left>6.2195in</Left>
               <Height>0in</Height>
-              <Width>-7.57027in</Width>
+              <Width>-6.13277in</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -2502,7 +2514,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox12</rd:DefaultName>
-              <Top>0.11908in</Top>
+              <Top>0.49408in</Top>
               <Left>0.10404in</Left>
               <Height>1.50001in</Height>
               <Width>3.58526in</Width>
@@ -2518,9 +2530,9 @@
               </Style>
             </Textbox>
             <Line Name="Line25">
-              <Top>0.0913in</Top>
+              <Top>0.49408in</Top>
               <Left>3.8351in</Left>
-              <Height>1.86364in</Height>
+              <Height>1.58586in</Height>
               <Width>0in</Width>
               <ZIndex>4</ZIndex>
               <Style>
@@ -2556,10 +2568,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.38801in</Top>
+              <Top>2.76301in</Top>
               <Left>0.19347in</Left>
               <Height>0.21085in</Height>
-              <Width>1.49688in</Width>
+              <Width>0.8823in</Width>
               <ZIndex>6</ZIndex>
               <Style>
                 <Border>
@@ -2588,10 +2600,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.14938in</Top>
+              <Top>2.52438in</Top>
               <Left>0.19347in</Left>
               <Height>0.21085in</Height>
-              <Width>1.49688in</Width>
+              <Width>0.8823in</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <Border>
@@ -2610,7 +2622,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=CDate(Fields!trans_date.Value).ToString("dd-MMM-yyyy")</Value>
+                      <Value>=Fields!trans_date.Value</Value>
                       <Style>
                         <FontFamily>arial</FontFamily>
                         <FontWeight>Bold</FontWeight>
@@ -2658,10 +2670,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.14938in</Top>
-              <Left>1.7598in</Left>
+              <Top>2.4098in</Top>
+              <Left>1.38578in</Left>
               <Height>0.21085in</Height>
-              <Width>3.39446in</Width>
+              <Width>1.79399in</Width>
               <ZIndex>9</ZIndex>
               <Style>
                 <Border>
@@ -2692,10 +2704,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.38801in</Top>
-              <Left>1.7598in</Left>
+              <Top>2.64843in</Top>
+              <Left>1.38578in</Left>
               <Height>0.43307in</Height>
-              <Width>3.39446in</Width>
+              <Width>1.79399in</Width>
               <ZIndex>10</ZIndex>
               <Style>
                 <Border>
@@ -2722,10 +2734,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.86275in</Top>
+              <Top>3.23775in</Top>
               <Left>0.19347in</Left>
               <Height>0.21085in</Height>
-              <Width>1.49688in</Width>
+              <Width>1.12286in</Width>
               <ZIndex>11</ZIndex>
               <Style>
                 <Border>
@@ -2756,10 +2768,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.86275in</Top>
-              <Left>1.7598in</Left>
+              <Top>3.12317in</Top>
+              <Left>1.38578in</Left>
               <Height>0.32543in</Height>
-              <Width>3.39446in</Width>
+              <Width>1.79399in</Width>
               <ZIndex>12</ZIndex>
               <Style>
                 <Border>
@@ -2825,6 +2837,310 @@
               <Height>0.59669cm</Height>
               <Width>3.17428cm</Width>
               <ZIndex>14</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox10">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Sales/Tax Invoice</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox10</rd:DefaultName>
+              <Top>0.3937cm</Top>
+              <Left>8.75453cm</Left>
+              <Height>0.68487cm</Height>
+              <Width>3.4925cm</Width>
+              <ZIndex>15</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox21">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Address </Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <Top>2.75259in</Top>
+              <Left>3.28238in</Left>
+              <Height>0.21085in</Height>
+              <Width>1.16429in</Width>
+              <ZIndex>16</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox28">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Consignee Name</Value>
+                      <Style>
+                        <FontFamily>arial</FontFamily>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <Top>2.51396in</Top>
+              <Left>3.28238in</Left>
+              <Height>0.21085in</Height>
+              <Width>1.16429in</Width>
+              <ZIndex>17</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox35">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>GSTIN Number</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <Top>3.35233in</Top>
+              <Left>3.28238in</Left>
+              <Height>0.21085in</Height>
+              <Width>1.16429in</Width>
+              <ZIndex>18</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox37">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Buyer</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value />
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox37</rd:DefaultName>
+              <Top>5.34141cm</Top>
+              <Left>0.84349cm</Left>
+              <Height>0.6cm</Height>
+              <Width>2.5cm</Width>
+              <ZIndex>19</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox39">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Consignee</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value />
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox37</rd:DefaultName>
+              <Top>5.42416cm</Top>
+              <Left>8.96503cm</Left>
+              <Height>0.6cm</Height>
+              <Width>2.5cm</Width>
+              <ZIndex>20</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox33">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Fields!consignee_name.Value</Value>
+                      <Style>
+                        <FontWeight>Normal</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <Top>2.51396in</Top>
+              <Left>4.50223in</Left>
+              <Height>0.21085in</Height>
+              <Width>1.79399in</Width>
+              <ZIndex>21</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox34">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Fields!consignee_address.Value</Value>
+                      <Style>
+                        <FontWeight>Normal</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <Top>2.75259in</Top>
+              <Left>4.50223in</Left>
+              <Height>0.43307in</Height>
+              <Width>1.79399in</Width>
+              <ZIndex>22</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox36">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Fields!consignee_gov_code.Value</Value>
+                      <Style>
+                        <FontWeight>Normal</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox17</rd:DefaultName>
+              <Top>3.21344in</Top>
+              <Left>4.51611in</Left>
+              <Height>0.33585in</Height>
+              <Width>1.79399in</Width>
+              <ZIndex>23</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>

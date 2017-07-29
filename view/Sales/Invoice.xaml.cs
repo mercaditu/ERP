@@ -664,7 +664,7 @@ namespace Cognitivo.Sales
         {
             if (sales_invoiceDataGrid.SelectedItem is sales_invoice sales_invoice && sales_invoice.status == Status.Documents_General.Approved)
             {
-                entity.Brillo.Document.Start.Manual(sales_invoice, sales_invoice.app_document_range);
+                entity.Brillo.Document.Start.Automatic(sales_invoice, sales_invoice.app_document_range);
             }
             else
             {

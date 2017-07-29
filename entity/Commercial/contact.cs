@@ -88,6 +88,7 @@ namespace entity
             item_brand = new List<item_brand>();
             item_transfer = new List<item_transfer>();
             contact_field_value = new List<contact_field_value>();
+            child = new List<contact>();
         }
 
         [Key]

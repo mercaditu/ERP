@@ -162,7 +162,7 @@ namespace entity
                 if (_id_range != value)
                 {
                     _id_range = value;
-                    RaisePropertyChanged("NumberWatermark");
+                    RaisePropertyChanged("id_range");
                 }
             }
         }

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using Humanizer;
+using System.Windows;
 
 namespace entity.Brillo.Document
 {
@@ -293,8 +295,8 @@ namespace entity.Brillo.Document
                 sub_Total = g.SubTotal,
                 sub_Total_vat = g.SubTotal_Vat,
                 sub_Total_Vat_Discount = g.Discount_SubTotal_Vat,
-                sub_Total_Factored =Math.Round(g.Quantity_Factored * g.unit_price,2),
-                sub_Total_Factoredvat = Math.Round(g.Quantity_Factored * g.UnitPrice_Vat,2),
+                sub_Total_Factored = Math.Round(g.Quantity_Factored * g.unit_price, 2),
+                sub_Total_Factoredvat = Math.Round(g.Quantity_Factored * g.UnitPrice_Vat, 2),
                 unit_cost = g.unit_cost,
                 unit_price = g.unit_price,
                 unit_price_vat = g.UnitPrice_Vat,
@@ -306,7 +308,7 @@ namespace entity.Brillo.Document
                 customer_contact_name = g.sales_invoice != null ? g.sales_invoice.contact.name : "",
                 customer_code = g.sales_invoice != null ? g.sales_invoice.contact.code : "",
                 customer_alias = g.sales_invoice != null ? g.sales_invoice.contact.alias : "",
-                consignee_name= g.sales_invoice != null ? g.sales_invoice.contact.child.FirstOrDefault()!=null ? g.sales_invoice.contact.child.FirstOrDefault().name :"" : "",
+                consignee_name = g.sales_invoice != null ? g.sales_invoice.contact.child.FirstOrDefault() != null ? g.sales_invoice.contact.child.FirstOrDefault().name : "" : "",
                 consignee_address = g.sales_invoice != null ? g.sales_invoice.contact.child.FirstOrDefault() != null ? g.sales_invoice.contact.child.FirstOrDefault().address : "" : "",
                 consignee_gov_code = g.sales_invoice != null ? g.sales_invoice.contact.child.FirstOrDefault() != null ? g.sales_invoice.contact.child.FirstOrDefault().gov_code : "" : "",
                 project_name = g.sales_invoice != null ? g.sales_invoice.project != null ? g.sales_invoice.project.name : "" : "",
@@ -336,23 +338,24 @@ namespace entity.Brillo.Document
 
                 // Text -> Words
                 AmountWordsCost = HasRounding ?
-                NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost - g.sales_invoice.TotalVATCost : 0))
+                Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost - g.sales_invoice.TotalVATCost : 0).ToWords()
                 :
                 NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost - g.sales_invoice.TotalVATCost : 0))),
 
                 // Text -> Words
                 AmountWordsCostVAT = HasRounding ?
-                NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))
+                Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0).ToWords()
                 :
                 NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotalCost : 0))),
 
                 // Text -> Words
                 AmountWords = HasRounding ?
-                NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
+                Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).ToWords()
                 :
-                NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
+                Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).DecimalToText()
+                //NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
 
-                AmountWordsEnglish = NumToWordsEnglish.NumberToWords(Convert.ToInt32(g.sales_invoice != null ? Math.Round(g.Quantity_Factored * g.UnitPrice_Vat, 2) : 0))
+                //AmountWordsEnglish = NumToWordsEnglish.NumberToWords(Convert.ToInt32(g.sales_invoice != null ? Math.Round(g.Quantity_Factored * g.UnitPrice_Vat, 2) : 0)),
             }).ToList();
 
             return reportDataSource;

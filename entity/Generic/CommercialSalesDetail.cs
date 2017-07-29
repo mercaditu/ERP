@@ -93,9 +93,14 @@ namespace entity
 
                     update_SubTotal();
 					update_UnitCostSubTotal();
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity,0);
-                    RaisePropertyChanged("_Quantity_Factored");
-
+                    using (db db = new db())
+                    {
+                      
+                        //  db.Configuration.AutoDetectChangesEnabled = false;
+                        item _item = db.items.Find(_id_item);
+                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_item, quantity, 0);
+                        RaisePropertyChanged("_Quantity_Factored");
+                    }
                     if (Quantity_InStock != null)
                     {
                         if (quantity > Quantity_InStock)
@@ -107,6 +112,7 @@ namespace entity
                         { InStock = true; RaisePropertyChanged("InStock"); }
                     }
                 }
+               
             }
         }
 

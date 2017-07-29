@@ -352,7 +352,7 @@ namespace entity.Brillo.Document
                 :
                 NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
 
-                AmountWordsEnglish = NumToWordsEnglish.NumberToWords(Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
+                AmountWordsEnglish = NumToWordsEnglish.NumberToWords(Convert.ToInt32(g.sales_invoice != null ? Math.Round(g.Quantity_Factored * g.UnitPrice_Vat, 2) : 0))
             }).ToList();
 
             return reportDataSource;

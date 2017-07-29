@@ -280,7 +280,15 @@ namespace entity.Controller.Sales
             }
             else
             {
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception EX)
+                {
+                    throw EX;
+                }
+               
                 return true;
             }
 

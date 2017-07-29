@@ -1,5 +1,6 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -63,7 +64,8 @@ namespace Cognitivo.Security
 
         private void toolBar_btnSave_Click(object sender)
         {
-            foreach (security_user security_user in UserDB.security_user.Local.Where(x => x.IsSelected))
+            List<security_user> security_userList = UserDB.security_user.Local.Where(x => x.IsSelected).ToList();
+            foreach (security_user security_user in security_userList)
             {
                 if (UserDB.security_user.Local.Where(x => x.name == security_user.name && x != security_user).Any() && security_user.State == EntityState.Added)
                 {

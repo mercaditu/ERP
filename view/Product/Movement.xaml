@@ -205,8 +205,8 @@
 					  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
 					  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
-                            <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" />
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding item_product.item.code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding item_product.item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" />
                             <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N},ValidatesOnExceptions=True,ValidatesOnNotifyDataErrors=True,ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"  />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 												Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="64" />

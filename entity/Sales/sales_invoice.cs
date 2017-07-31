@@ -20,7 +20,7 @@ namespace entity
             payment_schedual = new List<payment_schedual>();
             sales_return = new List<sales_return>();
             payment_withholding_detail = new List<payment_withholding_detail>();
-            
+
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
@@ -111,7 +111,7 @@ namespace entity
             get
             {
                 _GrandTotal = sales_invoice_detail.Sum(x => x.SubTotal_Vat);
-                
+
                 return _GrandTotal;
             }
             set
@@ -276,6 +276,22 @@ namespace entity
                 //Calculate here, and return sum values into. Put entire code into VAT Brillo.
             }
         }
+        [NotMapped]
+        public decimal sub_Total_Factoredvat
+        {
+            get
+            {
+                decimal TotalValue=0;
+                foreach (var item in sales_invoice_detail)
+                {
+                    TotalValue += Math.Round(item.Quantity_Factored * item.UnitPrice_Vat, 2);
+                }
+                return TotalValue;
+            }
+            set { _sub_Total_Factoredvat = value; RaisePropertyChanged("sub_Total_Factoredvat"); }
+        }
+        decimal _sub_Total_Factoredvat;
+
 
         #region "Foreign Key"
 

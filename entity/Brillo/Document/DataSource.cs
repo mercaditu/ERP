@@ -352,10 +352,10 @@ namespace entity.Brillo.Document
                 AmountWords = HasRounding ?
                 Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).ToWords()
                 :
-                Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).DecimalToText()
+                Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).DecimalToText(),
                 //NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
 
-                //AmountWordsEnglish = NumToWordsEnglish.NumberToWords(Convert.ToInt32(g.sales_invoice != null ? Math.Round(g.Quantity_Factored * g.UnitPrice_Vat, 2) : 0)),
+                AmountWordsFactored = Convert.ToInt32(g.sales_invoice != null ? Math.Round(g.Quantity_Factored * g.UnitPrice_Vat, 2) : 0).ToWords(),
             }).ToList();
 
             return reportDataSource;

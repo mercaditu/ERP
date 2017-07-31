@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -21,8 +21,8 @@
           <DataField>HasRounding</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
-        <Field Name="AmountWords">
-          <DataField>AmountWords</DataField>
+        <Field Name="AmountWordsFactored">
+          <DataField>AmountWordsFactored</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="AmountWordsEnglish">
@@ -1916,7 +1916,7 @@
             <Top>0.05in</Top>
             <Left>0.125in</Left>
             <Height>0.63622in</Height>
-            <Width>8.51561in</Width>
+            <Width>8.51562in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2114,7 +2114,7 @@
                     <Style />
                   </TextRun>
                   <TextRun>
-                    <Value>=First(Fields!AmountWordsEnglish.Value, "DataSet1")</Value>
+                    <Value>=Fields!AmountWordsFactored.Value</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>

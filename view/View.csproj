@@ -407,6 +407,9 @@
     <Compile Include="Configs\Condition.xaml.cs">
       <DependentUpon>Condition.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\Configuration.xaml.cs">
+      <DependentUpon>Configuration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\ConnectionBuilder.xaml.cs">
       <DependentUpon>ConnectionBuilder.xaml</DependentUpon>
     </Compile>
@@ -1254,6 +1257,10 @@
     <Page Include="Configs\Condition.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configs\Configuration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Configs\ConnectionBuilder.xaml">
       <Generator>MSBuild:Compile</Generator>

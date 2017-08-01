@@ -194,6 +194,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Transaction, "Configs.Document", "Document", "Document", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Transaction, "Configs.DocumentRange", "DocumentRange", "DocumentRange", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Transaction, "Configs.DocumentDesigner", "DocumentDesigner", "DocumentDesigner", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Transaction, "Configs.Configuration", "Configuration", "Configuration", entity.CurrentSession.Versions.Lite, "0");
 
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Purchase, "Configs.CostCenter", "CostCenter", "AccountingChart", entity.CurrentSession.Versions.Lite, "0");
 

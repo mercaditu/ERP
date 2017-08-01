@@ -18,7 +18,7 @@ namespace Cognitivo.Configs
 
         public void MySQLconnString(string connString)
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             config.ConnectionStrings.ConnectionStrings.Add(new ConnectionStringSettings("MySQLconnString", connString));
             config.Save(ConfigurationSaveMode.Modified, true);
             ConfigurationManager.RefreshSection("connectionStrings");

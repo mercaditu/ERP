@@ -37,6 +37,16 @@
                                    Style="{StaticResource text_Instructions}" Foreground="White"
                                    Margin="28,0,0,0" Width="188" />
                     </StackPanel>
+                    <StackPanel Margin="32,5" x:Name="configuration">
+                        <StackPanel Orientation="Horizontal" Margin="0">
+                            <Image Height="24" Source="/Cognitivo;component/Images/Menu/modConfig.png" />
+                            <TextBlock Text="{lex:Loc Configuration}" Focusable="True" MouseUp="config_MouseUp" Tag="Configuration"
+                                       Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0" />
+                        </StackPanel>
+                        <TextBlock Text="Defualt Configuration for this PC"
+                                   Style="{StaticResource text_Instructions}" Foreground="White"
+                                   Margin="28,0,0,0" Width="188" />
+                    </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />

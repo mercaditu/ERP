@@ -192,5 +192,17 @@ namespace Cognitivo.Properties {
                 this["DecimalStringFormat"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DefultCustomer {
+            get {
+                return ((int)(this["DefultCustomer"]));
+            }
+            set {
+                this["DefultCustomer"] = value;
+            }
+        }
     }
 }

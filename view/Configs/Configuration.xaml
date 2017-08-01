@@ -1,0 +1,43 @@
+﻿<Page x:Class="Cognitivo.Configs.Configuration"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Cognitivo.Configs"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="Configuration" 
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+        xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+          xmlns:converter="clr-namespace:Cognitivo.Converters"
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" Loaded="Page_Loaded">
+    <Page.Resources>
+        <converter:DecimalFormat x:Key="DecimalFormat"/>
+    </Page.Resources>
+
+    <Grid>
+        <StackPanel Margin="10,32,10,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="280">
+            <Label Content="{lex:Loc Configuration}" Style="{StaticResource H1}" HorizontalAlignment="Center" />
+            <Rectangle Style="{StaticResource line_Bar}" />
+
+            <Label Content="{lex:Loc Decimal}" Style="{StaticResource H3}" />
+            <Slider Minimum="0" Maximum="9" TickFrequency="1" TickPlacement="Both" IsSnapToTickEnabled="True"
+                                                        Value="{Binding Source={x:Static
+                                                    mainpref:Settings.Default}, 
+                                                    Path=DecimalStringFormat,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DecimalFormat}
+                                                    }"/>
+            <Label Content="{lex:Loc Customer}" Style="{StaticResource H3}" />
+            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" CanCreate="False"
+															   Select="Set_ContactPref"  />
+
+
+            <Button Style="{StaticResource btn_green}" Content="{lex:Loc Save}" Click="ButtonSave_Click" Margin="8" />
+        </StackPanel>
+    </Grid>
+</Page>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data.Entity;
 using Humanizer;
 using System.Windows;
+using System.Globalization;
 
 namespace entity.Brillo.Document
 {
@@ -355,7 +356,7 @@ namespace entity.Brillo.Document
                 Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).DecimalToText(),
                 //NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
 
-                AmountWordsFactored = NumToWordsEnglish.NumberToWords(Convert.ToInt32(g.sales_invoice!=null?g.sales_invoice.sub_Total_Factoredvat : 0)),
+                AmountWordsFactored =Convert.ToInt32(g.sales_invoice!=null?g.sales_invoice.sub_Total_Factoredvat : 0).ToWords(),
             }).ToList();
 
             return reportDataSource;

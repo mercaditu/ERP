@@ -61,5 +61,8 @@
     <Setting Name="DecimalStringFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">N2</Value>
     </Setting>
+    <Setting Name="DefultCustomer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

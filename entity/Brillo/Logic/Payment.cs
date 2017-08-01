@@ -345,12 +345,18 @@ namespace entity.Brillo.Logic
             {
                 List<payment_schedual> child_schedual = parent_schedual.child.ToList();
 
+                //Remove all Account Detail and Payment Detail. To make it a clean anull.
                 foreach (payment_schedual child in child_schedual)
                 {
-                    db.app_account_detail.RemoveRange(child.payment_detail.app_account_detail);
-                    db.payment_detail.Remove(child.payment_detail);
+                    if (child.payment_detail != null)
+                    {
+                        db.app_account_detail.RemoveRange(child.payment_detail.app_account_detail);
+                        db.payment_detail.Remove(child.payment_detail);
+                    }
                 }
 
+                //Seperate so that foreach doesn't have error on collection changed.
+                //Once all Account Detail and Payment Detail is removed, we can finally remove schedual.
                 if (parent_schedual.child.Count() > 0)
                 {
                     db.payment_schedual.RemoveRange(parent_schedual.child);

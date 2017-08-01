@@ -119,11 +119,6 @@ namespace entity
             string number = string.Empty;
             foreach (payment_detail payment_detail in payment.payment_detail.ToList())
             {
-                //if (payment_detail.id_payment_schedual > 0)
-                //{
-                //    Parent_Schedual = base.payment_schedual.Find(payment_detail.id_payment_schedual);
-                //}
-
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 List<payment_schedual> schedualList = new List<payment_schedual>();
@@ -159,13 +154,11 @@ namespace entity
                     payment_detail.id_account = CurrentSession.Id_Account;
                     payment_detail.app_account = await app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();
                 }
-                ///
+
+                ///If PaymentDetail Value is Negative.
                 if (IsRecievable == false)
                 {
-                    ///If PaymentDetail Value is Negative.
-                    ///
-
-                    decimal ChildBalance = entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
+                    decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {
                      
@@ -285,7 +278,7 @@ namespace entity
                     app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
                     app_account_detail.id_payment_type = payment_detail.id_payment_type;
                     app_account_detail.payment_detail = payment_detail;
-                    app_account_detail.trans_date = payment_detail.payment.trans_date;
+                    app_account_detail.trans_date = payment_detail.trans_date;
 
                     if (_payment_type.is_direct)
                     {

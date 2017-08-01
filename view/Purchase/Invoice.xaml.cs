@@ -94,7 +94,11 @@ namespace Cognitivo.Purchase
         {
             if (purchase_invoiceDataGrid.SelectedItem != null)
             {
-                PurchaseDB.Edit(purchase_invoiceDataGrid.SelectedItem as purchase_invoice);
+                purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+                if (purchase_invoice.status == Status.Documents_General.Pending)
+                {
+                    PurchaseDB.Edit(purchase_invoice);
+                }
             }
             else
             {
@@ -117,7 +121,7 @@ namespace Cognitivo.Purchase
             {
                 if (invoice.id_contact == 0)
                 {
-                    toolBar.msgWarning("Select Contact on Invoice:" + invoice.number);
+                    toolBar.msgWarning("Select Contact on Invoice: " + invoice.number);
                     Reject = true;
                 }
 
@@ -206,18 +210,23 @@ namespace Cognitivo.Purchase
                     purchase_invoice.id_contact = contact.id_contact;
                     purchase_invoice.contact = contact;
 
-                    if (contact.trans_code_exp != null)
-                    {
-                        if (contact.trans_code_exp >= DateTime.Today.Date)
-                        {
-                            purchase_invoice.code = contact.trans_code;
-                            purchase_invoice.RaisePropertyChanged("code");
-                        }
-                    }
-                    else if (contact.code != null)
-                    {
-                        contact.trans_code_exp = DateTime.Now.AddMonths(1);
-                    }
+                    purchase_invoice.code = contact.trans_code;
+                    purchase_invoice.RaisePropertyChanged("code");
+
+                    //Incase Expiration Date on code is set, 
+                    //and date is less than today, then do no bring code.
+                    //if (contact.trans_code_exp != null)
+                    //{
+                    //    if (contact.trans_code_exp < DateTime.Today.Date)
+                    //    {
+                    //        purchase_invoice.code = "";
+                    //        purchase_invoice.RaisePropertyChanged("code");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    contact.trans_code_exp = DateTime.Now.AddMonths(1);
+                    //}
 
                     ///Start Thread to get Data.
                     Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));

@@ -131,7 +131,10 @@ namespace Cognitivo.Sales
             if (sales_invoiceDataGrid.SelectedItem != null)
             {
                 sales_invoice Invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-                SalesDB.Edit(Invoice);
+                if (Invoice.status == Status.Documents_General.Pending)
+                {
+                    SalesDB.Edit(Invoice);
+                }
             }
             else
             {

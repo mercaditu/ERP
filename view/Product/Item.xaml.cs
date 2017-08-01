@@ -248,7 +248,7 @@ namespace Cognitivo.Product
 
             if (item != null)
             {
-                if (ItemDB.db.items.Any(x => x.name == item.name && x.id_item != item.id_item))
+                if (ItemDB.db.items.Any(x => x.name == item.name && x.id_item != item.id_item && x.id_company == CurrentSession.Id_Company))
                 {
                     toolBar.msgWarning("Product: " + item.name + " Already Exists..");
                     return;

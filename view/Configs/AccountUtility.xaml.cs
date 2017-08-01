@@ -141,7 +141,8 @@ namespace Cognitivo.Configs
                             .FirstOrDefault();
 					}
 
-					app_account_detailDataGrid.ItemsSource = app_account.app_account_detail
+					app_account_detailDataGrid.ItemsSource = 
+                        app_account.app_account_detail
 					.Where
                     (x => x.id_session == SessionID && //Gets Current Session Items Only.
                     (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
@@ -156,7 +157,6 @@ namespace Cognitivo.Configs
 				else
 				{
 					IsActive = false;
-
 					app_account_detailDataGrid.ItemsSource = null;
 				}
 
@@ -177,10 +177,15 @@ namespace Cognitivo.Configs
 				frmActive.Children.Add(AccountActive);
 
                 var count = app_account.app_account_detail.Count() / dataPager.PageSize;
+
                 if (app_account.app_account_detail.Count() % dataPager.PageSize == 0)
+                {
                     dataPager.PageCount = count;
+                }
                 else
+                {
                     dataPager.PageCount = count + 1;
+                }    
 
                 OnDemandLoading(0, dataPager.PageSize);
 			}

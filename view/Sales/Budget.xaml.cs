@@ -79,9 +79,13 @@ namespace Cognitivo.Sales
             if (sales_budgetDataGrid.SelectedItem != null)
             {
                 sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
-                sales_budget.IsSelected = true;
-                sales_budget.State = EntityState.Modified;
-                SalesBudgetDB.db.Entry(sales_budget).State = EntityState.Modified;
+
+                if (sales_budget.status == Status.Documents_General.Pending)
+                {
+                    sales_budget.IsSelected = true;
+                    sales_budget.State = EntityState.Modified;
+                    SalesBudgetDB.db.Entry(sales_budget).State = EntityState.Modified;
+                }
             }
             else
             {

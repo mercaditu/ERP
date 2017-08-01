@@ -109,13 +109,16 @@ namespace Cognitivo.Sales
             if (sales_returnDataGrid.SelectedItem != null)
             {
                 sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
-                sales_return.IsSelected = true;
-                sales_return.State = EntityState.Modified;
-                SalesReturnDB.db.Entry(sales_return).State = EntityState.Modified;
+                if (sales_return.status == Status.Documents_General.Pending)
+                {
+                    sales_return.IsSelected = true;
+                    sales_return.State = EntityState.Modified;
+                    SalesReturnDB.db.Entry(sales_return).State = EntityState.Modified;
+                }
             }
             else
             {
-                toolBar.msgWarning("Please Select A Record");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -468,7 +471,7 @@ namespace Cognitivo.Sales
             }
             else
             {
-                toolBar.msgWarning("Please select");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -481,8 +484,6 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = false;
         }
 
-		
-
 		private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
@@ -490,11 +491,9 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = true;
         }
 		
-
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
             load_PrimaryDataThread();
         }
-        
 	}
 }

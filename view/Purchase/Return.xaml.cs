@@ -41,6 +41,7 @@ namespace Cognitivo.Purchase
             {
                 dataPager.PageCount = PurchaseReturnDB.PageCount;
             }
+
             //PurchaseReturn
             purchaseReturnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
            
@@ -71,7 +72,6 @@ namespace Cognitivo.Purchase
         private void toolBar_btnNew_Click(object sender)
         {
             purchase_return purchase_return = PurchaseReturnDB.Create();
-           
             purchaseReturnViewSource.View.MoveCurrentToLast();
         }
 
@@ -89,8 +89,10 @@ namespace Cognitivo.Purchase
             if (purchase_returnDataGrid.SelectedItem != null)
             {
                 purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-
-                PurchaseReturnDB.Edit(purchase_return);
+                if (purchase_return.status == Status.Documents_General.Pending)
+                {
+                    PurchaseReturnDB.Edit(purchase_return);
+                }
             }
             else
             {

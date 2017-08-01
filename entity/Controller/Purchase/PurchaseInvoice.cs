@@ -376,6 +376,11 @@ namespace entity.Controller.Purchase
                         purchase_invoice.contact.id_cost_center = purchase_invoice.purchase_invoice_detail.FirstOrDefault().id_cost_center;
                     }
 
+                    if (purchase_invoice.contact.trans_code != purchase_invoice.code)
+                    {
+                        purchase_invoice.contact.trans_code = purchase_invoice.code;
+                    }
+
                     if (purchase_invoice.State == EntityState.Added)
                     {
                         purchase_invoice.timestamp = DateTime.Now;

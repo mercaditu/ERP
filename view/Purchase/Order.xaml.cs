@@ -115,9 +115,11 @@ namespace Cognitivo.Purchase
             {
                 if (purchase_orderDataGrid.SelectedItem != null)
                 {
-                    purchase_order purchase_order_old = purchase_orderDataGrid.SelectedItem as purchase_order;
-
-                    PurchaseDB.Edit(purchase_order_old);
+                    purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
+                    if (purchase_order.status == Status.Documents_General.Pending)
+                    {
+                        PurchaseDB.Edit(purchase_order);
+                    }
                 }
                 else
                 {

@@ -99,7 +99,10 @@ namespace Cognitivo.Sales
             {
                 if (sales_orderDataGrid.SelectedItem is sales_order Order)
                 {
-                    SalesDB.Edit(Order);
+                    if (Order.status == Status.Documents_General.Pending)
+                    {
+                        SalesDB.Edit(Order);
+                    }
                 }
             }
             else

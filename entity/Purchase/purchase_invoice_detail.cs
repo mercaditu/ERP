@@ -60,9 +60,9 @@ namespace entity
         [NotMapped]
         public DateTime LastPurchaseDate { get; set; }
         [NotMapped]
-        public decimal LastQuantity { get; set; }
+        public string LastQuantity { get; set; }
         [NotMapped]
-        public decimal LastUnitCost { get; set; }
+        public string LastUnitCost { get; set; }
 
         #region "Navigation Properties"
 
@@ -199,10 +199,10 @@ namespace entity
                     LastPurchaseDate = last_detail.purchase_invoice.trans_date;
                     RaisePropertyChanged("LastPurchaseDate");
 
-                    LastQuantity = last_detail.quantity;
+                    LastQuantity = last_detail.quantity.ToString("N2");
                     RaisePropertyChanged("LastQuantity");
 
-                    LastUnitCost = last_detail.UnitCost_Vat;
+                    LastUnitCost = last_detail.UnitCost_Vat.ToString("N2");
                     RaisePropertyChanged("LastUnitCost");
                 }
             }

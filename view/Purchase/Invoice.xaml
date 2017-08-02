@@ -488,8 +488,8 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <StackPanel>
                                     <Button Content="{lex:Loc Refresh}" Click="Refresh_PurchaseDetail_LastPurchase"/>
-                                    <TextBlock Style="{StaticResource text_H3}">
-                                        <Run Text="{lex:Loc Previous}"></Run>
+                                    <TextBlock Style="{StaticResource text_H3}" Foreground="Black">
+                                        <Run Text="Historic"></Run>
                                         <Run Text=" "></Run>
                                         <Run Text="{lex:Loc Purchase}"></Run>
                                     </TextBlock>
@@ -503,11 +503,11 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Style="{StaticResource input_label}" Content="{lex:Loc Quantity}" />
-                                        <Label Style="{StaticResource generic_Label}" Content="{Binding LastQuantity, StringFormat=N2}" />
+                                        <Label Style="{StaticResource generic_Label}" Content="{Binding LastQuantity}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Style="{StaticResource input_label}" Content="{lex:Loc UnitCost}" />
-                                        <Label Style="{StaticResource generic_Label}" Content="{Binding LastUnitCost, StringFormat=N2}" />
+                                        <Label Style="{StaticResource generic_Label}" Content="{Binding LastUnitCost}" />
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Visibility="{Binding item, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
@@ -519,23 +519,23 @@
 								                SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
 								                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 </StackPanel>
-                            </StackPanel>
-                            <Grid HorizontalAlignment="Right" Margin="8" Width="256">
-                                <Label Style="{StaticResource H3}" Content="{lex:Loc Dimension}" />
-                                <DataGrid x:Name="dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Column="2"
+                                <Grid HorizontalAlignment="Right" Margin="8">
+                                    <Label Style="{StaticResource H3}" Content="{lex:Loc Dimension}" />
+                                    <DataGrid x:Name="dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Column="2"
 									  ItemsSource="{Binding Source={StaticResource purchase_invoice_detailpurchase_invoice_dimensionViewSource}}"
 									  RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="True">
-                                    <DataGrid.Columns>
-                                        <DataGridComboBoxColumn Header="Dimension" Width="auto"
+                                        <DataGrid.Columns>
+                                            <DataGridComboBoxColumn Header="Dimension" Width="auto"
 															ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 															SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                        <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto" />
-                                        <DataGridComboBoxColumn DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"
+                                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto" />
+                                            <DataGridComboBoxColumn DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"
 															ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 															SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </Grid>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>

@@ -196,12 +196,12 @@ namespace Cognitivo.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int DefultCustomer {
+        public int DefaultCustomer {
             get {
-                return ((int)(this["DefultCustomer"]));
+                return ((int)(this["DefaultCustomer"]));
             }
             set {
-                this["DefultCustomer"] = value;
+                this["DefaultCustomer"] = value;
             }
         }
     }

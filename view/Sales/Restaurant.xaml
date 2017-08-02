@@ -29,7 +29,6 @@
         </Style>
         <Salescontroller:InvoiceController x:Key="SalesDB"/>
         <Financecontroller:Payment x:Key="PaymentDB"/>
-
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
@@ -307,46 +306,6 @@
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Center">
-                                    <!-- PRINT PAYMENT -->
-                                    <!--
-                                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Center" ToolTip="{lex:Loc Print}"
-								MouseUp="NewPayment_MouseUp">
-                                    <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Border.Background>
-                                            <SolidColorBrush Color="#FF004867" Opacity="0.32" />
-                                        </Border.Background>
-                                        <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
-                                            <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke" Margin="8"><Run Text="{lex:Loc New}" /><Run Text=" " /><Run Text="{lex:Loc Payment}" /></TextBlock>
-                                        </StackPanel>
-                                    </Border>
-                                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
-									BorderBrush="White" BorderThickness="1">
-                                        <Label Content="+" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-										VerticalAlignment="Center" HorizontalAlignment="Center"
-										Foreground="White" />
-                                    </Border>
-                                </Grid>-->
-
-                                    <!-- PRINT PAYMENT -->
-                                    <!--<Grid Margin="8" ToolTip="{lex:Loc Print}">
-                                    <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                        <Border.Background>
-                                            <SolidColorBrush Color="#FF004867" Opacity="0.32" />
-                                        </Border.Background>
-                                        <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
-                                            <CheckBox x:Name="chkreceipt" Style="{StaticResource input_checkbox}" Width="Auto">
-                                                <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke"><Run Text="{lex:Loc Print}" /><Run Text=" " /><Run Text="{lex:Loc Payment}" /></TextBlock>
-                                            </CheckBox>
-                                        </StackPanel>
-                                    </Border>
-                                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"
-									BorderBrush="White" BorderThickness="1">
-                                        <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15"
-										VerticalAlignment="Center" HorizontalAlignment="Center"
-										Foreground="White" />
-                                    </Border>
-                                </Grid>
-                            </StackPanel>-->
 
                                     <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" HorizontalAlignment="Center" FontSize="16" CanUserDeleteRows="False"
 							ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="PaymentDetail_InitializingNewItem">
@@ -487,47 +446,11 @@
 						       Foreground="White" />
                     </Border>
                 </Grid>
-                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.64" />
-                        </Border.Background>
-                        <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
-                            <Label Content="{lex:LocTextUpper Customer}" Style="{StaticResource input_label}" Foreground="Black" />
-                            <TextBox x:Name="tbxDefaultCustomer" Style="{StaticResource TextToLabelStyle}" Text="{Binding Source={x:Static pref:Settings.Default}, Path=Default_Customer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
-                    </Border>
-                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
-					        BorderBrush="White" BorderThickness="1">
-                        <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
-                               FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"
-						       Foreground="White" />
-                    </Border>
-                </Grid>
             </StackPanel>
 
             <StackPanel x:Name="stackRight" VerticalAlignment="Top" HorizontalAlignment="Right" 
                         Margin="8,40">
 
-                <!-- Cancel -->
-                <!--<Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
-				      Cursor="Hand" MouseDown="Cancel_MouseDown" TouchDown="Cancel_MouseDown" ToolTip="{lex:Loc Cancel}">
-                    <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <Border.Background>
-                            <SolidColorBrush Color="White" Opacity="0.64" />
-                        </Border.Background>
-                        <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                            <Label Content="{lex:LocTextUpper Cancel}" Style="{StaticResource input_label}" Foreground="Black" />
-                        </StackPanel>
-                    </Border>
-                    <Border CornerRadius="32" Background="Crimson" Width="32" Height="32" VerticalAlignment="Top" 
-                            HorizontalAlignment="Right" BorderBrush="White" BorderThickness="1">
-                        <TextBlock Text="c" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
-                               FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"
-						       Foreground="White" />
-                    </Border>
-                </Grid>-->
-                
                 <!-- Account Utility -->
                 <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
 				Cursor="Hand" MouseDown="Account_Click" TouchDown="Account_Click"

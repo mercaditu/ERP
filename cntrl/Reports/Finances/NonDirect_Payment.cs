@@ -25,6 +25,7 @@
             fx.buy_value as BuyRate,
             pd.comment as Comment
              FROM payment_detail as pd
+            left join payment_schedual as ps on pd.id_payment_detail = ps.id_payment_detail
             inner join payments as p on pd.id_payment = p.id_payment
             inner join payment_type as pt on pd.id_payment_type = pt.id_payment_type
             inner join contacts as c on p.id_contact = c.id_contact
@@ -36,6 +37,7 @@
             left join payment_schedual as sch on pd.id_payment_detail = sch.id_payment_detail
             where p.id_company = @CompanyID and 
                 p.trans_date between '@StartDate' and '@EndDate' 
-                and pt.is_direct = false";
+                and pt.is_direct = false and pt.payment_behavior = 0
+                and ps.debit = 0";
     }
 }

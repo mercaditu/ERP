@@ -212,6 +212,7 @@ namespace Cognitivo.Configs
                             id_currencyfx = counted_account_detail.id_currencyfxorigin,
                             id_payment_type = counted_account_detail.id_payment_type,
                             debit = counted_account_detail.amountCounted,
+                            status = Status.Documents_General.Approved,
                             comment = "Closing Balance",
                             tran_type = app_account_detail.tran_types.Close,
                             trans_date = DateTime.Now,
@@ -222,7 +223,7 @@ namespace Cognitivo.Configs
                         app_account_session.is_active = false;
 
                         db.app_account_detail.Add(app_account_detail);
-                        //app_account.is_active = false;
+
                         //Save Changes
                         db.SaveChanges();
 
@@ -249,28 +250,30 @@ namespace Cognitivo.Configs
                     //We need to OPEN (Activate) the inactive Session..
 
                     //Create New Session.
-                    app_account_session = new entity.app_account_session()
+                    app_account_session = new app_account_session()
                     {
                         id_account = app_account.id_account
                     };
 
                     //Loop through each account and create an Account Detail for the Closing Balance.
-                    foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
+                    foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt.Where(x => x.amountCounted > 0))
                     {
-                        app_account_detail app_account_detail = new global::entity.app_account_detail();
-                        app_account_detail.id_account = app_account.id_account;
-                        app_account_detail.id_currencyfx = counted_account_detail.id_currencyfxorigin;
-                        app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
-                        app_account_detail.credit = counted_account_detail.amountCounted;
-                        app_account_detail.comment = "Opening Balance";
-                        app_account_detail.tran_type = app_account_detail.tran_types.Open;
-                        app_account_detail.trans_date = DateTime.Now;
-                        app_account_detail.app_account_session = app_account_session;
+                        app_account_detail app_account_detail = new app_account_detail()
+                        {
+                            id_account = app_account.id_account,
+                            id_currencyfx = counted_account_detail.id_currencyfxorigin,
+                            id_payment_type = counted_account_detail.id_payment_type,
+                            credit = counted_account_detail.amountCounted,
+                            comment = "Opening Balance",
+                            trans_date = DateTime.Now,
+                            tran_type = app_account_detail.tran_types.Open,
+                            status = Status.Documents_General.Approved,
+                            app_account_session = app_account_session
+                        };
                         app_account_session.app_account_detail.Add(app_account_detail);
                         db.app_account_session.Add(app_account_session);
                     }
 
-                    //  app_account.is_active = true;
                     //Save Changes
                     db.SaveChanges();
 

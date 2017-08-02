@@ -18,7 +18,7 @@
                       HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,0">
             <WrapPanel HorizontalAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningRatio="1"
                        ScrollViewer.VerticalScrollBarVisibility="Auto" Orientation="Horizontal">
-                <StackPanel Margin="16,8" Width="270" Height="479"  VerticalAlignment="Top">
+                <StackPanel Margin="16,8" Width="270" Height="533"  VerticalAlignment="Top">
                     <Label Content="{lex:Loc Preference}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -71,7 +71,7 @@
                         </StackPanel>
                         <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188" />
                     </StackPanel>
-                    <StackPanel Margin="16,8" Width="270" Height="244">
+                    <StackPanel Margin="16,8" Width="270" Height="260">
                         <Label Content="{lex:Loc Document}" Style="{StaticResource H2}" />
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">

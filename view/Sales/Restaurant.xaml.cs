@@ -152,7 +152,29 @@ namespace Cognitivo.Sales
 
             if (SalesSettings.Default_Customer == 0)
             {
-                SalesSettings.Default_Customer = Convert.ToInt32(tbxDefaultCustomer.Text);
+                contact customer = SalesDB.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).FirstOrDefault();
+
+                //If no Active Customer exists in DB, create one.
+                if (customer == null)
+                {
+                    using (db db = new db())
+                    {
+                        customer = new contact()
+                        {
+                            name = "Walk-In Customer",
+                            alias = "Walk-in",
+                            gov_code = "NA",
+                            is_customer = true,
+                            is_active = true,
+                            id_company = CurrentSession.Id_Company
+                        };
+
+                        db.contacts.Add(customer);
+                        db.SaveChanges();
+                    }
+                }
+
+                SalesSettings.Default_Customer = customer.id_contact;
                 SalesSettings.Save();
             }
 

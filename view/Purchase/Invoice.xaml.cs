@@ -1006,9 +1006,7 @@ namespace Cognitivo.Purchase
                 }
             }
         }
-
-
-
+        
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
             Load_PrimaryDataThread();
@@ -1016,18 +1014,20 @@ namespace Cognitivo.Purchase
 
         private void PackingList_Click(object sender, MouseButtonEventArgs e)
         {
-
             purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
 
             if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved)
             {
-                purchase_packing purchase_packing = new purchase_packing();
-                purchase_packing.trans_date = DateTime.Now;
-                purchase_packing.comment = purchase_invoice.comment;
-                purchase_packing.id_contact = purchase_invoice.id_contact;
-                purchase_packing.contact = purchase_invoice.contact;
-                purchase_packing.id_branch = purchase_invoice.id_branch;
-                purchase_packing.status = Status.Documents_General.Pending;
+                purchase_packing purchase_packing = new purchase_packing()
+                {
+                    trans_date = DateTime.Now,
+                    comment = purchase_invoice.comment,
+                    id_contact = purchase_invoice.id_contact,
+                    contact = purchase_invoice.contact,
+                    id_branch = purchase_invoice.id_branch,
+                    status = Status.Documents_General.Pending
+                };
+
                 foreach (purchase_invoice_detail detail in 
                     purchase_invoice
                     .purchase_invoice_detail
@@ -1035,17 +1035,23 @@ namespace Cognitivo.Purchase
                 {
                     if (detail.purchase_packing_detail_relation.Count() == 0)
                     {
-                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail();
-                        purchase_packing_detail.id_item = (int)detail.id_item;
-                        purchase_packing_detail.id_location = detail.id_location;
-                        purchase_packing_detail.quantity = detail.quantity;
-                        purchase_packing_detail.batch_code = detail.batch_code;
-                        purchase_packing_detail.expire_date = detail.expire_date;
+                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail()
+                        {
+                            id_item = (int)detail.id_item,
+                            id_location = detail.id_location,
+                            quantity = detail.quantity,
+                            batch_code = detail.batch_code,
+                            expire_date = detail.expire_date
+                        };
+
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
-                        purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation();
-                        purchase_packing_detail_relation.id_purchase_invoice_detail = detail.id_purchase_invoice_detail;
-                        purchase_packing_detail_relation.purchase_packing_detail = purchase_packing_detail;
+                        purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
+                        {
+                            id_purchase_invoice_detail = detail.id_purchase_invoice_detail,
+                            purchase_packing_detail = purchase_packing_detail
+                        };
+
                         PurchaseDB.db.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
                     }
 
@@ -1069,5 +1075,21 @@ namespace Cognitivo.Purchase
             }
         }
 
+        private void Refresh_PurchaseDetail_LastPurchase(object sender, RoutedEventArgs e)
+        {
+            if (purchase_invoicepurchase_invoice_detailViewSource.View != null)
+            {
+                purchase_invoice_detail purchase_invoice_detail = purchase_invoicepurchase_invoice_detailViewSource.View.CurrentItem as purchase_invoice_detail;
+
+                if (purchase_invoice_detail != null && purchase_invoice_detail.id_item > 0)
+                {                    
+                    purchase_invoice_detail.Get_LastPurchase();
+                }
+                else
+                {
+                    toolBar.msgWarning("Only Invoices with Items can be checked.");
+                }
+            }
+        }
     }
 }

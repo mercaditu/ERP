@@ -5,6 +5,7 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
     using System.Linq;
     using System.Text;
 
@@ -53,6 +54,15 @@ namespace entity
         }
 
         private decimal _avlquantity;
+
+        [NotMapped]
+        public string LastSupplier { get; set; }
+        [NotMapped]
+        public DateTime LastPurchaseDate { get; set; }
+        [NotMapped]
+        public decimal LastQuantity { get; set; }
+        [NotMapped]
+        public decimal LastUnitCost { get; set; }
 
         #region "Navigation Properties"
 
@@ -169,6 +179,33 @@ namespace entity
             }
 
             return Dimension;
+        }
+
+        public void Get_LastPurchase()
+        {
+            using (db db = new db())
+            {
+                var last_detail = db.purchase_invoice_detail
+                    .Where(x => x.id_item == id_item && x.purchase_invoice.status == Status.Documents_General.Approved)
+                    .Include(x => x.purchase_invoice)
+                    .OrderByDescending(x => x.purchase_invoice.trans_date)
+                    .FirstOrDefault();
+
+                if (last_detail != null)
+                {
+                    LastSupplier = last_detail.purchase_invoice.contact.name;
+                    RaisePropertyChanged("LastSupplier");
+
+                    LastPurchaseDate = last_detail.purchase_invoice.trans_date;
+                    RaisePropertyChanged("LastPurchaseDate");
+
+                    LastQuantity = last_detail.quantity;
+                    RaisePropertyChanged("LastQuantity");
+
+                    LastUnitCost = last_detail.UnitCost_Vat;
+                    RaisePropertyChanged("LastUnitCost");
+                }
+            }
         }
     }
 }

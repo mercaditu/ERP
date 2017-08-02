@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using MoreLinq;
 
 namespace entity.Controller.Sales
 {
@@ -288,7 +289,7 @@ namespace entity.Controller.Sales
                 {
                     throw EX;
                 }
-               
+
                 return true;
             }
 
@@ -562,12 +563,12 @@ namespace entity.Controller.Sales
 
 
 
-          
+
             db.SaveChanges();
 
 
-         
-         
+
+
         }
 
         /// <summary>
@@ -772,13 +773,21 @@ namespace entity.Controller.Sales
         /// <param name="Invoice">Sales Invoice</param>
         /// <param name="PackingID">Sales Packing ID</param>
         /// <returns>True if Correct. False if Error or Unfinsihed</returns>
-        /// 
         public bool Link_PackingList(sales_invoice Invoice, int PackingID)
         {
             //Bring into Context.
             sales_packing Packing = db.sales_packing.Find(PackingID);
 
-            foreach (sales_packing_detail _sales_packing_detail in Packing.sales_packing_detail.Where(x => x.user_verified))
+            //Group Packing Detail so as to reduce the amount of lines in 
+            //Inoivces if the Product, Batch Code, Expiration Date are the same.
+            List<sales_packing_detail> GroupDetail = Packing.sales_packing_detail
+                .AsEnumerable()
+                .Where(x => x.user_verified)
+                .GroupBy(g => new { g.id_item, g.batch_code, g.expire_date, g.id_sales_order_detail })
+                .SelectMany(a => a)
+                .ToList();
+
+            foreach (sales_packing_detail _sales_packing_detail in GroupDetail)
             {
                 sales_order_detail sales_order_detail = _sales_packing_detail.sales_order_detail;
 
@@ -791,7 +800,6 @@ namespace entity.Controller.Sales
                 {
                     id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail,
                     sales_packing_detail = _sales_packing_detail,
-                    //id_sales_invoice_detail = Detail.id_sales_invoice_detail,
                     sales_invoice_detail = Detail
                 };
 

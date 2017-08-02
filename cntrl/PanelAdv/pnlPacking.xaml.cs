@@ -41,8 +41,8 @@ namespace cntrl.PanelAdv
 
                 if (_contact != null)
                 {
-                    sales_packingViewSource = (CollectionViewSource)Resources["sales_packingViewSource"];
-                    sales_packingViewSource.Source = _entity.sales_packing.Where(x => x.id_contact == _contact.id_contact && x.status==Status.Documents_General.Approved).ToList();
+                    sales_packingViewSource = Resources["sales_packingViewSource"] as CollectionViewSource;
+                    sales_packingViewSource.Source = _entity.sales_packing.Where(x => x.id_contact == _contact.id_contact && x.status == Status.Documents_General.Approved).ToList();
                 }
             }
         }
@@ -53,12 +53,8 @@ namespace cntrl.PanelAdv
 
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
-            // List<sales_packing> sales_packing = sales_packingDataGrid.ItemsSource.OfType<sales_packing>().ToList();
             selected_sales_packing = sales_packingDataGrid.ItemsSource.OfType<sales_packing>().Where(x => x.selected == true).ToList();
-            if (Link_Click != null)
-            {
-                Link_Click(sender);
-            }
+            Link_Click?.Invoke(sender);
         }
 
         private void sbxContact_Select(object sender, RoutedEventArgs e)

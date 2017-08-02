@@ -403,15 +403,15 @@ namespace cntrl.Class
                 Query = Reports.Stock.TransferSummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-										 new Report
-			{
-				Application = entity.App.Names.Recipe,
-				Name =entity.Brillo.Localize.StringText("Recipe")!= string.Empty ? entity.Brillo.Localize.StringText("Recipe") :"Recipe",
-				Path = "cntrl.Reports.Stocks.ItemReceipe.rdlc",
-				Query =  Reports.Stock.ItemReceipe.query,
-				Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-				
-			},
+                                         new Report
+            {
+                Application = entity.App.Names.Recipe,
+                Name =entity.Brillo.Localize.StringText("Recipe")!= string.Empty ? entity.Brillo.Localize.StringText("Recipe") :"Recipe",
+                Path = "cntrl.Reports.Stocks.ItemReceipe.rdlc",
+                Query =  Reports.Stock.ItemReceipe.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+
+            },
 
               //Customers
                  new Report
@@ -456,7 +456,8 @@ namespace cntrl.Class
                 Query = Reports.Commercial.Customer.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-               new Report
+
+                new Report
             {
                 Application = entity.App.Names.Supplier,
                 Name =entity.Brillo.Localize.StringText("ContactsByTag")!= string.Empty ? entity.Brillo.Localize.StringText("ContactsByTag") :"ContactsByTag",
@@ -465,7 +466,8 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
 
-             //Finance
+                //Finance
+
                 new Report
             {
                 Application = entity.App.Names.AccountsPayable,
@@ -474,7 +476,17 @@ namespace cntrl.Class
                 Query = Reports.Finance.PendingPayables.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-            new Report
+
+                new Report
+            {
+                Application = entity.App.Names.AccountsPayable,
+                Name = entity.Brillo.Localize.StringText("NonDirect_Payment"),
+                Path = "cntrl.Reports.Finances.NonDirect_Payment.rdlc",
+                Query = Reports.Finance.NonDirect_Payment_Supplier.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+
+                new Report
             {
                 Application = entity.App.Names.AccountsReceivable,
                 Name =entity.Brillo.Localize.StringText("AccountReceivable")!= string.Empty ? entity.Brillo.Localize.StringText("AccountReceivable") :"AccountReceivable",
@@ -593,7 +605,7 @@ namespace cntrl.Class
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate }
             }
             };
-            
+
         }
     }
 

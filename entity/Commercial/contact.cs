@@ -402,7 +402,7 @@ namespace entity
                 if (columnName == "name")
                 {
                     if (String.IsNullOrEmpty(name))
-                        return "Name needs to be filled";
+                        return Brillo.Localize.PleaseSelect + " " + Brillo.Localize.StringText("Name");
                 }
                 if (columnName == "id_contact_role")
                 {
@@ -418,7 +418,7 @@ namespace entity
                         {
                             using (db db = new db())
                             {
-                                if (db.contacts.Any(x => x.code == code && x.id_contact != id_contact))
+                                if (db.contacts.Any(x => x.code == code && x.id_contact != id_contact && x.id_company == CurrentSession.Id_Company))
                                 {
                                     return "Duplicate Contact Code";
                                 }

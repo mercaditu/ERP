@@ -376,7 +376,6 @@ namespace Cognitivo.Purchase
                 impeximpex_expenseDataGrid.CancelEdit();
                 impex impex = impexDataGrid.SelectedItem as impex;
                 impex.is_archived = true;
-                //impex.impex_expense.Remove(e.Parameter as impex_expense);
                 impeximpex_expenseViewSource.View.Refresh();
 
                 impexDataGrid_SelectionChanged(null, null);
@@ -423,7 +422,7 @@ namespace Cognitivo.Purchase
 
                 if (contact != null)
                 {
-                    impex impex = (impex)impexViewSource.View.CurrentItem;
+                    impex impex = impexViewSource.View.CurrentItem as impex;
                     impex.contact = contact;
 
                     if (contact != null)
@@ -455,6 +454,7 @@ namespace Cognitivo.Purchase
             if (sbxContact.ContactID > 0 || impex.id_contact > 0)
             {
                 int id_contact = 0;
+
                 if (sbxContact.ContactID > 0)
                 {
                     id_contact = sbxContact.ContactID;
@@ -465,6 +465,7 @@ namespace Cognitivo.Purchase
                 }
 
                 contact contact = ImpexDB.contacts.Find(id_contact);
+
                 if (contact != null)
                 {
                     pnlPurchaseInvoice._contact = contact;
@@ -485,7 +486,7 @@ namespace Cognitivo.Purchase
                 {
                     contact contact = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact;
 
-                    impex impex = (impex)impexViewSource.View.CurrentItem;
+                    impex impex = impexViewSource.View.CurrentItem as impex;
                     impex.contact = contact;
                     impex.Currencyfx = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().app_currencyfx;
                     sbxContact.Text = contact.name;

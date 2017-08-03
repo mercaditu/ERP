@@ -352,18 +352,27 @@ namespace cntrl.Controls
 
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (smartBoxContactSetting.Default.SearchFilter.Contains("Code"))
+            {
+                rbtnCode.IsChecked = true;
+            }
+            if (smartBoxContactSetting.Default.SearchFilter.Contains("Name"))
+            {
+                rbtnName.IsChecked = true;
+            }
+            if (smartBoxContactSetting.Default.SearchFilter.Contains("GovID"))
+            {
+                rbtnGov_ID.IsChecked = true;
+            }
+            if (smartBoxContactSetting.Default.SearchFilter.Contains("Tel"))
+            {
+                rbtnTel.IsChecked = true;
+            }
             popupCustomize.IsOpen = true;
             popupCustomize.Visibility = Visibility.Visible;
         }
 
         private void PopupCustomize_Closed(object sender, EventArgs e)
-        {
-            smartBoxContactSetting.Default.Save();
-            popupCustomize.IsOpen = false;
-            popupCustomize.Visibility = Visibility.Collapsed;
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (smartBoxContactSetting.Default.SearchFilter != null)
             {
@@ -387,8 +396,38 @@ namespace cntrl.Controls
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
 
+            
             smartBoxContactSetting.Default.Save();
+            popupCustomize.IsOpen = false;
+            popupCustomize.Visibility = Visibility.Collapsed;
         }
+
+        //private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    if (smartBoxContactSetting.Default.SearchFilter != null)
+        //    {
+        //        smartBoxContactSetting.Default.SearchFilter.Clear();
+        //    }
+
+        //    if (rbtnCode.IsChecked == true)
+        //    {
+        //        smartBoxContactSetting.Default.SearchFilter.Add("Code");
+        //    }
+        //    if (rbtnName.IsChecked == true)
+        //    {
+        //        smartBoxContactSetting.Default.SearchFilter.Add("Name");
+        //    }
+        //    if (rbtnGov_ID.IsChecked == true)
+        //    {
+        //        smartBoxContactSetting.Default.SearchFilter.Add("GovID");
+        //    }
+        //    if (rbtnTel.IsChecked == true)
+        //    {
+        //        smartBoxContactSetting.Default.SearchFilter.Add("Tel");
+        //    }
+
+        //    smartBoxContactSetting.Default.Save();
+        //}
 
         /// <summary>
         /// 

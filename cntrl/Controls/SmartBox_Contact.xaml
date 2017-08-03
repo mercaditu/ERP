@@ -57,16 +57,16 @@
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=ExactSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=1}"
-                                      Checked="RadioButton_Checked" />
+                                     />
                                 <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=2}"
-                                      Checked="RadioButton_Checked" />
+                                      />
                                 <CheckBox x:Name="rbtnGov_ID" Style="{StaticResource input_checkbox}" Content="{lex:Loc GovernmentID}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=3}"
-                                      Checked="RadioButton_Checked" />
+                                     />
                                 <CheckBox x:Name="rbtnTel" Style="{StaticResource input_checkbox}" Content="{lex:Loc Telephone}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=4}"
-                                      Checked="RadioButton_Checked" />
+                                     />
                             </StackPanel>
                         </Border>
                     </Popup>

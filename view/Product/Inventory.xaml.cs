@@ -1,5 +1,4 @@
 ﻿using entity;
-using Syncfusion.UI.Xaml.Grid.Converter;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,14 +8,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using Microsoft.VisualBasic;
 
 namespace Cognitivo.Product
 {
     public partial class Inventory : Page
     {
-        
-
         private CollectionViewSource item_inventoryViewSource,
             item_inventoryitem_inventory_detailViewSource,
             app_branchapp_locationViewSource,
@@ -30,6 +26,7 @@ namespace Cognitivo.Product
         {
             InitializeComponent();
             InventoryController = FindResource("InventoryController") as entity.Controller.Product.InventoryController;
+
             if (DesignerProperties.GetIsInDesignMode(this) == false)
             {
                 //Load Controller.
@@ -39,19 +36,14 @@ namespace Cognitivo.Product
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            item_inventoryitem_inventory_detailViewSource = (CollectionViewSource)(FindResource("item_inventoryitem_inventory_detailViewSource"));
-            app_branchapp_locationViewSource = (CollectionViewSource)(FindResource("app_branchapp_locationViewSource"));
-            item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
+            item_inventoryitem_inventory_detailViewSource = FindResource("item_inventoryitem_inventory_detailViewSource") as CollectionViewSource;
+            app_branchapp_locationViewSource = FindResource("app_branchapp_locationViewSource") as CollectionViewSource;
+            item_inventoryViewSource = FindResource("item_inventoryViewSource") as CollectionViewSource;
             InventoryController.Load();
 
-
-
             item_inventoryViewSource.Source = InventoryController.db.item_inventory.Local;
-
-            app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
-           
+            app_branchViewSource = FindResource("app_branchViewSource") as CollectionViewSource;
             app_branchViewSource.Source = InventoryController.db.app_branch.Local;
-
             FilterDetail();
         }
 
@@ -284,9 +276,7 @@ namespace Cognitivo.Product
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-
-            if (app_location != null)
+            if (app_branchapp_locationViewSource.View.CurrentItem is app_location app_location)
             {
                 if (item_inventoryitem_inventory_detailViewSource != null)
                 {
@@ -344,36 +334,6 @@ namespace Cognitivo.Product
             item_inventory.IsSelected = true;
             InventoryController.SaveChanges_WithValidation();
 
-
-
-            //if (sfdatagrid.View != null)
-            //{
-            //    var options = new ExcelExportingOptions()
-            //    {
-
-            //        AllowOutlining = false
-            //    };
-            //    var excelEngine = sfdatagrid.ExportToExcel(sfdatagrid.View, options);
-            //    var workBook = excelEngine.Excel.Workbooks[0];
-            //    // Add code to show save panel.
-            //    System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog()
-            //    {
-            //        FileName = "Excel", // Default file name
-            //        DefaultExt = ".xlsx", // Default file extension
-            //        Filter = "Text documents (.xlsx)|*.xlsx" // Filter files by extension
-            //    };
-
-            //    //Show save file dialog box
-            //    System.Windows.Forms.DialogResult result = dlg.ShowDialog();
-
-            //    //  Process save file dialog box results
-            //    if (result == System.Windows.Forms.DialogResult.OK)
-            //    {
-            //        // Save document
-            //        workBook.SaveAs(dlg.FileName);
-            //    }
-            //}
-
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
             if (app_location!=null)
             {
@@ -383,7 +343,6 @@ namespace Cognitivo.Product
                 }
             }
           
-
             toolBar_btnEdit_Click(null);
         }
 
@@ -405,28 +364,28 @@ namespace Cognitivo.Product
                 {
                     app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
                     item_inventory_detail _item_inventory_detail = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_product.id_item_product).FirstOrDefault();
-                    item_inventory_detail item_inventory_detail = new item_inventory_detail();
+
+                    item_inventory_detail item_inventory_detail = new item_inventory_detail()
+                    {
+                        id_inventory = item_inventory.id_inventory,
+                        id_item_product = item_product.id_item_product,
+                        item_product = item_product,
+                        id_location = app_location.id_location,
+
+                        State = EntityState.Added,
+                        timestamp = item_inventory.trans_date
+                    };
 
                     if (_item_inventory_detail == null)
                     {
                         Class.StockCalculations Stock = new Class.StockCalculations();
-                        //List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, item_inventory.trans_date);
-                        //Bring 0 Value into view since this is a new Item, it won't have any stock. OR else the System will assume same quantity for the rest.
                         item_inventory_detail.value_system = 0;
-                        item_inventory_detail.unit_value = 0; // StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == item_product.id_item_product).FirstOrDefault().Cost : 0;
+                        item_inventory_detail.unit_value = 0; 
                     }
                     else
                     {
                         item_inventory_detail.value_system = _item_inventory_detail.value_system;
                     }
-
-                    item_inventory_detail.id_inventory = item_inventory.id_inventory;
-                    item_inventory_detail.id_item_product = item_product.id_item_product;
-                    item_inventory_detail.item_product = item_product;
-                    item_inventory_detail.id_location = app_location.id_location;
-
-                    item_inventory_detail.State = EntityState.Added;
-                    item_inventory_detail.timestamp = item_inventory.trans_date;
 
                     if (CurrentSession.Get_Currency_Default_Rate() != null)
                     {
@@ -442,7 +401,6 @@ namespace Cognitivo.Product
         private void cbxExpiryCode_Unchecked(object sender, RoutedEventArgs e)
         {
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
 
             if (app_location != null)
             {
@@ -481,14 +439,18 @@ namespace Cognitivo.Product
                         {
                             crud_modal.Visibility = Visibility.Visible;
                             objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
+
                             foreach (item_dimension item_dimension in item_dimensionList)
                             {
-                                item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
-                                item_inventory_dimension.id_dimension = item_dimension.id_app_dimension;
-                                item_inventory_dimension.value = item_dimension.value;
-                                //  item_inventory_dimension.id_measurement = item_dimension.id_measurement;
+                                item_inventory_dimension item_inventory_dimension = new item_inventory_dimension()
+                                {
+                                    id_dimension = item_dimension.id_app_dimension,
+                                    value = item_dimension.value
+                                };
+
                                 item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                             }
+
                             item_inventory_detail.IsSelected = true;
 
                             objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
@@ -499,10 +461,13 @@ namespace Cognitivo.Product
                 }
                 else
                 {
+                    objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement()
+                    {
+                        item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList(),
+                        InventoryDB = InventoryController.db
+                    };
+
                     crud_modal.Visibility = Visibility.Visible;
-                    objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
-                    objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
-                    objpnl_ItemMovement.InventoryDB = InventoryController.db;
                     crud_modal.Children.Add(objpnl_ItemMovement);
                 }
                 if (item_inventory_detail.item_product.can_expire)
@@ -516,22 +481,17 @@ namespace Cognitivo.Product
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            if (entity.CurrentSession.UserRole.is_master)
+            if (CurrentSession.UserRole.is_master)
             {
-                item_inventory_detail item_inventory_detail = item_inventoryitem_inventory_detailViewSource.View.CurrentItem as item_inventory_detail;
-                if (item_inventory_detail!=null)
+                if (item_inventoryitem_inventory_detailViewSource.View.CurrentItem is item_inventory_detail item_inventory_detail)
                 {
                     decimal cost = item_inventory_detail.unit_value;
-                    //string Originalcost = //Microsoft.VisualBasic.Interaction.InputBox(cost.ToString(), "Cognitivo");
-                    item_movement item_movement = InventoryController.db.item_movement.
-                        Where(x => x.id_inventory_detail == item_inventory_detail.id_inventory_detail).FirstOrDefault();
+                    item_movement item_movement = InventoryController.db.item_movement.Where(x => x.id_inventory_detail == item_inventory_detail.id_inventory_detail).FirstOrDefault();
                     if (item_movement != null)
                     {
                         item_movement.Update_ChildVales(Convert.ToDecimal(cost));
                     }
                 }
-               
             }
             InventoryController.db.SaveChanges();
         }
@@ -549,6 +509,7 @@ namespace Cognitivo.Product
                 }
             }
         }
+
         private void Search_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query))

@@ -306,58 +306,33 @@ namespace DebeHaber
             Comment = Detail.item_description;
 
             CostCenter CC = new CostCenter();
-            //Check if Purchase has Item. If not its an expense.
-            if (Detail.item != null)
+
+            if (Detail.app_cost_center != null)
             {
-                // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-                if (Detail.item.id_item_type == item.item_type.FixedAssets)
+                CC.Name = Detail.app_cost_center.name;
+                
+                //Verify Type and Assign.
+                if (Detail.app_cost_center.is_fixedasset)
                 {
-                    CC.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
                     CC.Type = CostCenterTypes.FixedAsset;
-
-                    //Add CostCenter into Detail.
-                    CostCenter.Add(CC);
                 }
-                // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
-                else if (Detail.item.id_item_type == item.item_type.Service || Detail.item.id_item_type == item.item_type.Task || Detail.item.id_item_type == item.item_type.ServiceContract)
+                else if (Detail.app_cost_center.is_product)
                 {
-                    if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
-                    { CC.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
-                    else
-                    { CC.Name = Detail.item_description; }
-
-                    CC.Type = CostCenterTypes.Income;
-
-                    //Add CostCenter into Detail.
-                    CostCenter.Add(CC);
+                    CC.Type = CostCenterTypes.Merchendice;
                 }
-                // Finally if all else fails, assume Item being sold is Merchendice.
                 else
                 {
-                    app_cost_center app_cost_center = db.app_cost_center.Where(x => x.is_product).FirstOrDefault();
-                    if (app_cost_center != null)
-                    {
-                        CC.Name = app_cost_center.name;
-                        CC.Type = CostCenterTypes.Merchendice;
-                    }
-                    else
-                    {
-                        CC.Name = "Mercaderia";
-                        CC.Type = CostCenterTypes.Merchendice;
-                    }
-
-                    //Add CostCenter into Detail.
-                    CostCenter.Add(CC);
+                    CC.Type = CostCenterTypes.Expense;
                 }
             }
             else
             {
-                CC.Name = db.app_cost_center.Where(x => x.is_administrative).FirstOrDefault().name;
+                CC.Name = "Gasto No Controlado";
                 CC.Type = CostCenterTypes.Expense;
-
-                //Add CostCenter into Detail.
-                CostCenter.Add(CC);
             }
+
+            //Add CostCenter into Detail.
+            CostCenter.Add(CC);
         }
 
         public void Fill_ByPurchaseReturn(purchase_return_detail Detail, db db)

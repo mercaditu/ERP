@@ -218,16 +218,19 @@ namespace Cognitivo.Accounting
                     ///This will help fix payment details that don't have header.
                     if (schedual.payment_detail != null && schedual.payment_detail.payment == null)
                     {
-                        payment payment = new payment();
-                        payment.id_contact = sales_invoice.id_contact;
-                        payment.id_company = CurrentSession.Id_Company;
-                        payment.status = Status.Documents_General.Approved;
-                        payment.trans_date = schedual.expire_date;
-                        payment.id_user = schedual.payment_detail.id_user;
-                        payment.is_archived = false;
-                        payment.is_read = false;
-                        payment.is_accounted = false;
-                        payment.timestamp = DateTime.Now;
+                        payment payment = new payment()
+                        {
+                            id_contact = sales_invoice.id_contact,
+                            id_company = CurrentSession.Id_Company,
+                            status = Status.Documents_General.Approved,
+                            trans_date = schedual.expire_date,
+                            id_user = schedual.payment_detail.id_user,
+                            is_archived = false,
+                            is_read = false,
+                            is_accounted = false,
+                            timestamp = DateTime.Now
+                        };
+
                         db.db.payments.Add(payment);
                         db.db.SaveChanges();
                         schedual.payment_detail.id_payment = payment.id_payment;
@@ -295,8 +298,11 @@ namespace Cognitivo.Accounting
 
             foreach (purchase_invoice purchase_invoice in PurchaseList)
             {
-                DebeHaber.Integration Integration = new DebeHaber.Integration();
-                Integration.Key = RelationshipHash;
+                DebeHaber.Integration Integration = new DebeHaber.Integration()
+                {
+                    Key = RelationshipHash
+                };
+
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
 
                 DebeHaber.Commercial_Invoice Purchase = new DebeHaber.Commercial_Invoice();

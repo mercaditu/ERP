@@ -108,7 +108,24 @@ namespace Cognitivo.Product
 
                                     item_inventory_detail.value_system = Quantity_Updated;
                                     item_inventory_detail.value_counted += Quantity_Difference;
-                                    item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0;
+
+                                    //Get the newest Cost.
+                                    if (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null)
+                                    {
+                                        item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost;
+                                    }
+                                    else
+                                    {
+                                        //If Product does not exist in StockList, see if user has already defined cost. else add 0.
+                                        if (item_inventory_detail.unit_value > 0)
+                                        {
+                                            // If UnitValue > 0, means user must have manually inserted value. Leave it as is.
+                                        }
+                                        else
+                                        {
+                                            item_inventory_detail.unit_value = 0;
+                                        }
+                                    }
                                 }
                                 else
                                 {

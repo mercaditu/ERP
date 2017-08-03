@@ -187,6 +187,7 @@
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" Real" /></TextBlock>
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Binding="{Binding unit_value, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
                         <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                             Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
                             <DataGridTextColumn.CellStyle>
@@ -224,7 +225,6 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Binding="{Binding unit_value, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
                         <!--<DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="Auto"
 															ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
 															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->

@@ -86,6 +86,8 @@ namespace entity
 
         [NotMapped]
         public app_currencyfx Currencyfx { get; set; }
+        [NotMapped]
+        public string Currency { get; set; }
 
         public virtual impex_incoterm impex_incoterm { get; set; }
         public virtual contact contact { get; set; }

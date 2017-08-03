@@ -67,11 +67,11 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnDelete_Click_1(object sender)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure want to delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Archive, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
-                ImpexDB.impex.Remove(impex);
+                impex.is_archived = true;
                 toolBar_btnSave_Click_1(sender);
             }
         }
@@ -81,33 +81,38 @@ namespace Cognitivo.Purchase
             if (impexDataGrid.SelectedItem != null)
             {
                 impex impex = (impex)impexDataGrid.SelectedItem;
-                impex.IsSelected = true;
-                impex.State = EntityState.Modified;
-                ImpexDB.Entry(impex).State = EntityState.Modified;
+                if (impex.status == Status.Documents_General.Pending)
+                {
+                    impex.IsSelected = true;
+                    impex.State = EntityState.Modified;
+                    ImpexDB.Entry(impex).State = EntityState.Modified;
+                }
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
         private void toolBar_btnNew_Click_1(object sender)
         {
             purchase_invoiceViewSource.Source = ImpexDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_contact == 0 && a.is_issued == true).OrderByDescending(a => a.trans_date).ToList();
-            impex impex = new impex();
-            impex.impex_type = entity.impex.ImpexTypes.Import;
+            impex impex = new impex()
+            {
+                impex_type = entity.impex.ImpexTypes.Import,
+                eta = DateTime.Now,
+                etd = DateTime.Now,
+                is_active = true,
+                State = EntityState.Added,
+                status = Status.Documents_General.Pending,
+                IsSelected = true
+            };
 
             if (ImpexDB.impex_incoterm.Where(x => x.is_priority).FirstOrDefault() != null)
             {
                 impex.id_incoterm = ImpexDB.impex_incoterm.Where(x => x.is_priority).FirstOrDefault().id_incoterm;
             }
 
-            impex.eta = DateTime.Now;
-            impex.etd = DateTime.Now;
-            impex.is_active = true;
-            impex.State = EntityState.Added;
-            impex.status = Status.Documents_General.Pending;
-            impex.IsSelected = true;
             ImpexDB.impex.Add(impex);
             impexViewSource.View.MoveCurrentToLast();
             Impex_ItemDetailLIST.Clear();
@@ -162,7 +167,12 @@ namespace Cognitivo.Purchase
                 {
                     if (impex.impex_expense.FirstOrDefault() != null && impex.impex_expense.FirstOrDefault().purchase_invoice != null)
                     {
-                        impex.Currencyfx = impex.impex_expense.FirstOrDefault().purchase_invoice.app_currencyfx;
+                        var purchase_invoice = impex.impex_expense.FirstOrDefault().purchase_invoice;
+                        if (purchase_invoice != null)
+                        {
+                            impex.Currencyfx = purchase_invoice.app_currencyfx;
+                            impex.Currency = purchase_invoice.app_currencyfx.app_currency.name;
+                        }
                     }
 
                     GrandTotal = impex.impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Where(z => z.item != null && z.item.item_product != null).Sum(y => y.SubTotal));
@@ -286,21 +296,21 @@ namespace Cognitivo.Purchase
         {
             if (impexDataGrid.SelectedItem != null)
             {
-                if (id_incotermComboBox.SelectedItem != null && pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() != null)
+                impex impex = impexDataGrid.SelectedItem as impex;
+                if (impex != null && id_incotermComboBox.SelectedItem != null && impex.impex_import.FirstOrDefault() != null)
                 {
-                    impex impex = impexDataGrid.SelectedItem as impex;
-                    purchase_invoice PurchaseInvoice = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() as purchase_invoice;
+                    purchase_invoice PurchaseInvoice = impex.impex_import.FirstOrDefault().purchase_invoice as purchase_invoice;
                     impex_incoterm Incoterm = id_incotermComboBox.SelectedItem as impex_incoterm;
                     List<impex_incoterm_detail> IncotermDetail = null;
 
-                    if (impex.impex_type == entity.impex.ImpexTypes.Import)
+                    if (impex.impex_type == impex.ImpexTypes.Import)
                     {
-                        //Only fetch buyer expence
+                        //Only fetch buyer expense
                         IncotermDetail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == Incoterm.id_incoterm && i.buyer == true).ToList();
                     }
-                    if (impex.impex_type == entity.impex.ImpexTypes.Export)
+                    if (impex.impex_type == impex.ImpexTypes.Export)
                     {
-                        //Only fetch seller expence
+                        //Only fetch seller expense
                         IncotermDetail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == Incoterm.id_incoterm && i.seller == true).ToList();
                     }
 
@@ -308,19 +318,22 @@ namespace Cognitivo.Purchase
                     {
                         foreach (var item in IncotermDetail)
                         {
-                            impex_expense impex_expense = new impex_expense();
-                            impex_expense.State = EntityState.Added;
+                            impex_expense impex_expense = new impex_expense()
+                            {
+                                State = EntityState.Added,
+                                value = 0,
+                                id_incoterm_condition = item.id_incoterm_condition,
+                                id_currency = PurchaseInvoice.app_currencyfx.id_currency,
+                                id_currencyfx = PurchaseInvoice.id_currencyfx,
+                                id_purchase_invoice = PurchaseInvoice.id_purchase_invoice,
+                                id_item = (int)product.id_item
+                            };
 
                             if (ImpexDB.impex_incoterm_condition.Where(x => x.id_incoterm_condition == item.id_incoterm_condition).FirstOrDefault() != null)
                             {
                                 impex_expense.impex_incoterm_condition = ImpexDB.impex_incoterm_condition.Where(x => x.id_incoterm_condition == item.id_incoterm_condition).FirstOrDefault();
                             }
-                            impex_expense.value = 0;
-                            impex_expense.id_incoterm_condition = item.id_incoterm_condition;
-                            impex_expense.id_currency = PurchaseInvoice.app_currencyfx.id_currency;
-                            impex_expense.id_currencyfx = PurchaseInvoice.id_currencyfx;
-                            impex_expense.id_purchase_invoice = PurchaseInvoice.id_purchase_invoice;
-                            impex_expense.id_item = (int)product.id_item;
+
                             impex.impex_expense.Add(impex_expense);
                         }
                     }
@@ -329,7 +342,7 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    MessageBox.Show("Please select Incoterm, Type and Invoice to get expences.", "Get Expences", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Please select Incoterm and Purchase Invoice.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }
@@ -356,13 +369,14 @@ namespace Cognitivo.Purchase
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Archive, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 //DeleteDetailGridRow
                 impeximpex_expenseDataGrid.CancelEdit();
                 impex impex = impexDataGrid.SelectedItem as impex;
-                impex.impex_expense.Remove(e.Parameter as impex_expense);
+                impex.is_archived = true;
+                //impex.impex_expense.Remove(e.Parameter as impex_expense);
                 impeximpex_expenseViewSource.View.Refresh();
 
                 impexDataGrid_SelectionChanged(null, null);
@@ -505,7 +519,7 @@ namespace Cognitivo.Purchase
             }
             else
             {
-                toolBar.msgWarning("Please Approve Your Document..");
+                toolBar.msgWarning("Please Approve the Document..");
             }
         }
 

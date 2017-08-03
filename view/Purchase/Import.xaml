@@ -106,7 +106,7 @@
                     </TextBlock>
                 </StackPanel>
                 <StackPanel  Orientation="Horizontal" VerticalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                    <Label Content="{Binding Currency.name, Source={StaticResource impexViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=Curr}" />
+                    <Label Content="{Binding Currency, Source={StaticResource impexViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=Curr}" />
                     <TextBox Text="{Binding fx_rate,StringFormat=N2,Source={StaticResource impexViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}" />
                 </StackPanel>
             </StackPanel>
@@ -176,7 +176,8 @@
                 <TabItem Header="{lex:Loc Expenses}">
                     <Grid IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <TextBlock VerticalAlignment="Top" Style="{StaticResource text_HyperLinks}" Text="{lex:Loc Extract}" MouseUp="GetExpenses_PreviewMouseUp" />
+                        <TextBlock VerticalAlignment="Top" Style="{StaticResource text_HyperLinks}" 
+                                   Text="{lex:Loc Extract}" MouseUp="GetExpenses_PreviewMouseUp" />
                         <Grid Margin="0,25,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*" />

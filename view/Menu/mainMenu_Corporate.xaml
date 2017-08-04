@@ -4,15 +4,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:my="clr-namespace:entity.Properties;assembly=entity"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:pref="clr-namespace:entity.Properties;assembly=entity"
-      xmlns:entity="clr-namespace:entity;assembly=entity"
       lex:LocalizeDictionary.DesignCulture="en-US" Loaded="Page_Loaded"
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       MinWidth="800" MinHeight="600">
     <Page.Resources>
-        <BooleanToVisibilityConverter x:Key="Bool2Visi" />
         <Storyboard x:Key="tbxSearchShow">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="tbxSearch">
                 <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
@@ -115,15 +112,6 @@
                     <SolidColorBrush Color="White" Opacity="0.96" />
                 </TextBox.Background>
             </TextBox>
-        </Grid>
-        <Grid VerticalAlignment="Top" Background="LightCoral"
-              Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=ConnectionLost,
-                                   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                                   Converter={StaticResource Bool2Visi}}">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Foreground="White" Style="{StaticResource ico_Label}" Content="i"/>
-                <Label Foreground="White" Content="Connection Failure"/>
-            </StackPanel>
         </Grid>
         <Grid Margin="0,42,0,0">
             <Label x:Name="lblModuleName" Style="{StaticResource EditableLabelStyle}" VerticalAlignment="Top" HorizontalAlignment="Center"

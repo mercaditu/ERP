@@ -15,6 +15,7 @@ namespace Cognitivo.Sales
     public partial class PackingList : Page
     {
         private PackingListDB PackingListDB = new PackingListDB();
+
         private CollectionViewSource sales_packingViewSource, sales_packingsales_packinglist_detailViewSource, sales_packingsales_packing_detailVerifiedViewSource;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
@@ -27,7 +28,9 @@ namespace Cognitivo.Sales
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             sales_packingViewSource = FindResource("sales_packingViewSource") as CollectionViewSource;
-            await PackingListDB.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).LoadAsync();
+            await PackingListDB.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company)
+                .Include(x => x.contact)
+                .LoadAsync();
             sales_packingViewSource.Source = PackingListDB.sales_packing.Local;
 
             sales_packingsales_packinglist_detailViewSource = FindResource("sales_packingsales_packing_detailViewSource") as CollectionViewSource;

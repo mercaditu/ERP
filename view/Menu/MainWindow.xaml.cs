@@ -192,5 +192,29 @@ namespace Cognitivo.Menu
                 }
             }
         }
+
+        private void lblConnectionRetry_Click(object sender, MouseButtonEventArgs e)
+        {
+            Check_Connection();
+        }
+
+        public bool Check_Connection()
+        {
+            try
+            {
+                using (entity.db db = new entity.db())
+                {
+                    db.app_company.Find(entity.CurrentSession.Id_Company);
+                }
+                //If all is well, then Connection isn't Lost.
+                entity.CurrentSession.ConnectionLost = false;
+                return true;
+            }
+            catch
+            {
+                entity.CurrentSession.ConnectionLost = true;
+                return false;
+            }
+        }
     }
 }

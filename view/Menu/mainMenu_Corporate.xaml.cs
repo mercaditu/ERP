@@ -112,10 +112,6 @@ namespace Cognitivo.Menu
                                     }
                                 }
                             }
-                            else
-                            {
-                                //Do Nothing
-                            }
                         }
                         else
                         {
@@ -337,12 +333,23 @@ namespace Cognitivo.Menu
 
         public void open_App(object sender, RoutedEventArgs e)
         {
-            cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
-            string name = appName.Tag.ToString();
-
-            if (name.Contains("ReportDesigner"))
+            if (entity.Properties.Settings.Default.ConnectionLost)
             {
-                if (entity.Properties.Settings.Default.ConnectionLost == false)
+                if (MessageBox.Show("Connection Failure. Would you like to retry conection?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    if (rootWindow.Check_Connection() == false)
+                    {
+                        MessageBox.Show("Connection with Server is still lost. Cognitivo ERP will keep trying for another 10 minutes, but in the mean time please contact your network administrador to resolve this issue.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        //Don't continue opening the window.
+                        return;
+                    }
+                }
+            }
+
+            cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
+                string name = appName.Tag.ToString();
+
+                if (name.Contains("ReportDesigner"))
                 {
                     Window objWin = default(Window);
                     Type WinInstanceType = null;
@@ -355,10 +362,7 @@ namespace Cognitivo.Menu
                         Cursor = Cursors.Arrow;
                     }));
                 }
-            }
-            else if (Properties.Settings.Default.open_Window)
-            {
-                if (entity.Properties.Settings.Default.ConnectionLost==false)
+                else if (Properties.Settings.Default.open_Window)
                 {
                     ApplicationWindow appWindow = new ApplicationWindow()
                     {
@@ -369,11 +373,7 @@ namespace Cognitivo.Menu
                     };
                     appWindow.Show();
                 }
-           
-            }
-            else
-            {
-                if (entity.Properties.Settings.Default.ConnectionLost == false)
+                else
                 {
                     Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
                     MainWindow rootWindow = Window.GetWindow(this) as Menu.MainWindow;
@@ -388,9 +388,8 @@ namespace Cognitivo.Menu
                         this.Cursor = Cursors.Arrow;
                     }));
                 }
-            }
 
-            e.Handled = true;
+                e.Handled = true;
         }
 
         public void open_Report(object sender, RoutedEventArgs e)

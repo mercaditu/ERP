@@ -10,7 +10,7 @@ namespace entity
 {
     public static class CurrentSession
     {
-       
+
         #region PropertyChanged
 
         // INotifyPropertyChanged implementation
@@ -24,8 +24,21 @@ namespace entity
         #endregion PropertyChanged
 
         #region Properties
-      
 
+        public static bool ConnectionLost
+        {
+            get
+            {
+                return _ConnLost;
+            }
+            set
+            {
+                _ConnLost = value;
+                Properties.Settings.Default.ConnectionLost = _ConnLost;
+                Properties.Settings.Default.Save();
+            }
+        }
+        private static bool _ConnLost;
 
         public enum Versions
         {
@@ -278,13 +291,7 @@ namespace entity
 
         public static void Load_BasicData(object sender, ElapsedEventArgs e)
         {
-            
-                if (entity.Properties.Settings.Default.ConnectionLost == false)
-                {
-                    Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
-                }
-          
-         
+            Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
         }
 
         private static bool IsLoaded = false;

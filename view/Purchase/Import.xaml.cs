@@ -342,7 +342,7 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    MessageBox.Show("Please select Incoterm and Purchase Invoice.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(entity.Brillo.Localize.PleaseSelect + " Incoterm & " + entity.Brillo.Localize.StringText("PurchaseInvoice"), "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }
@@ -450,7 +450,8 @@ namespace Cognitivo.Purchase
             crud_modal.Visibility = Visibility.Visible;
             pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
             pnlPurchaseInvoice._entity = ImpexDB;
-            impex impex = (impex)impexViewSource.View.CurrentItem;
+            impex impex = impexViewSource.View.CurrentItem as impex;
+
             if (sbxContact.ContactID > 0 || impex.id_contact > 0)
             {
                 int id_contact = 0;

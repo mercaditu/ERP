@@ -7,7 +7,7 @@
             //in ctor, call the config methods
 
             //for Azure, retry common transient exceptions
-            SetExecutionStrategy("MySql.Data.MySqlClient", () => new Execustionstrategy());
+            SetExecutionStrategy("MySql.Data.MySqlClient", () => new Execustionstrategy(20, new System.TimeSpan(30000)));
         }
     }
 }

@@ -47,17 +47,7 @@ namespace entity
                 {
                     if (IsHandeled == false)
                     {
-                        //AboutBox1 box = new AboutBox1();
-                        //box.Show();
-
-                       
-
-                            entity.Properties.Settings.Default.ConnectionLost = true;
-                            entity.Properties.Settings.Default.Save();
-
-                       
-
-
+                        CurrentSession.ConnectionLost = true;
                         IsHandeled = true;
                     }
 
@@ -66,9 +56,8 @@ namespace entity
                 }
                 else
                 {
-                    entity.Properties.Settings.Default.ConnectionLost = false;
-                    entity.Properties.Settings.Default.Save();
-
+                    //If the Connection is Regained.
+                    CurrentSession.ConnectionLost = false;
 
                     //Add some error logging on this line for errors we aren't retrying.
                     //Make sure you record the Number property of sqlError.

@@ -65,11 +65,11 @@
                         <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref" Width="256" HorizontalAlignment="Left"
                                                    Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}" />
+                        <!--IsEnabled="{Binding Text, Converter={StaticResource TextChangeToEnable}, ElementName=tbxOrderNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"-->
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                   Style="{StaticResource input_combobox}"
-                                  IsEnabled="{Binding Text, Converter={StaticResource TextChangeToEnable}, ElementName=tbxOrderNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                   SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                         <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}" />
                         <TextBox Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -370,12 +370,12 @@
                  ItemsSource="{Binding}" SelectionChanged="sales_packingDataGrid_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   recordSecondaryName="{Binding number, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   recordName="{Binding contact.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    <cntrl:navList recordCode="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                   recordSecondaryName="{Binding number, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                   recordName="{Binding contact.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

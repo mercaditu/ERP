@@ -4,6 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:my="clr-namespace:entity.Properties;assembly=entity"
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:pref="clr-namespace:entity.Properties;assembly=entity"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       lex:LocalizeDictionary.DesignCulture="en-US" Loaded="Page_Loaded"
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -115,9 +116,9 @@
                 </TextBox.Background>
             </TextBox>
         </Grid>
-        <Grid VerticalAlignment="Top" Background="LightCoral" 
-              Visibility="{Binding Source={x:Static entity:CurrentSession.ConnectionLost}, 
-                                   Mode=OneWay, 
+        <Grid VerticalAlignment="Top" Background="LightCoral"
+              Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=ConnectionLost,
+                                   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                    Converter={StaticResource Bool2Visi}}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Foreground="White" Style="{StaticResource ico_Label}" Content="i"/>

@@ -10,6 +10,7 @@ namespace entity
 {
     public static class CurrentSession
     {
+       
         #region PropertyChanged
 
         // INotifyPropertyChanged implementation
@@ -23,8 +24,8 @@ namespace entity
         #endregion PropertyChanged
 
         #region Properties
+      
 
-        public static bool ConnectionLost { get; set; }
 
         public enum Versions
         {
@@ -194,7 +195,8 @@ namespace entity
 
             Version = Versions.Full;
 
-            ConnectionLost = false;
+        
+            
 
             Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();
@@ -251,13 +253,13 @@ namespace entity
                 Security_CurdList = cntx.security_curd.Where(x => x.id_role == User.id_role).ToList();
 
                 //Privilage
-                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role ).Include(x=>x.security_privilage).ToList();
+                Security_role_privilageList = cntx.security_role_privilage.Where(x => x.id_role == User.id_role).Include(x => x.security_privilage).ToList();
                 Security_role_privilageList = Security_role_privilageList.Where(x => x.security_privilage != null).ToList();
                 try
                 {
                     Allow_UpdateSalesDetail = !(Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.CanUserNotUpdatePrice &&
-                        x.has_privilage).FirstOrDefault() !=null ? true : false);
+                        x.has_privilage).FirstOrDefault() != null ? true : false);
 
                     Allow_BarCodeSearchOnly = Security_role_privilageList
                         .Where(x => x.security_privilage.name == Privilage.Privilages.ItemBarcodeSearchOnly &&
@@ -276,10 +278,13 @@ namespace entity
 
         public static void Load_BasicData(object sender, ElapsedEventArgs e)
         {
-            if (ConnectionLost == false)
-            {
-                Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
-            }
+            
+                if (entity.Properties.Settings.Default.ConnectionLost == false)
+                {
+                    Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
+                }
+          
+         
         }
 
         private static bool IsLoaded = false;
@@ -342,11 +347,12 @@ namespace entity
             }
         }
 
-        public static MySql.Data.MySqlClient.MySqlConnectionStringBuilder MySQLConnString { get; set; } 
+        public static MySql.Data.MySqlClient.MySqlConnectionStringBuilder MySQLConnString { get; set; }
 
         public static app_currencyfx Get_Currency_Default_Rate()
         {
             return CurrencyFX_ActiveRates.Where(x => x.id_currency == Currency_Default.id_currency).FirstOrDefault();
         }
     }
+  
 }

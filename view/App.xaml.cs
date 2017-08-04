@@ -146,7 +146,7 @@ namespace Cognitivo
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 //If Server cannot be found, launch the ConnectionBuilder page to set it up.
                 MainWin.mainFrame.Navigate(new StartUp());

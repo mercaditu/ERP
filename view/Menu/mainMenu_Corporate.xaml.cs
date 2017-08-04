@@ -195,6 +195,7 @@ namespace Cognitivo.Menu
             }
             else
             {
+             
                 _modName = (sender as TextBlock).Tag.ToString();
                 rootWindow.Nav_Frame(_modName);
             }
@@ -341,42 +342,52 @@ namespace Cognitivo.Menu
 
             if (name.Contains("ReportDesigner"))
             {
-                Window objWin = default(Window);
-                Type WinInstanceType = null;
-
-                Dispatcher.BeginInvoke((Action)(() =>
+                if (entity.Properties.Settings.Default.ConnectionLost == false)
                 {
-                    WinInstanceType = Type.GetType(name, true, true);
-                    objWin = (Window)Activator.CreateInstance(WinInstanceType);
-                    objWin.Show();
-                    Cursor = Cursors.Arrow;
-                }));
+                    Window objWin = default(Window);
+                    Type WinInstanceType = null;
+
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        WinInstanceType = Type.GetType(name, true, true);
+                        objWin = (Window)Activator.CreateInstance(WinInstanceType);
+                        objWin.Show();
+                        Cursor = Cursors.Arrow;
+                    }));
+                }
             }
             else if (Properties.Settings.Default.open_Window)
             {
-                ApplicationWindow appWindow = new ApplicationWindow()
+                if (entity.Properties.Settings.Default.ConnectionLost==false)
                 {
-                    PagePath = name,
-                    ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true),
-                    Title = entity.Brillo.Localize.StringText(appName.Uid),
-                    Icon = appName.imgSource
-                };
-                appWindow.Show();
+                    ApplicationWindow appWindow = new ApplicationWindow()
+                    {
+                        PagePath = name,
+                        ApplicationName = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appName.Uid, true),
+                        Title = entity.Brillo.Localize.StringText(appName.Uid),
+                        Icon = appName.imgSource
+                    };
+                    appWindow.Show();
+                }
+           
             }
             else
             {
-                Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
-                MainWindow rootWindow = Window.GetWindow(this) as Menu.MainWindow;
-                Page objPage = default(Page);
-                Type PageInstanceType = null;
-                PageInstanceType = Type.GetType(name, true, true);
-
-                Dispatcher.BeginInvoke((Action)(() =>
+                if (entity.Properties.Settings.Default.ConnectionLost == false)
                 {
-                    objPage = (Page)Activator.CreateInstance(PageInstanceType);
-                    rootWindow.mainFrame.Navigate(objPage);
-                    this.Cursor = Cursors.Arrow;
-                }));
+                    Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
+                    MainWindow rootWindow = Window.GetWindow(this) as Menu.MainWindow;
+                    Page objPage = default(Page);
+                    Type PageInstanceType = null;
+                    PageInstanceType = Type.GetType(name, true, true);
+
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        objPage = (Page)Activator.CreateInstance(PageInstanceType);
+                        rootWindow.mainFrame.Navigate(objPage);
+                        this.Cursor = Cursors.Arrow;
+                    }));
+                }
             }
 
             e.Handled = true;

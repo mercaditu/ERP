@@ -226,5 +226,17 @@ namespace entity.Properties {
                 this["Reciept_MinWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConnectionLost {
+            get {
+                return ((bool)(this["ConnectionLost"]));
+            }
+            set {
+                this["ConnectionLost"] = value;
+            }
+        }
     }
 }

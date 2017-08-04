@@ -50,7 +50,13 @@ namespace entity
                         //AboutBox1 box = new AboutBox1();
                         //box.Show();
 
-                        CurrentSession.ConnectionLost = true;
+                       
+
+                            entity.Properties.Settings.Default.ConnectionLost = true;
+                            entity.Properties.Settings.Default.Save();
+
+                       
+
 
                         IsHandeled = true;
                     }
@@ -60,7 +66,9 @@ namespace entity
                 }
                 else
                 {
-                    CurrentSession.ConnectionLost = false;
+                    entity.Properties.Settings.Default.ConnectionLost = false;
+                    entity.Properties.Settings.Default.Save();
+
 
                     //Add some error logging on this line for errors we aren't retrying.
                     //Make sure you record the Number property of sqlError.

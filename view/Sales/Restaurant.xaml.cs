@@ -191,11 +191,11 @@ namespace Cognitivo.Sales
                 await Dispatcher.BeginInvoke((Action)(() =>
                 {
                     sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-                    sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local.Where(x => x.status == Status.Documents_General.Pending);
+                    sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local.Where(x => x.status == Status.Documents_General.Pending).ToList() ;
                     sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
                 }));
 
-                dgvSalesDetail.CommitEdit();
+               // dgvSalesDetail.CommitEdit();
             }
             else
             {

@@ -5,7 +5,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Windows;
 
 namespace entity
 {
@@ -25,14 +24,14 @@ namespace entity
 
         #region Properties
 
+        public static bool ConnectionLost { get; set; }
+
         public enum Versions
         {
-            Lite,           //     0 USD //   0 USD
-            Basic,          // 3,000 USD // 350 USD
-            Medium,         // 5,000 USD // 550 USD
-            Full,           // 8,000 USD // 750 USD
-            PrintingPress,
-            EventManagement
+            Lite,
+            Basic,
+            Medium,
+            Full
         }
 
         public enum VersionsKey
@@ -187,21 +186,6 @@ namespace entity
         public static security_user User { get; set; }
         public static security_role UserRole { get; set; }
 
-        public static bool IsDataLoading
-        {
-            get
-            {
-                return _IsDataLoading;
-            }
-            set
-            {
-                _IsDataLoading = value;
-                NotifyStaticPropertyChanged("IsDataLoading");
-            }
-        }
-
-        private static bool _IsDataLoading = false;
-
         #endregion Properties
 
         public static void Start(security_user Sec_User, security_role Role)
@@ -209,6 +193,8 @@ namespace entity
             UserRole = Role;
 
             Version = Versions.Full;
+
+            ConnectionLost = false;
 
             Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();
@@ -241,7 +227,7 @@ namespace entity
                 //Load Basic Data into Timer.
                 Timer myTimer = new Timer();
                 myTimer.Elapsed += new ElapsedEventHandler(Load_BasicData);
-                myTimer.Interval = 60000;
+                myTimer.Interval = 300000;
                 myTimer.Start();
             }
         }
@@ -290,8 +276,10 @@ namespace entity
 
         public static void Load_BasicData(object sender, ElapsedEventArgs e)
         {
-            Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
-            IsDataLoading = true;
+            if (ConnectionLost == false)
+            {
+                Task taskAuth = Task.Factory.StartNew(() => Thread_Data());
+            }
         }
 
         private static bool IsLoaded = false;
@@ -324,8 +312,6 @@ namespace entity
                     VAT_GroupDetails = db.app_vat_group_details.Include("app_vat").Where(x => x.id_company == Id_Company).ToList();
                     VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 }
-
-                IsDataLoading = false;
             }
         }
 

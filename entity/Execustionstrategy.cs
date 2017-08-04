@@ -47,8 +47,10 @@ namespace entity
                 {
                     if (IsHandeled == false)
                     {
-                        AboutBox1 box = new AboutBox1();
-                        box.Show();
+                        //AboutBox1 box = new AboutBox1();
+                        //box.Show();
+
+                        CurrentSession.ConnectionLost = true;
 
                         IsHandeled = true;
                     }
@@ -58,6 +60,8 @@ namespace entity
                 }
                 else
                 {
+                    CurrentSession.ConnectionLost = false;
+
                     //Add some error logging on this line for errors we aren't retrying.
                     //Make sure you record the Number property of sqlError.
                     //If you see an error pop up that you want to retry, you can look in

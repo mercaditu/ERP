@@ -63,14 +63,6 @@ namespace entity.Brillo
             {
                 return CurrentSession.Versions.Full;
             }
-            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
-            {
-                return CurrentSession.Versions.PrintingPress;
-            }
-            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && security_role.name == versionname && security_role.app_company.gov_code == companycode)
-            {
-                return CurrentSession.Versions.EventManagement;
-            }
             else
             {
                 return CurrentSession.Versions.Lite;
@@ -130,14 +122,6 @@ namespace entity.Brillo
             {
                 return CurrentSession.Versions.Full;
             }
-            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && GovCode == companycode)
-            {
-                return CurrentSession.Versions.PrintingPress;
-            }
-            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && GovCode == companycode)
-            {
-                return CurrentSession.Versions.EventManagement;
-            }
             else
             {
                 return CurrentSession.Versions.Lite;
@@ -194,14 +178,6 @@ namespace entity.Brillo
             {
                 return CurrentSession.Versions.Full;
             }
-            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey && GovCode == companycode)
-            {
-                return CurrentSession.Versions.PrintingPress;
-            }
-            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey && GovCode == companycode)
-            {
-                return CurrentSession.Versions.EventManagement;
-            }
             else
             {
                 return CurrentSession.Versions.Lite;
@@ -228,14 +204,6 @@ namespace entity.Brillo
                 else if (CurrentSession.Versions.Full.ToString() == Version.ToString())
                 {
                     _Seats = CurrentSession.VersionsKey.Alphonso_255.ToString();
-                }
-                else if (CurrentSession.Versions.PrintingPress.ToString() == Version.ToString())
-                {
-                    _Seats = CurrentSession.VersionsKey.Gulabkhas_306.ToString();
-                }
-                else if (CurrentSession.Versions.EventManagement.ToString() == Version.ToString())
-                {
-                    _Seats = CurrentSession.VersionsKey.Chausa_357.ToString();
                 }
                 int id_role = CurrentSession.UserRole.id_role;
                 security_role security_role = db.security_role.Where(x => x.id_role == id_role).FirstOrDefault();
@@ -271,14 +239,6 @@ namespace entity.Brillo
                 else if (CurrentSession.Versions.Full.ToString() == Version.ToString())
                 {
                     _Seats = CurrentSession.VersionsKey.Alphonso_255.ToString();
-                }
-                else if (CurrentSession.Versions.PrintingPress.ToString() == Version.ToString())
-                {
-                    _Seats = CurrentSession.VersionsKey.Gulabkhas_306.ToString();
-                }
-                else if (CurrentSession.Versions.EventManagement.ToString() == Version.ToString())
-                {
-                    _Seats = CurrentSession.VersionsKey.Chausa_357.ToString();
                 }
                 int id_role = CurrentSession.UserRole.id_role;
                 _Seats = _Seats + "." + security_role.name + "." + security_role.app_company.gov_code;

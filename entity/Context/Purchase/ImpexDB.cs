@@ -158,6 +158,9 @@ namespace entity
                                     if (item_movement != null)
                                     {
                                         item_movement.item_movement_value.Add(item_movement_value);
+
+                                        item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost);
+
                                     }
                                 }
                             }

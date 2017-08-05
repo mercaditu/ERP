@@ -361,5 +361,4 @@ namespace entity
             return CurrencyFX_ActiveRates.Where(x => x.id_currency == Currency_Default.id_currency).FirstOrDefault();
         }
     }
-  
 }

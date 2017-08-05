@@ -203,13 +203,30 @@ namespace entity
 
 		#region Methods
 
-		public void Update_ChildVales(decimal BaseValue)
+		public void Update_ChildVales(decimal BaseValue, bool SkipCurrentItemUpdate)
 		{
-			this.item_movement_value.FirstOrDefault().unit_value = BaseValue;
+            if (SkipCurrentItemUpdate == false)
+            {
+                if (this.item_movement_value.Count() > 0)
+                {
+                    this.item_movement_value.FirstOrDefault().unit_value = BaseValue;
+                }
+            }
 
-			foreach (item_movement this_child in child)
+            if (this.sales_invoice_detail != null)
+            {
+                sales_invoice_detail.unit_cost = Brillo.Currency.convert_Values
+                    (
+                    BaseValue, 
+                    CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                    sales_invoice_detail.sales_invoice.id_currencyfx,
+                    App.Modules.Sales
+                    );
+            }
+
+            foreach (item_movement this_child in child)
 			{
-				this_child.Update_ChildVales(item_movement_value.Sum(x => x.unit_value));
+				this_child.Update_ChildVales(item_movement_value.Sum(x => x.unit_value), false);
 			}
 		}
 

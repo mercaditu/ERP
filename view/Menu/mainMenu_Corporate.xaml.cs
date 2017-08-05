@@ -284,8 +284,8 @@ namespace Cognitivo.Menu
             foreach (DataRow app in appList.dtApp.Select(SearchBy, "namespace ASC"))
             {
                 string _namespace = app["namespace"].ToString();
-                entity.CurrentSession.Versions Version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(app["Version"]));
-                if (entity.CurrentSession.Version >= Version)
+                CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(app["Version"]));
+                if (CurrentSession.Version >= Version)
                 {
                     if (arrNamespace.Contains(_namespace))
                     {

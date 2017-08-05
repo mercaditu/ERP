@@ -506,7 +506,7 @@ namespace Cognitivo.Product
                     item_movement item_movement = InventoryController.db.item_movement.Where(x => x.id_inventory_detail == item_inventory_detail.id_inventory_detail).FirstOrDefault();
                     if (item_movement != null)
                     {
-                        item_movement.Update_ChildVales(Convert.ToDecimal(cost));
+                        item_movement.Update_ChildVales(Convert.ToDecimal(cost), true);
                     }
                 }
             }

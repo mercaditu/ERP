@@ -29,7 +29,7 @@ namespace cntrl.Class
                         foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
                         {
                             //Fix child Unit Values.
-                            item_movement.Update_ChildVales(purchase_invoice_detail.unit_cost);
+                            item_movement.Update_ChildVales(purchase_invoice_detail.unit_cost, true);
                         }
                     }
                 }

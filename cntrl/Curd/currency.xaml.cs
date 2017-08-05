@@ -26,8 +26,13 @@ namespace cntrl
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                app_currencyViewSource = ((CollectionViewSource)(this.FindResource("app_currencyViewSource")));
-                entity.db.app_currency.Where(x => x.id_currency == CurrencyId).Load();
+                app_currencyViewSource = this.FindResource("app_currencyViewSource") as CollectionViewSource;
+
+                entity.db.app_currencyfx
+                    .Where(x => x.id_currency == CurrencyId)
+                    .OrderByDescending(x => x.timestamp)
+                    .Include(x => x.app_currency)
+                    .Load();
 
                 app_currencyViewSource.Source = entity.db.app_currency.Local;
                 app_currencyapp_currencyfxViewSource = this.FindResource("app_currencyapp_currencyfxViewSource") as CollectionViewSource;
@@ -67,7 +72,7 @@ namespace cntrl
             if (_app_currency.app_currencyfx.Any(x => x.is_active) == false && _app_currency.app_currencyfx.Count > 0)
             {
                 app_currencyfx app_currencyfx;
-                app_currencyfx = _app_currency.app_currencyfx.OrderBy(x => x.timestamp).FirstOrDefault();
+                app_currencyfx = _app_currency.app_currencyfx.OrderByDescending(x => x.timestamp).FirstOrDefault();
                 app_currencyfx.is_active = true;
                 app_currencyfx.is_reverse = false;
             }
@@ -87,15 +92,6 @@ namespace cntrl
                 Grid parentGrid = (Grid)Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = Visibility.Hidden;
-        }
-
-        private void cbxCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (cbxCountry.SelectedItem != null)
-            //{
-            //    //geo_country _geo_country = cbxCountry.SelectedItem as geo_country;
-            //    //tbxCurrency.Text = _geo_country.currency;
-            //}
         }
 
         private List<app_currencyfx> listapp_currencyfx = null;

@@ -81,11 +81,11 @@ namespace entity.Brillo
                                 {
                                     if (Modules == App.Modules.Sales)
                                     {
-                                        rate = app_currencyfxold.buy_value;
+                                        rate = app_currencyfxold.buy_value == 0 ? 1 : app_currencyfxold.buy_value;
                                     }
                                     else //Purchase Rates
                                     {
-                                        rate = app_currencyfxold.sell_value;
+                                        rate = app_currencyfxold.sell_value == 0 ? 1 : app_currencyfxold.sell_value;
                                     }
                                 }
 

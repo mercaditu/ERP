@@ -57,9 +57,9 @@
                     <CheckBox x:Name="chkhasrounding" Content="{lex:Loc Rounding}"
 				              Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
 				              IsChecked="{Binding has_rounding, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                    <CheckBox x:Name="chbxDivisible" Content="{lex:Loc IsDivisible}"
+                    <CheckBox x:Name="chbxDivisible" Content="{lex:Loc Divisible}"
 				              Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
-				              IsChecked="{Binding is_divisible, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+				              IsChecked="{Binding is_reverse, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                 </WrapPanel>
             </StackPanel>
 
@@ -82,7 +82,7 @@
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="64" IsReadOnly="True" Binding="{Binding timestamp, StringFormat={}{0:d}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:BuyRate}" Width="*" Binding="{Binding buy_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SellRate}" Width="*" Binding="{Binding sell_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                    <DataGridTemplateColumn Header="Is Divisible" Width="Auto">
+                    <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Divisible}" Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox x:Name="chkIsDivisible" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding is_reverse, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Checked="chkIsDivisble_Checked" />

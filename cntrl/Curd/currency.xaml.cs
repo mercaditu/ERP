@@ -1,5 +1,4 @@
 ﻿using entity;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -42,19 +41,12 @@ namespace cntrl
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
                     _SaveChanges();
                     btnCancel_Click(sender, e);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
 
             CurrentSession.Load_BasicData(null, null);
         }
@@ -92,16 +84,9 @@ namespace cntrl
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
                 Grid parentGrid = (Grid)Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = Visibility.Hidden;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         private void cbxCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -158,74 +143,47 @@ namespace cntrl
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (CurrencyId > 0)
             {
-                if (CurrencyId > 0)
+                MessageBoxResult res = MessageBox.Show("Sure you want to delete?", "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (res == MessageBoxResult.Yes)
                 {
-                    MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (res == MessageBoxResult.Yes)
-                    {
-                        app_currency app_currency = entity.db.app_currency.Where(a => a.id_currency == CurrencyId).First();
-                        app_currency.is_active = false;
-                        btnSave_Click(sender, e);
-                    }
+                    app_currency app_currency = entity.db.app_currency.Where(a => a.id_currency == CurrencyId).First();
+                    app_currency.is_active = false;
+                    btnSave_Click(sender, e);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
         private void chkIsActive_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            CheckBox objIsActive = sender as CheckBox;
+            int isCheckCtr = 0;
+            foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsActive"))
             {
-                CheckBox objIsActive = sender as CheckBox;
-                int isCheckCtr = 0;
+                if (checkBox.IsChecked == true)
+                    isCheckCtr++;
+            }
+            if (isCheckCtr > 1)
+            {
                 foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsActive"))
                 {
-                    if (checkBox.IsChecked == true)
-                        isCheckCtr++;
+                    checkBox.IsChecked = false;
                 }
-                if (isCheckCtr > 1)
-                {
-                    foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsActive"))
-                    {
-                        checkBox.IsChecked = false;
-                    }
-                    objIsActive.IsChecked = true;
-                }
-            }
-            catch (Exception)
-            {
-                //throw;
+                objIsActive.IsChecked = true;
             }
         }
 
         private void chkIsDivisble_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            CheckBox objIsActive = sender as CheckBox;
+
+            if (objIsActive != null)
             {
-                CheckBox objIsActive = sender as CheckBox;
-                int isCheckCtr = 0;
                 foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsDivisible"))
                 {
-                    if (checkBox.IsChecked == true)
-                        isCheckCtr++;
+                    checkBox.IsChecked = objIsActive.IsChecked;
                 }
-                if (isCheckCtr > 1)
-                {
-                    foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsDivisible"))
-                    {
-                        checkBox.IsChecked = false;
-                    }
-                    objIsActive.IsChecked = true;
-                }
-            }
-            catch (Exception)
-            {
-                //throw;
             }
         }
     }

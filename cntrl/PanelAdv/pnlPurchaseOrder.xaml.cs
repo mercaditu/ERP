@@ -16,7 +16,7 @@ namespace cntrl.PanelAdv
 
         public enum module
         {
-            sales_invoice,
+            invoice,
             packing_list
         }
 
@@ -62,7 +62,7 @@ namespace cntrl.PanelAdv
             {
                 List<purchase_order> purchase_order = purchase_orderDatagrid.ItemsSource.OfType<purchase_order>().ToList();
                 selected_purchase_order = purchase_order.Where(x => x.IsSelected == true).ToList();
-                if (mode == module.sales_invoice)
+                if (mode == module.invoice)
                 {
                     if (selected_purchase_order.Count() > 1)
                     {
@@ -112,9 +112,11 @@ namespace cntrl.PanelAdv
         private void load_PurchaseOrder(int id_contact)
         {
             var order = (from purchase_order_detail in _entity.purchase_order_detail
-                         where purchase_order_detail.purchase_order.id_contact == id_contact && purchase_order_detail.purchase_order.status == Status.Documents_General.Approved
+                         where 
+                         purchase_order_detail.purchase_order.id_contact == id_contact && 
+                         purchase_order_detail.purchase_order.status == Status.Documents_General.Approved
                          join purchase_invoice_detail in _entity.purchase_invoice_detail
-                   on purchase_order_detail.id_purchase_order_detail equals purchase_invoice_detail.id_purchase_order_detail into lst
+                             on purchase_order_detail.id_purchase_order_detail equals purchase_invoice_detail.id_purchase_order_detail into lst
                          from list in lst.DefaultIfEmpty()
                          group list by new
                          {

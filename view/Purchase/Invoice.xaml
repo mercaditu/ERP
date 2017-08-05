@@ -231,7 +231,7 @@
                         </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left" 
 									Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_PurchaseOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                            <Label Content="" Style="{StaticResource btn_Label}" />
+                            <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
 								<Hyperlink FontWeight="Bold" PreviewMouseUp="btnPurchaseOreder_Click">
 									<Run Text="{lex:Loc PurchaseOrder}" />
@@ -256,24 +256,22 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <StackPanel Orientation="Horizontal" >
-                            <Label Content="" Style="{StaticResource btn_Label}" />
-                            <TextBlock Margin="5,0" VerticalAlignment="Center">
-										<Hyperlink FontWeight="Bold" PreviewMouseUp="toolBar_btnReturn_Click">
-											<Run Text="{lex:Loc PurchaseReturn}" />
-										</Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                            <Label Content="O" Style="{StaticResource ico_Label}" HorizontalContentAlignment="Center" />
+                            <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
 												<Hyperlink PreviewMouseUp="PackingList_Click">
 													<Run Text="{lex:Loc PackingList}" />
 												</Hyperlink>
                             </TextBlock>
                         </StackPanel>
-
-                      
+                        <StackPanel Orientation="Horizontal" >
+                            <Label Content="" Style="{StaticResource btn_Label}" />
+                            <TextBlock Margin="5,0" VerticalAlignment="Center">
+										<Hyperlink FontWeight="Bold" PreviewMouseUp="toolBar_btnReturn_Click">
+											<Run Text="{lex:Loc PurchaseReturn}" />
+										</Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
                     </StackPanel>
                     
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"

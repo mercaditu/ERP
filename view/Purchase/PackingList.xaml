@@ -108,8 +108,8 @@
                                         </Hyperlink>
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                            <Label Content="" Style="{StaticResource btn_Label}" />
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                            <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                 <Hyperlink PreviewMouseUp="btnpurchaseOrder_Click">
                                     <Run Text="{lex:Loc purchaseOrder}" />
@@ -135,11 +135,11 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <Label Content="" Style="{StaticResource btn_Label}" />
+                            <Label Content="" Style="{StaticResource btn_Label}"/>
                             <TextBlock Style="{StaticResource text_Data}">
-							<Hyperlink PreviewMouseUp="btnInvoice_Click">
-								<Run Text="{lex:Loc PurchaseInvoice}" />
-							</Hyperlink>
+							    <Hyperlink PreviewMouseUp="btnImportInvoice_Click">
+								    <Run Text="{lex:Loc PurchaseInvoice}" />
+							    </Hyperlink>
                             </TextBlock>
                         </StackPanel>
                         <ItemsControl ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}" Margin="0">
@@ -157,7 +157,7 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="" Style="{StaticResource btn_Label}" />
+                            <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                 <Hyperlink PreviewMouseUp="btnPurchaseInvoice_Click">
                                     <Run Text="{lex:Loc PurchaseInvoice}" />

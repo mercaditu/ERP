@@ -858,20 +858,20 @@ namespace Cognitivo.Purchase
                 if (disposing)
                 {
                     PurchaseDB.db.Dispose();
-                    // Dispose other managed resources.
                 }
-                //release unmanaged resources.
             }
         }
 
         private void Fraction_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
-
-            foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail)
+            if (purchase_invoice != null)
             {
-                purchase_invoice_detail.Quantity_Factored = entity.Brillo.ConversionFactor.Factor_Quantity(purchase_invoice_detail.item, purchase_invoice_detail.quantity, purchase_invoice_detail.GetDimensionValue());
-                purchase_invoice_detail.RaisePropertyChanged("Quantity_Factored");
+                foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail)
+                {
+                    purchase_invoice_detail.Quantity_Factored = entity.Brillo.ConversionFactor.Factor_Quantity(purchase_invoice_detail.item, purchase_invoice_detail.quantity, purchase_invoice_detail.GetDimensionValue());
+                    purchase_invoice_detail.RaisePropertyChanged("Quantity_Factored");
+                }
             }
         }
 
@@ -889,20 +889,24 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    app_document app_document = new entity.app_document();
-                    app_document.id_application = entity.App.Names.PurchaseInvoice;
-                    app_document.name = "PurchaseInvoice";
+                    app_document app_document = new app_document()
+                    {
+                        id_application = entity.App.Names.PurchaseInvoice,
+                        name = "PurchaseInvoice"
+                    };
 
-                    app_document_range = new app_document_range();
-                    app_document_range.use_default_printer = false;
-                    app_document_range.app_document = app_document;
+                    app_document_range = new app_document_range()
+                    {
+                        use_default_printer = false,
+                        app_document = app_document
+                    };
                 }
 
                 entity.Brillo.Document.Start.Manual(purchase_invoice, app_document_range);
             }
             else
             {
-                toolBar.msgWarning("Please select");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -944,42 +948,48 @@ namespace Cognitivo.Purchase
 
             if (purchase_invoice != null && purchase_invoice.status == Status.Documents_General.Approved && purchase_invoice.purchase_return.Count() == 0)
             {
-                purchase_return purchase_return = new purchase_return();
-                purchase_return.barcode = purchase_invoice.barcode;
-                purchase_return.code = purchase_invoice.code;
-                purchase_return.trans_date = DateTime.Now;
-                purchase_return.comment = purchase_invoice.comment;
-                purchase_return.id_condition = purchase_invoice.id_condition;
-                purchase_return.id_contact = purchase_invoice.id_contact;
-                purchase_return.contact = purchase_return.contact;
-                purchase_return.id_contract = purchase_invoice.id_contract;
-                purchase_return.id_currencyfx = purchase_invoice.id_currencyfx;
-                purchase_return.id_project = purchase_invoice.id_project;
-                purchase_return.id_sales_rep = purchase_invoice.id_sales_rep;
-                purchase_return.id_weather = purchase_invoice.id_weather;
-                purchase_return.is_impex = purchase_invoice.is_impex;
-                purchase_return.purchase_invoice = purchase_invoice;
+                purchase_return purchase_return = new purchase_return()
+                {
+                    barcode = purchase_invoice.barcode,
+                    code = purchase_invoice.code,
+                    trans_date = DateTime.Now,
+                    comment = purchase_invoice.comment,
+                    id_condition = purchase_invoice.id_condition,
+                    id_contact = purchase_invoice.id_contact,
+                    contact = purchase_invoice.contact,
+                    id_contract = purchase_invoice.id_contract,
+                    id_currencyfx = purchase_invoice.id_currencyfx,
+                    id_project = purchase_invoice.id_project,
+                    id_sales_rep = purchase_invoice.id_sales_rep,
+                    id_weather = purchase_invoice.id_weather,
+                    is_impex = purchase_invoice.is_impex,
+                    purchase_invoice = purchase_invoice,
+                };
+
                 foreach (purchase_invoice_detail detail in purchase_invoice.purchase_invoice_detail)
                 {
-                    purchase_return_detail purchase_return_detail = new purchase_return_detail();
-                    purchase_return_detail.id_cost_center = detail.id_cost_center;
-                    purchase_return_detail.comment = detail.comment;
-                    purchase_return_detail.discount = detail.discount;
-                    purchase_return_detail.id_item = detail.id_item;
-                    purchase_return_detail.item_description = detail.item_description;
-                    purchase_return_detail.id_location = detail.id_location;
-                    purchase_return_detail.purchase_invoice_detail = detail;
-                    purchase_return_detail.id_vat_group = detail.id_vat_group;
-                    purchase_return_detail.quantity = detail.quantity - (detail.purchase_return_detail != null ? detail.purchase_return_detail.Sum(x => x.quantity) : 0);
-                    purchase_return_detail.unit_cost = detail.unit_cost;
-                    purchase_return_detail.batch_code = detail.batch_code;
-                    purchase_return_detail.expire_date = detail.expire_date;
+                    purchase_return_detail purchase_return_detail = new purchase_return_detail()
+                    {
+                        id_cost_center = detail.id_cost_center,
+                        comment = detail.comment,
+                        discount = detail.discount,
+                        id_item = detail.id_item,
+                        item_description = detail.item_description,
+                        id_location = detail.id_location,
+                        purchase_invoice_detail = detail,
+                        id_vat_group = detail.id_vat_group,
+                        quantity = detail.quantity - (detail.purchase_return_detail != null ? detail.purchase_return_detail.Sum(x => x.quantity) : 0),
+                        unit_cost = detail.unit_cost,
+                        batch_code = detail.batch_code,
+                        expire_date = detail.expire_date
+                    };
+
                     purchase_return.purchase_return_detail.Add(purchase_return_detail);
                 }
 
                 PurchaseDB.db.purchase_return.Add(purchase_return);
                 PurchaseDB.db.SaveChanges();
-                MessageBox.Show("Return Created Successfully..");
+                MessageBox.Show(entity.Brillo.Localize.StringText("Done"));
             }
             else
             {
@@ -1060,9 +1070,8 @@ namespace Cognitivo.Purchase
                 if (purchase_packing.purchase_packing_detail.Count() > 0)
                 {
                     PurchaseDB.db.purchase_packing.Add(purchase_packing);
-
                     PurchaseDB.db.SaveChanges();
-                    MessageBox.Show("Packing Created Successfully..");
+                    toolBar.msgSaved(1);
                 }
                 else
                 {

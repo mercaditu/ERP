@@ -1,4 +1,4 @@
-﻿<Page x:Name="pagePackingList" x:Class="Cognitivo.Purchase.PackingList" Title="{lex:Loc PackingList}"
+﻿<Page xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"  x:Name="pagePackingList" x:Class="Cognitivo.Purchase.PackingList" Title="{lex:Loc PackingList}"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:converter="clr-namespace:Cognitivo.Converters"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -73,149 +73,151 @@
                                  Style="{StaticResource input_textbox}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" >
-                        <Expander Header="{lex:Loc QuickActions}" Background="{StaticResource AccentColor_Brush}" BorderThickness="0">
-                            <StackPanel>
-                                <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" Margin="3,2,0,5">
-                                    <Label Content="A" Style="{StaticResource btn_Label}" />
-                                    <TextBlock x:Name="tbCustomize" MouseUp="tbCustomize_MouseUp" Margin="5,0" VerticalAlignment="Center">
+                        <Syncfusion:SfAccordion BorderThickness="0" AccentBrush="{StaticResource AccentColor_Brush}" SelectionMode="ZeroOrMore" FontWeight="Bold" >
+                            <Syncfusion:SfAccordionItem Header="{lex:Loc QuickActions}">
+                                <StackPanel Background="{StaticResource appConfig}">
+                                    <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" Margin="3,2,0,5">
+                                        <Label Content="A" Style="{StaticResource btn_Label}" />
+                                        <TextBlock x:Name="tbCustomize" MouseUp="tbCustomize_MouseUp" Margin="5,0" VerticalAlignment="Center">
                                 <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}" /></Hyperlink>
-                                    </TextBlock>
-                                    <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
+                                        </TextBlock>
+                                        <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
                                             PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
-                                        <Border BorderThickness="1" BorderBrush="Gray">
-                                            <StackPanel Background="WhiteSmoke" Width="180">
-                                                <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
-                                                <CheckBox Margin="6,0,0,0" x:Name="chkField"
+                                            <Border BorderThickness="1" BorderBrush="Gray">
+                                                <StackPanel Background="WhiteSmoke" Width="180">
+                                                    <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" />
+                                                    <CheckBox Margin="6,0,0,0" x:Name="chkField"
                                                   IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=Telephone, Mode=TwoWay}">
-                                                    <Label Content="{lex:Loc Telephone}" Style="{StaticResource generic_Label}" />
-                                                </CheckBox>
-                                                <CheckBox Margin="6,0,0,0" x:Name="chkBranch"
+                                                        <Label Content="{lex:Loc Telephone}" Style="{StaticResource generic_Label}" />
+                                                    </CheckBox>
+                                                    <CheckBox Margin="6,0,0,0" x:Name="chkBranch"
                                                   IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=Branch, Mode=TwoWay}">
-                                                    <Label Content="{lex:Loc Branch}" Style="{StaticResource generic_Label}" />
-                                                </CheckBox>
-                                            </StackPanel>
-                                        </Border>
-                                    </Popup>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
-                                    <Label Content="" Style="{StaticResource btn_Label}" />
-                                    <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                                        <Label Content="{lex:Loc Branch}" Style="{StaticResource generic_Label}" />
+                                                    </CheckBox>
+                                                </StackPanel>
+                                            </Border>
+                                        </Popup>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
+                                        <Label Content="" Style="{StaticResource btn_Label}" />
+                                        <TextBlock Margin="5,0" VerticalAlignment="Center">
                                         <Hyperlink>
                                             <Run Text="{lex:Loc Document}" />
                                         </Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
-                                <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                                    <Label Content="" Style="{StaticResource btn_Label}" />
-                                    <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                                        <Label Content="" Style="{StaticResource btn_Label}" />
+                                        <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                 <Hyperlink PreviewMouseUp="btnpurchaseOrder_Click">
                                     <Run Text="{lex:Loc purchaseOrder}" />
                                 </Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
-                                <ItemsControl x:Name="purchaseOrderItemSource" ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}" Margin="0">
-                                    <!-- host the items generated by this ItemsControl in a grid -->
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <!-- render each bound item using a TextBlock-->
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <ItemsControl x:Name="purchaseOrderItemSource" ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}" Margin="0">
+                                        <!-- host the items generated by this ItemsControl in a grid -->
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <!-- render each bound item using a TextBlock-->
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
                                     <Hyperlink Tag="{Binding purchase_order_detail.purchase_order}">
                                         <Run  Text="{Binding purchase_order_detail.purchase_order.number}" />
                                     </Hyperlink>
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                                    <Label Content="" Style="{StaticResource btn_Label}"/>
-                                    <TextBlock Style="{StaticResource text_Data}">
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                                        <Label Content="" Style="{StaticResource btn_Label}"/>
+                                        <TextBlock Style="{StaticResource text_Data}">
 							    <Hyperlink PreviewMouseUp="btnImportInvoice_Click">
 								    <Run Text="{lex:Loc PurchaseInvoice}" />
 							    </Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
-                                <ItemsControl ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}" Margin="0">
-                                    <!-- host the items generated by this ItemsControl in a grid -->
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <!-- render each bound item using a TextBlock-->
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}"><Hyperlink Tag="{Binding purchase_invoice_detail.purchase_invoice}"><Run Text="{Binding purchase_invoice_detail.purchase_invoice.number}" /></Hyperlink></TextBlock>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="" Style="{StaticResource btn_Label}" />
-                                    <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailViewSource}}" Margin="0">
+                                        <!-- host the items generated by this ItemsControl in a grid -->
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <!-- render each bound item using a TextBlock-->
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}"><Hyperlink Tag="{Binding purchase_invoice_detail.purchase_invoice}"><Run Text="{Binding purchase_invoice_detail.purchase_invoice.number}" /></Hyperlink></TextBlock>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="" Style="{StaticResource btn_Label}" />
+                                        <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                 <Hyperlink PreviewMouseUp="btnPurchaseInvoice_Click">
                                     <Run Text="{lex:Loc PurchaseInvoice}" />
                                 </Hyperlink>
-                                    </TextBlock>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </Expander >
-                        <Expander Header="{lex:Loc QuickLook}" Background="{StaticResource AccentColor_Brush}" IsExpanded="True" BorderThickness="0">
-                            <StackPanel IsEnabled="{Binding ElementName=pagePackingList, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
-                                <StackPanel Margin="2,0,0,0" Orientation="Horizontal" VerticalAlignment="Center"
+                            </Syncfusion:SfAccordionItem>
+                            <Syncfusion:SfAccordionItem Header="{lex:Loc QuickLook}">
+                                <StackPanel Background="{StaticResource appConfig}" IsEnabled="{Binding ElementName=pagePackingList, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
+                                    <StackPanel Margin="2,0,0,0" Orientation="Horizontal" VerticalAlignment="Center"
                             Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=Telephone, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                                    <Label Content="P" Style="{StaticResource ico_Label}" />
-                                    <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Telephone}" />
-                                    <TextBlock x:Name="tbFieldValue" Text="NA" Style="{StaticResource text_Data}" />
-                                </StackPanel>
-                                <StackPanel Margin="2,0,0,0" VerticalAlignment="Center" Orientation="Horizontal"
+                                        <Label Content="P" Style="{StaticResource ico_Label}" />
+                                        <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Telephone}" />
+                                        <TextBlock x:Name="tbFieldValue" Text="NA" Style="{StaticResource text_Data}" />
+                                    </StackPanel>
+                                    <StackPanel Margin="2,0,0,0" VerticalAlignment="Center" Orientation="Horizontal"
                             Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=Branch, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                                    <Label Content="" Style="{StaticResource ico_Label}" />
-                                    <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}" />
-                                    <ComboBox x:Name="cbxBranch" DisplayMemberPath="name" SelectedValuePath="id_branch" Width="Auto" Margin="0"
+                                        <Label Content="" Style="{StaticResource ico_Label}" />
+                                        <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}" />
+                                        <ComboBox x:Name="cbxBranch" DisplayMemberPath="name" SelectedValuePath="id_branch" Width="Auto" Margin="0"
                                       Style="{StaticResource ComboToLabelStyle}" SelectionChanged="cbxBranch_SelectionChanged"
                               ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"
                               SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel>
-                                <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Label Content="" Style="{StaticResource ico_Label}" />
-                                    <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
-                                    <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
+                                    </StackPanel>
+                                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Label Content="" Style="{StaticResource ico_Label}" />
+                                        <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
+                                        <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
                               Name="cbxPackingType"
                               SelectedValue="{Binding packing_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                       ValidatesOnExceptions=True, NotifyOnValidationError=True,
                                                       ValidatesOnDataErrors=True}" />
-                                </StackPanel>
-                                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                                <TextBox Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"
+                                    </StackPanel>
+                                    <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
+                                    <TextBox Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap" Margin="4,0" Height="64" />
-                                <StackPanel Margin="2,0,0,0" VerticalAlignment="Center" Orientation="Horizontal" Visibility="Collapsed">
-                                    <TextBlock Text="{lex:Loc Terminal}" Style="{StaticResource text_Label}" />
-                                    <ComboBox DisplayMemberPath="name" SelectedValuePath="id_terminal" Width="Auto" Margin="0"
+                                    <StackPanel Margin="2,0,0,0" VerticalAlignment="Center" Orientation="Horizontal" Visibility="Collapsed">
+                                        <TextBlock Text="{lex:Loc Terminal}" Style="{StaticResource text_Label}" />
+                                        <ComboBox DisplayMemberPath="name" SelectedValuePath="id_terminal" Width="Auto" Margin="0"
                               Style="{StaticResource ComboToLabelStyle}"
                               ItemsSource="{Binding Source={StaticResource app_terminalViewSource}}"
                               SelectedValue="{Binding id_terminal, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
-                                    <TextBlock Text="{lex:Loc driver}" Style="{StaticResource text_Label}" />
-                                    <TextBox Style="{StaticResource input_textbox}"
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                                        <TextBlock Text="{lex:Loc driver}" Style="{StaticResource text_Label}" />
+                                        <TextBox Style="{StaticResource input_textbox}"
                     Text="{Binding driver, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Width="126" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
-                                    <TextBlock Text="{lex:Loc licence}" Style="{StaticResource text_Label}" />
-                                    <TextBox Style="{StaticResource input_textbox}"
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                                        <TextBlock Text="{lex:Loc licence}" Style="{StaticResource text_Label}" />
+                                        <TextBox Style="{StaticResource input_textbox}"
                     Text="{Binding licence_no, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Width="118" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
-                                    <TextBlock Text="{lex:Loc Distance}" Style="{StaticResource text_Label}" />
-                                    <TextBox Style="{StaticResource input_textbox}"
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                                        <TextBlock Text="{lex:Loc Distance}" Style="{StaticResource text_Label}" />
+                                        <TextBox Style="{StaticResource input_textbox}"
                     Text="{Binding avg_distance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" Width="108" />
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </Expander>
+                            </Syncfusion:SfAccordionItem>
+                        </Syncfusion:SfAccordion>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

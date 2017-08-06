@@ -25,8 +25,6 @@ namespace Cognitivo.Purchase
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //entity.Properties.Settings _setting = new entity.Properties.Settings();
-
             purchase_packingViewSource = FindResource("purchase_packingViewSource") as CollectionViewSource;
             await PurchasePackingListDB.purchase_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).Take(100).Skip(PageIndex).LoadAsync(); //.Include("purchase_packing_detail").LoadAsync();
             purchase_packingViewSource.Source = PurchasePackingListDB.purchase_packing.Local;

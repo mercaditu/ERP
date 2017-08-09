@@ -254,7 +254,7 @@ namespace Cognitivo.Purchase
                     Impex_ProductsLIST.Add(ImpexImportProductDetails);
                 }
 
-                foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail.Where(x => x.item != null && x.item.item_product != null))
+                foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail.Where(x => x.item != null && x.item.item_product.Count()>0))
                 {
                     int id_item = (int)_purchase_invoice_detail.id_item;
 
@@ -264,6 +264,7 @@ namespace Cognitivo.Purchase
                         {
                             id_item = (int)_purchase_invoice_detail.id_item,
                             item = ImpexDB.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().name
+                            
                         };
 
                         Impex_ProductsLIST.Add(ImpexImportProductDetails);
@@ -275,6 +276,7 @@ namespace Cognitivo.Purchase
                         id_item = (int)_purchase_invoice_detail.id_item,
                         item_code = ImpexDB.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().code,
                         item = ImpexDB.items.Where(a => a.id_item == _purchase_invoice_detail.id_item).FirstOrDefault().name,
+                     
                         quantity = _purchase_invoice_detail.quantity,
                         unit_cost = _purchase_invoice_detail.unit_cost,
                         sub_total = _purchase_invoice_detail.SubTotal,

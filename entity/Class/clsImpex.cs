@@ -20,6 +20,7 @@ namespace entity.Class
         private decimal _sub_total = 0;
         public decimal prorated_cost { get { return _prorated_cost; } set { _prorated_cost = value; RaisePropertyChanged("prorated_cost"); } }
         private decimal _prorated_cost;
+        public bool is_product { get; set; }
         public string incoterm { get; set; }
         public decimal fx_rate { get; set; }
         public decimal unit_costfx { get; set; }
@@ -42,6 +43,8 @@ namespace entity.Class
 
     public class Impex_Products
     {
+     
+
         public int? id_item { get; set; }
         public string item { get; set; }
     }

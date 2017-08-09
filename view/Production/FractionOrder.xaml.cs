@@ -118,9 +118,9 @@ namespace Cognitivo.Production
             //projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
             //projectViewSource.Source = ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
-            OrderDB.Load(production_order.ProductionOrderTypes.Fraction);
-            ExecutionDB.Load(production_order.ProductionOrderTypes.Fraction);
-          production_lineViewSource = FindResource("production_lineViewSource") as CollectionViewSource;
+            OrderDB.Load(production_order.ProductionOrderTypes.Fraction, dataPager.PagedSource.PageIndex);
+            ExecutionDB.Load(production_order.ProductionOrderTypes.Fraction,0);
+            production_lineViewSource = FindResource("production_lineViewSource") as CollectionViewSource;
             production_lineViewSource.Source = OrderDB.db.production_line.Local;
 
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
@@ -493,7 +493,7 @@ namespace Cognitivo.Production
 
                 if (OrderDB.db.SaveChanges() > 0)
                 {
-                   
+
                     toolBar.msgSaved(1);
                 }
 
@@ -508,7 +508,7 @@ namespace Cognitivo.Production
 
                     RefreshData();
                     RefreshTree();
-                   
+
                 }
                 catch { }
             }
@@ -897,6 +897,33 @@ namespace Cognitivo.Production
             treeAsset.UpdateLayout();
             treeService.UpdateLayout();
             treeProduct.UpdateLayout();
+        }
+
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            OrderDB.Load(production_order.ProductionOrderTypes.Fraction, dataPager.PagedSource.PageIndex);
+        }
+
+        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+
+            if (string.IsNullOrEmpty(query))
+            {
+                OrderDB.Load(production_order.ProductionOrderTypes.Fraction, dataPager.PagedSource.PageIndex);
+                //Brings data into view.
+                Search_Click(sender, query);
+            }
+            else
+            {
+                production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
+                production_orderViewSource.Source = OrderDB.db.production_order
+                    .Where
+                    (
+                    x =>
+                    x.name.Contains(query) &&
+                    x.type == production_order.ProductionOrderTypes.Fraction
+                    ).ToListAsync();
+            }
         }
 
         private void btnInsert_Click(object sender, EventArgs e)
@@ -1297,7 +1324,7 @@ namespace Cognitivo.Production
         {
             if (production_orderDataGrid.SelectedItem is production_order production_order)
             {
-                foreach (production_order_detail production_order_detail in production_order.production_order_detail.Where(x =>x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
+                foreach (production_order_detail production_order_detail in production_order.production_order_detail.Where(x => x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
                 {
 
                     foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.status == null || x.status < Status.Production.Approved))

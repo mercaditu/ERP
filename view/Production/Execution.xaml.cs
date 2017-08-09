@@ -69,7 +69,7 @@ namespace Cognitivo.Production
 
         private void Load()
         {
-            ExecutionDB.Load(production_order.ProductionOrderTypes.Production);
+            ExecutionDB.Load(production_order.ProductionOrderTypes.Production,dataPager.PagedSource.PageIndex);
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
 
             production_orderViewSource.Source = ExecutionDB.db.production_order.Local.Where(x => x.is_archived == false);
@@ -660,7 +660,30 @@ namespace Cognitivo.Production
             }
         }
 
-     
+        private void SearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                ExecutionDB.Load(production_order.ProductionOrderTypes.Fraction, dataPager.PagedSource.PageIndex);
+                //Brings data into view.
+                toolBar_btnSearch_Click(sender, query);
+            }
+            else
+            {
+                production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
+                production_orderViewSource.Source = ExecutionDB.db.production_order
+                    .Where
+                    (
+                    x =>
+                    x.name.Contains(query) 
+                    ).ToListAsync();
+            }
+        }
+
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Load();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -316,7 +316,7 @@ namespace Cognitivo.Purchase
                                    // id_purchase_invoice_detail = PackingRelation.id_purchase_invoice_detail,
                                     purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
                                     id_purchase_packing_detail = PackingRelation.id_purchase_packing_detail,
-                                    purchase_packing_detail = PackingRelation.purchase_packing_detail
+                                   // purchase_packing_detail = PackingRelation.purchase_packing_detail
                                 };
                                 purchase_packing_detail.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
 
@@ -349,7 +349,7 @@ namespace Cognitivo.Purchase
                             ItemName = x.Max(y => y.item.name),
                             ItemCode = x.Max(y => y.item.code),
                             VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.verified_by != null && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                            Quantity = x.Max(y => y.quantity),
+                            Quantity = x.Sum(y => y.quantity),
                             id_item = x.Max(y => y.id_item)
                         })
                         .ToList();

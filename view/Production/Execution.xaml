@@ -66,7 +66,7 @@
 			  Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="5" />
         <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
 			  Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="5" IsVisibleChanged="crud_modalExpire_IsVisibleChanged" />
-        <ListBox x:Name="projectDataGrid"
+        <ListBox x:Name="projectDataGrid" Margin="0,0,0,30"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" SelectionChanged="projectDataGrid_SelectionChanged"
@@ -82,6 +82,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
         <TextBox Grid.Column="1" Margin="23,23,0,0" Grid.Row="1" Width="120" Text="TextBox"
 			HorizontalAlignment="Left" VerticalAlignment="Top" />
         <TextBox Grid.Column="1" Margin="23,54,0,0" Grid.Row="1" Text="TextBox" Width="120"
@@ -522,6 +524,7 @@
 					   btnCancel_Click="toolBar_btnCancel_Click"
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   btnSearch_Click="toolBar_btnSearch_Click"
+                          btnSearchInSource_Click="SearchInSource_Click"
 					   btnSave_Click="toolBar_btnSave_Click"
                        btnSync_Click="Page_Loaded"
                        btnDelete_Click="toolBar_btnDelete_Click"

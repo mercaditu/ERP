@@ -8,8 +8,19 @@ namespace entity.Controller.Product
 {
     public class RequestController:Base
     {
-      
-        public async void Load()
+        public int Count { get; set; }
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 100;
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
+
+        public async void Load(int PageIndex)
         {
             await db.item_request
                     .Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false)
@@ -18,6 +29,7 @@ namespace entity.Controller.Product
                     .Include(x => x.project)
                     .Include(x => x.security_user)
                     .OrderByDescending(x => x.request_date)
+                    .Skip(PageIndex * PageSize).Take(PageSize)
                     .LoadAsync();
 
             await db.items.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();

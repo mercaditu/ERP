@@ -391,7 +391,7 @@ namespace entity
         public int? id_sales_promotion { get; set; }
 
         [NotMapped]
-        public string DecimalStringFormat { get; set; }
+        public string QuantityDecimalStringFormat { get; set; }
 
         #region "Foreign Key"
 

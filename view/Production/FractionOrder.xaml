@@ -12,8 +12,8 @@
 	  xmlns:data="clr-namespace:entity;assembly=entity"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
-	  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-	  xmlns:cntrlConverter="clr-namespace:cntrl.Converters;assembly=cntrl"
+	  xmlns:sys="clr-namespace:System;assembly=mscorlib"  
+      xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		 xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
 		  xmlns:customcmd="clr-namespace:Cognitivo.Class"
@@ -93,7 +93,7 @@
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}"
 			  Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged" />
 
-        <ListBox x:Name="production_orderDataGrid"
+        <ListBox x:Name="production_orderDataGrid" Margin="0,0,0,30"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -109,7 +109,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
         <Grid Grid.Column="1" Grid.Row="1" Margin="0" IsEnabled="{Binding State}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="6*" />
@@ -762,6 +763,7 @@
 					   btnApprove_Click="Approve_Click"
 					   btnAnull_Click="Anull_Click"
 					   btnSearch_Click="Search_Click"
+                         btnSearchInSource_Click="SearchInSource_Click"
 					   appName="ProductionbyFraction"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					  Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

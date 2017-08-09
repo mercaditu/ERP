@@ -61,7 +61,7 @@ namespace Cognitivo.Product
             CollectionViewSource security_userViewSource = FindResource("security_userViewSource") as CollectionViewSource;
             item_requestViewSource = FindResource("item_requestViewSource") as CollectionViewSource;
 
-            RequestController.Load();
+            RequestController.Load(dataPager.PagedSource.PageIndex);
 
             item_requestViewSource.Source = RequestController.db.item_request.Local.Where(x => x.is_archived == false);
             app_departmentViewSource.Source = RequestController.db.app_department.Local;
@@ -604,6 +604,39 @@ namespace Cognitivo.Product
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
             item_request_detailitem_request_decisionViewSource.View.Refresh();
             Edit_Click(sender);
+        }
+
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            RequestController.Load(dataPager.PagedSource.PageIndex);
+        }
+
+        private void toolBar_btnSearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                RequestController.Load(dataPager.PagedSource.PageIndex);
+                //Brings data into view.
+                Search_Click(sender, query);
+            }
+            else
+            {
+                item_requestViewSource = FindResource("item_requestViewSource") as CollectionViewSource;
+                item_requestViewSource.Source = RequestController.db.item_request
+                    .Where
+                    ( x=>
+                    x.name.ToLower().Contains(query.ToLower()) ||
+                             x.number.ToLower().Contains(query.ToLower()) ||
+                             x.project.name.ToLower().Contains(query.ToLower())
+                    ).ToList();
+            }
+        }
+
+     
+
+        private void GenerateaMovement_Click(object sender, RoutedEventArgs e)
+        {
+            item_request_detailMovementDataGrid_SelectionChanged(sender, null);
         }
 
         private void RowDetail_Checked(object sender, RoutedEventArgs e)

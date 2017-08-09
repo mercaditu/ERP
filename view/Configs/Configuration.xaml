@@ -24,11 +24,19 @@
             <Label Content="{lex:Loc Configuration}" Style="{StaticResource H1}" HorizontalAlignment="Center" />
             <Rectangle Style="{StaticResource line_Bar}" />
 
-            <Label Content="{lex:Loc Decimal}" Style="{StaticResource H3}" />
+            <Label Content="{lex:Loc QuantityDecimal}" Style="{StaticResource H3}" />
             <Slider Minimum="0" Maximum="9" TickFrequency="1" TickPlacement="Both" IsSnapToTickEnabled="True"
                                                         Value="{Binding Source={x:Static
                                                     mainpref:Settings.Default}, 
-                                                    Path=DecimalStringFormat,
+                                                    Path=QuantityDecimalStringFormat,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DecimalFormat}
+                                                    }"/>
+            <Label Content="{lex:Loc CurrencyDecimal}" Style="{StaticResource H3}" />
+            <Slider Minimum="0" Maximum="9" TickFrequency="1" TickPlacement="Both" IsSnapToTickEnabled="True"
+                                                        Value="{Binding Source={x:Static
+                                                    mainpref:Settings.Default}, 
+                                                    Path=CurrencyDecimalStringFormat,
                                                     Mode=TwoWay,
                                                     UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DecimalFormat}
                                                     }"/>

@@ -12,6 +12,7 @@
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
+         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:Controller="clr-namespace:entity.Controller.Production;assembly=entity"
 	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -46,7 +47,7 @@
 
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
 
-        <ListBox x:Name="production_orderDataGrid"
+        <ListBox x:Name="production_orderDataGrid" Margin="0,0,0,30"
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -62,6 +63,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
 
         <Grid Grid.Column="1" Grid.Row="1" Margin="0" IsEnabled="{Binding State}">
             <Grid.RowDefinitions>
@@ -416,6 +419,7 @@
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   btnAnull_Click="toolBar_btnAnull_Click"
 					   btnSearch_Click="toolBar_btnSearch_Click"
+                        btnSearchInSource_Click="SearchInSource_Click"
                        btnSync_Click="Page_Loaded"
 					   appName="ProductionOrder"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

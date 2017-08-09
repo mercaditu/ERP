@@ -184,12 +184,12 @@ namespace Cognitivo.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("N2")]
-        public string DecimalStringFormat {
+        public string QuantityDecimalStringFormat {
             get {
-                return ((string)(this["DecimalStringFormat"]));
+                return ((string)(this["QuantityDecimalStringFormat"]));
             }
             set {
-                this["DecimalStringFormat"] = value;
+                this["QuantityDecimalStringFormat"] = value;
             }
         }
         
@@ -202,6 +202,18 @@ namespace Cognitivo.Properties {
             }
             set {
                 this["DefaultCustomer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("N2")]
+        public string CurrencyDecimalStringFormat {
+            get {
+                return ((string)(this["CurrencyDecimalStringFormat"]));
+            }
+            set {
+                this["CurrencyDecimalStringFormat"] = value;
             }
         }
     }

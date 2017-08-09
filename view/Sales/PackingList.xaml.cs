@@ -419,7 +419,7 @@ namespace Cognitivo.Sales
                         ItemName = x.Max(y => y.item.name),
                         ItemCode = x.Max(y => y.item.code),
                         VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                        Quantity = x.Max(y => y.quantity),
+                        Quantity = x.Sum(y => y.quantity),
                         id_item = x.Max(y => y.id_item)
                     })
                     .ToList();

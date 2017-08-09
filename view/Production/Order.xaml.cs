@@ -184,10 +184,16 @@ namespace Cognitivo.Production
 
         private  void Load()
         {
-              OrderDB.Load(production_order.ProductionOrderTypes.Production);
+              OrderDB.Load(production_order.ProductionOrderTypes.Production, dataPager.PagedSource.PageIndex);
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
          
             production_orderViewSource.Source = OrderDB.db.production_order.Local.Where(x => x.is_archived == false);
+
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = OrderDB.PageCount;
+            }
         }
 
         public void filter_task()
@@ -646,7 +652,7 @@ namespace Cognitivo.Production
                     }
                 }
                 OrderDB.Initialize();
-                OrderDB.Load(production_order.ProductionOrderTypes.Production);
+                OrderDB.Load(production_order.ProductionOrderTypes.Production,dataPager.PagedSource.PageIndex);
                 OrderDB.db.production_order.Where(a =>
                         a.id_company == CurrentSession.Id_Company &&
                         a.type != production_order.ProductionOrderTypes.Fraction &&
@@ -834,6 +840,32 @@ namespace Cognitivo.Production
             {
                 filter_task();
                 toolBar.msgSaved(OrderDB.NumberOfRecords);
+            }
+        }
+
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Load();
+        }
+
+        private void SearchInSource_Click(object sender, System.Windows.Input.KeyEventArgs e, string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                Load();
+                //Brings data into view.
+                toolBar_btnSearch_Click(sender, query);
+            }
+            else
+            {
+                production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
+                production_orderViewSource.Source = OrderDB.db.production_order
+                    .Where
+                    (
+                    x =>
+                    x.name.Contains(query) &&
+                    x.type==production_order.ProductionOrderTypes.Production
+                    ).ToListAsync();
             }
         }
 

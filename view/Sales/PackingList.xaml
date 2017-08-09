@@ -253,7 +253,7 @@
                                         <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                             <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
-                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>

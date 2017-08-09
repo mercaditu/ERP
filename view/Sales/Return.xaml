@@ -310,7 +310,7 @@
                                         <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                             <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
-                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
@@ -320,7 +320,7 @@
                                         <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                             <Binding Path="unit_price" TargetNullValue="" Mode="TwoWay" />
-                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
@@ -330,7 +330,7 @@
                                         <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                             <Binding Path="UnitPrice_Vat" TargetNullValue="" Mode="TwoWay" />
-                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
@@ -341,7 +341,7 @@
                                         <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                             <Binding Path="SubTotal" TargetNullValue="" Mode="TwoWay" />
-                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
@@ -352,7 +352,7 @@
                                         <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                             <Binding Path="SubTotal_Vat" TargetNullValue="" Mode="TwoWay" />
-                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
@@ -363,7 +363,7 @@
                                         <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                             <Binding Path="Total_Vat" TargetNullValue="" Mode="TwoWay" />
-                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="DecimalStringFormat" Mode="OneWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>

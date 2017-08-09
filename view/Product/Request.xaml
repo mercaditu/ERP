@@ -10,6 +10,7 @@
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
           xmlns:lex="http://wpflocalizeextension.codeplex.com"
           lex:LocalizeDictionary.DesignCulture="en-US"
           lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -54,7 +55,7 @@
         </Grid.RowDefinitions>
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}"
               Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
-        <ListBox x:Name="item_requestDataGrid"
+        <ListBox x:Name="item_requestDataGrid" Margin="0,0,0,30"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -69,6 +70,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
         <Grid Grid.Row="1" Grid.Column="1" Background="white">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
@@ -216,8 +219,9 @@
                             <ColumnDefinition Width="3*" />
                         </Grid.ColumnDefinitions>
                         <Grid IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
-                            <Label Content="{lex:Loc RequestResource}" Style="{StaticResource H2}" VerticalAlignment="Top" />
-                            <DataGrid SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged" Margin="0,44,0,0"
+                            <Label Content="{lex:Loc RequestResource}" Style="{StaticResource H2}" VerticalAlignment="Top" Margin="0,20,0,0" />
+                            <Button Content="Genrate Movement" VerticalAlignment="Top" Click="GenerateaMovement_Click"/>
+                            <DataGrid  Margin="0,70,0,0"
                                       AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                       ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
                                       RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
@@ -362,6 +366,7 @@
                        btnSave_Click="Save_Click"
                        btnDelete_Click="Delete_Click"
                        btnSearch_Click="Search_Click"
+                       btnSearchInSource_Click="toolBar_btnSearchInSource_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="RequestResource"
                                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

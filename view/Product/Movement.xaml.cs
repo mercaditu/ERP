@@ -149,7 +149,7 @@ namespace Cognitivo.Product
 
             if (ProductTransferDB.app_branch.Local.Count() > 0)
             {
-                toolBar.msgWarning("Your current branch (" + CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().name + "), is not authorized. ")
+                toolBar.msgWarning("Your current branch (" + CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().name + "), is not authorized. ");
             }
 
             CollectionViewSource location_originViewSource = FindResource("location_originViewSource") as CollectionViewSource;

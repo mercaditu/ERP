@@ -278,7 +278,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                    <syncfusion:SfMaskedEdit x:Name="dtpenddate" Text="{Binding ElementName=dtpscstartdate, Path=Text, Mode=OneWay}" MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                    <syncfusion:SfMaskedEdit x:Name="dtpenddate" MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
                                     <syncfusion:SfMaskedEdit x:Name="dtpendtime" MaskType="Simple" Mask="00:00:00" Watermark="hh:mm:ss"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
                                     <!--<toolkit:DateTimeUpDown x:Name="dtpenddate" Width="220" Format="FullDateTime" />-->
                                     <!--<syncfusion:SfDatePicker x:Name="dtpenddate" Width="220" />-->
@@ -383,7 +383,7 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                        <syncfusion:SfMaskedEdit x:Name="dtpscenddate" Text="{Binding ElementName=dtpscstartdate, Path=Text, Mode=OneWay}" MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/aaaa" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                        <syncfusion:SfMaskedEdit x:Name="dtpscenddate"  MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/aaaa" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
                                         <syncfusion:SfMaskedEdit x:Name="dtpscendtime" MaskType="Simple" Mask="00:00:00" Watermark="hh:mm:ss" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
                                     </StackPanel>
 

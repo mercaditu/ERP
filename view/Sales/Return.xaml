@@ -118,59 +118,6 @@
                         <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}" />
                         <Controls:CurrencyBox x:Name="cbxCurrency" Width="256" HorizontalAlignment="Left" appName="SalesReturn"
 											  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus" />
-                        <!--<Label Content="{lex:Loc Discount}" Style="{StaticResource input_label}" />
-						<TextBox Style="{StaticResource input_textbox}" Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
-                        <!--<Controls:CurrencyBox x:Name="cbxCurrencyfx"  ItemsSource="{StaticResource app_currencyfxViewSource}"  SelectedItem="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
-                        <!--<ComboBox Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
-							  DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
-							  SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
-                        <!--<Grid>
-							<Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-								<Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="CreateNewCondition_PreviewMouseUp"
-								   Style="{StaticResource btn_Label}" />
-								<Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditCondition_PreviewMouseUp"
-								   Style="{StaticResource btn_Label}" />
-							</StackPanel>
-						</Grid>-->
-                        <!--<ComboBox  Style="{DynamicResource input_combobox}"
-					x:Name="cbxCondition"
-					DisplayMemberPath="name" SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-					SelectedValuePath="id_condition"
-					 SelectionChanged="cbxCondition_SelectionChanged">
-							<ComboBox.ItemsPanel>
-								<ItemsPanelTemplate>
-									<VirtualizingStackPanel />
-								</ItemsPanelTemplate>
-							</ComboBox.ItemsPanel>
-						</ComboBox>
-						<Grid>
-							<Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-								<Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddContract_PreviewMouseUp"
-								   Style="{StaticResource btn_Label}" />
-								<Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditContract_PreviewMouseUp"
-								   Style="{StaticResource btn_Label}" />
-							</StackPanel>
-						</Grid>
-						<ComboBox Style="{DynamicResource input_combobox}"
-								DisplayMemberPath="name" x:Name="cbxContract"
-								SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-								SelectedValuePath="id_contract">
-							<ComboBox.ItemsPanel>
-								<ItemsPanelTemplate>
-									<VirtualizingStackPanel />
-								</ItemsPanelTemplate>
-							</ComboBox.ItemsPanel>
-						</ComboBox>-->
-                        <!--<Label Content="{lex:Loc Invoice}" Style="{StaticResource input_label}" />
-						<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-							<ComboBox x:Name="cbxSalesInvoice" Style="{StaticResource input_combobox}"
-									  ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}"
-							  DisplayMemberPath="sales_invoice.number" SelectedValuePath="id_sales_invoice"
-							  SelectedValue="{Binding id_sales_invoice, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-							<Button Content="{lex:Loc Import}" Click="ButtonImport_Click" Width="80" Height="20" />
-						</StackPanel>-->
                     </StackPanel>
                 </ScrollViewer>
 

@@ -51,7 +51,7 @@
 				 ScrollViewer.VerticalScrollBarVisibility="Auto"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-				 ItemsSource="{Binding}" Grid.Row="1">
+				 ItemsSource="{Binding}" Grid.Row="1" Margin="0,0,0,35">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding trans_date, StringFormat=d}"
@@ -63,8 +63,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
-                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
+        <syncfusion:SfDataPager x:Name="dataPager" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                Background="{StaticResource AccentColor_Brush}" Foreground="White" UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
         <Grid Grid.Column="1" Grid.Row="1" Background="White" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="400" />

@@ -55,7 +55,7 @@
         </Grid.RowDefinitions>
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}"
               Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" />
-        <ListBox x:Name="item_requestDataGrid" Margin="0,0,0,30"
+        <ListBox x:Name="item_requestDataGrid" Margin="0,0,0,35"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -70,8 +70,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
-                                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
+        <syncfusion:SfDataPager x:Name="dataPager" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5" Background="{StaticResource AccentColor_Brush}" Foreground="White"
+                                UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
         <Grid Grid.Row="1" Grid.Column="1" Background="white">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />

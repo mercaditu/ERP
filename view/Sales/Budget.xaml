@@ -31,12 +31,6 @@
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <CollectionViewSource x:Key="sales_budgetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget},CreateList=True}" />
-        <!--<CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
-        <CollectionViewSource x:Key="conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}" />
-        <CollectionViewSource x:Key="contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}" />
-        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}" />
-        <CollectionViewSource x:Key="currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_budgetViewSource}}" />-->
-
         <CollectionViewSource x:Key="sales_budgetsales_budget_detailViewSource" Source="{Binding sales_budget_detail, Source={StaticResource sales_budgetViewSource}}" />
         <CollectionViewSource x:Key="app_document_rangeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_document_range}, CreateList=True}" />
     </Page.Resources>

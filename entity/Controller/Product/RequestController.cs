@@ -306,20 +306,21 @@ namespace entity.Controller.Product
 
                 ///PURCHASE
                 if (DecisionList
-                    .Where(x => x.decision == entity.item_request_decision.Decisions.Purchase).Any())
+                    .Where(x => x.decision == item_request_decision.Decisions.Purchase).Any())
                 {
-                    purchase_tender purchase_tender = new purchase_tender();
-                    purchase_tender.status = Status.Documents_General.Pending;
-                    purchase_tender.id_department = item_request.id_department;
-
-                    purchase_tender.name = item_request.name;
-                    purchase_tender.code = 000;
-                    purchase_tender.trans_date = item_request.request_date;
-                    purchase_tender.comment = item_request.comment;
+                    purchase_tender purchase_tender = new purchase_tender()
+                    {
+                        status = Status.Documents_General.Pending,
+                        id_department = item_request.id_department,
+                        name = item_request.name,
+                        code = 000,
+                        trans_date = item_request.request_date,
+                        comment = item_request.comment
+                    };
 
                     foreach (item_request_decision decision in DecisionList
                         .Where(x =>
-                        x.decision == entity.item_request_decision.Decisions.Purchase))
+                        x.decision == item_request_decision.Decisions.Purchase))
                     {
                         if (dest_location != null)
                         {
@@ -331,17 +332,22 @@ namespace entity.Controller.Product
                             purchase_tender.id_project = project.id_project;
                         }
 
-                        purchase_tender_item purchase_tender_item = new purchase_tender_item();
-                        purchase_tender_item.id_item = decision.item_request_detail.id_item;
-                        purchase_tender_item.item_description = decision.item_request_detail.comment;
-                        purchase_tender_item.quantity = decision.quantity;
+                        purchase_tender_item purchase_tender_item = new purchase_tender_item()
+                        {
+                            id_item = decision.item_request_detail.id_item,
+                            item_description = decision.item_request_detail.comment,
+                            quantity = decision.quantity
+                        };
 
                         foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
                         {
-                            purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
-                            purchase_tender_dimension.id_dimension = item_request_dimension.id_dimension;
-                            purchase_tender_dimension.id_measurement = item_request_dimension.id_measurement;
-                            purchase_tender_dimension.value = item_request_dimension.value;
+                            purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension()
+                            {
+                                id_dimension = item_request_dimension.id_dimension,
+                                id_measurement = item_request_dimension.id_measurement,
+                                value = item_request_dimension.value
+                            };
+
                             purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
                         }
 

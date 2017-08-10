@@ -141,8 +141,16 @@ namespace Cognitivo.Product
             app_measurementViewSource.Source = ProductTransferDB.app_measurement.Local;
 
             CollectionViewSource branchViewSource = FindResource("branchViewSource") as CollectionViewSource;
-            await ProductTransferDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
+            await ProductTransferDB.app_branch
+                .Where(b => b.can_stock == true && b.is_active == true && b.id_company == CurrentSession.Id_Company && b.id_branch == CurrentSession.Id_Branch)
+                .Include(x => x.app_location)
+                .OrderBy(b => b.name).ToListAsync();
             branchViewSource.Source = ProductTransferDB.app_branch.Local; //ProductTransferDB.app_branch.Local;
+
+            CollectionViewSource location_originViewSource = FindResource("location_originViewSource") as CollectionViewSource;
+            CollectionViewSource location_destViewSource = FindResource("location_destViewSource") as CollectionViewSource;
+            location_originViewSource.Source = ProductTransferDB.app_location.Local;
+            location_destViewSource.Source = ProductTransferDB.app_location.Local;
 
             cbxBranch_SelectionChanged(sender, null);
         }
@@ -156,7 +164,13 @@ namespace Cognitivo.Product
                 {
                     app_location app_location = ProductTransferDB.app_location.Where(x => x.is_default && x.id_branch == item_transfer.id_branch).FirstOrDefault();
                     CollectionViewSource location_originViewSource = FindResource("location_originViewSource") as CollectionViewSource;
-                    location_originViewSource.View.MoveCurrentTo(app_location);
+                    if (location_originViewSource != null)
+                    {
+                        if (location_originViewSource.View != null)
+                        {
+                            location_originViewSource.View.MoveCurrentTo(app_location);
+                        }
+                    }
                 }
             }
         }

@@ -69,7 +69,7 @@ namespace Cognitivo.Product
             }
             else
             {
-                toolBar.msgWarning("Please Select an Item");
+                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
             }
         }
 
@@ -89,7 +89,9 @@ namespace Cognitivo.Product
 
             item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(this.FindResource("item_transferitem_transfer_detailViewSource")));
 
-            await ProductTransferDB.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.app_location.Count > 0).OrderBy(a => a.name).LoadAsync();
+            await ProductTransferDB.app_branch
+                .Where(a => a.is_active && a.can_stock && a.id_company == CurrentSession.Id_Company && a.app_location.Count > 0)
+                .OrderBy(a => a.name).LoadAsync();
 
             CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
             branch_originViewSource.Source = ProductTransferDB.app_branch.Local;

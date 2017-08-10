@@ -172,12 +172,6 @@
                         <!-- Product -->
                         <StackPanel Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailViewSource}">
                             <Label Content="{lex:Loc Product}" Style="{StaticResource H2}" />
-                            <!--<StackPanel DataContext="{Binding SelectedItem, ElementName=treeOrder}">
-								<TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Center"
-										   Text="{Binding parent.name}" TextTrimming="CharacterEllipsis" />
-								<TextBlock Text="{Binding name, Mode=OneWay}" TextTrimming="CharacterEllipsis"
-										   Style="{StaticResource text_H3}" HorizontalAlignment="Center" />
-							</StackPanel>-->
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="4"
 										IsEnabled="{Binding SelectedItem, ElementName=treeOrder, Converter={StaticResource Type2Enable}}">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
@@ -185,8 +179,7 @@
                                 <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click" />
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False"
-									  ItemsSource="{Binding}"
-									>
+									  ItemsSource="{Binding}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
 														Binding="{Binding trans_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" Width="60" />
@@ -277,16 +270,16 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
                                     <!--<toolkit:DateTimeUpDown x:Name="dtpstartdate" Width="220" Format="FullDateTime" />-->
-                                    <syncfusion:SfMaskedEdit x:Name="dtpstartdate" MaskType="Simple" Mask="00/00/0000"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
-                                    <syncfusion:SfMaskedEdit x:Name="dtpstarttime" MaskType="Simple" Mask="00:00:00"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
+                                    <syncfusion:SfMaskedEdit x:Name="dtpstartdate" MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                    <syncfusion:SfMaskedEdit x:Name="dtpstarttime" MaskType="Simple" Mask="00:00:00" Watermark="hh:mm:ss" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
                                     <!--<syncfusion:SfDatePicker x:Name="dtpstartdate" Width="220" />-->
                                     <!--<DatePicker   Width="150" Height="27" />-->
                                     <!--<syncfusion:SfTimePicker  x:Name="dtpstarttime" Width="85"  FormatString="HH:mm" SelectorFormatString="HH:mm" />-->
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                    <syncfusion:SfMaskedEdit x:Name="dtpenddate" MaskType="Simple" Mask="00/00/0000"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
-                                    <syncfusion:SfMaskedEdit x:Name="dtpendtime" MaskType="Simple" Mask="00:00:00"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
+                                    <syncfusion:SfMaskedEdit x:Name="dtpenddate" MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                    <syncfusion:SfMaskedEdit x:Name="dtpendtime" MaskType="Simple" Mask="00:00:00" Watermark="hh:mm:ss"  HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
                                     <!--<toolkit:DateTimeUpDown x:Name="dtpenddate" Width="220" Format="FullDateTime" />-->
                                     <!--<syncfusion:SfDatePicker x:Name="dtpenddate" Width="220" />-->
                                     <!--<DatePicker x:Name="dtpenddate"  Width="150" Height="27" />

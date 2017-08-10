@@ -147,6 +147,11 @@ namespace Cognitivo.Product
                 .OrderBy(b => b.name).ToListAsync();
             branchViewSource.Source = ProductTransferDB.app_branch.Local; //ProductTransferDB.app_branch.Local;
 
+            if (ProductTransferDB.app_branch.Local.Count() > 0)
+            {
+                toolBar.msgWarning("Your current branch (" + CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().name + "), is not authorized. ")
+            }
+
             CollectionViewSource location_originViewSource = FindResource("location_originViewSource") as CollectionViewSource;
             CollectionViewSource location_destViewSource = FindResource("location_destViewSource") as CollectionViewSource;
             location_originViewSource.Source = ProductTransferDB.app_location.Local;

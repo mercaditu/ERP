@@ -182,7 +182,11 @@ namespace entity.Controller.Purchase
                         if (purchase_order.number == null && purchase_order.id_range != null)
                         {
                             Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == purchase_order.id_branch).FirstOrDefault().code;
-                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == purchase_order.id_terminal).FirstOrDefault().code;
+
+                            if (purchase_order.id_terminal != null)
+                            {
+                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == purchase_order.id_terminal).FirstOrDefault().code;
+                            }
 
                             app_document_range app_document_range = db.app_document_range.Find(purchase_order.id_range);
                             purchase_order.number = Brillo.Logic.Range.calc_Range(app_document_range, true);

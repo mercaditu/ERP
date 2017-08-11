@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using Humanizer;
-using System.Windows;
-using System.Globalization;
 
 namespace entity.Brillo.Document
 {
@@ -314,7 +312,7 @@ namespace entity.Brillo.Document
                 consignee_gov_code = g.sales_invoice != null ? g.sales_invoice.contact.child.FirstOrDefault() != null ? g.sales_invoice.contact.child.FirstOrDefault().gov_code : "" : "",
                 project_name = g.sales_invoice != null ? g.sales_invoice.project != null ? g.sales_invoice.project.name : "" : "",
                 sales_invoice_rep_name = g.sales_invoice != null ? g.sales_invoice.sales_rep != null ? g.sales_invoice.sales_rep.name : "" : "",
-                trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.Date.ToString() : "",
+                trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.ToShortDateString() : "",
                 id_vat_group = g.id_vat_group,
                 VATCGSTName = g.app_vat_group != null ? GetVatCGST(g.app_vat_group) : "",
                 VATCGSTPercent = g.app_vat_group != null ? GetVatCGSTPer(g.app_vat_group) : "",

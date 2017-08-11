@@ -12,13 +12,13 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
-    <DataGrid Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
-                  ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged">
+    <DataGrid x:Name="dgItemMovement" Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+              ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged" CellEditEnding="dgItemMovement_CellEditEnding">
         <DataGrid.Columns>
-            <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*" />
-            <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" MinWidth="32" Width="*" />
-            <DataGridTextColumn Binding="{Binding Quantity, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}" />
-            <DataGridTextColumn Binding="{Binding Cost, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}" />
+            <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*" IsReadOnly="True"/>
+            <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" MinWidth="32" Width="*" IsReadOnly="True"/>
+            <DataGridTextColumn Binding="{Binding Quantity, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" IsReadOnly="True" CellStyle="{StaticResource Number_CellStyle}" />
+            <DataGridTextColumn Binding="{Binding Cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Cost}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
         </DataGrid.Columns>
         <DataGrid.RowDetailsTemplate>
             <DataTemplate>

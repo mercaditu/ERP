@@ -14,7 +14,7 @@ namespace cntrl.Controls
         public long? MovementID { get; set; }
 
         public ItemMovement ItemMovement { get; set; }
-
+        
         private CollectionViewSource item_movementViewSource;
         public App.Names ApplicationName { get; set; }
 
@@ -120,6 +120,41 @@ namespace cntrl.Controls
                 {
                     entity.Brillo.Document.Start.Automatic(db.item_movement.Find(MovementID), "MovementLabel");
                 }
+            }
+        }
+
+        private void dgItemMovement_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (CurrentSession.UserRole.is_master)
+            {
+                if (item_movementViewSource != null)
+                {
+                    if (item_movementViewSource.View != null)
+                    {
+                        ItemMovement ItemMovement = item_movementViewSource.View.CurrentItem as ItemMovement;
+                        if (ItemMovement != null)
+                        {
+                            decimal Cost = ItemMovement.Cost;
+                            long MovementID = ItemMovement.MovementID;
+
+                            using (db db = new db())
+                            {
+                                item_movement mov = db.item_movement.Find(MovementID);
+                                if (mov != null)
+                                {
+                                    mov.Update_ChildVales(Cost, false);
+                                    db.SaveChangesAsync();
+                                    MessageBox.Show(entity.Brillo.Localize.StringText("Done"), "Cognitivo ERP", MessageBoxButton.OK);
+                                    LoadData();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Sorry, only Administrators are allowed to update costs.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
     }

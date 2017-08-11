@@ -695,7 +695,7 @@ namespace entity.Brillo.Document
                     unit_price = g.unit_cost,
                     unit_price_vat = g.UnitCost_Vat,
                     terminal_name = g.purchase_order != null ? g.purchase_order.app_terminal != null ? g.purchase_order.app_terminal.name : "" : "",
-                    Condition = g.purchase_order != null ? g.purchase_order.app_condition.name : "",
+                    Condition = g.purchase_order != null ? g.purchase_order.app_condition != null ? g.purchase_order.app_condition.name : "" : "",
                     Contract = g.purchase_order != null ? g.purchase_order.app_contract.name : "",
                     Currency = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.name : "",
                     code = g.purchase_order.code,

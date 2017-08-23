@@ -14,11 +14,13 @@
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800" Loaded="Page_Loaded">
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
@@ -230,7 +232,15 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Code" Width="*" MinWidth="64" Binding="{Binding item.supplier_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <DataGridTextColumn Binding="{Binding item.supplier_name, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="True" MinWidth="256" Width="Auto" />
-                                <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding gross_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                             Header="{lex:Loc Cognitivo:local:GrossWeight}" Width="64" ElementStyle="{StaticResource RightAlignStyle}" />
                                 <DataGridTextColumn Binding="{Binding net_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
@@ -264,10 +274,26 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding ItemName, UpdateSourceTrigger=PropertyChanged}"
                                                         Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N}}"
-                                                        Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}"
-                                                        Header="{lex:Loc Cognitivo:local:quantityverified}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
+                                    <DataGridTextColumn
+                                                        Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" >
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                                <Binding Path="Quantity" TargetNullValue="" Mode="TwoWay" />
+                                                <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn 
+                                                        Header="{lex:Loc Cognitivo:local:quantityverified}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" >
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                                <Binding Path="VerifiedQuantity" TargetNullValue="" Mode="TwoWay" />
+                                                <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" />
@@ -278,10 +304,18 @@
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_location" />
-                                    <DataGridTextColumn Binding="{Binding verified_quantity, StringFormat={}{0:N}}"
+                                    <DataGridTextColumn 
                                                         Header="{lex:Loc Cognitivo:local:quantityverified}"
                                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                                        MinWidth="128" Width="Auto" />
+                                                        MinWidth="128" Width="Auto" >
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                                <Binding Path="verified_quantity" TargetNullValue="" Mode="TwoWay" />
+                                                <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
                                     <DataGridTextColumn Binding="{Binding batch_code, StringFormat={}{0:N}}"
                                                         Header="{lex:Loc Cognitivo:local:LotNumber}"
                                                         ElementStyle="{StaticResource RightAlignStyle}"

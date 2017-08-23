@@ -657,7 +657,7 @@
                                 <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged"  
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                     <Binding Path="SubTotal" TargetNullValue="" Mode="TwoWay" />
-                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>

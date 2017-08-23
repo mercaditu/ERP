@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:entity="clr-namespace:entity;assembly=entity"
 	xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
        xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	mc:Ignorable="d"
@@ -17,6 +18,7 @@
 	d:DesignHeight="600" d:DesignWidth="800" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:TrueToFalseConverter x:Key="True2False" />
@@ -207,7 +209,15 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding item_product.item.code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding item_product.item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" />
-                            <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N},ValidatesOnExceptions=True,ValidatesOnNotifyDataErrors=True,ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"  />
+                            <DataGridTextColumn  Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"  >
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                        <Binding Path="quantity_origin" TargetNullValue="" Mode="TwoWay" />
+                                        <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
 												Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="64" />
                             <DataGridTemplateColumn Width="26" Header="">
@@ -252,7 +262,7 @@
 																		Header="{lex:Loc Cognitivo:local:Dimension}" ElementStyle="{StaticResource RightAlignStyle}"
 																		Width="auto" />
                             <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"
-																		Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
+																		Header="{lex:Loc Cognitivo:local:Value}" ElementStyle="{StaticResource RightAlignStyle}"
 																		Width="auto" />
                         </DataGrid.Columns>
                     </DataGrid>

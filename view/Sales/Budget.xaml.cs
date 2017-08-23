@@ -259,10 +259,28 @@ namespace Cognitivo.Sales
                 {
                     if (item != null && item.id_item > 0 && sales_budget != null)
                     {
-                        item_product item_product = item.item_product.FirstOrDefault();
+
+                        int LineLimit = 0;
+                        if (sales_budget.id_range > 0)
+                        {
+                            app_document_range app_document_range = SalesBudgetDB.db.app_document_range.Find(sales_budget.id_range);
+                            if (app_document_range.app_document.line_limit != null)
+                            {
+                                LineLimit = (int)app_document_range.app_document.line_limit;
+                            }
+                        }
 
                         Settings SalesSettings = new Settings();
-                        Task Thread = Task.Factory.StartNew(() => Select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
+                        if (SalesSettings.BlockExcessItem == true && LineLimit > 0 && sales_budget.sales_budget_detail.Count + 1 > LineLimit)
+                        {
+                            toolBar.msgWarning("Your Item Limit is Exceed");
+                        }
+                        else
+                        {
+                            item_product item_product = item.item_product.FirstOrDefault();
+
+                            Task Thread = Task.Factory.StartNew(() => Select_Item(sales_budget, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
+                        }
                     }
 
                     sales_budget.RaisePropertyChanged("GrandTotal");

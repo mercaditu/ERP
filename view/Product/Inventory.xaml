@@ -5,7 +5,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
-    
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:cls="clr-namespace:Cognitivo.Class"
        xmlns:Controller="clr-namespace:entity.Controller.Product;assembly=entity"
@@ -18,7 +18,7 @@
 		lex:LocalizeDictionary.DesignCulture="en-US"
 	  d:DesignHeight="400" d:DesignWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
-        
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <BooleanToVisibilityConverter x:Key="Bool2Visi" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
@@ -177,17 +177,39 @@
 												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
                         <DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto" />
                         <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
+                        <DataGridTextColumn MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" System" /></TextBlock>
                             </DataGridTextColumn.Header>
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="value_system" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" ElementStyle="{StaticResource RightAlignStyle}">
+                        <DataGridTextColumn  Width="64" ElementStyle="{StaticResource RightAlignStyle}">
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" Real" /></TextBlock>
                             </DataGridTextColumn.Header>
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="value_counted" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}" Binding="{Binding unit_value, StringFormat={}{0:N2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}"  ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="unit_value" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
                         <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                             Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
                             <DataGridTextColumn.CellStyle>

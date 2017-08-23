@@ -10,6 +10,7 @@
 	  xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 	  xmlns:prop="clr-namespace:Cognitivo.Product"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 		xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:LocalizeDictionary.DesignCulture="es-PY"
@@ -24,6 +25,7 @@
 						CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <convert:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <convert:TrueToFalseConverter x:Key="TrueToFalse" />
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem" />
@@ -244,16 +246,36 @@
 														DisplayMemberPath="name" SelectedValuePath="id_price_list" SelectedValueBinding="{Binding id_price_list , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="Auto" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
 														DisplayMemberPath="name" SelectedValuePath="id_currency" SelectedValueBinding="{Binding id_currency, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn Binding="{Binding min_quantity,UpdateSourceTrigger=LostFocus, NotifyOnTargetUpdated=True, StringFormat={}{0:N}}"
-													Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
+                                <DataGridTextColumn
+													Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="LostFocus" NotifyOnTargetUpdated="True"
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="min_quantity" TargetNullValue="" Mode="TwoWay"  />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="SizeToHeader" ElementStyle="{StaticResource RightAlignStyle}"
-													Visibility="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Excluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-													Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,Mode=TwoWay,
-																	  StringFormat={}{0:N}, NotifyOnValidationError=True}" />
+													Visibility="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Excluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="LostFocus" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="value" TargetNullValue="" Mode="TwoWay"  />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
-													Visibility="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Included, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-													Binding="{Binding valuewithVAT,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True,
-																	  ValidatesOnDataErrors=True, StringFormat={}{0:N}}" />
+													Visibility="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Included, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="LostFocus" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="valuewithVAT" TargetNullValue="" Mode="TwoWay"  />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Width="30">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

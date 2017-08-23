@@ -329,18 +329,35 @@ namespace Cognitivo.Sales
 
                 if (item != null && item.id_item > 0 && sales_order != null)
                 {
-                    item_product item_product = item.item_product.FirstOrDefault();
-
-                    if (item_product != null && item_product.can_expire)
+                    int LineLimit = 0;
+                    if (sales_order.id_range > 0)
                     {
-                        crud_modalExpire.Visibility = Visibility.Visible;
-                        pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_order.id_branch, null, item_product.id_item_product);
-                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                        app_document_range app_document_range = SalesDB.db.app_document_range.Find(sales_order.id_range);
+                        if (app_document_range.app_document.line_limit != null)
+                        {
+                            LineLimit = (int)app_document_range.app_document.line_limit;
+                        }
+                    }
+
+                    Settings SalesSettings = new Settings();
+                    if (SalesSettings.BlockExcessItem == true && LineLimit > 0 && sales_order.sales_order_detail.Count + 1 > LineLimit)
+                    {
+                        toolBar.msgWarning("Your Item Limit is Exceed");
                     }
                     else
                     {
-                        Settings SalesSettings = new Settings();
-                        Task Thread = Task.Factory.StartNew(() => Select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
+                        item_product item_product = item.item_product.FirstOrDefault();
+
+                        if (item_product != null && item_product.can_expire)
+                        {
+                            crud_modalExpire.Visibility = Visibility.Visible;
+                            pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_order.id_branch, null, item_product.id_item_product);
+                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                        }
+                        else
+                        {
+                            Task Thread = Task.Factory.StartNew(() => Select_Item(sales_order, item, sbxItem.QuantityInStock, SalesSettings.AllowDuplicateItem, null, sbxItem.Quantity));
+                        }
                     }
                 }
                 sales_order.RaisePropertyChanged("GrandTotal");

@@ -6,7 +6,9 @@
 		 xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	   xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		  lex:LocalizeDictionary.DesignCulture="en-US"
 		  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -20,6 +22,7 @@
 						Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <CollectionViewSource x:Key="item_recepieViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_recepie}, CreateList=True}" />
         <CollectionViewSource x:Key="item_recepieitem_recepie_detailViewSource" Source="{Binding item_recepie_detail, Source={StaticResource item_recepieViewSource}}" />
     </Page.Resources>
@@ -93,10 +96,26 @@
 												    Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="128" />
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}"
 												    Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="256" />
-                                <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N8}}"
-												    Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="False" Width="*" />
-                                <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-										 Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
+                                <DataGridTextColumn 
+												    Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="False" Width="*" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
+										 Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="Quantity_Factored" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

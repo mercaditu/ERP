@@ -6,7 +6,7 @@
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
-
+xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       mc:Ignorable="d"
@@ -21,6 +21,7 @@
                         Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <converter:Bool2Color x:Key="Bool2Color" />
         <converter:TrueToFalseConverter x:Key="True2False" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
@@ -180,11 +181,26 @@
                                                     Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="*" IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnExceptions=True,ValidatesOnNotifyDataErrors=True,ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                                <DataGridTextColumn 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="64">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="quantity_origin" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Quantity_InStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
-                                                    Header="{lex:Loc Cognitivo:local:Stock}" Width="64" ElementStyle="{StaticResource RightAlignStyle}" />
+                                <DataGridTextColumn 
+                                                    Header="{lex:Loc Cognitivo:local:Stock}" Width="64" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="Quantity_InStock" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
                                                     Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" />
                                 <DataGridTextColumn Binding="{Binding gross_weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
@@ -268,8 +284,16 @@
                                                     Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="True" MinWidth="128" Width="Auto" />
-                                <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
-                                                    Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" />
+                                <DataGridTextColumn 
+                                                    Header="{lex:Loc Cognitivo:local:Quantity}" MinWidth="64" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="quantity_destination" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     Header="{lex:Loc Cognitivo:local:Date}" MinWidth="64" IsReadOnly="True" Width="SizeToHeader" />
                                 <DataGridTemplateColumn Width="Auto" Header="">

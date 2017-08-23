@@ -23,6 +23,7 @@
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <Controller:OrderController x:Key="PurchaseOrder"/>
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
@@ -339,43 +340,122 @@
 												ItemsSource="{Binding Source={x:Static entity:CurrentSession.VAT_Groups}}"
 												DisplayMemberPath="name" SelectedValuePath="id_vat_group"
 												SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"
-											Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding Quantity_Factored, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                        <DataGridTextColumn 
+											Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn
 											Header="Factor" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
-											   Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+											   Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="Quantity_Factored" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
 
                         <!-- UnitPrice -->
-                        <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N9}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        <DataGridTextColumn 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											Header="{lex:Loc Cognitivo:local:Price}" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+											Header="{lex:Loc Cognitivo:local:Price}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="unit_cost" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-												Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto"  ElementStyle="{StaticResource RightAlignStyle}" />
+												Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto"  ElementStyle="{StaticResource RightAlignStyle}" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="discount" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
 
                         <!-- UnitPrice_Vat -->
-                        <DataGridTextColumn Binding="{Binding UnitCost_Vat, Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        <DataGridTextColumn 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding Discount_SubTotal, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+											Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="UnitCost_Vat" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" />
-
+											Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="Discount_SubTotal" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
                         <!-- SubTotal -->
-                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding SubTotal, Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        <DataGridTextColumn IsReadOnly="True" 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding DiscountVat, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+											Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="SubTotal" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" />
+											Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="DiscountVat" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
 
                         <!-- SubTotal_VAT -->
-                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding SubTotal_Vat, Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                        <DataGridTextColumn IsReadOnly="True" 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-											Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding Discount_SubTotal_Vat, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+											Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="SubTotal_Vat" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn 
 											Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-												Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" />
+												Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" >
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                    <Binding Path="Discount_SubTotal_Vat" TargetNullValue="" Mode="TwoWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

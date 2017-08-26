@@ -168,15 +168,16 @@ namespace cntrl.Controls
                         {
                             Quantity = 1;
                         }
-                      //  Text = tbxSearch.Text;
+                        Text = tbxSearch.Text;
                     }
-                    Text = "";
-                    tbxSearch.Focus();
-                    tbxSearch.SelectAll();
+                   
                 }
             }
 
             Select?.Invoke(this, new RoutedEventArgs());
+            Text = "";
+            tbxSearch.Focus();
+            tbxSearch.SelectAll();
         }
 
         public int ItemID { get; set; }

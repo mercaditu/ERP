@@ -648,21 +648,31 @@ namespace entity.Brillo.Logic
                         foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail
                             .Where(x => x.item.item_product.Count() > 0 && x.sales_packing_relation.Count() > 0))
                         {
+                            // Only showes verified packing_detail
                             List<sales_packing_relation> PackingList = detail.sales_packing_relation.ToList();
+
                             foreach (sales_packing_relation sales_packing_relation in PackingList)
                             {
+                                //Only shows verified pakcing_detail
                                 sales_packing_detail sales_packing_detail = sales_packing_relation.sales_packing_detail;
+
                                 if (sales_packing_detail != null)
                                 {
-                                    if (sales_packing_detail.item_movement != null)
+                                    //Get approved item of this item.
+                                    sales_packing_detail approved_sales_packing = db.sales_packing_detail.Where(x => x.id_sales_packing == sales_packing_detail.id_sales_packing  && x.id_item == sales_packing_detail.id_item && x.user_verified).FirstOrDefault();
+
+                                    if (approved_sales_packing.item_movement != null)
                                     {
-                                        List<item_movement> MovementList = sales_packing_detail.item_movement.ToList();
+                                        List<item_movement> MovementList = db.item_movement.Where(x=>x.id_sales_packing_detail == approved_sales_packing.id_sales_packing_detail).ToList();
                                         foreach (item_movement mov in MovementList)
                                         {
                                             mov.id_sales_invoice_detail = detail.id_sales_invoice_detail;
                                             mov.sales_invoice_detail = detail;
                                             detail.batch_code = mov.code;
                                             detail.expire_date = mov.expire_date;
+                                            detail.unit_cost = Brillo.Currency.convert_Values(mov.item_movement_value.Sum(x => x.unit_value),
+                         mov.item_movement_value.FirstOrDefault().id_currencyfx,
+                         detail.sales_invoice.id_currencyfx, App.Modules.Sales);
                                         }
                                     }
                                 }

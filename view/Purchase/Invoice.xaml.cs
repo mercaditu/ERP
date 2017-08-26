@@ -378,13 +378,13 @@ namespace Cognitivo.Purchase
                 {
                     contact = PurchaseDB.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 }
-
+                string Description = sbxItem.Text;
                 InvoiceSetting InvoiceSetting = new InvoiceSetting();
-                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact, InvoiceSetting.AllowDuplicateItems, sbxItem.Quantity));
+                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact, InvoiceSetting.AllowDuplicateItems, sbxItem.Quantity,Description));
             }
         }
 
-        private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact, bool AllowDuplicate, decimal quantity)
+        private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact, bool AllowDuplicate, decimal quantity,string Description)
         {
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
             purchase_invoice_detail.State = EntityState.Added;
@@ -441,8 +441,10 @@ namespace Cognitivo.Purchase
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    purchase_invoice_detail.item_description = sbxItem.Text;
+                    purchase_invoice_detail.item_description = Description;
+                    purchase_invoice_detail.RaisePropertyChanged("item_description");
                 }));
+
             }
 
             //Cost Center

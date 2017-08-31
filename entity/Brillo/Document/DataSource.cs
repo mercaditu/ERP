@@ -251,7 +251,7 @@ namespace entity.Brillo.Document
         {
             reportDataSource.Name = "DataSet1";
            
-            List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.AsQueryable().Include(x=>x.app_vat_group).ToList();
+            List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.AsQueryable().Include(x => x.app_vat_group).ToList();
             if (sales_invoice_detail.Count < sales_invoice.app_document_range.app_document.line_limit)
             {
                 for (int i = sales_invoice_detail.Count; i < sales_invoice.app_document_range.app_document.line_limit; i++)

@@ -6,27 +6,32 @@ namespace entity.Class
     {
         public string ConvertToBarcode(string decode)
         {
-            string encode = null;
-            encode = Convert.ToChar(204).ToString();
-            int ans = 0;
-            int value = 0;
-            int i = 0;
-            char[] ch = null;
-            int ans1 = 0;
-            ans = 0;
-            ans1 = 0;
-            ch = decode.ToCharArray();
-            value = check_value(Convert.ToInt16(ch[0])) * 1;
-            ans += value + 104;
-            for (i = 1; i <= ch.Length - 1; i++)
+            if (decode!=null)
             {
-                value = check_value(Convert.ToInt16(ch[i])) * (i + 1);
-                ans += value;
+                string encode = null;
+                encode = Convert.ToChar(204).ToString();
+                int ans = 0;
+                int value = 0;
+                int i = 0;
+                char[] ch = null;
+                int ans1 = 0;
+                ans = 0;
+                ans1 = 0;
+                ch = decode.ToCharArray();
+                value = check_value(Convert.ToInt16(ch[0])) * 1;
+                ans += value + 104;
+                for (i = 1; i <= ch.Length - 1; i++)
+                {
+                    value = check_value(Convert.ToInt16(ch[i])) * (i + 1);
+                    ans += value;
+                }
+                ans = ans % 103;
+                ans1 = check_ascii(ans);
+                encode += decode + Convert.ToChar(ans1) + Convert.ToChar(206);
+                return encode;
             }
-            ans = ans % 103;
-            ans1 = check_ascii(ans);
-            encode += decode + Convert.ToChar(ans1) + Convert.ToChar(206);
-            return encode;
+            return "";
+
             //    REM: for example 78
             //    REM: get 7
             //    REM: call check_value for 7=23

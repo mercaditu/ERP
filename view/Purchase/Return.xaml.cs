@@ -144,6 +144,7 @@ namespace Cognitivo.Purchase
                     x.contact.name.Contains(query) ||
                     x.contact.gov_code.Contains(query) ||
                     x.number.Contains(query)
+                    
                     )
                 .OrderByDescending(x => x.trans_date)
                 .ThenBy(x => x.number)
@@ -158,7 +159,7 @@ namespace Cognitivo.Purchase
                 {
                     purchase_return purchase_return = i as purchase_return;
                     string name = purchase_return.contact != null ? purchase_return.contact.name : "";
-                    string number = string.IsNullOrEmpty(purchase_return.number) ? purchase_return.number : "";
+                    string number =purchase_return.number!="" ? purchase_return.number : "";
                     string total = purchase_return.GrandTotal.ToString();
 
                     if (name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()) || total.ToLower().Contains(query.ToLower()))

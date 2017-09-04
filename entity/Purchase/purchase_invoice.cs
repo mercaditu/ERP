@@ -132,6 +132,16 @@ namespace entity
                     }
                     RaisePropertyChanged("GrandTotal");
                 }
+                else
+                {
+                    foreach (purchase_invoice_detail detail in this.purchase_invoice_detail.Where(x => x.quantity > 0))
+                    {
+                        detail.DiscountVat = 0;
+                        detail.RaisePropertyChanged("DiscountVat");
+                    }
+                    RaisePropertyChanged("GrandTotal");
+                    
+                }
             }
         }
 

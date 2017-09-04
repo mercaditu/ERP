@@ -5,6 +5,8 @@
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:Stock="clr-namespace:Cognitivo.Class"
+       xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+       xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	  MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
@@ -15,6 +17,7 @@
       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  Title="{lex:Loc Stock}">
     <Page.Resources>
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}" />
@@ -53,9 +56,17 @@
                     <DataGridTextColumn Binding="{Binding Location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto" />
                     <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
                     <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
-                    <DataGridTextColumn Binding="{Binding Quantity, StringFormat={}{0:N2}}"
+                    <DataGridTextColumn
 										ElementStyle="{StaticResource RightAlignStyle}"
-										Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" />
+										Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" >
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                <Binding Path="Quantity" TargetNullValue="" Mode="TwoWay" />
+                                <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Measurement}" Header="{lex:Loc Cognitivo:local:Measurement}" Width="Auto" />
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
@@ -77,8 +88,24 @@
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="128" />
                                                 <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="auto" />
-                                                <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Debit}" Width="84" />
-                                                <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Credit}" Width="84" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Debit}" Width="84" >
+                                                    <DataGridTextColumn.Binding>
+                                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                                            <Binding Path="debit" TargetNullValue="" Mode="TwoWay" />
+                                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                                        </MultiBinding>
+                                                    </DataGridTextColumn.Binding>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn  ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Credit}" Width="84" >
+                                                    <DataGridTextColumn.Binding>
+                                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                                            <Binding Path="credit" TargetNullValue="" Mode="TwoWay" />
+                                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                                        </MultiBinding>
+                                                    </DataGridTextColumn.Binding>
+                                                </DataGridTextColumn>
                                                 <DataGridTextColumn Binding="{Binding code}" ElementStyle="{StaticResource RightAlignStyle}" Header="BatchCode" Width="128" />
                                                 <DataGridTextColumn Binding="{Binding expire_date, StringFormat={}{0:d}}" ElementStyle="{StaticResource RightAlignStyle}" Header="ExpiryDate" Width="128" />
                                             </DataGrid.Columns>

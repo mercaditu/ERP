@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+         xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+       xmlns:converter="clr-namespace:Cognitivo.Converters"
         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
         xmlns:customcmd="clr-namespace:Cognitivo.Class"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -17,6 +19,7 @@
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed" />
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <CollectionViewSource x:Key="impexViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex}, CreateList=True}" />
 
         <CollectionViewSource x:Key="incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}" />
@@ -147,12 +150,28 @@
                                 <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="100" />
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" MaxWidth="128" Binding="{Binding item_code}" />
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" MinWidth="64" MaxWidth="256" Binding="{Binding item}" />
-                                <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}"
+                                <DataGridTextColumn 
                                                 Width="64" CellStyle="{StaticResource Number_CellStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N2}}"
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="quantity" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
                                                     Width="64" CellStyle="{StaticResource Number_CellStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Cost}" ElementStyle="{StaticResource RightAlignStyle}" />
+                                                Header="{lex:Loc Cognitivo:local:Cost}" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="unit_cost" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding unit_Importcost, StringFormat={}{0:N2}}"
                                                     Width="64" CellStyle="{StaticResource Number_CellStyle}"
                                                 Header="{lex:Loc Cognitivo:local:Expenses}" ElementStyle="{StaticResource RightAlignStyle}" />

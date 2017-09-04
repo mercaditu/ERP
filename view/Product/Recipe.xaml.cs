@@ -32,6 +32,7 @@ namespace Cognitivo.Product
                     {
                         item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;
                         item_recepie.item = item;
+                        item_recepie.RaisePropertyChanged("item");
                     }
                     else
                     {
@@ -173,6 +174,7 @@ namespace Cognitivo.Product
             }
         }
 
+      
         private void btnCalculateCost_Click(object sender, RoutedEventArgs e)
         {
             item_recepie item_recepie = item_recepieViewSource.View.CurrentItem as item_recepie;

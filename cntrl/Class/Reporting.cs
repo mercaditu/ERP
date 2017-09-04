@@ -392,7 +392,7 @@ namespace cntrl.Class
                 Application = entity.App.Names.Movement,
                 Name =entity.Brillo.Localize.StringText("Movement")!= string.Empty ? entity.Brillo.Localize.StringText("Movement") :"Movement",
                 Path = "cntrl.Reports.Stocks.Movement.rdlc",
-                Query = Reports.Stock.TransferSummary.query,
+                Query = Reports.Stock.MovementSummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
                                         new Report

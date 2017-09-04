@@ -693,6 +693,7 @@
     <EmbeddedResource Include="Reports\Finances\NonDirect_Payment.rdlc" />
     <EmbeddedResource Include="Reports\Finances\PaymentRecievableByDate.rdlc" />
     <EmbeddedResource Include="Reports\Finances\PaymentRecievablesBySalesman.rdlc" />
+    <EmbeddedResource Include="Reports\Finances\RecievablesBySalesman.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reports\Productions\HR.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc">

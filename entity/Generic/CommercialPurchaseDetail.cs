@@ -98,8 +98,9 @@ namespace entity
                     RaisePropertyChanged("quantity");
                     //update quantity
                     update_SubTotal();
-                    //_Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity,);
-                    //RaisePropertyChanged("_Quantity_Factored");
+
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity,0);
+                   RaisePropertyChanged("_Quantity_Factored");
                 }
             }
         }

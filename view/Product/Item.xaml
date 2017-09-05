@@ -179,7 +179,7 @@
 							 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 							 metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
 							 metro:TextBoxHelper.SelectAllOnFocus="True"
-							 Text="{Binding supplier_name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
+							 Text="{Binding supplier_name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             </AdornerDecorator>
                             <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}" />
                             <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}"

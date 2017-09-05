@@ -361,6 +361,7 @@
     <Compile Include="Converters\Bool2Collapsed.cs" />
     <Compile Include="Converters\LevelToMarginConverter.cs" />
     <Compile Include="Converters\Decimal2Visibility.cs" />
+    <Compile Include="Converters\ToStringFormatConverter.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
     <Compile Include="Curd\ContactTag.xaml.cs">
       <DependentUpon>ContactTag.xaml</DependentUpon>

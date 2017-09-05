@@ -290,10 +290,11 @@
                                         <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
 
-                                    <StackPanel Margin="2" VerticalAlignment="Center">
-                                        <TextBlock Text="Comment" Style="{StaticResource text_Label}" />
-                                        <TextBox Width="Auto" TextWrapping="WrapWithOverflow" Margin="4,0" Height="64" HorizontalAlignment="Stretch" Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </StackPanel>
+                                 
+                                </StackPanel>
+                                <StackPanel Margin="2" VerticalAlignment="Center">
+                                    <TextBlock Text="Comment" Style="{StaticResource text_Label}" />
+                                    <TextBox Width="Auto" TextWrapping="WrapWithOverflow" Margin="4,0" Height="64" HorizontalAlignment="Stretch" Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

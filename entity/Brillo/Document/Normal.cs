@@ -108,7 +108,7 @@ namespace entity.Brillo.Document
                 };
                 item_movement item_movement = (item_movement)Document;
                 BarcodeLib.Barcode b = new BarcodeLib.Barcode();
-                Image img = b.Encode(BarcodeLib.TYPE.CODE128,item_movement.barcode ,100, 25);
+                Image img = b.Encode(BarcodeLib.TYPE.CODE128,item_movement.barcode ,250 , 100);
                 using (var ms = new MemoryStream())
                 {
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);

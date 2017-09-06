@@ -36,6 +36,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel x:Name="stackFlow" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Background="{StaticResource appConfig}">
+            
         </StackPanel>
+       
     </Grid>
 </Page>

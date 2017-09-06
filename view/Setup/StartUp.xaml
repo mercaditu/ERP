@@ -136,7 +136,7 @@
                         BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
                         <ProgressBar x:Name="progBarbarcode" Margin="0" Width="128" Height="24" HorizontalAlignment="Stretch" />
-                        <Label Content="Update Barcode" FontSize="10" HorizontalContentAlignment="Center" />
+                        <Label Content="Decode Barcode" FontSize="10" HorizontalContentAlignment="Center" />
                     </Grid>
                 </Button>
                 <Button IsDefault="True" Click="btnSalesCost_Clicked" Background="Transparent"

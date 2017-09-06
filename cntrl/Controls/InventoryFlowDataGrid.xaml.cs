@@ -1,9 +1,11 @@
 ﻿using entity;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace cntrl.Controls
 {
@@ -80,8 +82,17 @@ namespace cntrl.Controls
                 item_movementViewSource.Source = MovementList;
                 item_movementViewSource.View.Refresh();
 
+
                 Filter_NegativeTransactions();
             }
+           
+          
+
+
+
+
+          
+          
         }
 
         private void Filter_NegativeTransactions()

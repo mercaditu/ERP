@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
-    <DataGrid x:Name="dgItemMovement" Width="256" FontSize="10" Margin="2" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+     <DataGrid x:Name="dgItemMovement" Width="256" FontSize="10" Margin="5" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
               ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged" CellEditEnding="dgItemMovement_CellEditEnding">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*" IsReadOnly="True"/>
@@ -44,6 +44,7 @@
                         <local:ImageViewer MaxWidth="200"
                             ApplicationName="{Binding ElementName=this,Path=ApplicationName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ReferenceID="{Binding MovementID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AllowDrop="True"
                                            IsEnabled="{Binding DisplayImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                       
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
 
@@ -53,4 +54,5 @@
             </DataTemplate>
         </DataGrid.RowDetailsTemplate>
     </DataGrid>
+    
 </UserControl>

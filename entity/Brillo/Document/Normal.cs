@@ -1,9 +1,11 @@
 ﻿using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace entity.Brillo.Document
 {
@@ -100,6 +102,39 @@ namespace entity.Brillo.Document
             }
             else
             {
+                ReportParameter Parameters = new ReportParameter()
+                {
+                    Name = "Parameters"
+                };
+                item_movement item_movement = (item_movement)Document;
+                BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+                Image img = b.Encode(BarcodeLib.TYPE.CODE128,item_movement.barcode ,100, 25);
+                using (var ms = new MemoryStream())
+                {
+                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    ms.Position = 0;
+
+                    var bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.CacheOption = BitmapCacheOption.OnLoad;
+                    bi.StreamSource = ms;
+                    bi.EndInit();
+                    Parameters.Values.Add(Convert.ToBase64String(ms.ToArray()));
+
+                }
+
+              
+
+                try
+                {
+                    DocumentViewer.reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+             
                 DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.ItemMovementLabel((item_movement)Document));
             }
             DocumentViewer.reportViewer.RefreshReport();

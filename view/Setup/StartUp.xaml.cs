@@ -290,14 +290,14 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
 
-            ProductMovementDB ProductMovementDB = new ProductMovementDB();
+           ProductMovementDB ProductMovementDB = new ProductMovementDB();
             ProductMovementDB.ChangeBarcode_ProductMovement();
             ProductMovementDB.SaveChanges();
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
 
-        }
+            }
 
-        private void btnSalesCost_Clicked(object sender, RoutedEventArgs e)
+            private void btnSalesCost_Clicked(object sender, RoutedEventArgs e)
         {
             Utilities.SalesInvoice SI = new Utilities.SalesInvoice();
             MessageBox.Show(SI.Update_SalesCost() + " Records Updated", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);

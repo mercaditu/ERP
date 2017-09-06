@@ -240,10 +240,10 @@ namespace entity
             long n;
             foreach (item_movement item_movement in base.item_movement)
             {
-                if (item_movement.barcode != null && long.TryParse(item_movement.barcode, out n))
+                if (item_movement.barcode != null && !long.TryParse(item_movement.barcode, out n))
                 {
                     BarcodeGenerator.BarcodeGenerate BG = new BarcodeGenerator.BarcodeGenerate();
-                    item_movement.barcode = BG.Convert(item_movement.barcode);
+                    item_movement.barcode = BG.Decodestring(item_movement.barcode);
                 }
             }
         }

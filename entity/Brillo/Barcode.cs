@@ -6,9 +6,8 @@ namespace entity.Brillo
     {
         public static string RandomGenerator()
         {
-            BarcodeGenerator.BarcodeGenerate BG = new BarcodeGenerator.BarcodeGenerate();
             DateTime now = DateTime.Now;
-            return BG.Convert(now.Ticks.ToString());
+            return now.Ticks.ToString();
         }
         
     }

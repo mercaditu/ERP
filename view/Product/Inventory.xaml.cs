@@ -401,7 +401,7 @@ namespace Cognitivo.Product
                     }
                     else
                     {
-                        item_inventory_detail.value_system = _item_inventory_detail.value_system;
+                        item_inventory_detail.value_system = 0;
                     }
 
                     if (CurrentSession.Get_Currency_Default_Rate() != null)

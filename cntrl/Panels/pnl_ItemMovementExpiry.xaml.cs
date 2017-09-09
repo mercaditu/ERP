@@ -93,7 +93,7 @@ namespace cntrl.Panels
                 ExpiryInStock ExpiryInStock = new ExpiryInStock()
                 {
                     MovementID = Convert.ToInt32(DataRow["MovementID"]),
-                    BarCode = Convert.ToString(BG.Decodestring(Convert.ToString(DataRow["BarCode"]))),
+                    BarCode = Convert.ToString(Convert.ToString(DataRow["BarCode"])),
                     Location = Convert.ToString(DataRow["Location"]),
                     Branch = Convert.ToString(DataRow["Branch"]),
                     Code = Convert.ToString(DataRow["Code"]),

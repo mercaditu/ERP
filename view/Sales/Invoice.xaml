@@ -506,13 +506,13 @@
                             <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}" />
                             <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
                         </StackPanel>
-                        
-                    </StackPanel>
-                    <StackPanel VerticalAlignment="Center" Margin="2">
-                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64"
+                        <StackPanel VerticalAlignment="Center" Margin="2">
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
+                            <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64"
 								 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
+                        </StackPanel>
                     </StackPanel>
+                  
                     <!--sidepanel-->
                 </Grid>
             </ScrollViewer>

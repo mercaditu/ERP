@@ -162,8 +162,7 @@ namespace entity
 			set
 			{
 				_barcode = value;
-				BarcodeGenerator.BarcodeGenerate BG = new BarcodeGenerator.BarcodeGenerate();
-				BarCode_Number = BG.Decodestring(value);
+			     BarCode_Number=value;
 			}
 		}
 		private string _barcode="";

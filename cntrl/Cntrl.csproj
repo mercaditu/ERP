@@ -645,6 +645,7 @@
     <Compile Include="Reports\ReportEditor.xaml.cs">
       <DependentUpon>ReportEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Sales\SalesGst.cs" />
     <Compile Include="Reports\Sales\Sales.cs" />
     <Compile Include="Reports\Sales\SalesAnalysis.cs" />
     <Compile Include="Reports\Stocks\Item.cs" />
@@ -724,6 +725,7 @@
     <EmbeddedResource Include="Reports\Sales\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesVAT.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\InventoryByBatch.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\ItemReceipe.rdlc" />
@@ -869,6 +871,7 @@
     <None Include="Properties\DataSources\entity.Reporting.RPT_Project.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Purchase.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Sales.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_SalesGst.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.SalesAnalysis.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.SalesPayment.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Stock.datasource" />

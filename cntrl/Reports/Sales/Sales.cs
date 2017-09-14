@@ -73,7 +73,11 @@ sales_invoice_detail.id_sales_invoice_detail as DetailID,
 												(select parent_id_geography from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=
 												(select parent_id_geography from app_geography where id_geography=
-												(select parent_id_geography from app_geography where id_geography=contacts.id_geography))))) as GeoLevel5
+												(select parent_id_geography from app_geography where id_geography=contacts.id_geography))))) as GeoLevel5,
+                                                sales_invoice.id_user as User,
+                                                ( SELECT contact_tag.name FROM contact_tag left join contact_tag_detail on contact_tag.id_tag = contact_tag_detail.id_tag
+                                                  left join contacts on contact_tag_detail.id_contact = contacts.id_contact) as Contact_Tag
+                                                
 
 												from sales_invoice_detail
 												inner join sales_invoice on sales_invoice_detail.id_sales_invoice=sales_invoice.id_sales_invoice

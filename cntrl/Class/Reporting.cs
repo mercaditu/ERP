@@ -28,6 +28,14 @@ namespace cntrl.Class
             },
             new Report
             {
+                Application = entity.App.Names.SalesInvoice,
+                Name = entity.Brillo.Localize.StringText("SalesVAT")!= string.Empty ? entity.Brillo.Localize.StringText("SalesVAT") :"SalesGst",
+                Path = "cntrl.Reports.Sales.SalesVAT.rdlc",
+                Query = Reports.Sales.SalesGst.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+            new Report
+            {
                 Application = entity.App.Names.SalesOrder,
                 Name =entity.Brillo.Localize.StringText("SalesDetails")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetails") :"SalesDetails",
                 Path = "cntrl.Reports.Sales.SalesDetail.rdlc",

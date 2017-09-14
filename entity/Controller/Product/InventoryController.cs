@@ -12,10 +12,9 @@ namespace entity.Controller.Product
         {
             NumberOfRecords = 0;
 
-            foreach (item_inventory item_inventory in db.item_inventory.Local)
+            foreach (item_inventory item_inventory in db.item_inventory.Local.Where(x =>  x.IsSelected))
             {
-                if (item_inventory.IsSelected)
-                {
+              
                     if (item_inventory.State == EntityState.Added)
                     {
                         item_inventory.timestamp = DateTime.Now;
@@ -31,7 +30,7 @@ namespace entity.Controller.Product
                         item_inventory.IsSelected = false;
                     }
                     NumberOfRecords += 1;
-                }
+                
 
               
             }

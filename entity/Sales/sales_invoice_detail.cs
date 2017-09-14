@@ -30,6 +30,51 @@ namespace entity
         public int? movement_id { get; set; }
         public int? id_sales_order_detail { get; set; }
 
+        public new int? id_location
+        {
+            get
+            {
+                return locationID;
+            }
+            set
+            {
+                if (value != locationID)
+                {
+                    locationID = value;
+
+                    if (sales_invoice != null)
+                    {
+                        if (sales_invoice.State == System.Data.Entity.EntityState.Added || sales_invoice.State == System.Data.Entity.EntityState.Modified)
+                        {
+                            if (item != null)
+                            {
+                                if (item.item_product.FirstOrDefault() != null)
+                                {
+                                    entity.Brillo.Stock stock = new Brillo.Stock();
+                                    Quantity_InStock = stock.List(0, value, item.item_product.FirstOrDefault().id_item_product).Sum(x => x.QtyBalance);
+                                    RaisePropertyChanged("Quantity_InStock");
+
+                                    if (Quantity_InStock != null)
+                                    {
+                                        if (quantity > Quantity_InStock)
+                                        {
+                                            InStock = false;
+                                            RaisePropertyChanged("InStock");
+                                        }
+                                        else
+                                        { InStock = true; RaisePropertyChanged("InStock"); }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        int? locationID;
+
         [NotMapped]
         public bool IsPromo { get; set; }
 
@@ -129,8 +174,8 @@ namespace entity
                             return "Stock Exceeded";
                         }
                     }
-					
-				}
+
+                }
                 if (columnName == "unit_price")
                 {
                     if (unit_price < 0)

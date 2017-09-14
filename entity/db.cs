@@ -52,6 +52,11 @@
         public db() : base("name = Cognitivo.Properties.Settings.MySQLconnString")
         {
             Configuration.LazyLoadingEnabled = true;
+            AuditManager.DefaultConfiguration.Exclude<item_inventory_detail>();
+            AuditManager.DefaultConfiguration.Exclude<item_movement>();
+            AuditManager.DefaultConfiguration.Exclude<item_movement_dimension>();
+            AuditManager.DefaultConfiguration.Exclude<item_movement_value>();
+            AuditManager.DefaultConfiguration.Exclude<payment_schedual>();
             AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
         // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
         (context as db).AuditEntries.AddRange(audit.Entries);

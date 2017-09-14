@@ -452,6 +452,7 @@
     <Compile Include="Reporting\InventoryValue.cs" />
     <Compile Include="Reporting\PurchaseTender.cs" />
     <Compile Include="Reporting\NonDirect_Payment.cs" />
+    <Compile Include="Reporting\RPT_SalesGst.cs" />
     <Compile Include="Reporting\SalesPayment.cs" />
     <Compile Include="Reporting\SalesAnalysis.cs" />
     <Compile Include="Reporting\CostBreakDown.cs" />
@@ -668,6 +669,7 @@
     <None Include="Properties\DataSources\entity.Reporting.RPT_Project.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Purchase.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Sales.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_SalesGst.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.SalesAnalysis.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Stock.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.StockByBranch.datasource" />

@@ -177,6 +177,10 @@
                             <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
                         </StackPanel>
                     </StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Label Content="Z" Style="{StaticResource ico_Label}" />
+                        <CheckBox Content="{lex:Loc Details}" Checked="chbxRowDetail_Checked" Unchecked="chbxRowDetail_Checked" />
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" IsEnabled="True">
                         <Label Content="" Style="{StaticResource btn_Label}" />
                         <TextBlock Margin="5,0" VerticalAlignment="Center">

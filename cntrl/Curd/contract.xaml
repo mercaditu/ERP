@@ -68,6 +68,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coeficient}" Width="SizeToHeader" Binding="{Binding coefficient, StringFormat=P, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
                     <DataGridTextColumn Header="OffSet" Width="SizeToHeader" Binding="{Binding interval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                    <DataGridCheckBoxColumn Header="Is Order" Width="SizeToHeader" Binding="{Binding is_order, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Background="WhiteSmoke">

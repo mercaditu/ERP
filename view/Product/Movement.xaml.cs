@@ -497,5 +497,18 @@ namespace Cognitivo.Product
 
             }
         }
+
+        private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chbx = sender as CheckBox;
+            if ((bool)chbx.IsChecked)
+            {
+                item_transfer_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            }
+            else
+            {
+                item_transfer_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+            }
+        }
     }
 }

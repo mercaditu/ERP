@@ -8,7 +8,7 @@ namespace Cognitivo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value.ToString() == false.ToString())
+            if (value.ToString() == "false")
                 return new SolidColorBrush(Colors.Crimson);
             else
                 return new SolidColorBrush(Colors.Black);

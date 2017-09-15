@@ -563,7 +563,7 @@
 									  CellEditEnding="Detail_CellEditEnding">
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">
-                            <Setter Property="Foreground" Value="{Binding InStock, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Color}}" />
+                            <Setter Property="Foreground" Value="{Binding InStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Color}}" />
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>

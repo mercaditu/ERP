@@ -57,6 +57,9 @@
                                     ValidatesOnExceptions=True,
                                     UpdateSourceTrigger=PropertyChanged,
                                     ValidatesOnDataErrors=True, StringFormat={}{0:N}}" TextChanged="TextBox_TextChanged" />
+                    
+                    <Label Content="{lex:Loc WithHoldingAmount}" Style="{StaticResource input_label}" />
+                    <TextBox x:Name="Amount" Style="{StaticResource input_textbox}" TextChanged="Amount_TextChanged" />
                 </StackPanel>
 
                 <DataGrid x:Name="dgbinvoice" Margin="8,4" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">

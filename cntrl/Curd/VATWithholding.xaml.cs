@@ -74,7 +74,7 @@ namespace cntrl
 
             payment_withholding_tax.id_currencyfx = ((dynamic)_invoiceList.FirstOrDefault()).id_currencyfx;
             payment_withholding_tax.withholding_number = txtnumber.Text;
-            payment_withholding_tax.value = (decimal)lbltotalvat.Content;
+            payment_withholding_tax.value = Convert.ToDecimal(lbltotalvat.Content);
             payment_withholding_tax.trans_date = (DateTime)DtpTransdate.SelectedDate;
             payment_withholding_tax.expire_date = (DateTime)DtpTransdate.SelectedDate;
 
@@ -213,6 +213,13 @@ namespace cntrl
                     lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
                 }
             }
+        }
+
+       
+
+        private void Amount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            lbltotalvat.Content = Amount.Text;
         }
     }
 }

@@ -177,7 +177,7 @@
 												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
                         <DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto" />
                         <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto" />
-                        <DataGridTextColumn MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
+                        <DataGridTextColumn MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" SortMemberPath="value_system" >
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" System" /></TextBlock>
                             </DataGridTextColumn.Header>
@@ -185,11 +185,11 @@
                                 <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
                                     <Binding Path="value_system" TargetNullValue="" Mode="TwoWay" />
-                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                                    <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay"  />
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn  Width="64" ElementStyle="{StaticResource RightAlignStyle}">
+                        <DataGridTextColumn  Width="64" ElementStyle="{StaticResource RightAlignStyle}" SortMemberPath="value_counted">
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" Real" /></TextBlock>
                             </DataGridTextColumn.Header>
@@ -201,7 +201,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}"  ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" >
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}"  ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" SortMemberPath="unit_value">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">

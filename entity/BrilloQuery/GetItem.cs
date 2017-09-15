@@ -8,10 +8,38 @@ namespace entity.BrilloQuery
     {
         public ICollection<Item> Items { get; set; }
 
-        public GetItems()
+        public GetItems(bool IgnorStock)
         {
             Items = new List<Item>();
-            string query = @"SET sql_mode = '';
+            string query = "";
+            if (IgnorStock)
+            {
+                 query = @"SET sql_mode = '';
+							select
+								 item.id_item as ID,
+								 item.code as Code,
+								 item.name as Name,
+								 brand.name as Brand,
+								 item.id_company as CompanyID,
+								 item.is_active as IsActive,
+								 item.id_item_type,
+								 0 as Quantity
+
+								 from items as item
+
+								 left outer join item_product as prod on prod.id_item = item.id_item
+								 left outer join item_brand as brand on brand.id_brand = item.id_brand
+								
+
+								 where (item.id_company = {0} or item.id_company is null)
+								 and item.is_active = 1
+
+								 group by item.id_item
+								 order by item.name";
+            }
+            else
+            {
+                 query = @"SET sql_mode = '';
 							select
 								 item.id_item as ID,
 								 item.code as Code,
@@ -38,6 +66,7 @@ namespace entity.BrilloQuery
 
 								 group by item.id_item
 								 order by item.name";
+            }
 
             query = string.Format(query, CurrentSession.Id_Company, CurrentSession.Id_Branch);
 

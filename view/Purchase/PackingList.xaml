@@ -355,7 +355,7 @@
                     </TabItem>
                 </TabControl>
                 <Controls:SmartBox_Item x:Name="sbxItem"
-                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8" Select="SmartBox_Item_Select" />
+                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8" Select="SmartBox_Item_Select" IgnorStock="True"/>
             </Grid>
         </Grid>
 

@@ -30,6 +30,15 @@ namespace cntrl.Controls
             set { SetValue(QuantityIntegrationProperty, value); }
         }
 
+
+        public static readonly DependencyProperty IgnorStockProperty = DependencyProperty.Register("IgnorStock", typeof(bool), typeof(SmartBox_Item));
+
+        public bool IgnorStock
+        {
+            get { return (bool)GetValue(IgnorStockProperty); }
+            set { SetValue(IgnorStockProperty, value); }
+        }
+
         //Quantity of the Popup control if used.
         public decimal Quantity
         {
@@ -70,6 +79,7 @@ namespace cntrl.Controls
             get { return _ExactSearch; }
             set
             {
+
                 entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
                 _ExactSearch = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly) ? value : false;
                 RaisePropertyChanged("ExactSearch");
@@ -135,7 +145,7 @@ namespace cntrl.Controls
         
         protected virtual void OnLocationChange(int newvalue)
         {
-            var task = Task.Factory.StartNew(() => LoadData(newvalue));
+            var task = Task.Factory.StartNew(() => LoadData(newvalue,IgnorStock));
         }
        
 
@@ -197,6 +207,7 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
+            
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
             Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.Include_OutOfStock) == true ? false : true;
 
@@ -212,7 +223,12 @@ namespace cntrl.Controls
 
             if (entity.CurrentSession.Allow_BarCodeSearchOnly)
             {    
-                Settings.ExactSearch = true;            
+                Settings.ExactSearch = true;
+                ExactSearch = true;
+            }
+            else
+            {
+                ExactSearch = false;
             }
             smartBoxItemSetting.Default.Save();
             
@@ -223,7 +239,7 @@ namespace cntrl.Controls
         private void _SmartBox_Item_Loaded(object sender, RoutedEventArgs e)
         {
             int LocId = LocationID;
-            LoadData(LocationID);
+            LoadData(LocationID,IgnorStock);
 
             //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
             //Load_BasicData(null, null);
@@ -234,7 +250,7 @@ namespace cntrl.Controls
             //myTimer.Start();
         }
 
-        private void LoadData(int LocId)
+        private void LoadData(int LocId, bool IgnorStock)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
             {
@@ -242,10 +258,10 @@ namespace cntrl.Controls
                 tbxSearch.IsEnabled = false;
             }));
             
-            var task = Task.Factory.StartNew(() => LoadData_Thread(LocId));
+            var task = Task.Factory.StartNew(() => LoadData_Thread(LocId,IgnorStock));
         }
 
-        private void LoadData_Thread(int LocID)
+        private void LoadData_Thread(int LocID,bool IgnorStock)
         {
             Items = null;
 
@@ -253,7 +269,7 @@ namespace cntrl.Controls
 
             if (LocID == 0)
             {
-                Execute = new entity.BrilloQuery.GetItems();
+                Execute = new entity.BrilloQuery.GetItems(IgnorStock);
             }
             else
             {
@@ -429,7 +445,7 @@ namespace cntrl.Controls
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            LoadData(LocationID);
+            LoadData(LocationID,IgnorStock);
         }
 
         public void SmartBoxItem_Focus()

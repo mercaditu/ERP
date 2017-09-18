@@ -187,7 +187,11 @@ namespace entity
                                 ChildBalance -= ChildBalance;
                             }
 
-                            number = Parent_Schedual.purchase_invoice.number;
+                         
+                            if (Parent_Schedual.purchase_invoice!=null)
+                            {
+                                number = Parent_Schedual.purchase_invoice.number;
+                            }
                             if (Parent_Schedual.id_purchase_invoice != null)
                             {
                                 child_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
@@ -239,7 +243,12 @@ namespace entity
                             }
 
                             ///
-                            number = Parent_Schedual.sales_invoice.number;
+                            if (Parent_Schedual.sales_invoice!=null)
+                            {
+                                number = Parent_Schedual.sales_invoice.number;
+                            }
+                      
+
                             if (Parent_Schedual.id_sales_invoice != null)
                             {
                                 child_schedual.id_sales_invoice = Parent_Schedual.id_sales_invoice;

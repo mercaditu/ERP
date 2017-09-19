@@ -21,8 +21,8 @@ select
                              inner join item_transfer_detail as itd on it.id_transfer = itd.id_transfer
                              inner join item_product as ip on itd.id_item_product = ip.id_item_product
                              inner join items as i on ip.id_item = i.id_item
-                             left join app_location as Origin on it.app_location_origin_id_location = Origin.id_location
-                             left join app_location as Destination on it.app_location_destination_id_location = Destination.id_location
+                             inner join app_location as Origin on it.app_location_origin_id_location = Origin.id_location
+                             inner join app_location as Destination on it.app_location_destination_id_location = Destination.id_location
                              left join app_branch as OriginB on it.app_branch_origin_id_branch = OriginB.id_branch
                              left join app_branch as DestinationB on it.app_branch_destination_id_branch = DestinationB.id_branch
                              left join projects as p on it.id_project = p.id_project

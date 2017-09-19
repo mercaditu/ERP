@@ -268,7 +268,9 @@
                                 <ColumnDefinition Width="2" />
                                 <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
-                            <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                            <Controls:SmartBox_Item x:Name="sbxItem"  Grid.Column="2"
+                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Select="SmartBox_Item_Select" IgnorStock="True"/>
+                            <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Margin="0,50,0,0"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList" SelectionChanged="GridVerifiedList_SelectionChanged"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
@@ -296,8 +298,8 @@
                                     </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" />
-                            <DataGrid Grid.Column="2" CanUserDeleteRows="False" CanUserAddRows="False" x:Name="dgApproved"
+                            <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" Margin="0,50,0,0" />
+                            <DataGrid Grid.Column="2" CanUserDeleteRows="False" CanUserAddRows="False" x:Name="dgApproved" Margin="0,50,0,0"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
                                   RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
@@ -354,8 +356,7 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <Controls:SmartBox_Item x:Name="sbxItem"
-                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8" Select="SmartBox_Item_Select" IgnorStock="True"/>
+               
             </Grid>
         </Grid>
 

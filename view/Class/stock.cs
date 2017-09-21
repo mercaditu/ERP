@@ -50,9 +50,36 @@ namespace Cognitivo.Class
             return GenerateList(Generate.DataTable(query));
         }
 
+        public List<StockList> ByLot(int BranchID, DateTime TransDate)
+        {
+            string query = @"
+                               set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                 select * from(
+                                select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
+                                ip.id_item_product as ProductID,  (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
+                                 measure.name as Measurement,    
+                                 (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(im.id_movement)) AS Cost,
+                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,
+                                im.id_movement as MovementID
+                                 from item_movement as im
+                                left join item_movement as child on im.id_movement = child.parent_id_movement
+                                inner join item_product as ip on im.id_item_product = ip.id_item_product
+                                inner join items as i on ip.id_item = i.id_item
+                                inner join app_location as l on im.id_location = l.id_location
+                                inner join app_branch as b on l.id_branch = b.id_branch
+                                left join item_brand as brand on brand.id_brand = i.id_brand
+                                left join app_measurement as measure on i.id_measurement = measure.id_measurement
+                                where im.id_company = {0} and b.id_branch = {1} and im.trans_date <= '{2}'
+                                group by im.id_movement
+                                order by im.expire_date) as movement where Quantity>0";
+            query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
+            return GenerateList(Generate.DataTable(query));
+        }
+
         public List<StockList> ByLocation_BatchCode(int LocationID, DateTime TransDate)
         {
-            string query = @" 
+            string query = @"
                                 set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 select 
                                 ip.id_item_product as ProductID,

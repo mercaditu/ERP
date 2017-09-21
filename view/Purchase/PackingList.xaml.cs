@@ -72,14 +72,14 @@ namespace Cognitivo.Purchase
                         purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
                         if (id_item > 0)
                         {
-                            if (purchase_packing_detail.verified_by > 0 && purchase_packing_detail.id_item == id_item)
+                            if ((purchase_packing_detail.verified_by > 0  || purchase_packing_detail.parent!=null) && purchase_packing_detail.id_item == id_item)
                                 return true;
                             else
                                 return false;
                         }
                         else
                         {
-                            if (purchase_packing_detail.verified_by > 0)
+                            if (purchase_packing_detail.verified_by > 0 || purchase_packing_detail.parent != null)
                                 return true;
                             else
                                 return false;
@@ -301,7 +301,8 @@ namespace Cognitivo.Purchase
                             quantity = sbxItem.Quantity,
                             security_user = PurchasePackingListDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault(),
                             app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault(),
-                            verified_by = CurrentSession.Id_User
+                            verified_by = CurrentSession.Id_User,
+                            parent= _purchase_packing_detail
                         };
 
                         purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);

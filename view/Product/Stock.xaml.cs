@@ -55,10 +55,21 @@ namespace Cognitivo.Product
 
             if (app_branch != null)
             {
-                Class.StockCalculations StockCalculations = new Class.StockCalculations();
+                if (chkstock.IsChecked==true)
+                {
+                    Class.StockCalculations StockCalculations = new Class.StockCalculations();
 
-                inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
-                inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
+                    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
+                    inventoryViewSource.Source = StockCalculations.ByLot(app_branch.id_branch, InventoryDate);
+                }
+                else
+                {
+                    Class.StockCalculations StockCalculations = new Class.StockCalculations();
+
+                    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
+                    inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
+                }
+                
 
                 TextBox_TextChanged(null, null);
             }
@@ -112,20 +123,39 @@ namespace Cognitivo.Product
             {
                 int id_item_product = _item_movement.ProductID;
                 int id_location = _item_movement.LocationID;
+                int id_movement =(int)_item_movement.MovementID;
 
                 using (db db = new db())
                 {
                     item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-                    item_movementViewSource.Source = await db.item_movement
-                        .Where(x => x.id_company == CurrentSession.Id_Company
-                                                        && x.id_item_product == id_item_product
-                                                        && x.app_location.id_location == id_location
-                                                        && x.status == Status.Stock.InStock
-                                                        && x.trans_date <= InventoryDate
-                                                        )
-                                                        .OrderByDescending(x => x.trans_date)
-                                                        .Take(100)
-                                                        .Include(x => x.item_product).ToListAsync();
+                    if (chkstock.IsChecked==true)
+                    {
+                        item_movementViewSource.Source = await db.item_movement
+                      .Where(x => x.id_company == CurrentSession.Id_Company
+                                                      && x.id_item_product == id_item_product
+                                                      && x.app_location.id_location == id_location
+                                                      && x.status == Status.Stock.InStock
+                                                      && x.trans_date <= InventoryDate
+                                                      && (x.parent.id_movement == id_movement || x.id_movement==id_movement)
+                                                      )
+                                                      .OrderByDescending(x => x.trans_date)
+
+                                                      .Include(x => x.item_product).ToListAsync();
+                    }
+                    else
+                    {
+                        item_movementViewSource.Source = await db.item_movement
+                    .Where(x => x.id_company == CurrentSession.Id_Company
+                                                    && x.id_item_product == id_item_product
+                                                    && x.app_location.id_location == id_location
+                                                    && x.status == Status.Stock.InStock
+                                                    && x.trans_date <= InventoryDate
+                                                    )
+                                                    .OrderByDescending(x => x.trans_date)
+                                                    .Take(100)
+                                                    .Include(x => x.item_product).ToListAsync();
+                    }
+                  
 
                     foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
                     {
@@ -142,6 +172,12 @@ namespace Cognitivo.Product
                     }
                 }
             }
+        }
+
+        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+            calc_Inventory();
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -15,7 +15,7 @@ select
                              it.number as Transfer, it.comment as Comment, u.name as UserName, r.name as RequestedName,
                              i.name as ItemName, i.code as ItemCode,
                              itd.quantity_destination as Quantity_D, itd.quantity_origin as Quantity_O,
-                         (select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = i.id_item order by item_tag_detail.is_default limit 0,1) as Tag,
+                             (select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = i.id_item order by item_tag_detail.is_default limit 0,1) as Tag,
                              p.name as Project
                              from item_transfer as it
                              inner join item_transfer_detail as itd on it.id_transfer = itd.id_transfer
@@ -28,7 +28,7 @@ select
                              left join projects as p on it.id_project = p.id_project
                              inner join security_user as u on it.id_user = u.id_user
                              left join security_user as r on it.user_requested_id_user = r.id_user
-                             where  it.id_company=@CompanyID  and it.trans_date between '@StartDate' and '@EndDate'
+                             where  it.id_company=@CompanyID  and it.trans_date between '@StartDate' and '@EndDate' and it.transfer_type=0
                              order by it.trans_date";
     }
 }

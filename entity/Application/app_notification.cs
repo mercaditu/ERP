@@ -7,20 +7,20 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    public partial class app_comment : Audit, IDataErrorInfo
+    public partial class app_notification : Audit, IDataErrorInfo
     {
-        public app_comment()
+        public app_notification()
         {
 
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
-            is_active = true;
+        
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_comment { get; set; }
+        public int id_notification { get; set; }
 
         [Required]
         public App.Names id_application { get; set; }
@@ -33,20 +33,10 @@
 
 
 
-        public bool is_active
-        {
-            get { return _is_active; }
-            set
-            {
-                if (_is_active != value)
-                {
-                    _is_active = value;
-                    RaisePropertyChanged("is_active");
-                }
-            }
-        }
+       
 
-        private bool _is_active;
+        public virtual app_department notified_department { get; set; }
+        public virtual security_user notified_user { get; set; }
 
 
         public string Error
@@ -86,11 +76,7 @@
                     if (id_application == 0)
                         return "Application needs to be Selected";
                 }
-                //if (columnName == "designer_name")
-                //{
-                //    if (string.IsNullOrEmpty(designer_name))
-                //        return "Designer name needs to be filled";
-                //}
+             
                 return "";
             }
         }

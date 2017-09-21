@@ -197,6 +197,7 @@
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
     <Compile Include="Application\app_comment.cs" />
+    <Compile Include="Application\app_notification.cs" />
     <Compile Include="Application\app_company_interest.cs" />
     <Compile Include="Apps.cs" />
     <Compile Include="Application\app_account_session.cs" />
@@ -354,6 +355,10 @@
     <Compile Include="Migrations\201706211256507_auditandstructurechange.cs" />
     <Compile Include="Migrations\201706211256507_auditandstructurechange.Designer.cs">
       <DependentUpon>201706211256507_auditandstructurechange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709211122046_PackinglistNotificationchanges.cs" />
+    <Compile Include="Migrations\201709211122046_PackinglistNotificationchanges.Designer.cs">
+      <DependentUpon>201709211122046_PackinglistNotificationchanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
@@ -822,6 +827,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706211256507_auditandstructurechange.resx">
       <DependentUpon>201706211256507_auditandstructurechange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709211122046_PackinglistNotificationchanges.resx">
+      <DependentUpon>201709211122046_PackinglistNotificationchanges.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

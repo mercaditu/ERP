@@ -57,6 +57,7 @@
             AuditManager.DefaultConfiguration.Exclude<item_movement_dimension>();
             AuditManager.DefaultConfiguration.Exclude<item_movement_value>();
             AuditManager.DefaultConfiguration.Exclude<payment_schedual>();
+            AuditManager.DefaultConfiguration.Exclude<app_notification>();
             AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
         // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
         (context as db).AuditEntries.AddRange(audit.Entries);
@@ -121,6 +122,7 @@
         public virtual DbSet<app_terminal> app_terminal { get; set; }
         public virtual DbSet<app_location> app_location { get; set; }
         public virtual DbSet<app_configuration> app_configuration { get; set; }
+        public virtual DbSet<app_notification> app_notification { get; set; }
         public virtual DbSet<contact> contacts { get; set; }
         public virtual DbSet<contact_field_value> contact_field_value { get; set; }
         public virtual DbSet<contact_role> contact_role { get; set; }

@@ -45,6 +45,7 @@ namespace Cognitivo.Sales
             CollectionViewSource app_terminalViewSource = FindResource("app_terminalViewSource") as CollectionViewSource;
             app_terminalViewSource.Source = await PackingListDB.app_terminal.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
             await PackingListDB.app_measurement.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).LoadAsync();
+
             CollectionViewSource app_measurevolume = FindResource("app_measurevolume") as CollectionViewSource;
             CollectionViewSource app_measureweight = FindResource("app_measureweight") as CollectionViewSource;
             app_measurevolume.Source = PackingListDB.app_measurement.Local;
@@ -96,14 +97,14 @@ namespace Cognitivo.Sales
                         sales_packing_detail sales_packing_detail = (sales_packing_detail)i;
                         if (id_item > 0)
                         {
-                            if (sales_packing_detail.user_verified == true && sales_packing_detail.id_item == id_item)
+                            if ((sales_packing_detail.user_verified == true || sales_packing_detail.parent != null) && sales_packing_detail.id_item == id_item)
                                 return true;
                             else
                                 return false;
                         }
                         else
                         {
-                            if (sales_packing_detail.user_verified == true)
+                            if (sales_packing_detail.user_verified == true || sales_packing_detail.parent != null)
                                 return true;
                             else
                                 return false;

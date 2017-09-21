@@ -706,7 +706,7 @@
 
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
-                            <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                            <Grid Background="WhiteSmoke" Margin="4" >
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <Grid Height="130" Width="130" AllowDrop="True" Background="White" Margin="4">
                                         <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
@@ -717,7 +717,7 @@
                                         <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                         <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
                                     </StackPanel>
-                                    <StackPanel Visibility="{Binding item,Source={StaticResource sales_invoicesales_invoice_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
+                                    <StackPanel>
                                         <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                         <TextBox Style="{StaticResource input_textbox}"
 						                                    Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />

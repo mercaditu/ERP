@@ -116,7 +116,13 @@ namespace entity
 		public virtual app_branch app_branch { get; set; }
 		public virtual item item { get; set; }
 
-		public string Error
+   
+
+        public virtual ICollection<sales_packing_detail> child { get; set; }
+
+        public virtual sales_packing_detail parent { get; set; }
+
+        public string Error
 		{
 			get
 			{

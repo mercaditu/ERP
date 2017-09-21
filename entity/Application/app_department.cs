@@ -9,6 +9,10 @@ namespace entity
 {
     public partial class app_department : Audit, IDataErrorInfo
     {
+        public enum types
+        {
+
+        }
         public app_department()
         {
             is_active = true;
@@ -23,6 +27,8 @@ namespace entity
 
         [Required]
         public string name { get; set; }
+
+        public types type { get; set; }
 
         public bool is_active
         {

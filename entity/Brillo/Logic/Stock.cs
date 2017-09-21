@@ -246,6 +246,28 @@ namespace entity.Brillo.Logic
                                          comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
                                          ));
             }
+
+            //if (item_movementList.Count() == 0)
+            //{
+            //    foreach (sales_packing_detail packing_detail in
+            //  sales_packing
+            //  .sales_packing_detail
+            //  .Where(x => x.item.item_product.Count() > 0
+            //  && x.sales_packing_relation.Count() == 0
+            //  && x.user_verified))
+            //    {
+            //        item_movement item_movement = db.item_movement.Where(x => x.id_sales_packing_detail == packing_detail.id_sales_packing_detail).FirstOrDefault();
+            //        if (item_movement!=null)
+            //        {
+            //            if (item_movement.debit!= packing_detail.quantity)
+            //            {
+            //                item_movement.debit = packing_detail.quantity;
+            //            }
+            //        }
+
+            //    }
+            //}
+
             //Return List so we can save into context.
             return item_movementList;
         }
@@ -659,11 +681,11 @@ namespace entity.Brillo.Logic
                                 if (sales_packing_detail != null)
                                 {
                                     //Get approved item of this item.
-                                    sales_packing_detail approved_sales_packing = db.sales_packing_detail.Where(x => x.id_sales_packing == sales_packing_detail.id_sales_packing  && x.id_item == sales_packing_detail.id_item && x.user_verified).FirstOrDefault();
+                                    sales_packing_detail approved_sales_packing = db.sales_packing_detail.Where(x => x.id_sales_packing == sales_packing_detail.id_sales_packing && x.id_item == sales_packing_detail.id_item && x.user_verified).FirstOrDefault();
 
                                     if (approved_sales_packing.item_movement != null)
                                     {
-                                        List<item_movement> MovementList = db.item_movement.Where(x=>x.id_sales_packing_detail == approved_sales_packing.id_sales_packing_detail).ToList();
+                                        List<item_movement> MovementList = db.item_movement.Where(x => x.id_sales_packing_detail == approved_sales_packing.id_sales_packing_detail).ToList();
                                         foreach (item_movement mov in MovementList)
                                         {
                                             mov.id_sales_invoice_detail = detail.id_sales_invoice_detail;
@@ -1177,6 +1199,25 @@ namespace entity.Brillo.Logic
                     else if (ApplicationID == App.Names.SalesInvoice)
                     {
                         item_movement.id_sales_invoice_detail = TransactionDetailID;
+
+                        sales_invoice_detail detail = db.sales_invoice_detail.Find(TransactionDetailID);
+
+                        if (detail != null)
+                        {
+                            if (detail.item.item_product.FirstOrDefault() != null)
+                            {
+                                if (detail.expire_date != null)
+                                {
+                                    item_movement.expire_date = detail.expire_date;
+                                }
+                                if (detail.batch_code != null && detail.batch_code != "")
+                                {
+                                    item_movement.code = detail.batch_code;
+                                }
+
+                                item_movement.code = detail.batch_code;
+                            }
+                        }
                     }
                     else if (ApplicationID == App.Names.SalesReturn)
                     {
@@ -1475,6 +1516,8 @@ namespace entity.Brillo.Logic
                 else if (ApplicationID == App.Names.SalesInvoice)
                 {
                     item_movement.id_sales_invoice_detail = TransactionDetailID;
+
+
                 }
                 else if (ApplicationID == App.Names.SalesReturn)
                 {

@@ -109,6 +109,10 @@ namespace entity
         public virtual ICollection<purchase_packing_dimension> purchase_packing_dimension { get; set; }
         public virtual ICollection<purchase_packing_detail_relation> purchase_packing_detail_relation { get; set; }
 
+        public virtual ICollection<purchase_packing_detail> child { get; set; }
+
+        public virtual purchase_packing_detail parent { get; set; }
+
 
         public string Error
         {

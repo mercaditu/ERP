@@ -105,8 +105,11 @@ namespace entity
                 {
                     _code = value;
                     RaisePropertyChanged("code");
-                    RaisePropertyChanged("supplier_name");
+
                 }
+
+                supplier_name = value;
+                RaisePropertyChanged("supplier_name");
             }
         }
 
@@ -147,10 +150,7 @@ namespace entity
         {
             get
             {
-                if (string.IsNullOrEmpty(_supplier_name))
-                {
-                    _supplier_name = name;
-                }
+
 
                 return _supplier_name;
             }
@@ -286,7 +286,7 @@ namespace entity
                     {
                         using (db db = new db())
                         {
-                            if (db.items.Any(x => x.code == code && x.id_item != id_item && x.id_company==CurrentSession.Id_Company))
+                            if (db.items.Any(x => x.code == code && x.id_item != id_item && x.id_company == CurrentSession.Id_Company))
                             {
                                 return "Duplicate Code Not Allowed";
                             }

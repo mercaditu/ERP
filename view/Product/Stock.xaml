@@ -9,7 +9,7 @@
        xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-	  MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
+	  MinWidth="900" MinHeight="600" Loaded="StockPage_Loaded"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -120,6 +120,7 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+            <CheckBox x:Name="chkstock" Content="By Expire" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
             <metro:ToggleSwitch IsChecked="{Binding ElementName=this, Path=ShowZeros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Grid>
                 <TextBox Width="155" x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="14,0,0,0" TextChanged="TextBox_TextChanged" />
@@ -127,7 +128,8 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
+        <StackPanel HorizontalAlignment="Center" Grid.Column="1" Margin="0,0,248,0">
+
             <TextBlock Text="{Binding ElementName=this, Path=InventoryDate,
 									  StringFormat=D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 									  MouseDown="Today_MouseDown" HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray" />

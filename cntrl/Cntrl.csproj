@@ -309,6 +309,9 @@
     <Compile Include="Controls\InventoryFlowSalesPanel.xaml.cs">
       <DependentUpon>InventoryFlowSalesPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MovementPrint.xaml.cs">
+      <DependentUpon>MovementPrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
     </Compile>
@@ -957,6 +960,10 @@
     <Page Include="Controls\InventoryFlowSalesPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MovementPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NotificationButton.xaml">
       <SubType>Designer</SubType>

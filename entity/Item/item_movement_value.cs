@@ -4,9 +4,9 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class item_movement_value : Audit
+    public partial class item_movement_value2 : Audit
     {
-        public item_movement_value()
+        public item_movement_value2()
         {
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;

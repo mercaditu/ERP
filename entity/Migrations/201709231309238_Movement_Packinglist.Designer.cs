@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class PackinglistNotificationchanges : IMigrationMetadata
+    public sealed partial class Movement_Packinglist : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PackinglistNotificationchanges));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Movement_Packinglist));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709211122046_PackinglistNotificationchanges"; }
+            get { return "201709231309238_Movement_Packinglist"; }
         }
         
         string IMigrationMetadata.Source

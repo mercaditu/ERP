@@ -919,6 +919,22 @@ namespace Cognitivo.Sales
 
         }
 
-     
+        private void Movement_Print(object sender, MouseButtonEventArgs e)
+        {
+            sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+            if (sales_invoice!=null)
+            {
+                Product.PrintMovement PrintMovement = new Product.PrintMovement();
+                PrintMovement.SalesID = sales_invoice.id_sales_invoice;
+                Window window = new Window
+                {
+                    Title = "Print",
+                    Content = PrintMovement
+                };
+
+                window.ShowDialog();
+            }
+           
+        }
     }
 }

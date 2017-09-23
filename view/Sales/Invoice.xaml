@@ -321,6 +321,10 @@
                                 <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="Print_Click"><Run Text="{lex:Loc Document}" /></Hyperlink></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
+                                <Label Content="" Style="{StaticResource btn_Label}" />
+                                <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="Movement_Print"><Run Text="{lex:Loc Movement Print}" /></Hyperlink></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <Label Content="" Style="{StaticResource btn_Label}" />
                                 <TextBlock Margin="5,0" VerticalAlignment="Center">
 										<Hyperlink PreviewMouseUp="Return_Click">

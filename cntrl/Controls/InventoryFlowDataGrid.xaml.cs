@@ -172,6 +172,8 @@ namespace cntrl.Controls
 
     public class ItemMovement
     {
+        public byte[] file;
+
         public long MovementID { get; set; }
         public DateTime Date { get; set; }
         public string Branch { get; set; }

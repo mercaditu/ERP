@@ -69,7 +69,9 @@ namespace entity
 		public int? id_sales_packing_detail { get; set; }
 		public int? id_purchase_packing_detail { get; set; }
 		public int id_location { get; set; }
-		public Status.Stock status { get; set; }
+        public long id_movement_value_rel { get; set; }
+        public Status.Stock status { get; set; }
+
 
 		[Required]
 		public decimal debit
@@ -108,6 +110,7 @@ namespace entity
 
 		public DateTime? expire_date { get; set; }
 		public DateTime trans_date { get; set; }
+
 
 		[NotMapped]
 		public string DimensionComment
@@ -188,8 +191,9 @@ namespace entity
 		public virtual sales_return_detail sales_return_detail { get; set; }
 		public virtual ICollection<item_movement_value> item_movement_value { get; set; }
 		public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
+        public virtual item_movement_value_rel item_movement_value_rel { get; set; }
 
-		public virtual item_product item_product
+        public virtual item_product item_product
 		{
 			get { return _item_product; }
 			set

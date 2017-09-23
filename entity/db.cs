@@ -162,7 +162,9 @@
         public virtual DbSet<item_attachment> item_attachment { get; set; }
         public virtual DbSet<item_price_list> item_price_list { get; set; }
         public virtual DbSet<item_movement> item_movement { get; set; }
-        public virtual DbSet<item_movement_value> item_movement_value { get; set; }
+        public virtual DbSet<item_movement_value> item_movement_value2 { get; set; }
+        public virtual DbSet<item_movement_value_detail> item_movement_value_detail { get; set; }
+        public virtual DbSet<item_movement_value_rel> item_movement_value_rel { get; set; }
         public virtual DbSet<item_recepie> item_recepie { get; set; }
         public virtual DbSet<item_recepie_detail> item_recepie_detail { get; set; }
         public virtual DbSet<item_tag_detail> item_tag_detail { get; set; }

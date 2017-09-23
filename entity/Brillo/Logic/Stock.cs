@@ -247,26 +247,7 @@ namespace entity.Brillo.Logic
                                          ));
             }
 
-            //if (item_movementList.Count() == 0)
-            //{
-            //    foreach (sales_packing_detail packing_detail in
-            //  sales_packing
-            //  .sales_packing_detail
-            //  .Where(x => x.item.item_product.Count() > 0
-            //  && x.sales_packing_relation.Count() == 0
-            //  && x.user_verified))
-            //    {
-            //        item_movement item_movement = db.item_movement.Where(x => x.id_sales_packing_detail == packing_detail.id_sales_packing_detail).FirstOrDefault();
-            //        if (item_movement!=null)
-            //        {
-            //            if (item_movement.debit!= packing_detail.quantity)
-            //            {
-            //                item_movement.debit = packing_detail.quantity;
-            //            }
-            //        }
-
-            //    }
-            //}
+      
 
             //Return List so we can save into context.
             return item_movementList;
@@ -693,10 +674,30 @@ namespace entity.Brillo.Logic
                                             detail.batch_code = mov.code;
                                             detail.expire_date = mov.expire_date;
                                             detail.unit_cost = Brillo.Currency.convert_Values(mov.item_movement_value.Sum(x => x.unit_value),
-                         mov.item_movement_value.FirstOrDefault().id_currencyfx,
-                         detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                                             mov.item_movement_value.FirstOrDefault().id_currencyfx,
+                                             detail.sales_invoice.id_currencyfx, App.Modules.Sales);
                                         }
                                     }
+                                }
+                                List<item_movement> item_movement = sales_packing_relation.sales_packing_detail.item_movement.ToList();
+                                foreach (item_movement _item_movement in item_movement)
+                                {
+                                    //We will delete everything because there is not importation or extra cost associated.
+                                    db.item_movement_value.RemoveRange(_item_movement.item_movement_value);
+
+                                    //Insert New Cost with Default Curreny from Invoice Detail
+                                    int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+                                    decimal DefaultCurrency_Cost = Currency.convert_Values(detail.unit_price, sales_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+
+                                    item_movement_value mov_value = new item_movement_value()
+                                    {
+                                        unit_value = DefaultCurrency_Cost,
+                                        id_currencyfx = ID_CurrencyFX_Default,
+                                        comment = Localize.StringText("DirectCost")
+                                    };
+
+                                    //Adding Value into Movement
+                                    _item_movement.item_movement_value.Add(mov_value);
                                 }
                             }
                         }

@@ -343,6 +343,7 @@ namespace Cognitivo.Sales
         private void select_Item(sales_packing sales_packing, item item, app_branch app_branch, item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
+
             if (sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.id_movement == id_movement && a.user_verified).FirstOrDefault() == null)
             {
                 sales_packing_detail _sales_packing_detail = new sales_packing_detail();
@@ -351,9 +352,14 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.verified_quantity = quantity;
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
+             
+
+
 
                 sales_packing_detail sales_packing_detail = sales_packing.sales_packing_detail.Where(a => a.id_item == item.id_item && a.user_verified == false).FirstOrDefault();
-      
+                _sales_packing_detail.parent = sales_packing_detail;
+
+
                 if (sales_packing_detail != null)
                 {
                     if (sales_packing_detail.sales_packing_relation.Count() > 0)

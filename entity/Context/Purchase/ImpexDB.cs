@@ -137,68 +137,72 @@ namespace entity
                                 //Get total value of a Product Row
                                 decimal itemTotal = Impex_CostDetail.quantity * Impex_CostDetail.unit_cost;
 
-                                item_movement item_movement = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).FirstOrDefault();
-
-                                if (item_movement != null)
+                               List<item_movement> item_movementlIST = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).ToList();
+                                foreach (item_movement item_movement in item_movementlIST)
                                 {
-                                    if (item_movement.item_movement_value.Count > 0)
-                                    {
-                                        //This will clean any previously inserted values. To work with a clean slate.
-                                        base.item_movement_value.RemoveRange(item_movement.item_movement_value);
-                                    }
 
-                                    item_movement_value mov_value = new item_movement_value()
-                                    {
-                                        id_movement = item_movement.id_movement,
-                                        unit_value = Brillo.Currency
-                                        .convert_Values
-                                        (
-                                            Impex_CostDetail.unit_cost,
-                                            impex.impex_import.FirstOrDefault().purchase_invoice.id_currencyfx,
-                                            CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                            App.Modules.Purchase
-                                        ),
-                                        id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                        comment = "Base Cost"
-                                    };
 
-                                    base.item_movement_value.Add(mov_value);
-                                }
-
-                                if (item_movement != null)
-                                {
-                                    foreach (impex_expense _impex_expense in impex_expenses)
+                                    if (item_movement != null)
                                     {
-                                        if (_impex_expense.id_item == 0 || _impex_expense.id_item == Impex_CostDetail.id_item)
+                                        if (item_movement.item_movement_value.Count > 0)
                                         {
-                                            decimal percentage = ((Impex_CostDetail.unit_cost * Impex_CostDetail.quantity) / GrandTotal);
-                                            decimal participation = percentage * Convert.ToDecimal(_impex_expense.value);
-                                            Impex_CostDetail.unit_Importcost = participation / Impex_CostDetail.quantity;
+                                            //This will clean any previously inserted values. To work with a clean slate.
+                                            base.item_movement_value.RemoveRange(item_movement.item_movement_value);
                                         }
 
-                                        //Coeficient is used to get prorated cost of one item
-                                        item_movement_value item_movement_value = new item_movement_value()
+                                        item_movement_value mov_value = new item_movement_value()
                                         {
-                                            unit_value = 
-                                                Brillo.Currency
-                                                .convert_Values
-                                                (
-                                                    Impex_CostDetail.unit_Importcost,
-                                                    impex.impex_import.FirstOrDefault().purchase_invoice.id_currencyfx,
-                                                    CurrentSession.Get_Currency_Default_Rate().id_currencyfx, 
-                                                    App.Modules.Purchase
-                                                ),
+                                            id_movement = item_movement.id_movement,
+                                            unit_value = Brillo.Currency
+                                            .convert_Values
+                                            (
+                                                Impex_CostDetail.unit_cost,
+                                                impex.impex_import.FirstOrDefault().purchase_invoice.id_currencyfx,
+                                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                                App.Modules.Purchase
+                                            ),
                                             id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                            comment = _impex_expense.impex_incoterm_condition.name
+                                            comment = "Base Cost"
                                         };
 
-                                        if (item_movement != null)
-                                        {
-                                            item_movement.item_movement_value.Add(item_movement_value);
-                                        }
+                                        base.item_movement_value.Add(mov_value);
                                     }
 
-                                    item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost, true);
+                                    if (item_movement != null)
+                                    {
+                                        foreach (impex_expense _impex_expense in impex_expenses)
+                                        {
+                                            if (_impex_expense.id_item == 0 || _impex_expense.id_item == Impex_CostDetail.id_item)
+                                            {
+                                                decimal percentage = ((Impex_CostDetail.unit_cost * Impex_CostDetail.quantity) / GrandTotal);
+                                                decimal participation = percentage * Convert.ToDecimal(_impex_expense.value);
+                                                Impex_CostDetail.unit_Importcost = participation / Impex_CostDetail.quantity;
+                                            }
+
+                                            //Coeficient is used to get prorated cost of one item
+                                            item_movement_value item_movement_value = new item_movement_value()
+                                            {
+                                                unit_value =
+                                                    Brillo.Currency
+                                                    .convert_Values
+                                                    (
+                                                        Impex_CostDetail.unit_Importcost,
+                                                        impex.impex_import.FirstOrDefault().purchase_invoice.id_currencyfx,
+                                                        CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                                        App.Modules.Purchase
+                                                    ),
+                                                id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                                comment = _impex_expense.impex_incoterm_condition.name
+                                            };
+
+                                            if (item_movement != null)
+                                            {
+                                                item_movement.item_movement_value.Add(item_movement_value);
+                                            }
+                                        }
+
+                                        item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost, true);
+                                    }
                                 }
                             }
                         }

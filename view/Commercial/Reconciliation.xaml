@@ -75,6 +75,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentType}" Binding="{Binding payment_type.name, Mode=OneWay}" />
+                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentTypeNumber}" Binding="{Binding payment_detail.payment_type_number, Mode=OneWay}" />
 
                         <!-- Balance -->
                         <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Debit}" Binding="{Binding debit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />

@@ -497,7 +497,7 @@ namespace entity.Brillo.Logic
 
                             //Insert New Cost with Default Curreny from Invoice Detail
                             int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
-                            decimal DefaultCurrency_Cost = Currency.convert_Values(purchase_invoice_detail.unit_cost, purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+                            decimal DefaultCurrency_Cost = Currency.convert_Values(purchase_invoice_detail.unit_cost * purchase_invoice_detail.quantity, purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
 
                             item_movement_value mov_value = new item_movement_value()
                             {
@@ -662,22 +662,25 @@ namespace entity.Brillo.Logic
                                 if (sales_packing_detail != null)
                                 {
                                     //Get approved item of this item.
-                                    sales_packing_detail approved_sales_packing = db.sales_packing_detail.Where(x => x.id_sales_packing == sales_packing_detail.id_sales_packing && x.id_item == sales_packing_detail.id_item && x.user_verified).FirstOrDefault();
-
-                                    if (approved_sales_packing.item_movement != null)
+                                    List<sales_packing_detail> approved_sales_packing = sales_packing_detail.child.ToList();
+                                    foreach (sales_packing_detail sales_packing in approved_sales_packing)
                                     {
-                                        List<item_movement> MovementList = db.item_movement.Where(x => x.id_sales_packing_detail == approved_sales_packing.id_sales_packing_detail).ToList();
-                                        foreach (item_movement mov in MovementList)
+                                        if (sales_packing.item_movement != null)
                                         {
-                                            mov.id_sales_invoice_detail = detail.id_sales_invoice_detail;
-                                            mov.sales_invoice_detail = detail;
-                                            detail.batch_code = mov.code;
-                                            detail.expire_date = mov.expire_date;
-                                            detail.unit_cost = Brillo.Currency.convert_Values(mov.item_movement_value.Sum(x => x.unit_value),
-                                             mov.item_movement_value.FirstOrDefault().id_currencyfx,
-                                             detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                                            List<item_movement> MovementList = db.item_movement.Where(x => x.id_sales_packing_detail == sales_packing.id_sales_packing_detail).ToList();
+                                            foreach (item_movement mov in MovementList)
+                                            {
+                                                mov.id_sales_invoice_detail = detail.id_sales_invoice_detail;
+                                                mov.sales_invoice_detail = detail;
+                                                detail.batch_code = mov.code;
+                                                detail.expire_date = mov.expire_date;
+                                                detail.unit_cost = Brillo.Currency.convert_Values(mov.item_movement_value.Sum(x => x.unit_value),
+                                                 mov.item_movement_value.FirstOrDefault().id_currencyfx,
+                                                 detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                                            }
                                         }
                                     }
+                                   
                                 }
                                 List<item_movement> item_movement = sales_packing_relation.sales_packing_detail.item_movement.ToList();
                                 foreach (item_movement _item_movement in item_movement)
@@ -1291,6 +1294,8 @@ namespace entity.Brillo.Logic
                     //Logic for Value
                     if (CurrencyFXID > 0)
                     {
+
+
                         item_movement_value item_movement_value = new item_movement_value();
                         if (Unitcost > 0)
                         {
@@ -1303,7 +1308,11 @@ namespace entity.Brillo.Logic
 
                         item_movement_value.id_currencyfx = CurrencyFXID;
                         item_movement_value.comment = Localize.StringText("DirectCost");
-                        item_movement.item_movement_value.Add(item_movement_value);
+
+                        item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                        item_movement_value_rel.item_movement_value.Add(item_movement_value);
+                        item_movement_value_rel.item_movement.Add(item_movement);
+                        db.item_movement_value_rel.Add(item_movement_value_rel);
                     }
 
 
@@ -1411,7 +1420,11 @@ namespace entity.Brillo.Logic
 
                     item_movement_value.id_currencyfx = CurrencyFXID;
                     item_movement_value.comment = Localize.StringText("DirectCost");
-                    item_movement.item_movement_value.Add(item_movement_value);
+                    item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                    item_movement_value_rel.item_movement_value.Add(item_movement_value);
+                    item_movement_value_rel.item_movement.Add(item_movement);
+                    db.item_movement_value_rel.Add(item_movement_value_rel);
+                 
                 }
 
                 Final_ItemMovementLIST.Add(item_movement);
@@ -1570,8 +1583,13 @@ namespace entity.Brillo.Logic
                     item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
                     item_movement_value.comment = Localize.StringText("DirectCost");
 
+
+
                     //Adding Value into Movement
-                    item_movement.item_movement_value.Add(item_movement_value);
+                    item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                    item_movement_value_rel.item_movement_value.Add(item_movement_value);
+                    item_movement_value_rel.item_movement.Add(item_movement);
+                    db.item_movement_value_rel.Add(item_movement_value_rel);
                 }
                 else
                 {

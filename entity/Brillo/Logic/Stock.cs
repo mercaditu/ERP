@@ -494,6 +494,7 @@ namespace entity.Brillo.Logic
                         {
                             //We will delete everything because there is not importation or extra cost associated.
                             db.item_movement_value.RemoveRange(_item_movement.item_movement_value);
+                            db.item_movement_value_rel.Remove(_item_movement.item_movement_value_rel);
 
                             //Insert New Cost with Default Curreny from Invoice Detail
                             int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -506,8 +507,13 @@ namespace entity.Brillo.Logic
                                 comment = Localize.StringText("DirectCost")
                             };
 
+                            item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                            item_movement_value_rel.item_movement_value.Add(mov_value);
+                            item_movement_value_rel.item_movement.Add(_item_movement);
+                            _item_movement.item_movement_value_rel = item_movement_value_rel;
+
                             //Adding Value into Movement
-                            _item_movement.item_movement_value.Add(mov_value);
+                          //  _item_movement.item_movement_value.Add(mov_value);
 
                             //Link Purchsae Invoice With PackingList
                             if (_item_movement.id_purchase_invoice_detail == null)
@@ -687,6 +693,7 @@ namespace entity.Brillo.Logic
                                 {
                                     //We will delete everything because there is not importation or extra cost associated.
                                     db.item_movement_value.RemoveRange(_item_movement.item_movement_value);
+                                    db.item_movement_value_rel.Remove(_item_movement.item_movement_value_rel);
 
                                     //Insert New Cost with Default Curreny from Invoice Detail
                                     int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
@@ -699,8 +706,12 @@ namespace entity.Brillo.Logic
                                         comment = Localize.StringText("DirectCost")
                                     };
 
+                                    item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                                    item_movement_value_rel.item_movement_value.Add(mov_value);
+                                    item_movement_value_rel.item_movement.Add(_item_movement);
+                                    _item_movement.item_movement_value_rel = item_movement_value_rel;
                                     //Adding Value into Movement
-                                    _item_movement.item_movement_value.Add(mov_value);
+                                   // _item_movement.item_movement_value.Add(mov_value);
                                 }
                             }
                         }
@@ -1312,7 +1323,7 @@ namespace entity.Brillo.Logic
                         item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
                         item_movement_value_rel.item_movement_value.Add(item_movement_value);
                         item_movement_value_rel.item_movement.Add(item_movement);
-                        db.item_movement_value_rel.Add(item_movement_value_rel);
+                        item_movement.item_movement_value_rel = item_movement_value_rel;
                     }
 
 
@@ -1423,8 +1434,8 @@ namespace entity.Brillo.Logic
                     item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
                     item_movement_value_rel.item_movement_value.Add(item_movement_value);
                     item_movement_value_rel.item_movement.Add(item_movement);
-                    db.item_movement_value_rel.Add(item_movement_value_rel);
-                 
+                    item_movement.item_movement_value_rel = item_movement_value_rel;
+
                 }
 
                 Final_ItemMovementLIST.Add(item_movement);
@@ -1589,7 +1600,7 @@ namespace entity.Brillo.Logic
                     item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
                     item_movement_value_rel.item_movement_value.Add(item_movement_value);
                     item_movement_value_rel.item_movement.Add(item_movement);
-                    db.item_movement_value_rel.Add(item_movement_value_rel);
+                    item_movement.item_movement_value_rel=item_movement_value_rel;
                 }
                 else
                 {
@@ -1621,7 +1632,10 @@ namespace entity.Brillo.Logic
                         item_movement_value.comment = Localize.StringText("DirectCost");
 
                         //Adding Value into Movement
-                        item_movement.item_movement_value.Add(item_movement_value);
+                        item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                        item_movement_value_rel.item_movement_value.Add(item_movement_value);
+                        item_movement_value_rel.item_movement.Add(item_movement);
+                        item_movement.item_movement_value_rel = item_movement_value_rel;
                     }
                 }
 

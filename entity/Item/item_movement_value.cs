@@ -6,7 +6,7 @@ namespace entity
 
     public partial class item_movement_value2 : Audit
     {
-        public item_movement_value2()
+        public item_movement_value()
         {
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;

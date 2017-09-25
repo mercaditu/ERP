@@ -8,7 +8,7 @@
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
       Name="pageStartup"
-      mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
+      mc:Ignorable="d" d:DesignHeight="900" d:DesignWidth="800">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <Storyboard x:Key="AnimateButton">
@@ -32,7 +32,7 @@
             </Grid>
             <Rectangle Style="{StaticResource line_Bar}" />
         </StackPanel>
-        <Grid Margin="0,90,0,0" MaxWidth="1024">
+        <Grid Margin="0,120,0,0" MaxWidth="1024">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
@@ -144,6 +144,13 @@
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
                         <ProgressBar Margin="0" Width="128" Height="24" HorizontalAlignment="Stretch" />
                         <Label Content="Update Sales Cost" FontSize="10" HorizontalContentAlignment="Center" />
+                    </Grid>
+                </Button>
+                <Button IsDefault="True" Click="btnMovementValue_Clicked" Background="Transparent"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
+                        <ProgressBar Margin="0" Width="128" Height="24" HorizontalAlignment="Stretch" />
+                        <Label Content="Update Movement Values" FontSize="10" HorizontalContentAlignment="Center" />
                     </Grid>
                 </Button>
             </StackPanel>

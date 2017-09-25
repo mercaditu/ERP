@@ -17,8 +17,6 @@ namespace entity
             is_head = true;
             is_read = false;
             timestamp = DateTime.Now;
-
-            item_movement_value = new List<item_movement_value>();
             item_movement = new List<item_movement>();
         }
 
@@ -26,8 +24,12 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id_movement_value_rel { get; set; }
         public bool is_estimate { get; set; }
+        public string batch_code { get; set; }
+        public DateTime? entry_date { get; set; }
+        public decimal total_value { get; set; }
 
-        public virtual ICollection<item_movement_value> item_movement_value { get; set; }
+
+        public virtual ICollection<item_movement_value_detail> item_movement_value_detail { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
     }
 }

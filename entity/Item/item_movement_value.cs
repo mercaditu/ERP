@@ -1,10 +1,11 @@
 namespace entity
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class item_movement_value2 : Audit
+    public partial class item_movement_value : Audit
     {
         public item_movement_value()
         {
@@ -14,6 +15,7 @@ namespace entity
             is_estimate = false;
             is_read = false;
             timestamp = DateTime.Now;
+          
         }
 
         [Key]
@@ -28,6 +30,7 @@ namespace entity
         public bool is_estimate { get; set; }
 
         public virtual item_movement item_movement { get; set; }
+        
         public virtual app_currencyfx app_currencyfx { get; set; }
     }
 }

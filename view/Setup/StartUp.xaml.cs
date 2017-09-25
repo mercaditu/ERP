@@ -302,5 +302,33 @@ namespace Cognitivo.Menu
             Utilities.SalesInvoice SI = new Utilities.SalesInvoice();
             MessageBox.Show(SI.Update_SalesCost() + " Records Updated", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void btnMovementValue_Clicked(object sender, RoutedEventArgs e)
+        {
+            using (db db = new db())
+            {
+                List<item_movement> itemMovementList = db.item_movement.Where(x => x.parent == null).ToList();
+                foreach (item_movement item_movement in itemMovementList)
+                {
+                    foreach (item_movement_value item_movement_value in item_movement.item_movement_value)
+                    {
+                        item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
+                       item_movement_value_detail.unit_value = item_movement_value.unit_value;
+                       
+
+
+                        item_movement_value_detail.comment = item_movement_value.comment;
+
+
+                        item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                        item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
+                        item_movement_value_rel.item_movement.Add(item_movement);
+                        item_movement.item_movement_value_rel = item_movement_value_rel;
+                    }
+                }
+                db.SaveChanges();
+            }
+          
+        }
     }
 }

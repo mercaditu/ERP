@@ -137,25 +137,17 @@ namespace entity
                                 //Get total value of a Product Row
                                 decimal itemTotal = Impex_CostDetail.quantity * Impex_CostDetail.unit_cost;
 
-                               List<item_movement> item_movementlIST = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).ToList();
+                                List<item_movement> item_movementlIST = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).ToList();
                                 foreach (item_movement item_movement in item_movementlIST)
                                 {
 
 
                                     if (item_movement != null)
                                     {
-                                        if (item_movement.item_movement_value.Count > 0)
-                                        {
-                                            //This will clean any previously inserted values. To work with a clean slate.
-                                            base.item_movement_value.RemoveRange(item_movement.item_movement_value);
-                                        }
+                                       
 
-                                        item_movement_value mov_value = new item_movement_value()
-                                        {
-                                            id_movement = item_movement.id_movement,
-                                            id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                          
-                                        };
+
+
 
                                         item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
                                         {
@@ -168,10 +160,10 @@ namespace entity
                                                 App.Modules.Purchase
                                             ),
                                             comment = "Base Cost"
-                                          
-                                        };
 
-                                        base.item_movement_value.Add(mov_value);
+                                        };
+                                        item_movement_value_rel item_movement_value_rel = item_movement.item_movement_value_rel;
+                                        item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
                                     }
 
                                     if (item_movement != null)
@@ -184,10 +176,7 @@ namespace entity
                                                 decimal participation = percentage * Convert.ToDecimal(_impex_expense.value);
                                                 Impex_CostDetail.unit_Importcost = participation / Impex_CostDetail.quantity;
                                             }
-                                            item_movement_value item_movement_value = new item_movement_value()
-                                            {
-                                                id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx
-                                            };
+
 
                                             //Coeficient is used to get prorated cost of one item
                                             item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
@@ -201,13 +190,15 @@ namespace entity
                                                         CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                                         App.Modules.Purchase
                                                     ),
-                                            
+
                                                 comment = _impex_expense.impex_incoterm_condition.name
                                             };
 
-                                            if (item_movement != null)
+
+                                            if (item_movement != null && item_movement.item_movement_value_rel != null)
                                             {
-                                                item_movement.item_movement_value.Add(item_movement_value);
+                                                item_movement_value_rel item_movement_value_rel = item_movement.item_movement_value_rel;
+                                                item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
                                             }
                                         }
 

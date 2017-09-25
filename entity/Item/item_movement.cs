@@ -69,7 +69,7 @@ namespace entity
 		public int? id_sales_packing_detail { get; set; }
 		public int? id_purchase_packing_detail { get; set; }
 		public int id_location { get; set; }
-        public long id_movement_value_rel { get; set; }
+        public long? id_movement_value_rel { get; set; }
         public Status.Stock status { get; set; }
 
 

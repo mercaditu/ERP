@@ -16,6 +16,7 @@ namespace entity.Brillo
                                 loc.id_location as LocationID,
                                 loc.name as Location,
                                 parent.id_movement as MovementID,
+                                parent.id_movement_value_rel as MovementRelID,
                                 parent.trans_date as TransDate, parent.expire_date,parent.code,
                                 parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance,
                                 (select if(sum(unit_value) is null, 0, sum(unit_value)) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
@@ -53,6 +54,7 @@ namespace entity.Brillo
                                 loc.id_location as LocationID,
                                 loc.name as Location,
                                 parent.id_movement as MovementID,
+                                parent.id_movement_value_rel as MovementRelID, 
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.debit - if( sum(child.credit) > 0, sum(child.debit), 0 ) as QtyBalance,
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
@@ -97,6 +99,7 @@ namespace entity.Brillo
                                 parent.id_movement as MovementID,parent.id_location as LocationID,Loc.name as Location,
                                 parent.trans_date as TransDate,  parent.expire_date,parent.code,
                                 parent.credit  as QtyBalance,
+                                parent.id_movement_value_rel as MovementRelID, 
                                 (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
                                 from item_movement as parent
@@ -202,5 +205,6 @@ namespace entity.Brillo
         public string code { get; set; }
         public decimal QtyBalance { get; set; }
         public decimal Cost { get; set; }
+        public long MovementRelID { get; set; }
     }
 }

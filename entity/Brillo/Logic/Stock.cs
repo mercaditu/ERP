@@ -502,8 +502,12 @@ namespace entity.Brillo.Logic
 
                             item_movement_value mov_value = new item_movement_value()
                             {
-                                unit_value = DefaultCurrency_Cost,
                                 id_currencyfx = ID_CurrencyFX_Default,
+                               
+                            };
+                            item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
+                            {
+                                unit_value = DefaultCurrency_Cost,
                                 comment = Localize.StringText("DirectCost")
                             };
 
@@ -701,8 +705,13 @@ namespace entity.Brillo.Logic
 
                                     item_movement_value mov_value = new item_movement_value()
                                     {
-                                        unit_value = DefaultCurrency_Cost,
+                                      
                                         id_currencyfx = ID_CurrencyFX_Default,
+                                     
+                                    };
+                                    item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
+                                    {
+                                        unit_value = DefaultCurrency_Cost,
                                         comment = Localize.StringText("DirectCost")
                                     };
 
@@ -1305,20 +1314,21 @@ namespace entity.Brillo.Logic
                     //Logic for Value
                     if (CurrencyFXID > 0)
                     {
-
-
                         item_movement_value item_movement_value = new item_movement_value();
+                        item_movement_value.id_currencyfx = CurrencyFXID;
+
+                        item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
                         if (Unitcost > 0)
                         {
-                            item_movement_value.unit_value = Unitcost;
+                            item_movement_value_detail.unit_value = Unitcost;
                         }
                         else
                         {
-                            item_movement_value.unit_value = parent_Movement.Cost;
+                            item_movement_value_detail.unit_value = parent_Movement.Cost;
                         }
 
-                        item_movement_value.id_currencyfx = CurrencyFXID;
-                        item_movement_value.comment = Localize.StringText("DirectCost");
+                       
+                        item_movement_value_detail.comment = Localize.StringText("DirectCost");
 
                         item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
                         item_movement_value_rel.item_movement_value.Add(item_movement_value);
@@ -1414,23 +1424,25 @@ namespace entity.Brillo.Logic
                 if (CurrencyFXID > 0)
                 {
                     //Logic for Value in case Parent does not Exist, we will take from
-
                     item_movement_value item_movement_value = new item_movement_value();
+                    item_movement_value.id_currencyfx = CurrencyFXID;
 
+                    item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
                     if (Unitcost > 0)
                     {
-                        item_movement_value.unit_value = Unitcost;
+                        item_movement_value_detail.unit_value = Unitcost;
                     }
                     else
                     {
                         if (item_product.item.unit_cost != null)
                         {
-                            item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                            item_movement_value_detail.unit_value = (decimal)item_product.item.unit_cost;
                         }
                     }
 
-                    item_movement_value.id_currencyfx = CurrencyFXID;
-                    item_movement_value.comment = Localize.StringText("DirectCost");
+                    item_movement_value_detail.comment = Localize.StringText("DirectCost");
+
+                  
                     item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
                     item_movement_value_rel.item_movement_value.Add(item_movement_value);
                     item_movement_value_rel.item_movement.Add(item_movement);
@@ -1581,18 +1593,22 @@ namespace entity.Brillo.Logic
 
                 item_movement.trans_date = TransDate;
 
+                int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                 //Logic for Value in case Parent does not Exist, we will take from
                 item_movement_value item_movement_value = new item_movement_value();
+                item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
 
+
+                item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
                 if (Cost != 0)
                 {
                     ///Bring Cost from Transaction.
-                    int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+                 
                     decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, CurrencyFXID, ID_CurrencyFX_Default, null);
 
-                    item_movement_value.unit_value = DefaultCurrency_Cost;
-                    item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
-                    item_movement_value.comment = Localize.StringText("DirectCost");
+                    item_movement_value_detail.unit_value = DefaultCurrency_Cost;
+
+                    item_movement_value_detail.comment = Localize.StringText("DirectCost");
 
 
 
@@ -1619,17 +1635,17 @@ namespace entity.Brillo.Logic
                             {
                                 if (db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault() != null)
                                 {
-                                    item_movement_value.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
+                                    item_movement_value_detail.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
                                 }
                                 else
                                 {
-                                    item_movement_value.unit_value = 0;
+                                    item_movement_value_detail.unit_value = 0;
                                 }
                             }
                         }
 
                         item_movement_value.id_currencyfx = CurrencyFXID;
-                        item_movement_value.comment = Localize.StringText("DirectCost");
+                        item_movement_value_detail.comment = Localize.StringText("DirectCost");
 
                         //Adding Value into Movement
                         item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();

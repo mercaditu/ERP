@@ -153,6 +153,12 @@ namespace entity
                                         item_movement_value mov_value = new item_movement_value()
                                         {
                                             id_movement = item_movement.id_movement,
+                                            id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                          
+                                        };
+
+                                        item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
+                                        {
                                             unit_value = Brillo.Currency
                                             .convert_Values
                                             (
@@ -161,8 +167,8 @@ namespace entity
                                                 CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                                 App.Modules.Purchase
                                             ),
-                                            id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                             comment = "Base Cost"
+                                          
                                         };
 
                                         base.item_movement_value.Add(mov_value);
@@ -178,9 +184,13 @@ namespace entity
                                                 decimal participation = percentage * Convert.ToDecimal(_impex_expense.value);
                                                 Impex_CostDetail.unit_Importcost = participation / Impex_CostDetail.quantity;
                                             }
+                                            item_movement_value item_movement_value = new item_movement_value()
+                                            {
+                                                id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx
+                                            };
 
                                             //Coeficient is used to get prorated cost of one item
-                                            item_movement_value item_movement_value = new item_movement_value()
+                                            item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
                                             {
                                                 unit_value =
                                                     Brillo.Currency
@@ -191,7 +201,7 @@ namespace entity
                                                         CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                                         App.Modules.Purchase
                                                     ),
-                                                id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                            
                                                 comment = _impex_expense.impex_incoterm_condition.name
                                             };
 

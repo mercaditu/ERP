@@ -588,6 +588,7 @@ namespace entity.Brillo.Logic
                     {
                         StockList Stock = new StockList();
                         Stock.MovementID = Convert.ToInt32(_item_movement.id_movement);
+                        Stock.MovementRelID = Convert.ToInt32(_item_movement.id_movement_value_rel);
                         Stock.TranDate = Convert.ToDateTime(_item_movement.trans_date);
                         Stock.QtyBalance = Convert.ToDecimal(_item_movement.credit);
                         Stock.Cost = Convert.ToDecimal(_item_movement.item_movement_value.Sum(x => x.unit_value));
@@ -1278,16 +1279,27 @@ namespace entity.Brillo.Logic
                     }
 
                     item_movement.trans_date = TransDate;
-
-                    if (Unitcost > 0)
+                    if (Unitcost == 0)
                     {
+                        if (item_product.item.unit_cost != null)
+                        {
+                            Unitcost = (decimal)item_product.item.unit_cost;
+                        }
+                    }
+                  
+
+                    if (parent_Movement.MovementRelID == 0)
+                    {
+                       
                         item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
                         item_movement_value_detail.unit_value = Unitcost;
 
                         item_movement_value_detail.comment = Localize.StringText("DirectCost");
+                       
 
 
                         item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                        
                         item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
                         item_movement_value_rel.item_movement.Add(item_movement);
                         item_movement.item_movement_value_rel = item_movement_value_rel;
@@ -1297,8 +1309,13 @@ namespace entity.Brillo.Logic
                     }
                     else
                     {
-                        item_movement.id_movement_value_rel = parent_Movement.MovementRelID;
+
+                            item_movement.id_movement_value_rel = parent_Movement.MovementRelID;
+                             
+                        
+                     
                     }
+
 
 
                     foreach (item_movement_dimension item_movement_dimension in parent_movement_dimension)

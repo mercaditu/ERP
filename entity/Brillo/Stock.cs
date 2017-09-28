@@ -129,6 +129,7 @@ namespace entity.Brillo
                 {
                     StockList Stock = new StockList();
                     Stock.MovementID = (int)item_movement.id_movement;
+                    Stock.MovementRelID = (int)item_movement.id_movement_value_rel;
                     Stock.TranDate = item_movement.trans_date;
                     Stock.ExpirationDate = item_movement.expire_date;
                     Stock.code = item_movement.code;
@@ -170,6 +171,15 @@ namespace entity.Brillo
                 {
                     StockList Stock = new StockList();
                     Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
+
+                    if (!(DataRow["MovementRelID"] is DBNull))
+                    {
+                        Stock.MovementRelID = Convert.ToInt32(DataRow["MovementRelID"]);
+                    }
+                    else
+                    {
+                        Stock.MovementRelID = 0;
+                    }
                     Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
 
                     if (!(DataRow["expire_date"] is DBNull))

@@ -177,7 +177,7 @@
                                             <Label Content="{lex:Loc Branch}" Style="{StaticResource generic_Label}" />
                                         </CheckBox>
                                         <CheckBox Margin="6,0,0,0" x:Name="chkDuplicateItem"
-										  IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=AllowDuplicateItems, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+										  IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=AllowDuplicateItems, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                             <Label Content="Duplicate Items" Foreground="MediumVioletRed" />
                                         </CheckBox>
                                         <CheckBox Margin="6,0,0,0" x:Name="chkfilterbyBranch"

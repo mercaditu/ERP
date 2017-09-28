@@ -394,16 +394,9 @@ namespace Cognitivo.Purchase
             if (item != null)
             {
                 purchase_invoice_detail detail_withitem = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                if (detail_withitem != null && AllowDuplicate)
+                if (detail_withitem == null || AllowDuplicate)
                 {
-                    //Item Exists in Context, so add to sum.
-                    purchase_invoice_detail _purchase_invoice_detail = detail_withitem;
-                    _purchase_invoice_detail.quantity += quantity;
-                    //Return because Item exists, and will +1 in Quantity
-                    return;
-                }
-                else
-                {
+
                     //Item DOES NOT Exist in Context
                     purchase_invoice_detail.item = item;
                     purchase_invoice_detail.id_item = item.id_item;
@@ -421,6 +414,15 @@ namespace Cognitivo.Purchase
                         purchase_invoice_detail.id_vat_group = old_PurchaseInvoice.id_vat_group;
                         purchase_invoice_detail.unit_cost = old_PurchaseInvoice.unit_cost;
                     }
+                   
+                }
+                else
+                {
+                    //Item Exists in Context, so add to sum.
+                    purchase_invoice_detail _purchase_invoice_detail = detail_withitem;
+                    _purchase_invoice_detail.quantity += quantity;
+                    //Return because Item exists, and will +1 in Quantity
+                    return;
                 }
 
                 foreach (item_dimension item_dimension in item.item_dimension)

@@ -18,6 +18,7 @@ namespace entity
             is_read = false;
             timestamp = DateTime.Now;
             item_movement = new List<item_movement>();
+            item_movement_value_detail = new List<item_movement_value_detail>();
         }
 
         [Key]
@@ -26,7 +27,22 @@ namespace entity
         public bool is_estimate { get; set; }
         public string batch_code { get; set; }
         public DateTime? entry_date { get; set; }
-        public decimal total_value { get; set; }
+        public decimal total_value
+        {
+            get
+            {
+
+
+                _total_value= item_movement_value_detail.Sum(x => x.unit_value);
+                return _total_value;
+
+            }
+            set
+            {
+                _total_value = value; ;
+            }
+        }
+        decimal _total_value;
 
 
         public virtual ICollection<item_movement_value_detail> item_movement_value_detail { get; set; }

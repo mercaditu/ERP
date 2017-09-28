@@ -86,7 +86,15 @@ namespace entity
             {
                 if (purchase_packing.id_purchase_packing == 0)
                 {
-                    SaveChanges();
+                    try
+                    {
+                        SaveChanges();
+                    }
+                    catch(Exception ex)
+                    {
+                        throw ex;
+                    }
+                   
                 }
 
                 if (purchase_packing.status != Status.Documents_General.Approved)

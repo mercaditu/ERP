@@ -1580,54 +1580,20 @@ namespace entity.Brillo.Logic
 
 
                 item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
-                if (Cost != 0)
+
+                if (item_movement.parent==null)
                 {
-                    ///Bring Cost from Transaction.
-                 
-                    decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, CurrencyFXID, ID_CurrencyFX_Default, null);
-
-                    item_movement_value_detail.unit_value = DefaultCurrency_Cost;
-
-                    item_movement_value_detail.comment = Localize.StringText("DirectCost");
-                   
-
-
-                    //Adding Value into Movement
-                    item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
-                    item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
-                    item_movement_value_rel.item_movement.Add(item_movement);
-                    item_movement.item_movement_value_rel=item_movement_value_rel;
-                }
-                else
-                {
-                    ///If cost is 0, then take hand written cost from Items Table.
-                    ///In most cases, item_unit_cost will be zero, but in case it is not, we can use it as a reference.
-                    ///Also we are assuming item.unit_cost is in default currency. But if this transaction is in a different currency
-                    ///we can have mis-guided information.
-
-                    if (ProductID > 0)
+                    if (Cost != 0)
                     {
-                        using (db db = new db())
-                        {
-                            int i = 0;
-                            i = db.item_product.Where(x => x.id_item_product == ProductID).Select(x => x.id_item).FirstOrDefault();
-                            if (i > 0)
-                            {
-                                if (db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault() != null)
-                                {
-                                    item_movement_value_detail.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
-                                }
-                                else
-                                {
-                                    item_movement_value_detail.unit_value = 0;
-                                }
-                            }
-                        }
+                        ///Bring Cost from Transaction.
 
-                        item_movement_value.id_currencyfx = CurrencyFXID;
+                        decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, CurrencyFXID, ID_CurrencyFX_Default, null);
+
+                        item_movement_value_detail.unit_value = DefaultCurrency_Cost;
+
                         item_movement_value_detail.comment = Localize.StringText("DirectCost");
-                   
-                        
+
+
 
                         //Adding Value into Movement
                         item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
@@ -1635,7 +1601,55 @@ namespace entity.Brillo.Logic
                         item_movement_value_rel.item_movement.Add(item_movement);
                         item_movement.item_movement_value_rel = item_movement_value_rel;
                     }
+                    else
+                    {
+                        ///If cost is 0, then take hand written cost from Items Table.
+                        ///In most cases, item_unit_cost will be zero, but in case it is not, we can use it as a reference.
+                        ///Also we are assuming item.unit_cost is in default currency. But if this transaction is in a different currency
+                        ///we can have mis-guided information.
+
+                        if (ProductID > 0)
+                        {
+                            using (db db = new db())
+                            {
+                                int i = 0;
+                                i = db.item_product.Where(x => x.id_item_product == ProductID).Select(x => x.id_item).FirstOrDefault();
+                                if (i > 0)
+                                {
+                                    if (db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault() != null)
+                                    {
+                                        item_movement_value_detail.unit_value = (decimal)db.items.Where(x => x.id_item == i).Select(x => x.unit_cost).FirstOrDefault();
+                                    }
+                                    else
+                                    {
+                                        item_movement_value_detail.unit_value = 0;
+                                    }
+                                }
+                            }
+
+                            item_movement_value.id_currencyfx = CurrencyFXID;
+                            item_movement_value_detail.comment = Localize.StringText("DirectCost");
+
+
+
+                            //Adding Value into Movement
+                            item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                            item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
+                            item_movement_value_rel.item_movement.Add(item_movement);
+                            item_movement.item_movement_value_rel = item_movement_value_rel;
+                        }
+                    }
                 }
+                else
+                {
+                    if (item_movement.parent.id_movement_value_rel!=null)
+                    {
+                        item_movement.id_movement_value_rel = item_movement.parent.id_movement_value_rel;
+                    }
+                    
+                   
+                }
+               
 
                 //Generate a barcode for datetime tick to prevent duplication.
                 item_movement.barcode = Barcode.RandomGenerator();

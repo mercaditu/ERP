@@ -10,9 +10,10 @@
             RawMaterial.name as RawMaterial, RawMaterial.code as RawMaterialCode,
             ird.quantity as Quantity,
 
-			            (select sum(val.unit_value) 
+			            (select  imvd.unit_value
 				            from item_movement as mov
-				            inner join item_movement_value as val on mov.id_movement = val.id_movement
+				            left join item_movement_value_rel as imvr on mov.id_movement_value_rel=imvr.id_movement_value_rel
+             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel
 				            inner join item_product as prod on mov.id_item_product = prod.id_item_product
 				            where (mov.id_purchase_invoice_detail > 0 or mov.id_inventory_detail > 0 or mov.id_execution_detail > 0) and prod.id_item = RawMaterial.id_item
 				            group by mov.id_movement

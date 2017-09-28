@@ -31,7 +31,7 @@ namespace Cognitivo.Class
                              item.name as ItemName, prod.id_item_product as ProductID,
                              (sum(mov.credit) - sum(mov.debit)) as Quantity,
                              measure.name as Measurement,
-                                sum(imvd.unit_value) as Cost,
+                                imvd.unit_value as Cost,
                              brand.name as Brand,
                                  mov.code as BatchCode,
                                  mov.expire_date as ExpiryDate,
@@ -61,7 +61,7 @@ namespace Cognitivo.Class
                                 select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
                                 ip.id_item_product as ProductID,  (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement,    
-                                  sum(imvd.unit_value) as Cost,
+                                  imvd.unit_value as Cost,
                                 brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,
                                 im.id_movement as MovementID
                                  from item_movement as im
@@ -97,7 +97,7 @@ namespace Cognitivo.Class
                                 im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
                                 measure.name as Measurement,
 im.id_movement as MovementID,
-    sum(imvd.unit_value) as Cost
+    imvd.unit_value as Cost
 
                                 from item_movement as im
 
@@ -123,7 +123,7 @@ im.id_movement as MovementID,
                                  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                  select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
                                  prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement,
-                                  sum(imvd.unit_value) as Cost,
+                                  imvd.unit_value as Cost,
                                  mov.code as BatchCode,
                                  mov.expire_date as ExpiryDate,
                                     mov.id_movement as MovementID

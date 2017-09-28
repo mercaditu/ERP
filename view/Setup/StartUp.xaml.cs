@@ -310,6 +310,7 @@ namespace Cognitivo.Menu
                 List<item_movement> itemMovementList = db.item_movement.Where(x => x.parent == null).ToList();
                 foreach (item_movement item_movement in itemMovementList)
                 {
+                    item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
                     foreach (item_movement_value item_movement_value in item_movement.item_movement_value)
                     {
                         item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
@@ -320,13 +321,20 @@ namespace Cognitivo.Menu
                         item_movement_value_detail.comment = item_movement_value.comment;
 
 
-                        item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
+                       
                         item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
-                        item_movement_value_rel.item_movement.Add(item_movement);
-                        item_movement.item_movement_value_rel = item_movement_value_rel;
+                      
                     }
+                    item_movement_value_rel.item_movement.Add(item_movement);
+                    item_movement.item_movement_value_rel = item_movement_value_rel;
                 }
-                db.SaveChanges();
+                List<item_movement> itemMovementListparent = db.item_movement.Where(x => x.parent != null).ToList();
+                foreach (item_movement item_movement in itemMovementListparent)
+                {
+                    item_movement.id_movement_value_rel = item_movement.parent.id_movement_value_rel;
+                }
+
+                    db.SaveChanges();
             }
           
         }

@@ -22,7 +22,7 @@
 						(select name from item_tag_detail inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag where item_tag_detail.id_item = item.id_item order by item_tag_detail.is_default limit 0,1) as Tag
 
 								from (
-								select item_movement.*, sum(val.unit_value) as UnitCost,
+								select item_movement.*,  imvd.unit_value as UnitCost,
 								(select if(sum(debit) is null, 0, sum(debit))
 									from item_movement as mov
 									where mov.parent_id_movement = item_movement.id_movement
@@ -30,7 +30,9 @@
 									) as DebitChild
 
 								from item_movement
-								left outer join item_movement_value as val on item_movement.id_movement = val.id_movement
+                                 left join item_movement_value_rel as imvr on item_movement.id_movement_value_rel=imvr.id_movement_value_rel
+             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel    
+								
 								where item_movement.id_company = @CompanyID and   item_movement.trans_date between '@StartDate' and '@EndDate'
 								group by item_movement.id_movement
 								) as inv

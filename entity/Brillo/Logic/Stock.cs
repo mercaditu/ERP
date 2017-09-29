@@ -698,18 +698,11 @@ namespace entity.Brillo.Logic
                                 {
                                     //We will delete everything because there is not importation or extra cost associated.
                                     db.item_movement_value.RemoveRange(_item_movement.item_movement_value);
-                                    db.item_movement_value_rel.Remove(_item_movement.item_movement_value_rel);
+                                  //  db.item_movement_value_rel.Remove(_item_movement.item_movement_value_rel);
 
                                     //Insert New Cost with Default Curreny from Invoice Detail
                                     int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                                     decimal DefaultCurrency_Cost = Currency.convert_Values(detail.unit_price, sales_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
-
-                                    item_movement_value mov_value = new item_movement_value()
-                                    {
-                                      
-                                        id_currencyfx = ID_CurrencyFX_Default,
-                                     
-                                    };
 
                                     item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
                                     {
@@ -721,8 +714,10 @@ namespace entity.Brillo.Logic
                                     item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
                                     item_movement_value_rel.item_movement.Add(_item_movement);
                                     _item_movement.item_movement_value_rel = item_movement_value_rel;
+                                    _item_movement.id_movement_value_rel = item_movement_value_rel.id_movement_value_rel;
+
                                     //Adding Value into Movement
-                                   // _item_movement.item_movement_value.Add(mov_value);
+                                    // _item_movement.item_movement_value.Add(mov_value);
                                 }
                             }
                         }

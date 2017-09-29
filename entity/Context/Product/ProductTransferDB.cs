@@ -188,6 +188,16 @@ namespace entity
 
                 //Credit in Origin only if it is MoveByTruck.
                 item_movement item_movement_origin;
+                decimal Unit_cost = 0;
+                if (item_movement_LIST.FirstOrDefault().id_movement_value_rel > 0)
+                {
+                    item_movement_value_rel item_movement_value_rel = base.item_movement_value_rel.Where(x => x.id_movement_value_rel == item_movement_LIST.FirstOrDefault().id_movement_value_rel).FirstOrDefault();
+                    if (item_movement_value_rel != null)
+                    {
+                        Unit_cost = item_movement_value_rel.total_value;
+                    }
+
+                }
                 item_movement_origin =
                     stock.CreditOnly_Movement(
                         Status.Stock.InStock,
@@ -199,7 +209,7 @@ namespace entity
                         app_location_origin.id_location,
                         item_transfer_detail.quantity_destination,
                         item_transfer_detail.item_transfer.trans_date,
-                        item_movement_LIST.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                        Unit_cost,
                         stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                         null, null, null
                         );
@@ -214,6 +224,16 @@ namespace entity
 
                 foreach (item_movement item_movement in Items_InStockLIST)
                 {
+                    decimal Unit_cost = 0;
+                    if (item_movement.id_movement_value_rel > 0)
+                    {
+                        item_movement_value_rel item_movement_value_rel = base.item_movement_value_rel.Where(x => x.id_movement_value_rel == item_movement.id_movement_value_rel).FirstOrDefault();
+                        if (item_movement_value_rel != null)
+                        {
+                            Unit_cost = item_movement_value_rel.total_value;
+                        }
+
+                    }
                     item_movement_dest =
                           stock.CreditOnly_Movement(
                               Status.Stock.InStock,
@@ -225,7 +245,7 @@ namespace entity
                               app_location_dest.id_location,
                               item_movement.debit,
                               item_transfer_detail.item_transfer.trans_date,
-                              item_movement.item_movement_value.Sum(x => x.unit_value),
+                              Unit_cost,
                               stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                               null, null, null
                               );
@@ -288,7 +308,7 @@ namespace entity
                         app_locationdest.id_location,
                             item_transfer_detail.quantity_origin,
                             item_transfer_detail.item_transfer.trans_date,
-                            item_movement_originList.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                            item_movement_originList.FirstOrDefault().item_movement_value_rel!=null? item_movement_originList.FirstOrDefault().item_movement_value_rel.total_value:0,
                             stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                             null, null, null);
 

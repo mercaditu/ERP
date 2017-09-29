@@ -114,9 +114,9 @@ namespace Cognitivo.Product
         {
             item_transferViewSource = FindResource("item_transferViewSource") as CollectionViewSource;
             await ProductTransferDB.item_transfer
-                .Where(a => 
-                    a.id_company == CurrentSession.Id_Company && 
-                    a.id_branch == CurrentSession.Id_Branch && 
+                .Where(a =>
+                    a.id_company == CurrentSession.Id_Company &&
+                    a.id_branch == CurrentSession.Id_Branch &&
                     a.transfer_type == item_transfer.Transfer_Types.Movement
                 )
                 .OrderByDescending(x => x.trans_date)
@@ -292,6 +292,16 @@ namespace Cognitivo.Product
                             DimensionList.Add(_item_movement_dimension);
                         }
                     }
+                    decimal Unit_cost = 0;
+                    if (item_movement.id_movement_value_rel > 0)
+                    {
+                        item_movement_value_rel item_movement_value_rel = ProductTransferDB.item_movement_value_rel.Where(x => x.id_movement_value_rel == item_movement.id_movement_value_rel).FirstOrDefault();
+                        if (item_movement_value_rel != null)
+                        {
+                            Unit_cost = item_movement_value_rel.total_value;
+                        }
+
+                    }
 
                     item_movement_dest =
                                 stock.CreditOnly_Movement(
@@ -304,7 +314,7 @@ namespace Cognitivo.Product
                                     item_transfer_detail.item_transfer.app_location_destination.id_location,
                                     item_movement.debit,
                                     item_transfer_detail.item_transfer.trans_date,
-                                    item_movement.item_movement_value.Sum(x => x.unit_value),
+                                    Unit_cost,
                                     stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
                                     DimensionList, item_transfer_detail.expire_date, item_transfer_detail.batch_code
                                     );
@@ -485,8 +495,8 @@ namespace Cognitivo.Product
                         item_transfer_detail.expire_date = item_movement.expire_date;
 
                         item_transfer_detail.movement_id = (int)item_movement.id_movement;
-						item_transfer_detail.Quantity_InStockLot = item_movement.avlquantity;
-					}
+                        item_transfer_detail.Quantity_InStockLot = item_movement.avlquantity;
+                    }
 
                     item_transfer.item_transfer_detail.Add(item_transfer_detail);
 

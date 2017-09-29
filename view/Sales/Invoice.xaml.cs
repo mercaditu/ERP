@@ -107,6 +107,7 @@ namespace Cognitivo.Sales
             }));
 
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));
+            cbxVat.ItemsSource = CurrentSession.VAT_Groups;
         }
 
         #endregion DataLoad

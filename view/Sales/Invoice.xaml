@@ -581,8 +581,9 @@
 														Header="{lex:Loc Cognitivo:local:Items}"
                                                         IsReadOnly="{Binding Source={x:Static entity:CurrentSession.Allow_UpdateSalesDetail}, Converter={StaticResource TrueToFalse}}"
                                                         MinWidth="128" />
+                        <!--remove the binding becuase don't want to refresh the source at middle of invoice-->
                         <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="50"
-															ItemsSource="{Binding Source={x:Static entity:CurrentSession.VAT_Groups}}"
+														x:Name="cbxVat"
 															DisplayMemberPath="name" SelectedValuePath="id_vat_group" 
                                                            SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True,
 															UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

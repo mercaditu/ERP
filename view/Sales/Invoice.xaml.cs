@@ -162,7 +162,7 @@ namespace Cognitivo.Sales
 
         private void Save_Click(object sender)
         {
-            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+           
 
             if (SalesDB.SaveChanges_WithValidation())
             {

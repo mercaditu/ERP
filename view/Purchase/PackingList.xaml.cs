@@ -26,16 +26,8 @@ namespace Cognitivo.Purchase
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             purchase_packingViewSource = FindResource("purchase_packingViewSource") as CollectionViewSource;
-
-            await PurchasePackingListDB.purchase_packing.Where(a => a.id_company == CurrentSession.Id_Company)
-                .Include(x => x.contact)
-                .OrderByDescending(x => x.trans_date)
-                .Take(100)
-                .Skip(PageIndex)
-                .LoadAsync();
-
+            await PurchasePackingListDB.purchase_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).Take(100).Skip(PageIndex).LoadAsync(); //.Include("purchase_packing_detail").LoadAsync();
             purchase_packingViewSource.Source = PurchasePackingListDB.purchase_packing.Local;
-
             purchase_packingpurchase_packinglist_detailViewSource = FindResource("purchase_packingpurchase_packing_detailViewSource") as CollectionViewSource;
             purchase_packingpurchase_packing_detailApprovedViewSource = FindResource("purchase_packingpurchase_packing_detailApprovedViewSource") as CollectionViewSource;
 
@@ -56,8 +48,7 @@ namespace Cognitivo.Purchase
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchasePackingListDB, entity.App.Names.PurchasePacking, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
                 filterDetail();
-                filterVerifiedDetail();
-
+                filterVerifiedDetail(null);
                 if (purchase_packingpurchase_packinglist_detailViewSource.View != null)
                 {
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
@@ -67,24 +58,18 @@ namespace Cognitivo.Purchase
                     purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                 }
             }));
+            // cbxBranch.SelectedIndex = 0;
         }
 
-        private void filterVerifiedDetail()
+        private void filterVerifiedDetail(purchase_packing_detail _purchase_packing_detail)
         {
             if (purchase_packingpurchase_packing_detailApprovedViewSource != null)
             {
-                if (purchase_packingpurchase_packing_detailApprovedViewSource.View != null)
+                if (_purchase_packing_detail!=null)
                 {
-                    purchase_packingpurchase_packing_detailApprovedViewSource.View.Filter = i =>
-                    {
-                        purchase_packing_detail purchase_packing_detail = (purchase_packing_detail)i;
-
-                        if (purchase_packing_detail.verified_by > 0 || purchase_packing_detail.parent != null)
-                            return true;
-                        else
-                            return false;
-                    };
+                    purchase_packingpurchase_packing_detailApprovedViewSource.Source = _purchase_packing_detail.child.ToList();
                 }
+               
             }
         }
 
@@ -114,7 +99,6 @@ namespace Cognitivo.Purchase
             purchase_packing purchase_packing = PurchasePackingListDB.New();
             purchase_packing.trans_date = DateTime.Now.AddDays(PurchaseSettings.TransDate_OffSet);
             PurchasePackingListDB.purchase_packing.Add(purchase_packing);
-
             purchase_packingViewSource.View.Refresh();
             purchase_packingViewSource.View.MoveCurrentToLast();
         }
@@ -131,13 +115,13 @@ namespace Cognitivo.Purchase
             }
             else
             {
-                toolBar.msgWarning(entity.Brillo.Localize.PleaseSelect);
+                toolBar.msgWarning("Please Select an Item");
             }
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 PurchasePackingListDB.purchase_packing.Remove((purchase_packing)purchase_packingDataGrid.SelectedItem);
@@ -208,14 +192,14 @@ namespace Cognitivo.Purchase
                 //DeleteDetailGridRow
                 purchase_packinglist_detailDataGrid.CancelEdit();
                 purchase_packing_detail purchase_packing_detail = e.Parameter as purchase_packing_detail;
-                if (purchase_packing_detail!=null)
+                if (purchase_packing_detail != null)
                 {
                     PurchasePackingListDB.purchase_packing_detail_relation.RemoveRange(purchase_packing_detail.purchase_packing_detail_relation);
                     PurchasePackingListDB.purchase_packing_detail.Remove(e.Parameter as purchase_packing_detail);
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
                     purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                 }
-                   
+
             }
         }
 
@@ -289,46 +273,53 @@ namespace Cognitivo.Purchase
                 purchase_packing purchase_packing = purchase_packingViewSource.View.CurrentItem as purchase_packing;
                 if (purchase_packing != null)
                 {
-
-                    //Bad Query Fix.
-                    purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID && x.verified_by == null).FirstOrDefault();
-                    if (_purchase_packing_detail != null)
+                    //purchase_packing_detail _purchase_packing_detail = purchase_packingpurchase_packinglist_detailViewSource.View.OfType<purchase_packing_detail>().Where(x => x.id_item == sbxItem.ItemID && x.verified_by==null).FirstOrDefault();
+                    dynamic _selectedpacking = GridVerifiedList.SelectedItem;
+                    if (_selectedpacking != null)
                     {
-                        purchase_packing_detail purchase_packing_detail = new purchase_packing_detail()
-                        {
-                            id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail,
-                            id_item = _purchase_packing_detail.id_item,
-                            item = _purchase_packing_detail.item,
-                            verified_quantity = sbxItem.Quantity,
-                            quantity = sbxItem.Quantity,
-                            security_user = PurchasePackingListDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault(),
-                            app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault(),
-                            verified_by = CurrentSession.Id_User,
-                            parent= _purchase_packing_detail
-                        };
 
-                        purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
-                        if (_purchase_packing_detail.purchase_packing_detail_relation.Count() > 0)
+                        purchase_packing_detail _purchase_packing_detail = _selectedpacking.PurchasePackingDetail;
+                        if (_purchase_packing_detail != null)
                         {
-                            purchase_packing_detail_relation PackingRelation = _purchase_packing_detail.purchase_packing_detail_relation.FirstOrDefault();
-                            if (PackingRelation!=null)
+                            purchase_packing_detail purchase_packing_detail = new purchase_packing_detail()
                             {
-                                purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
-                                {
-                                    id_purchase_invoice_detail = PackingRelation.id_purchase_invoice_detail,
-                                   // purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
-                                    id_purchase_packing_detail = PackingRelation.id_purchase_packing_detail,
-                                   // purchase_packing_detail = PackingRelation.purchase_packing_detail
-                                };
-                                purchase_packing_detail.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
-                            }
-                        }
+                                id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail,
+                                id_item = _purchase_packing_detail.id_item,
+                                item = _purchase_packing_detail.item,
+                                verified_quantity = sbxItem.Quantity,
+                                quantity = sbxItem.Quantity,
+                                security_user = PurchasePackingListDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault(),
+                                app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault(),
+                                verified_by = CurrentSession.Id_User,
+                                parent = _purchase_packing_detail
+                            };
+                            _purchase_packing_detail.child.Add(purchase_packing_detail);
+                            purchase_packing.purchase_packing_detail.Add(purchase_packing_detail);
 
-                        purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
-                        purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
-                        filterDetail();
-                        Refresh_GroupByGrid();
+                            if (_purchase_packing_detail.purchase_packing_detail_relation.Count() > 0)
+                            {
+                                purchase_packing_detail_relation PackingRelation = _purchase_packing_detail.purchase_packing_detail_relation.FirstOrDefault();
+                                if (PackingRelation != null)
+                                {
+                                    purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation()
+                                    {
+                                        id_purchase_invoice_detail = PackingRelation.id_purchase_invoice_detail,
+                                        // purchase_invoice_detail = PackingRelation.purchase_invoice_detail,
+                                        id_purchase_packing_detail = PackingRelation.id_purchase_packing_detail,
+                                        // purchase_packing_detail = PackingRelation.purchase_packing_detail
+                                    };
+                                    purchase_packing_detail.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
+
+                                }
+
+                            }
+
+                            purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
+                            purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                            filterDetail();
+                            Refresh_GroupByGrid();
+                        }
                     }
                 }
             }
@@ -344,11 +335,13 @@ namespace Cognitivo.Purchase
                     //This code should be in Selection Changed of DataGrid and after inserting new items.
                     var VerifiedItemList = purchase_packing.purchase_packing_detail
                         .Where(x => x.verified_by == null)
+                        //  .GroupBy(x => x.id_item)
                         .Select(x => new
                         {
+                            PurchasePackingDetail = x,
                             ItemName = x.item.name,
                             ItemCode = x.item.code,
-                            VerifiedQuantity = x.child != null ? x.child.Sum(y => y.verified_quantity) : 0, //Only sum Verified Quantity if IsVerifiyed is True.
+                            VerifiedQuantity = x.child.Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
                             Quantity = x.quantity,
                             id_item = x.id_item
                         })
@@ -362,7 +355,7 @@ namespace Cognitivo.Purchase
         private void purchase_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Refresh_GroupByGrid();
-            filterVerifiedDetail();
+            filterVerifiedDetail(null);
             GridVerifiedList.SelectedIndex = 0;
         }
 
@@ -372,7 +365,7 @@ namespace Cognitivo.Purchase
             if (obj != null)
             {
                 dgApproved.CommitEdit();
-                filterVerifiedDetail();
+                filterVerifiedDetail(obj.PurchasePackingDetail);
             }
         }
 
@@ -434,7 +427,7 @@ namespace Cognitivo.Purchase
                         {
                             item = PackingDetail.item,
                             item_description = PackingDetail.item.name,
-                            quantity =(decimal) PackingDetail.verified_quantity,
+                            quantity = (decimal)PackingDetail.verified_quantity,
                             batch_code = PackingDetail.batch_code,
                             expire_date = PackingDetail.expire_date,
                             id_vat_group = PackingDetail.item.id_vat_group,
@@ -533,6 +526,7 @@ namespace Cognitivo.Purchase
             Page_Loaded(null, null);
         }
 
+
         private void navPagination_btnFirstPage_Click(object sender)
         {
             PageIndex = 0;
@@ -546,7 +540,7 @@ namespace Cognitivo.Purchase
             sbxContact.Text = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact.name;
             foreach (purchase_invoice item in pnlPurchaseInvoice.selected_purchase_invoice)
             {
-               foreach (purchase_invoice_detail _purchase_invoice_detail in item.purchase_invoice_detail)
+                foreach (purchase_invoice_detail _purchase_invoice_detail in item.purchase_invoice_detail)
                 {
                     purchase_packing_detail _purchase_packing_detail = new purchase_packing_detail();
                     _purchase_packing_detail.id_location = _purchase_invoice_detail.id_location;
@@ -570,13 +564,9 @@ namespace Cognitivo.Purchase
                         _purchase_packing_detail.batch_code = _purchase_invoice_detail.batch_code;
                         _purchase_packing_detail.expire_date = _purchase_invoice_detail.expire_date;
                         _purchase_packing.purchase_packing_detail.Add(_purchase_packing_detail);
-
-                        purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation
-                        {
-                            id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail,
-                            purchase_packing_detail = _purchase_packing_detail
-                        };
-
+                        purchase_packing_detail_relation purchase_packing_detail_relation = new purchase_packing_detail_relation();
+                        purchase_packing_detail_relation.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
+                        purchase_packing_detail_relation.purchase_packing_detail = _purchase_packing_detail;
                         PurchasePackingListDB.purchase_packing_detail_relation.Add(purchase_packing_detail_relation);
                     }
 
@@ -588,7 +578,7 @@ namespace Cognitivo.Purchase
                     purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
                     Refresh_GroupByGrid();
                     filterDetail();
-                    filterVerifiedDetail();
+                    filterVerifiedDetail(null);
                     purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
                 }
             }

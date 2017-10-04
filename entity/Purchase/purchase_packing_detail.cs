@@ -15,6 +15,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             purchase_packing_detail_relation = new List<purchase_packing_detail_relation>();
+            child = new List<purchase_packing_detail>();
             timestamp = DateTime.Now;
         }
 
@@ -76,10 +77,10 @@ namespace entity
         {
             get
             {
-                if (_verified_quantity == null)
-                {
-                    _verified_quantity = quantity;
-                }
+                //if (_verified_quantity == null)
+                //{
+                //    _verified_quantity = quantity;
+                //}
                 return _verified_quantity;
             }
             set { _verified_quantity = value; RaisePropertyChanged("verified_quantity"); }

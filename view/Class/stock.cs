@@ -61,7 +61,7 @@ namespace Cognitivo.Class
                                 select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
                                 ip.id_item_product as ProductID,  (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement,    
-                                  imvd.unit_value as Cost,
+                                  sum(imvd.unit_value) as Cost,
                                 brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,
                                 im.id_movement as MovementID
                                  from item_movement as im
@@ -70,8 +70,8 @@ namespace Cognitivo.Class
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
                                 inner join app_branch as b on l.id_branch = b.id_branch
-                                left join item_movement_value_rel as imvr on mov.id_movement_value_rel=imvr.id_movement_value_rel
-                             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel
+                                left join item_movement_value_rel as imvr on mov.id_movement_value_rel = imvr.id_movement_value_rel
+                             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel = imvd.id_movement_value_rel
                                 left join item_brand as brand on brand.id_brand = i.id_brand
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
                                 where im.id_company = {0} and b.id_branch = {1} and im.trans_date <= '{2}'
@@ -97,16 +97,16 @@ namespace Cognitivo.Class
                                 im.expire_date as ExpiryDate,
                                 im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
                                 measure.name as Measurement,
-im.id_movement as MovementID,
-    imvd.unit_value as Cost
+                                im.id_movement as MovementID,
+                                    sum(imvd.unit_value) as Cost
 
                                 from item_movement as im
 
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
-                                left join item_movement_value_rel as imvr on im.id_movement_value_rel=imvr.id_movement_value_rel
-                             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel
+                                left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
+                                left join item_movement_value_detail as imvd on imvr.id_movement_value_rel = imvd.id_movement_value_rel
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
                                 left join item_movement as imc on im.id_movement = imc.parent_id_movement
                                 where im.id_company = {0} and im.id_location = {1} and im.trans_date <= '{2}' and ip.can_expire

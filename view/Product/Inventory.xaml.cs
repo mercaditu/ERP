@@ -98,32 +98,35 @@ namespace Cognitivo.Product
                             {
                                 if (item_inventory.item_inventory_detail.Where(x => x.movement_id == Batch.MovementID).Any())
                                 {
-                                    item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).FirstOrDefault();
+                                    item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.movement_id == Batch.MovementID).FirstOrDefault();
 
-                                    ///Since this item already exists in Inventory, we should update the values. The following code
-                                    ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
-                                    decimal Quantity_Original = item_inventory_detail.value_system;
-                                    decimal Quantity_Updated = StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null ? StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Quantity : 0;
-                                    decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
-
-                                    item_inventory_detail.value_system = Quantity_Updated;
-                                    item_inventory_detail.value_counted += Quantity_Difference;
-
-                                    //Get the newest Cost.
-                                    if (StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null)
+                                    if (item_inventory_detail != null)
                                     {
-                                        item_inventory_detail.unit_value = StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Cost;
-                                    }
-                                    else
-                                    {
-                                        //If Product does not exist in StockList, see if user has already defined cost. else add 0.
-                                        if (item_inventory_detail.unit_value > 0)
+                                        ///Since this item already exists in Inventory, we should update the values. The following code
+                                        ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
+                                        decimal Quantity_Original = item_inventory_detail.value_system;
+                                        decimal Quantity_Updated = BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null ? BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Quantity : 0;
+                                        decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
+
+                                        item_inventory_detail.value_system = Quantity_Updated;
+                                        item_inventory_detail.value_counted += Quantity_Difference;
+
+                                        //Get the newest Cost.
+                                        if (BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null)
                                         {
-                                            // If UnitValue > 0, means user must have manually inserted value. Leave it as is.
+                                            item_inventory_detail.unit_value = BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Cost;
                                         }
                                         else
                                         {
-                                            item_inventory_detail.unit_value = 0;
+                                            //If Product does not exist in BatchList, see if user has already defined cost. else add 0.
+                                            if (item_inventory_detail.unit_value > 0)
+                                            {
+                                                // If UnitValue > 0, means user must have manually inserted value. Leave it as is.
+                                            }
+                                            else
+                                            {
+                                                item_inventory_detail.unit_value = 0;
+                                            }
                                         }
                                     }
                                 }

@@ -1570,8 +1570,8 @@ namespace entity.Brillo.Logic
 
                 int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                 //Logic for Value in case Parent does not Exist, we will take from
-                item_movement_value item_movement_value = new item_movement_value();
-                item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
+               // item_movement_value item_movement_value = new item_movement_value();
+                //item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
 
 
                 item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
@@ -1622,7 +1622,7 @@ namespace entity.Brillo.Logic
                                 }
                             }
 
-                            item_movement_value.id_currencyfx = CurrencyFXID;
+                           // item_movement_value.id_currencyfx = CurrencyFXID;
                             item_movement_value_detail.comment = Localize.StringText("DirectCost");
 
 

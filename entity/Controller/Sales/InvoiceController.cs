@@ -154,7 +154,7 @@ namespace entity.Controller.Sales
             }
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
-            sales_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
+          //  sales_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
 
             if (Invoice.app_contract == null && Invoice.id_contract > 0)
             {

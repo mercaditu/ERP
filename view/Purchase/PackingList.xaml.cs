@@ -344,14 +344,14 @@ namespace Cognitivo.Purchase
                     //This code should be in Selection Changed of DataGrid and after inserting new items.
                     var VerifiedItemList = purchase_packing.purchase_packing_detail
                         .Where(x => x.verified_by == null)
-                        .GroupBy(x => x.id_item)
+                      //  .GroupBy(x => x.id_item)
                         .Select(x => new
                         {
-                            ItemName = x.Max(y => y.item.name),
-                            ItemCode = x.Max(y => y.item.code),
-                            VerifiedQuantity = purchase_packing.purchase_packing_detail.Where(y => y.verified_by != null && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
-                            Quantity = x.Sum(y => y.quantity),
-                            id_item = x.Max(y => y.id_item)
+                            ItemName = x.item.name,
+                            ItemCode = x.item.code,
+                            VerifiedQuantity =x.verified_quantity, //Only sum Verified Quantity if IsVerifiyed is True.
+                            Quantity = x.quantity,
+                            id_item = x.id_item
                         })
                         .ToList();
 

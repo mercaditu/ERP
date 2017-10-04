@@ -261,6 +261,9 @@
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+										Header="Factor" Width="Auto" MinWidth="64" ElementStyle="{StaticResource RightAlignStyle}"
+										Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=ShowFactorQty, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridTextColumn 
 													ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto" >
                                     <DataGridTextColumn.Binding>

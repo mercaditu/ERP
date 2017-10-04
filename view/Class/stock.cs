@@ -117,33 +117,33 @@ im.id_movement as MovementID,
             return GenerateList(Generate.DataTable(query));
         }
 
-        public List<StockList> ByBranchLocation(int LocationID, DateTime TransDate)
-        {
-            string query = @" 
-                                 set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                 select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
-                                 prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement,
-                                  imvd.unit_value as Cost,
-                                 mov.code as BatchCode,
-                                 mov.expire_date as ExpiryDate,
-                                    mov.id_movement as MovementID
-                                 from item_movement as mov
+        //public List<StockList> ByBranchLocation(int LocationID, DateTime TransDate)
+        //{
+        //    string query = @" 
+        //                         set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+        //                         set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+        //                         select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
+        //                         prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement,
+        //                          imvd.unit_value as Cost,
+        //                         mov.code as BatchCode,
+        //                         mov.expire_date as ExpiryDate,
+        //                            mov.id_movement as MovementID
+        //                         from item_movement as mov
 
-                                 inner join app_location as loc on mov.id_location = loc.id_location
-                                 inner join app_branch as branch on loc.id_branch = branch.id_branch
-                                 inner join item_product as prod on mov.id_item_product = prod.id_item_product
-                                 inner join items as item on prod.id_item = item.id_item
-                                 left join item_movement_value_rel as imvr on mov.id_movement_value_rel=imvr.id_movement_value_rel
-                             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel
-                                 left join app_measurement as measure on item.id_measurement = measure.id_measurement
-                                 where mov.id_company = {0} and mov.id_location = {1} and mov.trans_date <= '{2}'
+        //                         inner join app_location as loc on mov.id_location = loc.id_location
+        //                         inner join app_branch as branch on loc.id_branch = branch.id_branch
+        //                         inner join item_product as prod on mov.id_item_product = prod.id_item_product
+        //                         inner join items as item on prod.id_item = item.id_item
+        //                         left join item_movement_value_rel as imvr on mov.id_movement_value_rel=imvr.id_movement_value_rel
+        //                     left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel
+        //                         left join app_measurement as measure on item.id_measurement = measure.id_measurement
+        //                         where mov.id_company = {0} and mov.id_location = {1} and mov.trans_date <= '{2}'
 
-                                 group by loc.id_location, prod.id_item_product
-                                 order by item.name";
-            query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-            return GenerateList(Generate.DataTable(query));
-        }
+        //                         group by loc.id_location, prod.id_item_product
+        //                         order by item.name";
+        //    query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
+        //    return GenerateList(Generate.DataTable(query));
+        //}
 
         private List<StockList> GenerateList(DataTable dt)
         {

@@ -103,16 +103,16 @@ namespace Cognitivo.Product
                                     ///Since this item already exists in Inventory, we should update the values. The following code
                                     ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
                                     decimal Quantity_Original = item_inventory_detail.value_system;
-                                    decimal Quantity_Updated = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
+                                    decimal Quantity_Updated = StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null ? StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Quantity : 0;
                                     decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
 
                                     item_inventory_detail.value_system = Quantity_Updated;
                                     item_inventory_detail.value_counted += Quantity_Difference;
 
                                     //Get the newest Cost.
-                                    if (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null)
+                                    if (StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null)
                                     {
-                                        item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost;
+                                        item_inventory_detail.unit_value = StockList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Cost;
                                     }
                                     else
                                     {

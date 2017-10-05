@@ -12,7 +12,7 @@
 
             im.id_movement as MovementID,
             im.comment as Comment, im.debit as Debit, im.credit as Credit,
-            imv.comment as CostDetail, imvd.unit_value as Cost,
+            imvd.comment as CostDetail, imvd.unit_value as Cost,
 
             -- dim.name as Dimension, imd.value as Value,
 

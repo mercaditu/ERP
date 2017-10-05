@@ -183,7 +183,7 @@ namespace entity.Brillo.Logic
                                                     (App.Names.ProductionExecution,
                                                     (production_execution_detail.production_order_detail.production_order != null ? production_execution_detail.production_order_detail.production_order.work_number : ""),
                                                     ""),
-                                                    OutputMovementDimensionLIST, null, null)
+                                                    OutputMovementDimensionLIST, null, null, null)
                                                 );
                             item_movementList.AddRange(item_movementOUTPUT);
                         }
@@ -307,7 +307,7 @@ namespace entity.Brillo.Logic
                                 purchase_packing.trans_date,
                                 UnitCost,
                                 comment_Generator(App.Names.PurchasePacking, purchase_packing.number ?? "", purchase_packing.contact.name), null,
-                                packing_detail.expire_date, packing_detail.batch_code
+                                packing_detail.expire_date, packing_detail.batch_code, null
                         ));
                 }
                 else
@@ -397,7 +397,7 @@ namespace entity.Brillo.Logic
                                     purchase_packing.trans_date,
                                     UnitCost,
                                     comment_Generator(App.Names.PurchasePacking, purchase_packing.number ?? "", purchase_packing.contact.name), null,
-                                    packing_detail.expire_date, packing_detail.batch_code
+                                    packing_detail.expire_date, packing_detail.batch_code, null
                             ));
 
                             foreach (var item in item_movementList)
@@ -479,7 +479,7 @@ namespace entity.Brillo.Logic
                             purchase_invoice.trans_date,
                             purchase_invoice_detail.unit_cost,
                             comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number ?? "", purchase_invoice.contact.name), item_movement_dimensionLIST,
-                            purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code
+                            purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code, null
                     ));
                     }
                 }
@@ -893,7 +893,7 @@ namespace entity.Brillo.Logic
                                             sales_return.trans_date,
                                              unit_cost,
                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
-                                            null, sales_return_detail.expire_date, sales_return_detail.batch_code
+                                            null, sales_return_detail.expire_date, sales_return_detail.batch_code, null
                                             ));
             }
             //Return List so we can save into context.
@@ -940,7 +940,7 @@ namespace entity.Brillo.Logic
                                 item_inventory_detail.item_inventory.trans_date,
                                 item_inventory_detail.unit_value,
                                 comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
-                                , null, null
+                                , null, null, null
                                 ));
                     }
                 }
@@ -1003,7 +1003,7 @@ namespace entity.Brillo.Logic
                                 item_inventory_detail.item_inventory.trans_date,
                                 item_inventory_detail.unit_value,
                                 comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), null,
-                                null, null
+                                null, null, null
                                 ));
                     }
                     else if (item_inventory_detail.Delta < 0)
@@ -1433,7 +1433,7 @@ namespace entity.Brillo.Logic
         public item_movement CreditOnly_Movement(Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
                                               int CurrencyFXID, int ProductID, int LocationID,
                                               decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList,
-                                              DateTime? ExpiryDate, string Code)
+                                              DateTime? ExpiryDate, string Code,item_movement Parent)
         {
             int id_movement = 0;
             if (Quantity > 0)
@@ -1445,7 +1445,8 @@ namespace entity.Brillo.Logic
                     debit = 0,
                     credit = Quantity,
                     status = Status,
-                    id_location = LocationID
+                    id_location = LocationID,
+                    parent= Parent
                 };
 
                 //Product Expiry Date...

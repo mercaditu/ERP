@@ -358,7 +358,7 @@ namespace cntrl.Class
                        Local_PurchaseInvoice.trans_date,
                        purchase_invoice_detail.unit_cost,
                         "Purcahse Invoice Fix", item_movement_dimensionLIST,
-                       purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code));
+                       purchase_invoice_detail.expire_date, purchase_invoice_detail.batch_code, null));
                         }
                     }
                 }

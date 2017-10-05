@@ -136,24 +136,42 @@ namespace Cognitivo.Configs
                     if (app_account_session.is_active)
                     {
                         SessionID = app_account_session.id_session;
-                            //app_account.app_account_session
-                            //.OrderByDescending(x => x.op_date)
-                            //.Select(x => x.id_session)
-                            //.FirstOrDefault();
+                        //app_account.app_account_session
+                        //.OrderByDescending(x => x.op_date)
+                        //.Select(x => x.id_session)
+                        //.FirstOrDefault();
+                    }
+                    if (app_account.id_account_type == app_account.app_account_type.Bank)
+                    {
+                        app_account_detailDataGrid.ItemsSource =
+                                              app_account_session.app_account_detail
+                                          .Where
+                                          (x => x.id_session == SessionID && //Gets Current Session Items Only.
+                                          (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
+                                          .GroupBy(ad => new { ad.app_currencyfx.id_currency })
+                                          .Select(s => new
+                                          {
+                                              cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+                                              payType = s.Max(ad => ad.payment_type.name),
+                                              amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
+                                          }).ToList();
+                    }
+                    else
+                    {
+                        app_account_detailDataGrid.ItemsSource =
+                                          app_account_session.app_account_detail
+                                      .Where
+                                      (x => x.id_session == SessionID && //Gets Current Session Items Only.
+                                      (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
+                                      .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
+                                      .Select(s => new
+                                      {
+                                          cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+                                          payType = s.Max(ad => ad.payment_type.name),
+                                          amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
+                                      }).ToList();
                     }
 
-                    app_account_detailDataGrid.ItemsSource =
-                        app_account_session.app_account_detail
-                    .Where
-                    (x => x.id_session == SessionID && //Gets Current Session Items Only.
-                    (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
-                    .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
-                    .Select(s => new
-                    {
-                        cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
-                        payType = s.Max(ad => ad.payment_type.name),
-                        amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
-                    }).ToList();
                 }
                 else
                 {

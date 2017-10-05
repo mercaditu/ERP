@@ -173,7 +173,7 @@
                                 <DataGridComboBoxColumn x:Name="payTypeCollum" Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
 														DisplayMemberPath="name" SelectedValuePath="id_payment_type" SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridTextColumn x:Name="amtColumn" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Rate}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding FXRate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Rate}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding FXRate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,StringFormat=N2}" />
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Margin="5">

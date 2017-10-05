@@ -211,7 +211,7 @@ namespace entity
                         item_transfer_detail.item_transfer.trans_date,
                         Unit_cost,
                         stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                        null, null, null
+                        null, null, null, null
                         );
 
                 base.item_movement.Add(item_movement_origin);
@@ -247,12 +247,12 @@ namespace entity
                               item_transfer_detail.item_transfer.trans_date,
                               Unit_cost,
                               stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                              null, null, null
+                              null, null, null, item_movement.parent
                               );
 
                     ///TODO: Using the parent movement of the debit seems wrong. Because the parent will have 
                     ///one debit and one credit, which will leave it at the same level.
-                    item_movement_dest.parent = item_movement.parent;
+                   // item_movement_dest.parent = item_movement.parent;
                     item_movement_dest.code = item_movement.code;
                     item_movement_dest.expire_date = item_movement.expire_date;
                     item_movement_dest.barcode = item_movement.parent != null ? item_movement.parent.barcode : "";
@@ -310,7 +310,7 @@ namespace entity
                             item_transfer_detail.item_transfer.trans_date,
                             item_movement_originList.FirstOrDefault().item_movement_value_rel!=null? item_movement_originList.FirstOrDefault().item_movement_value_rel.total_value:0,
                             stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                            null, null, null);
+                            null, null, null, null);
 
                     base.item_movement.Add(item_movement_Dest);
                 }

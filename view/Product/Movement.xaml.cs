@@ -316,10 +316,10 @@ namespace Cognitivo.Product
                                     item_transfer_detail.item_transfer.trans_date,
                                     Unit_cost,
                                     stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
-                                    DimensionList, item_transfer_detail.expire_date, item_transfer_detail.batch_code
+                                    DimensionList, item_transfer_detail.expire_date, item_transfer_detail.batch_code, item_movement.parent
                                     );
 
-                    item_movement_dest.parent = item_movement.parent;
+                 //   item_movement_dest.parent = item_movement.parent;
                     item_movement.barcode = item_movement.parent != null ? item_movement.parent.barcode : entity.Brillo.Barcode.RandomGenerator();
 
                     ProductTransferDB.item_movement.Add(item_movement_dest);

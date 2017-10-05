@@ -70,7 +70,7 @@ namespace cntrl.Controls
                                         ExpiryDate = item.expire_date,
                                         BatchCode = item.code,
                                         Quantity = item.credit - item.debit,
-                                        Cost = item.item_movement_value.Sum(x => x.unit_value),
+                                        Cost = item.item_movement_value_rel.total_value,
                                         Comment = item.comment,
                                         DisplayImage = item.credit > 0 ? true : false,
                                         IsTransfer = item.id_transfer_detail != null ? true : false
@@ -153,7 +153,7 @@ namespace cntrl.Controls
                                 item_movement mov = db.item_movement.Find(MovementID);
                                 if (mov != null)
                                 {
-                                    mov.Update_ChildVales(Cost, false);
+                                    mov.Update_ChildVales(Cost, false,DateTime.Now);
                                     db.SaveChangesAsync();
                                     MessageBox.Show(entity.Brillo.Localize.StringText("Done"), "Cognitivo ERP", MessageBoxButton.OK);
                                     LoadData();

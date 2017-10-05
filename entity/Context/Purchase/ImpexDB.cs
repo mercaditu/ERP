@@ -202,7 +202,7 @@ namespace entity
                                             }
                                         }
 
-                                        item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost, true);
+                                        item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost, true, DateTime.Now);
                                     }
                                 }
                             }

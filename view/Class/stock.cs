@@ -42,7 +42,6 @@ namespace Cognitivo.Class
                              inner join item_product as prod on mov.id_item_product = prod.id_item_product
                              inner join items as item on prod.id_item = item.id_item
                              left join item_movement_value_rel as imvr on mov.id_movement_value_rel=imvr.id_movement_value_rel
-                          
                              left join item_brand as brand on brand.id_brand = item.id_brand
                              left join app_measurement as measure on item.id_measurement = measure.id_measurement
                              where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
@@ -61,7 +60,7 @@ namespace Cognitivo.Class
                                 select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
                                 ip.id_item_product as ProductID,  (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement,    
-                                  sum(imvd.unit_value) as Cost,
+                                      sum(imvr.total_value) as Cost,
                                 brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,
                                 im.id_movement as MovementID
                                  from item_movement as im
@@ -71,7 +70,7 @@ namespace Cognitivo.Class
                                 inner join app_location as l on im.id_location = l.id_location
                                 inner join app_branch as b on l.id_branch = b.id_branch
                                 left join item_movement_value_rel as imvr on mov.id_movement_value_rel = imvr.id_movement_value_rel
-                             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel = imvd.id_movement_value_rel
+                         
                                 left join item_brand as brand on brand.id_brand = i.id_brand
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
                                 where im.id_company = {0} and b.id_branch = {1} and im.trans_date <= '{2}'
@@ -98,7 +97,7 @@ namespace Cognitivo.Class
                                 im.credit - if(sum(imc.debit) is not null,sum(imc.debit), 0) as Quantity,
                                 measure.name as Measurement,
                                 im.id_movement as MovementID,
-                                    sum(imvd.unit_value) as Cost
+                                      sum(imvr.total_value) as Cost,
 
                                 from item_movement as im
 
@@ -106,7 +105,7 @@ namespace Cognitivo.Class
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
                                 left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
-                                left join item_movement_value_detail as imvd on imvr.id_movement_value_rel = imvd.id_movement_value_rel
+                            
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
                                 left join item_movement as imc on im.id_movement = imc.parent_id_movement
                                 where im.id_company = {0} and im.id_location = {1} and im.trans_date <= '{2}' and ip.can_expire
@@ -124,7 +123,7 @@ namespace Cognitivo.Class
                                  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                  select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName,
                                  prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement,
-                                  imvd.unit_value as Cost,
+                                    sum(imvr.total_value) as Cost,
                                  mov.code as BatchCode,
                                  mov.expire_date as ExpiryDate,
                                     mov.id_movement as MovementID
@@ -135,7 +134,7 @@ namespace Cognitivo.Class
                                  inner join item_product as prod on mov.id_item_product = prod.id_item_product
                                  inner join items as item on prod.id_item = item.id_item
                                  left join item_movement_value_rel as imvr on mov.id_movement_value_rel=imvr.id_movement_value_rel
-                             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel
+                           
                                  left join app_measurement as measure on item.id_measurement = measure.id_measurement
                                  where mov.id_company = {0} and mov.id_location = {1} and mov.trans_date <= '{2}'
 

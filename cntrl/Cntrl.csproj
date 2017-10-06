@@ -319,6 +319,9 @@
       <DependentUpon>NotificationIcon.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="toolBarNotification.xaml.cs">
+      <DependentUpon>toolBarNotification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PrecateBuilder.cs" />
     <Compile Include="Controls\smartBoxContactSetting.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -970,6 +973,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NotificationIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="toolBarNotification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

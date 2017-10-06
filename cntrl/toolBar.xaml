@@ -105,6 +105,7 @@
             <Grid Grid.Column="1">
                 <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
                 <StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Content="Notification" Click="Button_Click"/>
                     <metro:DropDownButton ArrowPressedBrush="Orange" ArrowMouseOverBrush="Red"
                                           ArrowBrush="LightSteelBlue"
                                           FontSize="16" BorderThickness="0" Orientation="Horizontal"

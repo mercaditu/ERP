@@ -712,6 +712,9 @@ namespace cntrl
 			stackMessages.Children.Remove(toolMessage);
 		}
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
 
-	}
+        }
+    }
 }

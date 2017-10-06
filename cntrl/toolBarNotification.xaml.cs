@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using entity;
+using System.Data.Entity;
 
 namespace cntrl.Controls
 {
@@ -22,6 +23,7 @@ namespace cntrl.Controls
     public partial class NotificationWindow : UserControl
     {
         db db = new db();
+        CollectionViewSource app_notificationViewSource;
         public NotificationWindow()
         {
             InitializeComponent();
@@ -29,12 +31,19 @@ namespace cntrl.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            CollectionViewSource app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
+            db.app_notification.Load();
+            app_notificationViewSource.Source = db.app_notification.Local;
 
-           CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
+            CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
             app_departmentViewSource.Source = db.app_department.ToList();
 
             CollectionViewSource security_userViewSource = FindResource("security_userViewSource") as CollectionViewSource;
             security_userViewSource.Source = db.security_user.ToList();
+
+            app_notification app_notification = new app_notification();
+            db.app_notification.Add(app_notification);
+            app_notificationViewSource.View.MoveCurrentToLast();
 
         }
 
@@ -54,7 +63,7 @@ namespace cntrl.Controls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            db.SaveChanges();
         }
     }
 }

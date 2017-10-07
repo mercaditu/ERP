@@ -202,7 +202,11 @@ left join item_movement_value_rel as imvr on parent.id_movement_value_rel=imvr.i
 
                     Stock.code = Convert.ToString(DataRow["code"]);
                     Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
-                    Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
+                    if (!(DataRow["Cost"] is DBNull))
+                    {
+                        Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
+                    }
+                   
 
                     StockList.Add(Stock);
                 }

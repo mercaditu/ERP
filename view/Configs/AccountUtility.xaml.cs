@@ -217,6 +217,11 @@ namespace Cognitivo.Configs
             app_accountDataGrid_SelectionChanged(null, null);
         }
 
+        private void app_account_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            OnDemandLoading(0, dataPager.PageSize);
+        }
+
         private void btnAdjust_Click(object sender, RoutedEventArgs e)
         {
             app_account app_account = app_accountDataGrid.SelectedItem as app_account;

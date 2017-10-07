@@ -89,7 +89,7 @@
                         </Grid.RowDefinitions>
                         <Label Content="{lex:Loc CurrentlyinAccount}" Grid.ColumnSpan="2" />
                         <DataGrid x:Name="app_account_detailDataGrid" AutoGenerateColumns="False" BorderThickness="1" BorderBrush="Gray"
-								  EnableRowVirtualization="True" IsReadOnly="True" Margin="10,26,10,10"
+								  EnableRowVirtualization="True" IsReadOnly="True" Margin="10,26,10,10" SelectionChanged="app_account_detailDataGrid_SelectionChanged"
 							      RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="payTypeColumn" Binding="{Binding payType}" Header="Payment Type" Width="*" />

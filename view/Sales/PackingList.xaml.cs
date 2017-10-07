@@ -55,8 +55,7 @@ namespace Cognitivo.Sales
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
-                filterDetail();
-                filterVerifiedDetail(0);
+              
                 if (sales_packingsales_packinglist_detailViewSource.View != null)
                 {
                     sales_packingsales_packinglist_detailViewSource.View.Refresh();
@@ -437,6 +436,8 @@ namespace Cognitivo.Sales
 
         private void sales_packingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            filterDetail();
+            filterVerifiedDetail(0);
             Refresh_GroupByGrid();
             GridVerifiedList.SelectedIndex = 0;
         }
@@ -538,6 +539,9 @@ namespace Cognitivo.Sales
                 sales_packingViewSource.View.Filter = null;
             }
         }
+
+     
+
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {
             sales_packing packing = sales_packingViewSource.View.CurrentItem as sales_packing;

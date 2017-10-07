@@ -327,7 +327,10 @@ namespace Cognitivo.Menu
                     item_movement_value_rel.item_movement.Add(parentlessMovement);
                     parentlessMovement.item_movement_value_rel = item_movement_value_rel;
                 }
+            }
 
+            using (db db = new db())
+            {
                 List<item_movement> itemMovementListparent = db.item_movement.Where(x => x.parent != null).ToList();
 
                 foreach (item_movement item_movement in itemMovementListparent)

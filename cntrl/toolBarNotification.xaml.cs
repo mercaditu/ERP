@@ -15,16 +15,16 @@ using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
 
-namespace cntrl.Controls
+namespace cntrl
 {
     /// <summary>
     /// Interaction logic for NotificationWindow.xaml
     /// </summary>
-    public partial class NotificationWindow : UserControl
+    public partial class toolBarNotification : UserControl
     {
         db db = new db();
         CollectionViewSource app_notificationViewSource;
-        public NotificationWindow()
+        public toolBarNotification()
         {
             InitializeComponent();
         }

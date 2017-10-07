@@ -714,7 +714,9 @@ namespace cntrl
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            crud_modal.Visibility = Visibility.Visible;
+            cntrl.toolBarNotification objCon = new cntrl.toolBarNotification();
+            crud_modal.Children.Add(objCon);
         }
     }
 }

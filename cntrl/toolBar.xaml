@@ -53,6 +53,7 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
+            <Grid Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.ColumnSpan="3" />
             <Grid Background="{StaticResource AccentColor_Brush}" Margin="0,-30,0,0" />
 
             <Grid x:Name="gridSearch" Grid.Column="0" Background="{StaticResource AccentColor_Brush}">

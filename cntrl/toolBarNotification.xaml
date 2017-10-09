@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
               xmlns:entity="clr-namespace:entity;assembly=entity"
-             xmlns:local="clr-namespace:cntrl.Controls"
               xmlns:lex="http://wpflocalizeextension.codeplex.com"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -17,9 +16,22 @@
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}" />
         <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}" />
     </UserControl.Resources>
-    <Grid DataContext="{StaticResource app_notificationViewSource}">
+    <Grid DataContext="{StaticResource app_notificationViewSource}" Background="{StaticResource winBackground}">
         <TabControl>
-            <TabItem Header="{lex:Loc SendNotification}">
+            <TabItem Header="{lex:Loc View}">
+                <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                          BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling" 
+                          SelectionChanged="dgvnotification_SelectionChanged"
+						  CanUserAddRows="False" IsReadOnly="True"
+						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="8" Style="{StaticResource AzureDataGrid}" 
+                          ItemsSource="{Binding Source={StaticResource app_notificationViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" Width="*" />
+                        <DataGridTextColumn></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="{lex:Loc Request}">
                 <StackPanel>
                     <RadioButton x:Name="rbtnDepartment" Content="Department" Checked="rbtnDepartment_Checked" />
                     <RadioButton x:Name="rbtnUser" Content="User" Checked="rbtnDepartment_Checked" />
@@ -40,23 +52,12 @@
 											  SelectedValue="{Binding id_user, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                     </StackPanel>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                    <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="150"
+                    <TextBox x:Name="commentTextBox" MinHeight="150"
 								 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
-                    <Button Click="Button_Click" Content="Sent"/>
+                    <Button Click="Button_Click" Content="{lex:Loc Save}"/>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="{lex:Loc ReceiveNotification}">
-                <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectionChanged="dgvnotification_SelectionChanged"
-						 CanUserAddRows="False"
-						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding Source={StaticResource app_notificationViewSource}}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding comment}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="64" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding notified_department.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Department}" MinWidth="128" MaxWidth="256" Width="Auto" />
-                        <DataGridTextColumn Binding="{Binding notified_user.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:User}" MinWidth="128" MaxWidth="256" Width="Auto" />
-
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
+            
         </TabControl>
     </Grid>
 </UserControl>

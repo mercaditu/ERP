@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
 
@@ -22,7 +12,7 @@ namespace cntrl
     /// </summary>
     public partial class toolBarNotification : UserControl
     {
-        db db = new db();
+        //db db = new db();
         CollectionViewSource app_notificationViewSource;
         public toolBarNotification()
         {
@@ -32,22 +22,21 @@ namespace cntrl
         public App.Names id_application { get; set; }
         public int ref_id { get; set; }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
-            db.app_notification.Load();
-            app_notificationViewSource.Source = db.app_notification.Local;
+            using (db db = new db())
+            {
 
-            CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
-            app_departmentViewSource.Source = db.app_department.ToList();
+                app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
+                await db.app_notification.Where(x => x.is_read == false && ( x.id_user == CurrentSession.Id_User || x.notified_department == CurrentSession.UserRole.app_department)).LoadAsync();
+                app_notificationViewSource.Source = db.app_notification.Local;
 
-            CollectionViewSource security_userViewSource = FindResource("security_userViewSource") as CollectionViewSource;
-            security_userViewSource.Source = db.security_user.ToList();
+                CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
+                app_departmentViewSource.Source = await db.app_department.ToListAsync();
 
-            app_notification app_notification = new app_notification();
-            db.app_notification.Add(app_notification);
-            app_notificationViewSource.View.MoveCurrentToLast();
-
+                CollectionViewSource security_userViewSource = FindResource("security_userViewSource") as CollectionViewSource;
+                security_userViewSource.Source = await db.security_user.ToListAsync();
+            }
         }
 
         private void rbtnDepartment_Checked(object sender, RoutedEventArgs e)
@@ -66,13 +55,27 @@ namespace cntrl
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            db.SaveChanges();
+            //db.SaveChanges();
+            using (db db = new db())
+            {
+                string comment = commentTextBox.Text;
+                string userName = CurrentSession.User.name_full + ": " + comment;
+                db.SaveChangesAsync();
+            }
         }
 
         private void dgvnotification_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            app_notification app_notification = app_notificationViewSource.View.CurrentItem as app_notification;
-            ref_id = app_notification.ref_id;
+            //improve code, make async and wait 5 seconds before launching code.
+            using (db db = new db())
+            {
+                app_notification app_notification = app_notificationViewSource.View.CurrentItem as app_notification;
+                app_notification.is_read = true;
+                db.SaveChangesAsync();
+
+                ref_id = app_notification.ref_id;
+                //Where is event fire??
+            }
         }
     }
 }

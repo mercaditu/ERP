@@ -106,7 +106,6 @@
             <Grid Grid.Column="1">
                 <StackPanel x:Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
                 <StackPanel x:Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button Content="Notification" Click="Button_Click"/>
                     <metro:DropDownButton ArrowPressedBrush="Orange" ArrowMouseOverBrush="Red"
                                           ArrowBrush="LightSteelBlue"
                                           FontSize="16" BorderThickness="0" Orientation="Horizontal"
@@ -115,6 +114,8 @@
                             <Button Content="Approve Edit" />
                         </metro:DropDownButton.Items>
                     </metro:DropDownButton>
+                    
+                    <local:toolIcon x:Name="icoNotification" Click="icoNotification_Click" imgSource=""/>
                     <TextBlock x:Name="btnSync" Text="w" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"
                            MouseUp="btnSync_MouseUp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"
                            Margin="8" Foreground="Black" Opacity="0.9" RenderTransformOrigin="0.5,0.5"

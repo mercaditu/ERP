@@ -719,5 +719,15 @@ namespace cntrl
             objCon.id_application = appName;
             crud_modal.Children.Add(objCon);
         }
+
+        private void toolIcon_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void icoNotification_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

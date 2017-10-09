@@ -30,11 +30,11 @@ namespace cntrl
         }
 
         public App.Names id_application { get; set; }
-
+        public int ref_id { get; set; }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CollectionViewSource app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
+            app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
             db.app_notification.Load();
             app_notificationViewSource.Source = db.app_notification.Local;
 
@@ -67,6 +67,12 @@ namespace cntrl
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             db.SaveChanges();
+        }
+
+        private void dgvnotification_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            app_notification app_notification = app_notificationViewSource.View.CurrentItem as app_notification;
+            ref_id = app_notification.ref_id;
         }
     }
 }

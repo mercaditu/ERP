@@ -190,6 +190,11 @@ namespace Cognitivo.Product
                     }
                 }
 
+                if (checkStock.IsChecked==false)
+                {
+                    InventoryController.db.item_inventory_detail.RemoveRange(item_inventory.item_inventory_detail.Where(x => x.value_system == 0).ToList());
+                }
+
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryViewSource.View.MoveCurrentTo(item_inventory);
                 app_branchapp_locationViewSource.View.MoveCurrentTo(app_location);

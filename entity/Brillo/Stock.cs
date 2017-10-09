@@ -47,6 +47,8 @@ left join item_movement_value_rel as imvr on parent.id_movement_value_rel=imvr.i
             return GenerateList(dt);
         }
 
+       
+
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {
             string query = @"

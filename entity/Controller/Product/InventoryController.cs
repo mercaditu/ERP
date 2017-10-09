@@ -12,27 +12,34 @@ namespace entity.Controller.Product
         {
             NumberOfRecords = 0;
 
-            foreach (item_inventory item_inventory in db.item_inventory.Local.Where(x =>  x.IsSelected))
+            foreach (item_inventory item_inventory in db.item_inventory.Local.Where(x => x.IsSelected))
             {
-              
-                    if (item_inventory.State == EntityState.Added)
-                    {
-                        item_inventory.timestamp = DateTime.Now;
-                        item_inventory.State = EntityState.Unchanged;
-                        db.Entry(item_inventory).State = EntityState.Added;
-                        item_inventory.IsSelected = false;
-                    }
-                    else if (item_inventory.State == EntityState.Modified)
-                    {
-                        item_inventory.timestamp = DateTime.Now;
-                        item_inventory.State = EntityState.Unchanged;
-                        db.Entry(item_inventory).State = EntityState.Modified;
-                        item_inventory.IsSelected = false;
-                    }
-                    NumberOfRecords += 1;
-                
 
-              
+
+                if (item_inventory.State == EntityState.Added)
+                {
+                    //If Value Counted in Null, we undsertand that this has not been counted and will be removed from context.
+                    if (item_inventory.item_inventory_detail.Where(x => x.value_counted == null).Count() > 0)
+                    {
+                        List<item_inventory_detail> null_detail = item_inventory.item_inventory_detail.Where(x => x.value_counted == null).ToList();
+                        db.item_inventory_detail.RemoveRange(null_detail);
+                    }
+                    item_inventory.timestamp = DateTime.Now;
+                    item_inventory.State = EntityState.Unchanged;
+                    db.Entry(item_inventory).State = EntityState.Added;
+                    item_inventory.IsSelected = false;
+                }
+                else if (item_inventory.State == EntityState.Modified)
+                {
+                    item_inventory.timestamp = DateTime.Now;
+                    item_inventory.State = EntityState.Unchanged;
+                    db.Entry(item_inventory).State = EntityState.Modified;
+                    item_inventory.IsSelected = false;
+                }
+                NumberOfRecords += 1;
+
+
+
             }
 
             foreach (var error in db.GetValidationErrors())
@@ -68,12 +75,7 @@ namespace entity.Controller.Product
 
             foreach (item_inventory item_inventory in db.item_inventory.Local.Where(x => x.status != Status.Documents.Issued && x.IsSelected))
             {
-                //If Value Counted in Null, we undsertand that this has not been counted and will be removed from context.
-                if (item_inventory.item_inventory_detail.Where(x => x.value_counted == null).Count() > 0)
-                {
-                    List<item_inventory_detail> null_detail = item_inventory.item_inventory_detail.Where(x => x.value_counted == null).ToList();
-                    db.item_inventory_detail.RemoveRange(null_detail);
-                }
+
 
 
                 List<item_movement> item_movementLIST = new List<item_movement>();

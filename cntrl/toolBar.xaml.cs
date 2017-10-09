@@ -712,22 +712,14 @@ namespace cntrl
 			stackMessages.Children.Remove(toolMessage);
 		}
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+   
+
+        private void icoNotification_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
             cntrl.toolBarNotification objCon = new cntrl.toolBarNotification();
             objCon.id_application = appName;
             crud_modal.Children.Add(objCon);
-        }
-
-        private void toolIcon_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void icoNotification_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

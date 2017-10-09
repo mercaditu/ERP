@@ -41,7 +41,7 @@
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"
-											  SelectedValue="{Binding id_department, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+											  />
                     </StackPanel>
                     <StackPanel x:Name="stpUser">
                         <Label Content="{lex:Loc User}" Style="{StaticResource input_label}" />
@@ -49,7 +49,7 @@
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  Style="{StaticResource input_combobox}" 
-											  SelectedValue="{Binding id_user, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+											/>
                     </StackPanel>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                     <TextBox x:Name="commentTextBox" MinHeight="150"

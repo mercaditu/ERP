@@ -388,10 +388,11 @@ namespace Cognitivo.Sales
                         }
                         else
                         {
+                                                    
                             sales_invoice_detail _sales_invoice_detail =
                                 SalesDB.Create_Detail(ref sales_invoice, item, null,
                                 SalesSettings.AllowDuplicateItem,
-                                sbxItem.QuantityInStock,
+                               sbxItem.QuantityInStock,
                                 sbxItem.Quantity);
 
                             sales_invoicesales_invoice_detailViewSource.View.Refresh();

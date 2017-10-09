@@ -127,7 +127,7 @@ namespace entity.Controller.Sales
         public sales_invoice_detail Create_Detail(
             ref sales_invoice Invoice, item Item, item_movement ItemMovement,
             bool AllowDouble,
-            decimal QuantityInStock,
+            decimal? QuantityInStock,
             decimal Quantity)
         {
             int? i = null;
@@ -154,7 +154,7 @@ namespace entity.Controller.Sales
             }
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
-          //  sales_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
+            //  sales_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
 
             if (Invoice.app_contract == null && Invoice.id_contract > 0)
             {
@@ -323,7 +323,24 @@ namespace entity.Controller.Sales
             {
                 if (invoice.id_sales_invoice == 0 && invoice.id_contact > 0)
                 {
-                    SaveChanges_WithValidation();
+                    if (SaveChanges_WithValidation() == false)
+                    {
+                        return false;
+                    }
+                }
+
+                foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
+                {
+                    if (sales_invoice_detail.item.item_product.FirstOrDefault()!=null)
+                    {
+                        entity.Brillo.Stock stock = new Brillo.Stock();
+                        decimal Quantity_InStock = stock.List(CurrentSession.Id_Branch, sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.QtyBalance);
+                        if (Quantity_InStock < sales_invoice_detail.quantity)
+                        {
+                            return false;
+                        }
+                    }
+                  
                 }
 
                 invoice.app_condition = db.app_condition.Find(invoice.id_condition);
@@ -572,7 +589,7 @@ namespace entity.Controller.Sales
                 throw ex;
             }
 
-           
+
 
 
 

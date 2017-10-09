@@ -62,6 +62,18 @@ namespace cntrl
             {
                 string comment = commentTextBox.Text;
                 string userName = CurrentSession.User.name_full + ": " + comment;
+                app_notification app_notification = new app_notification();
+                if (cbxDepartment.SelectedItem != null)
+                {
+                    app_notification.notified_department = cbxDepartment.SelectedItem as app_department;
+                }
+                if (cbxUser.SelectedItem != null)
+                {
+                    app_notification.notified_user = cbxUser.SelectedItem as security_user;
+                }
+
+                app_notification.comment = userName;
+                db.app_notification.Add(app_notification);
                 db.SaveChangesAsync();
             }
         }

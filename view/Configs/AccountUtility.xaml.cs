@@ -71,6 +71,7 @@ namespace Cognitivo.Configs
 
                 dataPager.LoadDynamicItems(StartIndex, ListDetails);
             }
+
         }
 
         public AccountUtility()
@@ -148,7 +149,7 @@ namespace Cognitivo.Configs
                                           .Where
                                           (x => x.id_session == SessionID && //Gets Current Session Items Only.
                                           (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
-                                          .GroupBy(ad => new { ad.app_currencyfx.id_currency })
+                                          .GroupBy(ad => new { ad.app_currencyfx.id_currencyfx})
                                           .Select(s => new
                                           {
                                               cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
@@ -315,12 +316,13 @@ namespace Cognitivo.Configs
                     int DestinationRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencydest).FirstOrDefault().id_currencyfx;
                     int OriginRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currencyfx;
 
-                    app_currencyfx app_currencyfx =
+                    app_currencyfx Destapp_currencyfxold =
                         CurrentSession
                         .CurrencyFX_ActiveRates
                         .Where(x => x.id_currency == DestinationRate_ID).FirstOrDefault();
+                 
 
-                    decimal SellRate = app_currencyfx != null ? app_currencyfx.sell_value : 0;
+                    decimal SellRate = Destapp_currencyfxold != null ? Destapp_currencyfxold.sell_value : 0;
 
                     if (SellRate != Transfer.FXRate)
                     {
@@ -343,14 +345,19 @@ namespace Cognitivo.Configs
                     }
                     else
                     {
-                        DestinationRate_ID = app_currencyfx.id_currencyfx;
+                        DestinationRate_ID = Destapp_currencyfxold.id_currencyfx;
                     }
 
+                   
+                    app_currencyfx originapp_currencyfx =
+                      db.app_currencyfx
+                     .Where(x => x.id_currencyfx == OriginRate_ID).FirstOrDefault();
                     //Set up Origin Data.
                     app_account_detail Origin_AccountTransaction = new app_account_detail()
                     {
                         id_account = (int)Transfer.id_accountorigin,
                         id_currencyfx = OriginRate_ID,
+                        app_currencyfx= originapp_currencyfx,
                         id_payment_type = Transfer.id_payment_type,
                         credit = 0,
                         tran_type = app_account_detail.tran_types.Transaction,
@@ -367,10 +374,15 @@ namespace Cognitivo.Configs
 
                     decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate_ID, DestinationRate_ID, entity.App.Modules.Sales);
 
+                    app_currencyfx Destapp_currencyfx =
+                      db.app_currencyfx
+                      .Where(x => x.id_currencyfx == DestinationRate_ID).FirstOrDefault();
+
                     app_account_detail Destination_AccountTransaction = new app_account_detail()
                     {
                         id_account = (int)Transfer.id_accountdest,
                         id_currencyfx = DestinationRate_ID,
+                        app_currencyfx = Destapp_currencyfx,
                         id_payment_type = Transfer.id_payment_type,
                         tran_type = app_account_detail.tran_types.Transaction,
                         credit = Amount_AfterFXExchange,

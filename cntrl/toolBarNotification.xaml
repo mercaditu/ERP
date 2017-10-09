@@ -46,7 +46,15 @@
                 </StackPanel>
             </TabItem>
             <TabItem Header="{lex:Loc ReceiveNotification}">
-                
+                <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling"
+						 CanUserAddRows="False"
+						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding Source={StaticResource app_notificationViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding comment}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="64" Width="Auto" />
+                        <DataGridTextColumn Binding="{Binding app_dapartment.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Department}" MinWidth="128" MaxWidth="256" Width="Auto" />
+                  
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
         </TabControl>
     </Grid>

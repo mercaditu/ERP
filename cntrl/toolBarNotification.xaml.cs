@@ -29,6 +29,9 @@ namespace cntrl
             InitializeComponent();
         }
 
+        public App.Names id_application { get; set; }
+
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;

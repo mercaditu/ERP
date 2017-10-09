@@ -716,6 +716,7 @@ namespace cntrl
         {
             crud_modal.Visibility = Visibility.Visible;
             cntrl.toolBarNotification objCon = new cntrl.toolBarNotification();
+            objCon.id_application = appName;
             crud_modal.Children.Add(objCon);
         }
     }

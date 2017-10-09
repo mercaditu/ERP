@@ -115,7 +115,7 @@
                             </syncfusion:SfDataGrid.Columns>
                         </syncfusion:SfDataGrid>
                         <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="2" PageSize="100"
-                                                UseOnDemandPaging="True" OnDemandLoading="dataPager_OnDemandLoading"/>
+                                                 UseOnDemandPaging="True" OnDemandLoading="dataPager_OnDemandLoading"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{Binding is_active, Converter={StaticResource BoolToActiveReverse}}">

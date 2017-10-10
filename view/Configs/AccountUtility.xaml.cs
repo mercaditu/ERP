@@ -63,7 +63,7 @@ namespace Cognitivo.Configs
             if (app_account != null)
             {
                 List<app_account_detail> ListDetails = db.app_account_detail
-                    .Where(x => x.id_account == app_account.id_account && x.status==Status.Documents_General.Approved)
+                    .Where(x => x.id_account == app_account.id_account && x.status == Status.Documents_General.Approved)
                     .Include(y => y.app_currencyfx.app_currency)
                     .OrderByDescending(y => y.trans_date)
                     .Skip(StartIndex)
@@ -72,7 +72,6 @@ namespace Cognitivo.Configs
                 dataPager.LoadDynamicItems(StartIndex, ListDetails);
                
             }
-
         }
 
         public AccountUtility()

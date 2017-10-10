@@ -12,6 +12,8 @@ namespace DebeHaber
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4, Production = 5 }
 
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
+    
+    public enum PaymentModes { Recievable = 1, Payable = 2 }
 
     public class Integration
     {
@@ -410,6 +412,7 @@ namespace DebeHaber
 
     public class Payments
     {
+        public PaymentModes PaymentMode { get; set; }
         public PaymentTypes PaymentType { get; set; }
         public DateTime TransDate { get; set; }
         public string Parent { get; set; }
@@ -437,6 +440,7 @@ namespace DebeHaber
                 PaymentType = PaymentTypes.VATWithHolding;
             }
 
+            PaymentMode = schedual.parent.sales_invoice != null ? PaymentModes.Recievable : PaymentModes.Payable;
             Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "");
             Company = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
             Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";

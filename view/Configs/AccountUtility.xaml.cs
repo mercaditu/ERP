@@ -70,6 +70,7 @@ namespace Cognitivo.Configs
                     .Take(PageSize).ToList();
 
                 dataPager.LoadDynamicItems(StartIndex, ListDetails);
+               
             }
 
         }
@@ -208,6 +209,7 @@ namespace Cognitivo.Configs
                 }
 
                 OnDemandLoading(0, dataPager.PageSize);
+                dataPager.MoveToFirstPage();
             }
         }
 
@@ -422,6 +424,8 @@ namespace Cognitivo.Configs
             app_accountViewSource.View.Refresh();
             app_accountapp_account_detailViewSource.View.Refresh();
             //app_account_detail_adjustViewSource.View.Refresh();
+
+            app_accountDataGrid_SelectionChanged(null, null);
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)

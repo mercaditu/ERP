@@ -110,6 +110,91 @@ namespace entity.Brillo
             }
             return originalValue;
         }
+        public static decimal convert_Values(decimal originalValue, int old_app_currencyfx, app_currency app_currency, decimal rate, App.Modules? Modules)
+        {
+            // decimal rate = 0;
+            //app_currencyfx app_currencyfx = null;
+            app_currencyfx app_currencyfxold = null;
+
+            using (db db = new db())
+            {
+                db.Configuration.AutoDetectChangesEnabled = false;
+
+                //   app_currencyfx = db.app_currencyfx.Find(id_app_currencyfx);
+                app_currencyfxold = db.app_currencyfx.Find(old_app_currencyfx);
+
+                if (app_currencyfxold != null)
+                {
+                    //if (Modules == App.Modules.Sales)
+                    //{
+                    //    rate = app_currencyfx.buy_value;
+                    //}
+                    //else //Purchase Rates
+                    //{
+                    //    rate = app_currencyfx.sell_value;
+                    //}
+
+                    if (app_currency == null)
+                    {
+                        Rate_Previous = rate;
+                        return originalValue * rate;
+                    }
+                    else
+                    {
+                        if (app_currency.id_currency != app_currencyfxold.id_currency)
+                        {
+                            bool is_priority = true;
+                            if (app_currencyfxold != null)
+                            {
+                                if (app_currencyfxold.app_currency.is_priority)
+                                {
+                                    is_priority = app_currencyfxold.app_currency.is_priority;
+                                }
+                                else
+                                {
+                                    is_priority = false;
+                                }
+                            }
+
+                            if (app_currency.is_priority == false && is_priority == false)
+                            {
+                                app_currencyfx _app_currencyfx = CurrentSession.Get_Currency_Default_Rate(); //db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault();
+                                if (_app_currencyfx != null)
+                                {
+                                    //Convert Towards Defualt
+                                    decimal Value_InPriority = convert_Values(originalValue, old_app_currencyfx, _app_currencyfx.id_currencyfx, App.Modules.Sales);
+                                    //Convert Away from Default
+                                    return convert_Values(Value_InPriority, _app_currencyfx.id_currencyfx,  app_currency,rate, App.Modules.Sales);
+                                }
+                            }
+                            else if (app_currency.is_priority == true) //Towards Default
+                            {
+                                if (app_currencyfxold != null)
+                                {
+                                    if (Modules == App.Modules.Sales)
+                                    {
+                                        rate = app_currencyfxold.buy_value == 0 ? 1 : app_currencyfxold.buy_value;
+                                    }
+                                    else //Purchase Rates
+                                    {
+                                        rate = app_currencyfxold.sell_value == 0 ? 1 : app_currencyfxold.sell_value;
+                                    }
+                                }
+
+                                return originalValue * (1 / rate);
+                            }
+                            else //Away from Default
+                            {
+                                Rate_Previous = rate;
+                                 return originalValue * rate;
+                            }
+                        }
+                    }
+                }
+            }
+            return originalValue;
+        }
+
 
         public static decimal convert_Values(decimal v, int id_currencyfx1, int id_currencyfx2, object sales)
         {

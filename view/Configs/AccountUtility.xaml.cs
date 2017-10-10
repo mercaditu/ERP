@@ -217,6 +217,7 @@ namespace Cognitivo.Configs
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             app_accountDataGrid_SelectionChanged(null, null);
+
         }
 
         private void app_account_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

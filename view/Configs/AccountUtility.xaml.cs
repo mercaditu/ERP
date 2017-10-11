@@ -374,7 +374,8 @@ namespace Cognitivo.Configs
                         Origin_AccountTransaction.id_session = SessionID_Origin;
                     }
 
-                    decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate_ID, DestinationRate_ID, entity.App.Modules.Sales);
+
+                   // decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate_ID, DestinationRate_ID, entity.App.Modules.Sales);
 
                     app_currencyfx Destapp_currencyfx =
                       db.app_currencyfx
@@ -387,7 +388,7 @@ namespace Cognitivo.Configs
                         app_currencyfx = Destapp_currencyfx,
                         id_payment_type = Transfer.id_payment_type,
                         tran_type = app_account_detail.tran_types.Transaction,
-                        credit = Amount_AfterFXExchange,
+                        credit = Transfer.amountCounted,
                         debit = 0,
                         comment = "Transfered from " + Transfer.AccountOrigin,
                         trans_date = DateTime.Now

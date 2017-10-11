@@ -203,6 +203,7 @@ namespace Cognitivo.Configs
                     ///- Keep Account Active. (Previously we used to close Account, now Session handles that.)
 
                     //Loop through each account and create an Account Detail for the Opening Balance.
+
                     foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
                     {
                         app_account_detail app_account_detail = new app_account_detail()
@@ -210,6 +211,7 @@ namespace Cognitivo.Configs
                             id_session = app_account_session.id_session,
                             id_account = app_account_session.id_account,
                             id_currencyfx = counted_account_detail.id_currencyfxorigin,
+                            app_currencyfx=db.app_currencyfx.Find(counted_account_detail.id_currencyfxorigin),
                             id_payment_type = counted_account_detail.id_payment_type,
                             debit = counted_account_detail.amountCounted,
                             status = Status.Documents_General.Approved,
@@ -262,6 +264,7 @@ namespace Cognitivo.Configs
                         {
                             id_account = app_account.id_account,
                             id_currencyfx = counted_account_detail.id_currencyfxorigin,
+                            app_currencyfx = db.app_currencyfx.Find(counted_account_detail.id_currencyfxorigin),
                             id_payment_type = counted_account_detail.id_payment_type,
                             credit = counted_account_detail.amountCounted,
                             comment = "Opening Balance",

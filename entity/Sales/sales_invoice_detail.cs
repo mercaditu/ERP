@@ -176,11 +176,11 @@ namespace entity
                     }
 
                 }
-                if (columnName == "InStock")
-                {
-                    if (InStock==false)
-                        return "Stock Exceeded";
-                }
+                //if (columnName == "InStock")
+                //{
+                //    if (InStock==false)
+                //        return "Stock Exceeded";
+                //}
 
                 if (columnName == "unit_price")
                 {

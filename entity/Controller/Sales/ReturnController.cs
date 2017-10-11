@@ -50,15 +50,6 @@ namespace entity.Controller.Sales
                 predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Terminal);
             }
 
-            if (Start_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date >= Start_Range.Date);
-            }
-
-            if (End_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date <= End_Range.Date);
-            }
             if (Count == 0)
             {
                 Count = db.sales_return.Where(predicate).Count();

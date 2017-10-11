@@ -187,10 +187,18 @@ namespace Cognitivo.Sales
             {
                 if (!string.IsNullOrEmpty(query))
                 {
+                   
+                 
                     salesReturnViewSource.View.Filter = i =>
                     {
                         sales_return sales_return = i as sales_return;
-                        if (sales_return.contact.name.ToLower().Contains(query.ToLower()))
+                        string number = sales_return.number ?? "";
+                        string customer = "";
+                        if (sales_return.contact!=null)
+                        {
+                            customer = sales_return.contact.name;
+                        }
+                        if (customer.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
                         {
                             return true;
                         }

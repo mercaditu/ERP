@@ -69,7 +69,7 @@ namespace Cognitivo.Class
                                 inner join items as i on ip.id_item = i.id_item
                                 inner join app_location as l on im.id_location = l.id_location
                                 inner join app_branch as b on l.id_branch = b.id_branch
-                                left join item_movement_value_rel as imvr on mov.id_movement_value_rel = imvr.id_movement_value_rel
+                                left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
                          
                                 left join item_brand as brand on brand.id_brand = i.id_brand
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement

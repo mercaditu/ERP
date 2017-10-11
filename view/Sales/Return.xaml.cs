@@ -167,8 +167,8 @@ namespace Cognitivo.Sales
             }
             else
             {
-                salesReturnViewSource = FindResource("salesReturnViewSource") as CollectionViewSource;
-                salesReturnViewSource.Source = await SalesReturnDB.db.sales_budget
+                salesReturnViewSource = FindResource("sales_returnViewSource") as CollectionViewSource;
+                salesReturnViewSource.Source = await SalesReturnDB.db.sales_return
                     .Where
                     (
                     x =>

@@ -161,6 +161,7 @@ namespace Cognitivo.Purchase
         private void Approve_Click(object sender)
         {
             PurchaseDB.Approve();
+            toolBar.msgApproved(PurchaseDB.NumberOfRecords);
         }
 
         private void Anull_Click(object sender)

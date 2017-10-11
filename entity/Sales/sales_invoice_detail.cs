@@ -169,10 +169,10 @@ namespace entity
                     }
                     else if (Quantity_InStockLot != null)
                     {
-                        if (Quantity_InStockLot < quantity)
-                        {
-                            return "Stock Exceeded";
-                        }
+                        //if (Quantity_InStockLot < quantity)
+                        //{
+                        //    return "Stock Exceeded";
+                        //}
                     }
 
                 }

@@ -149,7 +149,7 @@ namespace Cognitivo.Configs
                                           .Where
                                           (x => x.id_session == SessionID && //Gets Current Session Items Only.
                                           (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
-                                          .GroupBy(ad => new { ad.app_currencyfx.id_currencyfx})
+                                          .GroupBy(ad => new { ad.app_currencyfx.id_currency})
                                           .Select(s => new
                                           {
                                               cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
@@ -364,7 +364,7 @@ namespace Cognitivo.Configs
                         credit = 0,
                         tran_type = app_account_detail.tran_types.Transaction,
                         debit = Transfer.amount,
-                        comment = "Transfered to " + Transfer.AccountDest,
+                        comment = tbxCommentTransfer.Text + "-> Transfered to " + Transfer.AccountDest,
                         trans_date = DateTime.Now
                     };
 
@@ -390,7 +390,7 @@ namespace Cognitivo.Configs
                         tran_type = app_account_detail.tran_types.Transaction,
                         credit = Transfer.amountCounted,
                         debit = 0,
-                        comment = "Transfered from " + Transfer.AccountOrigin,
+                        comment = tbxCommentTransfer.Text +  "-> Transfered from " + Transfer.AccountOrigin,
                         trans_date = DateTime.Now
                     };
 

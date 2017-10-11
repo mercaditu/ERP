@@ -32,6 +32,11 @@ namespace Cognitivo.Configs
             , app_account_listViewSource
             , app_accountapp_account_detailViewSource
             , app_account_detailViewSource
+            , app_accountDestViewSource
+            , app_accountOriginViewSource
+            , app_currencyViewSource
+            , app_currencydestViewSource
+            , payment_typeViewSource
             , amount_transferViewSource = null;
 
         private List<Class.clsTransferAmount> listTransferAmt = null;
@@ -70,13 +75,32 @@ namespace Cognitivo.Configs
                     .Take(PageSize).ToList();
 
                 dataPager.LoadDynamicItems(StartIndex, ListDetails);
-               
+
             }
         }
 
         public AccountUtility()
         {
             InitializeComponent();
+        }
+
+        private void TextAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int dest_currid = Convert.ToInt32(cbxDestinationCurrency.SelectedValue);
+            int origin_currid = Convert.ToInt32(cbxOriginCurrency.SelectedValue);
+            app_currencyfx originapp_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == origin_currid).FirstOrDefault();
+            app_currency dest_appcurrency = CurrentSession.Currencies.Where(x => x.id_currency == dest_currid).FirstOrDefault();
+            decimal fxrate = TextFxRate.Text != "" ? Convert.ToDecimal(TextFxRate.Text) : 0;
+            decimal amount = TextAmount.Text != "" ? Convert.ToDecimal(TextAmount.Text) : 0;
+            if (originapp_currencyfx != null)
+            {
+                if (dest_appcurrency != null)
+                {
+                    TextDestAmount.Text = Convert.ToString(Math.Round(entity.Brillo.Currency.convert_Values(amount, originapp_currencyfx.id_currencyfx, dest_appcurrency,fxrate, entity.App.Modules.Sales), 2));
+                    
+                }
+
+            }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -92,18 +116,18 @@ namespace Cognitivo.Configs
             app_account_listViewSource = this.FindResource("app_account_listViewSource") as CollectionViewSource;
             app_account_listViewSource.Source = db.app_account.Local.Where(a => a.id_account_type == app_account.app_account_type.Terminal && a.id_account_type == app_account.app_account_type.Bank).ToList();
 
-            CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
-            CollectionViewSource app_accountOriginViewSource = this.FindResource("app_accountOriginViewSource") as CollectionViewSource;
+            app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
+            app_accountOriginViewSource = this.FindResource("app_accountOriginViewSource") as CollectionViewSource;
             app_accountDestViewSource.Source = db.app_account.Local;
             app_accountOriginViewSource.Source = db.app_account.Local;
 
             //Payment Type
-            CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
+            payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = db.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).ToList();
 
             //CurrencyFx
-            CollectionViewSource app_currencyViewSource = this.FindResource("app_currencyViewSource") as CollectionViewSource;
-            CollectionViewSource app_currencydestViewSource = this.FindResource("app_currencydestViewSource") as CollectionViewSource;
+            app_currencyViewSource = this.FindResource("app_currencyViewSource") as CollectionViewSource;
+            app_currencydestViewSource = this.FindResource("app_currencydestViewSource") as CollectionViewSource;
             app_currencyViewSource.Source = CurrentSession.Currencies;
             app_currencydestViewSource.Source = CurrentSession.Currencies;
 
@@ -149,7 +173,7 @@ namespace Cognitivo.Configs
                                           .Where
                                           (x => x.id_session == SessionID && //Gets Current Session Items Only.
                                           (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
-                                          .GroupBy(ad => new { ad.app_currencyfx.id_currency})
+                                          .GroupBy(ad => new { ad.app_currencyfx.id_currency })
                                           .Select(s => new
                                           {
                                               cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
@@ -223,6 +247,31 @@ namespace Cognitivo.Configs
         private void app_account_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             OnDemandLoading(0, dataPager.PageSize);
+        }
+
+        private void cbxOriginAccount_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            app_account app_accountdest = app_accountDestViewSource.View.CurrentItem as app_account;
+            if (app_accountdest != null)
+            {
+                if (app_currencyViewSource != null)
+                {
+                    if (app_currencyViewSource.View != null)
+                    {
+                        app_currencyViewSource.View.Filter = i =>
+                        {
+                            app_currency app_currency = i as app_currency;
+                            if (app_currency.id_currency == app_accountdest.id_currency)
+                            {
+                                return true;
+                            }
+
+                            return false;
+                        };
+                    }
+                }
+
+            }
         }
 
         private void btnAdjust_Click(object sender, RoutedEventArgs e)
@@ -308,117 +357,121 @@ namespace Cognitivo.Configs
         private void btnTransfer_Click(object sender, RoutedEventArgs e)
         {
             //Run through all Transfer in list.
-            foreach (Class.clsTransferAmount Transfer in listTransferAmt)
+            //  foreach (Class.clsTransferAmount Transfer in listTransferAmt)
+            //{
+            payment_type payment_type = payment_typeViewSource.View.CurrentItem as payment_type;
+            app_account dest_account = cbxDestinationAccount.SelectedItem as app_account;
+            app_account origin_account = cbxOriginAccount.SelectedItem as app_account;
+
+            if (dest_account != null && origin_account != null && payment_type != null)
             {
-                payment_type payment_type = db.payment_type.Where(x => x.id_payment_type == Transfer.id_payment_type).FirstOrDefault();
+                //Fix this code. Allow use of manual FX Rate and create into table.
+                int dest_currid = Convert.ToInt32(cbxDestinationCurrency.SelectedValue);
+                int origin_currid = Convert.ToInt32(cbxOriginCurrency.SelectedValue);
+                int DestinationRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == dest_currid).FirstOrDefault().id_currencyfx;
+                int OriginRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == origin_currid).FirstOrDefault().id_currencyfx;
 
-                if (Transfer.id_accountorigin != null && Transfer.id_accountdest != null && payment_type != null)
+                app_currencyfx Destapp_currencyfxold =
+                    CurrentSession
+                    .CurrencyFX_ActiveRates
+                    .Where(x => x.id_currency == DestinationRate_ID).FirstOrDefault();
+
+
+                decimal SellRate = Destapp_currencyfxold != null ? Destapp_currencyfxold.sell_value : 0;
+
+                if (SellRate != Convert.ToDecimal(TextFxRate.Text))
                 {
-                    //Fix this code. Allow use of manual FX Rate and create into table.
-                    int DestinationRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencydest).FirstOrDefault().id_currencyfx;
-                    int OriginRate_ID = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == Transfer.id_currencyorigin).FirstOrDefault().id_currencyfx;
-
-                    app_currencyfx Destapp_currencyfxold =
-                        CurrentSession
-                        .CurrencyFX_ActiveRates
-                        .Where(x => x.id_currency == DestinationRate_ID).FirstOrDefault();
-                 
-
-                    decimal SellRate = Destapp_currencyfxold != null ? Destapp_currencyfxold.sell_value : 0;
-
-                    if (SellRate != Transfer.FXRate)
+                    using (db _db = new db())
                     {
-                        using (db _db = new db())
+                        app_currencyfx fx = new app_currencyfx()
                         {
-                            app_currencyfx fx = new app_currencyfx()
-                            {
-                                sell_value = Transfer.FXRate,
-                                buy_value = Transfer.FXRate,
-                                id_company = CurrentSession.Id_Company,
-                                is_active = false,
-                                id_currency = Transfer.id_currencydest
-                            };
+                            sell_value = Convert.ToDecimal(TextFxRate.Text),
+                            buy_value = Convert.ToDecimal(TextFxRate.Text),
+                            id_company = CurrentSession.Id_Company,
+                            is_active = false,
+                            id_currency = dest_currid
+                        };
 
-                            _db.app_currencyfx.Add(fx);
-                            _db.SaveChanges();
+                        _db.app_currencyfx.Add(fx);
+                        _db.SaveChanges();
 
-                            DestinationRate_ID = fx.id_currencyfx;
-                        }
+                        DestinationRate_ID = fx.id_currencyfx;
                     }
-                    else
-                    {
-                        DestinationRate_ID = Destapp_currencyfxold.id_currencyfx;
-                    }
-
-                   
-                    app_currencyfx originapp_currencyfx =
-                      db.app_currencyfx
-                     .Where(x => x.id_currencyfx == OriginRate_ID).FirstOrDefault();
-                    //Set up Origin Data.
-                    app_account_detail Origin_AccountTransaction = new app_account_detail()
-                    {
-                        id_account = (int)Transfer.id_accountorigin,
-                        id_currencyfx = OriginRate_ID,
-                        app_currencyfx= originapp_currencyfx,
-                        id_payment_type = Transfer.id_payment_type,
-                        credit = 0,
-                        tran_type = app_account_detail.tran_types.Transaction,
-                        debit = Transfer.amount,
-                        comment = tbxCommentTransfer.Text + "-> Transfered to " + Transfer.AccountDest,
-                        trans_date = DateTime.Now
-                    };
-
-                    int SessionID_Origin = db.app_account_session.Where(x => x.id_account == Transfer.id_accountorigin && x.is_active).Select(y => y.id_session).FirstOrDefault();
-                    if (SessionID_Origin > 0)
-                    {
-                        Origin_AccountTransaction.id_session = SessionID_Origin;
-                    }
-
-
-                   // decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate_ID, DestinationRate_ID, entity.App.Modules.Sales);
-
-                    app_currencyfx Destapp_currencyfx =
-                      db.app_currencyfx
-                      .Where(x => x.id_currencyfx == DestinationRate_ID).FirstOrDefault();
-
-                    app_account_detail Destination_AccountTransaction = new app_account_detail()
-                    {
-                        id_account = (int)Transfer.id_accountdest,
-                        id_currencyfx = DestinationRate_ID,
-                        app_currencyfx = Destapp_currencyfx,
-                        id_payment_type = Transfer.id_payment_type,
-                        tran_type = app_account_detail.tran_types.Transaction,
-                        credit = Transfer.amountCounted,
-                        debit = 0,
-                        comment = tbxCommentTransfer.Text +  "-> Transfered from " + Transfer.AccountOrigin,
-                        trans_date = DateTime.Now
-                    };
-
-                    int SessionID_Destination = db.app_account_session.Where(x => x.id_account == Transfer.id_accountdest && x.is_active).Select(y => y.id_session).FirstOrDefault();
-                    if (SessionID_Destination > 0)
-                    {
-                        Destination_AccountTransaction.id_session = SessionID_Destination;
-                    }
-
-                    if (payment_type.is_direct)
-                    {
-                        Origin_AccountTransaction.status = Status.Documents_General.Approved;
-                        Destination_AccountTransaction.status = Status.Documents_General.Approved;
-                    }
-                    else
-                    {
-                        Origin_AccountTransaction.status = Status.Documents_General.Pending;
-                        Destination_AccountTransaction.status = Status.Documents_General.Pending;
-                    }
-
-                    db.app_account_detail.Add(Origin_AccountTransaction);
-                    db.app_account_detail.Add(Destination_AccountTransaction);
-                    db.SaveChanges();
-
                 }
-            }
+                else
+                {
+                    DestinationRate_ID = Destapp_currencyfxold.id_currencyfx;
+                }
 
-            toolBar.msgSaved(listTransferAmt.Count());
+
+                app_currencyfx originapp_currencyfx =
+                  db.app_currencyfx
+                 .Where(x => x.id_currencyfx == OriginRate_ID).FirstOrDefault();
+                //Set up Origin Data.
+                app_account_detail Origin_AccountTransaction = new app_account_detail()
+                {
+                    id_account = origin_account.id_account,
+                    id_currencyfx = OriginRate_ID,
+                    app_currencyfx = originapp_currencyfx,
+                    id_payment_type = (int)cbxPaymentType.SelectedValue,
+                    credit = 0,
+                    tran_type = app_account_detail.tran_types.Transaction,
+                    debit = Convert.ToDecimal(TextAmount.Text),
+                    comment = tbxCommentTransfer.Text + "-> Transfered to " + origin_account.name,
+                    trans_date = DateTime.Now
+                };
+
+                int SessionID_Origin = db.app_account_session.Where(x => x.id_account == origin_account.id_account && x.is_active).Select(y => y.id_session).FirstOrDefault();
+                if (SessionID_Origin > 0)
+                {
+                    Origin_AccountTransaction.id_session = SessionID_Origin;
+                }
+
+
+                // decimal Amount_AfterFXExchange = entity.Brillo.Currency.convert_Values(Transfer.amount, OriginRate_ID, DestinationRate_ID, entity.App.Modules.Sales);
+
+                app_currencyfx Destapp_currencyfx =
+                  db.app_currencyfx
+                  .Where(x => x.id_currencyfx == DestinationRate_ID).FirstOrDefault();
+
+                app_account_detail Destination_AccountTransaction = new app_account_detail()
+                {
+                    id_account = dest_account.id_account,
+                    id_currencyfx = DestinationRate_ID,
+                    app_currencyfx = Destapp_currencyfx,
+                    id_payment_type = (int)cbxPaymentType.SelectedValue,
+                    tran_type = app_account_detail.tran_types.Transaction,
+                    credit = Convert.ToDecimal(TextDestAmount.Text),
+                    debit = 0,
+                    comment = tbxCommentTransfer.Text + "-> Transfered from " + dest_account.name,
+                    trans_date = DateTime.Now
+                };
+
+                int SessionID_Destination = db.app_account_session.Where(x => x.id_account == dest_account.id_account && x.is_active).Select(y => y.id_session).FirstOrDefault();
+                if (SessionID_Destination > 0)
+                {
+                    Destination_AccountTransaction.id_session = SessionID_Destination;
+                }
+
+                if (payment_type.is_direct)
+                {
+                    Origin_AccountTransaction.status = Status.Documents_General.Approved;
+                    Destination_AccountTransaction.status = Status.Documents_General.Approved;
+                }
+                else
+                {
+                    Origin_AccountTransaction.status = Status.Documents_General.Pending;
+                    Destination_AccountTransaction.status = Status.Documents_General.Pending;
+                }
+
+                db.app_account_detail.Add(Origin_AccountTransaction);
+                db.app_account_detail.Add(Destination_AccountTransaction);
+                db.SaveChanges();
+
+            }
+            // }
+
+            toolBar.msgSaved(1);
 
             listTransferAmt.Clear();
             amount_transferViewSource.View.Refresh();

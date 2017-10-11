@@ -149,39 +149,51 @@
                 </TabItem>
                 <TabItem Header="{lex:Loc Transfer}">
                     <StackPanel Background="WhiteSmoke" IsEnabled="{Binding IsActive, ElementName=this, Mode=OneWay}">
-                        <DataGrid x:Name="dgTransfer" BorderThickness="1" BorderBrush="Gray"
-								  AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="8,0" Height="Auto"
-								  ItemsSource="{Binding Source={StaticResource amount_transferViewSource}}"
-								  RowDetailsVisibilityMode="VisibleWhenSelected">
-                            <DataGrid.Columns>
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Origin}" Width="*" ItemsSource="{Binding Source={StaticResource app_accountOriginViewSource}}"
-                                                        TextBinding="{Binding AccountOrigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridComboBoxColumn x:Name="curColumn" Header="{lex:Loc Cognitivo:local:Currency}" Width="*"
-														ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_currency"
-														SelectedValueBinding="{Binding id_currencyorigin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Destination}" Width="*" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"
-                                                        TextBinding="{Binding AccountDest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-														DisplayMemberPath="name" SelectedValuePath="id_account" SelectedValueBinding="{Binding id_accountdest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="*"
-														ItemsSource="{Binding Source={StaticResource app_currencydestViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_currency"
-														SelectedValueBinding="{Binding id_currencydest, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                
-                                <DataGridComboBoxColumn x:Name="payTypeCollum" Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
-														DisplayMemberPath="name" SelectedValuePath="id_payment_type" SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn x:Name="amtColumn" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Rate}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding FXRate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,StringFormat=N2}" />
-                                <DataGridTextColumn x:Name="destamtColumn" Header="Amount Destination" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amountCounted, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Grid Margin="5">
-                            <TextBox x:Name="tbxCommentTransfer" Margin="0,0,105,0" Text="" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
+                                <ComboBox  x:Name="cbxOriginAccount" ItemsSource="{Binding Source={StaticResource app_accountOriginViewSource}}"                                                      
+														DisplayMemberPath="name" SelectedValuePath="id_account" SelectionChanged="cbxOriginAccount_SelectionChanged"  />
+                                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                                <ComboBox x:Name="cbxOriginCurrency" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"                                                      
+														DisplayMemberPath="name" SelectedValuePath="id_currency"  />
+                                <Label Content="{lex:Loc Amount}" Style="{StaticResource input_label}"/>
+                                <TextBox x:Name="TextAmount" TextChanged="TextAmount_TextChanged"/>
+                              
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Grid.Row="0">
+                                <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
+                                <ComboBox  x:Name="cbxDestinationAccount" ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}"                                                      
+														DisplayMemberPath="name" SelectedValuePath="id_account"  />
+                                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                                <ComboBox x:Name="cbxDestinationCurrency" ItemsSource="{Binding Source={StaticResource app_currencydestViewSource}}"                                                      
+														DisplayMemberPath="name" SelectedValuePath="id_currency"  />
+                                <Label Content="{lex:Loc FxRate}" Style="{StaticResource input_label}"/>
+                                <TextBox x:Name="TextFxRate" />
+                                <Label Content="{lex:Loc DestinationAmount}" Style="{StaticResource input_label}"/>
+                                <TextBox x:Name="TextDestAmount"  TextChanged="TextAmount_TextChanged"/>
+
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+                                <Label Content="{lex:Loc PaymentType}" Style="{StaticResource input_label}"/>
+                                <ComboBox  x:Name="cbxPaymentType" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"                                                      
+														DisplayMemberPath="name" SelectedValuePath="id_payment_type"  />
+                                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                                <TextBox x:Name="tbxCommentTransfer" Text="" />
                             <Button x:Name="btnTransfer" Content="{lex:Loc Transfer}" FontSize="12" VerticalAlignment="Center"
 									HorizontalAlignment="Right" Width="100" Click="btnTransfer_Click" />
+                            </StackPanel>
                         </Grid>
+                        
+                   
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="{lex:Loc Create}">

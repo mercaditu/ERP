@@ -96,8 +96,8 @@ namespace Cognitivo.Configs
             {
                 if (dest_appcurrency != null)
                 {
-                    TextDestAmount.Text = Convert.ToString(Math.Round(entity.Brillo.Currency.convert_Values(amount, originapp_currencyfx.id_currencyfx, dest_appcurrency,fxrate, entity.App.Modules.Sales), 2));
-                    
+                    TextDestAmount.Text = Convert.ToString(Math.Round(entity.Brillo.Currency.convert_Values(amount, originapp_currencyfx.id_currencyfx, dest_appcurrency, fxrate, entity.App.Modules.Sales), 2));
+
                 }
 
             }
@@ -251,25 +251,32 @@ namespace Cognitivo.Configs
 
         private void cbxOriginAccount_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            app_account app_accountdest = app_accountDestViewSource.View.CurrentItem as app_account;
-            if (app_accountdest != null)
+
+            app_account app_accountorigin = app_accountOriginViewSource.View.CurrentItem as app_account;
+            if (app_accountorigin != null)
             {
+
                 if (app_currencyViewSource != null)
                 {
                     if (app_currencyViewSource.View != null)
                     {
-                        app_currencyViewSource.View.Filter = i =>
+                        app_currencyViewSource.View.Filter = null;
+                        if (app_accountorigin.id_currency != null)
                         {
-                            app_currency app_currency = i as app_currency;
-                            if (app_currency.id_currency == app_accountdest.id_currency)
+                            app_currencyViewSource.View.Filter = i =>
                             {
-                                return true;
-                            }
+                                app_currency app_currency = i as app_currency;
+                                if (app_currency.id_currency == app_accountorigin.id_currency)
+                                {
+                                    return true;
+                                }
 
-                            return false;
-                        };
+                                return false;
+                            };
+                        }
                     }
                 }
+
 
             }
         }

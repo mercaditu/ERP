@@ -9,8 +9,8 @@
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
-             mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500" Loaded="UserControl_Loaded">
+             mc:Ignorable="d" Background="White"
+             d:DesignHeight="500" MaxWidth="512" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="app_notificationViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_notification}, CreateList=True}" />
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}" />

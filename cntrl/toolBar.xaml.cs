@@ -716,10 +716,16 @@ namespace cntrl
 
         private void icoNotification_Click(object sender, RoutedEventArgs e)
         {
-            crud_modal.Visibility = Visibility.Visible;
             cntrl.toolBarNotification objCon = new cntrl.toolBarNotification();
+            if (popMessages.IsOpen == false)
+            {
+                popMessages.IsOpen = true;
+            }
+           // stackMessages.Children.Add(toolMessage);
+           
+            
             objCon.id_application = appName;
-            crud_modal.Children.Add(objCon);
+            stackMessages.Children.Add(objCon);
         }
     }
 }

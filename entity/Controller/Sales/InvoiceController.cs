@@ -331,16 +331,20 @@ namespace entity.Controller.Sales
 
                 foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
                 {
-                    if (sales_invoice_detail.item.item_product.Count() > 0)
+                    if (sales_invoice_detail.sales_packing_relation.Count() == 0)
                     {
-                        Stock stock = new Stock();
-                        decimal Quantity_InStock = stock.List(CurrentSession.Id_Branch, sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.QtyBalance);
-
-                        if (Quantity_InStock < sales_invoice_detail.quantity)
+                        if (sales_invoice_detail.item.item_product.Count() > 0)
                         {
-                            return false;
+                            Stock stock = new Stock();
+                            decimal Quantity_InStock = stock.List(CurrentSession.Id_Branch, sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.QtyBalance);
+
+                            if (Quantity_InStock < sales_invoice_detail.quantity)
+                            {
+                                return false;
+                            }
                         }
                     }
+              
                 }
 
                 invoice.app_condition = db.app_condition.Find(invoice.id_condition);

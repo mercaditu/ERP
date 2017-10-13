@@ -290,6 +290,13 @@ namespace Cognitivo.Configs
                 {
                     app_account_detail app_account_detail = new app_account_detail();
                     app_account_detail.id_account = app_account.id_account;
+                    app_account_session app_account_session = app_account.app_account_session.Where(x => x.is_active).FirstOrDefault();
+                    if (app_account_session!=null)
+                    {
+                        app_account_detail.id_session = app_account_session.id_session;
+                    }
+                
+                    
 
                     if (cmbpayment.SelectedItem != null)
                     {

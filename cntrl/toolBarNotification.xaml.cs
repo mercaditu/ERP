@@ -91,5 +91,14 @@ namespace cntrl
                 //Where is event fire??
             }
         }
+
+        private void btnCancel_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            StackPanel stpparent = this.Parent as StackPanel;
+            if (stpparent!=null)
+            {
+                stpparent.Children.Clear();
+            }
+        }
     }
 }

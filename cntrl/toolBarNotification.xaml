@@ -17,7 +17,20 @@
         <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}" />
     </UserControl.Resources>
     <Grid DataContext="{StaticResource app_notificationViewSource}" Background="{StaticResource winBackground}">
-        <TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Background="#cc3333" Grid.Row="0">
+          
+            <Label Content="{lex:Loc Notification}" FontSize="25" Margin="50,0,0,0" Foreground="White" />
+            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                          />
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+        </Grid>
+        <TabControl Grid.Row="1">
             <TabItem Header="{lex:Loc View}">
                 <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                           BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling" 
@@ -45,7 +58,7 @@
                     </StackPanel>
                     <StackPanel x:Name="stpUser">
                         <Label Content="{lex:Loc User}" Style="{StaticResource input_label}" />
-                        <ComboBox Name="cbxUser" DisplayMemberPath="name" SelectedValuePath="id_user"
+                        <ComboBox Name="cbxUser" DisplayMemberPath="name" SelectedValuePath="id_user" ItemsSource="{Binding Source={StaticResource security_userViewSource}}"
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
 											  Style="{StaticResource input_combobox}" 

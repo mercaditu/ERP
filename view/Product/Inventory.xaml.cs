@@ -1,4 +1,5 @@
 ﻿using entity;
+using entity.Brillo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -90,7 +91,7 @@ namespace Cognitivo.Product
                     foreach (item_product item_product in item_productLIST.OrderBy(x => x.item.name))
                     {
                         int i = item_product.id_item_product;
-                        
+
                         //If Product Can Expire property is set to true, then we should loop through each Batch Code with a positive Balance.
                         if (item_product.can_expire && BatchList.Where(x => x.ProductID == i).Count() > 0)
                         {
@@ -99,9 +100,24 @@ namespace Cognitivo.Product
                                 if (item_inventory.item_inventory_detail.Where(x => x.movement_id == Batch.MovementID).Any())
                                 {
                                     item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.movement_id == Batch.MovementID).FirstOrDefault();
-
+                              
                                     if (item_inventory_detail != null)
                                     {
+                                        using (db db = new db())
+                                        {
+                                            item_movement item_movement = db.item_movement.Where(x => x.id_movement == Batch.MovementID).FirstOrDefault();
+                                            if (item_movement != null)
+                                            {
+                                                string quantiy = String.Format("{0:0.00}", Math.Round(item_inventory_detail.Delta, 2));
+                                                if (item_movement.comment.Contains(" | " + Localize.StringText("Inventory") + ": " + "Increased by " + quantiy))
+                                                {
+                                                    item_movement.credit -= item_inventory_detail.Delta;
+                                                    item_movement.comment = item_movement.comment.Substring(0, item_movement.comment.IndexOf(" | " + Localize.StringText("Inventory") + ": " + "Increased by " + quantiy));
+
+                                                }
+                                            }
+                                            db.SaveChanges();
+                                        }
                                         ///Since this item already exists in Inventory, we should update the values. The following code
                                         ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
                                         decimal Quantity_Original = item_inventory_detail.value_system;
@@ -159,7 +175,7 @@ namespace Cognitivo.Product
                                 ///Since this item already exists in Inventory, we should update the values. The following code
                                 ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
                                 item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).FirstOrDefault();
-                                
+
                                 decimal Quantity_Original = item_inventory_detail.value_system;
                                 decimal Quantity_Updated = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
                                 decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
@@ -190,7 +206,7 @@ namespace Cognitivo.Product
                     }
                 }
 
-                if (checkStock.IsChecked==false)
+                if (checkStock.IsChecked == false)
                 {
                     InventoryController.db.item_inventory_detail.RemoveRange(item_inventory.item_inventory_detail.Where(x => x.value_system == 0).ToList());
                 }
@@ -360,14 +376,14 @@ namespace Cognitivo.Product
             InventoryController.SaveChanges_WithValidation();
 
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-            if (app_location!=null)
+            if (app_location != null)
             {
                 if (Inv2Excel.Create(item_inventory, app_location.id_location))
                 {
                     toolBar.msgSaved(1);
                 }
             }
-          
+
             toolBar_btnEdit_Click(null);
         }
 
@@ -405,7 +421,7 @@ namespace Cognitivo.Product
                     {
                         Class.StockCalculations Stock = new Class.StockCalculations();
                         item_inventory_detail.value_system = 0;
-                        item_inventory_detail.unit_value = 0; 
+                        item_inventory_detail.unit_value = 0;
                     }
                     else
                     {
@@ -542,8 +558,8 @@ namespace Cognitivo.Product
                 item_inventoryViewSource.View.Filter = i =>
                 {
                     item_inventory Inventory = i as item_inventory;
-                    string comment = Inventory.comment != null ? Inventory.comment: "";
-                 
+                    string comment = Inventory.comment != null ? Inventory.comment : "";
+
 
                     if (comment.ToLower().Contains(query.ToLower()))
                     {

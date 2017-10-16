@@ -64,6 +64,9 @@ namespace entity
         private int _id_currencyfx;
         public bool is_accounted { get; set; }
 
+        [NotMapped]
+        public decimal vatwithholdingpercentage { get; set; }
+
         //TimeCapsule
         public ICollection<purchase_invoice> older { get; set; }
 

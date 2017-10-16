@@ -220,7 +220,11 @@ namespace Cognitivo.Commercial
                     VATWithholding.invoiceList.Add(purchase_invoice);
                     VATWithholding.PaymentDB = PaymentDB;
                     VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
-                    VATWithholding.percentage = PaymentSetting.Default.vatwithholdingpercent;
+                    if (purchase_invoice.vatwithholdingpercentage==0)
+                    {
+                        purchase_invoice.vatwithholdingpercentage = Commercial.PaymentSetting.Default.vatwithholdingpercent;
+                    }
+                    VATWithholding.percentage = purchase_invoice.vatwithholdingpercentage;
                     crud_modal.Visibility = System.Windows.Visibility.Visible;
                     crud_modal.Children.Add(VATWithholding);
                 }

@@ -71,6 +71,7 @@ namespace cntrl
             {
                 payment_withholding_tax.id_range = (int)cbxDocument.SelectedValue;
             }
+            
 
             payment_withholding_tax.id_currencyfx = ((dynamic)_invoiceList.FirstOrDefault()).id_currencyfx;
             payment_withholding_tax.withholding_number = txtnumber.Text;
@@ -106,6 +107,7 @@ namespace cntrl
             }
 
             _payment_schedual.parent = payment_schedual;
+            _payment_schedual.number = txtnumber.Text;
             _payment_schedual.expire_date = payment_schedual.expire_date;
             _payment_schedual.status = payment_schedual.status;
             _payment_schedual.id_contact = payment_schedual.id_contact;
@@ -122,6 +124,7 @@ namespace cntrl
             payment payment = new payment();
             payment = PaymentDB.New(true);
             payment.id_contact = payment_schedual.id_contact;
+            payment.number = txtnumber.Text;
             payment_detail payment_detail = new payment_detail();
             payment_detail.payment = payment;
             payment_detail.Default_id_currencyfx = payment_schedual.id_currencyfx;
@@ -210,7 +213,27 @@ namespace cntrl
                 purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
                 if (purchase_invoice.GrandTotal > 0)
                 {
-                    lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
+                    if (purchase_invoice.vatwithholdingpercentage > 0)
+                    {
+                        percentage = purchase_invoice.vatwithholdingpercentage;
+                        if (percentage <= 1)
+                        {
+                            if (purchase_invoice.GrandTotal > 0)
+                            {
+                                lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("not Exceed to Hundred %");
+                            lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal), 4);
+                        }
+                    }
+                    else
+                    {
+                        lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
+                    }
+                   
                 }
             }
         }

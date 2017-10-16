@@ -177,7 +177,7 @@
                                 <ComboBox x:Name="cbxDestinationCurrency" ItemsSource="{Binding Source={StaticResource app_currencydestViewSource}}"                                                      
 														DisplayMemberPath="name" SelectedValuePath="id_currency"  />
                                 <Label Content="{lex:Loc FxRate}" Style="{StaticResource input_label}"/>
-                                <TextBox x:Name="TextFxRate" />
+                                <TextBox x:Name="TextFxRate" TextChanged="TextAmount_TextChanged" />
                                 <Label Content="{lex:Loc DestinationAmount}" Style="{StaticResource input_label}"/>
                                 <TextBox x:Name="TextDestAmount"  TextChanged="TextAmount_TextChanged"/>
 

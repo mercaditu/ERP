@@ -89,14 +89,16 @@ namespace Cognitivo.Configs
             int dest_currid = Convert.ToInt32(cbxDestinationCurrency.SelectedValue);
             int origin_currid = Convert.ToInt32(cbxOriginCurrency.SelectedValue);
             app_currencyfx originapp_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == origin_currid).FirstOrDefault();
+            app_currencyfx destinapp_currencyfx = CurrentSession.CurrencyFX_ActiveRates.Where(x => x.id_currency == dest_currid).FirstOrDefault();
             app_currency dest_appcurrency = CurrentSession.Currencies.Where(x => x.id_currency == dest_currid).FirstOrDefault();
-            decimal fxrate = TextFxRate.Text != "" ? Convert.ToDecimal(TextFxRate.Text) : 0;
+            app_currency origin_appcurrency = CurrentSession.Currencies.Where(x => x.id_currency == origin_currid).FirstOrDefault();
+            decimal fxrate = TextFxRate.Text != "" ? Convert.ToDecimal(TextFxRate.Text) : 1;
             decimal amount = TextAmount.Text != "" ? Convert.ToDecimal(TextAmount.Text) : 0;
-            if (originapp_currencyfx != null)
+            if (destinapp_currencyfx != null)
             {
-                if (dest_appcurrency != null)
+                if (origin_appcurrency != null)
                 {
-                    TextDestAmount.Text = Convert.ToString(Math.Round(entity.Brillo.Currency.convert_Values(amount, originapp_currencyfx.id_currencyfx, dest_appcurrency, fxrate, entity.App.Modules.Sales), 2));
+                    TextDestAmount.Text = Convert.ToString(Math.Round(entity.Brillo.Currency.convert_Values(amount, destinapp_currencyfx.id_currencyfx, origin_appcurrency, fxrate, entity.App.Modules.Sales), 2));
 
                 }
 

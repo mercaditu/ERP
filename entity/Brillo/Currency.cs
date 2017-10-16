@@ -169,17 +169,7 @@ namespace entity.Brillo
                             }
                             else if (app_currency.is_priority == true) //Towards Default
                             {
-                                if (app_currencyfxold != null)
-                                {
-                                    if (Modules == App.Modules.Sales)
-                                    {
-                                        rate = app_currencyfxold.buy_value == 0 ? 1 : app_currencyfxold.buy_value;
-                                    }
-                                    else //Purchase Rates
-                                    {
-                                        rate = app_currencyfxold.sell_value == 0 ? 1 : app_currencyfxold.sell_value;
-                                    }
-                                }
+                               
 
                                 return originalValue * (1 / rate);
                             }

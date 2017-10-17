@@ -173,8 +173,7 @@ namespace Cognitivo.Configs
                         app_account_detailDataGrid.ItemsSource =
                                               app_account_session.app_account_detail
                                           .Where
-                                          (x => x.id_session == SessionID && //Gets Current Session Items Only.
-                                          (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
+                                          (x => x.status == Status.Documents_General.Approved) //Gets only Approved Items into view.
                                           .GroupBy(ad => new { ad.app_currencyfx.id_currency })
                                           .Select(s => new
                                           {
@@ -391,7 +390,6 @@ namespace Cognitivo.Configs
                     CurrentSession
                     .CurrencyFX_ActiveRates
                     .Where(x => x.id_currency == DestinationRate_ID).FirstOrDefault();
-
 
                 decimal SellRate = Destapp_currencyfxold != null ? Destapp_currencyfxold.sell_value : 0;
 

@@ -19,11 +19,11 @@ namespace entity.Brillo
                                 parent.id_movement_value_rel as MovementRelID,
                                 parent.trans_date as TransDate, parent.expire_date,parent.code,
                                 parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance,
-                             imvd.unit_value as Cost
+                                (select sum(unit_value) as cost from item_movement_value_detail as imvd
+                                join item_movement_value_rel as imvr on imvd.id_movement_value_rel = imvr.id_movement_value_rel
+                                where imvr.id_movement_value_rel = parent.id_movement_value_rel) as Cost
 
                                 from item_movement as parent
-left join item_movement_value_rel as imvr on parent.id_movement_value_rel=imvr.id_movement_value_rel
-             left join item_movement_value_detail as imvd on imvr.id_movement_value_rel=imvd.id_movement_value_rel
                                 inner join app_location as loc on parent.id_location = loc.id_location
                                 left join item_movement as child on child.parent_id_movement = parent.id_movement
 

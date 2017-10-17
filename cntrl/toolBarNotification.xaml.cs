@@ -24,7 +24,9 @@ namespace cntrl
             {
 
                 app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
-                await db.app_notification.Where(x => x.is_read == false && x.id_application == id_application && (x.id_user == CurrentSession.Id_User || x.notified_department.id_department == CurrentSession.UserRole.id_department)).LoadAsync();
+                await db.app_notification.Where(x => x.is_read == false && x.id_application == id_application && 
+                ((x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == CurrentSession.UserRole.id_department))
+                .LoadAsync();
                 app_notificationViewSource.Source = db.app_notification.Local;
 
                 CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
@@ -53,12 +55,12 @@ namespace cntrl
                 };
 
 
-                if (cbxDepartment.SelectedItem != null)
+                if (rbtnDepartment.IsChecked == true)
                 {
                     db.app_department.Attach(cbxDepartment.SelectedItem as app_department);
                     app_notification.notified_department = cbxDepartment.SelectedItem as app_department;
                 }
-                if (cbxUser.SelectedItem != null)
+                else if (rbtnUser.IsChecked == true)
                 {
                     db.security_user.Attach(cbxUser.SelectedItem as security_user);
                     app_notification.notified_user = cbxUser.SelectedItem as security_user;

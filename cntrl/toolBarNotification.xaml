@@ -10,8 +10,12 @@
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
              mc:Ignorable="d" Background="White"
-             d:DesignHeight="500" MaxWidth="512" Loaded="UserControl_Loaded">
+             MaxHeight="512" MaxWidth="512" Loaded="UserControl_Loaded">
+    <UserControl.Effect>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="8" />
+    </UserControl.Effect>
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="bool2visi"/>
         <CollectionViewSource x:Key="app_notificationViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_notification}, CreateList=True}" />
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}" />
         <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}" />
@@ -21,11 +25,10 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Background="#cc3333" Grid.Row="0">
-          
-            <Label Content="{lex:Loc Notification}" FontSize="25" Margin="50,0,0,0" Foreground="White" />
-            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
-                          />
+        <Grid Background="Crimson" Grid.Row="0">
+
+            <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="25" Margin="7" Foreground="White" />
+            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" />
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
@@ -44,30 +47,30 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="{lex:Loc Request}">
+            <TabItem Header="{lex:Loc Create}">
                 <StackPanel>
-                    <RadioButton x:Name="rbtnDepartment" Content="Department" Checked="rbtnDepartment_Checked" />
-                    <RadioButton x:Name="rbtnUser" Content="User" Checked="rbtnDepartment_Checked" />
-                    <StackPanel x:Name="stpDepartment">
+                    <RadioButton x:Name="rbtnDepartment" Content="{lex:Loc Department}"/>
+                    <RadioButton x:Name="rbtnUser" Content="{lex:Loc User}" IsChecked="True"/>
+
+                    <StackPanel x:Name="stpDepartment" Visibility="{Binding ElementName=rbtnDepartment, Path=IsChecked, Mode=OneWay, Converter={StaticResource bool2visi}}">
                     <Label Content="{lex:Loc Department}" Style="{StaticResource input_label}" />
                     <ComboBox Name="cbxDepartment" DisplayMemberPath="name" SelectedValuePath="id_department"
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-											  Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"
-											  />
+											  Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" />
                     </StackPanel>
-                    <StackPanel x:Name="stpUser">
+
+                    <StackPanel x:Name="stpUser"  Visibility="{Binding ElementName=rbtnUser, Path=IsChecked, Mode=OneWay, Converter={StaticResource bool2visi}}">
                         <Label Content="{lex:Loc User}" Style="{StaticResource input_label}" />
                         <ComboBox Name="cbxUser" DisplayMemberPath="name" SelectedValuePath="id_user" ItemsSource="{Binding Source={StaticResource security_userViewSource}}"
 											  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 											  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-											  Style="{StaticResource input_combobox}" 
-											/>
+											  Style="{StaticResource input_combobox}" />
                     </StackPanel>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                     <TextBox x:Name="commentTextBox" MinHeight="150"
 								 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
-                    <Button Click="Button_Click" Content="{lex:Loc Save}"/>
+                    <Button Click="Button_Click" Content="{lex:Loc Save}" Style="{StaticResource btn_green}" Margin="4"/>
                 </StackPanel>
             </TabItem>
             

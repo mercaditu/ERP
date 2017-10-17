@@ -7,12 +7,8 @@ using System.Data.Entity;
 
 namespace cntrl
 {
-    /// <summary>
-    /// Interaction logic for NotificationWindow.xaml
-    /// </summary>
     public partial class toolBarNotification : UserControl
     {
-        //db db = new db();
         CollectionViewSource app_notificationViewSource;
         public toolBarNotification()
         {
@@ -28,7 +24,7 @@ namespace cntrl
             {
 
                 app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
-                await db.app_notification.Where(x => x.is_read == false && ( x.id_application == id_application && x.id_user == CurrentSession.Id_User || x.notified_department.id_department == CurrentSession.UserRole.id_department)).LoadAsync();
+                await db.app_notification.Where(x => x.is_read == false && x.id_application == id_application && (x.id_user == CurrentSession.Id_User || x.notified_department.id_department == CurrentSession.UserRole.id_department)).LoadAsync();
                 app_notificationViewSource.Source = db.app_notification.Local;
 
                 CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
@@ -41,41 +37,38 @@ namespace cntrl
             }
         }
 
-        private void rbtnDepartment_Checked(object sender, RoutedEventArgs e)
-        {
-            if (rbtnDepartment.IsChecked==true)
-            {
-                stpDepartment.Visibility = Visibility.Visible;
-                stpUser.Visibility = Visibility.Collapsed;
-            }
-            if (rbtnUser.IsChecked==true)
-            {
-                stpDepartment.Visibility = Visibility.Collapsed;
-                stpUser.Visibility = Visibility.Visible;
-            }
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //db.SaveChanges();
+
             using (db db = new db())
             {
                 string comment = commentTextBox.Text;
                 string userName = CurrentSession.User.name_full + ": " + comment;
-                app_notification app_notification = new app_notification();
+
+                app_notification app_notification = new app_notification()
+                {
+                    comment = userName,
+                    id_application = id_application,
+                    ref_id = ref_id
+                };
+
+
                 if (cbxDepartment.SelectedItem != null)
                 {
+                    db.app_department.Attach(cbxDepartment.SelectedItem as app_department);
                     app_notification.notified_department = cbxDepartment.SelectedItem as app_department;
                 }
                 if (cbxUser.SelectedItem != null)
                 {
+                    db.security_user.Attach(cbxUser.SelectedItem as security_user);
                     app_notification.notified_user = cbxUser.SelectedItem as security_user;
                 }
 
-                app_notification.comment = userName;
                 db.app_notification.Add(app_notification);
                 db.SaveChangesAsync();
             }
+
+            btnCancel_Click(null, null);
         }
 
         private void dgvnotification_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,12 +82,14 @@ namespace cntrl
 
                 ref_id = app_notification.ref_id;
                 //Where is event fire??
+
             }
         }
 
         private void btnCancel_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             StackPanel stpparent = this.Parent as StackPanel;
+
             if (stpparent!=null)
             {
                 stpparent.Children.Clear();

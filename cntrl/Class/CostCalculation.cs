@@ -28,7 +28,7 @@ namespace cntrl.Class
                                   .FirstOrDefault();
                     if (item_movement != null)
                     {
-                        CostList.Cost = item_movement.item_movement_value.Sum(x => x.unit_value);
+                        CostList.Cost = item_movement.item_movement_value_rel.total_value;
                     }
                     else
                     {
@@ -66,7 +66,7 @@ namespace cntrl.Class
                                   .FirstOrDefault();
                     if (item_movement != null)
                     {
-                        CostList.Cost = item_movement.item_movement_value.Sum(x => x.unit_value);
+                        CostList.Cost = item_movement.item_movement_value_rel.total_value;
                     }
                     else
                     {

@@ -118,6 +118,7 @@ namespace Cognitivo.Product
                                             }
                                             db.SaveChanges();
                                         }
+                                      
                                         ///Since this item already exists in Inventory, we should update the values. The following code
                                         ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
                                         decimal Quantity_Original = item_inventory_detail.value_system;

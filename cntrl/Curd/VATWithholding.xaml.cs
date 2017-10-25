@@ -163,7 +163,16 @@ namespace cntrl
             PaymentDB.payments.Add(payment);
 
             PaymentDB.payment_schedual.Add(_payment_schedual);
-            PaymentDB.SaveChanges();
+            try
+            {
+                PaymentDB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
 
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();

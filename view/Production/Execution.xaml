@@ -550,7 +550,7 @@
 					   appName="ProductionExecution"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,150,0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,170,0">
             <Button x:Name="btncost" Click="Button_Click" Content="{lex:Loc Cost}" VerticalAlignment="Center" Width="90" Height="25" />
         </StackPanel>
     </Grid>

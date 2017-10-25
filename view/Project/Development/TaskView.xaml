@@ -228,7 +228,7 @@
                        btnSearch_Click="toolBar_btnSearch_Click" appName="Project"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center"  DataContext="{Binding SelectedItem_, ElementName=treeProject}">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center"  DataContext="{Binding SelectedItem_, ElementName=treeProject}" Margin="0,0,100,0">
             <Label Content="{lex:Loc Customer}" VerticalAlignment="Center" />
             <cntrl:toolIcon x:Name="btnapprove" Click="Button_Click" imgSource="j" icoName="{lex:Loc Approve}" VerticalAlignment="Center" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource Status2Enable}}" />
             <cntrl:toolIcon x:Name="btnanull" Click="Button_Click_1" imgSource="k" icoName="Rechazar" VerticalAlignment="Center" />

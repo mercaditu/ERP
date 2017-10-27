@@ -127,6 +127,8 @@
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" appName="ProjectExecution"
 			           btnSync_Click="Page_Loaded"
-                       btnSearch_Click="toolBar_btnSearch_Click" />
+                       btnSearch_Click="toolBar_btnSearch_Click" 
+                          btnFocus_Click="toolBar_btnFocus_Click"
+                       ref_id="{Binding id_project,Source={StaticResource projectViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

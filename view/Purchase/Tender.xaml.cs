@@ -565,6 +565,12 @@ namespace Cognitivo.Purchase
             popupCustomize.IsOpen = true;
         }
 
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
+            purchase_tenderViewSource.Source = TenderDB.db.purchase_tender.Where(x => x.id_purchase_tender == toolBar.ref_id).ToList();
+        }
+
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             TenderSetting _pref_PurchaseTender = new TenderSetting();

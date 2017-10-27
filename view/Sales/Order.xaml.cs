@@ -666,5 +666,14 @@ namespace Cognitivo.Sales
                 dgvSalesDetail.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
         }
+
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            if (toolBar.ref_id > 0)
+            {
+                sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
+                sales_orderViewSource.Source = SalesDB.db.sales_order.Where(x => x.id_sales_order == toolBar.ref_id).ToList();
+            }
+        }
     }
 }

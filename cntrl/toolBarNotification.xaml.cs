@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using entity;
 using System.Data.Entity;
+using System;
 
 namespace cntrl
 {
@@ -17,6 +18,16 @@ namespace cntrl
 
         public App.Names id_application { get; set; }
         public int ref_id { get; set; }
+
+        public event btnFocus_ClickedEventHandler btnFocus_Click;
+
+        public delegate void btnFocus_ClickedEventHandler(object sender);
+
+        public void btnFocus_MouseUp(object sender, EventArgs e)
+        {
+
+            btnFocus_Click?.Invoke(sender);
+        }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -83,7 +94,7 @@ namespace cntrl
                 db.SaveChangesAsync();
 
                 ref_id = app_notification.ref_id;
-                //Where is event fire??
+                btnFocus_MouseUp(sender, e);
 
             }
         }

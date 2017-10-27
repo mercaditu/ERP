@@ -327,6 +327,7 @@ namespace Cognitivo.Menu
                     item_movement_value_rel.item_movement.Add(parentlessMovement);
                     parentlessMovement.item_movement_value_rel = item_movement_value_rel;
                 }
+                db.SaveChanges();
             }
 
             using (db db = new db())

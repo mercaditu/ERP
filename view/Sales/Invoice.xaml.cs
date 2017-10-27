@@ -23,14 +23,14 @@ namespace Cognitivo.Sales
 
         //private db db = new db();
         private entity.Controller.Sales.InvoiceController SalesDB;
-       
+
         private cntrl.PanelAdv.pnlPacking pnlPacking;
         private cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
-      
+
         public Invoice()
         {
             InitializeComponent();
-        
+
             //Load Controller.
             SalesDB = FindResource("SalesInvoice") as entity.Controller.Sales.InvoiceController;
             if (DesignerProperties.GetIsInDesignMode(this) == false)
@@ -87,13 +87,13 @@ namespace Cognitivo.Sales
 
         private void Load_PrimaryDataThread(object sender, EventArgs e)
         {
-			Settings Settings = new Settings();
-            SalesDB.Load(Settings.FilterByBranch,dataPager.PagedSource.PageIndex);
+            Settings Settings = new Settings();
+            SalesDB.Load(Settings.FilterByBranch, dataPager.PagedSource.PageIndex);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-			sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
+            sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Local;
 
-            if (dataPager.PageCount==0)
+            if (dataPager.PageCount == 0)
             {
                 dataPager.PageCount = SalesDB.PageCount;
             }
@@ -120,11 +120,22 @@ namespace Cognitivo.Sales
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             SalesDB.db.sales_invoice.Add(sales_invoice);
-			SalesInvoice_Loaded(null,null);
+            SalesInvoice_Loaded(null, null);
 
-			sales_invoiceViewSource.View.MoveCurrentToLast();
+            sales_invoiceViewSource.View.MoveCurrentToLast();
             sbxContact.Text = "";
             sbxItem.Text = "";
+        }
+
+        private void btnFocus_Click(object sender)
+        {
+            if (toolBar.ref_id > 0)
+            {
+                sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+                sales_invoiceViewSource.Source = SalesDB.db.sales_invoice.Where(x => x.id_sales_invoice == toolBar.ref_id).ToList();
+            }
+
+
         }
 
         private void Edit_Click(object sender)
@@ -145,7 +156,7 @@ namespace Cognitivo.Sales
 
         private void Delete_Click(object sender)
         {
-            if (MessageBox.Show("Do You Want to Archived..","Cognitivo",MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+            if (MessageBox.Show("Do You Want to Archived..", "Cognitivo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 foreach (sales_invoice invoice in SalesDB.db.sales_invoice.Local.Where(x => x.IsSelected))
                 {
@@ -157,13 +168,13 @@ namespace Cognitivo.Sales
 
                 SalesDB.db.SaveChanges();
             }
-          
+
             Load_PrimaryDataThread(null, null);
         }
 
         private void Save_Click(object sender)
         {
-           
+
 
             if (SalesDB.SaveChanges_WithValidation())
             {
@@ -388,7 +399,7 @@ namespace Cognitivo.Sales
                         }
                         else
                         {
-                                                    
+
                             sales_invoice_detail _sales_invoice_detail =
                                 SalesDB.Create_Detail(ref sales_invoice, item, null,
                                 SalesSettings.AllowDuplicateItem,
@@ -403,7 +414,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void Search_Click(object sender,string query)
+        private void Search_Click(object sender, string query)
         {
             if (!string.IsNullOrEmpty(query) && sales_invoiceViewSource != null)
             {
@@ -419,7 +430,7 @@ namespace Cognitivo.Sales
                         string customer = "";
                         string cust_code = "";
                         string cust_gov_code = "";
-						string trans_date = Invoice.trans_date.Date.ToString("dd/MM/yyyy") ?? "";
+                        string trans_date = Invoice.trans_date.Date.ToString("dd/MM/yyyy") ?? "";
                         if (contact != null)
                         {
                             if (contact.name != null)
@@ -434,7 +445,7 @@ namespace Cognitivo.Sales
                             {
                                 cust_gov_code = contact.gov_code.ToLower();
                             }
-							
+
 
                             if (customer.Contains(query.ToLower())
                                 ||
@@ -443,8 +454,8 @@ namespace Cognitivo.Sales
                                 cust_gov_code.Contains(query.ToLower())
                                 ||
                                 number.Contains(query)
-								||
-								trans_date==query)
+                                ||
+                                trans_date == query)
                             {
                                 return true;
                             }
@@ -503,7 +514,7 @@ namespace Cognitivo.Sales
                     }
                 }
             }
-           calculate_vat(sender, e);
+            calculate_vat(sender, e);
         }
 
         private void Detail_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -866,9 +877,9 @@ namespace Cognitivo.Sales
                         item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
                         Settings SalesSettings = new Settings();
-						sales_invoice_detail _sales_invoice_detail =SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
-						_sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
-						sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                        sales_invoice_detail _sales_invoice_detail = SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
+                        _sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
+                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
                         sales_invoice.RaisePropertyChanged("GrandTotal");
                     }
                     else
@@ -924,7 +935,7 @@ namespace Cognitivo.Sales
         private void Movement_Print(object sender, MouseButtonEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-            if (sales_invoice!=null)
+            if (sales_invoice != null)
             {
                 Product.PrintMovement PrintMovement = new Product.PrintMovement();
                 PrintMovement.SalesID = sales_invoice.id_sales_invoice;
@@ -936,9 +947,9 @@ namespace Cognitivo.Sales
 
                 window.ShowDialog();
             }
-           
+
         }
 
-      
+
     }
 }

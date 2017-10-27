@@ -414,8 +414,9 @@
             </TabControl>
         </Grid>
         <cntrl:toolBar x:Name="toolBar" appName="PurchaseTender" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" btnSearch_Click="Search_Click"
-                       btnNew_Click="New_Click" btnApprove_Click="Approve_Click" btnEdit_Click="Edit_Click" btnSave_Click="Save_Click"
+                       btnNew_Click="New_Click" btnApprove_Click="Approve_Click" btnEdit_Click="Edit_Click" btnSave_Click="Save_Click" btnFocus_Click="toolBar_btnFocus_Click"
                        btnCancel_Click="Cancel_Click" btnDelete_Click="Delete_Click" btnAnull_Click="Anull_Click"
+                        ref_id="{Binding id_purchase_tender,Source={StaticResource purchase_tenderViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

@@ -540,7 +540,11 @@ namespace Cognitivo.Sales
             }
         }
 
-     
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            sales_packingViewSource = FindResource("sales_packingViewSource") as CollectionViewSource;
+            sales_packingViewSource.Source = PackingListDB.sales_packing.Where(x => x.id_sales_packing == toolBar.ref_id).ToList();
+        }
 
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {

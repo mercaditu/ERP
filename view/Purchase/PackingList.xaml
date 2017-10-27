@@ -384,6 +384,8 @@
                        btnSave_Click="toolBar_btnSave_Click"
                        btnApprove_Click="btnApprove_Click"
                           btnAnull_Click="toolBar_btnAnull_Click"
+                       btnFocus_Click="toolBar_btnFocus_Click"
+                               ref_id="{Binding id_purchase_packing,Source={StaticResource purchase_packingViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

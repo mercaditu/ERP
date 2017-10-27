@@ -123,6 +123,15 @@ namespace Cognitivo.Project
             filter_task();
         }
 
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            if (toolBar.ref_id > 0)
+            {
+                projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
+                projectViewSource.Source = db.projects.Where(x => x.id_project == toolBar.ref_id).ToList();
+            }
+        }
+
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {
         }

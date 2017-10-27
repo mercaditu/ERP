@@ -531,6 +531,11 @@ namespace Cognitivo.Purchase
             Page_Loaded(null, null);
         }
 
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            purchase_packingViewSource = FindResource("purchase_packingViewSource") as CollectionViewSource;
+            purchase_packingViewSource.Source = PurchasePackingListDB.purchase_packing.Where(x => x.id_purchase_packing == toolBar.ref_id).ToList();
+        }
 
         private void navPagination_btnFirstPage_Click(object sender)
         {

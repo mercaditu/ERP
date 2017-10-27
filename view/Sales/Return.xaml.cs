@@ -498,7 +498,13 @@ namespace Cognitivo.Sales
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
-		
+
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            salesReturnViewSource = FindResource("salesReturnViewSource") as CollectionViewSource;
+            salesReturnViewSource.Source = SalesReturnDB.db.sales_return.Where(x => x.id_sales_return == toolBar.ref_id).ToList();
+        }
+
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
             load_PrimaryDataThread();

@@ -1304,8 +1304,15 @@ namespace entity.Brillo.Logic
                     }
                     else
                     {
+                        item_movement_value_rel item_movement_value_rel = db.item_movement_value_rel.Where(x => x.id_movement_value_rel == parent_Movement.MovementRelID).FirstOrDefault();
 
-                            item_movement.id_movement_value_rel = parent_Movement.MovementRelID;
+                        if (item_movement_value_rel!=null)
+                        {
+                            item_movement.item_movement_value_rel = item_movement_value_rel;
+                        }
+                      
+
+                        item_movement.id_movement_value_rel = parent_Movement.MovementRelID;
                              
                         
                      

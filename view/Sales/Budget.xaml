@@ -474,6 +474,8 @@
                        btnSync_Click="Page_Loaded"
                        btnSearchInSource_Click="SearchInSource_Click"
 					   Grid.ColumnSpan="2"
+                        btnFocus_Click="toolBar_btnFocus_Click"
+                       ref_id="{Binding id_sales_budget,Source={StaticResource sales_budgetViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 

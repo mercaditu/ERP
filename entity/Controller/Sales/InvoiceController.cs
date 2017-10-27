@@ -563,18 +563,21 @@ namespace entity.Controller.Sales
             {
                 if (sales_detail.item_movement.FirstOrDefault() != null)
                 {
-                    if (sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault() != null)
+                    if (sales_detail.item_movement.FirstOrDefault().item_movement_value_rel != null)
                     {
                         if (sales_detail.unit_cost == 0)
                         {
                             //item_movement item_movement = db.item_movement.Find()
-                            sales_detail.unit_cost = Currency.convert_Values
-                            (
-                            sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-                            sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                            sales_detail.sales_invoice.id_currencyfx,
-                            App.Modules.Sales
-                            );
+
+                            //sales_detail.unit_cost = Currency.convert_Values
+                            //(
+                            //sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x=>x.unit_value),
+                            //sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                            //sales_detail.sales_invoice.id_currencyfx,
+                            //App.Modules.Sales
+                            //);
+
+                            sales_detail.unit_cost = sales_detail.item_movement.FirstOrDefault().item_movement_value_rel.total_value;
                         }
                     }
                 }

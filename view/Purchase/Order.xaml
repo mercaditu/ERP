@@ -528,6 +528,8 @@
                          btnSearchInSource_Click="SearchInSource_Click"
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   btnAnull_Click="toolBar_btnAnull_Click"
+                       btnFocus_Click="toolBar_btnFocus_Click"
+                               ref_id="{Binding id_purchase_order,Source={StaticResource purchase_orderViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

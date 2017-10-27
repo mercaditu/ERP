@@ -869,6 +869,15 @@ namespace Cognitivo.Production
             }
         }
 
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            if (toolBar.ref_id > 0)
+            {
+                production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
+                production_orderViewSource.Source = OrderDB.db.production_order.Where(x => x.id_production_order == toolBar.ref_id).ToList();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string prop)

@@ -736,7 +736,7 @@ namespace Cognitivo.Purchase
                 }
                 else
                 {
-                    toolBar.msgWarning("Please check that Order is Approved.");
+                    toolBar.msgWarning("Please check that Order is Approved Or Invoice Already Created...");
                 }
             }
          
@@ -746,6 +746,12 @@ namespace Cognitivo.Purchase
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
             load_PrimaryDataThread();
+        }
+
+        private void toolBar_btnFocus_Click(object sender)
+        {
+            purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
+            purchase_orderViewSource.Source = PurchaseDB.db.purchase_order.Where(x => x.id_purchase_order == toolBar.ref_id).ToList();
         }
     }
 }

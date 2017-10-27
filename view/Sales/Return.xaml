@@ -60,6 +60,8 @@
 					   btnSave_Click="toolBar_btnSave_Click"
 					   btnApprove_Click="toolBar_btnApprove_Click"
 					   btnAnull_Click="toolBar_btnAnull_Click"
+                       btnFocus_Click="toolBar_btnFocus_Click"
+                       ref_id="{Binding id_sales_return,Source={StaticResource sales_returnViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch"

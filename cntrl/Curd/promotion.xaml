@@ -64,7 +64,8 @@
                     <Label Content="{lex:Loc Parameters}" Style="{StaticResource H3}"/>
                     <StackPanel x:Name="Item_Parameter">
                         <Label Content="{lex:Loc Items}" />
-                        <controls:SmartBox_Item Text="{Binding InputName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
+                        <Label Content="{Binding InputName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120" />
+                        <controls:SmartBox_Item  x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
                     </StackPanel>
                     <StackPanel x:Name="Tag_Parameter">
                         <Label Content="{lex:Loc ItemTag}" />
@@ -97,7 +98,8 @@
                     <Label Content="{lex:Loc Output}" Style="{StaticResource H3}"/>
                     <StackPanel x:Name="Item_Bonus">
                         <Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120" />
-                        <controls:SmartBox_Item Text="{Binding OutputName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select" />
+                        <Label Content="{Binding OutputName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120" />
+                        <controls:SmartBox_Item x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select" />
                     </StackPanel>
 
                     <StackPanel x:Name="Discount">

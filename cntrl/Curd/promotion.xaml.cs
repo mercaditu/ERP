@@ -77,6 +77,18 @@ namespace cntrl
                 if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
                     sales_promotion.reference = sbxRefItem.ItemID;
+                    using (db db = new db())
+                    {
+
+                        item item = db.items.Where(x => x.id_item == sbxRefItem.ItemID).FirstOrDefault();
+                        if (item != null)
+                        {
+                            sales_promotion.InputName = item.name;
+                            sales_promotion.RaisePropertyChanged("InputName");
+                        }
+
+
+                    }
                 }
             }
         }
@@ -109,6 +121,18 @@ namespace cntrl
                 if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
                     sales_promotion.reference_bonus = sbxBonusItem.ItemID;
+                    using (db db = new db())
+                    {
+
+                        item item = db.items.Where(x => x.id_item == sbxBonusItem.ItemID).FirstOrDefault();
+                        if (item != null)
+                        {
+                            sales_promotion.OutputName = item.name;
+                            sales_promotion.RaisePropertyChanged("OutputName");
+                        }
+
+
+                    }
                 }
             }
         }

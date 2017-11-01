@@ -40,7 +40,7 @@ namespace Cognitivo.Purchase
 
             //incotermViewSource
             incotermViewSource = FindResource("incotermViewSource") as CollectionViewSource;
-            incotermViewSource.Source = await ImpexDB.impex_incoterm.OrderBy(a => a.name).AsNoTracking().ToListAsync();
+            incotermViewSource.Source = await ImpexDB.impex_incoterm.Where(x=>x.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToListAsync();
 
             //CurrencyFx
             CollectionViewSource currencyfxViewSource = FindResource("currencyfxViewSource") as CollectionViewSource;
@@ -48,7 +48,7 @@ namespace Cognitivo.Purchase
 
             //incotermconditionViewSource
             CollectionViewSource incotermconditionViewSource = FindResource("incotermconditionViewSource") as CollectionViewSource;
-            incotermconditionViewSource.Source = await ImpexDB.impex_incoterm_condition.OrderBy(a => a.name).AsNoTracking().ToListAsync();
+            incotermconditionViewSource.Source = await ImpexDB.impex_incoterm_condition.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToListAsync();
         }
 
         private void toolBar_btnCancel_Click_1(object sender)

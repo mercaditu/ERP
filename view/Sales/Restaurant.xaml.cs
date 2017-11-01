@@ -299,6 +299,7 @@ namespace Cognitivo.Sales
                 foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
                 {
                     sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+                    sales_invoice.RaisePropertyChanged("Location");
                 }
             }
 

@@ -141,30 +141,30 @@ namespace entity
                                 foreach (item_movement item_movement in item_movementlIST)
                                 {
 
-
-                                    if (item_movement != null)
-                                    {
+                                    //base cost already insert by purchase invoice so no need to add new cost
+                                    //if (item_movement != null)
+                                    //{
                                        
 
 
 
 
-                                        item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
-                                        {
-                                            unit_value = Brillo.Currency
-                                            .convert_Values
-                                            (
-                                                Impex_CostDetail.unit_cost,
-                                                impex.impex_import.FirstOrDefault().purchase_invoice.id_currencyfx,
-                                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                                App.Modules.Purchase
-                                            ),
-                                            comment = "Base Cost"
+                                    //    item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
+                                    //    {
+                                    //        unit_value = Brillo.Currency
+                                    //        .convert_Values
+                                    //        (
+                                    //            Impex_CostDetail.unit_cost,
+                                    //            impex.impex_import.FirstOrDefault().purchase_invoice.id_currencyfx,
+                                    //            CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                    //            App.Modules.Purchase
+                                    //        ),
+                                    //        comment = "Base Cost"
 
-                                        };
-                                        item_movement_value_rel item_movement_value_rel = item_movement.item_movement_value_rel;
-                                        item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
-                                    }
+                                    //    };
+                                    //    item_movement_value_rel item_movement_value_rel = item_movement.item_movement_value_rel;
+                                    //    item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
+                                    //}
 
                                     if (item_movement != null)
                                     {
@@ -202,7 +202,7 @@ namespace entity
                                             }
                                         }
 
-                                        item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost, true, DateTime.Now);
+                                      //  item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost, true, DateTime.Now);
                                     }
                                 }
                             }

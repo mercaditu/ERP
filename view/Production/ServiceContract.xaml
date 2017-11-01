@@ -77,7 +77,7 @@
                             CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
                             VirtualizingPanel.VirtualizationMode="Recycling">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 													Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="False" MinWidth="128" />
                                 <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
 													Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />

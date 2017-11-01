@@ -43,7 +43,7 @@
                           ItemsSource="{Binding Source={StaticResource app_notificationViewSource}}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" Width="*" />
-                        <DataGridTextColumn></DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding timestamp}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

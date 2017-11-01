@@ -35,16 +35,16 @@ namespace cntrl
             {
 
                 app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
-                await db.app_notification.Where(x => x.is_read == false && x.id_application == id_application && 
+                await db.app_notification.Where(x => x.is_read == false && x.id_application == id_application &&  x.id_company==CurrentSession.Id_Company &&
                 ((x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == CurrentSession.UserRole.id_department))
                 .LoadAsync();
                 app_notificationViewSource.Source = db.app_notification.Local;
 
                 CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
-                app_departmentViewSource.Source = await db.app_department.ToListAsync();
+                app_departmentViewSource.Source = await db.app_department.Where(x=>x.id_company==CurrentSession.Id_Company).ToListAsync();
 
                 CollectionViewSource security_userViewSource = FindResource("security_userViewSource") as CollectionViewSource;
-                security_userViewSource.Source = await db.security_user.ToListAsync();
+                security_userViewSource.Source = await db.security_user.Where(x => x.id_company == CurrentSession.Id_Company).ToListAsync();
 
                 //If ref Id exists in notification viewsource, then put focus on that row.
             }

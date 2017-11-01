@@ -248,19 +248,19 @@
                   <Width>0.34307in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.60138in</Width>
+                  <Width>1.98951in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.72993in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.40411in</Width>
+                  <Width>0.56984in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.54363in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.07455in</Width>
+                  <Width>0.77241in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.54675in</Width>
@@ -348,6 +348,7 @@
                               </TextRuns>
                               <Style>
                                 <TextAlign>Center</TextAlign>
+                                <LineHeight>2pt</LineHeight>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -783,6 +784,7 @@
                               </TextRuns>
                               <Style>
                                 <TextAlign>Center</TextAlign>
+                                <LineHeight>2pt</LineHeight>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1279,7 +1281,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.2in</Height>
+                  <Height>0.825in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1292,6 +1294,7 @@
                                 <TextRun>
                                   <Value>=RowNumber(nothing)</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1308,18 +1311,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1340,12 +1345,14 @@
                                 <TextRun>
                                   <Value>=Fields!item_description.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
                                 <TextAlign>Left</TextAlign>
+                                <LineHeight>2pt</LineHeight>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1356,18 +1363,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1388,6 +1397,7 @@
                                 <TextRun>
                                   <Value>=Fields!unit_price.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <Format>N2</Format>
                                   </Style>
@@ -1405,18 +1415,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1437,6 +1449,7 @@
                                 <TextRun>
                                   <Value>=Round(Fields!quantity.Value,2)</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1453,18 +1466,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1485,6 +1500,7 @@
                                 <TextRun>
                                   <Value>=Round(Fields!Quantity_Factored.Value,2)</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1501,18 +1517,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1533,6 +1551,7 @@
                                 <TextRun>
                                   <Value>=Fields!sub_Total_Factored.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1549,18 +1568,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1581,12 +1602,13 @@
                                 <TextRun>
                                   <Value>=Fields!VATCGSTPercent.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1597,18 +1619,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1629,12 +1653,13 @@
                                 <TextRun>
                                   <Value>=Fields!VATCGSTAmount.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1645,18 +1670,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1677,12 +1704,13 @@
                                 <TextRun>
                                   <Value>=Fields!VATSGSTPercent.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1693,18 +1721,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1725,12 +1755,13 @@
                                 <TextRun>
                                   <Value>=Fields!VATSGSTAmount.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1741,18 +1772,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1773,12 +1806,13 @@
                                 <TextRun>
                                   <Value>=Fields!VATIGSTPercent.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1789,18 +1823,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1821,12 +1857,13 @@
                                 <TextRun>
                                   <Value>=Fields!VATIGSTAmount.Value</Value>
                                   <Style>
+                                    <FontFamily>Times New Roman</FontFamily>
                                     <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1837,18 +1874,20 @@
                               <Style>Solid</Style>
                             </Border>
                             <TopBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </TopBorder>
                             <BottomBorder>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </BottomBorder>
                             <LeftBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </LeftBorder>
                             <RightBorder>
-                              <Color>Black</Color>
-                              <Style>None</Style>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
                             </RightBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -1908,6 +1947,9 @@
                 <TablixMember />
                 <TablixMember>
                   <Group Name="Details" />
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -1915,12 +1957,10 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>0.05in</Top>
             <Left>0.125in</Left>
-            <Height>0.63622in</Height>
-            <Width>8.51562in</Width>
+            <Height>1.26122in</Height>
+            <Width>8.76734in</Width>
             <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
+              <Border />
             </Style>
           </Tablix>
           <Tablix Name="Tablix5">
@@ -2006,7 +2046,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -2190,6 +2229,51 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="Textbox57">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Authorized Sign</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox57</rd:DefaultName>
+            <Top>17.40469cm</Top>
+            <Left>13.94037cm</Left>
+            <Height>0.6cm</Height>
+            <Width>4.23333cm</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>18.55643cm</Height>
         <Style />
@@ -2247,10 +2331,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox20</rd:DefaultName>
-              <Top>1.36214in</Top>
-              <Left>6.12677in</Left>
+              <Top>0.54963in</Top>
+              <Left>3.90454in</Left>
               <Height>0.50695in</Height>
-              <Width>1.49151in</Width>
+              <Width>1.95994in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2416,14 +2500,16 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Address</Value>
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.76301in</Top>
+              <Top>2.51301in</Top>
               <Left>0.19347in</Left>
               <Height>0.21085in</Height>
               <Width>0.8823in</Width>
@@ -2447,7 +2533,7 @@
                     <TextRun>
                       <Value>Customer</Value>
                       <Style>
-                        <FontFamily>arial</FontFamily>
+                        <FontFamily>Times New Roman</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -2455,7 +2541,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.52438in</Top>
+              <Top>2.27438in</Top>
               <Left>0.19347in</Left>
               <Height>0.21085in</Height>
               <Width>0.8823in</Width>
@@ -2481,7 +2567,7 @@
                       <Style>
                         <FontFamily>arial</FontFamily>
                         <FontWeight>Bold</FontWeight>
-                        <Format>d' de 'MMMM' de 'yyyy</Format>
+                        <Format>dd/MM/yyyy</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -2491,10 +2577,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>1.68243in</Top>
+              <Top>1.80743in</Top>
               <Left>3.90454in</Left>
               <Height>0.21085in</Height>
-              <Width>1.99972in</Width>
+              <Width>1.38613in</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <Border>
@@ -2515,6 +2601,7 @@
                     <TextRun>
                       <Value>=Fields!customer_contact_name.Value</Value>
                       <Style>
+                        <FontFamily>Times New Roman</FontFamily>
                         <FontWeight>Normal</FontWeight>
                       </Style>
                     </TextRun>
@@ -2525,7 +2612,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.4098in</Top>
+              <Top>2.2848in</Top>
               <Left>1.38578in</Left>
               <Height>0.21085in</Height>
               <Width>1.79399in</Width>
@@ -2549,6 +2636,7 @@
                     <TextRun>
                       <Value>=Fields!add1.Value</Value>
                       <Style>
+                        <FontFamily>Times New Roman</FontFamily>
                         <FontWeight>Normal</FontWeight>
                       </Style>
                     </TextRun>
@@ -2559,7 +2647,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.64843in</Top>
+              <Top>2.52343in</Top>
               <Left>1.38578in</Left>
               <Height>0.43307in</Height>
               <Width>1.79399in</Width>
@@ -2582,14 +2670,16 @@
                   <TextRuns>
                     <TextRun>
                       <Value>GSTIN Number</Value>
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>3.23775in</Top>
+              <Top>2.98775in</Top>
               <Left>0.19347in</Left>
               <Height>0.21085in</Height>
               <Width>1.12286in</Width>
@@ -2613,6 +2703,7 @@
                     <TextRun>
                       <Value>=Fields!gov_id.Value</Value>
                       <Style>
+                        <FontFamily>Times New Roman</FontFamily>
                         <FontWeight>Normal</FontWeight>
                       </Style>
                     </TextRun>
@@ -2623,7 +2714,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>3.12317in</Top>
+              <Top>2.99817in</Top>
               <Left>1.38578in</Left>
               <Height>0.32543in</Height>
               <Width>1.79399in</Width>
@@ -2652,15 +2743,15 @@
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
-              <Top>2.28657cm</Top>
-              <Left>13.63865cm</Left>
-              <Height>0.99688cm</Height>
-              <Width>5.8cm</Width>
+              <Top>4.25332cm</Top>
+              <Left>0.33481cm</Left>
+              <Height>0.81167cm</Height>
+              <Width>6.36699cm</Width>
               <ZIndex>13</ZIndex>
               <Style>
                 <Border>
@@ -2687,7 +2778,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
-              <Top>3.53557cm</Top>
+              <Top>3.85307cm</Top>
               <Left>9.91754cm</Left>
               <Height>0.59669cm</Height>
               <Width>3.17428cm</Width>
@@ -2742,7 +2833,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Address </Value>
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -2773,7 +2866,7 @@
                     <TextRun>
                       <Value>Consignee Name</Value>
                       <Style>
-                        <FontFamily>arial</FontFamily>
+                        <FontFamily>Times New Roman</FontFamily>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -2804,7 +2897,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>GSTIN Number</Value>
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -2834,7 +2929,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Buyer</Value>
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -2843,7 +2940,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value />
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -2873,7 +2972,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Consignee</Value>
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -2882,7 +2983,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value />
-                      <Style />
+                      <Style>
+                        <FontFamily>Times New Roman</FontFamily>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style />
@@ -2913,6 +3016,7 @@
                     <TextRun>
                       <Value>=Fields!consignee_name.Value</Value>
                       <Style>
+                        <FontFamily>Times New Roman</FontFamily>
                         <FontWeight>Normal</FontWeight>
                       </Style>
                     </TextRun>
@@ -2947,6 +3051,7 @@
                     <TextRun>
                       <Value>=Fields!consignee_address.Value</Value>
                       <Style>
+                        <FontFamily>Times New Roman</FontFamily>
                         <FontWeight>Normal</FontWeight>
                       </Style>
                     </TextRun>
@@ -2957,7 +3062,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox17</rd:DefaultName>
-              <Top>2.75259in</Top>
+              <Top>2.76301in</Top>
               <Left>4.50223in</Left>
               <Height>0.43307in</Height>
               <Width>1.79399in</Width>
@@ -2981,6 +3086,7 @@
                     <TextRun>
                       <Value>=Fields!consignee_gov_code.Value</Value>
                       <Style>
+                        <FontFamily>Times New Roman</FontFamily>
                         <FontWeight>Normal</FontWeight>
                       </Style>
                     </TextRun>

@@ -113,9 +113,9 @@ namespace cntrl.Curd
                             payment.contact = payment_schedual.contact;
                             payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
 
-                            if (dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+                            if (dbContext.db.payment_type.Where(x =>x.id_company==CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
                             {
-                                payment_detail.id_payment_type = dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                                payment_detail.id_payment_type = dbContext.db.payment_type.Where(x => x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().id_payment_type;
                             }
                             else
                             {
@@ -192,9 +192,9 @@ namespace cntrl.Curd
                             payment.id_contact = payment_schedual.id_contact;
                             payment.contact = payment_schedual.contact;
                             payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
-                            if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+                            if (PaymentDB.payment_type.Where(x => x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
                             {
-                                payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                                payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().id_payment_type;
                             }
                             else
                             {

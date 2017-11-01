@@ -68,7 +68,7 @@ namespace entity.Brillo.Logic
                             if (item_movementINPUT.Count() > 0)
                             {
                                 item_movementList.AddRange(item_movementINPUT);
-                                production_execution_detail.unit_cost = item_movementINPUT.FirstOrDefault().item_movement_value.Sum(y => y.unit_value);
+                                production_execution_detail.unit_cost = item_movementINPUT.FirstOrDefault().item_movement_value_rel.total_value;
                             }
                         }
                     }
@@ -957,16 +957,19 @@ namespace entity.Brillo.Logic
                             item_movement.credit += item_inventory_detail.Delta;
                             item_movement.comment += " | " + Localize.StringText("Inventory") + ": " + "Increased by " + String.Format("{0:0.00}", item_inventory_detail.Delta) + " | " + item_inventory_detail.comment;
                             item_movement.timestamp = DateTime.Now;
+                            item_movement.code = item_inventory_detail.batch_code;
+                            item_movement.expire_date = item_inventory_detail.expire_date;
                         }
                         //Negative Delta creates an Decrease Stock
+                        //credit with negative delta
                         else if (item_inventory_detail.Delta < 0)
                         {
                             item_movement im = new item_movement()
                             {
                                 id_item_product = item_inventory_detail.id_item_product,
                                 id_location = item_inventory_detail.id_location,
-                                credit = 0,
-                                debit = Math.Abs(item_inventory_detail.Delta),
+                                debit = 0,
+                                credit = item_inventory_detail.Delta,
                                 status = Status.Stock.InStock,
                                 code = item_movement.code,
                                 expire_date = item_movement.expire_date,

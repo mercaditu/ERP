@@ -71,7 +71,7 @@ namespace entity.Controller.Product
         public bool Approve()
         {
             NumberOfRecords = 0;
-            db.SaveChanges();
+            SaveChanges_WithValidation();
 
             foreach (item_inventory item_inventory in db.item_inventory.Local.Where(x => x.status != Status.Documents.Issued && x.IsSelected))
             {

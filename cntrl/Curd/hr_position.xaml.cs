@@ -32,7 +32,7 @@ namespace cntrl
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 CollectionViewSource app_departmentViewSource = (CollectionViewSource)FindResource("app_departmentViewSource");
-                Entity.db.app_department.Load();
+                Entity.db.app_department.Where(a => a.id_company == CurrentSession.Id_Company).Load();
                 app_departmentViewSource.Source = Entity.db.app_department.Local;
 
                 Entity.db.hr_position.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();

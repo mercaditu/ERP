@@ -52,7 +52,7 @@ namespace cntrl.PanelAdv
                 production_orderViewSource.Source = Shared_dbContext.production_order.Local;
 
                 production_lineViewSource = (CollectionViewSource)this.Resources["production_lineViewSource"];
-                Shared_dbContext.production_line.Load();
+                Shared_dbContext.production_line.Where(x=>x.id_company==CurrentSession.Id_Company).Load();
                 production_lineViewSource.Source = Shared_dbContext.production_line.Local;
             }
 

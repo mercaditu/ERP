@@ -37,7 +37,7 @@ namespace Cognitivo.HumanResource
             contacthr_educationViewSource = (CollectionViewSource)FindResource("contacthr_educationViewSource");
 
             app_departmentViewSource = (CollectionViewSource)FindResource("app_departmentViewSource");
-            await dbContext.app_department.ToListAsync();
+            await dbContext.app_department.Where(i => i.id_company == CurrentSession.Id_Company).ToListAsync();
             app_departmentViewSource.Source = dbContext.app_department.Local;
 
             hr_talentViewSource = (CollectionViewSource)FindResource("hr_talentViewSource");
@@ -172,16 +172,16 @@ namespace Cognitivo.HumanResource
                     contact contact = i as contact;
                     if (contact != null)
                     {
-                        FirstName = string.IsNullOrEmpty(contact.FirstName) ? "" : contact.FirstName ;
+                        FirstName = string.IsNullOrEmpty(contact.FirstName) ? "" : contact.FirstName;
                         LastName = string.IsNullOrEmpty(contact.LastName) ? "" : contact.LastName;
-                        code = string.IsNullOrEmpty(contact.code) ? "" : contact.code ;
+                        code = string.IsNullOrEmpty(contact.code) ? "" : contact.code;
                     }
 
                     if (
                     FirstName.ToLower().Contains(query.ToLower())
                     ||
                     LastName.ToLower().Contains(query.ToLower())
-                        || 
+                        ||
                         code.ToLower().Contains(query.ToLower())
                         )
                     {

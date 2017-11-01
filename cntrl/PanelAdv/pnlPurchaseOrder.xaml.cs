@@ -113,7 +113,7 @@ namespace cntrl.PanelAdv
         {
             var order = (from purchase_order_detail in _entity.purchase_order_detail
                          where 
-                         purchase_order_detail.purchase_order.id_contact == id_contact && 
+                         purchase_order_detail.purchase_order.id_contact == id_contact  &&
                          purchase_order_detail.purchase_order.status == Status.Documents_General.Approved
                          join purchase_invoice_detail in _entity.purchase_invoice_detail
                              on purchase_order_detail.id_purchase_order_detail equals purchase_invoice_detail.id_purchase_order_detail into lst

@@ -44,7 +44,7 @@ namespace cntrl
                 try
                 {
                     CollectionViewSource measurement_typeViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_measurement_typeViewSource");
-                    measurement_typeViewSource.Source = _entity.db.app_measurement_type.OrderBy(a => a.name).ToList();
+                    measurement_typeViewSource.Source = _entity.db.app_measurement_type.Where(x=>x.id_company==CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                     if (!isExternalCall)
                     {

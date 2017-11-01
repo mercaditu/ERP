@@ -28,6 +28,15 @@ namespace cntrl
 
             btnFocus_Click?.Invoke(sender);
         }
+        public event btnClear_ClickedEventHandler btnClear_Click;
+
+        public delegate void btnClear_ClickedEventHandler(object sender);
+
+        public void btnClear_MouseUp(object sender, EventArgs e)
+        {
+
+            btnClear_Click?.Invoke(sender);
+        }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -104,6 +113,17 @@ namespace cntrl
             StackPanel stpparent = this.Parent as StackPanel;
 
             if (stpparent!=null)
+            {
+                stpparent.Children.Clear();
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            btnClear_MouseUp(sender, e);
+            StackPanel stpparent = this.Parent as StackPanel;
+
+            if (stpparent != null)
             {
                 stpparent.Children.Clear();
             }

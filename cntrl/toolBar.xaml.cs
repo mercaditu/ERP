@@ -420,7 +420,7 @@ namespace cntrl
 
             btnSave_Click?.Invoke(sender);
         }
-        //Focus
+        //filter for toolbar notification
         public event btnFocus_ClickedEventHandler btnFocus_Click;
 
         public delegate void btnFocus_ClickedEventHandler(object sender);
@@ -430,6 +430,19 @@ namespace cntrl
            // cntrl.toolBarNotification objCon = new cntrl.toolBarNotification();
             ref_id = objCon.ref_id;
             btnFocus_Click?.Invoke(sender);
+
+        }
+
+        //clear filter for toolbar notification
+        public event btnClear_ClickedEventHandler btnClear_Click;
+
+        public delegate void btnClear_ClickedEventHandler(object sender);
+
+        public void btnClear_MouseUp(object sender, EventArgs e)
+        {
+          
+           
+            btnClear_Click?.Invoke(sender);
 
         }
         //CANCEL
@@ -751,6 +764,7 @@ namespace cntrl
             objCon.id_application = appName;
             objCon.ref_id = ref_id;
             objCon.btnFocus_Click += ObjCon_btnFocus_Click;
+            objCon.btnClear_Click += ObjCon_btnClear_Click;
 
             stackMessages.Children.Add(objCon);
         }
@@ -758,6 +772,10 @@ namespace cntrl
         private void ObjCon_btnFocus_Click(object sender)
         {
             btnFocus_MouseUp(null, null);
+        }
+        private void ObjCon_btnClear_Click(object sender)
+        {
+            btnClear_MouseUp(null, null);
         }
     }
 }

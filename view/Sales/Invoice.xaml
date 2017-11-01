@@ -751,6 +751,7 @@
 					   btnCancel_Click="Cancel_Click"
                        btnSync_Click="SalesInvoice_Loaded"
                        btnFocus_Click="btnFocus_Click"
+                       btnClear_Click="toolBar_btnClear_Click"          
                        ref_id="{Binding id_sales_invoice,Source={StaticResource sales_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

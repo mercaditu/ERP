@@ -33,8 +33,11 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
+        
         <TabControl Grid.Row="1">
             <TabItem Header="{lex:Loc View}">
+                <StackPanel>
+                    <Button Click="Button_Click_1" Content="{lex:Loc Clear Filter}" Style="{StaticResource btn_green}" Margin="4"/>
                 <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                           BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling" 
                           SelectionChanged="dgvnotification_SelectionChanged"
@@ -46,6 +49,7 @@
                         <DataGridTextColumn Binding="{Binding timestamp}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+                </StackPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Create}">
                 <StackPanel>

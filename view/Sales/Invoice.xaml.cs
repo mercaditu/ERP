@@ -950,6 +950,11 @@ namespace Cognitivo.Sales
 
         }
 
-     
+        private void toolBar_btnClear_Click(object sender)
+        {
+            SalesDB.Initialize();
+            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+            Load_PrimaryDataThread(null,null);
+        }
     }
 }

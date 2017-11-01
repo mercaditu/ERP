@@ -396,12 +396,12 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                                        <syncfusion:SfMaskedEdit x:Name="dtpscstartdate" MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                        <syncfusion:SfMaskedEdit x:Name="dtpscstartdate" MaskType="Simple" Mask="00/00/0000" Watermark="mm/dd/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
                                         <syncfusion:SfMaskedEdit x:Name="dtpscstarttime" MaskType="Simple" Mask="00:00:00" Watermark="hh:mm:ss" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                                        <syncfusion:SfMaskedEdit x:Name="dtpscenddate"  MaskType="Simple" Mask="00/00/0000" Watermark="dd/mm/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
+                                        <syncfusion:SfMaskedEdit x:Name="dtpscenddate"  MaskType="Simple" Mask="00/00/0000" Watermark="mm/dd/yyyy" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="100"/>
                                         <syncfusion:SfMaskedEdit x:Name="dtpscendtime" MaskType="Simple" Mask="00:00:00" Watermark="hh:mm:ss" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="85"/>
                                     </StackPanel>
 

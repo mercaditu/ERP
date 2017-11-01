@@ -363,6 +363,12 @@ namespace Cognitivo.Production
                     //DeleteDetailGridRow
                     exexustiondetail.CancelEdit();
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
+                    if (production_execution_detail.production_service_account !=null)
+                    {
+                        ExecutionDB.db.production_service_account.Remove(production_execution_detail.production_service_account);
+                        production_execution_detail.production_service_account = null;
+                        
+                    }
                     production_execution_detail.State = EntityState.Deleted;
                     production_order_detail.production_execution_detail.Remove(production_execution_detail);
                     ExecutionDB.db.production_execution_detail.Remove(production_execution_detail);

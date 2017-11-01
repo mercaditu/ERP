@@ -77,7 +77,8 @@ namespace cntrl.Panels
 				production_service_account.unit_cost = SelectedAccount.unit_cost;
 				production_service_account.debit = production_execution_detail.quantity;
 				production_service_account.credit = 0;
-				SelectedAccount.child.Add(production_service_account);
+                production_execution_detail.production_service_account = production_service_account;
+                SelectedAccount.child.Add(production_service_account);
 			}
 			ExecutionDB.SaveChanges();
 			btnCancel_Click(sender, null);

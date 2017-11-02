@@ -227,6 +227,7 @@
                        btnNew_Click="toolBar_btnNew_Click"
                        btnSearch_Click="toolBar_btnSearch_Click" 
                           btnFocus_Click="toolBar_btnFocus_Click"
+                       btnClear_Click="toolBar_btnClear_Click"
                        ref_id="{Binding id_project,Source={StaticResource projectViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        appName="Project"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

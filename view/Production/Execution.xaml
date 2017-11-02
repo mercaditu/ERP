@@ -549,6 +549,7 @@
                        btnDelete_Click="toolBar_btnDelete_Click"
 					   appName="ProductionExecution"
                         btnFocus_Click="toolBar_btnFocus_Click"
+                       btnClear_Click="toolBar_btnClear_Click"
                        ref_id="{Binding id_production_order,Source={StaticResource production_orderViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />

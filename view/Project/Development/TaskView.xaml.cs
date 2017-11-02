@@ -699,5 +699,14 @@ namespace Cognitivo.Project.Development
                 projectViewSource.Source = ProjectTaskDB.projects.Where(x => x.id_project == toolBar.ref_id).ToList();
             }
         }
+
+        private void toolBar_btnClear_Click(object sender)
+        {
+            projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
+
+             ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
+                .Include(x => x.project_tag_detail).LoadAsync();
+            projectViewSource.Source = ProjectTaskDB.projects.Local;
+        }
     }
 }

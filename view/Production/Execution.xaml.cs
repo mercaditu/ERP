@@ -700,6 +700,12 @@ namespace Cognitivo.Production
             }
         }
 
+        private void toolBar_btnClear_Click(object sender)
+        {
+            ExecutionDB.Initialize();
+            Load();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string prop)

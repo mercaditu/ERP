@@ -525,6 +525,7 @@
 					   btnAnull_Click="Anull_Click"
                        btnSync_Click="Page_Loaded"
                        btnFocus_Click="toolBar_btnFocus_Click"
+                          btnClear_Click="toolBar_btnClear_Click"
                        ref_id="{Binding id_sales_order,Source={StaticResource sales_orderViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

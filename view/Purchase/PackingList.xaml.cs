@@ -536,6 +536,13 @@ namespace Cognitivo.Purchase
             purchase_packingViewSource = FindResource("purchase_packingViewSource") as CollectionViewSource;
             purchase_packingViewSource.Source = PurchasePackingListDB.purchase_packing.Where(x => x.id_purchase_packing == toolBar.ref_id).ToList();
         }
+        private void toolBar_btnClear_Click(object sender)
+        {
+          
+            purchase_packingViewSource = FindResource("purchase_packingViewSource") as CollectionViewSource;
+            PurchasePackingListDB.purchase_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).Take(100).Skip(PageIndex).LoadAsync(); //.Include("purchase_packing_detail").LoadAsync();
+            purchase_packingViewSource.Source = PurchasePackingListDB.purchase_packing.Local;
+        }
 
         private void navPagination_btnFirstPage_Click(object sender)
         {

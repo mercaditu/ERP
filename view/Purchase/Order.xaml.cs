@@ -753,5 +753,12 @@ namespace Cognitivo.Purchase
             purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
             purchase_orderViewSource.Source = PurchaseDB.db.purchase_order.Where(x => x.id_purchase_order == toolBar.ref_id).ToList();
         }
+        private void toolBar_btnClear_Click(object sender)
+        {
+            PurchaseDB.Initialize();
+            purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
+            load_PrimaryDataThread();
+        }
+
     }
 }

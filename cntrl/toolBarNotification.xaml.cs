@@ -18,6 +18,7 @@ namespace cntrl
 
         public App.Names id_application { get; set; }
         public int ref_id { get; set; }
+   
 
         public event btnFocus_ClickedEventHandler btnFocus_Click;
 
@@ -49,6 +50,7 @@ namespace cntrl
                 .LoadAsync();
                 app_notificationViewSource.Source = db.app_notification.Local;
 
+          
                 CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
                 app_departmentViewSource.Source = await db.app_department.Where(x=>x.id_company==CurrentSession.Id_Company).ToListAsync();
 
@@ -99,10 +101,16 @@ namespace cntrl
             using (db db = new db())
             {
                 app_notification app_notification = app_notificationViewSource.View.CurrentItem as app_notification;
-                app_notification.is_read = true;
-                db.SaveChangesAsync();
+                if (app_notification!=null)
+                {
+                    app_notification app_notificationdb = db.app_notification.Where(x => x.id_notification == app_notification.id_notification).FirstOrDefault();
+                    app_notificationdb.is_read = true;
+                    db.SaveChanges();
+                    ref_id = app_notification.ref_id;
+                }
+               
 
-                ref_id = app_notification.ref_id;
+             
                 btnFocus_MouseUp(sender, e);
 
             }

@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,13 +14,13 @@ using WPFLocalizeExtension.Extensions;
 namespace cntrl
 {
     public enum ToolBarIcons { Basic, Filter, Admin, Impex, Project, Production }
-    
+
     public partial class toolBarData
     {
-    
+
         private DataTable dtIconList = new DataTable();
         public DataTable dtIconList_property { get { return dtIconList; } set { dtIconList = value; } }
-       
+
         public toolBarData()
         {
             //create Columns to fill
@@ -240,7 +241,7 @@ namespace cntrl
             set { SetValue(ref_idProperty, value); }
         }
 
-      
+
 
         #region "Status Properties & Events"
 
@@ -427,7 +428,7 @@ namespace cntrl
 
         public void btnFocus_MouseUp(object sender, EventArgs e)
         {
-           // cntrl.toolBarNotification objCon = new cntrl.toolBarNotification();
+            // cntrl.toolBarNotification objCon = new cntrl.toolBarNotification();
             ref_id = objCon.ref_id;
             btnFocus_Click?.Invoke(sender);
 
@@ -440,8 +441,8 @@ namespace cntrl
 
         public void btnClear_MouseUp(object sender, EventArgs e)
         {
-          
-           
+
+
             btnClear_Click?.Invoke(sender);
 
         }
@@ -535,6 +536,11 @@ namespace cntrl
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
                 Get_Icons(ToolBarIcons.Basic.ToString(), ref security);
+            }
+            using (db db = new db())
+            {
+                icoNotification.ToolTip = db.app_notification.Where(x => x.is_read == false && x.id_application == appName && x.id_company == CurrentSession.Id_Company &&
+                    ((x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == CurrentSession.UserRole.id_department)).Count();
             }
         }
 
@@ -753,7 +759,7 @@ namespace cntrl
 
         private void icoNotification_Click(object sender, RoutedEventArgs e)
         {
-         
+
             if (popMessages.IsOpen == false)
             {
                 popMessages.IsOpen = true;

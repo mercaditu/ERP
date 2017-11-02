@@ -636,6 +636,7 @@
 					   btnApprove_Click="Approve_Click"
 					   btnAnull_Click="Anull_Click"
                        btnFocus_Click="toolBar_btnFocus_Click"
+                          btnClear_Click="toolBar_btnClear_Click"
                          btnSearchInSource_Click="SearchInSource_Click"
                         ref_id="{Binding id_purchase_invoice,Source={StaticResource purchase_invoiceViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

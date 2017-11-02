@@ -675,5 +675,11 @@ namespace Cognitivo.Sales
                 sales_orderViewSource.Source = SalesDB.db.sales_order.Where(x => x.id_sales_order == toolBar.ref_id).ToList();
             }
         }
+        private void toolBar_btnClear_Click(object sender)
+        {
+            SalesDB.Initialize();
+            sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
+            Load_PrimaryDataThread( );
+        }
     }
 }

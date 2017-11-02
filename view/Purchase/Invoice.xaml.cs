@@ -1111,7 +1111,13 @@ namespace Cognitivo.Purchase
             purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
             purchase_invoiceViewSource.Source = PurchaseDB.db.purchase_invoice.Where(x => x.id_purchase_invoice == toolBar.ref_id).ToList();
         }
+        private void toolBar_btnClear_Click(object sender)
+        {
+            PurchaseDB.Initialize();
+            purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
+            Load_PrimaryDataThread();
+        }
 
-      
+
     }
 }

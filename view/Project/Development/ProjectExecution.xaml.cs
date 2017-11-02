@@ -132,6 +132,15 @@ namespace Cognitivo.Project
             }
         }
 
+
+        private void toolBar_btnClear_Click(object sender)
+        {
+            projectViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
+            db.projects.Where(a => a.is_active == true && a.is_archived == false && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            projectViewSource.Source = db.projects.Local;
+        }
+
+
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {
         }

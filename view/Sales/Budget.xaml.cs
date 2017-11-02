@@ -558,6 +558,14 @@ namespace Cognitivo.Sales
                 sales_budgetViewSource.Source = SalesBudgetDB.db.sales_budget.Where(x => x.id_sales_budget == toolBar.ref_id).ToList();
             }
         }
+        private void toolBar_btnClear_Click(object sender)
+        {
+            SalesBudgetDB.Initialize();
+            sales_budgetViewSource = FindResource("sales_budgetViewSource") as CollectionViewSource;
+            Page_Loaded(null, null);
+        }
+
+      
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {

@@ -12,7 +12,7 @@ namespace Cognitivo.Production
 {
     public partial class Order : Page, INotifyPropertyChanged
     {
-       // private OrderDB OrderDB = new OrderDB();
+        // private OrderDB OrderDB = new OrderDB();
 
         private CollectionViewSource
             project_task_dimensionViewSource,
@@ -73,7 +73,7 @@ namespace Cognitivo.Production
 
             production_order Order = OrderDB.Create_Normal(LineID);
             Order.State = EntityState.Added;
-            
+
             production_orderViewSource.View.Refresh();
             production_orderViewSource.View.MoveCurrentTo(Order);
 
@@ -104,40 +104,40 @@ namespace Cognitivo.Production
             production_order _production_order = (production_order)production_orderDataGrid.SelectedItem;
             if ((_production_order.work_number == null || _production_order.work_number == string.Empty) && _production_order.id_range > 0)
             {
-				if (_production_order.id_branch > 0)
-				{
-					entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == _production_order.id_branch).FirstOrDefault().code;
-				}
-				else
-				{
-					entity.Brillo.Logic.Range.branch_Code = "";
-				}
+                if (_production_order.id_branch > 0)
+                {
+                    entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == _production_order.id_branch).FirstOrDefault().code;
+                }
+                else
+                {
+                    entity.Brillo.Logic.Range.branch_Code = "";
+                }
                 if (_production_order.id_terminal > 0)
                 {
                     entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == _production_order.id_terminal).FirstOrDefault().code;
                 }
-				else
-				{
-					entity.Brillo.Logic.Range.terminal_Code = "";
-				}
-				if (_production_order.id_user>0)
-				{
-					entity.Brillo.Logic.Range.user_Code = OrderDB.db.security_user.Where(x => x.id_user == _production_order.id_user).Select(x => x.code).FirstOrDefault();
-				}
-				else
-				{
-					entity.Brillo.Logic.Range.user_Code = "";
-				}
-				if (_production_order.id_project>0)
-				{
-					entity.Brillo.Logic.Range.project_Code = OrderDB.db.projects.Where(x => x.id_project == _production_order.id_project).Select(x => x.code).FirstOrDefault();
-				}
-				else
-				{
-					entity.Brillo.Logic.Range.project_Code = "";
-				}
+                else
+                {
+                    entity.Brillo.Logic.Range.terminal_Code = "";
+                }
+                if (_production_order.id_user > 0)
+                {
+                    entity.Brillo.Logic.Range.user_Code = OrderDB.db.security_user.Where(x => x.id_user == _production_order.id_user).Select(x => x.code).FirstOrDefault();
+                }
+                else
+                {
+                    entity.Brillo.Logic.Range.user_Code = "";
+                }
+                if (_production_order.id_project > 0)
+                {
+                    entity.Brillo.Logic.Range.project_Code = OrderDB.db.projects.Where(x => x.id_project == _production_order.id_project).Select(x => x.code).FirstOrDefault();
+                }
+                else
+                {
+                    entity.Brillo.Logic.Range.project_Code = "";
+                }
 
-				app_document_range app_document_range = OrderDB.db.app_document_range.Where(x => x.id_range == _production_order.id_range).FirstOrDefault();
+                app_document_range app_document_range = OrderDB.db.app_document_range.Where(x => x.id_range == _production_order.id_range).FirstOrDefault();
                 _production_order.work_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                 _production_order.RaisePropertyChanged("work_number");
             }
@@ -159,7 +159,7 @@ namespace Cognitivo.Production
             Load();
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            app_dimensionViewSource.Source =  OrderDB.db.app_dimension.Local;
+            app_dimensionViewSource.Source = OrderDB.db.app_dimension.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
             app_measurementViewSource.Source = OrderDB.db.app_measurement.Local;
@@ -182,11 +182,11 @@ namespace Cognitivo.Production
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(OrderDB.db, entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
 
-        private  void Load()
+        private void Load()
         {
-              OrderDB.Load(production_order.ProductionOrderTypes.Production, dataPager.PagedSource.PageIndex);
+            OrderDB.Load(production_order.ProductionOrderTypes.Production, dataPager.PagedSource.PageIndex);
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-         
+
             production_orderViewSource.Source = OrderDB.db.production_order.Local.Where(x => x.is_archived == false);
 
 
@@ -216,7 +216,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            if (MessageBox.Show("FINALIZAR PROYECTO: Está seguro de finalizarlo?","Cognitivo",MessageBoxButton.YesNo) ==MessageBoxResult.Yes)
+            if (MessageBox.Show("FINALIZAR PROYECTO: Está seguro de finalizarlo?", "Cognitivo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 if (production_order != null)
@@ -228,8 +228,8 @@ namespace Cognitivo.Production
                     }
                 }
             }
-            
-         
+
+
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -597,7 +597,7 @@ namespace Cognitivo.Production
 
         private void btnSaveTask_Click(object sender)
         {
-            if (OrderDB.SaveChanges_WithValidation() )
+            if (OrderDB.SaveChanges_WithValidation())
             {
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 if (production_order != null)
@@ -652,7 +652,7 @@ namespace Cognitivo.Production
                     }
                 }
                 OrderDB.Initialize();
-                OrderDB.Load(production_order.ProductionOrderTypes.Production,dataPager.PagedSource.PageIndex);
+                OrderDB.Load(production_order.ProductionOrderTypes.Production, dataPager.PagedSource.PageIndex);
                 OrderDB.db.production_order.Where(a =>
                         a.id_company == CurrentSession.Id_Company &&
                         a.type != production_order.ProductionOrderTypes.Fraction &&
@@ -693,13 +693,13 @@ namespace Cognitivo.Production
 
         private void toolIcon_Click(object sender)
         {
-           
+
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_orderproduction_order_detailViewSource.View.Filter = null;
 
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
 
-            foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true && x.status!=Status.Production.Anull))
+            foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true && x.status != Status.Production.Anull))
             {
                 if (production_order_detail.item.id_item_type != item.item_type.Task)
                 {
@@ -790,9 +790,9 @@ namespace Cognitivo.Production
             Update_Logistics();
         }
 
-        private  void slider_LostFocus(object sender, EventArgs e)
+        private void slider_LostFocus(object sender, EventArgs e)
         {
-             OrderDB.SaveChanges_WithValidation();
+            OrderDB.SaveChanges_WithValidation();
         }
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
@@ -864,7 +864,7 @@ namespace Cognitivo.Production
                     (
                     x =>
                     x.name.Contains(query) &&
-                    x.type==production_order.ProductionOrderTypes.Production
+                    x.type == production_order.ProductionOrderTypes.Production
                     ).ToListAsync();
             }
         }
@@ -876,6 +876,14 @@ namespace Cognitivo.Production
                 production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
                 production_orderViewSource.Source = OrderDB.db.production_order.Where(x => x.id_production_order == toolBar.ref_id).ToList();
             }
+        }
+
+        private void toolBar_btnClear_Click(object sender)
+        {
+
+            ExecutionDB.Initialize();
+            Load();
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

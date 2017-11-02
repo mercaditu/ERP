@@ -423,6 +423,7 @@
                        btnSync_Click="Page_Loaded"
 					   appName="ProductionOrder"
                          btnFocus_Click="toolBar_btnFocus_Click"
+                       btnClear_Click="toolBar_btnClear_Click"
                        ref_id="{Binding id_production_order,Source={StaticResource production_orderViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 					  Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

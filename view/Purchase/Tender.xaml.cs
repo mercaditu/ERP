@@ -613,5 +613,13 @@ namespace Cognitivo.Purchase
             PageIndex = 0;
             Page_Loaded(null, null);
         }
+
+        private void toolBar_btnClear_Click(object sender)
+        {
+            TenderDB.Initialize();
+             TenderDB.Load();
+            purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
+            purchase_tenderViewSource.Source = TenderDB.db.purchase_tender.Local;
+        }
     }
 }

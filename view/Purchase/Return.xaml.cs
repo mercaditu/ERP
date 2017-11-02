@@ -551,6 +551,12 @@ namespace Cognitivo.Purchase
             purchaseReturnViewSource = FindResource("purchaseReturnViewSource") as CollectionViewSource;
             purchaseReturnViewSource.Source = PurchaseReturnDB.db.purchase_return.Where(x => x.id_purchase_return == toolBar.ref_id).ToList();
         }
+        private void toolBar_btnClear_Click(object sender)
+        {
+            PurchaseReturnDB.Initialize();
+            purchaseReturnViewSource = FindResource("purchaseReturnViewSource") as CollectionViewSource;
+            purchaseReturnViewSource.Source = PurchaseReturnDB.db.purchase_return.Local;
+        }
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {

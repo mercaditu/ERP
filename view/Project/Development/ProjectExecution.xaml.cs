@@ -135,6 +135,7 @@ namespace Cognitivo.Project
 
         private void toolBar_btnClear_Click(object sender)
         {
+            db = new db();
             projectViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
             db.projects.Where(a => a.is_active == true && a.is_archived == false && a.id_company == CurrentSession.Id_Company).LoadAsync();
             projectViewSource.Source = db.projects.Local;

@@ -702,6 +702,7 @@ namespace Cognitivo.Project.Development
 
         private void toolBar_btnClear_Click(object sender)
         {
+            ProjectTaskDB = new ProjectTaskDB();
             projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
 
              ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)

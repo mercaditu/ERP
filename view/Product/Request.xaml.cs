@@ -251,35 +251,40 @@ namespace Cognitivo.Product
 
                 if (desion.State == State.Added)
                 {
-                    if (RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
+                   
+                    if (item_request_detail.item != null)
                     {
-                        crud_modal.Children.Clear();
-                        Configs.itemMovement itemMovement = new Configs.itemMovement()
+                        if (item_request_detail.item.item_dimension.Count() > 0)
                         {
-                            id_item = item_request_detail.id_item,
-                            id_location = desion.id_location,
-                            Quantity = desion.Quantity,
-                            db = RequestController.db,
-                            Decision = item_request_decision.Decisions.Movement
-                        };
+                            crud_modal.Children.Clear();
+                            Configs.itemMovement itemMovement = new Configs.itemMovement()
+                            {
+                                id_item = item_request_detail.id_item,
+                                id_location = desion.id_location,
+                                Quantity = desion.Quantity,
+                                db = RequestController.db,
+                                Decision = item_request_decision.Decisions.Movement
+                            };
 
-                        itemMovement.Save += pnlMovement_SaveChanges;
+                            itemMovement.Save += pnlMovement_SaveChanges;
 
-                        crud_modal.Visibility = Visibility.Visible;
-                        crud_modal.Children.Add(itemMovement);
-                    }
-                    else
-                    {
-                        desion.State = State.Modified;
-
-                        item_request_detail.item_request_decision.Add(new item_request_decision()
+                            crud_modal.Visibility = Visibility.Visible;
+                            crud_modal.Children.Add(itemMovement);
+                        }
+                        else
                         {
-                            IsSelected = true,
-                            id_location = desion.id_location,
-                            quantity = desion.Quantity,
-                            decision = item_request_decision.Decisions.Movement
-                        });
+                            desion.State = State.Modified;
+
+                            item_request_detail.item_request_decision.Add(new item_request_decision()
+                            {
+                                IsSelected = true,
+                                id_location = desion.id_location,
+                                quantity = desion.Quantity,
+                                decision = item_request_decision.Decisions.Movement
+                            });
+                        }
                     }
+                    
                 }
             }
 

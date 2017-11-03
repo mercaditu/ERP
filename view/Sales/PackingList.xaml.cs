@@ -64,6 +64,7 @@ namespace Cognitivo.Sales
                 {
                     sales_packingsales_packing_detailVerifiedViewSource.View.Refresh();
                 }
+                filterDetail();
             }));
         }
 

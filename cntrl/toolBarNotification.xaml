@@ -29,6 +29,7 @@
 
             <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="25" Margin="7" Foreground="White" />
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" />
+            <Button Click="Button_Click_1" Content="Show All Data" Style="{StaticResource btn_green}" Margin="349,4,35,4"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
@@ -37,7 +38,7 @@
         <TabControl Grid.Row="1">
             <TabItem Header="{lex:Loc View}">
                 <StackPanel>
-                    <Button Click="Button_Click_1" Content="{lex:Loc Clear Filter}" Style="{StaticResource btn_green}" Margin="4"/>
+                   
                 <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                           BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling" 
                           SelectionChanged="dgvnotification_SelectionChanged"

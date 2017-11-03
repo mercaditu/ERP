@@ -881,7 +881,7 @@ namespace Cognitivo.Production
         private void toolBar_btnClear_Click(object sender)
         {
 
-            ExecutionDB.Initialize();
+            OrderDB.Initialize();
             Load();
 
         }

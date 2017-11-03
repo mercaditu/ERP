@@ -765,8 +765,7 @@ namespace cntrl
                 popMessages.IsOpen = true;
             }
             // stackMessages.Children.Add(toolMessage);
-
-
+            objCon.commentTextBox.Text = "";
             objCon.id_application = appName;
             objCon.ref_id = ref_id;
             objCon.btnFocus_Click += ObjCon_btnFocus_Click;

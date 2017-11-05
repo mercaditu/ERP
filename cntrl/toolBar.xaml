@@ -6,6 +6,7 @@
 			 xmlns:lex="http://wpflocalizeextension.codeplex.com"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:cntrl"
+             xmlns:control="clr-namespace:cntrl.Controls"
              mc:Ignorable="d" 
 			 lex:LocalizeDictionary.DesignCulture="en-US"
 			 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -73,20 +74,6 @@
                               BorderThickness="0" Margin="4" Cursor="Hand" BorderBrush="Transparent"
                               Style="{DynamicResource MetroCircleToggleButtonStyle}">
                 </ToggleButton>
-
-                <!--<TextBlock x:Name="btnCancel" Text="x" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"
-                           MouseUp="btnSync_MouseUp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"
-                           Margin="8" Foreground="White" Opacity="0.1" RenderTransformOrigin="0.5,0.5"
-                           ToolTip="{lex:Loc Refresh}">
-                    <TextBlock.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform />
-                            <SkewTransform />
-                            <RotateTransform />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </TextBlock.RenderTransform>
-                </TextBlock>-->
             </Grid>
 
             <Popup IsOpen="False" Grid.Column="0">
@@ -97,10 +84,7 @@
                             <DropShadowEffect ShadowDepth="0" Opacity="0.75"/>
                         </local:DateRange.Effect>
                     </local:DateRange>
-
                 </StackPanel>
-
-
             </Popup>
 
             <Grid Grid.Column="1">
@@ -114,8 +98,12 @@
                             <Button Content="Approve Edit" />
                         </metro:DropDownButton.Items>
                     </metro:DropDownButton>
+
+                    <Grid>
+                        <local:toolIcon x:Name="icoNotification" Click="icoNotification_Click" imgSource=""/>
+                        <control:NotificationIcon Number="{Binding ElementName=icoNotification, Path=qtyNotification}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    </Grid>
                     
-                    <local:toolIcon x:Name="icoNotification" Click="icoNotification_Click" imgSource=""/>
                     <TextBlock x:Name="btnSync" Text="w" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"
                            MouseUp="btnSync_MouseUp" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right"
                            Margin="8" Foreground="Black" Opacity="0.9" RenderTransformOrigin="0.5,0.5"

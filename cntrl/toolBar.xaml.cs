@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -537,10 +538,15 @@ namespace cntrl
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
                 Get_Icons(ToolBarIcons.Basic.ToString(), ref security);
             }
+
             using (db db = new db())
             {
-                icoNotification.ToolTip = db.app_notification.Where(x => x.is_read == false && x.id_application == appName && x.id_company == CurrentSession.Id_Company &&
-                    ((x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == CurrentSession.UserRole.id_department)).Count();
+                countNotifications(null, null);
+                //Load Basic Data into Timer.
+                Timer myTimer = new Timer();
+                myTimer.Elapsed += new ElapsedEventHandler(countNotifications);
+                myTimer.Interval = 1;
+                myTimer.Start();
             }
         }
 
@@ -755,32 +761,50 @@ namespace cntrl
             stackMessages.Children.Remove(toolMessage);
         }
 
-
+        private void countNotifications(object sender, EventArgs e)
+        {
+            try
+            {
+                using (db db = new db())
+                {
+                    icoNotification.qtyNotification = db.app_notification.Where(x => x.is_read == false && x.id_application == appName && x.id_company == CurrentSession.Id_Company &&
+                    ((x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == CurrentSession.UserRole.id_department))
+                    .Count();
+                }
+            }
+            catch { }
+        }
 
         private void icoNotification_Click(object sender, RoutedEventArgs e)
         {
-
-            if (popMessages.IsOpen == false)
+            try
             {
-                popMessages.IsOpen = true;
-            }
-            // stackMessages.Children.Add(toolMessage);
-            objCon.commentTextBox.Text = "";
-            objCon.id_application = appName;
-            objCon.ref_id = ref_id;
-            objCon.btnFocus_Click += ObjCon_btnFocus_Click;
-            objCon.btnClear_Click += ObjCon_btnClear_Click;
+                if (popMessages.IsOpen == false)
+                {
+                    popMessages.IsOpen = true;
+                }
 
-            stackMessages.Children.Add(objCon);
+                objCon.commentTextBox.Text = "";
+                objCon.id_application = appName;
+                objCon.ref_id = ref_id;
+                objCon.btnFocus_Click += ObjCon_btnFocus_Click;
+                objCon.btnClear_Click += ObjCon_btnClear_Click;
+
+                stackMessages.Children.Add(objCon);
+            }
+            catch { }
         }
 
         private void ObjCon_btnFocus_Click(object sender)
         {
             btnFocus_MouseUp(null, null);
         }
+
         private void ObjCon_btnClear_Click(object sender)
         {
             btnClear_MouseUp(null, null);
         }
+
+
     }
 }

@@ -6,6 +6,7 @@
               xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
               xmlns:entity="clr-namespace:entity;assembly=entity"
               xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
@@ -29,12 +30,13 @@
 
             <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="25" Margin="7" Foreground="White" />
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" />
-            <Button Click="Button_Click_1" Content="Show All Data" Style="{StaticResource btn_green}" Margin="349,4,35,4"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
         
+        <Button Click="Button_Click_1" Content="{lex:Loc Refresh}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
         <TabControl Grid.Row="1">
             <TabItem Header="{lex:Loc View}">
                 <StackPanel>
@@ -48,11 +50,18 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" Width="*" />
                         <DataGridTextColumn Binding="{Binding timestamp}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"></DataGridTextColumn>
+                        <DataGridTemplateColumn Width="Auto" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="" Click="hideNotification_OnClick" Style="{StaticResource btnDeleteChildStyle}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="{lex:Loc Create}">
+            <TabItem Header="{lex:Loc Create}" x:Name="tabCreate">
                 <StackPanel>
                     <RadioButton x:Name="rbtnDepartment" Content="{lex:Loc Department}"/>
                     <RadioButton x:Name="rbtnUser" Content="{lex:Loc User}" IsChecked="True"/>

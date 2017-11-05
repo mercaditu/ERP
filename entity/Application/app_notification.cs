@@ -32,13 +32,8 @@
         [Required]
         public string comment { get; set; }
 
-
-
-       
-
         public virtual app_department notified_department { get; set; }
         public virtual security_user notified_user { get; set; }
-
 
         public string Error
         {

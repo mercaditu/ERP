@@ -1,5 +1,7 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -233,6 +235,16 @@ namespace Cognitivo.Menu
             ///AssemblyCheck. If reporting exists, don't add Cognitivo.
             appIcon.Tag = "Cognitivo." + _path;
             appIcon.Uid = _name;
+
+            entity.App.Names App = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appIcon.Uid, true);
+
+            if (CurrentSession.NotificationCounts.Where(x => x.Name == App).FirstOrDefault() != null)
+            {
+                appIcon.NotificationNumber =  CurrentSession.NotificationCounts.Where(x => x.Name == App).FirstOrDefault().Count;
+                appIcon.RaisePropertyChanged("NotificationNumber");
+            }
+            
+            
             ///Security Check.
             try
             {

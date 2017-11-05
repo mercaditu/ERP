@@ -70,6 +70,7 @@ namespace cntrl
                 using (db db = new db())
                 {
                     app_notificationViewSource = FindResource("app_notificationViewSource") as CollectionViewSource;
+
                     await db.app_notification.Where(x => x.is_read == false && x.id_application == id_application && x.id_company == CurrentSession.Id_Company &&
                     ((x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == CurrentSession.UserRole.id_department))
                     .LoadAsync();

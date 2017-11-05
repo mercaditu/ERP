@@ -217,9 +217,9 @@ namespace Cognitivo.Menu
                 foreach (DataRow app in appList.dtApp.Select(SearchBy, "namespace ASC"))
                 {
                     string _namespace = app["namespace"].ToString();
-                    entity.CurrentSession.Versions Version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(app["Version"]));
+                    CurrentSession.Versions Version = (entity.CurrentSession.Versions)Enum.Parse(typeof(entity.CurrentSession.Versions), Convert.ToString(app["Version"]));
 
-                    if (entity.CurrentSession.Version >= Version)
+                    if (CurrentSession.Version >= Version)
                     {
                         if (arrNamespace.Contains(_namespace))
                         {
@@ -239,6 +239,7 @@ namespace Cognitivo.Menu
                             Style style = Application.Current.FindResource("H2") as Style;
                             lbl.Style = style;
                             lbl.Foreground = Brushes.White;
+
                             lbl.Effect = new DropShadowEffect
                             {
                                 ShadowDepth = 0,
@@ -285,6 +286,7 @@ namespace Cognitivo.Menu
             {
                 string _namespace = app["namespace"].ToString();
                 CurrentSession.Versions Version = (CurrentSession.Versions)Enum.Parse(typeof(CurrentSession.Versions), Convert.ToString(app["Version"]));
+
                 if (CurrentSession.Version >= Version)
                 {
                     if (arrNamespace.Contains(_namespace))
@@ -313,6 +315,7 @@ namespace Cognitivo.Menu
 
                         stck.Children.Add(lbl);
                         var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _namespace + "").SetBinding(lbl, Label.ContentProperty);
+
                         cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                         appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
                         appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);

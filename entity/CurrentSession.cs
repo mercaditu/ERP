@@ -318,6 +318,22 @@ namespace entity
                 Terminals = db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).OrderBy(x => x.name).ToList();
                 AppField = db.app_field.Where(x => x.id_company == Id_Company).ToList();
 
+                var app_notifications = db.app_notification.Where(x => x.is_read == false && x.id_company == Id_Company &&
+                    (x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == UserRole.id_department).ToList();
+
+                NotificationCounts = new List<NotificationCount>();
+
+                foreach (var app_notification in app_notifications)
+                {
+                    NotificationCount notificationCount = new NotificationCount
+                    {
+                        Count = app_notifications.Where(x => x.id_application == app_notification.id_application).Count(),
+                        Name = app_notification.id_application
+                    };
+
+                    NotificationCounts.Add(notificationCount);
+                }
+
                 if (IsLoaded == false)
                 {
                     VAT_Groups = db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
@@ -338,6 +354,8 @@ namespace entity
         public static List<app_terminal> Terminals { get; set; }
         public static List<app_currency> Currencies { get; set; }
         public static List<item_price_list> PriceLists { get; set; }
+
+        public static List<NotificationCount> NotificationCounts { get; set; }
 
         public static app_currency Currency_Default { get; set; }
         public static List<app_currencyfx> CurrencyFX_ActiveRates { get; set; }
@@ -360,5 +378,11 @@ namespace entity
         {
             return CurrencyFX_ActiveRates.Where(x => x.id_currency == Currency_Default.id_currency).FirstOrDefault();
         }
+    }
+
+    public class NotificationCount
+    {
+        public App.Names Name { get; set; }
+        public int Count { get; set; }
     }
 }

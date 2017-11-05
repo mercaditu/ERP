@@ -1,14 +1,28 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace cntrl
 {
-    public partial class applicationIcon : UserControl
+    public partial class applicationIcon : UserControl, INotifyPropertyChanged
     {
+        #region NotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        #endregion NotifyPropertyChanged
+
         public static readonly DependencyProperty HasReportProperty =
         DependencyProperty.Register("HasReport", typeof(bool), typeof(applicationIcon));
+
+        public int? NotificationNumber { get; set; }
 
         public bool HasReport
         {

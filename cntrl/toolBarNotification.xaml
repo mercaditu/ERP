@@ -64,7 +64,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <toolkit:RichTextBox MinWidth="256" Text="{Binding comment, Mode=OneWay, UpdateSourceTrigger=Default}" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    <toolkit:RichTextBox MinWidth="256" Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                          IsReadOnly="True" Background="WhiteSmoke" Padding="4"/>
                 </StackPanel>
             </TabItem>

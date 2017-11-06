@@ -7,11 +7,22 @@ using System.Data.Entity;
 using System;
 using System.Windows.Input;
 using System.Timers;
+using System.ComponentModel;
 
 namespace cntrl
 {
-    public partial class toolBarNotification : UserControl
+    public partial class toolBarNotification : UserControl, INotifyPropertyChanged
     {
+        #region NotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        #endregion NotifyPropertyChanged
         CollectionViewSource app_notificationViewSource;
 
         public toolBarNotification()
@@ -174,6 +185,7 @@ namespace cntrl
             if (app_notification != null)
             {
                 ref_id = app_notification.ref_id;
+                RaisePropertyChanged("ref_id");
             }
 
             btnFocus_MouseUp(sender, e);

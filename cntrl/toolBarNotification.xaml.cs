@@ -123,19 +123,6 @@ namespace cntrl
             btnCancel_Click(null, null);
         }
 
-        private void dgvnotification_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            app_notification app_notification = app_notificationViewSource.View.CurrentItem as app_notification;
-
-            //improve code, make async and wait 5 seconds before launching code.
-            if (app_notification!=null)
-            {
-                ref_id = app_notification.ref_id;
-            }
-               
-            btnFocus_MouseUp(sender, e);
-        }
-
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             if (Parent is StackPanel stpparent)
@@ -177,6 +164,19 @@ namespace cntrl
             {
                 //toolBar.msgError(ex);
             }
+        }
+
+        private void viewNotification_OnClick(object sender, RoutedEventArgs e)
+        {
+            app_notification app_notification = app_notificationViewSource.View.CurrentItem as app_notification;
+
+            //improve code, make async and wait 5 seconds before launching code.
+            if (app_notification != null)
+            {
+                ref_id = app_notification.ref_id;
+            }
+
+            btnFocus_MouseUp(sender, e);
         }
     }
 }

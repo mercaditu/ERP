@@ -38,27 +38,33 @@
         <Button Click="Button_Click_1" Content="{lex:Loc Refresh}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <TabControl Grid.Row="1">
-            <TabItem Header="{lex:Loc View}">
-                <StackPanel>
-                   
-                <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+            <TabItem Header="{lex:Loc View}" DataContext="{StaticResource app_notificationViewSource}">
+                <StackPanel Orientation="Horizontal">
+
+                    <DataGrid x:Name="dgvnotification" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                           BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling" 
-                          SelectionChanged="dgvnotification_SelectionChanged"
 						  CanUserAddRows="False" IsReadOnly="True"
-						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="8" Style="{StaticResource AzureDataGrid}" 
-                          ItemsSource="{Binding Source={StaticResource app_notificationViewSource}}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" Width="*" />
-                        <DataGridTextColumn Binding="{Binding timestamp}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"></DataGridTextColumn>
-                        <DataGridTemplateColumn Width="Auto" Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="" Click="hideNotification_OnClick" Style="{StaticResource btnDeleteChildStyle}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+						  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="8"
+                          HorizontalAlignment="Left" Width="128" ItemsSource="{Binding}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding timestamp, Mode=OneWay, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" Width="*"></DataGridTextColumn>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="" Click="viewNotification_OnClick" Foreground="RoyalBlue" Style="{StaticResource btnDeleteChildStyle}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="c" Click="hideNotification_OnClick" Foreground="Crimson" Style="{StaticResource btnDeleteChildStyle}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock Width="256" Text="{Binding comment, Mode=OneWay}" Background="WhiteSmoke" Padding="4" TextWrapping="WrapWithOverflow"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Create}" x:Name="tabCreate">
@@ -83,7 +89,7 @@
                     </StackPanel>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                     <TextBox x:Name="commentTextBox" MinHeight="150"
-								 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap" />
+								 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="WrapWithOverflow" />
                     <Button Click="Button_Click" Content="{lex:Loc Save}" Style="{StaticResource btn_green}" Margin="4"/>
                 </StackPanel>
             </TabItem>

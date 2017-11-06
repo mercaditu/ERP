@@ -6,7 +6,7 @@
               xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
               xmlns:entity="clr-namespace:entity;assembly=entity"
               xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
+             xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
 		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 		lex:ResxLocalizationProvider.DefaultDictionary="local"
 		lex:LocalizeDictionary.DesignCulture="en-US"
@@ -64,7 +64,8 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBlock Width="256" Text="{Binding comment, Mode=OneWay}" Background="WhiteSmoke" Padding="4" TextWrapping="WrapWithOverflow"/>
+                    <toolkit:RichTextBox MinWidth="256" Text="{Binding comment, Mode=OneWay, UpdateSourceTrigger=Default}" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                         IsReadOnly="True" Background="WhiteSmoke" Padding="4"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Create}" x:Name="tabCreate">
@@ -88,8 +89,7 @@
 											  Style="{StaticResource input_combobox}" />
                     </StackPanel>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                    <TextBox x:Name="commentTextBox" MinHeight="150"
-								 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="WrapWithOverflow" />
+                    <toolkit:RichTextBox x:Name="commentTextBox" MinHeight="150" HorizontalAlignment="Stretch" Width="Auto" />
                     <Button Click="Button_Click" Content="{lex:Loc Save}" Style="{StaticResource btn_green}" Margin="4"/>
                 </StackPanel>
             </TabItem>

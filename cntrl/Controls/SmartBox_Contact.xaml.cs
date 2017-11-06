@@ -162,6 +162,10 @@ namespace cntrl.Controls
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
+            if (rbtnAlias.IsChecked == true)
+            {
+                smartBoxContactSetting.Default.SearchFilter.Add("Alias");
+            }
 
         }
 
@@ -329,6 +333,11 @@ namespace cntrl.Controls
                     predicateOR = predicateOR.Or(x => x.Telephone.ToUpper().Contains(SearchText));
                 }
 
+                if (param.Contains("Alias"))
+                {
+                    predicateOR = predicateOR.Or(x => x.Alias.ToUpper().Contains(SearchText));
+                }
+
                 predicate = predicate.And
                 (
                     predicateOR
@@ -368,6 +377,10 @@ namespace cntrl.Controls
             {
                 rbtnTel.IsChecked = true;
             }
+            if (smartBoxContactSetting.Default.SearchFilter.Contains("Alias"))
+            {
+                rbtnAlias.IsChecked = true;
+            }
             popupCustomize.IsOpen = true;
             popupCustomize.Visibility = Visibility.Visible;
         }
@@ -395,8 +408,12 @@ namespace cntrl.Controls
             {
                 smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
+            if (rbtnAlias.IsChecked == true)
+            {
+                smartBoxContactSetting.Default.SearchFilter.Add("Alias");
+            }
 
-            
+
             smartBoxContactSetting.Default.Save();
             popupCustomize.IsOpen = false;
             popupCustomize.Visibility = Visibility.Collapsed;

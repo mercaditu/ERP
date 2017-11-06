@@ -67,6 +67,9 @@
                                 <CheckBox x:Name="rbtnTel" Style="{StaticResource input_checkbox}" Content="{lex:Loc Telephone}"
                                       IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=4}"
                                      />
+                                <CheckBox x:Name="rbtnAlias" Style="{StaticResource input_checkbox}" Content="{lex:Loc Alias}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=5}"
+                                     />
                             </StackPanel>
                         </Border>
                     </Popup>
@@ -99,7 +102,7 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" Width="auto" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Alias}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovId}" Binding="{Binding Gov_Code}" Width="auto" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Address}" Binding="{Binding Alias}" FontWeight="Bold" Width="auto" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Address}" Binding="{Binding Address}" FontWeight="Bold" Width="auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

@@ -27,7 +27,7 @@ namespace Cognitivo.Configs
         public item_request_decision.Decisions Decision { get; set; }
         public decimal? Quantity { get;  set; }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void  Page_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));

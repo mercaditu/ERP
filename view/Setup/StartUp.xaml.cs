@@ -343,5 +343,21 @@ namespace Cognitivo.Menu
             }
 
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            using (db db = new db())
+            {
+                List
+                <item_movement> itemMovementListparent = db.item_movement.Where(x => x.parent != null).ToList();
+
+                foreach (item_movement item_movement in itemMovementListparent)
+                {
+                    item_movement.id_movement_value_rel = item_movement.parent.id_movement_value_rel;
+                }
+
+                db.SaveChanges();
+            }
+        }
     }
 }

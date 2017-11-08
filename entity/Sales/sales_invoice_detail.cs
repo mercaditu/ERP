@@ -106,6 +106,15 @@ namespace entity
                     {
                         _sales_invoice = value;
                         CurrencyFX_ID = value.id_currencyfx;
+                        if (id_location==null)
+                        {
+                            app_location app_location = CurrentSession.Locations.Where(x => x.is_default).FirstOrDefault();
+                            if (app_location!=null)
+                            {
+                                id_location = app_location.id_location;
+                                RaisePropertyChanged("id_location");
+                            }
+                        }
                     }
                 }
                 else

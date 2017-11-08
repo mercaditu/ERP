@@ -15,9 +15,10 @@ namespace entity.Brillo
                                 select
                                 loc.id_location as LocationID,
                                 loc.name as Location,
+                                item.name as Item, 
                                 parent.id_movement as MovementID,
                                 parent.id_movement_value_rel as MovementRelID,
-                                parent.trans_date as TransDate, parent.expire_date,parent.code,
+                                parent.trans_date as TransDate, parent.expire_date,parent.code,parent.comment,
                                 parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance,
                                 (select sum(unit_value) as cost from item_movement_value_detail as imvd
                                 join item_movement_value_rel as imvr on imvd.id_movement_value_rel = imvr.id_movement_value_rel
@@ -26,6 +27,8 @@ namespace entity.Brillo
                                 from item_movement as parent
                                 inner join app_location as loc on parent.id_location = loc.id_location
                                 left join item_movement as child on child.parent_id_movement = parent.id_movement
+                                left join item_product as ip on ip.id_item_product = parent.id_item_product
+                                left join items as item on item.id_item = ip.id_item
 
                                 where {0} and parent.id_item_product = {1} and parent.status = 2 and parent.debit = 0
                                 group by parent.id_movement
@@ -201,8 +204,19 @@ namespace entity.Brillo
                         Stock.Location = Convert.ToString(DataRow["Location"]);
                         Stock.LocationID = Convert.ToInt32(DataRow["LocationID"]);
                     }
+                    if (dt.Columns.Contains("Item"))
+                    {
+                        Stock.Item = Convert.ToString(DataRow["Item"]);
+                    
+                    }
 
                     Stock.code = Convert.ToString(DataRow["code"]);
+                    if (dt.Columns.Contains("comment"))
+                    {
+                        Stock.comment = Convert.ToString(DataRow["comment"]);
+
+                    }
+               
                     Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
                     if (!(DataRow["Cost"] is DBNull))
                     {
@@ -222,6 +236,8 @@ namespace entity.Brillo
     {
         public int LocationID { get; set; }
         public string Location { get; set; }
+        public string Item { get; set; }
+        public string comment { get; set; }
         public int MovementID { get; set; }
         public DateTime TranDate { get; set; }
         public DateTime? ExpirationDate { get; set; }

@@ -10,8 +10,8 @@
 			 MaxHeight="512" MaxWidth="512"
 	 Loaded="Page_Loaded">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}" />
-        <CollectionViewSource x:Key="item_movementitem_movement_dimensionViewSource" Source="{Binding item_movement_dimension, Source={StaticResource item_movementViewSource}}" />
+        <!--<CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}" />
+        <CollectionViewSource x:Key="item_movementitem_movement_dimensionViewSource" Source="{Binding item_movement_dimension, Source={StaticResource item_movementViewSource}}" />-->
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}" />
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}" />
     </UserControl.Resources>
@@ -29,18 +29,18 @@
 					   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
         </Grid>
 
-        <StackPanel HorizontalAlignment="Center" Height="233" DataContext="{Binding Source={StaticResource item_movementViewSource}}">
+        <StackPanel HorizontalAlignment="Center" Height="233" >
             <Rectangle Height="1" Margin="3" Fill="Silver" />
             <Label Content="{Binding  item_product.item.name, UpdateSourceTrigger=PropertyChanged}"/>
-            <DataGrid Height="227" x:Name="item_movement_detailDataGrid" Width="300" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
-							  AutoGenerateColumns="False" ItemsSource="{Binding}"
+            <DataGrid Height="227" x:Name="item_movement_detailDataGrid" Width="500" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
+							  AutoGenerateColumns="False" 
 							  EnableRowVirtualization="True"
-							  RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
+							  RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" LoadingRowDetails="item_movement_detailDataGrid_LoadingRowDetails">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:Comment}" IsReadOnly="True" Width="*" />
-                    <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged,StringFormat=d}"  Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding avlquantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding ExpirationDate, UpdateSourceTrigger=PropertyChanged,StringFormat=d}"  Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding QtyBalance, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*" />
                     <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:BatchCode}" IsReadOnly="True" Width="*" />
@@ -51,7 +51,7 @@
                     <DataTemplate>
                         <Grid Background="{StaticResource AccentColor_Introvert}">
                             <DataGrid x:Name="item_inventory_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" Margin="4" IsReadOnly="True"
-										EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource item_movementitem_movement_dimensionViewSource}}"
+										EnableRowVirtualization="True" Height="Auto" 
 										RowDetailsVisibilityMode="VisibleWhenSelected" CanUserDeleteRows="False">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"

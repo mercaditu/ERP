@@ -7,14 +7,23 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using entity.Brillo;
+using System.ComponentModel;
 
 namespace cntrl.Panels
 {
-    public partial class pnl_ItemMovement : UserControl
+    public partial class pnl_ItemMovement : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
         private CollectionViewSource item_inventory_detailViewSource;
         public db InventoryDB { get; set; }
         public List<item_inventory_detail> item_inventoryList { get; set; }
+        public List<StockList> Items_InStockLIST { get; set; }
 
         public pnl_ItemMovement()
         {
@@ -23,9 +32,53 @@ namespace cntrl.Panels
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+
+            if (Items_InStockLIST != null)
+            {
+                foreach (StockList item in Items_InStockLIST)
+                {
+                    item_inventory_detail item_inventory_detail = new item_inventory_detail();
+                    item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
+                    item_inventory_detail.value_system = item_inventoryList.FirstOrDefault().value_system;
+                    item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
+                    item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
+                    item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
+                    item_inventory_detail.IsSelected = true;
+                    item_inventory_detail.State = EntityState.Added;
+                    item_inventory_detail.unit_value = item_inventoryList.FirstOrDefault().unit_value;
+                    item_inventory_detail.timestamp = item_inventoryList.FirstOrDefault().item_inventory.trans_date;
+
+                    if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                    {
+                        item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                    }
+
+                    item_inventoryList.Add(item_inventory_detail);
+                    if (item.MovementID > 0)
+                    {
+                        if (InventoryDB.item_movement.Where(x => x.id_movement == item.MovementID).FirstOrDefault() != null)
+                        {
+                            item_movement item_movement = InventoryDB.item_movement.Where(x => x.id_movement == item.MovementID).FirstOrDefault();
+                            if (item_movement.item_movement_dimension != null)
+                            {
+
+                                foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                                {
+                                    item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
+                                    item_inventory_dimension.id_dimension = item_movement_dimension.id_dimension;
+                                    item_inventory_dimension.value = item_movement_dimension.value;
+                                    item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
             item_inventory_detailViewSource = FindResource("item_inventory_detailViewSource") as CollectionViewSource;
             item_inventory_detailViewSource.Source = item_inventoryList;
-
             CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
             InventoryDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_dimensionViewSource.Source = InventoryDB.app_dimension.Local;
@@ -87,7 +140,7 @@ namespace cntrl.Panels
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            item_inventoryList = item_inventory_detailViewSource.View.OfType<item_inventory_detail>().ToList();
+            item_inventoryList = item_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.value_system > 0).ToList();
             btnCancel_Click(sender, null);
         }
     }

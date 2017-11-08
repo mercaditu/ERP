@@ -48,7 +48,7 @@
                 else if (app_document.id_application == App.Names.Restaurant)
                 {
                     sales_invoice sales_invoice = (sales_invoice)obj;
-                    Content = SalesInvoice(sales_invoice);
+                    Content = Restaurant(sales_invoice);
                     Print(Content, app_document, PrinterName);
                 }
                 else if (app_document.id_application == App.Names.PaymentUtility)
@@ -678,7 +678,7 @@
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
                 + "-------------------------------- \n"
-                + "Descripcion, Cantiad, Precio" + "\n"
+                + "Descripcion, Cantiad" + "\n"
                 + "--------------------------------" + "\n"
                 + "\n";
 
@@ -691,58 +691,20 @@
 
                 Detail = Detail + (string.IsNullOrEmpty(Detail) ? "\n" : "")
                     + ItemName + "\n"
-                    + Qty.ToString() + "\t" + ItemCode + "\t" + Math.Round((d.SubTotal_Vat), 2) + "\n";
+                    + Qty.ToString() + "\t" + ItemCode + "\t" +  "\n";
             }
 
             decimal DiscountTotal = sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
 
             Footer = "--------------------------------" + "\n";
-            Footer += "Total Bruto       : " + Math.Round((sales_invoice.GrandTotal + DiscountTotal), 2) + "\n";
-            Footer += "Total Descuento   : -" + Math.Round(sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat), 2) + "\n";
-            Footer += "Total " + CurrencyName + " : " + Math.Round(sales_invoice.GrandTotal, 2) + "\n";
             Footer += "Fecha & Hora      : " + DateTime.Now + "\n";
-            Footer += "Numero de Factura : " + sales_invoice.number + "\n";
             Footer += "-------------------------------" + "\n";
 
-            if (sales_invoice != null)
-            {
-                List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
-                if (sales_invoice_detail.Count > 0)
-                {
-                    using (db db = new db())
-                    {
-                        var listvat = sales_invoice_detail
-                          .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                              , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * (cfx.app_vat.coefficient * cfx.percentage), id_vat = cfx.app_vat.id_vat, ad })
-                              .GroupBy(a => new { a.name, a.id_vat, a.ad })
-                      .Select(g => new
-                      {
-                          vatname = g.Key.ad.app_vat_group.name,
-                          id_vat = g.Key.id_vat,
-                          name = g.Key.name,
-                          value = g.Sum(a => a.value * a.ad.quantity)
-                      }).ToList();
-                        var VAtList = listvat.GroupBy(x => x.id_vat).Select(g => new
-                        {
-                            vatname = g.Max(y => y.vatname),
-                            id_vat = g.Max(y => y.id_vat),
-                            name = g.Max(y => y.name),
-                            value = g.Sum(a => a.value)
-                        }).ToList();
-                        foreach (dynamic item in VAtList)
-                        {
-                            Footer += item.vatname + "   : " + Math.Round(item.value, 2) + "\n";
-                        }
-                        Footer += "Total IVA : " + CurrencyName + " " + Math.Round(VAtList.Sum(x => x.value), 2) + "\n";
-                    }
-                }
-            }
+        
 
 
             Footer += "------------------------------- \n";
-            Footer += "Sucursal   : " + BranchName + "\n";
-            Footer += "Sucursal Address  : " + BranchAddress + "\n";
-            Footer += Localize.StringText("Terminal") + ": " + TerminalName;
+            Footer += "Location   : " + sales_invoice.Location.name + "\n";
             Footer += "------------------------------- \n \n";
             Footer += Localize.StringText("Client") + " : ................... \n \n";
             Footer += Localize.StringText("GovernmentID") + " : ................... \n";

@@ -488,25 +488,30 @@ namespace Cognitivo.Product
                 Decision Decision = item_request_decisionmovementDataGrid.SelectedItem as Decision;
                 Decision.State = State.Modified;
 
-                item_request_decision item_request_decision = new item_request_decision()
+                if (itemMovement.item_movement!=null)
                 {
-                    movement_id = (int)itemMovement.item_movement.id_movement,
-                    IsSelected = true,
-                    id_location = Decision.id_location,
-                    quantity = Convert.ToDecimal(itemMovement.Quantity),
-                    decision = itemMovement.Decision
-                };
+                    item_request_decision item_request_decision = new item_request_decision()
+                    {
+                        movement_id = (int)itemMovement.item_movement.id_movement,
+                        IsSelected = true,
+                        id_location = Decision.id_location,
+                        quantity = Convert.ToDecimal(itemMovement.Quantity),
+                        decision = itemMovement.Decision
+                    };
 
-                item_request_detail.item_request_decision.Add(item_request_decision);
-                item_request_detail.item_request.GetTotalDecision();
-                item_request_detail.RaisePropertyChanged("Balance");
+                    item_request_detail.item_request_decision.Add(item_request_decision);
+                    item_request_detail.item_request.GetTotalDecision();
+                    item_request_detail.RaisePropertyChanged("Balance");
 
-                RequestController.db.SaveChangesAsync();
+                    RequestController.db.SaveChangesAsync();
+                }
+              
 
                 item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
                 item_request_detailitem_request_decisionViewSource.View.Refresh();
 
                 Edit_Click(null);
+                GenerateaMovement_Click(null, null);
             }
         }
 

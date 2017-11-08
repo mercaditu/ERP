@@ -315,7 +315,7 @@
                                 Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding Quantity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Button Content="{lex:Loc GetData}" VerticalAlignment="Top" Click="GenerateaMovement_Click"/>
+                                    
                                 </Grid>
                             </TabItem>
                             <TabItem Header="{lex:Loc Transfer}" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource B2V}}">

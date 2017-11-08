@@ -319,7 +319,7 @@ namespace entity
                 AppField = db.app_field.Where(x => x.id_company == Id_Company).ToList();
 
                 var app_notifications = db.app_notification.Where(x => x.is_read == false && x.id_company == Id_Company &&
-                    (x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == UserRole.id_department).ToList();
+                    ((x.notified_user.id_user == CurrentSession.Id_User && x.notified_department == null) || x.notified_department.id_department == UserRole.id_department)).ToList();
 
                 NotificationCounts = new List<NotificationCount>();
 

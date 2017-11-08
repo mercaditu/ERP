@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace entity.Controller.Product
 {
-    public class RequestController:Base
+    public class RequestController : Base
     {
         public int Count { get; set; }
         public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
@@ -55,7 +55,7 @@ namespace entity.Controller.Product
             }
 
             db.Entry(item_request).State = EntityState.Added;
-            
+
             return item_request;
         }
 
@@ -223,14 +223,31 @@ namespace entity.Controller.Product
                         if (project != null)
                         { item_transfer.id_project = project.id_project; }
 
-                        foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
+                        if (decision.movement_id > 0)
                         {
-                            item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
-                            item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
-                            item_transfer_dimension.value = item_request_dimension.value;
-                            item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
-                        }
+                            item_movement item_movement = db.item_movement.Where(x => x.id_movement == decision.movement_id).FirstOrDefault();
+                            if (item_movement != null)
+                            {
+                                foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                                {
+                                    item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                                    item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
+                                    item_transfer_dimension.value = item_movement_dimension.value;
+                                    item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                                }
+                            }
 
+                        }
+                        else
+                        {
+                            foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
+                            {
+                                item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                                item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
+                                item_transfer_dimension.value = item_request_dimension.value;
+                                item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                            }
+                        }
                         item_transfer.item_transfer_detail.Add(item_transfer_detail);
                     }
 
@@ -289,12 +306,30 @@ namespace entity.Controller.Product
                         if (decision.item_request_detail.project_task != null)
                         { item_transfer_detail.id_project_task = decision.item_request_detail.project_task.id_project_task; }
 
-                        foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
+                        if (decision.movement_id > 0)
                         {
-                            item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
-                            item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
-                            item_transfer_dimension.value = item_request_dimension.value;
-                            item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                            item_movement item_movement = db.item_movement.Where(x => x.id_movement == decision.movement_id).FirstOrDefault();
+                            if (item_movement != null)
+                            {
+                                foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                                {
+                                    item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                                    item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
+                                    item_transfer_dimension.value = item_movement_dimension.value;
+                                    item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            foreach (item_request_dimension item_request_dimension in decision.item_request_detail.item_request_dimension)
+                            {
+                                item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                                item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
+                                item_transfer_dimension.value = item_request_dimension.value;
+                                item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                            }
                         }
                         item_transfer_detail.quantity_origin = decision.quantity;
                         item_transfer_detail.quantity_destination = decision.quantity;
@@ -498,7 +533,7 @@ namespace entity.Controller.Product
 
                 if (item_request.State > 0)
                 {
-                    if (item_request.State != EntityState.Unchanged )
+                    if (item_request.State != EntityState.Unchanged)
                     {
                         if (item_request.item_request_detail.Count() > 0)
                         {
@@ -510,7 +545,7 @@ namespace entity.Controller.Product
                             db.item_transfer.RemoveRange(item_request.item_transfer);
                         }
 
-                       
+
 
                     }
                 }

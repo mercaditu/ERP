@@ -23,6 +23,8 @@ namespace Cognitivo.Product
         private cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
         public entity.Controller.Product.InventoryController InventoryController;
 
+
+
         public Inventory()
         {
             InitializeComponent();
@@ -100,7 +102,7 @@ namespace Cognitivo.Product
                                 if (item_inventory.item_inventory_detail.Where(x => x.movement_id == Batch.MovementID).Any())
                                 {
                                     item_inventory_detail item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.movement_id == Batch.MovementID).FirstOrDefault();
-                              
+
                                     if (item_inventory_detail != null)
                                     {
                                         using (db db = new db())
@@ -118,7 +120,7 @@ namespace Cognitivo.Product
                                             }
                                             db.SaveChanges();
                                         }
-                                      
+
                                         ///Since this item already exists in Inventory, we should update the values. The following code
                                         ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
                                         decimal Quantity_Original = item_inventory_detail.value_system;
@@ -465,6 +467,7 @@ namespace Cognitivo.Product
 
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
+            entity.Brillo.Stock stock = new entity.Brillo.Stock();
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Hidden;
             item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
@@ -494,8 +497,8 @@ namespace Cognitivo.Product
                             }
 
                             item_inventory_detail.IsSelected = true;
-
                             objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
+                            objpnl_ItemMovement.Items_InStockLIST = stock.List(0, item_inventory_detail.id_location, item_inventory_detail.id_item_product);
                             objpnl_ItemMovement.InventoryDB = InventoryController.db;
                             crud_modal.Children.Add(objpnl_ItemMovement);
                         }
@@ -503,9 +506,12 @@ namespace Cognitivo.Product
                 }
                 else
                 {
+
+
                     objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement()
                     {
                         item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList(),
+                        Items_InStockLIST = stock.List(0, item_inventory_detail.id_location, item_inventory_detail.id_item_product),
                         InventoryDB = InventoryController.db
                     };
 

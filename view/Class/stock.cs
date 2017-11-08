@@ -74,7 +74,7 @@ namespace Cognitivo.Class
                                 left join item_brand as brand on brand.id_brand = i.id_brand
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
                                 where im.id_company = {0} and b.id_branch = {1} and im.trans_date <= '{2}'
-                                group by im.id_movement
+                                group by im.id_item_product
                                 order by im.expire_date) as movement where Quantity>0";
             query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
             return GenerateList(Generate.DataTable(query));
@@ -109,7 +109,7 @@ namespace Cognitivo.Class
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
                                 left join item_movement as imc on im.id_movement = imc.parent_id_movement
                                 where im.id_company = {0} and im.id_location = {1} and im.trans_date <= '{2}' and ip.can_expire
-                                group by im.id_movement
+                                group by im.id_item_product
                                 order by i.name";
 
             query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd 23:59:59"));

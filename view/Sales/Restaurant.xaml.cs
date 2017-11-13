@@ -294,14 +294,14 @@ namespace Cognitivo.Sales
 			}
 
             //This code will help assign the necesary Location in Header based on last used from detail. Header Location is Not Mapped.
-            foreach (sales_invoice sales_invoice in SalesDB.db.sales_invoice.Local)
-            {
-                foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
-                {
-                    sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == detail.id_location).FirstOrDefault();
-                    sales_invoice.RaisePropertyChanged("Location");
-                }
-            }
+            //foreach (sales_invoice sales_invoice in SalesDB.db.sales_invoice.Local)
+            //{
+            //    foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
+            //    {
+            //        sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+            //        sales_invoice.RaisePropertyChanged("Location");
+            //    }
+            //}
 
             //This will only bring Products into view, not Raw Materials or Services.
             sbxItem.item_types = item.item_type.Product;
@@ -534,6 +534,10 @@ namespace Cognitivo.Sales
         {
 
         }
-       
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            SalesDB.db.SaveChanges();
+        }
     }
 }

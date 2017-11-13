@@ -18,7 +18,7 @@
       lex:LocalizeDictionary.DesignCulture="en-US"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
 	  Title="{lex:Loc PointOfSale}" 
-      Loaded="Page_Loaded" KeyDown="Page_KeyDown">
+      Loaded="Page_Loaded" KeyDown="Page_KeyDown" Unloaded="Page_Unloaded">
     <Page.Resources>
         <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
             <Style.Triggers>
@@ -157,7 +157,7 @@
                                                                 SelectedValueBinding="{Binding id_sales_rep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                 DisplayMemberPath="name" SelectedValuePath="id_sales_rep"/>
                                         <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Table}" 
-                                                                ItemsSource="{Binding Source={StaticResource app_locationViewSource}}"
+                                                                ItemsSource="{Binding Source={StaticResource app_locationViewSource}}" TextBinding="{Binding Location.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                                 SelectedItemBinding="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 															DisplayMemberPath="name" SelectedValuePath="id_location" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium" Width="232"

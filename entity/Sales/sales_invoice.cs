@@ -213,7 +213,7 @@ namespace entity
                     {
                         foreach (sales_invoice_detail detail in this.sales_invoice_detail.Where(x => x.quantity > 0))
                         {
-                           
+
                             detail.DiscountVat = 0;
                             detail.RaisePropertyChanged("DiscountVat");
                         }
@@ -268,7 +268,30 @@ namespace entity
         public decimal vatwithholdingpercentage { get; set; }
 
         [NotMapped]
-        public app_location Location { get; set; }
+        public app_location Location
+        {
+            get
+            {
+                return _Location;
+            }
+            set
+            {
+                _Location = value;
+                if (_Location!=null)
+                {
+                    foreach (sales_invoice_detail item in sales_invoice_detail)
+                    {
+                        if (item.id_location==null)
+                        {
+                            item.id_location = _Location.id_location;
+                            item.RaisePropertyChanged("id_location");
+                        }
+                     
+                    }
+                }
+            }
+        }
+        app_location _Location;
 
         [NotMapped]
         public decimal TotalChanged { get; set; }
@@ -292,7 +315,7 @@ namespace entity
         {
             get
             {
-                decimal TotalValue=0;
+                decimal TotalValue = 0;
                 foreach (var item in sales_invoice_detail)
                 {
                     TotalValue += Math.Round(item.Quantity_Factored * item.UnitPrice_Vat, 2);

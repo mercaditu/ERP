@@ -382,14 +382,20 @@ namespace Cognitivo.Sales
                     _sales_packing_detail.batch_code = item_movement.code;
                     _sales_packing_detail.expire_date = item_movement.expire_date;
                     _sales_packing_detail.id_movement = (int)item_movement.id_movement;
-					_sales_packing_detail.Quantity_InStockLot = item_movement.avlquantity;
+                    _sales_packing_detail.id_location = (int)item_movement.id_location;
+                    _sales_packing_detail.app_location = PackingListDB.app_location.Where(x => x.id_location == (int)item_movement.id_location).FirstOrDefault();
+                    _sales_packing_detail.Quantity_InStockLot = item_movement.avlquantity;
 
 				}
 
                 if (app_branch != null)
                 {
-                    _sales_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
-                    _sales_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
+                    if (_sales_packing_detail.id_location==null)
+                    {
+                        _sales_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
+                        _sales_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
+                    }
+                   
                 }
                 sales_packing_detail.verified_quantity = 1;
                 sales_packing.sales_packing_detail.Add(_sales_packing_detail);

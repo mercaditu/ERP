@@ -472,56 +472,62 @@ namespace Cognitivo.Product
             crud_modal.Visibility = Visibility.Hidden;
             item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
             item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
+            app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
 
             if (item_inventory_detail != null)
             {
-                if (item_inventory_detail.item_inventory_dimension.Count() == 0)
+                if (app_location != null)
                 {
-                    if (InventoryController.db.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList() != null)
+
+
+                    if (item_inventory_detail.item_inventory_dimension.Count() == 0)
                     {
-                        List<item_dimension> item_dimensionList = InventoryController.db.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList();
-                        if (item_dimensionList.Count() > 0)
+                        if (InventoryController.db.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList() != null)
                         {
-                            crud_modal.Visibility = Visibility.Visible;
-                            objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
-
-                            foreach (item_dimension item_dimension in item_dimensionList)
+                            List<item_dimension> item_dimensionList = InventoryController.db.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList();
+                            if (item_dimensionList.Count() > 0)
                             {
-                                item_inventory_dimension item_inventory_dimension = new item_inventory_dimension()
+                                crud_modal.Visibility = Visibility.Visible;
+                                objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
+
+                                foreach (item_dimension item_dimension in item_dimensionList)
                                 {
-                                    id_dimension = item_dimension.id_app_dimension,
-                                    value = item_dimension.value
-                                };
+                                    item_inventory_dimension item_inventory_dimension = new item_inventory_dimension()
+                                    {
+                                        id_dimension = item_dimension.id_app_dimension,
+                                        value = item_dimension.value
+                                    };
 
-                                item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
+                                    item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
+                                }
+
+                                item_inventory_detail.IsSelected = true;
+                                objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
+                                objpnl_ItemMovement.Items_InStockLIST = stock.List(0, app_location.id_location, item_inventory_detail.id_item_product);
+                                objpnl_ItemMovement.InventoryDB = InventoryController.db;
+                                crud_modal.Children.Add(objpnl_ItemMovement);
                             }
-
-                            item_inventory_detail.IsSelected = true;
-                            objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
-                            objpnl_ItemMovement.Items_InStockLIST = stock.List(0, item_inventory_detail.id_location, item_inventory_detail.id_item_product);
-                            objpnl_ItemMovement.InventoryDB = InventoryController.db;
-                            crud_modal.Children.Add(objpnl_ItemMovement);
                         }
                     }
-                }
-                else
-                {
-
-
-                    objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement()
+                    else
                     {
-                        item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList(),
-                        Items_InStockLIST = stock.List(0, item_inventory_detail.id_location, item_inventory_detail.id_item_product),
-                        InventoryDB = InventoryController.db
-                    };
 
-                    crud_modal.Visibility = Visibility.Visible;
-                    crud_modal.Children.Add(objpnl_ItemMovement);
+
+                        objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement()
+                        {
+                            item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList(),
+                            Items_InStockLIST = stock.List(0, app_location.id_location, item_inventory_detail.id_item_product),
+                            InventoryDB = InventoryController.db
+                        };
+
+                        crud_modal.Visibility = Visibility.Visible;
+                        crud_modal.Children.Add(objpnl_ItemMovement);
+                    }
                 }
                 if (item_inventory_detail.item_product.can_expire)
                 {
                     crud_modalExpire.Visibility = Visibility.Visible;
-                    pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(item_inventory_detail.item_inventory.id_branch, null, item_inventory_detail.id_item_product);
+                    pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(null,app_location.id_location, item_inventory_detail.id_item_product);
                     crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                 }
             }

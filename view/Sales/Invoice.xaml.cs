@@ -956,5 +956,6 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
             Load_PrimaryDataThread(null,null);
         }
+
     }
 }

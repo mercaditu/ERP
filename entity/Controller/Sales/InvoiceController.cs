@@ -35,7 +35,8 @@ namespace entity.Controller.Sales
         {
             None,
             CreditLimit_Exceeded,
-            DocumentRange_Finished
+            DocumentRange_Finished,
+            StockExceed
         }
 
         public List<Messages> Msg { get; set; }
@@ -131,7 +132,7 @@ namespace entity.Controller.Sales
             decimal Quantity)
         {
             int? i = null;
-
+            int? location = null;
 
             sales_invoice_detail sales_invoice_detail = new sales_invoice_detail()
             {
@@ -145,13 +146,11 @@ namespace entity.Controller.Sales
                 quantity = Quantity,
                 batch_code = ItemMovement != null ? ItemMovement.code : "",
                 expire_date = ItemMovement != null ? ItemMovement.expire_date : null,
-                movement_id = ItemMovement != null ? (int)ItemMovement.id_movement : i
+                movement_id = ItemMovement != null ? (int)ItemMovement.id_movement : i,
+                id_location = ItemMovement != null ? ItemMovement.id_location : location,
 
             };
-            if (Invoice.Location != null)
-            {
-                sales_invoice_detail.id_location = Invoice.Location.id_location;
-            }
+
 
             int VatGroupID = (int)sales_invoice_detail.id_vat_group;
             //  sales_invoice_detail.app_vat_group = db.app_vat_group.Find(VatGroupID);
@@ -340,11 +339,12 @@ namespace entity.Controller.Sales
 
                             if (Quantity_InStock < sales_invoice_detail.quantity)
                             {
+                                Msg.Add(Messages.StockExceed);
                                 return false;
                             }
                         }
                     }
-              
+
                 }
 
                 invoice.app_condition = db.app_condition.Find(invoice.id_condition);
@@ -559,11 +559,30 @@ namespace entity.Controller.Sales
 
 
             //Loop through each Item Movement and assign cost to detail for reporting purposes.
-            foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item_movement.Count() > 0))
+            foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail)
             {
-                if (sales_detail.item_movement.FirstOrDefault() != null)
+                item_movement item_movement = null;
+                if (sales_detail.item_movement.Count() > 0)
                 {
-                    if (sales_detail.item_movement.FirstOrDefault().item_movement_value_rel != null)
+                    item_movement = sales_detail.item_movement.FirstOrDefault();
+
+
+                }
+                else
+                {
+                    if (sales_detail.sales_packing_relation.FirstOrDefault() != null)
+                    {
+                        if (sales_detail.sales_packing_relation.FirstOrDefault().sales_packing_detail != null)
+                        {
+                            item_movement = sales_detail.sales_packing_relation.FirstOrDefault().sales_packing_detail.item_movement.FirstOrDefault();
+                        }
+
+                    }
+
+                }
+                if (item_movement != null)
+                {
+                    if (item_movement.item_movement_value_rel != null)
                     {
                         if (sales_detail.unit_cost == 0)
                         {
@@ -577,11 +596,13 @@ namespace entity.Controller.Sales
                             //App.Modules.Sales
                             //);
 
-                            sales_detail.unit_cost = sales_detail.item_movement.FirstOrDefault().item_movement_value_rel.total_value;
+                            sales_detail.unit_cost = item_movement.item_movement_value_rel.total_value;
                         }
                     }
                 }
+
             }
+
 
 
 

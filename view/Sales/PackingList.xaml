@@ -338,7 +338,7 @@
                                 </DataGrid.Columns>
                                 <DataGrid.RowDetailsTemplate>
                                     <DataTemplate>
-                                        <Grid Background="WhiteSmoke" Margin="4" IsEnabled="False">
+                                        <Grid Background="WhiteSmoke" Margin="4" >
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 
                                                 <StackPanel Width="250">

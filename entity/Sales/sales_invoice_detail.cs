@@ -113,8 +113,19 @@ namespace entity
                             {
                                 id_location = app_location.id_location;
                                 RaisePropertyChanged("id_location");
+                                
                             }
                         }
+                        else
+                        {
+                            if (_sales_invoice != null)
+                            {
+                                app_location app_location = CurrentSession.Locations.Where(x => x.id_location == id_location).FirstOrDefault();
+                                _sales_invoice.Location = app_location;
+                                _sales_invoice.RaisePropertyChanged("Location");
+                            }
+                        }
+                       
                     }
                 }
                 else

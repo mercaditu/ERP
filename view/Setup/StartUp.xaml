@@ -8,7 +8,7 @@
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
       Name="pageStartup"
-      mc:Ignorable="d" d:DesignHeight="900" d:DesignWidth="800">
+      mc:Ignorable="d" d:DesignHeight="1000" d:DesignWidth="800">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <Storyboard x:Key="AnimateButton">
@@ -125,13 +125,13 @@
                         <Label Content="Convert To Testing" FontSize="10" HorizontalContentAlignment="Center" />
                     </Grid>
                 </Button>
-                <Button IsDefault="True" Click="btnUpdatePrice_Click" Background="Transparent"
+                <!--<Button IsDefault="True" Click="btnUpdatePrice_Click" Background="Transparent"
                         BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
                         <ProgressBar x:Name="progBarunitcost" Margin="0" Width="128" Height="24" HorizontalAlignment="Stretch" />
                         <Label Content="Update Unit Cost" FontSize="10" HorizontalContentAlignment="Center" />
                     </Grid>
-                </Button>
+                </Button>-->
                 <Button IsDefault="True" Click="Button_Click" Background="Transparent"
                         BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">

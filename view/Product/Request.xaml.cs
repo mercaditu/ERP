@@ -24,7 +24,7 @@ namespace Cognitivo.Product
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-
+        public int id { get; set; }
         public int id_item { get; set; }
         public string name { get; set; }
         public int id_location { get; set; }
@@ -37,6 +37,13 @@ namespace Cognitivo.Product
 
     public partial class Request : Page
     {
+
+        List<Decision> list_desion = new List<Decision>();
+        List<Decision> list_desion_transfer = new List<Decision>();
+        List<Decision> list_desion_purchase = new List<Decision>();
+        List<Decision> list_desion_internal = new List<Decision>();
+        List<Decision> list_desion_production = new List<Decision>();
+
         private CollectionViewSource item_requestViewSource;
         private CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
 
@@ -137,102 +144,119 @@ namespace Cognitivo.Product
 
             if (item_requestitem_request_detailViewSource.View != null)
             {
-                if (item_requestitem_request_detailViewSource.View.CurrentItem is item_request_detail item_request_detail)
+
+                list_desion.Clear();
+                list_desion_transfer.Clear();
+                list_desion_purchase.Clear();
+                list_desion_internal.Clear();
+                list_desion_production.Clear();
+                foreach (item_request_detail item_request_detail in item_requestitem_request_detailViewSource.View.OfType<item_request_detail>().ToList())
                 {
-                    item _item = RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
-                    var movements =
-                            (from items in RequestController.db.item_movement
-                             where items.status == Status.Stock.InStock
-                             && items.item_product.id_item == item_request_detail.id_item
-                             && items.app_location.id_branch == CurrentSession.Id_Branch
-                             group items by new { items.app_location }
-                                 into last
-                             select new
-                             {
-                                 id_location = last.Key.app_location.id_location,
-                                 Location = last.Key.app_location.name,
-                                 Quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                             }).ToList();
-
-                    List<Decision> list_desion = new List<Decision>();
-
-                    foreach (dynamic movement in movements)
+                    int id = item_request_detail.id_item_request_detail;
+                    if (item_request_detail != null)
                     {
-                        list_desion.Add(new Decision()
+                        item _item = RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
+                        var movements =
+                                (from items in RequestController.db.item_movement
+                                 where items.status == Status.Stock.InStock
+                                 && items.item_product.id_item == item_request_detail.id_item
+                                 && items.app_location.id_branch == CurrentSession.Id_Branch
+                                 group items by new { items.app_location }
+                                     into last
+                                 select new
+                                 {
+                                     id_location = last.Key.app_location.id_location,
+                                     Location = last.Key.app_location.name,
+                                     Quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                                 }).ToList();
+
+
+
+                        foreach (dynamic movement in movements)
                         {
-                            id_item = _item.id_item,
-                            id_location = movement.id_location,
-                            location = movement.Location,
-                            name = _item.name,
-                            avlqty = movement.Quantity,
+                            list_desion.Add(new Decision()
+                            {
+                                id = id,
+                                id_item = _item.id_item,
+                                id_location = movement.id_location,
+                                location = movement.Location,
+                                name = _item.name,
+                                avlqty = movement.Quantity,
+                                Quantity = 0,
+                                State = State.Added
+                            });
+                        }
+
+
+
+                        var transfer =
+                        (from items in RequestController.db.item_movement
+                         where items.status == Status.Stock.InStock
+                         && items.item_product.id_item == item_request_detail.id_item
+
+                         group items by new { items.app_location.app_branch }
+                             into last
+                         select new
+                         {
+                             id_location = last.Key.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault(),
+                             branch = last.Key.app_branch.name,
+                             quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                         }).ToList();
+
+
+                        foreach (dynamic item in transfer)
+                        {
+                            list_desion_transfer.Add(new Decision()
+                            {
+                                id = id,
+                                branch = item.branch,
+                                id_location = item.id_location,
+                                id_item = _item.id_item,
+                                name = _item.name,
+                                avlqty = item.quntitiy,
+                                Quantity = 0,
+                                State = State.Added
+                            });
+                        }
+
+
+
+
+                        list_desion_purchase.Add(new Decision()
+                        {
+                            id = id,
+                            State = State.Added,
+                            Quantity = 0
+                        });
+
+
+
+                        Decision InternalDecision = new Decision()
+                        {
+                            id = id,
+                            State = State.Added,
+                            Quantity = 0
+                        };
+
+                        list_desion_internal.Add(InternalDecision);
+
+
+
+                        Decision ProductionDecision = new Decision()
+                        {
+                            id = id,
+                            name = item_request_detail.item.name,
                             Quantity = 0,
                             State = State.Added
-                        });
+                        };
+
+                        ProductionDecision.RaisePropertyChanged("name");
+
+                        list_desion_production.Add(ProductionDecision);
+
                     }
-                    item_request_decisionmovementDataGrid.ItemsSource = list_desion;
-
-                    var transfer =
-                    (from items in RequestController.db.item_movement
-                     where items.status == Status.Stock.InStock
-                     && items.item_product.id_item == item_request_detail.id_item
-
-                     group items by new { items.app_location.app_branch }
-                         into last
-                     select new
-                     {
-                         id_location = last.Key.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault(),
-                         branch = last.Key.app_branch.name,
-                         quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                     }).ToList();
-
-                    List<Decision> list_desion_transfer = new List<Decision>();
-                    foreach (dynamic item in transfer)
-                    {
-                        list_desion_transfer.Add(new Decision()
-                        {
-                            branch = item.branch,
-                            id_location = item.id_location,
-                            id_item = _item.id_item,
-                            name = _item.name,
-                            avlqty = item.quntitiy,
-                            Quantity = 0,
-                            State = State.Added
-                        });
-                    }
-
-                    item_request_decisiontransferDataGrid.ItemsSource = list_desion_transfer;
-
-                    List<Decision> list_desion_purchase = new List<Decision>();
-                    list_desion_purchase.Add(new Decision()
-                    {
-                        State = State.Added,
-                        Quantity = 0
-                    });
-                    item_request_decisionpurchaseDataGrid.ItemsSource = list_desion_purchase;
-
-                    List<Decision> list_desion_internal = new List<Decision>();
-                    Decision InternalDecision = new Decision()
-                    {
-                        State = State.Added,
-                        Quantity = 0
-                    };
-
-                    list_desion_internal.Add(InternalDecision);
-                    item_request_decisioninternalDataGrid.ItemsSource = list_desion_internal;
-
-                    List<Decision> list_desion_production = new List<Decision>();
-                    Decision ProductionDecision = new Decision()
-                    {
-                        name = item_request_detail.item.name,
-                        Quantity = 0,
-                        State = State.Added
-                    };
-
-                    ProductionDecision.RaisePropertyChanged("name");
-
-                    list_desion_production.Add(ProductionDecision);
-                    item_request_decisionproductionDataGrid.ItemsSource = list_desion_production;
                 }
+
             }
         }
 
@@ -251,7 +275,7 @@ namespace Cognitivo.Product
 
                 if (desion.State == State.Added)
                 {
-                   
+
                     if (item_request_detail.item != null)
                     {
                         if (item_request_detail.item.item_dimension.Count() > 0)
@@ -284,7 +308,7 @@ namespace Cognitivo.Product
                             });
                         }
                     }
-                    
+
                 }
             }
 
@@ -327,11 +351,11 @@ namespace Cognitivo.Product
         private void TransferDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
-            if (item_requestitem_request_detailViewSource.View!=null)
+            if (item_requestitem_request_detailViewSource.View != null)
             {
 
             }
-        
+
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
 
             if (item_request_decisiontransferDataGrid.SelectedItem != null)
@@ -488,7 +512,7 @@ namespace Cognitivo.Product
                 Decision Decision = item_request_decisionmovementDataGrid.SelectedItem as Decision;
                 Decision.State = State.Modified;
 
-                if (itemMovement.item_movement!=null)
+                if (itemMovement.item_movement != null)
                 {
                     item_request_decision item_request_decision = new item_request_decision()
                     {
@@ -505,7 +529,7 @@ namespace Cognitivo.Product
 
                     RequestController.db.SaveChangesAsync();
                 }
-              
+
 
                 item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
                 item_request_detailitem_request_decisionViewSource.View.Refresh();
@@ -634,19 +658,42 @@ namespace Cognitivo.Product
                 item_requestViewSource = FindResource("item_requestViewSource") as CollectionViewSource;
                 item_requestViewSource.Source = RequestController.db.item_request
                     .Where
-                    ( x=>
-                    x.name.ToLower().Contains(query.ToLower()) ||
-                             x.number.ToLower().Contains(query.ToLower()) ||
-                             x.project.name.ToLower().Contains(query.ToLower())
+                    (x =>
+                   x.name.ToLower().Contains(query.ToLower()) ||
+                            x.number.ToLower().Contains(query.ToLower()) ||
+                            x.project.name.ToLower().Contains(query.ToLower())
                     ).ToList();
             }
         }
 
-     
+
 
         private void GenerateaMovement_Click(object sender, RoutedEventArgs e)
         {
             item_request_detailMovementDataGrid_SelectionChanged(sender, null);
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (item_requestitem_request_detailViewSource != null)
+            {
+                if (item_requestitem_request_detailViewSource.View != null)
+                {
+                    item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+                    if (item_request_detail != null)
+                    {
+                        item_request_decisionmovementDataGrid.ItemsSource = list_desion.Where(x => x.id == item_request_detail.id_item_request_detail).ToList();
+                        item_request_decisiontransferDataGrid.ItemsSource = list_desion_transfer.Where(x => x.id == item_request_detail.id_item_request_detail).ToList();
+                        item_request_decisiontransferDataGrid.ItemsSource = list_desion_transfer.Where(x => x.id == item_request_detail.id_item_request_detail).ToList();
+                        item_request_decisionpurchaseDataGrid.ItemsSource = list_desion_purchase.Where(x => x.id == item_request_detail.id_item_request_detail).ToList();
+                        item_request_decisioninternalDataGrid.ItemsSource = list_desion_internal.Where(x => x.id == item_request_detail.id_item_request_detail).ToList();
+                        item_request_decisionproductionDataGrid.ItemsSource = list_desion_production.Where(x => x.id == item_request_detail.id_item_request_detail).ToList();
+                    }
+                }
+
+            }
+
+
         }
 
         private void RowDetail_Checked(object sender, RoutedEventArgs e)

@@ -467,7 +467,6 @@ namespace Cognitivo.Product
 
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-            entity.Brillo.Stock stock = new entity.Brillo.Stock();
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Hidden;
             item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
@@ -479,6 +478,7 @@ namespace Cognitivo.Product
                 if (app_location != null)
                 {
 
+                    entity.Brillo.Stock stock = new entity.Brillo.Stock();
 
                     if (item_inventory_detail.item_inventory_dimension.Count() == 0)
                     {

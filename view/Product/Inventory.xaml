@@ -1,15 +1,14 @@
 ﻿<Page x:Class="Cognitivo.Product.Inventory" Title="{lex:Loc Inventory}"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	   xmlns:customcmd="clr-namespace:Cognitivo.Class"
+	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-	  xmlns:cls="clr-namespace:Cognitivo.Class"
-       xmlns:Controller="clr-namespace:entity.Controller.Product;assembly=entity"
-        xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:Controller="clr-namespace:entity.Controller.Product;assembly=entity"
+      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  mc:Ignorable="d"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -212,7 +211,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        <!--<DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                             Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
@@ -239,7 +238,7 @@
                                     <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        </DataGridTemplateColumn>-->
                         <DataGridTemplateColumn Width="Auto" Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

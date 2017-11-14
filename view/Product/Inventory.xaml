@@ -26,7 +26,11 @@
         <CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}" />
-        <CollectionViewSource x:Key="item_inventoryitem_inventory_detailViewSource" Source="{Binding item_inventory_detail, Source={StaticResource item_inventoryViewSource}}" />
+        <CollectionViewSource x:Key="item_inventoryitem_inventory_detailViewSource" Source="{Binding item_inventory_detail, Source={StaticResource item_inventoryViewSource}}" >
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="id_item_product"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
     </Page.Resources>
     <Page.CommandBindings>
         <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll"
@@ -212,7 +216,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        <!--<DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                             Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
@@ -239,7 +243,7 @@
                                     <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        </DataGridTemplateColumn>-->
                         <DataGridTemplateColumn Width="Auto" Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

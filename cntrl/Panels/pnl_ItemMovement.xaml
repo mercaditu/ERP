@@ -33,6 +33,7 @@
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
 					   HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
 					   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand" />
+                
             </Grid>
             <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource item_inventory_detailViewSource}">
                 <StackPanel x:Name="stpDisplay">

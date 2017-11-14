@@ -47,7 +47,8 @@ namespace cntrl.Panels
                     item_inventory_detail.State = EntityState.Added;
                     item_inventory_detail.unit_value = item_inventoryList.FirstOrDefault().unit_value;
                     item_inventory_detail.timestamp = item_inventoryList.FirstOrDefault().item_inventory.trans_date;
-
+                    item_inventory_detail.expire_date = item.ExpirationDate;
+                    item_inventory_detail.batch_code = item.code;
                     if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
                     {
                         item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
@@ -143,5 +144,7 @@ namespace cntrl.Panels
             item_inventoryList = item_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.value_system > 0).ToList();
             btnCancel_Click(sender, null);
         }
+
+       
     }
 }

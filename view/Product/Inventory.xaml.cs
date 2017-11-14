@@ -467,6 +467,7 @@ namespace Cognitivo.Product
 
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
+            entity.Brillo.Stock stock = new entity.Brillo.Stock();
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Hidden;
             item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
@@ -478,7 +479,6 @@ namespace Cognitivo.Product
                 if (app_location != null)
                 {
 
-                    entity.Brillo.Stock stock = new entity.Brillo.Stock();
 
                     if (item_inventory_detail.item_inventory_dimension.Count() == 0)
                     {
@@ -527,7 +527,7 @@ namespace Cognitivo.Product
                 if (item_inventory_detail.item_product.can_expire)
                 {
                     crud_modalExpire.Visibility = Visibility.Visible;
-                    pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(null,app_location.id_location, item_inventory_detail.id_item_product);
+                    pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(null, app_location.id_location, item_inventory_detail.id_item_product);
                     crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
                 }
             }

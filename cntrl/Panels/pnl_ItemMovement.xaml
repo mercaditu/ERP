@@ -37,7 +37,7 @@
             <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource item_inventory_detailViewSource}">
                 <StackPanel x:Name="stpDisplay">
                     <Label Content="{Binding item_product.items.name}" Style="{StaticResource input_label}" />
-                    
+
                     <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="700"
 							  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
 							  EnableRowVirtualization="True" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem"
@@ -51,66 +51,13 @@
 												Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="100" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
 												Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" />
-                            <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
-												Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" />
-
-                            <DataGridTextColumn  Width="64" ElementStyle="{StaticResource RightAlignStyle}" SortMemberPath="value_counted">
-                                <DataGridTextColumn.Header>
-                                    <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" Real" /></TextBlock>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.Binding>
-                                    <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
-                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
-                                        <Binding Path="value_counted" TargetNullValue="" Mode="TwoWay" />
-                                        <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
-                                    </MultiBinding>
-                                </DataGridTextColumn.Binding>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}"  ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" SortMemberPath="unit_value">
-                                <DataGridTextColumn.Binding>
-                                    <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
-                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
-                                        <Binding Path="unit_value" TargetNullValue="" Mode="TwoWay" />
-                                        <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
-                                    </MultiBinding>
-                                </DataGridTextColumn.Binding>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                            Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
-                                <DataGridTextColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding item_product.can_expire}" Value="false">
-                                                <Setter Property="IsEnabled" Value="false" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTextColumn.CellStyle>
-                            </DataGridTextColumn>
-                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="100">
-                                <DataGridTemplateColumn.CellStyle>
-                                    <Style TargetType="DataGridCell">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding item_product.can_expire}" Value="false">
-                                                <Setter Property="IsEnabled" Value="false" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGridTemplateColumn.CellStyle>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                            <DataGridTextColumn Binding="{Binding Quantity_Factored,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
 												Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
                             <DataGridTextColumn Binding="{Binding unit_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
 												Header="{lex:Loc Cognitivo:local:unit_value}" Width="*" />
                             <DataGridTextColumn Binding="{Binding currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
 												Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True" />
-                            
+
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>

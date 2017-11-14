@@ -1,14 +1,15 @@
 ﻿<Page x:Class="Cognitivo.Product.Inventory" Title="{lex:Loc Inventory}"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:customcmd="clr-namespace:Cognitivo.Class"
+	   xmlns:customcmd="clr-namespace:Cognitivo.Class"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:mainpref="clr-namespace:Cognitivo.Properties"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-      xmlns:Controller="clr-namespace:entity.Controller.Product;assembly=entity"
-      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+	  xmlns:cls="clr-namespace:Cognitivo.Class"
+       xmlns:Controller="clr-namespace:entity.Controller.Product;assembly=entity"
+        xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
 	  xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  mc:Ignorable="d"
 	  xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -157,7 +158,7 @@
 						VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" />
                     <CheckBox x:Name="checkStock" Width="auto" Style="{StaticResource input_checkbox}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Content="{lex:Loc Stock}" />
                     <CheckBox x:Name="checkBatch" Width="auto" Style="{StaticResource input_checkbox}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Content="{lex:Loc Insert}" />
-            
+
                 </StackPanel>
 
                 <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="256" Margin="2">
@@ -211,7 +212,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <!--<DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                             Header="{lex:Loc Cognitivo:local:LotNumber}" MinWidth="64" MaxWidth="128">
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
@@ -238,7 +239,7 @@
                                     <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>-->
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Width="Auto" Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -253,7 +254,7 @@
 															SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />-->
                         <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="128" Width="Auto" />
                         <DataGridTemplateColumn Width="Auto" Header="">
-                             <DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="Update Cost" Click="Button_Click"/>
                                 </DataTemplate>

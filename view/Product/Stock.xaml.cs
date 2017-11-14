@@ -55,7 +55,7 @@ namespace Cognitivo.Product
 
             if (app_branch != null)
             {
-                if (chkstock.IsChecked==true)
+                if (chkstock.IsChecked == true)
                 {
                     Class.StockCalculations StockCalculations = new Class.StockCalculations();
 

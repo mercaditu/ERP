@@ -29,12 +29,12 @@ namespace Cognitivo.Utilities
                             var iv = 1;
                             iv += iv;
                         }
-                        if (item_movement.item_movement_value.Count() > 0)
+                        if (item_movement.item_movement_value_rel != null)
                         {
                             detail.unit_cost = Currency.convert_Values
                                 (
-                                item_movement.item_movement_value.Sum(x => x.unit_value),
-                                item_movement.item_movement_value.FirstOrDefault().id_currencyfx,
+                                item_movement.item_movement_value_rel.item_movement_value_detail.Sum(x => x.unit_value),
+                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                 detail.sales_invoice.id_currencyfx,
                                 entity.App.Modules.Sales
                                 );

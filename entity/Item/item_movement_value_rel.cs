@@ -44,7 +44,6 @@ namespace entity
         }
         decimal _total_value;
 
-
         public virtual ICollection<item_movement_value_detail> item_movement_value_detail { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
     }

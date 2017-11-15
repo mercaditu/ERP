@@ -23,7 +23,7 @@ namespace cntrl.Panels
         private CollectionViewSource item_inventory_detailViewSource;
         public db InventoryDB { get; set; }
         public List<item_inventory_detail> item_inventoryList { get; set; }
-       // List<item_inventory_detail> item_inventoryDetailList = new List<item_inventory_detail>();
+        // List<item_inventory_detail> item_inventoryDetailList = new List<item_inventory_detail>();
         public List<StockList> Items_InStockLIST { get; set; }
 
         public pnl_ItemMovement()
@@ -36,10 +36,13 @@ namespace cntrl.Panels
 
             if (Items_InStockLIST != null)
             {
+                int i = 0;
                 foreach (StockList item in Items_InStockLIST)
                 {
-                    item_inventory_detail item_inventory_detail = item_inventoryList.Where(x => x.id_location == item.LocationID).FirstOrDefault();
-                    if (item_inventory_detail==null)
+                    i = i + 1;
+                   
+                    item_inventory_detail item_inventory_detail = item_inventoryList.FirstOrDefault();
+                    if (i>1)
                     {
                         item_inventory_detail = new item_inventory_detail();
                         item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
@@ -51,21 +54,23 @@ namespace cntrl.Panels
                         item_inventory_detail.batch_code = item.code;
                         item_inventoryList.Add(item_inventory_detail);
                     }
-                  
-                   
+
+
                     item_inventory_detail.IsSelected = true;
                     item_inventory_detail.State = EntityState.Added;
                     item_inventory_detail.unit_value = item.Cost;
                     item_inventory_detail.timestamp = item.TranDate;
-                    
-                   
+
+
                     if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
                     {
                         item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                         item_inventory_detail.currency = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().app_currency.name;
                     }
 
-                  
+
+
+                    item_inventory_detail.item_inventory_dimension.Clear();
                     if (item.MovementID > 0)
                     {
                         if (InventoryDB.item_movement.Where(x => x.id_movement == item.MovementID).FirstOrDefault() != null)
@@ -85,9 +90,9 @@ namespace cntrl.Panels
                         }
                     }
                 }
-                
+
             }
-            
+
 
 
             item_inventory_detailViewSource = FindResource("item_inventory_detailViewSource") as CollectionViewSource;
@@ -157,6 +162,6 @@ namespace cntrl.Panels
             btnCancel_Click(sender, null);
         }
 
-       
+
     }
 }

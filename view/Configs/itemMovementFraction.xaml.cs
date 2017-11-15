@@ -62,7 +62,7 @@ namespace Cognitivo.Configs
 
             Items_InStockLIST = await ExecutionDB.item_movement.Where(x => x.id_location == production_order_detail.production_order.production_line.id_location &&
                                                                      x.item_product.id_item == id_item &&
-                                                                     x.status == entity.Status.Stock.InStock).ToListAsync();
+                                                                     x.status == entity.Status.Stock.InStock).Include(x=>x.item_movement_dimension).ToListAsync();
            Items_InStockLIST = Items_InStockLIST.Where(x => (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0)
                                                                     
                                                                     .ToList();

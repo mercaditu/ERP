@@ -29,6 +29,7 @@ namespace Cognitivo.Utilities
                             var iv = 1;
                             iv += iv;
                         }
+
                         if (item_movement.item_movement_value_rel != null)
                         {
                             detail.unit_cost = Currency.convert_Values

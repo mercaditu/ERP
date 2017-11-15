@@ -47,7 +47,7 @@
         </ListBox>
 
         <Grid Grid.Column="1" Grid.Row="1">
-            <DataGrid x:Name="item_inventoryDataGrid"
+            <DataGrid x:Name="item_inventoryDataGrid" CanUserSortColumns="True"
 					VerticalScrollBarVisibility="Auto" SelectionMode="Single"
 					AutoGenerateColumns="False" Grid.Column="1" CanUserReorderColumns="True"
 					EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="item_movementDataGrid_SelectionChanged"

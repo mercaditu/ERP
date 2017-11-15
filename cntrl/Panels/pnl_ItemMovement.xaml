@@ -46,10 +46,18 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, StringFormat=d, UpdateSourceTrigger=PropertyChanged}"
 												Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
-                            <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                            <DataGridTextColumn Binding="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 												Header="{lex:Loc Cognitivo:local:Batch}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
-                            <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, StringFormat=d, UpdateSourceTrigger=PropertyChanged}"
-												Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="100" IsReadOnly="True" />
+                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="100">
+                                  <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
+												Header="{lex:Loc Cognitivo:local:QuantityBalance}" Width="*" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
 												Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" />
                             <DataGridTextColumn Binding="{Binding Quantity_Factored,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"

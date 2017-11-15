@@ -158,7 +158,7 @@
                                                                 DisplayMemberPath="name" SelectedValuePath="id_sales_rep"/>
                                         <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Table}" 
                                                                 ItemsSource="{Binding Source={StaticResource app_locationViewSource}}" TextBinding="{Binding Location.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                                SelectedItemBinding="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                SelectedItemBinding="{Binding Location, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
 															DisplayMemberPath="name" SelectedValuePath="id_location" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium" Width="232"
 												Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />

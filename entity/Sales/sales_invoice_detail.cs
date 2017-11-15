@@ -125,7 +125,8 @@ namespace entity
                                 _sales_invoice.RaisePropertyChanged("Location");
                             }
                         }
-                       
+
+
                     }
                 }
                 else

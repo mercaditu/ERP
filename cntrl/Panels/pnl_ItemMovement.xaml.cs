@@ -23,6 +23,7 @@ namespace cntrl.Panels
         private CollectionViewSource item_inventory_detailViewSource;
         public db InventoryDB { get; set; }
         public List<item_inventory_detail> item_inventoryList { get; set; }
+       // List<item_inventory_detail> item_inventoryDetailList = new List<item_inventory_detail>();
         public List<StockList> Items_InStockLIST { get; set; }
 
         public pnl_ItemMovement()
@@ -37,24 +38,34 @@ namespace cntrl.Panels
             {
                 foreach (StockList item in Items_InStockLIST)
                 {
-                    item_inventory_detail item_inventory_detail = new item_inventory_detail();
-                    item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
-                    item_inventory_detail.value_system = item_inventoryList.FirstOrDefault().value_system;
-                    item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
-                    item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
-                    item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
+                    item_inventory_detail item_inventory_detail = item_inventoryList.Where(x => x.id_location == item.LocationID).FirstOrDefault();
+                    if (item_inventory_detail==null)
+                    {
+                        item_inventory_detail = new item_inventory_detail();
+                        item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
+                        item_inventory_detail.value_system = item.QtyBalance;
+                        item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
+                        item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
+                        item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
+                        item_inventory_detail.expire_date = item.ExpirationDate;
+                        item_inventory_detail.batch_code = item.code;
+                        item_inventoryList.Add(item_inventory_detail);
+                    }
+                  
+                   
                     item_inventory_detail.IsSelected = true;
                     item_inventory_detail.State = EntityState.Added;
-                    item_inventory_detail.unit_value = item_inventoryList.FirstOrDefault().unit_value;
-                    item_inventory_detail.timestamp = item_inventoryList.FirstOrDefault().item_inventory.trans_date;
-                    item_inventory_detail.expire_date = item.ExpirationDate;
-                    item_inventory_detail.batch_code = item.code;
+                    item_inventory_detail.unit_value = item.Cost;
+                    item_inventory_detail.timestamp = item.TranDate;
+                    
+                   
                     if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
                     {
                         item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                        item_inventory_detail.currency = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().app_currency.name;
                     }
 
-                    item_inventoryList.Add(item_inventory_detail);
+                  
                     if (item.MovementID > 0)
                     {
                         if (InventoryDB.item_movement.Where(x => x.id_movement == item.MovementID).FirstOrDefault() != null)
@@ -74,8 +85,9 @@ namespace cntrl.Panels
                         }
                     }
                 }
-
+                
             }
+            
 
 
             item_inventory_detailViewSource = FindResource("item_inventory_detailViewSource") as CollectionViewSource;
@@ -97,17 +109,17 @@ namespace cntrl.Panels
         public void add_item(item_inventory_detail item_inventory_detail)
         {
             item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
-            item_inventory_detail.value_system = item_inventoryList.FirstOrDefault().value_system;
             item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
             item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
             item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
             item_inventory_detail.IsSelected = true;
             item_inventory_detail.State = EntityState.Added;
             item_inventory_detail.timestamp = item_inventoryList.FirstOrDefault().item_inventory.trans_date;
-
-            if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+            app_currencyfx app_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+            if (app_currencyfx != null)
             {
-                item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                item_inventory_detail.id_currencyfx = app_currencyfx.id_currencyfx;
+                item_inventory_detail.currency = app_currencyfx.app_currency.name;
             }
 
             item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Add(item_inventory_detail);

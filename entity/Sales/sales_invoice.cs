@@ -279,13 +279,12 @@ namespace entity
                 _Location = value;
                 if (_Location!=null)
                 {
-                    foreach (sales_invoice_detail item in sales_invoice_detail)
+                    foreach (sales_invoice_detail item in sales_invoice_detail.Where(x=>x.id_sales_invoice_detail>0).ToList())
                     {
-                        if (item.id_location==null)
-                        {
+                        
                             item.id_location = _Location.id_location;
                             item.RaisePropertyChanged("id_location");
-                        }
+                        
                      
                     }
                 }

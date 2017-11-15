@@ -372,12 +372,15 @@ namespace Cognitivo.Sales
 
 				if (sales_invoice_detail != null)
 				{
-					if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
+                    if (sales_invoiceViewSource.View.CurrentItem is sales_invoice sales_invoice)
+                        
 					{
 						SalesDB.db.sales_invoice_detail.Remove(sales_invoice_detail);
 
                         SalesDB.SaveChanges_WithValidation();
 
+                        sales_invoice.RaisePropertyChanged("GrandTotal");
+                        GrandTotalsales_DataContextChanged(null, null);
                         if (FindResource("sales_invoicesales_invoice_detailViewSource") is CollectionViewSource sales_invoicesales_invoice_detailViewSource)
 						{
 							if (sales_invoicesales_invoice_detailViewSource.View != null)

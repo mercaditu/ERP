@@ -820,6 +820,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702220628489_ChangesinProject.resx">
       <DependentUpon>201702220628489_ChangesinProject.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703311224125_ProjectUpdate.resx">
       <DependentUpon>201703311224125_ProjectUpdate.cs</DependentUpon>

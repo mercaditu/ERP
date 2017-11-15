@@ -27,9 +27,7 @@
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}" />
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}" />
         <CollectionViewSource x:Key="item_inventoryitem_inventory_detailViewSource" Source="{Binding item_inventory_detail, Source={StaticResource item_inventoryViewSource}}" >
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="id_item_product"/>
-            </CollectionViewSource.GroupDescriptions>
+           
         </CollectionViewSource>
     </Page.Resources>
     <Page.CommandBindings>

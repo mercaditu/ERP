@@ -58,22 +58,29 @@ namespace entity.Controller.Purchase
 
         public purchase_order Create(int TransDate_OffSet)
         {
-            purchase_order purchase_order = new purchase_order()
+            purchase_order purchase_order = new purchase_order();
+
+            purchase_order.State = EntityState.Added;
+           purchase_order.app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+            if (CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault()!=null)
             {
-                State = EntityState.Added,
-            app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault(),
-            id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition,
-            id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract,
-            status = Status.Documents_General.Pending,
-            trans_date = DateTime.Now.AddDays(TransDate_OffSet),
-            app_branch = db.app_branch.Find(CurrentSession.Id_Branch),
-            app_terminal = db.app_terminal.Find(CurrentSession.Id_Terminal),
-            IsSelected = true,
+                purchase_order.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
+            }
+            if (CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault()!=null)
+            {
+                purchase_order.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
+            }
+          
+           purchase_order.status = Status.Documents_General.Pending;
+           purchase_order.trans_date = DateTime.Now.AddDays(TransDate_OffSet);
+          purchase_order.app_branch = db.app_branch.Find(CurrentSession.Id_Branch);
+          purchase_order.app_terminal = db.app_terminal.Find(CurrentSession.Id_Terminal);
+           purchase_order.IsSelected = true;
 
             //Navigation Properties
-            app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx)
+           purchase_order.app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx);
               
-            };
+           
             db.purchase_order.Add(purchase_order);
             return purchase_order;
         }

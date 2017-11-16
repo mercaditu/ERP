@@ -51,8 +51,8 @@ namespace entity.Controller.Purchase
             {
                 State = EntityState.Added,
                 app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.PurchaseReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault(),
-                id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition,
-                id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract,
+               // id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition,
+              //  id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract,
                 status = Status.Documents_General.Pending,
                 trans_date = DateTime.Now,
                 app_branch = db.app_branch.Find(CurrentSession.Id_Branch),
@@ -63,6 +63,23 @@ namespace entity.Controller.Purchase
                 app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx)
 
             };
+            if (CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault() != null)
+            {
+                purchase_return.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
+            }
+            else
+            {
+                purchase_return.id_condition = CurrentSession.Contracts.FirstOrDefault().id_condition;
+            }
+            if (CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault() != null)
+            {
+                purchase_return.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
+            }
+            else
+            {
+                purchase_return.id_condition = CurrentSession.Contracts.FirstOrDefault().id_contract;
+            }
+
             db.purchase_return.Add(purchase_return);
             return purchase_return;
         }

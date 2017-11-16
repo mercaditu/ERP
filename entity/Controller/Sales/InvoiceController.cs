@@ -565,8 +565,6 @@ namespace entity.Controller.Sales
                 if (sales_detail.item_movement.Count() > 0)
                 {
                     item_movement = sales_detail.item_movement.FirstOrDefault();
-
-
                 }
                 else
                 {

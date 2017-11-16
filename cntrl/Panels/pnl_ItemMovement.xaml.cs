@@ -36,24 +36,27 @@ namespace cntrl.Panels
 
             if (Items_InStockLIST != null)
             {
-                int i = 0;
-                foreach (StockList item in Items_InStockLIST)
+                for (int i = 0; i < Items_InStockLIST.Count(); i++)
                 {
-                    i = i + 1;
-                   
-                    item_inventory_detail item_inventory_detail = item_inventoryList.FirstOrDefault();
-                    if (i>1)
+                    item_inventory_detail item_inventory_detail;
+                    StockList item = Items_InStockLIST.ElementAt(i);
+                    if (i == 0)
+                    {
+                        item_inventory_detail = item_inventoryList.FirstOrDefault();
+                    }
+                    else
                     {
                         item_inventory_detail = new item_inventory_detail();
-                        item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
-                        item_inventory_detail.value_system = item.QtyBalance;
-                        item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
-                        item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
-                        item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
-                        item_inventory_detail.expire_date = item.ExpirationDate;
-                        item_inventory_detail.batch_code = item.code;
-                        item_inventoryList.Add(item_inventory_detail);
                     }
+                    item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
+                    item_inventory_detail.value_system = item.QtyBalance;
+                    item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
+                    item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
+                    item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
+                    item_inventory_detail.expire_date = item.ExpirationDate;
+                    item_inventory_detail.batch_code = item.code;
+                    item_inventoryList.Add(item_inventory_detail);
+
 
 
                     item_inventory_detail.IsSelected = true;
@@ -90,6 +93,7 @@ namespace cntrl.Panels
                         }
                     }
                 }
+
 
             }
 

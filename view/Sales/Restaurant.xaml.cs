@@ -540,7 +540,7 @@ namespace Cognitivo.Sales
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            SalesDB.db.SaveChanges();
+            SalesDB.SaveChanges_WithValidation();
         }
     }
 }

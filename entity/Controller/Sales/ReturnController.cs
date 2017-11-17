@@ -96,8 +96,23 @@ namespace entity.Controller.Sales
             if (IsMigration == false)
             {
                 Return.app_document_range = Brillo.Logic.Range.List_Range(db, App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-                Return.id_condition = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_condition).FirstOrDefault();
-                Return.id_contract = CurrentSession.Contracts.Where(x => x.is_default).Select(x => x.id_contract).FirstOrDefault();
+                if (CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault() != null)
+                {
+                    Return.id_condition = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_condition;
+                }
+                else
+                {
+                    Return.id_condition = CurrentSession.Contracts.FirstOrDefault().id_condition;
+                }
+                if (CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault() != null)
+                {
+                    Return.id_contract = CurrentSession.Contracts.Where(x => x.is_default).FirstOrDefault().id_contract;
+                }
+                else
+                {
+                    Return.id_contract = CurrentSession.Contracts.FirstOrDefault().id_contract;
+                }
+               
             }
 
             db.sales_return.Add(Return);

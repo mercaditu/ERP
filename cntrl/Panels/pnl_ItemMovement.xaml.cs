@@ -47,6 +47,7 @@ namespace cntrl.Panels
                     else
                     {
                         item_inventory_detail = new item_inventory_detail();
+                        item_inventoryList.Add(item_inventory_detail);
                     }
                     item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
                     item_inventory_detail.value_system = item.QtyBalance;
@@ -55,7 +56,7 @@ namespace cntrl.Panels
                     item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
                     item_inventory_detail.expire_date = item.ExpirationDate;
                     item_inventory_detail.batch_code = item.code;
-                    item_inventoryList.Add(item_inventory_detail);
+                    
 
 
 

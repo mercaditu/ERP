@@ -77,7 +77,7 @@ namespace entity.Controller.Purchase
             }
             else
             {
-                purchase_return.id_condition = CurrentSession.Contracts.FirstOrDefault().id_contract;
+                purchase_return.id_contract = CurrentSession.Contracts.FirstOrDefault().id_contract;
             }
 
             db.purchase_return.Add(purchase_return);

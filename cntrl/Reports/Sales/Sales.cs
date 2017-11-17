@@ -49,7 +49,7 @@ sales_invoice_detail.id_sales_invoice_detail as DetailID,
 												quantity as Quantity,
 												sales_invoice_detail.unit_cost as UnitCost,
 												sales_invoice_detail.unit_price as UnitPrice,
-												round(( sales_invoice_detail.unit_price * vatco.coef),4) as UnitPriceVat,
+												round(( (sales_invoice_detail.unit_price-vatco.percentage) * vatco.coef),4) as UnitPriceVat,
 												round((sales_invoice_detail.quantity * sales_invoice_detail.unit_price),4) as SubTotal,
 												round((sales_invoice_detail.quantity * sales_invoice_detail.unit_price * vatco.coef),4) as SubTotalVat,
 												round(sales_invoice_detail.discount, 4) as Discount,
@@ -87,7 +87,7 @@ sales_invoice_detail.id_sales_invoice_detail as DetailID,
 												inner join items on sales_invoice_detail.id_item = items.id_item
 												left join app_terminal on sales_invoice.id_terminal = app_terminal.id_terminal
 													 LEFT OUTER JOIN
-															 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef ,app_vat_group.name as VAT
+															 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef,app_vat_group.name as VAT
 																FROM  app_vat_group
 																	LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
 																	LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat

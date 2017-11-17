@@ -485,17 +485,20 @@ namespace Cognitivo.Product
                         if (item_dimensionList.Count() > 0)
                         {
 
-
-                            foreach (item_dimension item_dimension in item_dimensionList)
+                            if (item_inventory_detail.item_inventory_dimension.Count() == 0)
                             {
-                                item_inventory_dimension item_inventory_dimension = new item_inventory_dimension()
+                                foreach (item_dimension item_dimension in item_dimensionList)
                                 {
-                                    id_dimension = item_dimension.id_app_dimension,
-                                    value = item_dimension.value
-                                };
+                                    item_inventory_dimension item_inventory_dimension = new item_inventory_dimension()
+                                    {
+                                        id_dimension = item_dimension.id_app_dimension,
+                                        value = item_dimension.value
+                                    };
 
-                                item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
+                                    item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
+                                }
                             }
+
                         }
                         crud_modal.Visibility = Visibility.Visible;
                         objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();

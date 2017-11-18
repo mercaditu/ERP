@@ -64,6 +64,17 @@ namespace Cognitivo.Sales
 			{
                 app_document_range document = SalesDB.db.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.Restaurant && x.is_active).FirstOrDefault();
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                if (sales_invoice.Location==null)
+                {
+                    
+                    if (sales_invoice.sales_invoice_detail.FirstOrDefault()!=null)
+                    {
+                        int? id_location = sales_invoice.sales_invoice_detail.FirstOrDefault().id_location;
+                        sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == id_location).FirstOrDefault();
+                        sales_invoice.RaisePropertyChanged("Location");
+                    }
+                   
+                }
 
                 if (sales_invoice != null && document != null)
 				{
@@ -542,5 +553,7 @@ namespace Cognitivo.Sales
         {
             SalesDB.SaveChanges_WithValidation();
         }
+
+       
     }
 }

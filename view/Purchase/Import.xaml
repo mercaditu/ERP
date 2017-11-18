@@ -115,7 +115,7 @@
             </StackPanel>
 
             <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Margin="0,2" HorizontalAlignment="Stretch" />
-
+             
             <TabControl Grid.Row="2" Grid.ColumnSpan="2" metro:TabControlHelper.IsUnderlined="True" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="{lex:Loc Date}">
                     <Grid>
@@ -143,6 +143,7 @@
                 </TabItem>
                 <TabItem Header="{lex:Loc Purchase}">
                     <Grid>
+                        
                         <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserDeleteRows="False"
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">

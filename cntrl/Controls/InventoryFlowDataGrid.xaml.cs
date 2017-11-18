@@ -153,6 +153,7 @@ namespace cntrl.Controls
                                 item_movement mov = db.item_movement.Find(MovementID);
                                 if (mov != null)
                                 {
+                                    db.item_movement_value_detail.RemoveRange(mov.item_movement_value_rel.item_movement_value_detail);
                                     mov.Update_ChildVales(Cost, false,DateTime.Now);
                                     db.SaveChangesAsync();
                                     MessageBox.Show(entity.Brillo.Localize.StringText("Done"), "Cognitivo ERP", MessageBoxButton.OK);

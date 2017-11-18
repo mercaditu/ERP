@@ -19,6 +19,9 @@ namespace Cognitivo.Purchase
         private List<entity.Class.Impex_ItemDetail> Impex_ItemDetailLIST = new List<entity.Class.Impex_ItemDetail>();
         private List<entity.Class.Impex_Products> Impex_ProductsLIST = new List<entity.Class.Impex_Products>();
 
+        decimal ExpenseSubTotal;
+        decimal PurchaseSubTotal;
+
         private decimal GrandTotal;
 
         public Import()
@@ -173,6 +176,7 @@ namespace Cognitivo.Purchase
                     {
                         getProratedCostCounted(impex_import.purchase_invoice, false, GrandTotal);
                     }
+                    ExpenseSubTotal = Convert.ToDecimal(impex.impex_expense.Sum(x=>x.value));
                 }
             }
 
@@ -181,6 +185,9 @@ namespace Cognitivo.Purchase
             impex_importDataGrid.ItemsSource = Impex_ItemDetailLIST;
             productDataGrid.ItemsSource = Impex_ProductsLIST;
             Calculate_Click(null, null);
+            PurchaseSubTotal = Impex_ItemDetailLIST.Sum(x => x.sub_total);
+            
+
         }
 
         private void getProratedCostCounted(purchase_invoice purchase_invoice, bool isNew, decimal GrandTotal)
@@ -567,6 +574,7 @@ namespace Cognitivo.Purchase
         private void impeximpex_expenseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             impexDataGrid_SelectionChanged(null, null);
+
         }
 
         private void productDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

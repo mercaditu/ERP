@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+    using System.Linq;
 
     public partial class impex : Audit, IDataErrorInfo
     {
@@ -88,6 +89,8 @@ namespace entity
         public app_currencyfx Currencyfx { get; set; }
         [NotMapped]
         public string Currency { get; set; }
+     
+       
 
         public virtual impex_incoterm impex_incoterm { get; set; }
         public virtual contact contact { get; set; }

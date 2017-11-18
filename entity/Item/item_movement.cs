@@ -218,7 +218,7 @@ namespace entity
 
 
                 item_movement_value_detail item_movement_value_detail = new item_movement_value_detail();
-                item_movement_value_detail.unit_value = this.item_movement_value_rel.total_value - BaseValue;
+                item_movement_value_detail.unit_value = BaseValue;
                 item_movement_value_detail.comment ="Update Cost";
                 this.item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
              
@@ -241,7 +241,7 @@ namespace entity
 
             foreach (item_movement this_child in child)
             {
-                this_child.Update_ChildVales(item_movement_value_rel.total_value, false,DateTime.Now);
+                this_child.Update_ChildVales(item_movement_value_rel.total_value, true,DateTime.Now);
             }
         }
 

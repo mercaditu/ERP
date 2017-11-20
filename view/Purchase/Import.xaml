@@ -112,6 +112,14 @@
                     <Label Content="{Binding Currency, Source={StaticResource impexViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=Curr}" />
                     <TextBox Text="{Binding fx_rate,StringFormat=N2,Source={StaticResource impexViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}" />
                 </StackPanel>
+                <StackPanel  Orientation="Horizontal" VerticalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    <Label Content="PurchaeTotal" />
+                    <Label Content="{Binding PurchaseTotal,StringFormat=N2,Source={StaticResource impexViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal" VerticalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    <Label Content="ExpenseTotal" />
+                    <Label Content="{Binding ExpenseTotal,StringFormat=N2,Source={StaticResource impexViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  />
+                </StackPanel>
             </StackPanel>
 
             <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Margin="0,2" HorizontalAlignment="Stretch" />

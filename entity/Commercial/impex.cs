@@ -89,8 +89,35 @@ namespace entity
         public app_currencyfx Currencyfx { get; set; }
         [NotMapped]
         public string Currency { get; set; }
-     
-       
+
+        [NotMapped]
+        public decimal PurchaseTotal
+        {
+            get
+            {
+                _PurchaseTotal = Convert.ToDecimal(impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Sum(x => x.SubTotal)));
+                return _PurchaseTotal;
+            }
+            set
+            {
+                _PurchaseTotal = value;
+            }
+        }
+        decimal _PurchaseTotal;
+        [NotMapped]
+        public decimal ExpsenseTotal
+        {
+            get
+            {
+                _ExpsenseTotal = Convert.ToDecimal(impex_expense.Sum(x => x.value));
+                return _ExpsenseTotal;
+            }
+            set
+            {
+                _ExpsenseTotal = value;
+            }
+        }
+        decimal _ExpsenseTotal;
 
         public virtual impex_incoterm impex_incoterm { get; set; }
         public virtual contact contact { get; set; }

@@ -95,7 +95,7 @@ namespace entity
         {
             get
             {
-                _PurchaseTotal = Convert.ToDecimal(impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Sum(x => x.SubTotal)));
+                _PurchaseTotal = Convert.ToDecimal(impex_import.Sum(x => x.purchase_invoice.purchase_invoice_detail.Sum(y => y.SubTotal)));
                 return _PurchaseTotal;
             }
             set

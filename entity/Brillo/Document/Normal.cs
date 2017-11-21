@@ -129,9 +129,8 @@ namespace entity.Brillo.Document
                 {
                     DocumentViewer.reportViewer.LocalReport.SetParameters(new ReportParameter[] { Parameters });
                 }
-                catch (Exception ex)
+                catch
                 {
-
                     throw;
                 }
              

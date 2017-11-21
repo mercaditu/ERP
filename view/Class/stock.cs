@@ -78,7 +78,7 @@ namespace Cognitivo.Class
         public List<StockList> ByLot(int BranchID, DateTime TransDate)
         {
             string query = @"
-                               set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 select ItemName, ItemCode, ProductID, LocationID, Location, Quantity, Measurement, Cost, Brand, BatchCode, ExpiryDate, MovementID from (
                                 select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,

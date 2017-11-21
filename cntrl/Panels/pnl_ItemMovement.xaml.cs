@@ -36,8 +36,8 @@ namespace cntrl.Panels
 
             if (Items_InStockLIST != null)
             {
-                if (item_inventoryList.Count() != Items_InStockLIST.Count())
-                {
+                //if (item_inventoryList.Count() == Items_InStockLIST.Count())
+                //{
                     if (Items_InStockLIST.FirstOrDefault() != null)
                     {
 
@@ -76,7 +76,7 @@ namespace cntrl.Panels
                             item_inventoryList.FirstOrDefault().currency = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().app_currency.name;
                         }
                     }
-                }
+              //  }
                 for (int i = item_inventoryList.Count(); i < Items_InStockLIST.Count(); i++)
                 {
                     item_inventory_detail item_inventory_detail;
@@ -139,6 +139,7 @@ namespace cntrl.Panels
             int id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
             int id_location = item_inventoryList.FirstOrDefault().id_location;
             item_inventory_detailViewSource = FindResource("item_inventory_detailViewSource") as CollectionViewSource;
+
             item_inventory_detailViewSource.Source = item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Where(x=>x.id_item_product== id_item_product && x.id_location == id_location).ToList();
             CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
             InventoryDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();

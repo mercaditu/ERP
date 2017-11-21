@@ -412,6 +412,7 @@ namespace Cognitivo.Product
                     item_inventory_detail item_inventory_detail = new item_inventory_detail()
                     {
                         id_inventory = item_inventory.id_inventory,
+                        item_inventory= item_inventory,
                         id_item_product = item_product.id_item_product,
                         item_product = item_product,
                         id_location = app_location.id_location,

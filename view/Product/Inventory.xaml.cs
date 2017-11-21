@@ -195,7 +195,7 @@ namespace Cognitivo.Product
                                 item_inventory_detail.app_location = app_location;
                                 item_inventory_detail.id_location = app_location.id_location;
                                 item_inventory_detail.timestamp = DateTime.Now;
-                                item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0;
+                                item_inventory_detail.value_system = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).Sum(x => x.Quantity) : 0;
                                 item_inventory_detail.unit_value = StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0;
 
                                 if (CurrentSession.Get_Currency_Default_Rate() != null)
@@ -412,7 +412,7 @@ namespace Cognitivo.Product
                     item_inventory_detail item_inventory_detail = new item_inventory_detail()
                     {
                         id_inventory = item_inventory.id_inventory,
-                        item_inventory= item_inventory,
+                        item_inventory = item_inventory,
                         id_item_product = item_product.id_item_product,
                         item_product = item_product,
                         id_location = app_location.id_location,
@@ -504,7 +504,7 @@ namespace Cognitivo.Product
                         crud_modal.Visibility = Visibility.Visible;
                         objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                         item_inventory_detail.IsSelected = true;
-                        objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product && x.id_location==item_inventory_detail.id_location).ToList();
+                        objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product && x.id_location == item_inventory_detail.id_location).ToList();
                         objpnl_ItemMovement.Items_InStockLIST = stock.List(0, app_location.id_location, item_inventory_detail.id_item_product);
                         objpnl_ItemMovement.InventoryDB = InventoryController.db;
                         crud_modal.Children.Add(objpnl_ItemMovement);

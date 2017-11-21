@@ -931,7 +931,7 @@ namespace entity.Brillo.Logic
                         }
                     }
 
-                    if (item_inventory_detail.value_counted > 0)
+                    if (item_inventory_detail.Delta > 0)
                     {
                         item_movementList.Add(
                             CreditOnly_Movement(
@@ -942,11 +942,38 @@ namespace entity.Brillo.Logic
                                 CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
                                 item_inventory_detail.id_item_product,
                                 item_inventory_detail.id_location,
-                                (decimal)item_inventory_detail.value_counted,
+                                (decimal)item_inventory_detail.Delta,
                                 item_inventory_detail.item_inventory.trans_date,
                                 item_inventory_detail.unit_value,
                                 comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
                                 , null, null, null
+                                ));
+                    }
+                    else
+                    {
+                        List<StockList> Items_InStockLIST = null;
+                        if (item_inventory_detail.movement_id != null && item_inventory_detail.movement_id > 0)
+                        {
+                            Brillo.Stock stockBrillo = new Brillo.Stock();
+                            Items_InStockLIST = stockBrillo.ScalarMovement((long)item_inventory_detail.movement_id);
+                        }
+                        else
+                        {
+                            Brillo.Stock stock = new Brillo.Stock();
+                            Items_InStockLIST = stock.List(item_inventory_detail.app_location.id_branch, item_inventory_detail.id_location, item_inventory_detail.id_item_product);
+                        }
+
+                        item_movementList.AddRange(
+                            DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
+                                App.Names.Inventory,
+                                item_inventory_detail.id_inventory,
+                                item_inventory_detail.id_inventory_detail,
+                                CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                item_inventory_detail.item_product,
+                                item_inventory_detail.id_location,
+                                Math.Abs(item_inventory_detail.Delta),
+                                item_inventory_detail.item_inventory.trans_date,
+                                comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment)
                                 ));
                     }
                 }

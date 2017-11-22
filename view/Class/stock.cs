@@ -141,7 +141,7 @@ namespace Cognitivo.Class
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 select ItemName, ItemCode, ProductID, LocationID, Location, Quantity, Measurement, Cost, Brand, BatchCode, ExpiryDate, MovementID from (
                                 select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
-                                ip.id_item_product as ProductID,im.credit,sum(IFNULL(child.debit, 0)), (sum(IFNULL(im.credit,0)) - sum(IFNULL(child.debit,0))) as Quantity,
+                                ip.id_item_product as ProductID,im.credit,sum(IFNULL(child.debit, 0)), (IFNULL(im.credit,0) - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,
                                 brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,
                                 max(im.id_movement) as MovementID

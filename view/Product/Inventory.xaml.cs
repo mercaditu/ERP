@@ -479,7 +479,6 @@ namespace Cognitivo.Product
             {
                 if (app_location != null)
                 {
-
                     if (InventoryController.db.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList() != null)
                     {
                         List<item_dimension> item_dimensionList = InventoryController.db.item_dimension.Where(x => x.id_item == item_inventory_detail.item_product.id_item).ToList();

@@ -124,6 +124,7 @@ namespace cntrl.Panels
                                     item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
                                     item_inventory_dimension.id_dimension = item_movement_dimension.id_dimension;
                                     item_inventory_dimension.value = item_movement_dimension.value;
+                                    item_inventory_detail.movement_id = item.MovementID;
                                     item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                                 }
                             }

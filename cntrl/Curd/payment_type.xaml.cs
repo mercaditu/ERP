@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using entity;
 
 namespace cntrl.Curd
 {
@@ -45,8 +46,9 @@ namespace cntrl.Curd
 
             {
                 CollectionViewSource app_documentViewSource = ((CollectionViewSource)(FindResource("app_documentViewSource")));
+             
                 app_documentViewSource.Source = entity.db.app_document.Local;
-
+              
                 cbxbehaviour.ItemsSource = Enum.GetValues(typeof(entity.payment_type.payment_behaviours));
                 if (!isExternalCall)
                 {
@@ -146,7 +148,7 @@ namespace cntrl.Curd
         {
             if ((bool)cbxPrint.IsChecked)
             {
-                entity.db.app_document.Where(x => x.id_application == global::entity.App.Names.PaymentType && x.id_company == 1).Load();
+                entity.db.app_document.Where(x => x.id_application == global::entity.App.Names.PaymentType && x.id_company == CurrentSession.Id_Company).Load();
             }
             else
             {

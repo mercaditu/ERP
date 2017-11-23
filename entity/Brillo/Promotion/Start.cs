@@ -72,7 +72,10 @@ namespace entity.Brillo.Promotion
                         item_description = Best_Promotion.Item.name,
                         quantity = Best_Promotion.Quantity,
                         unit_price = Best_Promotion.Price,
-                        discount = Best_Promotion.Discount
+                        discount = Best_Promotion.Discount,
+                        sales_promotion=Best_Promotion.Promotion,
+                        id_sales_promotion=Best_Promotion.PromotionID
+
                     };
 
                     SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);

@@ -99,7 +99,7 @@ namespace cntrl
             {
                 if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
-                    if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType)
+                    if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType || sales_promotion.type==sales_promotion.salesPromotion.Discount_onGrandTotal)
                     {
                         if (sales_promotion.id_sales_promotion > 0)
                         {
@@ -145,7 +145,7 @@ namespace cntrl
                 {
                     if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
                     {
-                        if (cbxparatag.SelectedValue.ToString() == "0")
+                        if (sales_promotion.id_sales_promotion > 0)
                         {
                             cbxparatag.SelectedValue = sales_promotion.reference;
                         }

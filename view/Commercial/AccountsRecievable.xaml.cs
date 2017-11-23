@@ -226,6 +226,8 @@ namespace Cognitivo.Commercial
                     amount = payment_schedual.AccountReceivableBalance;
                 }
                 else
+
+
                 {
                     payment_schedual _payment_schedual = payment_schedual.child.Where(x => x.is_interest).LastOrDefault();
                     amount = payment_schedual.AccountReceivableBalance + payment_schedual.child.Where(x => x.is_interest).Sum(x => x.AccountReceivableBalance);

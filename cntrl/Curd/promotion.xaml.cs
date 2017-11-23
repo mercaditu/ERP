@@ -45,10 +45,11 @@ namespace cntrl
                 app_currencyViewSource.Source = entity.db.app_currency.Local;
 
                 cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.salesPromotion)).OfType<sales_promotion.salesPromotion>().ToList();
-
-                cbxparaContacttag.SelectedValue = -1;
+               
+               
                 cbxcurrency.SelectedIndex = -1;
-                cbxparatag.SelectedIndex = -1;
+                
+                 
             }
         }
 
@@ -101,7 +102,7 @@ namespace cntrl
                 {
                     if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType || sales_promotion.type==sales_promotion.salesPromotion.Discount_onGrandTotal)
                     {
-                        if (sales_promotion.id_sales_promotion > 0)
+                        if (cbxparatag.SelectedValue == null)
                         {
                             cbxparaContacttag.SelectedValue = sales_promotion.reference;
                         }
@@ -145,7 +146,7 @@ namespace cntrl
                 {
                     if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
                     {
-                        if (sales_promotion.id_sales_promotion > 0)
+                        if (cbxparatag.SelectedValue==null)
                         {
                             cbxparatag.SelectedValue = sales_promotion.reference;
                         }

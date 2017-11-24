@@ -168,6 +168,13 @@ namespace Cognitivo.Sales
 
             sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
             sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
+            app_document_range app_document_range=SalesDB.db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PointOfSale && x.is_active).FirstOrDefault();
+            if (app_document_range!=null)
+            {
+                sales_invoice.id_range = app_document_range.id_range;
+                sales_invoice.RaisePropertyChanged("id_range");
+                sales_invoice.app_document_range = app_document_range;
+            }
             SalesDB.db.sales_invoice.Add(sales_invoice);
 
             Dispatcher.BeginInvoke((Action)(() =>

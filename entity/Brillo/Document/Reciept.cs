@@ -39,7 +39,7 @@
                     Content = SalesReturn(sales_return);
                     Print(Content, app_document, PrinterName);
                 }
-                else if (app_document.id_application == App.Names.SalesInvoice)
+                else if (app_document.id_application == App.Names.SalesInvoice || app_document.id_application==App.Names.PointOfSale)
                 {
                     sales_invoice sales_invoice = (sales_invoice)obj;
                     Content = SalesInvoice(sales_invoice);
@@ -528,7 +528,7 @@
                               .GroupBy(a => new { a.name, a.id_vat, a.ad })
                       .Select(g => new
                       {
-                          vatname = g.Key.ad.app_vat_group.name,
+                          vatname = g.Key.ad.app_vat_group!=null? g.Key.ad.app_vat_group.name:"",
                           id_vat = g.Key.id_vat,
                           name = g.Key.name,
                           value = g.Sum(a => a.value * a.ad.quantity)

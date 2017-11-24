@@ -94,27 +94,6 @@ namespace cntrl
             }
         }
 
-        private void cbxparaContacttag_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxparaContacttag.SelectedValue != null)
-            {
-                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
-                {
-                    if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType || sales_promotion.type==sales_promotion.salesPromotion.Discount_onGrandTotal)
-                    {
-                        if (cbxparatag.SelectedValue == null)
-                        {
-                            cbxparaContacttag.SelectedValue = sales_promotion.reference;
-                        }
-                        else
-                        {
-                            sales_promotion.reference = Convert.ToInt32(cbxparaContacttag.SelectedValue);
-                        }
-                    }
-                }
-            }
-        }
-
         private void sbxBonusItem_Select(object sender, RoutedEventArgs e)
         {
             if (sbxBonusItem.ItemID > 0)
@@ -138,6 +117,29 @@ namespace cntrl
             }
         }
 
+        private void cbxparaContacttag_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxparaContacttag.SelectedValue != null)
+            {
+                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
+                {
+                    if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType || sales_promotion.type==sales_promotion.salesPromotion.Discount_onGrandTotal)
+                    {
+                        if (sales_promotion.reference > 0)
+                        {
+                            cbxparaContacttag.SelectedValue = sales_promotion.reference;
+                        }
+                        else
+                        {
+                            sales_promotion.reference = Convert.ToInt32(cbxparaContacttag.SelectedValue);
+                        }
+                    }
+                }
+            }
+        }
+
+       
+
         private void cbxparatag_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbxparatag.SelectedValue != null)
@@ -146,7 +148,7 @@ namespace cntrl
                 {
                     if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
                     {
-                        if (cbxparatag.SelectedValue==null)
+                        if (sales_promotion.reference>0)
                         {
                             cbxparatag.SelectedValue = sales_promotion.reference;
                         }

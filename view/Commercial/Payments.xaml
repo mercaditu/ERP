@@ -12,8 +12,10 @@
     <Page.Resources>
         <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter" />
         <CollectionViewSource x:Key="payment_detailMadeViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
+        <CollectionViewSource x:Key="payment_detailMadeDetailViewSource" Source="{Binding payment_detail, Source={StaticResource payment_detailMadeViewSource}}" />
         <CollectionViewSource x:Key="contactViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
         <CollectionViewSource x:Key="payment_detailReceive"  d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
+        <CollectionViewSource x:Key="payment_detailDetailViewSource" Source="{Binding payment_detail, Source={StaticResource payment_detailReceive}}" />
     </Page.Resources>
     <Grid Background="WhiteSmoke">
         <Grid.ColumnDefinitions>
@@ -63,11 +65,26 @@
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
                                         Header="{lex:Loc Cognitivo:local:Number}" Width="auto" IsReadOnly="True" />
-                            <DataGridTextColumn IsReadOnly="True" Header="PaymentTypeNumber" Binding="{Binding payment_type_number, Mode=OneWay}" />
+                            <DataGridTextColumn IsReadOnly="True" Header="PaymentTypeNumber" Binding="{Binding is_account, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Binding="{Binding  GrandTotalDetailValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True"
                                         ElementStyle="{StaticResource RightAlignStyle}" />
                         </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <DataGrid  VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
+                        		                  EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		                  ItemsSource="{Binding Source={StaticResource payment_detailMadeDetailViewSource}}"
+                        		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding payment_type.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:PaymentType}" Width="100" FontWeight="Bold" />
+                                       <DataGridTextColumn Binding="{Binding payment_type_number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:PaymentTypeNumber}" Width="100" FontWeight="Bold" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
                     </DataGrid>
                     <cntrl:toolBar_Mini btnAnull_Click="toolBar_btnAnull_Click" 
                                         btnEdit_Click="toolBar_btnEdit_Click"
@@ -96,7 +113,22 @@
                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True"
                                         ElementStyle="{StaticResource RightAlignStyle}" />
                     </DataGrid.Columns>
-                </DataGrid>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <DataGrid  VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
+                        		                  EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		                  ItemsSource="{Binding Source={StaticResource payment_detailDetailViewSource}}"
+                        		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding payment_type.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:PaymentType}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding payment_type_number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Measurement}" Width="100" FontWeight="Bold" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
                     <cntrl:toolBar_Mini btnAnull_Click="toolBar_btnAnull_Click" 
                                         btnEdit_Click="toolBar_btnEdit_Click"
 			                            btnCancel_Click="toolBar_btnCancel_Click"

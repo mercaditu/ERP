@@ -50,7 +50,7 @@ namespace Cognitivo.Commercial
 
             payment_detailMadeViewSource = FindResource("payment_detailMadeViewSource") as CollectionViewSource;
             payment_detailReceive = FindResource("payment_detailReceive") as CollectionViewSource;
-            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact).LoadAsync();
+            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact).Include(x=>x.payment_detail).LoadAsync();
             //Logic to bring Data into view.
 
             payment_detailReceive.Source = PaymentDB.payments.Local;

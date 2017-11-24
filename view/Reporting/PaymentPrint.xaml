@@ -46,7 +46,8 @@
                         <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
                                        recordName="{Binding payment.contact.name,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
 											   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-											   recordSecondaryName="{Binding value, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+											   recordSecondaryName="{Binding value, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                          IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

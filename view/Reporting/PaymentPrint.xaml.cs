@@ -90,29 +90,33 @@ namespace Cognitivo.Reporting
 
         private void Print_Click(object sender, RoutedEventArgs e)
         {
-            payment_detail payment_detail = PaymnetDetailDataGrid.SelectedItem as payment_detail;
-            if (payment_detail != null)
+           
+            foreach (payment_detail payment_detail in payment_detailViewSource.View.OfType<payment_detail>().Where(x=>x.IsSelected).ToList())
             {
-
-
-                if (payment_detail.id_range > 0 && payment_detail.app_document_range != null)
+                if (payment_detail != null)
                 {
-                    if (payment_detail.payment != null && payment_detail.payment.id_branch > 0)
-                    {
-                        entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == payment_detail.payment.id_branch).Select(x => x.code).FirstOrDefault();
-                    }
-                    if (payment_detail.payment != null && payment_detail.payment.id_terminal > 0)
-                    {
-                        entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == payment_detail.payment.id_terminal).Select(x => x.code).FirstOrDefault();
-                    }
 
-                    app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == payment_detail.id_range).FirstOrDefault();
-                    payment_detail.payment_type_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
-                    payment_detail.RaisePropertyChanged("payment_type_number");
-                    payment_detail.is_read = true;
-                    Start.Automatic(payment_detail, app_document_range);
+
+                    if (payment_detail.id_range > 0 && payment_detail.app_document_range != null)
+                    {
+                        if (payment_detail.payment != null && payment_detail.payment.id_branch > 0)
+                        {
+                            entity.Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == payment_detail.payment.id_branch).Select(x => x.code).FirstOrDefault();
+                        }
+                        if (payment_detail.payment != null && payment_detail.payment.id_terminal > 0)
+                        {
+                            entity.Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == payment_detail.payment.id_terminal).Select(x => x.code).FirstOrDefault();
+                        }
+
+                        app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == payment_detail.id_range).FirstOrDefault();
+                        payment_detail.payment_type_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
+                        payment_detail.RaisePropertyChanged("payment_type_number");
+                        payment_detail.is_read = true;
+                        Start.Automatic(payment_detail, app_document_range);
+                    }
                 }
             }
+            
 
             db.SaveChanges();
         }

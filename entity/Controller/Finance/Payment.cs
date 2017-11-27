@@ -123,25 +123,19 @@ namespace entity.Controller.Finance
                         if (ChildBalance > 0)
                         {
                             payment_schedual child_schedual = new payment_schedual();
+                            if (db.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
+                            {
+                                child_schedual.parent = db.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).Include(x => x.contact).FirstOrDefault();
+                                Parent_Schedual = child_schedual.parent;
+                            }
                             if (Math.Round(ChildBalance, 2) >= Math.Round(parent.AccountPayableBalance))
                             {
                                 child_schedual.debit = parent.AccountPayableBalance;
-                                if (db.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
-                                {
-                                    child_schedual.parent = db.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
-                                    Parent_Schedual = child_schedual.parent;
-                                }
-
                                 ChildBalance -= parent.AccountPayableBalance;
                             }
                             else
                             {
                                 child_schedual.debit = ChildBalance;
-                                if (db.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
-                                {
-                                    child_schedual.parent = db.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
-                                    Parent_Schedual = child_schedual.parent;
-                                }
                                 ChildBalance -= ChildBalance;
                             }
 
@@ -269,8 +263,15 @@ namespace entity.Controller.Finance
 
                     ///Comment with Module Name and Contact.
                     ///Insert AccountDetail into Context.
+                    try
+                    {
+                        app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact != null ? Parent_Schedual.contact.name : "";
+                    }
+                    catch
+                    {
+                        app_account_detail.comment = " Error ";
+                    }
 
-                    app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact!=null? Parent_Schedual.contact.name:"";
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                     db.app_account_detail.Add(app_account_detail);
                 }

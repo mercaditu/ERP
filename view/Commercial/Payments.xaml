@@ -7,6 +7,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:entity="clr-namespace:entity;assembly=entity"
+       xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
       mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="700"
 	Title="Payments" Loaded="Page_Loaded">
     <Page.Resources>
@@ -63,12 +64,15 @@
                                         Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" MinWidth="128" IsReadOnly="True" />
                             <DataGridTextColumn Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True" />
+                            
                             <DataGridTextColumn Binding="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
                                         Header="{lex:Loc Cognitivo:local:Number}" Width="auto" IsReadOnly="True" />
-                            <DataGridTextColumn IsReadOnly="True" Header="PaymentTypeNumber" Binding="{Binding is_account, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Binding="{Binding  GrandTotalDetailValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="auto" IsReadOnly="True"
                                         ElementStyle="{StaticResource RightAlignStyle}" />
+                            <DataGridTextColumn Binding="{Binding is_accounted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="{lex:Loc Cognitivo:local:Accounted}" Width="auto" IsReadOnly="True" />
+
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
@@ -77,15 +81,24 @@
                         		                  ItemsSource="{Binding Source={StaticResource payment_detailMadeDetailViewSource}}"
                         		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                     <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Date}" Width="100" FontWeight="Bold" />
                                         <DataGridTextColumn Binding="{Binding payment_type.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:PaymentType}" Width="100" FontWeight="Bold" />
                                        <DataGridTextColumn Binding="{Binding payment_type_number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="{lex:Loc Cognitivo:local:PaymentTypeNumber}" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Number}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,StringFormat=N2}"
+                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding comment, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Comment}" Width="100" FontWeight="Bold" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
+                    
                     <cntrl:toolBar_Mini btnAnull_Click="toolBar_btnAnull_Click" 
                                         btnEdit_Click="toolBar_btnEdit_Click"
 			                            btnCancel_Click="toolBar_btnCancel_Click"
@@ -120,10 +133,18 @@
                         		                  ItemsSource="{Binding Source={StaticResource payment_detailDetailViewSource}}"
                         		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                     <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Date}" Width="100" FontWeight="Bold" />
                                         <DataGridTextColumn Binding="{Binding payment_type.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:PaymentType}" Width="100" FontWeight="Bold" />
                                         <DataGridTextColumn Binding="{Binding payment_type_number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                                        Header="{lex:Loc Cognitivo:local:Measurement}" Width="100" FontWeight="Bold" />
+                                                        Header="{lex:Loc Cognitivo:local:Number}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,StringFormat=N2}"
+                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Width="32" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding comment, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                        Header="{lex:Loc Cognitivo:local:Comment}" Width="100" FontWeight="Bold" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DataTemplate>

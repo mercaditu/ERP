@@ -208,8 +208,8 @@ namespace entity
 
             Version = Versions.Full;
 
-        
-            
+
+
 
             Security_CurdList = new List<security_crud>();
             Security_role_privilageList = new List<security_role_privilage>();
@@ -341,6 +341,33 @@ namespace entity
                     VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 }
             }
+        }
+
+        public static string GetBranchCode(int id_branch)
+        {
+            if (Branches.Count() > 0)
+            {
+                app_branch app_branch = Branches.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                if (app_branch != null)
+                {
+                    return app_branch.code;
+                }
+
+            }
+            return "";
+        }
+        public static string GetTerminalCode(int id_terminal)
+        {
+            if (Terminals.Count() > 0)
+            {
+                app_terminal app_terminal = Terminals.Where(x => x.id_terminal == id_terminal).FirstOrDefault();
+                if (app_terminal != null)
+                {
+                    return app_terminal.code;
+                }
+
+            }
+            return "";
         }
 
         public static List<sales_rep> SalesReps { get; set; }

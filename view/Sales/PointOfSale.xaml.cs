@@ -113,50 +113,61 @@ namespace Cognitivo.Sales
             if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
             {
                 sales_invoice.trans_date = DateTime.Now;
-
+                sales_invoice.IsSelected = true;
                 ///Approve Sales Invoice.
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
-                SalesDB.Approve();
+                bool ApprovalStatus = SalesDB.Approve();
 
-                if (sales_invoice.TotalChanged > 0)
+                if (ApprovalStatus)
                 {
-                    if (true)
+
+                    if (sales_invoice.TotalChanged > 0)
                     {
-                        decimal ChangeAmount = sales_invoice.TotalChanged;
-
-                        List<payment_detail> SameCurrency_Payments = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).ToList();
-                        foreach (var detail in SameCurrency_Payments)
+                        if (true)
                         {
-                            payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
-                            payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+                            decimal ChangeAmount = sales_invoice.TotalChanged;
 
-                            //ChangeAmount -= ChangeAmount - 
+                            List<payment_detail> SameCurrency_Payments = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).ToList();
+                            foreach (var detail in SameCurrency_Payments)
+                            {
+                                payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                                payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+
+                                //ChangeAmount -= ChangeAmount - 
+                            }
+
+                            //if (ChangeAmount > 0)
+                            //{
+                            //    List<payment_detail> DiffCurrency_Payments = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx != sales_invoice.id_currencyfx).ToList();
+                            //    foreach (var detail in SameCurrency_Payments)
+                            //    {
+                            //        payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                            //        payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+                            //    }
+                            //}
                         }
+                    }
 
-                        //if (ChangeAmount > 0)
-                        //{
-                        //    List<payment_detail> DiffCurrency_Payments = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx != sales_invoice.id_currencyfx).ToList();
-                        //    foreach (var detail in SameCurrency_Payments)
-                        //    {
-                        //        payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
-                        //        payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
-                        //    }
-                        //}
+                    //if (SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList())
+                    //{
+                    //    payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                    //    payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
+                    //}
+
+                    List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
+                    PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
+
+                    //Start New Sale
+                    New_Sale_Payment();
+                }
+                else
+                {
+                    if (SalesDB.Msg.Count()>0)
+                    {
+                        MessageBox.Show(SalesDB.Msg.FirstOrDefault().ToString());
                     }
                 }
-
-                //if (SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList())
-                //{
-                //    payment_detail payment_detail = paymentpayment_detailViewSource.View.OfType<payment_detail>().ToList().Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
-                //    payment_detail.value = payment_detail.value - sales_invoice.TotalChanged;
-                //}
-
-                List<payment_schedual> payment_schedualList = SalesDB.db.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).ToList();
-                PaymentDB.Approve(payment_schedualList, true, (bool)chkreceipt.IsChecked);
-
-                //Start New Sale
-                New_Sale_Payment();
             }
         }
 
@@ -168,8 +179,8 @@ namespace Cognitivo.Sales
 
             sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
             sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
-            app_document_range app_document_range=SalesDB.db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PointOfSale && x.is_active).FirstOrDefault();
-            if (app_document_range!=null)
+            app_document_range app_document_range = SalesDB.db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PointOfSale && x.is_active).FirstOrDefault();
+            if (app_document_range != null)
             {
                 sales_invoice.id_range = app_document_range.id_range;
                 sales_invoice.RaisePropertyChanged("id_range");
@@ -247,7 +258,11 @@ namespace Cognitivo.Sales
                                 new Settings().AllowDuplicateItem,
                                 sbxItem.QuantityInStock,
                                 sbxItem.Quantity);
-                        _sales_invoice_detail.id_location = sales_invoice.Location.id_location;
+                        if (sales_invoice.Location != null)
+                        {
+                            _sales_invoice_detail.id_location = sales_invoice.Location.id_location;
+                        }
+
                     }
 
                     sales_invoiceViewSource.View.Refresh();
@@ -273,7 +288,7 @@ namespace Cognitivo.Sales
             CollectionViewSource payment_typeViewSource = FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = SalesDB.db.payment_type.Local;
 
-            cbxSalesRep.ItemsSource = CurrentSession.SalesReps; 
+            cbxSalesRep.ItemsSource = CurrentSession.SalesReps;
 
             CollectionViewSource app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
             app_currencyViewSource.Source = CurrentSession.Currencies;
@@ -525,7 +540,7 @@ namespace Cognitivo.Sales
                 {
                     if (detail.quantity > detail.Quantity_InStock &&
                         (
-                        detail.item.id_item_type == item.item_type.Product || 
+                        detail.item.id_item_type == item.item_type.Product ||
                         detail.item.id_item_type == item.item_type.RawMaterial ||
                         detail.item.id_item_type == item.item_type.Supplies)
                         )
@@ -538,6 +553,6 @@ namespace Cognitivo.Sales
             }
         }
 
-     
+
     }
 }

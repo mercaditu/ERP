@@ -191,6 +191,11 @@ namespace Cognitivo.Commercial
             }
         }
 
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+
+        }
+
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modal.Visibility == Visibility.Hidden)

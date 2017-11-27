@@ -266,8 +266,14 @@ namespace entity
                         {
                             if (payment != null)
                             {
-                                Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == payment.id_branch).FirstOrDefault().code;
-                                Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == payment.id_terminal).FirstOrDefault().code;
+                                if (payment.id_branch!=null)
+                                {
+                                    Brillo.Logic.Range.branch_Code = CurrentSession.GetBranchCode((int)payment.id_branch);
+                                }
+                                if (payment.id_terminal != null)
+                                {
+                                    Brillo.Logic.Range.terminal_Code = CurrentSession.GetTerminalCode((int)payment.id_terminal);
+                                }
                             }
 
                             NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);

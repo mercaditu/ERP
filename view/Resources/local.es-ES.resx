@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>Cuentas</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>Cuentas De Pago</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>Cuentas Por Pagar</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>Cuentas Por Cobrar</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>Cuentas Recieved</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>Utilidad De Cuentas</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="Allow" xml:space="preserve">
     <value>Permitir</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>Todas Las Transacciones</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>Cantidad</value>
@@ -1084,7 +1093,7 @@
     <value>Tipo De Pago</value>
   </data>
   <data name="PendingDocuments" xml:space="preserve">
-    <value>A La Espera De Los Documentos</value>
+    <value>Documentos Pendientes</value>
   </data>
   <data name="PendingPayables" xml:space="preserve">
     <value>Pendientes Por Pagar</value>
@@ -1183,7 +1192,7 @@
     <value>Ejecución Del Proyecto</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
-    <value>Financiamiento De Proyectos</value>
+    <value>Financiación De Proyectos</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
     <value>Pagaré</value>

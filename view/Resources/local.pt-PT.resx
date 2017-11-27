@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>Contas</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>Contas Pagas</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>Contas A Pagar</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>Contas Recebíveis</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>Contas Recieved</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>Utility For Contas</value>
@@ -154,7 +160,7 @@
     <value>Ativo</value>
   </data>
   <data name="ActivityPlan" xml:space="preserve">
-    <value>Plano De Actividades</value>
+    <value>Plano De Atividades</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Endereço</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="Allow" xml:space="preserve">
     <value>Permitir</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>Todas As Transacções</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>Montante</value>
@@ -1171,7 +1180,7 @@
     <value>Produção Status Do Pedido</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
-    <value>Status Da Produção</value>
+    <value>Status De Produção</value>
   </data>
   <data name="Profit" xml:space="preserve">
     <value>Lucro</value>
@@ -1663,7 +1672,7 @@
     <value>Atenção</value>
   </data>
   <data name="Weekend" xml:space="preserve">
-    <value>Fim De Semana</value>
+    <value>Final De Semana</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>Largura</value>

@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>帐号</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>账户缴交</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>应付账款</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>应收账款</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>帐户收到</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>帐户工具</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="Allow" xml:space="preserve">
     <value>允许</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>所有交易</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>量</value>
@@ -1165,7 +1174,7 @@
     <value>生产执行</value>
   </data>
   <data name="ProductionOrder" xml:space="preserve">
-    <value>生产订单</value>
+    <value>产品订单</value>
   </data>
   <data name="ProductionOrderStatus" xml:space="preserve">
     <value>生产订单状态</value>
@@ -1325,6 +1334,9 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>需要</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>餐厅</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>返回号码</value>
@@ -1527,14 +1539,23 @@
   <data name="Supplier" xml:space="preserve">
     <value>供应商</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>供应商代码</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>供应商往来账户</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>供应商名称</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>供应</value>
   </data>
   <data name="Surcharge" xml:space="preserve">
     <value>附加费</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>表</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>标签</value>
@@ -1643,6 +1664,9 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>卷</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>服务员</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>警告</value>

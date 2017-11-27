@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>アカウント</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>有料アカウント</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>買掛金勘定</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>売掛金</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>受け取っがアカウント</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>アカウントユーティリティ</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="Allow" xml:space="preserve">
     <value>許します</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>全取引</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>量</value>
@@ -652,7 +661,7 @@
     <value>イベント管理</value>
   </data>
   <data name="EventType" xml:space="preserve">
-    <value>イベントの種類</value>
+    <value>イベントタイプ</value>
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>経費</value>
@@ -1255,7 +1264,7 @@
     <value>削除！本気ですか？</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
-    <value>クイックアクション</value>
+    <value>素早い動作</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
     <value>クイックアクション</value>
@@ -1325,6 +1334,9 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>必須</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>レストラン</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>リターン数</value>
@@ -1527,14 +1539,23 @@
   <data name="Supplier" xml:space="preserve">
     <value>サプライヤー</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>取引先コード</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>サプライヤー経常収支</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>サプライヤ名</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>用品</value>
   </data>
   <data name="Surcharge" xml:space="preserve">
     <value>サーチャージ</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>表</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>タグ</value>
@@ -1643,6 +1664,9 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>ボリューム</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>ウェイター</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>警告</value>

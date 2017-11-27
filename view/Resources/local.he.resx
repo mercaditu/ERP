@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>חשבונות</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>חשבונות בתשלום</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>חשבונות לתשלום</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>חשבונות חייבים</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>חשבונות שמתקבל</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>Utility חשבון</value>
@@ -154,7 +160,7 @@
     <value>פָּעִיל</value>
   </data>
   <data name="ActivityPlan" xml:space="preserve">
-    <value>תוכנית פעילות</value>
+    <value>תכנית פעילות</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>כתובת</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="Allow" xml:space="preserve">
     <value>להתיר</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>כָּל הַפְּעוּלוֹת</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>כמות</value>
@@ -247,7 +256,7 @@
     <value>קְבוּצָה</value>
   </data>
   <data name="Behavior" xml:space="preserve">
-    <value>הִתְנַהֲגוּת</value>
+    <value>התנהגות</value>
   </data>
   <data name="BelongsTo" xml:space="preserve">
     <value>שייך ל</value>
@@ -493,7 +502,7 @@
     <value>תאריך עזיבה</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>תאור</value>
+    <value>תיאור</value>
   </data>
   <data name="desc_Account" xml:space="preserve">
     <value>חשבונות ולעקוב אחר כל העסקות הפיננסיות</value>
@@ -607,7 +616,7 @@
     <value>לַעֲרוֹך</value>
   </data>
   <data name="Education" xml:space="preserve">
-    <value>הַשׂכָּלָה</value>
+    <value>חינוך</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>אֶלֶקטרוֹנִי</value>
@@ -679,7 +688,7 @@
     <value>מִשׁפָּחָה</value>
   </data>
   <data name="Favorite" xml:space="preserve">
-    <value>הכי אהוב</value>
+    <value>אהוב</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>נְקֵבָה</value>
@@ -1171,7 +1180,7 @@
     <value>מצב הפקה להזמין</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
-    <value>מצב הפקה</value>
+    <value>מצב ההפקה</value>
   </data>
   <data name="Profit" xml:space="preserve">
     <value>רווח</value>
@@ -1183,7 +1192,7 @@
     <value>ביצוע פרויקט</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
-    <value>מימון פרויקטים</value>
+    <value>פרוייקט כלכלי</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
     <value>שטר חוב</value>
@@ -1285,7 +1294,7 @@
     <value>תשלום קבלתי</value>
   </data>
   <data name="Recipe" xml:space="preserve">
-    <value>מַתכּוֹן</value>
+    <value>מתכון</value>
   </data>
   <data name="Refinance" xml:space="preserve">
     <value>refinance</value>
@@ -1325,6 +1334,9 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>נדרש</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>מִסעָדָה</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>מספר השבות</value>
@@ -1417,7 +1429,7 @@
     <value>נשמר</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>חפש</value>
+    <value>לחפש</value>
   </data>
   <data name="Searchexactcode" xml:space="preserve">
     <value>חיפוש קוד מדויק</value>
@@ -1527,14 +1539,23 @@
   <data name="Supplier" xml:space="preserve">
     <value>ספק</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>קוד ספק</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>חשבון שוטף ספק</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>שם ספק</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>אספקה</value>
   </data>
   <data name="Surcharge" xml:space="preserve">
     <value>תַשׁלוּם נוֹסָף</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>שולחן</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>תגיות</value>
@@ -1642,7 +1663,10 @@
     <value>נוף</value>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>כֶּרֶך</value>
+    <value>כרך</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>מֶלְצַר</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>אַזהָרָה</value>
@@ -1660,7 +1684,7 @@
     <value>עֲבוֹדָה</value>
   </data>
   <data name="WorkType" xml:space="preserve">
-    <value>סוג העבודה</value>
+    <value>סוג עבודה</value>
   </data>
   <data name="Year" xml:space="preserve">
     <value>שָׁנָה</value>

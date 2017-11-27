@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>@Accounts</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>@AccountsPaid</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>@AccountsPayable</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>@AccountsReceivable</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>@AccountsRecieved</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>@AccountUtility</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="Allow" xml:space="preserve">
     <value>@Allow</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>@AllTransactions</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>@Amount</value>

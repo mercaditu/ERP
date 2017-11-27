@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>Comptes</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>Comptes Payés</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>Comptes À Payer</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>Comptes Débiteurs</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>Comptes Recieved</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>Utilitaire Pour Les Comptes</value>
@@ -180,6 +186,9 @@
   <data name="Allow" xml:space="preserve">
     <value>Permettre</value>
   </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>Toutes Transactions</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Montant</value>
   </data>
@@ -214,7 +223,7 @@
     <value>Les Atouts</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>Audit</value>
+    <value>Vérification</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
     <value>Comptabilité Automatique</value>
@@ -700,7 +709,7 @@
     <value>Fini</value>
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
-    <value>Exercice Financier</value>
+    <value>Période Fiscal</value>
   </data>
   <data name="FixedAssetGroup" xml:space="preserve">
     <value>Groupe Immobilisation</value>
@@ -1326,6 +1335,9 @@
   <data name="Required" xml:space="preserve">
     <value>Champs Obligatoires</value>
   </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>Restaurant</value>
+  </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>Retour Nombre</value>
   </data>
@@ -1345,7 +1357,7 @@
     <value>Analyse Des Ventes</value>
   </data>
   <data name="SalesBudget" xml:space="preserve">
-    <value>Budget De Vente</value>
+    <value>Le Budget Des Ventes</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
     <value>Budget Des Ventes Résumé</value>
@@ -1509,12 +1521,6 @@
   <data name="StockMinimum" xml:space="preserve">
     <value>Stock Minimum</value>
   </data>
-  <data name="String" xml:space="preserve">
-    <value>#VALUE!</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value>#VALUE!</value>
-  </data>
   <data name="StylePrinter" xml:space="preserve">
     <value>Style De L'Imprimante</value>
   </data>
@@ -1547,6 +1553,9 @@
   </data>
   <data name="Surcharge" xml:space="preserve">
     <value>Surtaxe</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Table</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Mots Clés</value>
@@ -1655,6 +1664,9 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>Le Volume</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>Serveur</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Attention</value>

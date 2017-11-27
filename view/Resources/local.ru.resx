@@ -118,1554 +118,1578 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>Conta</value>
+    <value>Счет</value>
   </data>
   <data name="Accountant" xml:space="preserve">
-    <value>Contador</value>
+    <value>Бухгалтер</value>
   </data>
   <data name="AccountBalance" xml:space="preserve">
-    <value>Saldo Da Conta</value>
+    <value>Баланс</value>
   </data>
   <data name="Accounted" xml:space="preserve">
-    <value>Representaram</value>
+    <value>Учитывается</value>
   </data>
   <data name="Accounting" xml:space="preserve">
-    <value>Contabilidade</value>
+    <value>бухгалтерский учет</value>
   </data>
   <data name="AccountingJournal" xml:space="preserve">
-    <value>Accounting Journal</value>
+    <value>Бухгалтерский журнал</value>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Contas</value>
+    <value>Счета</value>
+  </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>Счета Paid</value>
   </data>
   <data name="AccountsPayable" xml:space="preserve">
-    <value>Contas A Pagar</value>
+    <value>Кредиторская задолженность</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
-    <value>Contas Recebíveis</value>
+    <value>Задолженность на счетах</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>Счета пОЛУЧАЛ</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
-    <value>Utility For Contas</value>
+    <value>Утилита для учетных записей</value>
   </data>
   <data name="Activate" xml:space="preserve">
-    <value>Ativar</value>
+    <value>активировать</value>
   </data>
   <data name="Active" xml:space="preserve">
-    <value>Ativo</value>
+    <value>активный</value>
   </data>
   <data name="ActivityPlan" xml:space="preserve">
-    <value>Plano De Actividades</value>
+    <value>План деятельности</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Endereço</value>
+    <value>Адрес</value>
   </data>
   <data name="AddsValue" xml:space="preserve">
-    <value>Agrega Valor</value>
+    <value>Прибавляет Значение</value>
   </data>
   <data name="Adjust" xml:space="preserve">
-    <value>Ajustar</value>
+    <value>регулировать</value>
   </data>
   <data name="Administrative" xml:space="preserve">
-    <value>Administrativo</value>
+    <value>административный</value>
   </data>
   <data name="Adult" xml:space="preserve">
-    <value>Adulto</value>
+    <value>для взрослых</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>Avançado</value>
+    <value>продвинутый</value>
   </data>
   <data name="Alias" xml:space="preserve">
-    <value>Pseudônimo</value>
+    <value>кличка</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>Permitir</value>
+    <value>Позволять</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>Все транзакции</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>Montante</value>
+    <value>Количество</value>
   </data>
   <data name="AmountPaid" xml:space="preserve">
-    <value>Quantia Paga</value>
+    <value>выплачиваемая сумма</value>
   </data>
   <data name="AnalisysofAccountsReceivable" xml:space="preserve">
-    <value>Análise Do Contas A Receber</value>
+    <value>Анализы дебиторской задолженности</value>
   </data>
   <data name="Annul" xml:space="preserve">
-    <value>Anular</value>
+    <value>кассировать</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>Aplicação</value>
+    <value>заявка</value>
   </data>
   <data name="Applicationrestartwillberequired" xml:space="preserve">
-    <value>Reinicialização Do Aplicativo Será Exigido</value>
+    <value>потребуется перезагрузка приложения</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>Aprovar</value>
+    <value>Одобрить</value>
   </data>
   <data name="Archive" xml:space="preserve">
-    <value>Arquivo</value>
+    <value>Архив</value>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>Área</value>
+    <value>Площадь</value>
   </data>
   <data name="ArrivalDate" xml:space="preserve">
-    <value>Data De Chegada</value>
+    <value>Дата прибытия</value>
   </data>
   <data name="Assets" xml:space="preserve">
-    <value>Ativos</value>
+    <value>Активы</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>Auditar</value>
+    <value>аудит</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
-    <value>Contabilidade Automática</value>
+    <value>Автоматический учет</value>
   </data>
   <data name="AutomaticRecipe" xml:space="preserve">
-    <value>Receita Automática</value>
+    <value>Автоматический Рецепт</value>
   </data>
   <data name="Available" xml:space="preserve">
-    <value>Acessível</value>
+    <value>Доступный</value>
   </data>
   <data name="AvailableCredit" xml:space="preserve">
-    <value>Crédito Disponível</value>
+    <value>Доступный кредит</value>
   </data>
   <data name="BackgroundImage" xml:space="preserve">
-    <value>Imagem De Fundo</value>
+    <value>Изображение на заднем плане</value>
   </data>
   <data name="Bank" xml:space="preserve">
-    <value>Banco</value>
+    <value>Банка</value>
   </data>
   <data name="BankReconciliation" xml:space="preserve">
-    <value>Reconciliação Bancária</value>
+    <value>Банк примирения</value>
   </data>
   <data name="BaseSalary" xml:space="preserve">
-    <value>Salário Base</value>
+    <value>Базовая зарплата</value>
   </data>
   <data name="Basic" xml:space="preserve">
-    <value>Básico</value>
+    <value>основной</value>
   </data>
   <data name="Batch" xml:space="preserve">
-    <value>Fornada</value>
+    <value>партия</value>
   </data>
   <data name="Behavior" xml:space="preserve">
-    <value>Comportamento</value>
+    <value>Поведение</value>
   </data>
   <data name="BelongsTo" xml:space="preserve">
-    <value>Pertence A</value>
+    <value>Принадлежит</value>
   </data>
   <data name="BloodType" xml:space="preserve">
-    <value>Tipo Sanguíneo</value>
+    <value>Группа крови</value>
   </data>
   <data name="BookofExpenses" xml:space="preserve">
-    <value>Livro De Despesas</value>
+    <value>Книга расходов</value>
   </data>
   <data name="BookofIncomes" xml:space="preserve">
-    <value>Livro De Receitas</value>
+    <value>Книга доходов</value>
   </data>
   <data name="Branch" xml:space="preserve">
-    <value>Ramo</value>
+    <value>Филиал</value>
   </data>
   <data name="Brand" xml:space="preserve">
-    <value>Marca</value>
+    <value>марка</value>
   </data>
   <data name="BudgetNumber" xml:space="preserve">
-    <value>Número Orçamento</value>
+    <value>Бюджет Количество</value>
   </data>
   <data name="Buyer" xml:space="preserve">
-    <value>Comprador</value>
+    <value>Покупатель</value>
   </data>
   <data name="BuyRate" xml:space="preserve">
-    <value>Comprar Taxa</value>
+    <value>Купить Цена</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
-    <value>Por Dimension</value>
+    <value>По измерению</value>
   </data>
   <data name="ByValue" xml:space="preserve">
-    <value>Por Valor</value>
+    <value>По значению</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>Calcular</value>
+    <value>подсчитывать</value>
   </data>
   <data name="Calculated" xml:space="preserve">
-    <value>Calculado</value>
+    <value>вычисленный</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancelar</value>
+    <value>Отмена</value>
   </data>
   <data name="CanExpire" xml:space="preserve">
-    <value>Pode Expirar</value>
+    <value>Может Expire</value>
   </data>
   <data name="CapitalResource" xml:space="preserve">
-    <value>Resource Capital</value>
+    <value>Капитал Сырьевые</value>
   </data>
   <data name="CaractersLeft" xml:space="preserve">
-    <value>Caracters Esquerda</value>
+    <value>Caracters левый</value>
   </data>
   <data name="CashFlow" xml:space="preserve">
-    <value>Fluxo De Caixa</value>
+    <value>Поток наличных денег</value>
   </data>
   <data name="Catalog" xml:space="preserve">
-    <value>Catálogo</value>
+    <value>Каталог</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>Categoria</value>
+    <value>категория</value>
   </data>
   <data name="ChartofAccount" xml:space="preserve">
-    <value>Plano De Contas</value>
+    <value>Схема счета</value>
   </data>
   <data name="Children" xml:space="preserve">
-    <value>Crianças</value>
+    <value>Дети</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>Cidade</value>
+    <value>город</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>Código</value>
+    <value>Код</value>
   </data>
   <data name="Coeficient" xml:space="preserve">
-    <value>Coeficiente</value>
+    <value>Коэффициент</value>
   </data>
   <data name="CollectionAgent" xml:space="preserve">
-    <value>Coleção Agent</value>
+    <value>агент по инкассо</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>Comente</value>
+    <value>Комментарий</value>
   </data>
   <data name="Commercial" xml:space="preserve">
-    <value>Comercial</value>
+    <value>коммерческий</value>
   </data>
   <data name="Commision" xml:space="preserve">
-    <value>Comissão</value>
+    <value>Commision</value>
   </data>
   <data name="CommisionBase" xml:space="preserve">
-    <value>Base De Comissão</value>
+    <value>Commision Base</value>
   </data>
   <data name="CommisionTemplate" xml:space="preserve">
-    <value>Template Comissão</value>
+    <value>Commision шаблона</value>
   </data>
   <data name="Company" xml:space="preserve">
-    <value>Companhia</value>
+    <value>Компания</value>
   </data>
   <data name="Condition" xml:space="preserve">
-    <value>Condição</value>
+    <value>Состояние</value>
   </data>
   <data name="Configuration" xml:space="preserve">
-    <value>Configuração</value>
+    <value>конфигурация</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Conectar</value>
+    <value>соединять</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
-    <value>Builder Connection</value>
+    <value>Builder Подключение</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
-    <value>Connection String</value>
+    <value>Строка соединения</value>
   </data>
   <data name="Consume" xml:space="preserve">
-    <value>Consumir</value>
+    <value>потреблять</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
-    <value>Consumir Próxima Faixa</value>
+    <value>Потребляйте следующий диапазон</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>Contato</value>
+    <value>контакт</value>
   </data>
   <data name="ContactPerson" xml:space="preserve">
-    <value>Pessoa De Contato</value>
+    <value>Контактное лицо</value>
   </data>
   <data name="ContactRole" xml:space="preserve">
-    <value>Contato Papel</value>
+    <value>Контакт Роль</value>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contatos</value>
+    <value>контакты</value>
   </data>
   <data name="ContactTags" xml:space="preserve">
-    <value>Contato Tag</value>
+    <value>Контакт Метки</value>
   </data>
   <data name="Contract" xml:space="preserve">
-    <value>Contrato</value>
+    <value>контракт</value>
   </data>
   <data name="Corrective" xml:space="preserve">
-    <value>Corretivo</value>
+    <value>корректив</value>
   </data>
   <data name="Cost" xml:space="preserve">
-    <value>Custo</value>
+    <value>Стоимость</value>
   </data>
   <data name="CostCalculation" xml:space="preserve">
-    <value>Calculo De Custo</value>
+    <value>Расчет стоимости</value>
   </data>
   <data name="CostCenter" xml:space="preserve">
-    <value>Centro De Custo</value>
+    <value>Центр затрат</value>
   </data>
   <data name="CostofGoodsSold" xml:space="preserve">
-    <value>Custo De Bens Vendidos</value>
+    <value>Стоимость проданных товаров</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>País</value>
+    <value>Страна</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value>Crio</value>
+    <value>Создайте</value>
   </data>
   <data name="CreateorUpdate" xml:space="preserve">
-    <value>Criar Ou Atualizar</value>
+    <value>Создание или обновление</value>
   </data>
   <data name="Credit" xml:space="preserve">
-    <value>Crédito</value>
+    <value>кредит</value>
   </data>
   <data name="CreditDays" xml:space="preserve">
-    <value>Dias De Crédito</value>
+    <value>Кредитные дни</value>
   </data>
   <data name="CreditLimit" xml:space="preserve">
-    <value>Limite De Crédito</value>
+    <value>Кредитный лимит</value>
   </data>
   <data name="CreditLine" xml:space="preserve">
-    <value>Linha De Crédito</value>
+    <value>Кредитная линия</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>Moeda</value>
+    <value>валюта</value>
   </data>
   <data name="Current" xml:space="preserve">
-    <value>Atual</value>
+    <value>Текущий</value>
   </data>
   <data name="CurrentAccountCustomer" xml:space="preserve">
-    <value>Cliente Conta Corrente</value>
+    <value>Текущие счета клиентов</value>
   </data>
   <data name="CurrentAccountEvent" xml:space="preserve">
-    <value>Evento Conta Corrente</value>
+    <value>Текущие события счетов</value>
   </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
-    <value>Actualmente Conta</value>
+    <value>В настоящее время на счету</value>
   </data>
   <data name="CurrentValue" xml:space="preserve">
-    <value>Valor Atual</value>
+    <value>Текущая стоимость</value>
   </data>
   <data name="Customer" xml:space="preserve">
-    <value>Cliente</value>
+    <value>Клиент</value>
   </data>
   <data name="CustomerCurrentAccount" xml:space="preserve">
-    <value>Cliente Conta Corrente</value>
+    <value>Клиент Расчетный счет</value>
   </data>
   <data name="CustomerDeliveryList" xml:space="preserve">
-    <value>Cliente Lista De Entrega</value>
+    <value>Список Доставка клиентов</value>
   </data>
   <data name="Customize" xml:space="preserve">
-    <value>Customizar</value>
+    <value>Настроить</value>
   </data>
   <data name="CustomsDuty" xml:space="preserve">
-    <value>Direitos Aduaneiros</value>
+    <value>Таможенная пошлина</value>
   </data>
   <data name="DailyGoal" xml:space="preserve">
-    <value>Meta Diária</value>
+    <value>Ежедневная цель</value>
   </data>
   <data name="Database" xml:space="preserve">
-    <value>Base De Dados</value>
+    <value>База данных</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Encontro</value>
+    <value>Дата</value>
   </data>
   <data name="DateofArrival" xml:space="preserve">
-    <value>Data De Chegada</value>
+    <value>Дата прибытия</value>
   </data>
   <data name="DateofBirth" xml:space="preserve">
-    <value>Data De Nascimento</value>
+    <value>Дата рождения</value>
   </data>
   <data name="Day" xml:space="preserve">
-    <value>Dia</value>
+    <value>День</value>
   </data>
   <data name="DebeHaberIntegration" xml:space="preserve">
-    <value>Integração Debehaber</value>
+    <value>Интеграция DebeHaber</value>
   </data>
   <data name="Debit" xml:space="preserve">
-    <value>Débito</value>
+    <value>Дебет</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Padrão</value>
+    <value>По умолчанию</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Excluir</value>
+    <value>Удалить</value>
   </data>
   <data name="DeliveryDate" xml:space="preserve">
-    <value>Data De Entrega</value>
+    <value>Дата доставки</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>Departamento</value>
+    <value>отдел</value>
   </data>
   <data name="DepartureDate" xml:space="preserve">
-    <value>Data De Partida</value>
+    <value>Дата отбытия</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Descrição</value>
+    <value>Описание</value>
   </data>
   <data name="desc_Account" xml:space="preserve">
-    <value>Contas Rastrear Todas As Transações Financeiras</value>
+    <value>Счета отслеживать все финансовые операции</value>
   </data>
   <data name="desc_AccountsPayable" xml:space="preserve">
-    <value>Insira Os Pagamentos Feitos E Calcular O Que É Esquerda</value>
+    <value>Вставьте платежи и рассчитать, что осталось</value>
   </data>
   <data name="desc_AccountsReceivable" xml:space="preserve">
-    <value>Insira Pagamentos Aliviados E Calcular O Que É Esquerda</value>
+    <value>Вставьте платежи освобождены и вычислить, что осталось</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>Criar E Transaccionar Com Suas Contas Financeiras</value>
+    <value>Создание и сделки с финансовыми счетами</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
-    <value>Os Bancos Têm Capacidade De Manter Várias Contas</value>
+    <value>Банки имеют возможность удерживать несколько учетных записей</value>
   </data>
   <data name="desc_Contact" xml:space="preserve">
-    <value>Informação De Contato Para Seus Contatos E Fornecedores</value>
+    <value>Контактная информация для контактов и поставщиков</value>
   </data>
   <data name="desc_ContactRole" xml:space="preserve">
-    <value>Definir Funções E Direitos Para Os Nossos Contactos</value>
+    <value>Определение роли и права для наших контактов</value>
   </data>
   <data name="desc_contactTag" xml:space="preserve">
-    <value>As Tags Ajudam Pesquisar E Classificar Os Contatos Rapidamente</value>
+    <value>Теги помогают найти и быстро сортировать контакты</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
-    <value>Permite Transações Em Diferentes Moedas E Taxas</value>
+    <value>Позволяет операции в различных валютах и ​​ставок</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
-    <value>Todos Os Itens Que Serão Comercializados</value>
+    <value>Все элементы, которые будут коммерциализованными</value>
   </data>
   <data name="desc_ItemTag" xml:space="preserve">
-    <value>As Tags Ajudam Pesquisar E Classificar Os Itens Rapidamente</value>
+    <value>Теги помогают найти и быстро сортировать элементы</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
-    <value>Locais De Manter Estoques Dentro De Um Ramo</value>
+    <value>Места провести инвентаризацию в отрасли</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
-    <value>Controle E Manutenção Schedual Para Seus Ativos</value>
+    <value>Контроль и внеплановое охранение для ваших активов</value>
   </data>
   <data name="desc_Movement" xml:space="preserve">
-    <value>Mover Itens De E Para Locais Diferentes</value>
+    <value>Перемещение элементов и из разных мест</value>
   </data>
   <data name="desc_PriceList" xml:space="preserve">
-    <value>Comercializar Mesmo Item Com Preços Diferentes</value>
+    <value>Коммерциализация же товар по разным ценам</value>
   </data>
   <data name="desc_Stock" xml:space="preserve">
-    <value>Os Níveis De Estoque Agrupados Por Ramo E Localização</value>
+    <value>Уровень запасов, сгруппированных по отраслям и местоположение</value>
   </data>
   <data name="desc_Terminal" xml:space="preserve">
-    <value>Terminais Permitir-Nos Para Emitir Documentos</value>
+    <value>Терминалы позволяют излучать документы</value>
   </data>
   <data name="desc_Transfer" xml:space="preserve">
-    <value>Transferir Itens De E Para Diferentes Lojas</value>
+    <value>Передача предметов и из разных магазинов</value>
   </data>
   <data name="desc_VAT" xml:space="preserve">
-    <value>Impostos Aplicados Durante Uma Venda Ou Compra</value>
+    <value>Налоги применяются при продаже или покупке</value>
   </data>
   <data name="desc_VATGroup" xml:space="preserve">
-    <value>Iva Que São Agrupados Para Simplesmente Transações</value>
+    <value>НДС, которые сгруппированы просто сделок</value>
   </data>
   <data name="Designer" xml:space="preserve">
-    <value>Estilista</value>
+    <value>дизайнер</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>Destino</value>
+    <value>Место назначения</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Detalhes</value>
+    <value>Детали</value>
   </data>
   <data name="DeveloperMode" xml:space="preserve">
-    <value>Modo De Desenvolvedor</value>
+    <value>Режим разработчика</value>
   </data>
   <data name="DifferenceinDate" xml:space="preserve">
-    <value>Diferença De Data</value>
+    <value>Разница в дате</value>
   </data>
   <data name="Dimension" xml:space="preserve">
-    <value>Dimensão</value>
+    <value>измерение</value>
   </data>
   <data name="DirectCost" xml:space="preserve">
-    <value>Custo Direto</value>
+    <value>прямая стоимость</value>
   </data>
   <data name="Discount" xml:space="preserve">
-    <value>Desconto</value>
+    <value>скидка</value>
   </data>
   <data name="Distance" xml:space="preserve">
-    <value>Distância</value>
+    <value>Расстояние</value>
   </data>
   <data name="Divisible" xml:space="preserve">
-    <value>Divisível</value>
+    <value>делимый</value>
   </data>
   <data name="Document" xml:space="preserve">
-    <value>Documento</value>
+    <value>Документ</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>Feito</value>
+    <value>Готово</value>
   </data>
   <data name="DownTime" xml:space="preserve">
-    <value>Tempo De Inatividade</value>
+    <value>Вниз Время</value>
   </data>
   <data name="Driver" xml:space="preserve">
-    <value>Motorista</value>
+    <value>Водитель</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>Duplicado</value>
+    <value>дублировать</value>
   </data>
   <data name="DynamicFields" xml:space="preserve">
-    <value>Campos Dinâmicos</value>
+    <value>Динамические поля</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Editar</value>
+    <value>редактировать</value>
   </data>
   <data name="Education" xml:space="preserve">
-    <value>Educação</value>
+    <value>образование</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>O Email</value>
+    <value>Эл. адрес</value>
   </data>
   <data name="Employee" xml:space="preserve">
-    <value>Empregado</value>
+    <value>Наемный рабочий</value>
   </data>
   <data name="EncryptedConnection" xml:space="preserve">
-    <value>Conexão Criptografada</value>
+    <value>Зашифрованные соединения</value>
   </data>
   <data name="EndDate" xml:space="preserve">
-    <value>Data Final</value>
+    <value>Дата окончания</value>
   </data>
   <data name="Ending" xml:space="preserve">
-    <value>Final</value>
+    <value>окончание</value>
   </data>
   <data name="EndingDate" xml:space="preserve">
-    <value>Data De Encerramento</value>
+    <value>Дата окончания</value>
   </data>
   <data name="Enter" xml:space="preserve">
-    <value>Entrar</value>
+    <value>Войти</value>
   </data>
   <data name="Equity" xml:space="preserve">
-    <value>Capital Próprio</value>
+    <value>Капитал</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Erro</value>
+    <value>ошибка</value>
   </data>
   <data name="EstimatedDateofArrival" xml:space="preserve">
-    <value>Estima Data De Chegada</value>
+    <value>Предполагаемая дата прибытия</value>
   </data>
   <data name="EstimatedDateofDeparture" xml:space="preserve">
-    <value>Estima Data De Partida</value>
+    <value>Предполагаемая дата вылета</value>
   </data>
   <data name="EstimatedTimeofArrival" xml:space="preserve">
-    <value>Tempo Estimado De Chegada</value>
+    <value>Примерное время прибытия</value>
   </data>
   <data name="EstimatedTimeofDeparture" xml:space="preserve">
-    <value>Hora Prevista De Partida</value>
+    <value>Ожидаемое время отправления</value>
   </data>
   <data name="EventManagement" xml:space="preserve">
-    <value>Gestão De Eventos</value>
+    <value>Управление событиями</value>
   </data>
   <data name="EventType" xml:space="preserve">
-    <value>Tipo De Evento</value>
+    <value>Тип события</value>
   </data>
   <data name="Expenses" xml:space="preserve">
-    <value>Despesas</value>
+    <value>Затраты</value>
   </data>
   <data name="ExpirationDate" xml:space="preserve">
-    <value>Data De Validade</value>
+    <value>Срок годности</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Exportar</value>
+    <value>экспорт</value>
   </data>
   <data name="Exports" xml:space="preserve">
-    <value>Exportações</value>
+    <value>экспорт</value>
   </data>
   <data name="Extract" xml:space="preserve">
-    <value>Extrair</value>
+    <value>экстракт</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>Extras</value>
+    <value>Дополнительно</value>
   </data>
   <data name="Factor" xml:space="preserve">
-    <value>Fator</value>
+    <value>фактор</value>
   </data>
   <data name="Family" xml:space="preserve">
-    <value>Família</value>
+    <value>семья</value>
   </data>
   <data name="Favorite" xml:space="preserve">
-    <value>Favorito</value>
+    <value>любимец</value>
   </data>
   <data name="Female" xml:space="preserve">
-    <value>Mulher</value>
+    <value>женский</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filtro</value>
+    <value>Фильтр</value>
   </data>
   <data name="FinalCost" xml:space="preserve">
-    <value>Custo Final</value>
+    <value>конечная стоимость</value>
   </data>
   <data name="Finance" xml:space="preserve">
-    <value>Finança</value>
+    <value>финансов</value>
   </data>
   <data name="Financial" xml:space="preserve">
-    <value>Financeiro</value>
+    <value>финансовый</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>Acabado</value>
+    <value>Законченный</value>
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
-    <value>Período Fiscal</value>
+    <value>Финансовый период</value>
   </data>
   <data name="FixedAssetGroup" xml:space="preserve">
-    <value>Fixa Grupo De Ativos</value>
+    <value>Фиксированная группа активов</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
-    <value>Ativo Permanente</value>
+    <value>неликвидные активы</value>
   </data>
   <data name="FootTraffic" xml:space="preserve">
-    <value>Tráfego De Pedestres</value>
+    <value>Пешеходное движение</value>
   </data>
   <data name="Forced" xml:space="preserve">
-    <value>Forçado</value>
+    <value>вынужденная</value>
   </data>
   <data name="Form" xml:space="preserve">
-    <value>Formulario</value>
+    <value>форма</value>
   </data>
   <data name="Fraction" xml:space="preserve">
-    <value>Fração</value>
+    <value>Доля</value>
   </data>
   <data name="Freight" xml:space="preserve">
-    <value>Frete</value>
+    <value>перевозка грузов</value>
   </data>
   <data name="Gender" xml:space="preserve">
-    <value>Gênero</value>
+    <value>Пол</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>Geral</value>
+    <value>Генеральная</value>
   </data>
   <data name="Geography" xml:space="preserve">
-    <value>Geografia</value>
+    <value>география</value>
   </data>
   <data name="GetDetails" xml:space="preserve">
-    <value>Obter Detalhes</value>
+    <value>Получить подробную информацию</value>
   </data>
   <data name="Gift" xml:space="preserve">
-    <value>Presente</value>
+    <value>Подарок</value>
   </data>
   <data name="GovernmentID" xml:space="preserve">
-    <value>Cnpj</value>
+    <value>ИД правительства</value>
   </data>
   <data name="GracePeriod" xml:space="preserve">
-    <value>Período De Carência</value>
+    <value>Льготный период</value>
   </data>
   <data name="Grid" xml:space="preserve">
-    <value>Grade</value>
+    <value>сетка</value>
   </data>
   <data name="GrossWeight" xml:space="preserve">
-    <value>Peso Bruto</value>
+    <value>Вес брутто</value>
   </data>
   <data name="Guest" xml:space="preserve">
-    <value>Convidado</value>
+    <value>гость</value>
   </data>
   <data name="HasPromotion" xml:space="preserve">
-    <value>Tem Promoção</value>
+    <value>Имеет Promotion</value>
   </data>
   <data name="HasWeight" xml:space="preserve">
-    <value>Tem Peso</value>
+    <value>Имеет вес</value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>Cabeçalho</value>
+    <value>заголовок</value>
   </data>
   <data name="Hello" xml:space="preserve">
-    <value>Olá</value>
+    <value>Здравствуйте</value>
   </data>
   <data name="HistoricStockLevels" xml:space="preserve">
-    <value>Níveis Históricos De Stock</value>
+    <value>Исторические уровни запасов</value>
   </data>
   <data name="HistoricStockValues" xml:space="preserve">
-    <value>Os Valores Históricos De Stock</value>
+    <value>Исторические ценности фонда</value>
   </data>
   <data name="Hour" xml:space="preserve">
-    <value>Hora</value>
+    <value>Час</value>
   </data>
   <data name="HourCoeficient" xml:space="preserve">
-    <value>Hour Coeficiente</value>
+    <value>час Коэффициент</value>
   </data>
   <data name="HumanResources" xml:space="preserve">
-    <value>Recursos Humanos</value>
+    <value>Отдел кадров</value>
   </data>
   <data name="Humidity" xml:space="preserve">
-    <value>Umidade</value>
+    <value>влажность</value>
   </data>
   <data name="Importance" xml:space="preserve">
-    <value>Importância</value>
+    <value>значение</value>
   </data>
   <data name="Importation" xml:space="preserve">
-    <value>Importação</value>
+    <value>Импорт</value>
   </data>
   <data name="Imports" xml:space="preserve">
-    <value>Importações</value>
+    <value>импорт</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
-    <value>Inativar</value>
+    <value>инактивировать</value>
   </data>
   <data name="Incomes" xml:space="preserve">
-    <value>Rendimentos</value>
+    <value>доходов</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
-    <value>Incoterm</value>
+    <value>Инкотермс</value>
   </data>
   <data name="IncotermCondition" xml:space="preserve">
-    <value>Incoterm Condição</value>
+    <value>Инкотермс Условия</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Em Formação</value>
+    <value>Информация</value>
   </data>
   <data name="InitialAmount" xml:space="preserve">
-    <value>Quantidade Inicial</value>
+    <value>Первоначальная сумма</value>
   </data>
   <data name="InitialSetup" xml:space="preserve">
-    <value>Configuração Inicial</value>
+    <value>Начальная настройка</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>Entrada</value>
+    <value>вход</value>
   </data>
   <data name="Insert" xml:space="preserve">
-    <value>Inserir</value>
+    <value>Вставить</value>
   </data>
   <data name="Insurance" xml:space="preserve">
-    <value>Seguro</value>
+    <value>страхование</value>
   </data>
   <data name="Integration" xml:space="preserve">
-    <value>Integração</value>
+    <value>интеграция</value>
   </data>
   <data name="Interests" xml:space="preserve">
-    <value>Interesses</value>
+    <value>интересы</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
-    <value>Comércio Internacional</value>
+    <value>Международная торговля</value>
   </data>
   <data name="Inventory" xml:space="preserve">
-    <value>Inventário</value>
+    <value>инвентарь</value>
   </data>
   <data name="InventoryFlow" xml:space="preserve">
-    <value>Fluxo De Inventário</value>
+    <value>Flow Inventory</value>
   </data>
   <data name="InventoryFlowwithDimension" xml:space="preserve">
-    <value>Fluxo De Inventário Com Dimension</value>
+    <value>Inventory Flow с Dimension</value>
   </data>
   <data name="Invoice" xml:space="preserve">
-    <value>Fatura</value>
+    <value>Выставленный счет</value>
   </data>
   <data name="InvoiceDay" xml:space="preserve">
-    <value>Dia Factura</value>
+    <value>День счет-фактура</value>
   </data>
   <data name="InvoiceInterval" xml:space="preserve">
-    <value>Intervalo Factura</value>
+    <value>Интервал счета-фактуры</value>
   </data>
   <data name="InvoiceNumber" xml:space="preserve">
-    <value>Número De Fatura</value>
+    <value>Номер счета</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>Endereço Do Servidor (Ip Ou Domínio)</value>
+    <value>Адрес сервера (IP или домена)</value>
   </data>
   <data name="IsDirect" xml:space="preserve">
-    <value>É Direto</value>
+    <value>Является прямым</value>
   </data>
   <data name="ISOCode" xml:space="preserve">
-    <value>Código Iso</value>
+    <value>Код ISO</value>
   </data>
   <data name="Issubstitute" xml:space="preserve">
-    <value>É Substituto</value>
+    <value>Является заменой</value>
   </data>
   <data name="Issued" xml:space="preserve">
-    <value>Emitido</value>
+    <value>Выпущен</value>
   </data>
   <data name="ItemDefect" xml:space="preserve">
-    <value>Defeito Item</value>
+    <value>Пункт Дефект</value>
   </data>
   <data name="ItemExpired" xml:space="preserve">
-    <value>Item Expirado</value>
+    <value>Пункт Expired</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
-    <value>Movimento Item</value>
+    <value>Пункт Movement</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value>Unid</value>
+    <value>Предметы</value>
   </data>
   <data name="ItemTag" xml:space="preserve">
-    <value>Tag Item</value>
+    <value>Пункт Тэг</value>
   </data>
   <data name="ItemTransfer" xml:space="preserve">
-    <value>Transferência De Item</value>
+    <value>Пункт переводов</value>
   </data>
   <data name="ItemType" xml:space="preserve">
-    <value>Tipo De Item</value>
+    <value>Тип вещи</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
-    <value>Atalhos Do Teclado</value>
+    <value>Горячие клавиши</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Língua</value>
+    <value>язык</value>
   </data>
   <data name="LastUsed" xml:space="preserve">
-    <value>Usado Por Último</value>
+    <value>Последний используемый</value>
   </data>
   <data name="Latitude" xml:space="preserve">
-    <value>Latitude</value>
+    <value>широта</value>
   </data>
   <data name="Legal" xml:space="preserve">
-    <value>Legal</value>
+    <value>легальный</value>
   </data>
   <data name="LegalRepresentative" xml:space="preserve">
-    <value>Representante Legal</value>
+    <value>Законный представитель</value>
   </data>
   <data name="Length" xml:space="preserve">
-    <value>Comprimento</value>
+    <value>длина</value>
   </data>
   <data name="Liabilities" xml:space="preserve">
-    <value>Passivo</value>
+    <value>пассивы</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>Licença</value>
+    <value>Лицензия</value>
   </data>
   <data name="Line" xml:space="preserve">
-    <value>Linha</value>
+    <value>Линия</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>Ligação</value>
+    <value>Ссылка</value>
   </data>
   <data name="List" xml:space="preserve">
-    <value>Lista</value>
+    <value>Список</value>
   </data>
   <data name="LocatetheServer" xml:space="preserve">
-    <value>Localize O Servidor</value>
+    <value>Найдите сервер</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Localização</value>
+    <value>Место нахождения</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>Entrar</value>
+    <value>Авторизоваться</value>
   </data>
   <data name="Logistics" xml:space="preserve">
-    <value>Logística</value>
+    <value>Логистика</value>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>Sair</value>
+    <value>Выйти</value>
   </data>
   <data name="Longitud" xml:space="preserve">
-    <value>Longitud</value>
+    <value>LONGITUD</value>
   </data>
   <data name="LotNumber" xml:space="preserve">
-    <value>Número De Lote</value>
+    <value>Большое число</value>
   </data>
   <data name="Maintainance" xml:space="preserve">
-    <value>Manutenção</value>
+    <value>коммунальных</value>
   </data>
   <data name="MakeaGroupPayment" xml:space="preserve">
-    <value>Fazer Um Pagamento Grupo</value>
+    <value>Сделать группу Оплата</value>
   </data>
   <data name="MakePayment" xml:space="preserve">
-    <value>Faça O Pagamento</value>
+    <value>Производить оплату</value>
   </data>
   <data name="Male" xml:space="preserve">
-    <value>Homme</value>
+    <value>мужчина</value>
   </data>
   <data name="ManufacturingDate" xml:space="preserve">
-    <value>Data De Fabricação</value>
+    <value>Дата производства</value>
   </data>
   <data name="Margin" xml:space="preserve">
-    <value>Margem</value>
+    <value>Поле</value>
   </data>
   <data name="MaritalStatus" xml:space="preserve">
-    <value>Estado Civil</value>
+    <value>Семейное положение</value>
   </data>
   <data name="Markup" xml:space="preserve">
-    <value>Remarcação</value>
+    <value>наценка</value>
   </data>
   <data name="Mask" xml:space="preserve">
-    <value>Mascarar</value>
+    <value>маскировать</value>
   </data>
   <data name="Master" xml:space="preserve">
-    <value>Mestre</value>
+    <value>Мастер</value>
   </data>
   <data name="Measurement" xml:space="preserve">
-    <value>Medição</value>
+    <value>измерение</value>
   </data>
   <data name="MeasurementType" xml:space="preserve">
-    <value>Tipo De Medição</value>
+    <value>Тип измерения</value>
   </data>
   <data name="MerchandisewithCredits" xml:space="preserve">
-    <value>Mercadoria Com Créditos</value>
+    <value>Товар с Кредитом</value>
   </data>
   <data name="MerchandisewithDebits" xml:space="preserve">
-    <value>Mercadoria Com Débitos</value>
+    <value>Товар с дебетом</value>
   </data>
   <data name="MigrationType" xml:space="preserve">
-    <value>Tipo De Migração</value>
+    <value>Тип миграции</value>
   </data>
   <data name="MobilePointofSale" xml:space="preserve">
-    <value>Ponto Móvel De Venda</value>
+    <value>Мобильная точка продаж</value>
   </data>
   <data name="Module" xml:space="preserve">
-    <value>Módulo</value>
+    <value>модуль</value>
   </data>
   <data name="Month" xml:space="preserve">
-    <value>Mês</value>
+    <value>Месяц</value>
   </data>
   <data name="MonthlyGoal" xml:space="preserve">
-    <value>Meta Mensal</value>
+    <value>Ежемесячная цель</value>
   </data>
   <data name="Movement" xml:space="preserve">
-    <value>Movimento</value>
+    <value>движение</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Nome</value>
+    <value>имя</value>
   </data>
   <data name="Nationality" xml:space="preserve">
-    <value>Nacionalidade</value>
+    <value>Национальность</value>
   </data>
   <data name="NeededbyDate" xml:space="preserve">
-    <value>Necessária Por Data</value>
+    <value>Необходимые по дате</value>
   </data>
   <data name="NetWeight" xml:space="preserve">
-    <value>Peso Líquido</value>
+    <value>Вес нетто</value>
   </data>
   <data name="New" xml:space="preserve">
-    <value>Novo</value>
+    <value>новый</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Não</value>
+    <value>нет</value>
   </data>
   <data name="Number" xml:space="preserve">
-    <value>Número</value>
+    <value>Число</value>
   </data>
   <data name="Order" xml:space="preserve">
-    <value>Ordem</value>
+    <value>порядок</value>
   </data>
   <data name="OrderNumber" xml:space="preserve">
-    <value>Número Do Pedido</value>
+    <value>Номер заказа</value>
   </data>
   <data name="Origin" xml:space="preserve">
-    <value>Origem</value>
+    <value>происхождения</value>
   </data>
   <data name="Others" xml:space="preserve">
-    <value>Outras</value>
+    <value>другие</value>
   </data>
   <data name="Output" xml:space="preserve">
-    <value>Saída</value>
+    <value>Вывод</value>
   </data>
   <data name="PackingList" xml:space="preserve">
-    <value>Lista De Embalagem</value>
+    <value>Товарная накладная</value>
   </data>
   <data name="Parameters" xml:space="preserve">
-    <value>Parâmetros</value>
+    <value>параметры</value>
   </data>
   <data name="Parent" xml:space="preserve">
-    <value>Parente</value>
+    <value>родитель</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Senha</value>
+    <value>пароль</value>
   </data>
   <data name="Payable" xml:space="preserve">
-    <value>A Pagar</value>
+    <value>к оплате</value>
   </data>
   <data name="Payment" xml:space="preserve">
-    <value>Forma De Pagamento</value>
+    <value>Оплата</value>
   </data>
   <data name="PaymentDate" xml:space="preserve">
-    <value>Data De Pagamento</value>
+    <value>Дата оплаты</value>
   </data>
   <data name="PaymentForm" xml:space="preserve">
-    <value>Formulário De Pagamento</value>
+    <value>Форма оплаты</value>
   </data>
   <data name="PaymentMade" xml:space="preserve">
-    <value>Pagamento Realizado</value>
+    <value>Платеж произведен</value>
   </data>
   <data name="PaymentReceipt" xml:space="preserve">
-    <value>Recibo De Pagamento</value>
+    <value>Квитанция об оплате</value>
   </data>
   <data name="PaymentRecieved" xml:space="preserve">
-    <value>Pagamento Recebido</value>
+    <value>Оплата пОЛУЧАЛ</value>
   </data>
   <data name="PaymentsMade" xml:space="preserve">
-    <value>Os Pagamentos Efectuados</value>
+    <value>платежи Сделанный</value>
   </data>
   <data name="PaymentsRecieved" xml:space="preserve">
-    <value>Pagamentos Recebido</value>
+    <value>платежи пОЛУЧАЛ</value>
   </data>
   <data name="PaymentType" xml:space="preserve">
-    <value>Tipo De Pagamento</value>
+    <value>Способ оплаты</value>
   </data>
   <data name="PendingDocuments" xml:space="preserve">
-    <value>Pendente Documentos</value>
+    <value>В ожидании документов</value>
   </data>
   <data name="PendingPayables" xml:space="preserve">
-    <value>Dívidas Pendentes</value>
+    <value>В ожидании Payables</value>
   </data>
   <data name="PendingReceivables" xml:space="preserve">
-    <value>Pendentes A Receber</value>
+    <value>Нерешенные Дебиторская задолженность</value>
   </data>
   <data name="Percentage" xml:space="preserve">
-    <value>Percentagem</value>
+    <value>процент</value>
   </data>
   <data name="Person" xml:space="preserve">
-    <value>Pessoa</value>
+    <value>Человек</value>
   </data>
   <data name="Personal" xml:space="preserve">
-    <value>Pessoal</value>
+    <value>личный</value>
   </data>
   <data name="PlaceofBirth" xml:space="preserve">
-    <value>Local De Nascimento</value>
+    <value>Место рождения</value>
   </data>
   <data name="PleaseSelect" xml:space="preserve">
-    <value>Por Favor Selecione</value>
+    <value>Пожалуйста выберите</value>
   </data>
   <data name="PointofSale" xml:space="preserve">
-    <value>Ponto De Venda</value>
+    <value>Торговая точка</value>
   </data>
   <data name="Position" xml:space="preserve">
-    <value>Posição</value>
+    <value>Должность</value>
   </data>
   <data name="Preference" xml:space="preserve">
-    <value>Preferência</value>
+    <value>предпочтение</value>
   </data>
   <data name="Preventive" xml:space="preserve">
-    <value>Preventivo</value>
+    <value>превентивный</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Preço</value>
+    <value>Цена</value>
   </data>
   <data name="PriceList" xml:space="preserve">
-    <value>Lista De Preços</value>
+    <value>Прайс-лист</value>
   </data>
   <data name="PricewithVAT" xml:space="preserve">
-    <value>Preço Com Iva</value>
+    <value>Цена с НДС</value>
   </data>
   <data name="Print" xml:space="preserve">
-    <value>Impressão</value>
+    <value>Распечатать</value>
   </data>
   <data name="Printer" xml:space="preserve">
-    <value>Impressora</value>
+    <value>принтер</value>
   </data>
   <data name="PrinterValues" xml:space="preserve">
-    <value>Valores De Impressora</value>
+    <value>Значения принтера</value>
   </data>
   <data name="PrintingCheques" xml:space="preserve">
-    <value>Impressão De Cheques</value>
+    <value>Печать Проверки</value>
   </data>
   <data name="PrintingPress" xml:space="preserve">
-    <value>Imprensa</value>
+    <value>Печатный станок</value>
   </data>
   <data name="Privilege" xml:space="preserve">
-    <value>Privilégio</value>
+    <value>льгота</value>
   </data>
   <data name="Produce" xml:space="preserve">
-    <value>Produzir</value>
+    <value>Производить</value>
   </data>
   <data name="Product" xml:space="preserve">
-    <value>Produtos</value>
+    <value>Продукт</value>
   </data>
   <data name="ProductDeliveryList" xml:space="preserve">
-    <value>Lista De Entrega Do Produto</value>
+    <value>Список поставки товаров</value>
   </data>
   <data name="Production" xml:space="preserve">
-    <value>Produção</value>
+    <value>производство</value>
   </data>
   <data name="ProductionbyFraction" xml:space="preserve">
-    <value>Produção Pela Fração</value>
+    <value>Производство по фракции</value>
   </data>
   <data name="ProductionExecution" xml:space="preserve">
-    <value>Execução De Produção</value>
+    <value>Выполнение производства</value>
   </data>
   <data name="ProductionOrder" xml:space="preserve">
-    <value>Ordem De Produção</value>
+    <value>Производственный заказ</value>
   </data>
   <data name="ProductionOrderStatus" xml:space="preserve">
-    <value>Produção Status Do Pedido</value>
+    <value>Производство Статус заказа</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
-    <value>Status Da Produção</value>
+    <value>Изготовления</value>
   </data>
   <data name="Profit" xml:space="preserve">
-    <value>Lucro</value>
+    <value>прибыль</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>Projeto</value>
+    <value>проект</value>
   </data>
   <data name="ProjectExecution" xml:space="preserve">
-    <value>Projeto De Execução</value>
+    <value>Выполнение проекта</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
-    <value>Project Finance</value>
+    <value>Проектное финансирование</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
-    <value>Nota Promissória</value>
+    <value>вексель</value>
   </data>
   <data name="Promoted" xml:space="preserve">
-    <value>Promovido</value>
+    <value>Повышен</value>
   </data>
   <data name="Properties" xml:space="preserve">
-    <value>Propriedades</value>
+    <value>свойства</value>
   </data>
   <data name="Property" xml:space="preserve">
-    <value>Propriedade</value>
+    <value>Имущество</value>
   </data>
   <data name="ProratedCost" xml:space="preserve">
-    <value>Custo Proporcional</value>
+    <value>Стоимость пропорционального распределения</value>
   </data>
   <data name="Purchase" xml:space="preserve">
-    <value>Compra</value>
+    <value>покупка</value>
   </data>
   <data name="PurchasebyCostCenter" xml:space="preserve">
-    <value>Compra Por Centro De Custo</value>
+    <value>Покупка МВЗ</value>
   </data>
   <data name="PurchaseDate" xml:space="preserve">
-    <value>Data De Compra</value>
+    <value>Дата покупки</value>
   </data>
   <data name="PurchaseDetail" xml:space="preserve">
-    <value>Detalhe De Compra</value>
+    <value>Покупка Деталь</value>
   </data>
   <data name="PurchaseDocuments" xml:space="preserve">
-    <value>Documentos De Compra</value>
+    <value>Покупка Документы</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
-    <value>Nota Fiscal De Compra</value>
+    <value>Счет заказа</value>
   </data>
   <data name="PurchaseInvoiceSummary" xml:space="preserve">
-    <value>Comprar Invoice Summary</value>
+    <value>Покупка Сводка счета-фактуры</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
-    <value>Ordem De Compra</value>
+    <value>Заказ на покупку</value>
   </data>
   <data name="PurchaseOrderSummary" xml:space="preserve">
-    <value>Purchase Order Summary</value>
+    <value>Покупка Резюме заказа</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
-    <value>Retorno De Compra</value>
+    <value>Покупка Возврат</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
-    <value>Tender Compra</value>
+    <value>Покупка тендера</value>
   </data>
   <data name="PurchaseTenderSummary" xml:space="preserve">
-    <value>Resumo Compra Tender</value>
+    <value>Покупка Тендер Резюме</value>
   </data>
   <data name="PurchaseValue" xml:space="preserve">
-    <value>Valor De Compra</value>
+    <value>Покупка стоимость</value>
   </data>
   <data name="Quantity" xml:space="preserve">
-    <value>Quantidade</value>
+    <value>Количество</value>
   </data>
   <data name="quantityverified" xml:space="preserve">
-    <value>Quantidade Verificada</value>
+    <value>количество проверено</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>Questão</value>
+    <value>Вопрос</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>Cancelar As Alterações! Você Tem Certeza?</value>
+    <value>Отменить изменения! Ты уверен?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
-    <value>Excluir! Você Tem Certeza?</value>
+    <value>Удалить! Ты уверен?</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
-    <value>Ação Rápida</value>
+    <value>Быстрое действие</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
-    <value>Ações Rápidas</value>
+    <value>Быстрые действия</value>
   </data>
   <data name="QuickLook" xml:space="preserve">
-    <value>Uma Olhadela</value>
+    <value>Беглый взгляд</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>Alcance</value>
+    <value>Ассортимент</value>
   </data>
   <data name="RangeValues" xml:space="preserve">
-    <value>Os Valores Variam</value>
+    <value>Диапазон значений</value>
   </data>
   <data name="Rate" xml:space="preserve">
-    <value>Taxa</value>
+    <value>Ставка</value>
   </data>
   <data name="RawMaterial" xml:space="preserve">
-    <value>Matéria-Prima</value>
+    <value>Сырье</value>
   </data>
   <data name="Receipt" xml:space="preserve">
-    <value>Recibo</value>
+    <value>Квитанция</value>
   </data>
   <data name="Receivable" xml:space="preserve">
-    <value>A Receber</value>
+    <value>дебиторов</value>
   </data>
   <data name="RecievePayment" xml:space="preserve">
-    <value>Receber Pagamento</value>
+    <value>Получать зарплату</value>
   </data>
   <data name="Recipe" xml:space="preserve">
-    <value>Receita</value>
+    <value>Рецепт</value>
   </data>
   <data name="Refinance" xml:space="preserve">
-    <value>Refinanciar</value>
+    <value>рефинансировать</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refrescar</value>
+    <value>обновление</value>
   </data>
   <data name="RelatedTo" xml:space="preserve">
-    <value>Relacionado A</value>
+    <value>Относится к</value>
   </data>
   <data name="RelatetoInvoice" xml:space="preserve">
-    <value>Relacionar A Facturar</value>
+    <value>Касается счет-фактура</value>
   </data>
   <data name="Relationship" xml:space="preserve">
-    <value>Relação</value>
+    <value>отношения</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
-    <value>Lembre De Mim</value>
+    <value>Запомни меня</value>
   </data>
   <data name="Repair" xml:space="preserve">
-    <value>Reparar</value>
+    <value>ремонт</value>
   </data>
   <data name="Reports" xml:space="preserve">
-    <value>Relatórios</value>
+    <value>Отчеты</value>
   </data>
   <data name="Reprint" xml:space="preserve">
-    <value>Reimprimir</value>
+    <value>переиздание</value>
   </data>
   <data name="Requested" xml:space="preserve">
-    <value>Requeridos</value>
+    <value>запрошенный</value>
   </data>
   <data name="RequestManagement" xml:space="preserve">
-    <value>Gerenciamento De Solicitações</value>
+    <value>Запрос управления</value>
   </data>
   <data name="RequestResource" xml:space="preserve">
-    <value>Resource Request</value>
+    <value>Запрос ресурсов</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>Requeridos</value>
+    <value>необходимые</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>Ресторан</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
-    <value>Número De Retorno</value>
+    <value>Возврат Номер</value>
   </data>
   <data name="Rounding" xml:space="preserve">
-    <value>Completando</value>
+    <value>округление</value>
   </data>
   <data name="RowLimit" xml:space="preserve">
-    <value>Limite De Linhas</value>
+    <value>Row Limit</value>
   </data>
   <data name="Sale" xml:space="preserve">
-    <value>Venda</value>
+    <value>Продажа</value>
   </data>
   <data name="Sales" xml:space="preserve">
-    <value>Vendas</value>
+    <value>Продажи</value>
   </data>
   <data name="SalesAnalysis" xml:space="preserve">
-    <value>Análise De Vendas</value>
+    <value>анализ сбыта</value>
   </data>
   <data name="SalesBudget" xml:space="preserve">
-    <value>Orçamento De Vendas</value>
+    <value>план по реализации</value>
   </data>
   <data name="SalesBudgetSummary" xml:space="preserve">
-    <value>Resumo Do Orçamento De Vendas</value>
+    <value>Продажи Резюме Бюджета</value>
   </data>
   <data name="SalesbyBranch" xml:space="preserve">
-    <value>Vendas Por Filial</value>
+    <value>Продажи отделения</value>
   </data>
   <data name="SalesbyBrand" xml:space="preserve">
-    <value>Vendas Por Marca</value>
+    <value>Продажи по брендам</value>
   </data>
   <data name="SalesbyCustomer" xml:space="preserve">
-    <value>Vendas Por Cliente</value>
+    <value>Продажи Заказчика</value>
   </data>
   <data name="SalesbyDate" xml:space="preserve">
-    <value>Vendas Por Data</value>
+    <value>Продажи по дате</value>
   </data>
   <data name="SalesbyItem" xml:space="preserve">
-    <value>Vendas Por Item</value>
+    <value>Продажи по пункту</value>
   </data>
   <data name="SalesbySalesman" xml:space="preserve">
-    <value>Vendas Por Salesman</value>
+    <value>Продажи коммивояжера</value>
   </data>
   <data name="SalesbyTag" xml:space="preserve">
-    <value>Vendas Por Tag</value>
+    <value>Продажи по категории</value>
   </data>
   <data name="SalesDetails" xml:space="preserve">
-    <value>Detalhes De Vendas</value>
+    <value>подробности по продажам</value>
   </data>
   <data name="SalesDocuments" xml:space="preserve">
-    <value>Documentos De Vendas</value>
+    <value>Торговые документы</value>
   </data>
   <data name="SalesInvoice" xml:space="preserve">
-    <value>Fatura De Vendas</value>
+    <value>Счет-фактура продажи</value>
   </data>
   <data name="SalesInvoiceSummary" xml:space="preserve">
-    <value>Resumo Da Factura De Vendas</value>
+    <value>Резюме Расходная накладная</value>
   </data>
   <data name="Salesman" xml:space="preserve">
-    <value>Vendedor</value>
+    <value>коммивояжер</value>
   </data>
   <data name="SalesmanType" xml:space="preserve">
-    <value>Tipo Salesman</value>
+    <value>Специалист Тип</value>
   </data>
   <data name="SalesOrder" xml:space="preserve">
-    <value>Pedido De Venda</value>
+    <value>Заказ клиента</value>
   </data>
   <data name="SalesOrderSummary" xml:space="preserve">
-    <value>Resumo Do Pedido De Vendas</value>
+    <value>Резюме заказа клиента</value>
   </data>
   <data name="SalesPromotion" xml:space="preserve">
-    <value>Promoção De Vendas</value>
+    <value>Стимулирование сбыта</value>
   </data>
   <data name="SalesRepresentative" xml:space="preserve">
-    <value>Representante De Vendas</value>
+    <value>Торговый представитель</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
-    <value>Retorno</value>
+    <value>Возвращение продаж</value>
   </data>
   <data name="Saloon" xml:space="preserve">
-    <value>Salão</value>
+    <value>салон</value>
   </data>
   <data name="Sample" xml:space="preserve">
-    <value>Amostra</value>
+    <value>Образец</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Salve </value>
+    <value>Сохранить</value>
   </data>
   <data name="Saved" xml:space="preserve">
-    <value>Salvou</value>
+    <value>Сохраненный</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Pesquisa</value>
+    <value>Поиск</value>
   </data>
   <data name="Searchexactcode" xml:space="preserve">
-    <value>Pesquisar Código Exato</value>
+    <value>Поиск точного кода</value>
   </data>
   <data name="Searchonlyavailable" xml:space="preserve">
-    <value>Pesquisa Só Está Disponível</value>
+    <value>Поиск доступен только</value>
   </data>
   <data name="SeatsAvailable" xml:space="preserve">
-    <value>Assentos Disponíveis</value>
+    <value>Количество мест Доступные</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Segurança</value>
+    <value>Безопасность</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
-    <value>Resposta De Segurança</value>
+    <value>Ответ на секретный вопрос</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
-    <value>Selecionar Tudo</value>
+    <value>Выбрать все</value>
   </data>
   <data name="Seller" xml:space="preserve">
-    <value>Vendedor</value>
+    <value>продавец</value>
   </data>
   <data name="SellRate" xml:space="preserve">
-    <value>Vender Taxa</value>
+    <value>Продать Оценить</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Serviço</value>
+    <value>обслуживание</value>
   </data>
   <data name="ServiceContract" xml:space="preserve">
-    <value>Contrato De Serviço</value>
+    <value>Контракт на обслуживание</value>
   </data>
   <data name="ServicesperEvent" xml:space="preserve">
-    <value>Serviços Por Evento</value>
+    <value>Услуги в Событии</value>
   </data>
   <data name="ServicesperPerson" xml:space="preserve">
-    <value>Serviços Por Pessoa</value>
+    <value>Услуги на одного человека</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Configurações</value>
+    <value>настройки</value>
   </data>
   <data name="Sex" xml:space="preserve">
-    <value>Sexo</value>
+    <value>секс</value>
   </data>
   <data name="Share" xml:space="preserve">
-    <value>Compartilhar</value>
+    <value>Поделиться</value>
   </data>
   <data name="Shipping" xml:space="preserve">
-    <value>Remessa</value>
+    <value>Перевозка</value>
   </data>
   <data name="Shop" xml:space="preserve">
-    <value>Fazer Compras</value>
+    <value>Магазин</value>
   </data>
   <data name="SingleCurrency" xml:space="preserve">
-    <value>Moeda Única</value>
+    <value>Единая валюта</value>
   </data>
   <data name="SocialID" xml:space="preserve">
-    <value>Id Social</value>
+    <value>Социальный ID</value>
   </data>
   <data name="SoleCurrency" xml:space="preserve">
-    <value>Moeda Sole</value>
+    <value>Подошва валюты</value>
   </data>
   <data name="Special" xml:space="preserve">
-    <value>Especial</value>
+    <value>Особый</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Rapidez</value>
+    <value>скорость</value>
   </data>
   <data name="StartDate" xml:space="preserve">
-    <value>Data De Início</value>
+    <value>Дата начала</value>
   </data>
   <data name="Starting" xml:space="preserve">
-    <value>Iniciando</value>
+    <value>начало</value>
   </data>
   <data name="StartingDate" xml:space="preserve">
-    <value>Data De Início</value>
+    <value>Дата начала</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>Estado</value>
+    <value>состояние</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Estado</value>
+    <value>Положение дел</value>
   </data>
   <data name="Stock" xml:space="preserve">
-    <value>Estoque</value>
+    <value>Акции</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
-    <value>Da Máxima</value>
+    <value>Фото Максимальная</value>
   </data>
   <data name="StockMinimum" xml:space="preserve">
-    <value>Estoque Mínimo</value>
+    <value>Минимальный сток</value>
   </data>
   <data name="StylePrinter" xml:space="preserve">
-    <value>Estilo Printer</value>
+    <value>Стиль для печати</value>
   </data>
   <data name="StyleReceipt" xml:space="preserve">
-    <value>Estilo Receipt</value>
+    <value>Стиль Квитанция</value>
   </data>
   <data name="Subscription" xml:space="preserve">
-    <value>Inscrição</value>
+    <value>Подписка</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
-    <value>Subtotal</value>
+    <value>Промежуточный итог</value>
   </data>
   <data name="SubTotalwithVAT" xml:space="preserve">
-    <value>Subtotal Com Iva</value>
+    <value>Субтотальная с НДС</value>
   </data>
   <data name="Supplier" xml:space="preserve">
-    <value>Fornecedor</value>
+    <value>поставщик</value>
+  </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>Код поставщиком</value>
   </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
-    <value>Fornecedor Conta Corrente</value>
+    <value>Поставщик текущего счета</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>наименование поставщика</value>
   </data>
   <data name="Supplies" xml:space="preserve">
-    <value>Suprimentos</value>
+    <value>предметы снабжения</value>
   </data>
   <data name="Surcharge" xml:space="preserve">
-    <value>Sobretaxa</value>
+    <value>доплата</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Таблица</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Tag</value>
+    <value>Теги</value>
   </data>
   <data name="Talent" xml:space="preserve">
-    <value>Talento</value>
+    <value>Талант</value>
   </data>
   <data name="Task" xml:space="preserve">
-    <value>Tarefa</value>
+    <value>задача</value>
   </data>
   <data name="TaskList" xml:space="preserve">
-    <value>Lista De Tarefas</value>
+    <value>Список заданий</value>
   </data>
   <data name="Telephone" xml:space="preserve">
-    <value>Telefone</value>
+    <value>телефон</value>
   </data>
   <data name="Temperature" xml:space="preserve">
-    <value>Temperatura</value>
+    <value>температура</value>
   </data>
   <data name="Template" xml:space="preserve">
-    <value>Modelo</value>
+    <value>шаблон</value>
   </data>
   <data name="Terminal" xml:space="preserve">
-    <value>Terminal</value>
+    <value>Терминал</value>
   </data>
   <data name="Terms" xml:space="preserve">
-    <value>Condições</value>
+    <value>сроки</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>Total</value>
+    <value>Всего</value>
   </data>
   <data name="Transact" xml:space="preserve">
-    <value>Transacionar</value>
+    <value>заключать</value>
   </data>
   <data name="Transaction" xml:space="preserve">
-    <value>Transação</value>
+    <value>Сделка</value>
   </data>
   <data name="TransactionDate" xml:space="preserve">
-    <value>Transaction Data</value>
+    <value>Дата сделки</value>
   </data>
   <data name="TransactionNumber" xml:space="preserve">
-    <value>Número De Transações</value>
+    <value>Номер транзакции</value>
   </data>
   <data name="Transactions" xml:space="preserve">
-    <value>Transações</value>
+    <value>операции</value>
   </data>
   <data name="Transfer" xml:space="preserve">
-    <value>Transferir</value>
+    <value>Перевод</value>
   </data>
   <data name="TransferbetweenWarehouse" xml:space="preserve">
-    <value>A Transferência Entre Armazém</value>
+    <value>Переход между Склад</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Tipo</value>
+    <value>Тип</value>
   </data>
   <data name="Urgency" xml:space="preserve">
-    <value>Urgência</value>
+    <value>Острая необходимость</value>
   </data>
   <data name="Usage" xml:space="preserve">
-    <value>Uso</value>
+    <value>Применение</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>Do Utilizador</value>
+    <value>пользователь</value>
   </data>
   <data name="UserRole" xml:space="preserve">
-    <value>Papel Do Usuário</value>
+    <value>Роль пользователя</value>
   </data>
   <data name="ValidUntil" xml:space="preserve">
-    <value>Válido Até</value>
+    <value>Годен до</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Valor</value>
+    <value>Стоимость</value>
   </data>
   <data name="Variant" xml:space="preserve">
-    <value>Variante</value>
+    <value>Вариант</value>
   </data>
   <data name="VAT" xml:space="preserve">
-    <value>Cuba</value>
+    <value>Налог с продаж</value>
   </data>
   <data name="VATExcluded" xml:space="preserve">
-    <value>Excluído Iva</value>
+    <value>Цена без НДС</value>
   </data>
   <data name="VATGrouping" xml:space="preserve">
-    <value>Iva Agrupamento</value>
+    <value>НДС Группировка</value>
   </data>
   <data name="VATIncluded" xml:space="preserve">
-    <value>Iva Incluído</value>
+    <value>С НДС</value>
   </data>
   <data name="VATPurchase" xml:space="preserve">
-    <value>Compra Iva</value>
+    <value>НДС Купить</value>
   </data>
   <data name="VATSales" xml:space="preserve">
-    <value>Vendas De Iva</value>
+    <value>НДС по продажам</value>
   </data>
   <data name="VATWithholding" xml:space="preserve">
-    <value>Retenção De Iva</value>
+    <value>НДС Подоходный</value>
   </data>
   <data name="VerifiedBy" xml:space="preserve">
-    <value>Verificado Por</value>
+    <value>Проверено</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Versão</value>
+    <value>Версия</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>Visão</value>
+    <value>Посмотреть</value>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
+    <value>объем</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>Официант</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Atenção</value>
+    <value>Предупреждение</value>
   </data>
   <data name="Weekend" xml:space="preserve">
-    <value>Fim De Semana</value>
+    <value>выходные</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Largura</value>
+    <value>Ширина</value>
   </data>
   <data name="WindSpeed" xml:space="preserve">
-    <value>Velocidade Do Vento</value>
+    <value>Скорость ветра</value>
   </data>
   <data name="Work" xml:space="preserve">
-    <value>Trabalhos</value>
+    <value>Работа</value>
   </data>
   <data name="WorkType" xml:space="preserve">
-    <value>Tipo De Trabalho</value>
+    <value>Тип работы</value>
   </data>
   <data name="Year" xml:space="preserve">
-    <value>Ano</value>
+    <value>Год</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Sim</value>
+    <value>да</value>
   </data>
 </root>

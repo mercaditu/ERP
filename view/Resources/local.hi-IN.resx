@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>हिसाब किताब</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>लेखा भुगतान किया</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>देय खाते</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>प्राप्य खाते</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>प्राप्त लेखा</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>खाता उपयोगिता</value>
@@ -180,6 +186,9 @@
   <data name="Allow" xml:space="preserve">
     <value>अनुमति दें</value>
   </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>सभी लेन - देन</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>रकम</value>
   </data>
@@ -202,7 +211,7 @@
     <value>मंजूर</value>
   </data>
   <data name="Archive" xml:space="preserve">
-    <value>संग्रह</value>
+    <value>पुरालेख</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>क्षेत्र</value>
@@ -358,7 +367,7 @@
     <value>कनेक्शन बिल्डर</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
-    <value>कनेक्शन स्ट्रिंग</value>
+    <value>संबंध तार</value>
   </data>
   <data name="Consume" xml:space="preserve">
     <value>उपभोग करना</value>
@@ -745,7 +754,7 @@
     <value>मुहलत</value>
   </data>
   <data name="Grid" xml:space="preserve">
-    <value>जाल</value>
+    <value>ग्रिड</value>
   </data>
   <data name="GrossWeight" xml:space="preserve">
     <value>कुल भार</value>
@@ -808,7 +817,7 @@
     <value>जानकारी</value>
   </data>
   <data name="InitialAmount" xml:space="preserve">
-    <value>मूल धन</value>
+    <value>प्रारंभिक रकम</value>
   </data>
   <data name="InitialSetup" xml:space="preserve">
     <value>प्रारंभिक व्यवस्था</value>
@@ -829,7 +838,7 @@
     <value>रूचियाँ</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
-    <value>अंतरराष्ट्रीय वाणिज्य</value>
+    <value>अंतर्राष्ट्रीय व्यापार</value>
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>इन्वेंटरी</value>
@@ -1051,7 +1060,7 @@
     <value>माता-पिता</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>पासवर्ड</value>
+    <value>पारण शब्द</value>
   </data>
   <data name="Payable" xml:space="preserve">
     <value>देय</value>
@@ -1063,7 +1072,7 @@
     <value>भुगतान तिथि</value>
   </data>
   <data name="PaymentForm" xml:space="preserve">
-    <value>भुगतान फार्म</value>
+    <value>भुगतान पर्ची</value>
   </data>
   <data name="PaymentMade" xml:space="preserve">
     <value>भुगतान किया गया</value>
@@ -1246,7 +1255,7 @@
     <value>मात्रा सत्यापित</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>प्रश्न</value>
+    <value>सवाल</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
     <value>परिवर्तन रद्द करें! क्या आपको यकीन है?</value>
@@ -1325,6 +1334,9 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>अपेक्षित</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>खाने की दुकान</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>वापसी संख्या</value>
@@ -1501,7 +1513,7 @@
     <value>स्थिति</value>
   </data>
   <data name="Stock" xml:space="preserve">
-    <value>स्टॉक</value>
+    <value>भण्डार</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
     <value>स्टॉक अधिकतम</value>
@@ -1527,14 +1539,23 @@
   <data name="Supplier" xml:space="preserve">
     <value>प्रदायक</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>प्रदायक का कोड</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>प्रदायक चालू खाता</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>आपूर्तिकर्ता का नाम</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>आपूर्ति</value>
   </data>
   <data name="Surcharge" xml:space="preserve">
     <value>अधिभार</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>तालिका</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>टैग</value>
@@ -1643,6 +1664,9 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>आयतन</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>वेटर</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>चेतावनी</value>

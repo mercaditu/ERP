@@ -19,7 +19,7 @@ namespace Cognitivo.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class local {
@@ -124,6 +124,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @AccountsPaid.
+        /// </summary>
+        public static string AccountsPaid {
+            get {
+                return ResourceManager.GetString("AccountsPaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @AccountsPayable.
         /// </summary>
         public static string AccountsPayable {
@@ -138,6 +147,15 @@ namespace Cognitivo.Resources {
         public static string AccountsReceivable {
             get {
                 return ResourceManager.GetString("AccountsReceivable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AccountsRecieved.
+        /// </summary>
+        public static string AccountsRecieved {
+            get {
+                return ResourceManager.GetString("AccountsRecieved", resourceCulture);
             }
         }
         
@@ -246,6 +264,15 @@ namespace Cognitivo.Resources {
         public static string Allow {
             get {
                 return ResourceManager.GetString("Allow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AllTransactions.
+        /// </summary>
+        public static string AllTransactions {
+            get {
+                return ResourceManager.GetString("AllTransactions", resourceCulture);
             }
         }
         

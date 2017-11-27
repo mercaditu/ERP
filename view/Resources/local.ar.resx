@@ -138,11 +138,17 @@
   <data name="Accounts" xml:space="preserve">
     <value>حسابات</value>
   </data>
+  <data name="AccountsPaid" xml:space="preserve">
+    <value>الحسابات المدفوعة</value>
+  </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>حسابات قابلة للدفع</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
     <value>الحسابات المستحقة</value>
+  </data>
+  <data name="AccountsRecieved" xml:space="preserve">
+    <value>حسابات يستلم</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
     <value>أداة حساب</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="Allow" xml:space="preserve">
     <value>السماح</value>
+  </data>
+  <data name="AllTransactions" xml:space="preserve">
+    <value>كل الحركات المالية</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>كمية</value>
@@ -280,7 +289,7 @@
     <value>بواسطة البعد</value>
   </data>
   <data name="ByValue" xml:space="preserve">
-    <value>حسب القيمة</value>
+    <value>بالقيمة</value>
   </data>
   <data name="Calculate" xml:space="preserve">
     <value>حساب</value>
@@ -679,7 +688,7 @@
     <value>أسرة</value>
   </data>
   <data name="Favorite" xml:space="preserve">
-    <value>المفضل</value>
+    <value>مفضل</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>إناثا</value>
@@ -973,7 +982,7 @@
     <value>قناع</value>
   </data>
   <data name="Master" xml:space="preserve">
-    <value>رئيسي - سيد</value>
+    <value>رئيس</value>
   </data>
   <data name="Measurement" xml:space="preserve">
     <value>قياس</value>
@@ -1186,7 +1195,7 @@
     <value>تمويل المشاريع</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
-    <value>إذني</value>
+    <value>ملاحظة أذنى</value>
   </data>
   <data name="Promoted" xml:space="preserve">
     <value>رقية</value>
@@ -1228,7 +1237,7 @@
     <value>أمر الشراء موجز</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
-    <value>شراء العودة</value>
+    <value>عودة شراء</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
     <value>مناقصة شراء</value>
@@ -1325,6 +1334,9 @@
   </data>
   <data name="Required" xml:space="preserve">
     <value>مطلوب</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>مطعم</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>عودة عدد</value>
@@ -1527,14 +1539,23 @@
   <data name="Supplier" xml:space="preserve">
     <value>المورد</value>
   </data>
+  <data name="SupplierCode" xml:space="preserve">
+    <value>كود المورد</value>
+  </data>
   <data name="SupplierCurrentAccount" xml:space="preserve">
     <value>المورد الحساب الجاري</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>اسم المورد</value>
   </data>
   <data name="Supplies" xml:space="preserve">
     <value>اللوازم</value>
   </data>
   <data name="Surcharge" xml:space="preserve">
     <value>ضريبة إضافية</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>الطاولة</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>الكلمات</value>
@@ -1582,7 +1603,7 @@
     <value>المعاملات</value>
   </data>
   <data name="Transfer" xml:space="preserve">
-    <value>تحويل</value>
+    <value>نقل</value>
   </data>
   <data name="TransferbetweenWarehouse" xml:space="preserve">
     <value>التحويل بين المستودعات</value>
@@ -1643,6 +1664,9 @@
   </data>
   <data name="Volume" xml:space="preserve">
     <value>الصوت</value>
+  </data>
+  <data name="Waiter" xml:space="preserve">
+    <value>نادل</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>تحذير</value>

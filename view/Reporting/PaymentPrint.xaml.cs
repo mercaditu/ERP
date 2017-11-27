@@ -109,7 +109,7 @@ namespace Cognitivo.Reporting
                         }
 
                         app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == payment_detail.id_range).FirstOrDefault();
-                        payment_detail.payment_type_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
+                        payment_detail.payment_type_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                         payment_detail.RaisePropertyChanged("payment_type_number");
                         payment_detail.is_read = true;
                         Start.Automatic(payment_detail, app_document_range);

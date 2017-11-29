@@ -24,30 +24,6 @@ namespace Cognitivo.Class
     {
         public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         {
-            //string query = @"
-            //                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-            //                    set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-            //                select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode,
-            //                 item.name as ItemName, prod.id_item_product as ProductID,
-            //                 (sum(mov.credit) - sum(mov.debit)) as Quantity,
-            //                 measure.name as Measurement,
-            //                     sum(imvr.total_value) as Cost,
-            //                 brand.name as Brand,
-            //                     mov.code as BatchCode,
-            //                     mov.expire_date as ExpiryDate,
-            //            mov.id_movement as MovementID
-            //                 from item_movement as mov
-            //                 inner join app_location as loc on mov.id_location = loc.id_location
-            //                 inner join app_branch as branch on loc.id_branch = branch.id_branch
-            //                 inner join item_product as prod on mov.id_item_product = prod.id_item_product
-            //                 inner join items as item on prod.id_item = item.id_item
-            //                 left join item_movement_value_rel as imvr on mov.id_movement_value_rel=imvr.id_movement_value_rel
-            //                 left join item_brand as brand on brand.id_brand = item.id_brand
-            //                 left join app_measurement as measure on item.id_measurement = measure.id_measurement
-            //                 where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
-            //                 group by loc.id_location, prod.id_item_product
-            //                 order by item.name";
-
             string query = @"
                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';

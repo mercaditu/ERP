@@ -45,6 +45,7 @@ namespace cntrl.Curd.Promotion
                 if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
                 {
                     sales_promotion.reference_bonus = sbxBonusItem.ItemID;
+                    sales_promotion.RaisePropertyChanged("OutputName");
 
                 }
             }

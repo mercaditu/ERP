@@ -14,7 +14,10 @@ namespace entity.Controller.Sales
             // Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+        public InvoiceController()
+        {
+            LoadPromotion();
+        }
         protected virtual void Dispose(bool disposing)
         {
             if (this != null)
@@ -27,6 +30,7 @@ namespace entity.Controller.Sales
                 //release unmanaged resources.
             }
         }
+
         public Brillo.Promotion.Start Promotions { get; set; }
 
         #region Properties
@@ -324,10 +328,15 @@ namespace entity.Controller.Sales
 
             NumberOfRecords = 0;
 
+          //  Stock stock = new Stock();
+           // stock.List(CurrentSession.Id_Branch, sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product)
 
             List<sales_invoice> SalesInvoiceList = db.sales_invoice.Local.Where(x =>
-                                                x.status == Status.Documents_General.Pending
-                                                        && x.IsSelected && x.Error == null && x.id_contact > 0).ToList();
+                                                x.status == Status.Documents_General.Pending &&
+                                                        x.IsSelected && 
+                                                        x.Error == null && 
+                                                        x.id_contact > 0)
+                                                        .ToList();
             foreach (sales_invoice invoice in SalesInvoiceList)
             {
                 SpiltInvoice(invoice);
@@ -342,6 +351,8 @@ namespace entity.Controller.Sales
                         return false;
                     }
                 }
+
+                Check_Promotions(invoice);
 
                 foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
                 {
@@ -580,8 +591,7 @@ namespace entity.Controller.Sales
                 db.item_movement.AddRange(item_movementList);
 
             }
-
-
+            
             //Loop through each Item Movement and assign cost to detail for reporting purposes.
             foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail)
             {
@@ -598,36 +608,20 @@ namespace entity.Controller.Sales
                         {
                             item_movement = sales_detail.sales_packing_relation.FirstOrDefault().sales_packing_detail.item_movement.FirstOrDefault();
                         }
-
                     }
-
                 }
+
                 if (item_movement != null)
                 {
                     if (item_movement.item_movement_value_rel != null)
                     {
                         if (sales_detail.unit_cost == 0)
                         {
-                            //item_movement item_movement = db.item_movement.Find()
-
-                            //sales_detail.unit_cost = Currency.convert_Values
-                            //(
-                            //sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x=>x.unit_value),
-                            //sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                            //sales_detail.sales_invoice.id_currencyfx,
-                            //App.Modules.Sales
-                            //);
-
                             sales_detail.unit_cost = item_movement.item_movement_value_rel.total_value;
                         }
                     }
                 }
-
             }
-
-
-
-
 
             try
             {
@@ -635,15 +629,8 @@ namespace entity.Controller.Sales
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
-
-
-
-
-
         }
 
         /// <summary>

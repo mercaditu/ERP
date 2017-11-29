@@ -65,7 +65,7 @@
                     <StackPanel x:Name="ContactTag_Parameter">
                         <Label Content="{lex:Loc ContactTags}" />
                         <ComboBox x:Name="cbxparaContacttag" Style="{StaticResource input_combobox}"
-							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectedValue="{Binding refence,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+							  DisplayMemberPath="name" SelectedValuePath="id_tag" SelectedValue="{Binding reference,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 							  ItemsSource="{Binding Source={StaticResource contact_tagViewSource}}" />
                     </StackPanel>
                     

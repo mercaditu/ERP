@@ -181,7 +181,7 @@
 												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
                         <DataGridTextColumn Binding="{Binding item_product.item.code}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Code}" MinWidth="64" Width="Auto" />
                         <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" MaxWidth="256" Width="Auto" />
-                        <DataGridTextColumn MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" SortMemberPath="value_system" >
+                        <DataGridTextColumn MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" SortMemberPath="value_system" IsReadOnly="True" >
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" System" /></TextBlock>
                             </DataGridTextColumn.Header>

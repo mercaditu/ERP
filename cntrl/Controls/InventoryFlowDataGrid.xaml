@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="cntrl.Controls.InventoryFlowDataGrid" x:Name="this"
+              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -33,12 +34,16 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
                         <Label Content="{lex:Loc ExpirationDate}" Style="{StaticResource input_label}" Width="auto" />
-                        <Label Content="{Binding ExpiryDate, Mode=OneTime, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" />
+                        <DatePicker metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+									metro:ControlsHelper.MouseOverBorderBrush="Silver" 
+                                    SelectedDate="{Binding ExpiryDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Width="auto">
                         <Label Content="{lex:Loc Batch}" Style="{StaticResource input_label}" Width="auto" />
-                        <Label Content="{Binding BatchCode, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Text="{Binding BatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button  Content="Update Batch And Date" Click="UpdateBatch_Click"/>
                     </StackPanel>
+                    
                     <StackPanel Orientation="Horizontal" Width="auto">
                         <Label Content="Image" Style="{StaticResource input_label}" Width="auto" />
                         <local:ImageViewer MaxWidth="200"

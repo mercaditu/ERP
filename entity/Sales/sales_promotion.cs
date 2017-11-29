@@ -3,6 +3,7 @@ namespace entity
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public partial class sales_promotion : Audit
     {
@@ -64,9 +65,61 @@ namespace entity
         public int reference_bonus { get; set; }
 
         [NotMapped]
-        public string InputName { get; set; }
+        public string InputName
+        {
+            get
+            {
+                using (db db = new db())
+                {
+                    if (type==salesPromotion.BuyThis_GetThat || type == salesPromotion.Discount_onItem)
+                    {
+                        entity.item item = db.items.Where(x => x.id_item == reference).FirstOrDefault();
+                        if (item != null)
+                        {
+                            _InputName = item.name;
+
+                        }
+                    }
+                  
+
+
+                }
+                return _InputName;
+            }
+            set
+            {
+                _InputName = value;
+            }
+        }
+        string _InputName;
 
         [NotMapped]
-        public string OutputName { get; set; }
+        public string OutputName
+        {
+            get
+            {
+                using (db db = new db())
+                {
+                    if (type == salesPromotion.BuyThis_GetThat || type==salesPromotion.BuyTag_GetThat)
+                    {
+                        entity.item item = db.items.Where(x => x.id_item == reference_bonus).FirstOrDefault();
+                        if (item != null)
+                        {
+                            _OutputName = item.name;
+
+                        }
+                    }
+
+
+
+                }
+                return _OutputName;
+            }
+            set
+            {
+                _OutputName = value;
+            }
+        }
+        string _OutputName;
     }
 }

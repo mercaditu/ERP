@@ -1,8 +1,5 @@
 ﻿using entity;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +9,6 @@ namespace cntrl
 {
     public partial class promotion : UserControl
     {
-        private CollectionViewSource item_tagViewSource, app_currencyViewSource, contact_tagViewSource;
         private CollectionViewSource _sales_promotionViewSource = null;
         public CollectionViewSource sales_promotionViewSource { get { return _sales_promotionViewSource; } set { _sales_promotionViewSource = value; } }
 
@@ -28,41 +24,13 @@ namespace cntrl
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                stackMain.DataContext = sales_promotionViewSource;
-
-                item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
-
-                entity.db.item_tag.Where(x => x.id_company == CurrentSession.Id_Company).Load();
-                item_tagViewSource.Source = entity.db.item_tag.Local;
-
-                contact_tagViewSource = FindResource("contact_tagViewSource") as CollectionViewSource;
-
-                entity.db.contact_tag.Where(x => x.id_company == CurrentSession.Id_Company).Load();
-                contact_tagViewSource.Source = entity.db.contact_tag.Local;
-
-                app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
-                entity.db.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).Load();
-                app_currencyViewSource.Source = entity.db.app_currency.Local;
 
                 cbxType.ItemsSource = Enum.GetValues(typeof(sales_promotion.salesPromotion)).OfType<sales_promotion.salesPromotion>().ToList();
                
-               
-                cbxcurrency.SelectedIndex = -1;
-                
-                 
             }
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            if (entity.db.GetValidationErrors().Count() == 0)
-            {
-                entity.SaveChanges();
-                btnCancel_Click(sender, e);
-            }
-        }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        public void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             entity.CancelChanges();
             sales_promotionViewSource.View.Refresh();
@@ -71,187 +39,55 @@ namespace cntrl
             parentGrid.Visibility = Visibility.Hidden;
         }
 
-        private void sbxRefItem_Select(object sender, RoutedEventArgs e)
-        {
-            if (sbxRefItem.ItemID > 0)
-            {
-                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
-                {
-                    sales_promotion.reference = sbxRefItem.ItemID;
-                    using (db db = new db())
-                    {
-
-                        item item = db.items.Where(x => x.id_item == sbxRefItem.ItemID).FirstOrDefault();
-                        if (item != null)
-                        {
-                            sales_promotion.InputName = item.name;
-                            sales_promotion.RaisePropertyChanged("InputName");
-                        }
-
-
-                    }
-                }
-            }
-        }
-
-        private void sbxBonusItem_Select(object sender, RoutedEventArgs e)
-        {
-            if (sbxBonusItem.ItemID > 0)
-            {
-                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
-                {
-                    sales_promotion.reference_bonus = sbxBonusItem.ItemID;
-                    using (db db = new db())
-                    {
-
-                        item item = db.items.Where(x => x.id_item == sbxBonusItem.ItemID).FirstOrDefault();
-                        if (item != null)
-                        {
-                            sales_promotion.OutputName = item.name;
-                            sales_promotion.RaisePropertyChanged("OutputName");
-                        }
-
-
-                    }
-                }
-            }
-        }
-
-        private void cbxparaContacttag_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxparaContacttag.SelectedValue != null)
-            {
-                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
-                {
-                    if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType || sales_promotion.type==sales_promotion.salesPromotion.Discount_onGrandTotal)
-                    {
-                        if (sales_promotion.reference > 0)
-                        {
-                            cbxparaContacttag.SelectedValue = sales_promotion.reference;
-                        }
-                        else
-                        {
-                            sales_promotion.reference = Convert.ToInt32(cbxparaContacttag.SelectedValue);
-                        }
-                    }
-                }
-            }
-        }
-
-       
-
-        private void cbxparatag_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxparatag.SelectedValue != null)
-            {
-                if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
-                {
-                    if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat || sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
-                    {
-                        if (sales_promotion.reference>0)
-                        {
-                            cbxparatag.SelectedValue = sales_promotion.reference;
-                        }
-                        else
-                        {
-                            sales_promotion.reference = Convert.ToInt32(cbxparatag.SelectedValue);
-                        }
-
-                    }
-                }
-            }
-        }
-
         private void cbxType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
+            if (cbxType.SelectedItem != null)
+            {
+                sales_promotion.salesPromotion Type = (sales_promotion.salesPromotion)cbxType.SelectedItem;
 
-            if (sales_promotion.type == sales_promotion.salesPromotion.BuyThis_GetThat)
-            {
-                Total_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Parameter.Visibility = Visibility.Collapsed;
-                Item_Parameter.Visibility = Visibility.Visible;
-                Item_Bonus.Visibility = Visibility.Visible;
-                Discount.Visibility = Visibility.Collapsed;
-                QuntityStep.Visibility = Visibility.Visible;
-                ContactTag_Parameter.Visibility = Visibility.Collapsed;
-                item input = entity.db.items.Find(sales_promotion.reference);
-                if (input != null)
+                if (Type == sales_promotion.salesPromotion.BuyThis_GetThat)
                 {
-                    sales_promotion.InputName = input.name;
-                    sales_promotion.RaisePropertyChanged("InputName");
-                }
+                    Curd.Promotion.BuyThis_GetThat BuyThis_GetThat = new Curd.Promotion.BuyThis_GetThat();
+                    BuyThis_GetThat.sales_promotionViewSource = sales_promotionViewSource;
+                    BuyThis_GetThat.entity = entity;
+                    PromotionFrame.Navigate(BuyThis_GetThat);
 
-                item output = entity.db.items.Find(sales_promotion.reference_bonus);
-                if (output != null)
-                {
-                    sales_promotion.OutputName = output.name;
-                    sales_promotion.RaisePropertyChanged("OutputName");
                 }
-            }
-            else if (sales_promotion.type == sales_promotion.salesPromotion.BuyTag_GetThat)
-            {
-                Total_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Parameter.Visibility = Visibility.Visible;
-                Item_Parameter.Visibility = Visibility.Collapsed;
-                Item_Bonus.Visibility = Visibility.Visible;
-                Discount.Visibility = Visibility.Collapsed;
-                QuntityStep.Visibility = Visibility.Visible;
-                ContactTag_Parameter.Visibility = Visibility.Collapsed;
-
-                item output = entity.db.items.Find(sales_promotion.reference_bonus);
-
-                if (output != null)
+                else if (Type == sales_promotion.salesPromotion.BuyTag_GetThat)
                 {
-                    sales_promotion.OutputName = output.name;
-                    sales_promotion.RaisePropertyChanged("OutputName");
+                    Curd.Promotion.BuyTag_GetThat BuyTag_GetThat = new Curd.Promotion.BuyTag_GetThat();
+                    BuyTag_GetThat.sales_promotionViewSource = sales_promotionViewSource;
+                    BuyTag_GetThat.entity = entity;
+                    PromotionFrame.Navigate(BuyTag_GetThat);
                 }
-                QuntityStep.Visibility = Visibility.Visible;
-            }
-            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onItem)
-            {
-                Total_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Parameter.Visibility = Visibility.Collapsed;
-                Item_Parameter.Visibility = Visibility.Visible;
-                Item_Bonus.Visibility = Visibility.Collapsed;
-                Discount.Visibility = Visibility.Visible;
-                ContactTag_Parameter.Visibility = Visibility.Collapsed;
-                item input = entity.db.items.Find(sales_promotion.reference);
-                if (input != null)
+                else if (Type == sales_promotion.salesPromotion.Discount_onItem)
                 {
-                    sales_promotion.InputName = input.name;
-                    sales_promotion.RaisePropertyChanged("InputName");
+                    Curd.Promotion.Discount_OnItem Discount_onItem = new Curd.Promotion.Discount_OnItem();
+                    Discount_onItem.sales_promotionViewSource = sales_promotionViewSource;
+                    Discount_onItem.entity = entity;
+                    PromotionFrame.Navigate(Discount_onItem);
                 }
-                QuntityStep.Visibility = Visibility.Visible;
-            }
-            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onTag)
-            {
-                Total_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Parameter.Visibility = Visibility.Visible;
-                Item_Parameter.Visibility = Visibility.Collapsed;
-                Item_Bonus.Visibility = Visibility.Collapsed;
-                Discount.Visibility = Visibility.Visible;
-                QuntityStep.Visibility = Visibility.Visible;
-                ContactTag_Parameter.Visibility = Visibility.Collapsed;
-            }
-            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onGrandTotal)
-            {
-                Total_Parameter.Visibility = Visibility.Visible;
-                Tag_Parameter.Visibility = Visibility.Collapsed;
-                Item_Parameter.Visibility = Visibility.Collapsed;
-                Item_Bonus.Visibility = Visibility.Collapsed;
-                Discount.Visibility = Visibility.Visible;
-                QuntityStep.Visibility = Visibility.Collapsed;
-            }
-            else if (sales_promotion.type == sales_promotion.salesPromotion.Discount_onCustomerType)
-            {
-                Total_Parameter.Visibility = Visibility.Collapsed;
-                Tag_Parameter.Visibility = Visibility.Collapsed;
-                Item_Parameter.Visibility = Visibility.Collapsed;
-                Item_Bonus.Visibility = Visibility.Collapsed;
-                Discount.Visibility = Visibility.Visible;
-                QuntityStep.Visibility = Visibility.Visible;
-                ContactTag_Parameter.Visibility = Visibility.Visible;
+                else if (Type == sales_promotion.salesPromotion.Discount_onTag)
+                {
+                    Curd.Promotion.Discount_OnTag Discount_OnTag = new Curd.Promotion.Discount_OnTag();
+                    Discount_OnTag.sales_promotionViewSource = sales_promotionViewSource;
+                    Discount_OnTag.entity = entity;
+                    PromotionFrame.Navigate(Discount_OnTag);
+                }
+                else if (Type == sales_promotion.salesPromotion.Discount_onGrandTotal)
+                {
+                    Curd.Promotion.Discount_OnGrandTotal Discount_OnGrandTotal = new Curd.Promotion.Discount_OnGrandTotal();
+                    Discount_OnGrandTotal.sales_promotionViewSource = sales_promotionViewSource;
+                    Discount_OnGrandTotal.entity = entity;
+                    PromotionFrame.Navigate(Discount_OnGrandTotal);
+                }
+                else if (Type == sales_promotion.salesPromotion.Discount_onCustomerType)
+                {
+                    Curd.Promotion.Discount_OnContactType Discount_OnContactType = new Curd.Promotion.Discount_OnContactType();
+                    Discount_OnContactType.sales_promotionViewSource = sales_promotionViewSource;
+                    Discount_OnContactType.entity = entity;
+                    PromotionFrame.Navigate(Discount_OnContactType);
+                }
             }
         }
     }

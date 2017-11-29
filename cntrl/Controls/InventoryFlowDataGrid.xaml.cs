@@ -169,6 +169,44 @@ namespace cntrl.Controls
                 MessageBox.Show("Sorry, only Administrators are allowed to update costs.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
         }
+
+        private void UpdateBatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentSession.UserRole.is_master)
+            {
+                if (item_movementViewSource != null)
+                {
+                    if (item_movementViewSource.View != null)
+                    {
+                        ItemMovement ItemMovement = item_movementViewSource.View.CurrentItem as ItemMovement;
+                        if (ItemMovement != null)
+                        {
+                            string Code = ItemMovement.BatchCode;
+                            DateTime? ExpireDate = ItemMovement.ExpiryDate??null;
+                            long MovementID = ItemMovement.MovementID;
+
+                            using (db db = new db())
+                            {
+                                item_movement mov = db.item_movement.Find(MovementID);
+                                if (mov != null)
+                                {
+                                    mov.code = Code;
+                                    mov.expire_date = ExpireDate ?? null;
+                                    mov.Update_ChildBatch(Code,ExpireDate);
+                                    db.SaveChangesAsync();
+                                    MessageBox.Show(entity.Brillo.Localize.StringText("Done"), "Cognitivo ERP", MessageBoxButton.OK);
+                                    LoadData();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Sorry, only Administrators are allowed to update costs.", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
+        }
     }
 
     public class ItemMovement

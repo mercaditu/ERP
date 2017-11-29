@@ -319,6 +319,24 @@
       <DependentUpon>NotificationIcon.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Curd\Promotion\BuyTag_GetThat.xaml.cs">
+      <DependentUpon>BuyTag_GetThat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Promotion\BuyThis_GetThat.xaml.cs">
+      <DependentUpon>BuyThis_GetThat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Promotion\Discount_OnContactType.xaml.cs">
+      <DependentUpon>Discount_OnContactType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Promotion\Discount_OnGrandTotal.xaml.cs">
+      <DependentUpon>Discount_OnGrandTotal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Promotion\Discount_OnItem.xaml.cs">
+      <DependentUpon>Discount_OnItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Promotion\Discount_OnTag.xaml.cs">
+      <DependentUpon>Discount_OnTag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="toolBarNotification.xaml.cs">
       <DependentUpon>toolBarNotification.xaml</DependentUpon>
     </Compile>
@@ -973,6 +991,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NotificationIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Promotion\BuyTag_GetThat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Promotion\BuyThis_GetThat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Promotion\Discount_OnContactType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Promotion\Discount_OnGrandTotal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Promotion\Discount_OnItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Promotion\Discount_OnTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

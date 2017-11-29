@@ -244,6 +244,14 @@ namespace entity
                 this_child.Update_ChildVales(item_movement_value_rel.total_value, true,DateTime.Now);
             }
         }
+        public void Update_ChildBatch(string BatchCode,DateTime? ExpireDate)
+        {
+            foreach (item_movement item_movement in child)
+            {
+                item_movement.code = BatchCode;
+                item_movement.expire_date = expire_date??null;
+            }
+        }
 
         #endregion Methods
     }

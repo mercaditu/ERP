@@ -682,9 +682,6 @@
       <DependentUpon>Packing.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sales\PackingListSetting.cs" />
-    <Compile Include="Sales\Promotions\BuyThis_GetThat.xaml.cs">
-      <DependentUpon>BuyThis_GetThat.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sales\Restaurant.xaml.cs">
       <DependentUpon>Restaurant.xaml</DependentUpon>
     </Compile>
@@ -1558,10 +1555,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Sales\Packing.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sales\Promotions\BuyThis_GetThat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

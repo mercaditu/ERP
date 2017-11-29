@@ -1,0 +1,92 @@
+﻿<Page x:Class="cntrl.Curd.Promotion.Discount_OnGrandTotal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+			lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+			lex:ResxLocalizationProvider.DefaultDictionary="local"
+			lex:LocalizeDictionary.DesignCulture="en-US"
+      xmlns:controls="clr-namespace:cntrl.Controls"
+      	xmlns:entity="clr-namespace:entity;assembly=entity"
+      	xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:local="clr-namespace:cntrl.Curd.Promotion"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="500"
+      Title="BuyThis_GetThat" Loaded="Page_Loaded">
+    <Page.Resources>
+
+        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}" />
+        <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}" />
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="stackMain">
+            <StackPanel HorizontalAlignment="Center" Margin="8" >
+                <Label Content="{lex:Loc Name}" />
+                <TextBox
+					 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+					 metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
+					 metro:TextBoxHelper.ClearTextButton="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=Self}}"
+					 metro:TextBoxHelper.SelectAllOnFocus="True"
+					 Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" />
+
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="1">
+                        <Label  Content="{lex:Loc StartDate}" Width="125" />
+                        <DatePicker SelectedDate="{Binding date_start, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								Width="124" />
+                    </StackPanel>
+                    <StackPanel Margin="1">
+                        <Label  Content="{lex:Loc EndDate}" Width="125" />
+                        <DatePicker SelectedDate="{Binding date_end, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								 Width="124" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <Rectangle Height="1" Margin="9" Fill="Silver" VerticalAlignment="Top"  Grid.Row="1" />
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <Label Content="{lex:Loc Parameters}" Style="{StaticResource H3}"/>
+                        <StackPanel x:Name="Total_Parameter">
+                            <Label Content="{lex:Loc Total}" />
+                            <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}" />
+                            <Label Content="{lex:Loc Currency}" />
+                            <ComboBox x:Name="cbxcurrency" Style="{StaticResource input_combobox}" SelectedValue="{Binding reference,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+									ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}" 
+									DisplayMemberPath="name" SelectedValuePath="id_currency" />
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                        <Label Content="{lex:Loc Output}" Style="{StaticResource H3}"/>
+                        <StackPanel x:Name="Discount">
+                            <Label Content="{lex:Loc Discount}" />
+                            <TextBox Text="{Binding result_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}" />
+                        </StackPanel>
+
+
+                    </StackPanel>
+                </Grid>
+
+                <Grid Background="WhiteSmoke">
+                    <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
+						FontWeight="Medium" Cursor="Hand" Focusable="True" Margin="4" Click="btnSave_Click" />
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

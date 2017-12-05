@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using entity.Brillo;
+using System;
 
 namespace Cognitivo.Configs
 {
@@ -57,7 +58,8 @@ namespace Cognitivo.Configs
             item_product item_product = db.item_product.Where(x => x.id_item == id_item).FirstOrDefault();
             if (item_product!=null)
             {
-                Items_InStockLIST = stock.List(0, id_location, item_product.id_item_product);
+                Items_InStockLIST = stock.getItems_ByBranch(0, DateTime.Now).Where(x => x.LocationID == id_location && x.ProductID == item_product.id_item_product).ToList();
+          
             }
             item_movement_detailDataGrid.ItemsSource = Items_InStockLIST;
 

@@ -463,8 +463,10 @@ namespace entity.Controller.Product
                     List<Brillo.StockList> Items_InStockLIST;
                     Brillo.Stock stockBrillo = new Brillo.Stock();
                     item_product item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault();
-
-                    Items_InStockLIST = stockBrillo.List((int)item_request.id_branch, item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location, grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault().id_item_product);
+                    int id_item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+                    int id_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
+                    Items_InStockLIST = stockBrillo.getItems_ByBranch(item_request.id_branch, DateTime.Now).Where(x => x.LocationID ==id_location && x.ProductID == id_item_product).ToList();
+                  
 
                     //If Item_InStockLIST does not have enough
                     int LocationID = 0;

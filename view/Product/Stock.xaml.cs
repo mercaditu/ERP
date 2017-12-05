@@ -120,7 +120,7 @@ namespace Cognitivo.Product
 
         private async void item_movementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Class.StockList _item_movement = item_inventoryDataGrid.SelectedItem as Class.StockList;
+            entity.Brillo.StockList _item_movement = item_inventoryDataGrid.SelectedItem as entity.Brillo.StockList;
 
             if (_item_movement != null)
             {

@@ -264,7 +264,8 @@ namespace Cognitivo.Product
                 else
                 {
                     entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
-                    Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_transfer_detail.id_item_product);
+                   Items_InStockLIST = stockBrillo.getItems_ByBranch(app_location.id_branch, DateTime.Now).Where(x => x.LocationID == app_location.id_location && x.ProductID==item_transfer_detail.id_item_product).ToList();
+
                 }
 
                 ///Debit Movement from Origin.

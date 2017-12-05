@@ -423,7 +423,7 @@ namespace Cognitivo.Product
 
                     if (_item_inventory_detail == null)
                     {
-                        Class.StockCalculations Stock = new Class.StockCalculations();
+                       
                         item_inventory_detail.value_system = 0;
                         item_inventory_detail.unit_value = 0;
                     }
@@ -503,8 +503,8 @@ namespace Cognitivo.Product
                         crud_modal.Visibility = Visibility.Visible;
                         objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                         item_inventory_detail.IsSelected = true;
+                        objpnl_ItemMovement.Items_InStockLIST = stock.getItems_ByBranch(0, DateTime.Now).Where(x => x.LocationID == app_location.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
                         objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product && x.id_location == item_inventory_detail.id_location).ToList();
-                        objpnl_ItemMovement.Items_InStockLIST = stock.List(0, app_location.id_location, item_inventory_detail.id_item_product);
                         objpnl_ItemMovement.InventoryDB = InventoryController.db;
                         crud_modal.Children.Add(objpnl_ItemMovement);
 

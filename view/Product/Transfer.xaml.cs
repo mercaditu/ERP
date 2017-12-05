@@ -14,7 +14,7 @@ namespace Cognitivo.Product
     public partial class Transfer : Page
     {
         private ProductTransferDB ProductTransferDB = new ProductTransferDB();
-        private Class.StockCalculations StockCalculations = new Class.StockCalculations();
+      
         private CollectionViewSource item_transferViewSource, item_transferitem_transfer_detailViewSource;
         private Configs.itemMovement itemMovement = new Configs.itemMovement();
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;

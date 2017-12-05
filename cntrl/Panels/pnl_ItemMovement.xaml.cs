@@ -43,9 +43,9 @@ namespace cntrl.Panels
 
 
 
-                        item_inventoryList.FirstOrDefault().value_system = Items_InStockLIST.FirstOrDefault().QtyBalance;
-                        item_inventoryList.FirstOrDefault().batch_code = Items_InStockLIST.FirstOrDefault().code;
-                        item_inventoryList.FirstOrDefault().expire_date = Items_InStockLIST.FirstOrDefault().ExpirationDate;
+                        item_inventoryList.FirstOrDefault().value_system = Items_InStockLIST.FirstOrDefault().Quantity;
+                        item_inventoryList.FirstOrDefault().batch_code = Items_InStockLIST.FirstOrDefault().BatchCode;
+                        item_inventoryList.FirstOrDefault().expire_date = Items_InStockLIST.FirstOrDefault().ExpiryDate;
                         item_inventoryList.FirstOrDefault().unit_value = Items_InStockLIST.FirstOrDefault().Cost;
                         item_inventoryList.FirstOrDefault().timestamp = Items_InStockLIST.FirstOrDefault().TranDate;
                         item_inventoryList.FirstOrDefault().item_inventory_dimension.Clear();
@@ -86,12 +86,12 @@ namespace cntrl.Panels
 
 
                     item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
-                    item_inventory_detail.value_system = item.QtyBalance;
+                    item_inventory_detail.value_system = item.Quantity;
                     item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
                     item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
                     item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
-                    item_inventory_detail.expire_date = item.ExpirationDate;
-                    item_inventory_detail.batch_code = item.code;
+                    item_inventory_detail.expire_date = item.ExpiryDate;
+                    item_inventory_detail.batch_code = item.BatchCode;
 
 
 

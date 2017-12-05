@@ -55,21 +55,24 @@ namespace Cognitivo.Product
 
             if (app_branch != null)
             {
-                if (chkstock.IsChecked == true)
-                {
-                    Class.StockCalculations StockCalculations = new Class.StockCalculations();
+                //if (chkstock.IsChecked == true)
+                //{
+                    //Class.StockCalculations StockCalculations = new Class.StockCalculations();
 
-                    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
-                    inventoryViewSource.Source = StockCalculations.ByLot(app_branch.id_branch, InventoryDate);
-                }
-                else
-                {
-                    Class.StockCalculations StockCalculations = new Class.StockCalculations();
+                //    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
+                //    inventoryViewSource.Source = StockCalculations.ByLot(app_branch.id_branch, InventoryDate);
+                //}
+                //else
+                //{
+                //    Class.StockCalculations StockCalculations = new Class.StockCalculations();
 
-                    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
-                    inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
-                }
-                
+                //    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
+                //    inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
+                //}
+                entity.Brillo.Stock Stock = new entity.Brillo.Stock();
+                inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
+                inventoryViewSource.Source = Stock.getInStock_ByBranch(app_branch.id_branch, InventoryDate);
+
 
                 TextBox_TextChanged(null, null);
             }

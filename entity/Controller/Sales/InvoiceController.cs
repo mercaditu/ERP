@@ -366,11 +366,11 @@ namespace entity.Controller.Sales
 
                             if (sales_invoice_detail.id_location != null)
                             {
-                                Quantity_InStock = stock.List(CurrentSession.Id_Branch, sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.QtyBalance);
+                                Quantity_InStock = stock.List(CurrentSession.Id_Branch, sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
                             }
                             else
                             {
-                                Quantity_InStock = stock.List(CurrentSession.Id_Branch, null, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.QtyBalance);
+                                Quantity_InStock = stock.List(CurrentSession.Id_Branch, null, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
                             }
 
                             if (Quantity_InStock < sales_invoice_detail.quantity)

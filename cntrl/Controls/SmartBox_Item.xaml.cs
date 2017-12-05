@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -194,7 +195,8 @@ namespace cntrl.Controls
     
         public entity.item.item_type? item_types { get; set; }
 
-        public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
+        public IQueryable<entity.Brillo.StockList> Items { get; set; }
+        //  public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
 
         //private Task taskSearch;
         private CancellationTokenSource tokenSource;
@@ -265,26 +267,24 @@ namespace cntrl.Controls
         {
             Items = null;
 
-            entity.BrilloQuery.GetItems Execute = null;
+            entity.Brillo.Stock Execute = new entity.Brillo.Stock();
+           
 
             if (LocID == 0)
             {
-                Execute = new entity.BrilloQuery.GetItems(IgnorStock);
+                Items = Execute.getItems_All().AsQueryable();
             }
             else
             {
-                Execute = new entity.BrilloQuery.GetItems(LocID);
+                Items = Execute.getItems_All().Where(x=>x.LocationID>0).AsQueryable();
             }
 
             if (Exclude_OutOfStock)
             {
-                Items = Execute.Items.AsQueryable()
-        .Where(x => (x.InStock > 0 && x.IsProduct) || x.IsProduct == false);
+                Items = Items
+        .Where(x => x.Quantity>0).AsQueryable();
             }
-            else
-            {
-                Items = Execute.Items.AsQueryable();
-            }
+           
 
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () 
             {
@@ -374,7 +374,7 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
-            var predicate = PredicateBuilder.True<entity.BrilloQuery.Item>();
+            var predicate = PredicateBuilder.True<entity.Brillo.StockList>();
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
             if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
             {
@@ -383,14 +383,14 @@ namespace cntrl.Controls
         
             if (_ExactSearch)
             {
-                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) && (x.Code == SearchText));
+                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) && (x.ItemCode == SearchText));
             }
             else
             {
                 predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) &&
                     (
-                        x.Code.ToLower().Contains(SearchText.ToLower()) ||
-                        x.Name.ToLower().Contains(SearchText.ToLower()) ||
+                        x.ItemCode.ToLower().Contains(SearchText.ToLower()) ||
+                        x.ItemName.ToLower().Contains(SearchText.ToLower()) ||
                         x.Brand.ToLower().Contains(SearchText.ToLower())
                     ));
 

@@ -468,7 +468,7 @@ namespace entity.Controller.Product
 
                     //If Item_InStockLIST does not have enough
                     int LocationID = 0;
-                    if (Items_InStockLIST.Sum(x => x.QtyBalance) < grouped_decisionInternal.quantity)
+                    if (Items_InStockLIST.Sum(x => x.Quantity) < grouped_decisionInternal.quantity)
                     {
                         LocationID = item_request.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault();
                     }

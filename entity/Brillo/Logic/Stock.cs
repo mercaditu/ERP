@@ -590,11 +590,11 @@ namespace entity.Brillo.Logic
                         Stock.MovementID = Convert.ToInt32(_item_movement.id_movement);
                         Stock.MovementRelID = Convert.ToInt32(_item_movement.id_movement_value_rel);
                         Stock.TranDate = Convert.ToDateTime(_item_movement.trans_date);
-                        Stock.QtyBalance = Convert.ToDecimal(_item_movement.credit);
+                        Stock.Quantity = Convert.ToDecimal(_item_movement.credit);
                         Stock.Cost = Convert.ToDecimal(_item_movement.item_movement_value.Sum(x => x.unit_value));
                         Stock.LocationID = _item_movement.id_location;
-                        Stock.ExpirationDate = _item_movement.expire_date;
-                        Stock.code = _item_movement.code;
+                        Stock.ExpiryDate = _item_movement.expire_date;
+                        Stock.BatchCode = _item_movement.code;
 
                         Items_InStockLIST.Add(Stock);
                     }
@@ -810,9 +810,9 @@ namespace entity.Brillo.Logic
                             Brillo.Stock stockBrillo = new Brillo.Stock();
                             Items_InStockLIST = stockBrillo.ScalarMovement((long)detail.movement_id);
 
-                            if (detail.quantity > Items_InStockLIST.FirstOrDefault().QtyBalance)
+                            if (detail.quantity > Items_InStockLIST.FirstOrDefault().Quantity)
                             {
-                                quantity = Items_InStockLIST.FirstOrDefault().QtyBalance;
+                                quantity = Items_InStockLIST.FirstOrDefault().Quantity;
                             }
                             else
                             {
@@ -1204,9 +1204,9 @@ namespace entity.Brillo.Logic
                     decimal movement_debit_quantity = Quantity;
 
                     //If Parent Movement is lesser than Quantity, then only take total value of Parent.
-                    if (parent_Movement.QtyBalance <= Quantity)
+                    if (parent_Movement.Quantity <= Quantity)
                     {
-                        movement_debit_quantity = parent_Movement.QtyBalance;
+                        movement_debit_quantity = parent_Movement.Quantity;
                     }
 
                     if (parent_Movement.LocationID > 0)
@@ -1221,8 +1221,8 @@ namespace entity.Brillo.Logic
                     item_movement.status = Status;
 
                     //Batch Information is carried forward to chil
-                    item_movement.expire_date = parent_Movement.ExpirationDate;
-                    item_movement.code = parent_Movement.code;
+                    item_movement.expire_date = parent_Movement.ExpiryDate;
+                    item_movement.code = parent_Movement.BatchCode;
 
                     item_movement.parent = db.item_movement.Find(parent_Movement.MovementID);
                     item_movement.barcode = item_movement.parent != null ? item_movement.parent.barcode : Barcode.RandomGenerator();
@@ -1369,7 +1369,7 @@ namespace entity.Brillo.Logic
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);
-                    Quantity -= parent_Movement.QtyBalance;
+                    Quantity -= parent_Movement.Quantity;
                 }
             }
 

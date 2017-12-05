@@ -383,11 +383,11 @@ namespace cntrl.Controls
         
             if (_ExactSearch)
             {
-                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) && (x.ItemCode == SearchText));
+                predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company || x.CompanyID == null) && (x.ItemCode == SearchText));
             }
             else
             {
-                predicate = (x => x.IsActive && (x.ComapnyID == entity.CurrentSession.Id_Company || x.ComapnyID == null) &&
+                predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company || x.CompanyID == null) &&
                     (
                         x.ItemCode.ToLower().Contains(SearchText.ToLower()) ||
                         x.ItemName.ToLower().Contains(SearchText.ToLower()) ||
@@ -396,15 +396,15 @@ namespace cntrl.Controls
 
                 if (item_types != null)
                 {
-                    predicate = predicate.And(x => x.Type == item_types);
+                    predicate = predicate.And(x => x.Type == (int)item_types);
                 }
                 if (Exclude_OutOfStock == true)
                 {
-                    predicate = predicate.And(x => x.InStock > 0 && x.IsProduct == true).Or(y => y.IsProduct == false);
+                    predicate = predicate.And(x => x.Quantity > 0);
                 }
             }
 
-            itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.Name).ToList();
+            itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.ItemName).ToList();
             ItemPopUp.IsOpen = true;
         }
 

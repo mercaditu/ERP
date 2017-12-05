@@ -16,8 +16,8 @@ namespace entity.Brillo
                                select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire from(
                                 (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
                                 ip.id_item_product as ProductID, (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
-                                 measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,
-                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,
+                                 measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,i.is_active as IsActive,i.company_id as CompanyID,
+                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,i.id_item_type as Type,
                                 max(im.id_movement) as MovementID,i.id_item_type,ip.can_expire,imvr.id_movement_value_rel as MovementRelID
                                   from items  as i
                                  left join item_product as ip on i.id_item = ip.id_item
@@ -38,9 +38,9 @@ namespace entity.Brillo
                                 ) as movement where Quantity >0
                                  union(select i.name as ItemName, i.code as ItemCode,0 as ProductID,0 as LocationID,'' as Location,
                               0 as Quantity,false as can_expire
-                                 measure.name as Measurement, 0 as Cost,
+                                 measure.name as Measurement, 0 as Cost,,i.is_active as IsActive,i.company_id as CompanyID,i.id_item_type as Type,
                                 brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,
-                               0 as MovementID,0 as MovementRelID
+                               0 as MovementID,0 as MovementRelID,,i.is_active as IsActive,i.company_id as CompanyID,
                                   from items  as i
 
 
@@ -64,8 +64,8 @@ namespace entity.Brillo
                                 select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
                                 ip.id_item_product as ProductID,im.credit,sum(IFNULL(child.debit, 0)),   (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,
-                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,
-                                max(im.id_movement) as MovementID,ip.can_expire,imvr.id_movement_value_rel as MovementRelID
+                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,i.id_item_type as Type,
+                                max(im.id_movement) as MovementID,ip.can_expire,imvr.id_movement_value_rel as MovementRelID,i.is_active as IsActive,i.company_id as CompanyID
                                  from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
@@ -91,8 +91,8 @@ namespace entity.Brillo
                                select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire from(
                                 (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
                                 ip.id_item_product as ProductID, (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
-                                 measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,
-                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,,im.trans_date as TranDate,
+                                 measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,i.is_active as IsActive,i.company_id as CompanyID,i.id_item_type as Type,
+                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,
                                 max(im.id_movement) as MovementID,i.id_item_type,ip.can_expire,imvr.id_movement_value_rel as MovementRelID
                                   from items  as i
                                  left join item_product as ip on i.id_item = ip.id_item
@@ -114,8 +114,8 @@ namespace entity.Brillo
                                  union(select i.name as ItemName, i.code as ItemCode,0 as ProductID,0 as LocationID,'' as Location,
                               0 as Quantity,false as can_expire
                                  measure.name as Measurement, 0 as Cost,
-                                brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,
-                               0 as MovementID,0 as MovementRelID
+                                brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,i.id_item_type as Type,
+                               0 as MovementID,0 as MovementRelID,,i.is_active as IsActive,i.company_id as CompanyID
                                   from items  as i
 
 
@@ -316,6 +316,9 @@ namespace entity.Brillo
                     Quantity = !DataRow.IsNull("Quantity") ? Convert.ToDecimal(DataRow["Quantity"]) : 0,
                     Cost = !DataRow.IsNull("Cost") ? Convert.ToDecimal(DataRow["Cost"]) : 0,
                     can_expire= Convert.ToBoolean(DataRow["can_expire"]),
+                    IsActive = Convert.ToBoolean(DataRow["IsActive"]),
+                    CompanyID = Convert.ToInt16(DataRow["CompanyID"]),
+                    Type = Convert.ToInt16(DataRow["Type"])
                 };
 
                 if (!DataRow.IsNull("ExpiryDate"))
@@ -419,5 +422,8 @@ namespace entity.Brillo
         public bool can_expire { get; set; }
         public DateTime TranDate { get; set; }
         public int MovementRelID { get; set; }
+        public bool IsActive { get; set; }
+        public int CompanyID { get; set; }
+        public int Type { get; set; }
     }
 }

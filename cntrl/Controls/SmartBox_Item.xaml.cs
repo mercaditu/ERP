@@ -68,7 +68,7 @@ namespace cntrl.Controls
                     //Filters Items list to only include InStock Items or Non-Products
                     if (Items != null)
                     {
-                        Items = Items.AsQueryable().Where(x => (x.InStock > 0 && x.IsProduct) || x.IsProduct == false);
+                        Items = Items.AsQueryable().Where(x=>x.Quantity>0);
                     }
                 }
             }

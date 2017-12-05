@@ -47,7 +47,11 @@ namespace entity.Brillo.Logic
                             {
                                 Brillo.Stock stockBrillo = new Brillo.Stock();
                                 app_location app_location = db.app_location.Find(production_execution_detail.production_order_detail.production_order.production_line.id_location);
-                                Items_InStockLIST = stockBrillo.List(app_location.id_branch, app_location.id_location, item_product.id_item_product);
+                                if (app_location!=null)
+                                {
+                                    Items_InStockLIST = stockBrillo.getItems_ByBranch(app_location.id_branch,DateTime.Now).Where(x=>x.LocationID==app_location.id_location && x.ProductID==item_product.id_item_product).ToList();
+                                }
+                                
                             }
 
                             item_movementINPUT.AddRange(
@@ -231,7 +235,8 @@ namespace entity.Brillo.Logic
                 else
                 {
                     Brillo.Stock stock = new Brillo.Stock();
-                    Items_InStockLIST = stock.List(packing_detail.app_location.id_branch, LocationID, item_product.id_item_product);
+                    Items_InStockLIST = stock.getItems_ByBranch(packing_detail.app_location.id_branch, DateTime.Now).Where(x => x.LocationID == LocationID && x.ProductID == item_product.id_item_product).ToList();
+                   
                 }
 
                 item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
@@ -623,7 +628,8 @@ namespace entity.Brillo.Logic
                     else
                     { // Get all Movements with Balance.
                         Brillo.Stock stock = new Brillo.Stock();
-                        Items_InStockLIST = stock.List(purchase_return_detail.app_location.id_branch, (int)purchase_return_detail.id_location, item_product.id_item_product);
+                        Items_InStockLIST = stock.getItems_ByBranch(purchase_return_detail.app_location.id_branch, DateTime.Now).Where(x => x.LocationID == (int)purchase_return_detail.id_location && x.ProductID == item_product.id_item_product).ToList();
+                        
                     }
 
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,

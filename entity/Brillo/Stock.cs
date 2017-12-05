@@ -38,7 +38,7 @@ namespace entity.Brillo
                                 ) as movement where Quantity >0
                                  union(select i.name as ItemName, i.code as ItemCode,0 as ProductID,0 as LocationID,'' as Location,
                               0 as Quantity,false as can_expire
-                                 measure.name as Measurement, 0 as Cost,,i.is_active as IsActive,i.company_id as CompanyID,i.id_item_type as Type,
+                                 measure.name as Measurement, 0 as Cost,i.is_active as IsActive,i.company_id as CompanyID,i.id_item_type as Type,
                                 brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,
                                0 as MovementID,0 as MovementRelID,,i.is_active as IsActive,i.company_id as CompanyID,
                                   from items  as i
@@ -135,47 +135,47 @@ namespace entity.Brillo
 
 
 
-        public List<StockList> List(int BranchID, int? LocationID, int ProductID)
-        {
-            string query = @" set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                select
-                                loc.id_location as LocationID,
-                                loc.name as Location,
-                                item.name as Item, 
-                                parent.id_movement as MovementID,
-                                parent.id_movement_value_rel as MovementRelID,
-                                parent.trans_date as TransDate, parent.expire_date,parent.code,parent.comment,
-                                parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance,
-                                (select sum(unit_value) as cost from item_movement_value_detail as imvd
-                                join item_movement_value_rel as imvr on imvd.id_movement_value_rel = imvr.id_movement_value_rel
-                                where imvr.id_movement_value_rel = parent.id_movement_value_rel) as Cost
+        //public List<StockList> List(int BranchID, int? LocationID, int ProductID)
+        //{
+        //    string query = @" set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+        //                        set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+        //                        select
+        //                        loc.id_location as LocationID,
+        //                        loc.name as Location,
+        //                        item.name as Item, 
+        //                        parent.id_movement as MovementID,
+        //                        parent.id_movement_value_rel as MovementRelID,
+        //                        parent.trans_date as TransDate, parent.expire_date,parent.code,parent.comment,
+        //                        parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance,
+        //                        (select sum(unit_value) as cost from item_movement_value_detail as imvd
+        //                        join item_movement_value_rel as imvr on imvd.id_movement_value_rel = imvr.id_movement_value_rel
+        //                        where imvr.id_movement_value_rel = parent.id_movement_value_rel) as Cost
 
-                                from item_movement as parent
-                                inner join app_location as loc on parent.id_location = loc.id_location
-                                left join item_movement as child on child.parent_id_movement = parent.id_movement
-                                left join item_product as ip on ip.id_item_product = parent.id_item_product
-                                left join items as item on item.id_item = ip.id_item
+        //                        from item_movement as parent
+        //                        inner join app_location as loc on parent.id_location = loc.id_location
+        //                        left join item_movement as child on child.parent_id_movement = parent.id_movement
+        //                        left join item_product as ip on ip.id_item_product = parent.id_item_product
+        //                        left join items as item on item.id_item = ip.id_item
 
-                                where {0} and parent.id_item_product = {1} and parent.status = 2 and parent.debit = 0
-                                group by parent.id_movement
-                                order by parent.trans_date";
-            string WhereQuery = "";
+        //                        where {0} and parent.id_item_product = {1} and parent.status = 2 and parent.debit = 0
+        //                        group by parent.id_movement
+        //                        order by parent.trans_date";
+        //    string WhereQuery = "";
 
-            //This determins if we should bring cost of entire block of
-            if (LocationID > 0 || LocationID != null)
-            {
-                WhereQuery = string.Format("parent.id_location = {0}", LocationID);
-            }
-            else
-            {
-                WhereQuery = string.Format("loc.id_branch = {0}", BranchID);
-            }
+        //    //This determins if we should bring cost of entire block of
+        //    if (LocationID > 0 || LocationID != null)
+        //    {
+        //        WhereQuery = string.Format("parent.id_location = {0}", LocationID);
+        //    }
+        //    else
+        //    {
+        //        WhereQuery = string.Format("loc.id_branch = {0}", BranchID);
+        //    }
 
-            query = string.Format(query, WhereQuery, ProductID);
-            DataTable dt = exeDT(query);
-            return GenerateList(dt);
-        }
+        //    query = string.Format(query, WhereQuery, ProductID);
+        //    DataTable dt = exeDT(query);
+        //    return GenerateList(dt);
+        //}
 
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {

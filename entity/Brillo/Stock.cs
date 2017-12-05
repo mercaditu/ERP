@@ -8,7 +8,7 @@ namespace entity.Brillo
 {
     public class Stock
     {
-        public List<StockList> getItems_ByBranch(int BranchID, DateTime TransDate)
+        public List<StockList> getItems_ByBranch(int? BranchID, DateTime TransDate)
         {
             string query = @"
                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
@@ -29,7 +29,7 @@ namespace entity.Brillo
                                 left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
                                 left join item_brand as brand on brand.id_brand = i.id_brand
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
-                                 where i.id_company = {0} and b.id_branch = {1} and im.trans_date <= '{2}' 
+                                 where i.id_company = {0} and {1} and im.trans_date <= '{2}' 
                                 
                                 group by im.id_movement
                                 order by im.expire_date)
@@ -50,12 +50,18 @@ namespace entity.Brillo
                                  where i.id_company = {0} and id_item_type = 3
                                  group by i.id_item)
                                ";
+            string WhereQuery = "";
+            if (BranchID > 0 || BranchID != null)
+            {
+                WhereQuery = string.Format(" and b.id_branch = {1}", BranchID);
+            }
 
-            query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
+
+            query = String.Format(query, entity.CurrentSession.Id_Company, WhereQuery, TransDate.ToString("yyyy-MM-dd 23:59:59"));
 
             return GenerateList(exeDT(query));
         }
-        public List<StockList> getInStock_ByBranch(int BranchID, DateTime TransDate)
+        public List<StockList> getInStock_ByBranch(int? BranchID, DateTime TransDate)
         {
             string query = @"
                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
@@ -75,12 +81,18 @@ namespace entity.Brillo
                                 left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
                                 left join item_brand as brand on brand.id_brand = i.id_brand
                                 left join app_measurement as measure on i.id_measurement = measure.id_measurement
-                                 where im.id_company = {0} and b.id_branch = {1} and im.trans_date <= '{2}' 
+                                 where im.id_company = {0} and {1} and im.trans_date <= '{2}' 
                                 -- and im.credit > 0
                                 group by im.id_movement
                                 order by im.expire_date) as movement where Quantity > 0 group by ProductID,LocationID";
+            string WhereQuery = "";
+            if (BranchID > 0 || BranchID != null)
+            {
+                WhereQuery = string.Format(" and b.id_branch = {1}", BranchID);
+            }
+            
 
-            query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
+            query = String.Format(query, entity.CurrentSession.Id_Company, WhereQuery, TransDate.ToString("yyyy-MM-dd 23:59:59"));
             return GenerateList(exeDT(query));
         }
         public List<StockList> getItems_All()

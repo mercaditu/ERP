@@ -286,7 +286,8 @@ namespace entity
                     else
                     {
                         Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.List(LocationOrigin.id_branch, LocationOrigin.id_location, item_transfer_detail.id_item_product);
+                        Items_InStockLIST = stock.getItems_ByBranch(LocationOrigin.id_branch, DateTime.Now).Where(x => x.LocationID == LocationOrigin.id_location && x.ProductID == item_transfer_detail.item_product.id_item_product).TOlist();
+                       
                     }
 
                     List<item_movement> item_movement_originList;

@@ -274,22 +274,64 @@ namespace entity.Brillo
             List<StockList> StockList = new List<StockList>();
             foreach (DataRow DataRow in dt.Rows)
             {
-                StockList Stock = new StockList()
+                StockList Stock = new StockList();
+                  if (!DataRow.IsNull("ItemCode"))
                 {
-                    ItemCode = DataRow["ItemCode"].ToString(),
-                    ItemName = DataRow["ItemName"].ToString(),
-                    Location = DataRow["Location"].ToString(),
-                    LocationID = Convert.ToInt16(DataRow["LocationID"]),
-                    Measurement = DataRow["Measurement"].ToString(),
-                    ProductID = Convert.ToInt16(DataRow["ProductID"]),
-                    BatchCode = DataRow["BatchCode"].ToString(),
-                    Quantity = !DataRow.IsNull("Quantity") ? Convert.ToDecimal(DataRow["Quantity"]) : 0,
-                    Cost = !DataRow.IsNull("Cost") ? Convert.ToDecimal(DataRow["Cost"]) : 0,
-                    can_expire= Convert.ToBoolean(DataRow["can_expire"]),
-                    IsActive = Convert.ToBoolean(DataRow["IsActive"]),
-                    CompanyID = Convert.ToInt16(DataRow["CompanyID"]),
-                  
-                };
+                    Stock.ItemCode = DataRow["ItemCode"].ToString();
+                }
+                if (!DataRow.IsNull("ItemName"))
+                {
+                    Stock.ItemName = DataRow["ItemName"].ToString();
+                }
+                if (!DataRow.IsNull("Location"))
+                {
+                    Stock.Location = DataRow["Location"].ToString();
+                }
+                if (!DataRow.IsNull("LocationID"))
+                {
+                    Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
+                }
+                if (!DataRow.IsNull("Measurement"))
+                {
+                    Stock.Measurement = DataRow["Measurement"].ToString();
+                }
+                if (!DataRow.IsNull("ProductID"))
+                {
+                    Stock.ProductID = Convert.ToInt16(DataRow["ProductID"]);
+                }
+                if (!DataRow.IsNull("Quantity"))
+                {
+                    Stock.Quantity = Convert.ToDecimal(DataRow["Quantity"]);
+                }
+                if (!DataRow.IsNull("Cost"))
+                {
+                    Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
+                }
+
+
+
+
+        
+
+
+                
+                if (!DataRow.IsNull("BatchCode"))
+                {
+                    Stock.BatchCode = DataRow["BatchCode"].ToString();
+            }
+                if (!DataRow.IsNull("can_expire"))
+                {
+                    Stock.can_expire = Convert.ToBoolean(DataRow["can_expire"]);
+                }
+                if (!DataRow.IsNull("IsActive"))
+                {
+                    Stock.IsActive = Convert.ToBoolean(DataRow["IsActive"]);
+                }
+                if (!DataRow.IsNull("CompanyID"))
+                {
+
+                    Stock.CompanyID = Convert.ToInt16(DataRow["CompanyID"]);
+                }
                 if (!DataRow.IsNull("Type"))
                 {
                     Stock.Type = Convert.ToInt16(DataRow["Type"]);

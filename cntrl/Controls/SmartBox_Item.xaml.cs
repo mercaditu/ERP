@@ -374,38 +374,46 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
-            var predicate = PredicateBuilder.True<entity.Brillo.StockList>();
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-            if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
+            try
             {
-
-            }
-        
-            if (_ExactSearch)
-            {
-                predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company || x.CompanyID == null) && (x.ItemCode == SearchText));
-            }
-            else
-            {
-                predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company || x.CompanyID == null) &&
-                    (
-                        x.ItemCode.ToLower().Contains(SearchText.ToLower()) ||
-                        x.ItemName.ToLower().Contains(SearchText.ToLower()) ||
-                        x.Brand.ToLower().Contains(SearchText.ToLower())
-                    ));
-
-                if (item_types != null)
+                var predicate = PredicateBuilder.True<entity.Brillo.StockList>();
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+                if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
                 {
-                    predicate = predicate.And(x => x.Type == (int)item_types);
-                }
-                if (Exclude_OutOfStock == true)
-                {
-                    predicate = predicate.And(x => x.Quantity > 0);
-                }
-            }
 
-            itemViewSource.Source = Items.Where(predicate).OrderBy(x => x.ItemName).ToList();
-            ItemPopUp.IsOpen = true;
+                }
+
+                if (_ExactSearch)
+                {
+                    predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company) && (x.ItemCode == SearchText));
+                }
+                else
+                {
+                    predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company) &&
+                        (
+                            x.ItemCode.ToLower().Contains(SearchText.ToLower()) ||
+                            x.ItemName.ToLower().Contains(SearchText.ToLower()) ||
+                            x.Brand.ToLower().Contains(SearchText.ToLower())
+                        ));
+
+                    if (item_types != null)
+                    {
+                        predicate = predicate.And(x => x.Type == (int)item_types);
+                    }
+                    if (Exclude_OutOfStock == true)
+                    {
+                        predicate = predicate.And(x => x.Quantity > 0);
+                    }
+                }
+
+                itemViewSource.Source = Items;
+                
+
+
+                ItemPopUp.IsOpen = true;
+            }
+            catch
+            { }
         }
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)

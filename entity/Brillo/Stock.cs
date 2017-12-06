@@ -26,6 +26,28 @@ namespace entity.Brillo
             }
         }
 
+        //public List<StockList> getgroupbylist(int? BranchID)
+        //{
+           
+        //        //Get Specific Data based on date. Fill up NEW DT and send back.
+        //        return CurrentItems.GetList((int)BranchID).GroupBy(x=>x.ItemID)
+        //        .Select(x => new
+        //        {
+        //            Code = x.Max(y => y.Code),
+        //            Name = x.Max(y => y.Name),
+        //            Location = x.Max(y => y.Location),
+        //            Measurement = x.Max(y => y.Measurement),
+        //            Quantity = x.Sum(y => y.Quantity),
+        //            MovementID = x.Max(y => y.MovementID),
+        //            ProductID = x.Max(y => y.ProductID),
+        //            LocationID = x.Max(y => y.LocationID)
+        //        })
+        //        .Cast<StockList>().ToList();
+            
+        //}
+
+
+
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {
             string query = @"

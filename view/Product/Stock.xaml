@@ -54,10 +54,9 @@
 					RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" ItemsSource="{Binding Source={StaticResource inventoryViewSource}}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto" />
-                    <DataGridTextColumn Binding="{Binding ItemCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
-                    <DataGridTextColumn Binding="{Binding ItemName}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
-                    <DataGridTextColumn
-										ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding Code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
+                    <DataGridTextColumn Binding="{Binding Name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
+                    <DataGridTextColumn ElementStyle="{StaticResource RightAlignStyle}"
 										Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" >
                         <DataGridTextColumn.Binding>
                             <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 

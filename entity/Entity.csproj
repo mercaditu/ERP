@@ -300,6 +300,7 @@
     <Compile Include="Controller\Finance\Payment.cs" />
     <Compile Include="Controller\Sales\InvoiceController.cs" />
     <Compile Include="Crm\crm_schedual.cs" />
+    <Compile Include="CurrentItems.cs" />
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="DebeHaber\Sync.cs" />
     <Compile Include="Execustionstrategy.cs" />

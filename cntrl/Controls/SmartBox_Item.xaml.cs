@@ -31,15 +31,6 @@ namespace cntrl.Controls
             set { SetValue(QuantityIntegrationProperty, value); }
         }
 
-
-        public static readonly DependencyProperty IgnorStockProperty = DependencyProperty.Register("IgnorStock", typeof(bool), typeof(SmartBox_Item));
-
-        public bool IgnorStock
-        {
-            get { return (bool)GetValue(IgnorStockProperty); }
-            set { SetValue(IgnorStockProperty, value); }
-        }
-
         //Quantity of the Popup control if used.
         public decimal Quantity
         {
@@ -146,7 +137,7 @@ namespace cntrl.Controls
 
         protected virtual void OnLocationChange(int newvalue)
         {
-            var task = Task.Factory.StartNew(() => LoadData(newvalue, IgnorStock));
+            var task = Task.Factory.StartNew(() => LoadData(newvalue));
         }
 
 
@@ -163,8 +154,12 @@ namespace cntrl.Controls
 
                     if (Item != null)
                     {
-                        ItemID = Item.ID;
-                        QuantityInStock = Item.Quantity;
+                        ItemID = Item.ItemID;
+                        if (Item.Quantity!=null)
+                        {
+                            QuantityInStock = (decimal)Item.Quantity;
+                        }
+                      
                         ItemPopUp.IsOpen = false;
                         //  Text = Item.Name;
                         if (Quantity <= 1)
@@ -241,7 +236,7 @@ namespace cntrl.Controls
         private void _SmartBox_Item_Loaded(object sender, RoutedEventArgs e)
         {
             int LocId = LocationID;
-            LoadData(LocationID, IgnorStock);
+            LoadData(LocationID);
 
             //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
             //Load_BasicData(null, null);
@@ -252,7 +247,7 @@ namespace cntrl.Controls
             //myTimer.Start();
         }
 
-        private void LoadData(int LocId, bool IgnorStock)
+        private void LoadData(int LocId)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
             {
@@ -260,32 +255,30 @@ namespace cntrl.Controls
                 tbxSearch.IsEnabled = false;
             }));
 
-            var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
+            LoadData_Thread(LocId);
+           // var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
         }
 
-        private void LoadData_Thread(int LocID, bool IgnorStock)
+        private void LoadData_Thread(int LocID)
         {
             Items = null;
 
             entity.Brillo.Stock Execute = new entity.Brillo.Stock();
-
-
+            
             if (LocID == 0)
             {
-                Items = Execute.getItems_All().AsQueryable();
+                Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).AsQueryable();
             }
             else
             {
-                Items = Execute.getItems_All().Where(x => x.LocationID > 0).AsQueryable();
+                Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
             }
 
             if (Exclude_OutOfStock)
             {
-                Items = Items
-        .Where(x => x.Quantity > 0).AsQueryable();
+                Items = Items.Where(x => x.Quantity > 0).AsQueryable();
             }
-
-
+            
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
             {
                 tbxSearch.IsEnabled = true;
@@ -448,7 +441,7 @@ namespace cntrl.Controls
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            LoadData(LocationID, IgnorStock);
+            LoadData(LocationID);
         }
 
         public void SmartBoxItem_Focus()

@@ -419,7 +419,7 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-                    if ((project_task.status == Status.Project.Pending || project_task.status == null) && project_task.id_item>0)
+                    if ((project_task.status == Status.Project.Pending || project_task.status == null) && project_task.id_item > 0)
                     {
                         project_task.status = Status.Project.Management_Approved;
                         ProjectTaskDB.NumberOfRecords += 1;
@@ -683,10 +683,18 @@ namespace Cognitivo.Project.Development
                 using (db db = new db())
                 {
                     project_task _project_task = db.project_task.Find(project_task.id_project_task);
-                    _project_task.completed = project_task.completed;
-                    _project_task.importance = project_task.importance;
-                    _project_task.RaisePropertyChanged("importance");
-                    db.SaveChanges();
+
+                    try
+                    {
+                        _project_task.completed = project_task.completed;
+                        _project_task.importance = project_task.importance;
+                        _project_task.RaisePropertyChanged("importance");
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        //Do nothing
+                    }
                 }
             }
         }
@@ -705,8 +713,8 @@ namespace Cognitivo.Project.Development
             ProjectTaskDB = new ProjectTaskDB();
             projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
 
-             ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                .Include(x => x.project_tag_detail).LoadAsync();
+            ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
+               .Include(x => x.project_tag_detail).LoadAsync();
             projectViewSource.Source = ProjectTaskDB.projects.Local;
         }
     }

@@ -49,7 +49,7 @@ namespace entity.Brillo.Logic
                                 app_location app_location = db.app_location.Find(production_execution_detail.production_order_detail.production_order.production_line.id_location);
                                 if (app_location!=null)
                                 {
-                                    Items_InStockLIST = stockBrillo.getItems_ByBranch(app_location.id_branch,DateTime.Now).Where(x=>x.LocationID==app_location.id_location && x.ProductID==item_product.id_item_product).ToList();
+                                    Items_InStockLIST = stockBrillo.getItems_ByBranch(app_location.id_branch).Where(x=>x.LocationID==app_location.id_location && x.ProductID==item_product.id_item_product).ToList();
                                 }
                                 
                             }
@@ -235,7 +235,7 @@ namespace entity.Brillo.Logic
                 else
                 {
                     Brillo.Stock stock = new Brillo.Stock();
-                    Items_InStockLIST = stock.getItems_ByBranch(packing_detail.app_location.id_branch, DateTime.Now).Where(x => x.LocationID == LocationID && x.ProductID == item_product.id_item_product).ToList();
+                    Items_InStockLIST = stock.getItems_ByBranch(packing_detail.app_location.id_branch).Where(x => x.LocationID == LocationID && x.ProductID == item_product.id_item_product).ToList();
                    
                 }
 
@@ -628,7 +628,7 @@ namespace entity.Brillo.Logic
                     else
                     { // Get all Movements with Balance.
                         Brillo.Stock stock = new Brillo.Stock();
-                        Items_InStockLIST = stock.getItems_ByBranch(purchase_return_detail.app_location.id_branch, DateTime.Now).Where(x => x.LocationID == (int)purchase_return_detail.id_location && x.ProductID == item_product.id_item_product).ToList();
+                        Items_InStockLIST = stock.getItems_ByBranch(purchase_return_detail.app_location.id_branch).Where(x => x.LocationID == (int)purchase_return_detail.id_location && x.ProductID == item_product.id_item_product).ToList();
                     }
 
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
@@ -772,7 +772,7 @@ namespace entity.Brillo.Logic
                                 else
                                 {
                                     Brillo.Stock stockBrillo = new Brillo.Stock();
-                                    Items_InStockLIST = stockBrillo.getItems_ByBranch(detail.sales_invoice.id_branch ,DateTime.Now).Where(x =>  x.ProductID == item_productSub.id_item_product).ToList();
+                                    Items_InStockLIST = stockBrillo.getItems_ByBranch(detail.sales_invoice.id_branch).Where(x =>  x.ProductID == item_productSub.id_item_product).ToList();
                                     
                                 }
 
@@ -816,9 +816,9 @@ namespace entity.Brillo.Logic
                             Brillo.Stock stockBrillo = new Brillo.Stock();
                             Items_InStockLIST = stockBrillo.ScalarMovement((long)detail.movement_id);
 
-                            if (detail.quantity > Items_InStockLIST.FirstOrDefault().Quantity)
+                            if (detail.quantity > (decimal)Items_InStockLIST.FirstOrDefault().Quantity)
                             {
-                                quantity = Items_InStockLIST.FirstOrDefault().Quantity;
+                                quantity = (decimal)Items_InStockLIST.FirstOrDefault().Quantity;
                             }
                             else
                             {
@@ -829,7 +829,7 @@ namespace entity.Brillo.Logic
                         {
                             quantity = detail.quantity;
                             Brillo.Stock stock = new Brillo.Stock();
-                            Items_InStockLIST = stock.getItems_ByBranch(detail.sales_invoice.id_branch, DateTime.Now).Where(x => x.ProductID == item_product.id_item_product).ToList();
+                            Items_InStockLIST = stock.getItems_ByBranch(detail.sales_invoice.id_branch).Where(x => x.ProductID == item_product.id_item_product).ToList();
                             
                         }
 
@@ -967,7 +967,7 @@ namespace entity.Brillo.Logic
                         else
                         {
                             Brillo.Stock stock = new Brillo.Stock();
-                            Items_InStockLIST = stock.getItems_ByBranch(item_inventory_detail.app_location.id_branch, DateTime.Now).Where(x =>x.LocationID== item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
+                            Items_InStockLIST = stock.getItems_ByBranch(item_inventory_detail.app_location.id_branch).Where(x =>x.LocationID== item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
                             
                         }
 
@@ -1061,7 +1061,7 @@ namespace entity.Brillo.Logic
                         else
                         {
                             Brillo.Stock stock = new Brillo.Stock();
-                            Items_InStockLIST = stock.getItems_ByBranch(item_inventory_detail.app_location.id_branch, DateTime.Now).Where(x => x.LocationID == item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
+                            Items_InStockLIST = stock.getItems_ByBranch(item_inventory_detail.app_location.id_branch).Where(x => x.LocationID == item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
                           
                         }
 
@@ -1215,12 +1215,12 @@ namespace entity.Brillo.Logic
                     //If Parent Movement is lesser than Quantity, then only take total value of Parent.
                     if (parent_Movement.Quantity <= Quantity)
                     {
-                        movement_debit_quantity = parent_Movement.Quantity;
+                        movement_debit_quantity = (decimal)parent_Movement.Quantity;
                     }
 
                     if (parent_Movement.LocationID > 0)
                     {
-                        item_movement.id_location = parent_Movement.LocationID;
+                        item_movement.id_location = (int)parent_Movement.LocationID;
                     }
 
                     item_movement.comment = Comment;
@@ -1378,7 +1378,7 @@ namespace entity.Brillo.Logic
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);
-                    Quantity -= parent_Movement.Quantity;
+                    Quantity -= (decimal)parent_Movement.Quantity;
                 }
             }
 

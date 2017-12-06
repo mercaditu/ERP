@@ -465,7 +465,7 @@ namespace entity.Controller.Product
                     item_product item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault();
                     int id_item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault().id_item_product;
                     int id_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
-                    Items_InStockLIST = stockBrillo.getItems_ByBranch(item_request.id_branch, DateTime.Now).Where(x => x.LocationID ==id_location && x.ProductID == id_item_product).ToList();
+                    Items_InStockLIST = stockBrillo.getItems_ByBranch(item_request.id_branch).Where(x => x.LocationID ==id_location && x.ProductID == id_item_product).ToList();
                   
 
                     //If Item_InStockLIST does not have enough

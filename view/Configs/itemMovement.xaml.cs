@@ -58,7 +58,7 @@ namespace Cognitivo.Configs
             item_product item_product = db.item_product.Where(x => x.id_item == id_item).FirstOrDefault();
             if (item_product!=null)
             {
-                Items_InStockLIST = stock.getItems_ByBranch(0, DateTime.Now).Where(x => x.LocationID == id_location && x.ProductID == item_product.id_item_product).ToList();
+                Items_InStockLIST = stock.getItems_ByBranch(CurrentSession.Id_Branch).Where(x => x.LocationID == id_location && x.ProductID == item_product.id_item_product).ToList();
           
             }
             item_movement_detailDataGrid.ItemsSource = Items_InStockLIST;

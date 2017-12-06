@@ -36,20 +36,15 @@ namespace cntrl.Panels
 
             if (Items_InStockLIST != null)
             {
-                //if (item_inventoryList.Count() == Items_InStockLIST.Count())
-                //{
                     if (Items_InStockLIST.FirstOrDefault() != null)
                     {
-
-
-
-                        item_inventoryList.FirstOrDefault().value_system = Items_InStockLIST.FirstOrDefault().Quantity;
+                        item_inventoryList.FirstOrDefault().value_system = (decimal)Items_InStockLIST.FirstOrDefault().Quantity;
                         item_inventoryList.FirstOrDefault().batch_code = Items_InStockLIST.FirstOrDefault().BatchCode;
                         item_inventoryList.FirstOrDefault().expire_date = Items_InStockLIST.FirstOrDefault().ExpiryDate;
-                        item_inventoryList.FirstOrDefault().unit_value = Items_InStockLIST.FirstOrDefault().Cost;
+                        item_inventoryList.FirstOrDefault().unit_value = (decimal)Items_InStockLIST.FirstOrDefault().Cost;
                         item_inventoryList.FirstOrDefault().timestamp = Items_InStockLIST.FirstOrDefault().TranDate;
                         item_inventoryList.FirstOrDefault().item_inventory_dimension.Clear();
-                        int MovementID = Items_InStockLIST.FirstOrDefault().MovementID;
+                        int MovementID = (int)Items_InStockLIST.FirstOrDefault().MovementID;
                         if (MovementID > 0)
                         {
                             if (InventoryDB.item_movement.Where(x => x.id_movement == MovementID).FirstOrDefault() != null)
@@ -86,7 +81,7 @@ namespace cntrl.Panels
 
 
                     item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
-                    item_inventory_detail.value_system = item.Quantity;
+                    item_inventory_detail.value_system = (decimal)item.Quantity;
                     item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
                     item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
                     item_inventory_detail.id_location = item_inventoryList.FirstOrDefault().id_location;
@@ -98,7 +93,7 @@ namespace cntrl.Panels
 
                     item_inventory_detail.IsSelected = true;
                     item_inventory_detail.State = EntityState.Added;
-                    item_inventory_detail.unit_value = item.Cost;
+                    item_inventory_detail.unit_value = (decimal)item.Cost;
                     item_inventory_detail.timestamp = item.TranDate;
 
 

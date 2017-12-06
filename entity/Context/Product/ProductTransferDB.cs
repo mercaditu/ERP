@@ -286,7 +286,7 @@ namespace entity
                     else
                     {
                         Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.getItems_ByBranch(LocationOrigin.id_branch, DateTime.Now).Where(x => x.LocationID == LocationOrigin.id_location && x.ProductID == item_transfer_detail.item_product.id_item_product).ToList();
+                        Items_InStockLIST = stockBrillo.getItems_ByBranch(LocationOrigin.id_branch).Where(x => x.LocationID == LocationOrigin.id_location && x.ProductID == item_transfer_detail.item_product.id_item_product).ToList();
                        
                     }
 
@@ -326,7 +326,7 @@ namespace entity
                     else
                     {
                         Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.getItems_ByBranch(LocationOrigin.id_branch, DateTime.Now).Where(x =>x.LocationID== LocationOrigin.id_location && x.ProductID == item_transfer_detail.id_item_product).ToList();
+                        Items_InStockLIST = stockBrillo.getItems_ByBranch(LocationOrigin.id_branch).Where(x =>x.LocationID== LocationOrigin.id_location && x.ProductID == item_transfer_detail.id_item_product).ToList();
                        
                     }
 

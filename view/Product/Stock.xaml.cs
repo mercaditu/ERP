@@ -55,23 +55,9 @@ namespace Cognitivo.Product
 
             if (app_branch != null)
             {
-                //if (chkstock.IsChecked == true)
-                //{
-                    //Class.StockCalculations StockCalculations = new Class.StockCalculations();
-
-                //    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
-                //    inventoryViewSource.Source = StockCalculations.ByLot(app_branch.id_branch, InventoryDate);
-                //}
-                //else
-                //{
-                //    Class.StockCalculations StockCalculations = new Class.StockCalculations();
-
-                //    inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
-                //    inventoryViewSource.Source = StockCalculations.ByBranch(app_branch.id_branch, InventoryDate);
-                //}
                 entity.Brillo.Stock Stock = new entity.Brillo.Stock();
                 inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
-                inventoryViewSource.Source = Stock.getInStock_ByBranch(app_branch.id_branch, InventoryDate);
+                inventoryViewSource.Source = Stock.getProducts_InStock(app_branch.id_branch, InventoryDate);
 
 
                 TextBox_TextChanged(null, null);
@@ -124,14 +110,15 @@ namespace Cognitivo.Product
 
             if (_item_movement != null)
             {
-                int id_item_product = _item_movement.ProductID;
-                int id_location = _item_movement.LocationID;
+                int id_item_product = (int)_item_movement.ProductID;
+                int id_location = (int)_item_movement.LocationID;
                 int id_movement =(int)_item_movement.MovementID;
 
                 using (db db = new db())
                 {
                     item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-                    if (chkstock.IsChecked==true)
+
+                    if (chkstock.IsChecked == true)
                     {
                         item_movementViewSource.Source = await db.item_movement
                       .Where(x => x.id_company == CurrentSession.Id_Company
@@ -139,11 +126,11 @@ namespace Cognitivo.Product
                                                       && x.app_location.id_location == id_location
                                                       && x.status == Status.Stock.InStock
                                                       && x.trans_date <= InventoryDate
-                                                      && (x.parent.id_movement == id_movement || x.id_movement==id_movement)
+                                                      && (x.parent.id_movement == id_movement || x.id_movement == id_movement)
                                                       )
                                                       .OrderByDescending(x => x.trans_date)
-
-                                                      .Include(x => x.item_product).ToListAsync();
+                                                      .Include(x => x.item_product)
+                                                      .ToListAsync();
                     }
                     else
                     {
@@ -156,7 +143,8 @@ namespace Cognitivo.Product
                                                     )
                                                     .OrderByDescending(x => x.trans_date)
                                                     .Take(100)
-                                                    .Include(x => x.item_product).ToListAsync();
+                                                    .Include(x => x.item_product)
+                                                    .ToListAsync();
                     }
                   
 
@@ -193,8 +181,8 @@ namespace Cognitivo.Product
                     {
                         dynamic TmpInventory = (dynamic)i;
 
-                        if (TmpInventory.ItemCode.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
-                            TmpInventory.ItemName.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                        if (TmpInventory.Code.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                            TmpInventory.Name.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
                             TmpInventory.Location.ToUpper().Contains(txtsearch.Text.ToUpper()))
                         {
                             //This code checks for Quantity after checking for name. This will cause less loops.

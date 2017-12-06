@@ -8,143 +8,22 @@ namespace entity.Brillo
 {
     public class Stock
     {
-        public List<StockList> getItems_ByBranch(int? BranchID, DateTime TransDate)
+        public List<StockList> getItems_ByBranch(int? BranchID)
         {
-            string query = @"
-                               set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                               select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID,ID from(
-                                (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,i.id_item as ID,
-                                ip.id_item_product as ProductID, (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
-                                 measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,i.is_active as IsActive,i.id_company as CompanyID,
-                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,i.id_item_type as Type,
-                                max(im.id_movement) as MovementID,i.id_item_type,ip.can_expire,imvr.id_movement_value_rel as MovementRelID
-                                  from items  as i
-                                 left join item_product as ip on i.id_item = ip.id_item
-                                   left join item_movement as im on im.id_item_product = ip.id_item_product
-                                  left join item_movement as child on im.id_movement = child.parent_id_movement
-
-                                left join app_location as l on im.id_location = l.id_location
-                                left join app_branch as b on l.id_branch = b.id_branch
-                                left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
-                                left join item_brand as brand on brand.id_brand = i.id_brand
-                                left join app_measurement as measure on i.id_measurement = measure.id_measurement
-                                 where i.id_company = {0} and {1} and im.trans_date <= '{2}' nd i.is_active = true
-                                
-                                group by im.id_movement
-                                order by im.expire_date)
-                               
-                                ) as movement where Quantity > 0
-
-                                 union(select i.name as ItemName, i.code as ItemCode, 0 as ProductID, 0 as LocationID,'' as Location,i.id_item as ID,
-                              0 as Quantity,false as can_expire,
-                                 measure.name as Measurement, 0 as Cost,i.is_active as IsActive,i.id_company as CompanyID,i.id_item_type as Type,
-                                brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,
-                               0 as MovementID,0 as MovementRelID,i.is_active as IsActive
-                                  from items  as i
-
-
-
-                                left join item_brand as brand on brand.id_brand = i.id_brand
-                                left join app_measurement as measure on i.id_measurement = measure.id_measurement
-                                 where i.id_company = {0} and id_item_type in (3, 4, 5, 7) and i.is_active = true
-                                 group by i.id_item)
-                               ";
-            string WhereQuery = "";
-            if (BranchID > 0 || BranchID != null)
-            {
-                WhereQuery = string.Format("  b.id_branch = {0}", BranchID);
-            }
-
-
-            query = String.Format(query, entity.CurrentSession.Id_Company, WhereQuery, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-
-            return GenerateList(exeDT(query));
+            return CurrentItems.GetList((int)BranchID);
         }
 
-        public List<StockList> getInStock_ByBranch(int? BranchID, DateTime TransDate)
+        public List<StockList> getProducts_InStock(int? BranchID, DateTime? TransDate)
         {
-            string query = @"
-                               set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                select ItemName,ItemCode,ProductID,LocationID,Location,sum(Quantity) as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID,ID from(
-                                select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,i.id_item as ID,
-                                ip.id_item_product as ProductID,im.credit,sum(IFNULL(child.debit, 0)),   (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
-                                 measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,
-                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,i.id_item_type as Type,
-                                max(im.id_movement) as MovementID,ip.can_expire,imvr.id_movement_value_rel as MovementRelID,i.is_active as IsActive,i.id_company as CompanyID
-                                 from item_movement as im
-                                left join item_movement as child on im.id_movement = child.parent_id_movement
-                                inner join item_product as ip on im.id_item_product = ip.id_item_product
-                                inner join items as i on ip.id_item = i.id_item
-                                inner join app_location as l on im.id_location = l.id_location
-                                inner join app_branch as b on l.id_branch = b.id_branch
-                                left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
-                                left join item_brand as brand on brand.id_brand = i.id_brand
-                                left join app_measurement as measure on i.id_measurement = measure.id_measurement
-                                 where im.id_company = {0} and {1} and im.trans_date <= '{2}' and  i.is_active = true
-                                -- and im.credit > 0
-                                group by im.id_movement
-                                order by im.expire_date) as movement where Quantity > 0 group by ProductID,LocationID";
-            string WhereQuery = "";
-            if (BranchID > 0 || BranchID != null)
+            if (TransDate == null)
             {
-                WhereQuery = string.Format("  b.id_branch = {0}", BranchID);
+                return CurrentItems.GetList((int)BranchID).Where(x => x.Quantity > 0).ToList();
             }
-            
-
-            query = String.Format(query, entity.CurrentSession.Id_Company, WhereQuery, TransDate.ToString("yyyy-MM-dd 23:59:59"));
-            return GenerateList(exeDT(query));
-        }
-        public List<StockList> getItems_All()
-        {
-            string query = @"
-                               set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                               select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID,ID from(
-                                
-                                (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,i.id_item as ID,
-                                ip.id_item_product as ProductID, (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
-                                 measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost, i.is_active as IsActive, i.id_company as CompanyID, i.id_item_type as Type,
-                                brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,
-                                max(im.id_movement) as MovementID,i.id_item_type,ip.can_expire,imvr.id_movement_value_rel as MovementRelID
-                                  from items  as i
-                                 left join item_product as ip on i.id_item = ip.id_item
-                                   left join item_movement as im on im.id_item_product = ip.id_item_product
-                                  left join item_movement as child on im.id_movement = child.parent_id_movement
-
-                                left join app_location as l on im.id_location = l.id_location
-                                left join app_branch as b on l.id_branch = b.id_branch
-                                left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
-                                left join item_brand as brand on brand.id_brand = i.id_brand
-                                left join app_measurement as measure on i.id_measurement = measure.id_measurement
-                                 where i.id_company = {0} and  i.is_active = true
-                                
-                                group by im.id_movement
-                                order by im.expire_date)
-                               
-                                
-                                ) as movement
-
-
-                                 union(select i.name as ItemName, i.code as ItemCode,0 as ProductID,0 as LocationID,'' as Location,
-                              0 as Quantity,false as can_expire,i.id_item as ID,
-                                 measure.name as Measurement, 0 as Cost,
-                                brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,i.id_item_type as Type,
-                               0 as MovementID,0 as MovementRelID,i.is_active as IsActive,i.id_company as CompanyID
-                                  from items  as i
-
-
-
-                                left join item_brand as brand on brand.id_brand = i.id_brand
-                                left join app_measurement as measure on i.id_measurement = measure.id_measurement
-                                 where i.id_company = {0} and id_item_type = 3 and id_item_type in (3, 4, 5, 7) and i.is_active = true
-                                 group by i.id_item)
-                               ";
-
-            query = String.Format(query, entity.CurrentSession.Id_Company);
-
-            return GenerateList(exeDT(query));
+            else
+            {
+                //Get Specific Data based on date. Fill up NEW DT and send back.
+                return CurrentItems.GetList((int)BranchID).Where(x => x.Quantity > 0).ToList();
+            }
         }
 
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
@@ -249,7 +128,7 @@ namespace entity.Brillo
             return StockList;
         }
 
-        private DataTable exeDT(string sql)
+        public DataTable exeDT(string sql)
         {
             DataTable dt = new DataTable();
             //try
@@ -269,23 +148,35 @@ namespace entity.Brillo
             return dt;
         }
 
-        private List<StockList> GenerateList(DataTable dt)
+        public List<StockList> GenerateList(DataTable dt)
         {
             List<StockList> StockList = new List<StockList>();
             foreach (DataRow DataRow in dt.Rows)
             {
                 StockList Stock = new StockList();
-                  if (!DataRow.IsNull("ItemCode"))
+                if (!DataRow.IsNull("ItemCode"))
                 {
                     Stock.Code = DataRow["ItemCode"].ToString();
+                }
+                else
+                {
+                    Stock.Code = "";
                 }
                 if (!DataRow.IsNull("ItemName"))
                 {
                     Stock.Name = DataRow["ItemName"].ToString();
                 }
+                else
+                {
+                    Stock.Name = "";
+                }
                 if (!DataRow.IsNull("Location"))
                 {
                     Stock.Location = DataRow["Location"].ToString();
+                }
+                else
+                {
+                    Stock.Location = "";
                 }
                 if (!DataRow.IsNull("LocationID"))
                 {
@@ -294,6 +185,10 @@ namespace entity.Brillo
                 if (!DataRow.IsNull("Measurement"))
                 {
                     Stock.Measurement = DataRow["Measurement"].ToString();
+                }
+                else
+                {
+                    Stock.Measurement = "";
                 }
                 if (!DataRow.IsNull("ProductID"))
                 {
@@ -307,18 +202,15 @@ namespace entity.Brillo
                 {
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
                 }
-
-
-
-
-        
-
-
                 
                 if (!DataRow.IsNull("BatchCode"))
                 {
                     Stock.BatchCode = DataRow["BatchCode"].ToString();
-            }
+                }
+                else
+                {
+                    Stock.BatchCode = "";
+                }
                 if (!DataRow.IsNull("can_expire"))
                 {
                     Stock.can_expire = Convert.ToBoolean(DataRow["can_expire"]);
@@ -339,9 +231,9 @@ namespace entity.Brillo
 
                 if (!DataRow.IsNull("ExpiryDate"))
                 {
-                    Stock.TranDate = Convert.ToDateTime(DataRow["ExpiryDate"]);
+                    Stock.ExpiryDate = Convert.ToDateTime(DataRow["ExpiryDate"]);
                 }
-                if (!DataRow.IsNull("TranDate"))
+                if (!DataRow.IsNull("TranDate") && DataRow["TranDate"].ToString() != "")
                 {
                     Stock.TranDate = Convert.ToDateTime(DataRow["TranDate"]);
                 }
@@ -356,7 +248,7 @@ namespace entity.Brillo
                 }
                 if (!DataRow.IsNull("ID"))
                 {
-                    Stock.ID = Convert.ToInt32(DataRow["ID"]);
+                    Stock.ItemID = Convert.ToInt32(DataRow["ID"]);
                 }
 
 
@@ -366,28 +258,29 @@ namespace entity.Brillo
         }
     }
 
-  
-
     public class StockList
     {
-        public int ID { get; set; }
+        public int ItemID { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public int? BranchID { get; set; }
+        public string Branch { get; set; }
+        public int? LocationID { get; set; }
         public string Location { get; set; }
         public string Brand { get; set; }
-        public int ProductID { get; set; }
-        public int LocationID { get; set; }
-        public int MovementID { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal Cost { get; set; }
+        public int? ProductID { get; set; }
+        public int? MovementID { get; set; }
+        public decimal? Quantity { get; set; }
+        public decimal? Cost { get; set; }
         public string Measurement { get; set; }
         public string BatchCode { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public bool can_expire { get; set; }
         public DateTime TranDate { get; set; }
-        public int MovementRelID { get; set; }
+        public int? MovementRelID { get; set; }
         public bool IsActive { get; set; }
         public int CompanyID { get; set; }
         public int Type { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

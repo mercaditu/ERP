@@ -162,8 +162,8 @@
                 <DataGrid MaxWidth="512" MaxHeight="600" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource itemViewSource}}"
                           IsReadOnly="True" MouseDoubleClick="ItemGrid_MouseDoubleClick" Margin="4">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding ItemCode}" MinWidth="64" MaxWidth="128" />
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding ItemName}" FontWeight="Bold" MinWidth="128" MaxWidth="256" />
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding Code}" MinWidth="64" MaxWidth="128" />
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding Name}" FontWeight="Bold" MinWidth="128" MaxWidth="256" />
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Brand}" Binding="{Binding Brand}" FontWeight="Bold" MinWidth="64" MaxWidth="128" />
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Stock}" Binding="{Binding Quantity, StringFormat=N2}" Width="32" />
                     </DataGrid.Columns>

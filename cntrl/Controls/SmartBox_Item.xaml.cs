@@ -68,7 +68,7 @@ namespace cntrl.Controls
                     //Filters Items list to only include InStock Items or Non-Products
                     if (Items != null)
                     {
-                        Items = Items.AsQueryable().Where(x=>x.Quantity>0);
+                        Items = Items.AsQueryable().Where(x => x.Quantity > 0);
                     }
                 }
             }
@@ -143,12 +143,12 @@ namespace cntrl.Controls
                 c.OnLocationChange((int)e.NewValue);
             }
         }
-        
+
         protected virtual void OnLocationChange(int newvalue)
         {
-            var task = Task.Factory.StartNew(() => LoadData(newvalue,IgnorStock));
+            var task = Task.Factory.StartNew(() => LoadData(newvalue, IgnorStock));
         }
-       
+
 
         #endregion "INotifyPropertyChanged"
         public event RoutedEventHandler Select;
@@ -159,15 +159,15 @@ namespace cntrl.Controls
             {
                 if (itemViewSource.View != null)
                 {
-                    entity.BrilloQuery.Item Item = itemViewSource.View.CurrentItem as entity.BrilloQuery.Item;
-                    
+                    entity.Brillo.StockList Item = itemViewSource.View.CurrentItem as entity.Brillo.StockList;
+
                     if (Item != null)
                     {
                         ItemID = Item.ID;
-                        QuantityInStock = Item.InStock;
+                        QuantityInStock = Item.Quantity;
                         ItemPopUp.IsOpen = false;
-                      //  Text = Item.Name;
-                        if (Quantity<=1)
+                        //  Text = Item.Name;
+                        if (Quantity <= 1)
                         {
                             Quantity = 1;
                         }
@@ -181,7 +181,7 @@ namespace cntrl.Controls
                         }
                         Text = tbxSearch.Text;
                     }
-                   
+
                 }
             }
 
@@ -192,7 +192,7 @@ namespace cntrl.Controls
         }
 
         public int ItemID { get; set; }
-    
+
         public entity.item.item_type? item_types { get; set; }
 
         public IQueryable<entity.Brillo.StockList> Items { get; set; }
@@ -209,7 +209,7 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
-            
+
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
             Exclude_OutOfStock = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.Include_OutOfStock) == true ? false : true;
 
@@ -224,7 +224,7 @@ namespace cntrl.Controls
             }
 
             if (entity.CurrentSession.Allow_BarCodeSearchOnly)
-            {    
+            {
                 Settings.ExactSearch = true;
                 ExactSearch = true;
             }
@@ -233,7 +233,7 @@ namespace cntrl.Controls
                 ExactSearch = false;
             }
             smartBoxItemSetting.Default.Save();
-            
+
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
         }
@@ -241,7 +241,7 @@ namespace cntrl.Controls
         private void _SmartBox_Item_Loaded(object sender, RoutedEventArgs e)
         {
             int LocId = LocationID;
-            LoadData(LocationID,IgnorStock);
+            LoadData(LocationID, IgnorStock);
 
             //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
             //Load_BasicData(null, null);
@@ -259,16 +259,16 @@ namespace cntrl.Controls
                 progBar.Visibility = Visibility.Visible;
                 tbxSearch.IsEnabled = false;
             }));
-            
-            var task = Task.Factory.StartNew(() => LoadData_Thread(LocId,IgnorStock));
+
+            var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
         }
 
-        private void LoadData_Thread(int LocID,bool IgnorStock)
+        private void LoadData_Thread(int LocID, bool IgnorStock)
         {
             Items = null;
 
             entity.Brillo.Stock Execute = new entity.Brillo.Stock();
-           
+
 
             if (LocID == 0)
             {
@@ -276,17 +276,17 @@ namespace cntrl.Controls
             }
             else
             {
-                Items = Execute.getItems_All().Where(x=>x.LocationID>0).AsQueryable();
+                Items = Execute.getItems_All().Where(x => x.LocationID > 0).AsQueryable();
             }
 
             if (Exclude_OutOfStock)
             {
                 Items = Items
-        .Where(x => x.Quantity>0).AsQueryable();
+        .Where(x => x.Quantity > 0).AsQueryable();
             }
-           
 
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate () 
+
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
             {
                 tbxSearch.IsEnabled = true;
                 progBar.Visibility = Visibility.Collapsed;
@@ -321,7 +321,7 @@ namespace cntrl.Controls
         }
 
         private void StartSearch(object sender, KeyEventArgs e)
-       {
+        {
             if (e.Key == Key.Enter)
             {
                 if (QuantityIntegration)
@@ -374,46 +374,41 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
-            try
+
+            var predicate = PredicateBuilder.True<entity.Brillo.StockList>();
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+
+            if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
             {
-                var predicate = PredicateBuilder.True<entity.Brillo.StockList>();
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-                if (Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.ItemBarcodeSearchOnly))
-                {
 
-                }
-
-                if (_ExactSearch)
-                {
-                    predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company) && (x.ItemCode == SearchText));
-                }
-                else
-                {
-                    predicate = (x => x.IsActive && (x.CompanyID == entity.CurrentSession.Id_Company) &&
-                        (
-                            x.ItemCode.ToLower().Contains(SearchText.ToLower()) ||
-                            x.ItemName.ToLower().Contains(SearchText.ToLower()) ||
-                            x.Brand.ToLower().Contains(SearchText.ToLower())
-                        ));
-
-                    if (item_types != null)
-                    {
-                        predicate = predicate.And(x => x.Type == (int)item_types);
-                    }
-                    if (Exclude_OutOfStock == true)
-                    {
-                        predicate = predicate.And(x => x.Quantity > 0);
-                    }
-                }
-
-                itemViewSource.Source = Items;
-                
-
-
-                ItemPopUp.IsOpen = true;
             }
-            catch
-            { }
+
+            if (_ExactSearch)
+            {
+                predicate = (x => (x.CompanyID == entity.CurrentSession.Id_Company) && (x.Code == SearchText));
+            }
+            else
+            {
+                predicate = (x => (x.CompanyID == entity.CurrentSession.Id_Company) &&
+                    (
+                        x.Code.ToLower().Contains(SearchText.ToLower()) 
+                        || x.Name.ToLower().Contains(SearchText.ToLower()) 
+                        //|| x.Brand.ToLower().Contains(SearchText.ToLower())
+                    ));
+
+                if (item_types != null)
+                {
+                    predicate = predicate.And(x => x.Type == (int)item_types);
+                }
+                //if (Exclude_OutOfStock == true)
+                //{
+                //    predicate = predicate.And(x => x.Quantity > 0);
+                //}
+            }
+            List<entity.Brillo.StockList> ItemList = Items.Where(predicate).OrderBy(x => x.Name).ToList();
+            itemViewSource.Source = ItemList;
+            //       itemViewSource.Source = Items;
+            ItemPopUp.IsOpen = true;
         }
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -453,7 +448,7 @@ namespace cntrl.Controls
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            LoadData(LocationID,IgnorStock);
+            LoadData(LocationID, IgnorStock);
         }
 
         public void SmartBoxItem_Focus()

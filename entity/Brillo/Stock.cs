@@ -13,8 +13,8 @@ namespace entity.Brillo
             string query = @"
                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                               select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID from(
-                                (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
+                               select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID,ID from(
+                                (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,i.id_item as ID,
                                 ip.id_item_product as ProductID, (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,i.is_active as IsActive,i.id_company as CompanyID,
                                 brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,i.id_item_type as Type,
@@ -36,7 +36,7 @@ namespace entity.Brillo
                                
                                 ) as movement where Quantity > 0
 
-                                 union(select i.name as ItemName, i.code as ItemCode, 0 as ProductID, 0 as LocationID,'' as Location,
+                                 union(select i.name as ItemName, i.code as ItemCode, 0 as ProductID, 0 as LocationID,'' as Location,i.id_item as ID,
                               0 as Quantity,false as can_expire,
                                  measure.name as Measurement, 0 as Cost,i.is_active as IsActive,i.id_company as CompanyID,i.id_item_type as Type,
                                 brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,
@@ -67,8 +67,8 @@ namespace entity.Brillo
             string query = @"
                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                select ItemName,ItemCode,ProductID,LocationID,Location,sum(Quantity) as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID from(
-                                select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
+                                select ItemName,ItemCode,ProductID,LocationID,Location,sum(Quantity) as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID,ID from(
+                                select  l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,i.id_item as ID,
                                 ip.id_item_product as ProductID,im.credit,sum(IFNULL(child.debit, 0)),   (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost,
                                 brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,i.id_item_type as Type,
@@ -101,9 +101,9 @@ namespace entity.Brillo
             string query = @"
                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                               select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID from(
+                               select ItemName,ItemCode,ProductID,LocationID,Location,Quantity as Quantity,Measurement,Cost,Brand,BatchCode,ExpiryDate,MovementID,can_expire,IsActive,Type,CompanyID,TranDate,MovementRelID,ID from(
                                 
-                                (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,
+                                (select l.id_location as LocationID,l.name as Location,i.code as ItemCode, i.name as ItemName,i.id_item as ID,
                                 ip.id_item_product as ProductID, (im.credit - sum(IFNULL(child.debit,0))) as Quantity,
                                  measure.name as Measurement, sum(IFNULL(imvr.total_value, 0)) as Cost, i.is_active as IsActive, i.id_company as CompanyID, i.id_item_type as Type,
                                 brand.name as Brand,  im.code as BatchCode, im.expire_date as ExpiryDate,im.trans_date as TranDate,
@@ -128,7 +128,7 @@ namespace entity.Brillo
 
 
                                  union(select i.name as ItemName, i.code as ItemCode,0 as ProductID,0 as LocationID,'' as Location,
-                              0 as Quantity,false as can_expire,
+                              0 as Quantity,false as can_expire,i.id_item as ID,
                                  measure.name as Measurement, 0 as Cost,
                                 brand.name as Brand,  '' as BatchCode, null as ExpiryDate,null as TranDate,i.id_item_type as Type,
                                0 as MovementID,0 as MovementRelID,i.is_active as IsActive,i.id_company as CompanyID
@@ -277,11 +277,11 @@ namespace entity.Brillo
                 StockList Stock = new StockList();
                   if (!DataRow.IsNull("ItemCode"))
                 {
-                    Stock.ItemCode = DataRow["ItemCode"].ToString();
+                    Stock.Code = DataRow["ItemCode"].ToString();
                 }
                 if (!DataRow.IsNull("ItemName"))
                 {
-                    Stock.ItemName = DataRow["ItemName"].ToString();
+                    Stock.Name = DataRow["ItemName"].ToString();
                 }
                 if (!DataRow.IsNull("Location"))
                 {
@@ -354,7 +354,11 @@ namespace entity.Brillo
                 {
                     Stock.MovementRelID = Convert.ToInt32(DataRow["MovementRelID"]);
                 }
-            
+                if (!DataRow.IsNull("ID"))
+                {
+                    Stock.ID = Convert.ToInt32(DataRow["ID"]);
+                }
+
 
                 StockList.Add(Stock);
             }
@@ -366,8 +370,9 @@ namespace entity.Brillo
 
     public class StockList
     {
-        public string ItemName { get; set; }
-        public string ItemCode { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
         public string Location { get; set; }
         public string Brand { get; set; }
         public int ProductID { get; set; }

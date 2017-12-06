@@ -75,7 +75,10 @@ namespace Cognitivo.Product
                             Name = x.Max(y => y.Name),
                             Location = x.Max(y => y.Location),
                             Measurement = x.Max(y => y.Measurement),
-                            Quantity = x.Sum(y => y.Quantity)
+                            Quantity = x.Sum(y => y.Quantity),
+                            MovementID = x.Max(y => y.MovementID),
+                            ProductID = x.Max(y => y.ProductID),
+                            LocationID = x.Max(y => y.LocationID)
                         });
                 }
 
@@ -125,13 +128,14 @@ namespace Cognitivo.Product
 
         private async void item_movementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            entity.Brillo.StockList _item_movement = item_inventoryDataGrid.SelectedItem as entity.Brillo.StockList;
+            //entity.Brillo.StockList _item_movement = item_inventoryDataGrid.SelectedItem as entity.Brillo.StockList;
+            dynamic selectedITEM = (dynamic)item_inventoryDataGrid.SelectedItem;
 
-            if (_item_movement != null)
+            if (selectedITEM != null)
             {
-                int id_item_product = (int)_item_movement.ProductID;
-                int id_location = (int)_item_movement.LocationID;
-                int id_movement =(int)_item_movement.MovementID;
+                int id_item_product = (int)selectedITEM.ProductID;
+                int id_location = (int)selectedITEM.LocationID;
+                int id_movement =(int)selectedITEM.MovementID;
 
                 using (db db = new db())
                 {

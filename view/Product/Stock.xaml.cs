@@ -29,7 +29,11 @@ namespace Cognitivo.Product
                 _InventoryDate = value;
                 RaisePropertyChanged("InventoryDate");
 
-                slider.Maximum = DateTime.DaysInMonth(_InventoryDate.Year, _InventoryDate.Month);
+                if (chkstock.IsChecked == true)
+                {
+                    slider.Maximum = DateTime.DaysInMonth(_InventoryDate.Year, _InventoryDate.Month);
+                }
+
                 slider.Value = InventoryDate.Day;
 
                 calc_Inventory();
@@ -57,8 +61,23 @@ namespace Cognitivo.Product
             {
                 entity.Brillo.Stock Stock = new entity.Brillo.Stock();
                 inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
-                inventoryViewSource.Source = Stock.getProducts_InStock(app_branch.id_branch, InventoryDate);
 
+                if (chkstock.IsChecked == true)
+                {
+                    inventoryViewSource.Source = Stock.getProducts_InStock(app_branch.id_branch, InventoryDate);
+                }
+                else
+                {
+                    inventoryViewSource.Source = Stock.getProducts_InStock(app_branch.id_branch, InventoryDate)
+                        .GroupBy(x => x.ItemID).Select(x => new
+                        {
+                            Code = x.Max(y => y.Code),
+                            Name = x.Max(y => y.Name),
+                            Location = x.Max(y => y.Location),
+                            Measurement = x.Max(y => y.Measurement),
+                            Quantity = x.Sum(y => y.Quantity)
+                        });
+                }
 
                 TextBox_TextChanged(null, null);
             }
@@ -167,7 +186,6 @@ namespace Cognitivo.Product
 
         private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
-
             calc_Inventory();
         }
 

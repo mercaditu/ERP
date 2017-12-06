@@ -22,37 +22,49 @@ namespace entity
 
         #endregion PropertyChanged
 
-        private static entity.Brillo.Stock stock = new Stock();
-        private static List<StockList> List
+        private static Stock stock = new Stock();
+        private static List<StockList> List { get; set; }
+        //private static List<StockList> List
+        //{
+        //    get { return _List; }
+        //    set { _List = value; }
+        //}
+        //static List<StockList> _List = new List<StockList>();
+
+        public static List<StockList> GetList(int BranchID, bool GroupBy)
         {
-            get { return _List; }
-            set { _List=value; }
-        }
-       static List<StockList> _List = new List<StockList>();
+            List = new List<StockList>();
 
-
-
-        public static List<StockList> GetList(int BranchID)
-        {
             if (List.Count() > 0)
             {
-                if (List.Where(x => (x.BranchID == BranchID || x.BranchID == null) && x.TimeStamp.AddMinutes(15) > DateTime.Now).Count() == 0)
-                {
-                    //update only stock items
-                    UpdateStock(BranchID);
-                }
+                UpdateStock(BranchID, GroupBy);
+                //if (List.Where(x => (x.BranchID == BranchID || x.BranchID == null)).Count() == 0)
+                //{
+                //    //update only stock items
+                //    UpdateStock(BranchID, GroupBy);
+                //}
             }
             else
             {
                 //call data
                 GetItems();
-                UpdateStock(BranchID);
+                UpdateStock(BranchID, GroupBy);
             }
 
             return List.Where(x => x.BranchID == BranchID || x.BranchID == null).ToList();
         }
 
-        private static void UpdateStock(int BranchID)
+        public static List<StockList> Refresh(int BranchID, bool GroupBy)
+        {
+            List = new List<StockList>();
+            //call data
+            GetItems();
+            UpdateStock(BranchID, GroupBy);
+
+            return List.Where(x => x.BranchID == BranchID || x.BranchID == null).ToList();
+        }
+
+        private static void UpdateStock(int BranchID, bool GroupBy)
         {
             //run code to bring stock.
             if (BranchID > 0)
@@ -123,23 +135,34 @@ namespace entity
                         //Since movement exists, there is no need to update other data, just get out and continue for.
                         continue;
                     }
-                    
-                    if (List.Where(x => x.ItemID == ItemID && x.Quantity == null).Count() > 0)
+
+                    if (List.Where(x => x.ItemID == ItemID && (x.Quantity == null || GroupBy)).Count() > 0)
                     {
                         StockList Row = List.Where(x => x.ItemID == ItemID && x.Quantity == null).FirstOrDefault();
+
+                        if (Row == null)
+                        {
+                            Row = List.Where(x => x.ItemID == ItemID).FirstOrDefault();
+                            Row.Quantity = Row.Quantity == null ? 0 : Row.Quantity;
+                            Row.Quantity += Quantity;
+                        }
+                        else
+                        {
+                            Row.Quantity = Quantity;
+                        }
+
                         Row.ProductID = ProductID;
                         Row.LocationID = LocationID;
                         Row.Location = LocationName;
                         Row.MovementID = MovementID;
                         Row.BranchID = BranchID;
-                        Row.Quantity = Quantity;
                         Row.Cost = Cost;
                         Row.BatchCode = BatchCode;
                         Row.ExpiryDate = ExpiryDate;
                         Row.TimeStamp = DateTime.Now;
                         Row.can_expire = CanExpire;
                     }
-                    else if(List.Where(x => x.ItemID == ItemID).Count() > 0)
+                    else if (List.Where(x => x.ItemID == ItemID).Count() > 0)
                     {
                         StockList Original = List.Where(x => x.ItemID == ItemID).FirstOrDefault();
                         StockList Row = new StockList();
@@ -201,17 +224,5 @@ namespace entity
                 List.Add(data);
             }
         }
-
-        //public class ItemList
-        //{
-        //    public int ID { get; set; }
-        //    public string Name { get; set; }
-        //    public string Code { get; set; }
-        //    public string Brand { get; set; }
-        //    public string Measurement { get; set; }
-        //    public bool IsActive { get; set; }
-        //    public int CompanyID { get; set; }
-        //    public int Type { get; set; }
-        //}
     }
 }

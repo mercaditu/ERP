@@ -68,18 +68,18 @@ namespace Cognitivo.Product
                 }
                 else
                 {
-                    inventoryViewSource.Source = Stock.getProducts_InStock(app_branch.id_branch, InventoryDate)
-                        .GroupBy(x => x.ItemID).Select(x => new
-                        {
-                            Code = x.Max(y => y.Code),
-                            Name = x.Max(y => y.Name),
-                            Location = x.Max(y => y.Location),
-                            Measurement = x.Max(y => y.Measurement),
-                            Quantity = x.Sum(y => y.Quantity),
-                            MovementID = x.Max(y => y.MovementID),
-                            ProductID = x.Max(y => y.ProductID),
-                            LocationID = x.Max(y => y.LocationID)
-                        });
+                    inventoryViewSource.Source = Stock.getProducts_InStockGroupBy(app_branch.id_branch, InventoryDate);
+                        //.GroupBy(x => x.ItemID).Select(x => new
+                        //{
+                        //    Code = x.Max(y => y.Code),
+                        //    Name = x.Max(y => y.Name),
+                        //    Location = x.Max(y => y.Location),
+                        //    Measurement = x.Max(y => y.Measurement),
+                        //    Quantity = x.Sum(y => y.Quantity),
+                        //    MovementID = x.Max(y => y.MovementID),
+                        //    ProductID = x.Max(y => y.ProductID),
+                        //    LocationID = x.Max(y => y.LocationID)
+                        //});
                 }
 
                 TextBox_TextChanged(null, null);

@@ -328,9 +328,6 @@ namespace entity.Controller.Sales
 
             NumberOfRecords = 0;
 
-          //  Stock stock = new Stock();
-           // stock.List(CurrentSession.Id_Branch, sales_invoice_detail.id_location, sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product)
-
             List<sales_invoice> SalesInvoiceList = db.sales_invoice.Local.Where(x =>
                                                 x.status == Status.Documents_General.Pending &&
                                                         x.IsSelected && 
@@ -354,25 +351,27 @@ namespace entity.Controller.Sales
 
                 Check_Promotions(invoice);
 
+                List<StockList> ListofStock = new List<StockList>();
+                Stock stock = new Stock();
+                ListofStock = stock.getProducts_InStockGroupBy(invoice.id_branch, null);
+
                 foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
                 {
                     if (sales_invoice_detail.sales_packing_relation.Count() == 0)
                     {
                         if (sales_invoice_detail.item.item_product.Count() > 0)
                         {
-                            Stock stock = new Stock();
-
                             decimal Quantity_InStock = 0;
 
                             if (sales_invoice_detail.id_location != null)
                             {
-                                Quantity_InStock = (decimal)stock.getItems_ByBranch(CurrentSession.Id_Branch).Where(x => x.LocationID == sales_invoice_detail.id_location && x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
-                              
+                                Quantity_InStock = (decimal)stock.getItems_ByBranch(CurrentSession.Id_Branch)
+                                    .Where(x => x.LocationID == sales_invoice_detail.id_location && x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
                             }
                             else
                             {
-                                Quantity_InStock = (decimal)stock.getItems_ByBranch(CurrentSession.Id_Branch).Where(x=> x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
-                              
+                                Quantity_InStock = (decimal)stock.getItems_ByBranch(CurrentSession.Id_Branch)
+                                    .Where(x=> x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
                             }
 
                             if (Quantity_InStock < sales_invoice_detail.quantity)

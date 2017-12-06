@@ -255,23 +255,49 @@ namespace cntrl.Controls
                 tbxSearch.IsEnabled = false;
             }));
 
-            LoadData_Thread(LocId);
+            LoadData_Thread(LocId, false);
            // var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
         }
 
-        private void LoadData_Thread(int LocID)
+        private void forceLoadData(int LocId)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
+            {
+                progBar.Visibility = Visibility.Visible;
+                tbxSearch.IsEnabled = false;
+            }));
+
+            LoadData_Thread(LocId, true);
+            // var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
+        }
+
+        private void LoadData_Thread(int LocID, bool forceData)
         {
             Items = null;
 
             entity.Brillo.Stock Execute = new entity.Brillo.Stock();
-            
-            if (LocID == 0)
+
+            if (forceData)
             {
-                Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).AsQueryable();
+                if (LocID == 0)
+                {
+                    Items = Execute.refresh_ItemList(entity.CurrentSession.Id_Branch).AsQueryable();
+                }
+                else
+                {
+                    Items = Execute.refresh_ItemList(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
+                }
             }
             else
             {
-                Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
+                if (LocID == 0)
+                {
+                    Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).AsQueryable();
+                }
+                else
+                {
+                    Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
+                }
             }
 
             if (Exclude_OutOfStock)

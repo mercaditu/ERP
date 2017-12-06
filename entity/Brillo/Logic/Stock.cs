@@ -830,7 +830,6 @@ namespace entity.Brillo.Logic
                             quantity = detail.quantity;
                             Brillo.Stock stock = new Brillo.Stock();
                             Items_InStockLIST = stock.getItems_ByBranch(detail.sales_invoice.id_branch).Where(x => x.ProductID == item_product.id_item_product).ToList();
-                            
                         }
 
                         if (quantity > 0)

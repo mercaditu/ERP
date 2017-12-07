@@ -269,7 +269,7 @@
                                 <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <Controls:SmartBox_Item x:Name="sbxItem"  Grid.Column="2"
-                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Select="SmartBox_Item_Select" />
+                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Select="SmartBox_Item_Select" Type="All" />
                             <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Margin="0,50,0,0"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList" SelectionChanged="GridVerifiedList_SelectionChanged"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">

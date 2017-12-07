@@ -352,10 +352,9 @@ namespace entity.Controller.Sales
                 Check_Promotions(invoice);
 
                 List<StockList> ListofStock = new List<StockList>();
-                Stock stock = new Stock();
 
                 //Get List and Refresh Data in Session for future use.
-                ListofStock = stock.getProducts_InStock(invoice.id_branch, DateTime.Now, true).Where(x => x.BranchID == invoice.id_branch).ToList();
+                ListofStock = CurrentItems.getProducts_InStock(invoice.id_branch, DateTime.Now, true).Where(x => x.BranchID == invoice.id_branch).ToList();
 
                 foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
                 {

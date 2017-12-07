@@ -125,7 +125,7 @@ namespace entity.Controller.Product
             foreach (item_request item_request in db.item_request.Local.Where(x => x.status == Status.Documents_General.Pending && x.IsSelected))
             {
                 int LineID = 0;
-                //TODO GET FRESH DATA FROM STOCK.
+
                 app_location dest_location = null;
                 project project = null;
                 production_line production_line = null;
@@ -457,35 +457,40 @@ namespace entity.Controller.Product
                     }
                 }
 
-                foreach (item_request_decision grouped_decisionInternal in DecisionList
-                    .Where(x => x.decision == item_request_decision.Decisions.Internal))
+                if (DecisionList
+                    .Where(x => x.decision == item_request_decision.Decisions.Internal).Count() > 0)
                 {
-                    List<Brillo.StockList> Items_InStockLIST;
-                    Brillo.Stock stockBrillo = new Brillo.Stock();
-                    item_product item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault();
-                    int id_item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault().id_item_product;
-                    int id_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
-                    Items_InStockLIST = stockBrillo.getProducts_InStock(item_request.id_branch,DateTime.Now,false).Where(x => x.LocationID == id_location && x.ProductID == id_item_product).ToList();
+                    //Get Fresh Data before starting
+                    CurrentItems.getProducts_InStock(item_request.id_branch, DateTime.Now, true);
 
-
-                    //If Item_InStockLIST does not have enough
-                    int LocationID = 0;
-                    if (Items_InStockLIST.Sum(x => x.Quantity) < grouped_decisionInternal.quantity)
+                    foreach (item_request_decision grouped_decisionInternal in DecisionList.Where(x => x.decision == item_request_decision.Decisions.Internal))
                     {
-                        LocationID = item_request.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault();
-                    }
+                        List<Brillo.StockList> Items_InStockLIST;
+                        item_product item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault();
+                        int id_item_product = grouped_decisionInternal.item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+                        int id_location = item_request.app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
+                        Items_InStockLIST = CurrentItems.getProducts_InStock(item_request.id_branch, DateTime.Now, false).Where(x => x.LocationID == id_location && x.ProductID == id_item_product).ToList();
 
-                    if (item_product != null)
-                    {
-                        Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movement_originList;
-                        item_movement_originList = stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock, App.Names.Movement, item_request.id_item_request, grouped_decisionInternal.item_request_detail.id_item_request_detail,
-                                                        CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                                        item_product, LocationID,
-                                                        grouped_decisionInternal.quantity, item_request.timestamp,
-                                                        stock.comment_Generator(App.Names.RequestResource, item_request.number != null ? item_request.number.ToString() : "", ""));
 
-                        db.item_movement.AddRange(item_movement_originList);
+                        //If Item_InStockLIST does not have enough
+                        int LocationID = 0;
+                        if (Items_InStockLIST.Sum(x => x.Quantity) < grouped_decisionInternal.quantity)
+                        {
+                            LocationID = item_request.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault();
+                        }
+
+                        if (item_product != null)
+                        {
+                            Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
+                            List<item_movement> item_movement_originList;
+                            item_movement_originList = stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock, App.Names.Movement, item_request.id_item_request, grouped_decisionInternal.item_request_detail.id_item_request_detail,
+                                                            CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                                            item_product, LocationID,
+                                                            grouped_decisionInternal.quantity, item_request.timestamp,
+                                                            stock.comment_Generator(App.Names.RequestResource, item_request.number != null ? item_request.number.ToString() : "", ""));
+
+                            db.item_movement.AddRange(item_movement_originList);
+                        }
                     }
                 }
 

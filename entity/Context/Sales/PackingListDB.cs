@@ -100,6 +100,8 @@ namespace entity
 
                     if (sales_packing.status != Status.Documents_General.Approved)
                     {
+                        CurrentItems.getProducts_InStock(sales_packing.id_branch, DateTime.Now, true);
+
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
                         item_movementList = _Stock.SalesPacking_Approve(this, sales_packing);

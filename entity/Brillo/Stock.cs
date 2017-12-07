@@ -8,63 +8,6 @@ namespace entity.Brillo
 {
     public class Stock
     {
-        public List<StockList> getItems_ByBranch(int? BranchID,bool forceData)
-        {
-            return CurrentItems.GetList((int)BranchID, forceData);
-        }
-
-        public List<StockList> getProducts_InStock(int? BranchID, DateTime? TransDate, bool forceData)
-        {
-            if (TransDate == null)
-            {
-                return CurrentItems.GetList((int)BranchID, forceData).Where(x => x.Quantity > 0).ToList();
-            }
-            else
-            {
-                //Get Specific Data based on date. Fill up NEW DT and send back.
-                return CurrentItems.GetList((int)BranchID, forceData).Where(x => x.Quantity > 0).ToList();
-            }
-        }
-
-        public IEnumerable<StockList> getProducts_InStockGroupBy(int? BranchID, DateTime? TransDate, bool forceData)
-        {
-
-            var list = getProducts_InStock((int)BranchID, TransDate, forceData)
-                .GroupBy(x => x.ItemID)
-                .Select(x => new
-                {
-                    Code = x.Max(y => y.Code),
-                    Name = x.Max(y => y.Name),
-                    Location = x.Max(y => y.Location),
-                    Measurement = x.Max(y => y.Measurement),
-                    Quantity = x.Sum(y => y.Quantity),
-                    Cost = x.Max(y => y.Cost),
-                    MovementID = x.Max(y => y.MovementID),
-                    ProductID = x.Max(y => y.ProductID),
-                    LocationID = x.Max(y => y.LocationID)
-                }).ToList();
-
-            List<StockList> StockList = new List<Brillo.StockList>();
-
-            foreach (dynamic item in list)
-            {
-                StockList Stock = new Brillo.StockList();
-
-                Stock.Code = item.Code;
-                Stock.Name = item.Name;
-                Stock.Location = item.Location;
-                Stock.Measurement = item.Measurement;
-                Stock.Quantity = item.Quantity;
-                Stock.Cost = item.Cost;
-                Stock.MovementID = item.MovementID;
-                Stock.ProductID = item.ProductID;
-                Stock.LocationID = item.LocationID;
-                StockList.Add(Stock);
-            }
-            return StockList;
-        }
-
-
         public List<StockList> DebitList(int BranchID, int LocationID, int ProductID)
         {
             string query = @"
@@ -135,7 +78,7 @@ namespace entity.Brillo
                                 order by parent.trans_date";
             query = String.Format(query, MovementID);
             DataTable dt = exeDT(query);
-            return GenerateList(dt);
+            return GenerateListScalar(dt);
         }
 
         /// <summary>
@@ -193,6 +136,7 @@ namespace entity.Brillo
             foreach (DataRow DataRow in dt.Rows)
             {
                 StockList Stock = new StockList();
+
                 if (!DataRow.IsNull("ItemCode"))
                 {
                     Stock.Code = DataRow["ItemCode"].ToString();
@@ -289,6 +233,56 @@ namespace entity.Brillo
                 {
                     Stock.ItemID = Convert.ToInt32(DataRow["ID"]);
                 }
+
+
+                StockList.Add(Stock);
+            }
+            return StockList;
+        }
+        public List<StockList> GenerateListScalar(DataTable dt)
+        {
+            List<StockList> StockList = new List<StockList>();
+            foreach (DataRow DataRow in dt.Rows)
+            {
+                StockList Stock = new StockList();
+
+                if (!DataRow.IsNull("Location"))
+                {
+                    Stock.Location = DataRow["Location"].ToString();
+                }
+                else
+                {
+                    Stock.Location = "";
+                }
+                if (!DataRow.IsNull("LocationID"))
+                {
+                    Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
+                }
+
+                if (!DataRow.IsNull("QtyBalance"))
+                {
+                    Stock.Quantity = Convert.ToDecimal(DataRow["QtyBalance"]);
+                }
+                if (!DataRow.IsNull("Cost"))
+                {
+                    Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
+                }
+
+
+                if (!DataRow.IsNull("TranDate") && DataRow["TranDate"].ToString() != "")
+                {
+                    Stock.TranDate = Convert.ToDateTime(DataRow["TranDate"]);
+                }
+
+                if (!DataRow.IsNull("MovementID"))
+                {
+                    Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
+                }
+                if (!DataRow.IsNull("MovementRelID"))
+                {
+                    Stock.MovementRelID = Convert.ToInt32(DataRow["MovementRelID"]);
+                }
+
 
 
                 StockList.Add(Stock);

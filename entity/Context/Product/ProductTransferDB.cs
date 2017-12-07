@@ -68,6 +68,10 @@ namespace entity
                 SaveChanges();
             }
 
+
+            
+            CurrentItems.getProducts_InStock(item_transfer.id_branch, DateTime.Now, true);
+
             //Run foreach on all Transfers that are selected and that Item Transfer Detail is still pending.
             //foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.item_transfer_detail.Where(y => y.status == Status.Documents_General.Pending).Count() > 0))
             //{
@@ -285,8 +289,8 @@ namespace entity
                     }
                     else
                     {
-                        Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.getProducts_InStock(LocationOrigin.id_branch,DateTime.Now,false).Where(x => x.LocationID == LocationOrigin.id_location && x.ProductID == item_transfer_detail.item_product.id_item_product).ToList();
+                  
+                        Items_InStockLIST = CurrentItems.getProducts_InStock(LocationOrigin.id_branch,DateTime.Now,false).Where(x => x.LocationID == LocationOrigin.id_location && x.ProductID == item_transfer_detail.item_product.id_item_product).ToList();
                        
                     }
 
@@ -325,8 +329,8 @@ namespace entity
                     }
                     else
                     {
-                        Stock stockBrillo = new Stock();
-                        Items_InStockLIST = stockBrillo.getProducts_InStock(LocationOrigin.id_branch,DateTime.Now,false).Where(x =>x.LocationID== LocationOrigin.id_location && x.ProductID == item_transfer_detail.id_item_product).ToList();
+                       
+                        Items_InStockLIST = CurrentItems.getProducts_InStock(LocationOrigin.id_branch,DateTime.Now,false).Where(x =>x.LocationID== LocationOrigin.id_location && x.ProductID == item_transfer_detail.id_item_product).ToList();
                        
                     }
 

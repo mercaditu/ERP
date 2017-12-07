@@ -22,14 +22,124 @@ namespace entity
 
         #endregion PropertyChanged
 
-        private static Stock stock = new Stock();
+        public static Stock stock = new Stock();
         //private static List<StockList> List { get; set; }
-        private static List<StockList> List
+        public static List<StockList> List
         {
             get { return _List; }
             set { _List = value.ToList(); }
         }
         static List<StockList> _List = new List<StockList>();
+
+        public static List<StockList> getItems_ByBranch(int? BranchID, bool forceData)
+        {
+            return CurrentItems.GetList((int)BranchID, forceData);
+        }
+
+        public static List<StockList> getProducts_InStock(int? BranchID, DateTime? TransDate, bool forceData)
+        {
+            if (TransDate == null)
+            {
+                return CurrentItems.GetList((int)BranchID, forceData).Where(x => x.Quantity > 0).ToList();
+            }
+            else
+            {
+                //Get Specific Data based on date. Fill up NEW DT and send back.
+                return CurrentItems.GetList((int)BranchID, forceData).Where(x => x.Quantity > 0).ToList();
+            }
+        }
+
+        public static IEnumerable<StockList> getProducts_InStock_GroupBy(int? BranchID, DateTime? TransDate, bool forceData)
+        {
+            var list = getItems_ByBranch((int)BranchID, forceData)
+                .GroupBy(x => x.ItemID)
+                .Select(x => new
+                {
+                    Code = x.Max(y => y.Code),
+                    Name = x.Max(y => y.Name),
+                    Location = x.Max(y => y.Location),
+                    Measurement = x.Max(y => y.Measurement),
+                    Quantity = x.Sum(y => y.Quantity),
+                    Cost = x.Max(y => y.Cost),
+                    MovementID = x.Max(y => y.MovementID),
+                    ItemID = x.Max(y => y.ItemID),
+                    ProductID = x.Max(y => y.ProductID),
+                    LocationID = x.Max(y => y.LocationID),
+                    CompanyID = x.Max(y => y.CompanyID),
+                    Type = x.Max(y => y.Type)
+                }).Where(x => x.Quantity > 0).ToList();
+
+            List<StockList> StockList = new List<StockList>();
+
+            foreach (dynamic item in list)
+            {
+                StockList Stock = new StockList();
+
+                Stock.Code = item.Code;
+                Stock.Name = item.Name;
+                Stock.Location = item.Location;
+                Stock.Measurement = item.Measurement;
+                Stock.Quantity = item.Quantity;
+                Stock.Cost = item.Cost;
+                Stock.MovementID = item.MovementID;
+                Stock.ItemID = item.ItemID;
+                Stock.ProductID = item.ProductID;
+                Stock.LocationID = item.LocationID;
+                Stock.CompanyID = item.CompanyID;
+                Stock.Type = item.Type;
+                StockList.Add(Stock);
+            }
+
+            return StockList;
+        }
+
+        public static IEnumerable<StockList> getItems_GroupBy(int? BranchID, DateTime? TransDate, bool forceData, bool InStock_Only)
+        {
+            var list = getItems_ByBranch((int)BranchID, forceData)
+                .GroupBy(x => x.ItemID)
+                .Select(x => new
+                {
+                    Code = x.Max(y => y.Code),
+                    Name = x.Max(y => y.Name),
+                    Location = x.Max(y => y.Location),
+                    Measurement = x.Max(y => y.Measurement),
+                    Quantity = x.Sum(y => y.Quantity),
+                    Cost = x.Max(y => y.Cost),
+                    MovementID = x.Max(y => y.MovementID),
+                    ItemID = x.Max(y => y.ItemID),
+                    ProductID = x.Max(y => y.ProductID),
+                    LocationID = x.Max(y => y.LocationID),
+                    CompanyID = x.Max(y => y.CompanyID),
+                    Type = x.Max(y => y.Type)
+                }).ToList();
+
+            if (InStock_Only)
+            {
+                list = list.Where(x => x.Quantity > 0 || (x.Quantity == 0 && (x.Type == 3 || x.Type == 7 || x.Type == 5))).ToList();
+            }
+
+            List<StockList> StockList = new List<StockList>();
+
+            foreach (dynamic item in list)
+            {
+                StockList Stock = new StockList();
+
+                Stock.Code = item.Code;
+                Stock.Name = item.Name;
+                Stock.Location = item.Location;
+                Stock.Measurement = item.Measurement;
+                Stock.Quantity = item.Quantity;
+                Stock.Cost = item.Cost;
+                Stock.MovementID = item.MovementID;
+                Stock.ItemID = item.ItemID;
+                Stock.ProductID = item.ProductID;
+                Stock.LocationID = item.LocationID;
+                Stock.CompanyID = item.CompanyID;
+                Stock.Type = item.Type;
+                StockList.Add(Stock);
+            }
+            return StockList;
+        }
 
         public static List<StockList> GetList(int BranchID, bool forceData)
         {
@@ -53,6 +163,25 @@ namespace entity
             }
 
             return List.Where(x => x.BranchID == BranchID || x.BranchID == null).ToList();
+        }
+
+        public static bool updateStockList(item_movement mov)
+        {
+
+            app_location loc = CurrentSession.Locations.Where(x => x.id_location == mov.id_location).FirstOrDefault(); //db.app_location.Find(mov.id_location);
+
+            if (loc != null)
+            {
+                StockList updatedMovement = getProducts_InStock(loc.id_branch, DateTime.Now, false).Where(x => x.MovementID == mov.parent.id_movement).FirstOrDefault();
+
+                if (updatedMovement != null)
+                {
+                    updatedMovement.Quantity += mov.credit - mov.debit;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void UpdateStock(int BranchID)
@@ -202,6 +331,7 @@ namespace entity
                 data.Measurement = Convert.ToString(itemRow["Measurement"]);
                 data.Brand = Convert.ToString(itemRow["Brand"]);
                 data.Type = Convert.ToInt32(itemRow["Type"]);
+                data.can_expire = false;
                 List.Add(data);
             }
         }

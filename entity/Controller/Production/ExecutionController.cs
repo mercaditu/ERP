@@ -57,6 +57,8 @@ namespace entity.Controller.Production
             {
                 if (production_order_detail.production_order != null)
                 {
+                    CurrentItems.getProducts_InStock(production_order_detail.production_order.id_branch, DateTime.Now, true);
+
                     foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.status == null || x.status < Status.Production.Approved))
                     {
                         ///Assign this so that inside Stock Brillo we can run special logic required for Production or Fraction.
@@ -64,11 +66,11 @@ namespace entity.Controller.Production
                         ///Fraction: Takes a Fraction of the parent.
                         ///TODO: Fraction only takes cost of parent. We need to include other things as well.
 
-                        if (production_execution_detail.item.id_item_type==item.item_type.Product
+                        if (production_execution_detail.item.id_item_type == item.item_type.Product
                             || production_execution_detail.item.id_item_type == item.item_type.RawMaterial
                             || production_execution_detail.item.id_item_type == item.item_type.Supplies)
                         {
-                            using (entity.BrilloQuery.GetItems Execute = new entity.BrilloQuery.GetItems((int)production_execution_detail.id_item, production_order_detail.production_order.production_line.id_location))
+                            using (BrilloQuery.GetItems Execute = new BrilloQuery.GetItems((int)production_execution_detail.id_item, production_order_detail.production_order.production_line.id_location))
                             {
                                 BrilloQuery.Item Item = Execute.Items.Where(x => x.InStock <= 0).FirstOrDefault();
                                 if (Item != null)
@@ -79,7 +81,7 @@ namespace entity.Controller.Production
                                 }
                             }
                         }
-                     
+
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
@@ -116,9 +118,10 @@ namespace entity.Controller.Production
 
                         NumberOfRecords += 1;
                     }
-                }
 
-                db.SaveChanges();
+
+                    db.SaveChanges();
+                }
             }
 
             foreach (production_order_detail production_order_detail in db.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved))

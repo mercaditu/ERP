@@ -137,7 +137,7 @@
 
                             <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
-                        <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top" Exclude_OutOfStock="True" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" />
+                        <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top" Type="InStock_Only" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" />
                         <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0" IsReadOnly="{Binding ElementName=toolBar,Path=IsEditable, Converter={StaticResource True2False}}"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}"

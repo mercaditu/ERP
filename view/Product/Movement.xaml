@@ -197,7 +197,7 @@
                     Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" />
                     <Controls:SmartBox_Item x:Name="sbxItem" Select="cbxItem_KeyDown" 
-                                            LocationID="{Binding ElementName=id_location_originComboBox,Path=SelectedValue,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                                            LocationID="{Binding ElementName=id_location_originComboBox,Path=SelectedValue,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Type="InStock_Only"
                                             Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top" />
                 </StackPanel>
                 <Grid Grid.Row="1" Margin="0,58,0,0">

@@ -357,7 +357,7 @@
                             <StackPanel>
                                 <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" Margin="0,0,436,0" />
                                 <Grid>
-                                    <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left"
+                                    <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Type="All"
 													    can_New="True"    Width="256" Height="26" Select="Item_Select"
 														IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                                 </Grid>

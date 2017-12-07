@@ -51,7 +51,7 @@
         </Grid>
         <Grid>
             <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60" VerticalAlignment="Top" Margin="0,80,0,0">
-                <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="sbxItem_Select" />
+                <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="sbxItem_Select" Type="All"/>
             </Viewbox>
             <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
 							Margin="64,155,64,36" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"

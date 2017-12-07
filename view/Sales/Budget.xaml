@@ -328,7 +328,7 @@
                 </StackPanel>
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" Width="250" HorizontalAlignment="Left" />
-                    <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select"
+                    <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select" Type="All"
 									  can_New="True" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                 </StackPanel>
                 <DataGrid x:Name="sales_budget_detailDataGrid" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"

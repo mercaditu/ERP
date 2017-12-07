@@ -530,7 +530,7 @@
 										Visibility="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
                     <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" Margin="0,0,444,0" />
                     <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select"
-														QuantityIntegration="True"
+														QuantityIntegration="True"  Type="InStock_wServices"
                                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                 </StackPanel>
 

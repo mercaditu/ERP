@@ -50,8 +50,7 @@ namespace entity
                     {
                         if (item.item_product.FirstOrDefault() != null)
                         {
-                            entity.Brillo.Stock stock = new Brillo.Stock();
-                            Quantity_InStock = stock.getProducts_InStock(entity.CurrentSession.Id_Branch,DateTime.Now,false).Where(x => x.LocationID == value && x.ProductID == item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
+                            Quantity_InStock = CurrentItems.getProducts_InStock(entity.CurrentSession.Id_Branch,DateTime.Now,false).Where(x => x.LocationID == value && x.ProductID == item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
                          
                             RaisePropertyChanged("Quantity_InStock");
 
@@ -105,17 +104,21 @@ namespace entity
                 {
                     if (_sales_invoice != value)
                     {
+                        //if (_sales_invoice.Location)
+                        //{
+
+                        //}
                         _sales_invoice = value;
                         CurrencyFX_ID = value.id_currencyfx;
-                        if (id_location==null)
+
+                        if (id_location == null)
                         {
-                            app_location app_location = CurrentSession.Locations.Where(x => x.is_default).FirstOrDefault();
-                            if (app_location!=null)
-                            {
-                                id_location = app_location.id_location;
-                                RaisePropertyChanged("id_location");
-                                
-                            }
+                            //app_location app_location = CurrentSession.Locations.Where(x => x.is_default).FirstOrDefault();
+                            //if (app_location!=null)
+                            //{
+                            //    id_location = app_location.id_location;
+                            //    RaisePropertyChanged("id_location");
+                            //}
                         }
                         else
                         {
@@ -126,8 +129,6 @@ namespace entity
                                 _sales_invoice.RaisePropertyChanged("Location");
                             }
                         }
-
-
                     }
                 }
                 else

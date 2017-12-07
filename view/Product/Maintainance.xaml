@@ -98,7 +98,7 @@
                         <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="256" HorizontalAlignment="Left" />
 
                         <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" HorizontalAlignment="Left" />
-                        <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select" />
+                        <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select" Type="All" item_types="4"/>
 
                         <Controls:NotificationButton Text="{lex:Loc RequestResource}"
 															 Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

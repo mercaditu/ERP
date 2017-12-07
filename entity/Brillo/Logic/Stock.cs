@@ -45,11 +45,11 @@ namespace entity.Brillo.Logic
                             }
                             else
                             {
-                                Brillo.Stock stockBrillo = new Brillo.Stock();
+                             
                                 app_location app_location = db.app_location.Find(production_execution_detail.production_order_detail.production_order.production_line.id_location);
                                 if (app_location != null)
                                 {
-                                    Items_InStockLIST = stockBrillo.getProducts_InStock(app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == app_location.id_location && x.ProductID == item_product.id_item_product).ToList();
+                                    Items_InStockLIST = CurrentItems.getProducts_InStock(app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == app_location.id_location && x.ProductID == item_product.id_item_product).ToList();
                                 }
                             }
 
@@ -201,7 +201,7 @@ namespace entity.Brillo.Logic
         public List<item_movement> SalesPacking_Approve(db db, sales_packing sales_packing)
         {
             List<item_movement> item_movementList = new List<item_movement>();
-
+            
             //Just bring Sales Packing that has Item Product and No relation to Sales Invoice. This will help discount stock only for thse
             //that are not linked to Sales Invoice. If linked with Sales Invoice, the stock will get discounted there forcefully.
             foreach (sales_packing_detail packing_detail in
@@ -233,8 +233,7 @@ namespace entity.Brillo.Logic
                 }
                 else
                 {
-                    Brillo.Stock stock = new Brillo.Stock();
-                    Items_InStockLIST = stock.getProducts_InStock(packing_detail.app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == LocationID && x.ProductID == item_product.id_item_product).ToList();
+                    Items_InStockLIST = CurrentItems.getProducts_InStock(packing_detail.app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == LocationID && x.ProductID == item_product.id_item_product).ToList();
 
                 }
 
@@ -626,8 +625,7 @@ namespace entity.Brillo.Logic
                     }
                     else
                     { // Get all Movements with Balance.
-                        Brillo.Stock stock = new Brillo.Stock();
-                        Items_InStockLIST = stock.getItems_ByBranch(purchase_return_detail.app_location.id_branch, false).Where(x => x.LocationID == (int)purchase_return_detail.id_location && x.ProductID == item_product.id_item_product).ToList();
+                        Items_InStockLIST = CurrentItems.getItems_ByBranch(purchase_return_detail.app_location.id_branch, false).Where(x => x.LocationID == (int)purchase_return_detail.id_location && x.ProductID == item_product.id_item_product).ToList();
                     }
 
                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
@@ -770,8 +768,7 @@ namespace entity.Brillo.Logic
                                 }
                                 else
                                 {
-                                    Brillo.Stock stockBrillo = new Brillo.Stock();
-                                    Items_InStockLIST = stockBrillo.getProducts_InStock(detail.sales_invoice.id_branch, DateTime.Now, false).Where(x => x.ProductID == item_productSub.id_item_product).ToList();
+                                    Items_InStockLIST = CurrentItems.getProducts_InStock(detail.sales_invoice.id_branch, DateTime.Now, false).Where(x => x.ProductID == item_productSub.id_item_product).ToList();
 
                                 }
 
@@ -827,8 +824,7 @@ namespace entity.Brillo.Logic
                         else
                         {
                             quantity = detail.quantity;
-                            Brillo.Stock stock = new Brillo.Stock();
-                            Items_InStockLIST = stock.getProducts_InStock(detail.sales_invoice.id_branch, DateTime.Now, false).Where(x => x.ProductID == item_product.id_item_product).ToList();
+                            Items_InStockLIST = CurrentItems.getProducts_InStock(detail.sales_invoice.id_branch, DateTime.Now, false).Where(x => x.ProductID == item_product.id_item_product).ToList();
                         }
 
                         if (quantity > 0)
@@ -964,8 +960,8 @@ namespace entity.Brillo.Logic
                         }
                         else
                         {
-                            Brillo.Stock stock = new Brillo.Stock();
-                            Items_InStockLIST = stock.getProducts_InStock(item_inventory_detail.app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
+                           
+                            Items_InStockLIST = CurrentItems.getProducts_InStock(item_inventory_detail.app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
 
                         }
 
@@ -1058,8 +1054,7 @@ namespace entity.Brillo.Logic
                         }
                         else
                         {
-                            Brillo.Stock stock = new Brillo.Stock();
-                            Items_InStockLIST = stock.getProducts_InStock(item_inventory_detail.app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
+                            Items_InStockLIST = CurrentItems.getProducts_InStock(item_inventory_detail.app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
 
                         }
 
@@ -1478,7 +1473,14 @@ namespace entity.Brillo.Logic
 
                 Final_ItemMovementLIST.Add(item_movement);
             }
+
+            foreach (item_movement mov in Final_ItemMovementLIST)
+            {
+                CurrentItems.updateStockList(mov);
+            }
+
             return Final_ItemMovementLIST;
+
         }
 
         public item_movement CreditOnly_Movement(Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,

@@ -219,6 +219,8 @@ namespace entity.Controller.Purchase
                             db.payment_schedual.AddRange(payment_schedualList);
                         }
 
+                        CurrentItems.getProducts_InStock(purchase_return.id_branch, DateTime.Now, true);
+
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
                         item_movementList = _Stock.PurchaseReturn_Approve(db, purchase_return);

@@ -92,8 +92,9 @@
                     </Button.Effect>
                 </Button>
                 <ToggleButton x:Name="toggleButton" Margin="1,0" Width="28" Height="28" Content="" ToolTip="{lex:Loc Searchonlyavailable}" Foreground="Black" Background="PaleVioletRed" BorderBrush="Black"
-                              Visibility="{Binding Exclude_OutOfStock, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="0.3"
-                              IsChecked="{Binding Exclude_OutOfStock, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                              Visibility="{Binding InStock_Only, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}" 
+                              FontFamily="/cntrl;component/Resources/#cognitivo" BorderThickness="0.3"
+                              IsChecked="{Binding InStock_Only, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ToggleButton.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0" />
                     </ToggleButton.Effect>

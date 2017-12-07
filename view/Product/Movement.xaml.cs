@@ -244,8 +244,8 @@ namespace Cognitivo.Product
 
             ProductTransferDB.SaveChanges();
 
-            entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
-            stockBrillo.getProducts_InStock(item_transfer.id_branch, DateTime.Now, true);
+           
+            CurrentItems.getProducts_InStock(item_transfer.id_branch, DateTime.Now, true);
 
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
             {
@@ -260,14 +260,14 @@ namespace Cognitivo.Product
                 {
                     if (item_transfer_detail.movement_id > 0)
                     {
-
+                        entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
                         Items_InStockLIST = stockBrillo.ScalarMovement((long)item_transfer_detail.movement_id);
                     }
                 }
                 else
                 {
 
-                    Items_InStockLIST = stockBrillo.getProducts_InStock(app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == app_location.id_location && x.ProductID == item_transfer_detail.id_item_product).ToList();
+                    Items_InStockLIST = CurrentItems.getProducts_InStock(app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == app_location.id_location && x.ProductID == item_transfer_detail.id_item_product).ToList();
 
                 }
 

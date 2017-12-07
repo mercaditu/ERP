@@ -42,7 +42,7 @@ namespace Cognitivo.Configs
 
             if (id_item > 0 && app_location != null)
             {
-                item_movement_detailDataGrid.ItemsSource = stock.getProducts_InStock(app_location.id_branch, DateTime.Now, true).Where(x => x.LocationID == id_location && x.ItemID == id_item).ToList();
+                item_movement_detailDataGrid.ItemsSource = CurrentItems.getProducts_InStock(app_location.id_branch, DateTime.Now, true).Where(x => x.LocationID == id_location && x.ItemID == id_item).ToList();
             }
         }
 

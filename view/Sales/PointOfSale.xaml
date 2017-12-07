@@ -155,7 +155,7 @@
                             <Label Content="{lex:LocTextUpper Sales}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White" />
                         </StackPanel>
                         <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60" VerticalAlignment="Top" Margin="0,80,0,0">
-                            <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="Item_Select" 
+                            <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="Item_Select"   Type="InStock_wServices"
                                                  QuantityIntegration="{Binding QuantityIntegration, Source={x:Static pref:Settings.Default}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                                  LocationID="{Binding Source={x:Static pref:Settings.Default}, Path=Location, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Viewbox>

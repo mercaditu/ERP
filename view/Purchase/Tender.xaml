@@ -217,7 +217,7 @@
                     <StackPanel Margin="4">
                         <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource Bool2Visi}}">
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}" />
-                            <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
+                            <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Type="All" />
                         </StackPanel>
                         <DataGrid x:Name="purchase_tender_itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"

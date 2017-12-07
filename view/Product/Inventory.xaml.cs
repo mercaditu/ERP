@@ -86,8 +86,8 @@ namespace Cognitivo.Product
                     List<item_product> item_productLIST = InventoryController.db.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).Include(y => y.item).ToList(); //.Select(x=>x.id_item_product).ToList();
                     //Class.StockCalculations Stock = new Class.StockCalculations();
                       entity.Brillo.Stock Stock = new entity.Brillo.Stock();
-                    List< StockList> StockList = Stock.getProducts_InStock(app_location.id_branch, item_inventory.trans_date);
-                    List< StockList> BatchList = Stock.getProducts_InStock(app_location.id_branch, item_inventory.trans_date).Where(x => x.can_expire).ToList();
+                    List< StockList> StockList = Stock.getProducts_InStock(app_location.id_branch, item_inventory.trans_date,true);
+                    List< StockList> BatchList = Stock.getProducts_InStock(app_location.id_branch, item_inventory.trans_date,false).Where(x => x.can_expire).ToList();
 
                     ///List through the entire product list.
                     foreach (item_product item_product in item_productLIST.OrderBy(x => x.item.name))
@@ -504,7 +504,7 @@ namespace Cognitivo.Product
                         objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                         item_inventory_detail.IsSelected = true;
 
-                        objpnl_ItemMovement.Items_InStockLIST = stock.getProducts_InStock(app_location.id_branch, null)
+                        objpnl_ItemMovement.Items_InStockLIST = stock.getProducts_InStock(app_location.id_branch, DateTime.Now,false)
                             .Where(x => 
                             x.LocationID == app_location.id_location && 
                             x.ProductID == item_inventory_detail.id_item_product)

@@ -51,7 +51,7 @@ namespace entity
                         if (item.item_product.FirstOrDefault() != null)
                         {
                             entity.Brillo.Stock stock = new Brillo.Stock();
-                            Quantity_InStock = stock.getItems_ByBranch(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == value && x.ProductID == item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
+                            Quantity_InStock = stock.getProducts_InStock(entity.CurrentSession.Id_Branch,DateTime.Now,false).Where(x => x.LocationID == value && x.ProductID == item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
                          
                             RaisePropertyChanged("Quantity_InStock");
 

@@ -1,5 +1,6 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
@@ -64,22 +65,22 @@ namespace Cognitivo.Product
 
                 if (chkstock.IsChecked == true)
                 {
-                    inventoryViewSource.Source = Stock.getProducts_InStock(app_branch.id_branch, InventoryDate);
+                    inventoryViewSource.Source = Stock.getProducts_InStock(app_branch.id_branch, InventoryDate, true);
                 }
                 else
                 {
-                    inventoryViewSource.Source = Stock.getProducts_InStockGroupBy(app_branch.id_branch, InventoryDate);
-                        //.GroupBy(x => x.ItemID).Select(x => new
-                        //{
-                        //    Code = x.Max(y => y.Code),
-                        //    Name = x.Max(y => y.Name),
-                        //    Location = x.Max(y => y.Location),
-                        //    Measurement = x.Max(y => y.Measurement),
-                        //    Quantity = x.Sum(y => y.Quantity),
-                        //    MovementID = x.Max(y => y.MovementID),
-                        //    ProductID = x.Max(y => y.ProductID),
-                        //    LocationID = x.Max(y => y.LocationID)
-                        //});
+                    inventoryViewSource.Source = Stock.getProducts_InStockGroupBy(app_branch.id_branch, InventoryDate, true);// Stock.getProducts_InStockGroupBy(app_branch.id_branch, InventoryDate);
+                                                                                                                             //.GroupBy(x => x.ItemID).Select(x => new
+                                                                                                                             //{
+                                                                                                                             //    Code = x.Max(y => y.Code),
+                                                                                                                             //    Name = x.Max(y => y.Name),
+                                                                                                                             //    Location = x.Max(y => y.Location),
+                                                                                                                             //    Measurement = x.Max(y => y.Measurement),
+                                                                                                                             //    Quantity = x.Sum(y => y.Quantity),
+                                                                                                                             //    MovementID = x.Max(y => y.MovementID),
+                                                                                                                             //    ProductID = x.Max(y => y.ProductID),
+                                                                                                                             //    LocationID = x.Max(y => y.LocationID)
+                                                                                                                             //});
                 }
 
                 TextBox_TextChanged(null, null);
@@ -135,7 +136,7 @@ namespace Cognitivo.Product
             {
                 int id_item_product = (int)selectedITEM.ProductID;
                 int id_location = (int)selectedITEM.LocationID;
-                int id_movement =(int)selectedITEM.MovementID;
+                int id_movement = (int)selectedITEM.MovementID;
 
                 using (db db = new db())
                 {
@@ -169,7 +170,7 @@ namespace Cognitivo.Product
                                                     .Include(x => x.item_product)
                                                     .ToListAsync();
                     }
-                  
+
 
                     foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
                     {
@@ -201,7 +202,7 @@ namespace Cognitivo.Product
                 {
                     inventoryViewSource.View.Filter = i =>
                     {
-                        dynamic TmpInventory = (dynamic)i;
+                        entity.Brillo.StockList TmpInventory = i as entity.Brillo.StockList;
 
                         if (TmpInventory.Code.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
                             TmpInventory.Name.ToUpper().Contains(txtsearch.Text.ToUpper()) ||

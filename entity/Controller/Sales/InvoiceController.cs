@@ -138,7 +138,7 @@ namespace entity.Controller.Sales
                 {
                     sales_invoice.id_contract = CurrentSession.Contracts.FirstOrDefault().id_contract;
                 }
-           
+
             }
 
             return sales_invoice;
@@ -330,8 +330,8 @@ namespace entity.Controller.Sales
 
             List<sales_invoice> SalesInvoiceList = db.sales_invoice.Local.Where(x =>
                                                 x.status == Status.Documents_General.Pending &&
-                                                        x.IsSelected && 
-                                                        x.Error == null && 
+                                                        x.IsSelected &&
+                                                        x.Error == null &&
                                                         x.id_contact > 0)
                                                         .ToList();
             foreach (sales_invoice invoice in SalesInvoiceList)
@@ -353,7 +353,9 @@ namespace entity.Controller.Sales
 
                 List<StockList> ListofStock = new List<StockList>();
                 Stock stock = new Stock();
-                ListofStock = stock.getProducts_InStockGroupBy(invoice.id_branch, null).ToList();
+
+                //Get List and Refresh Data in Session for future use.
+                ListofStock = stock.getProducts_InStock(invoice.id_branch, DateTime.Now, true).Where(x => x.BranchID == invoice.id_branch).ToList();
 
                 foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
                 {
@@ -365,13 +367,15 @@ namespace entity.Controller.Sales
 
                             if (sales_invoice_detail.id_location != null)
                             {
-                                Quantity_InStock = (decimal)stock.getItems_ByBranch(CurrentSession.Id_Branch)
-                                    .Where(x => x.LocationID == sales_invoice_detail.id_location && x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
+                                Quantity_InStock = (decimal)ListofStock
+                                    .Where(x => x.LocationID == sales_invoice_detail.id_location && x.ItemID == sales_invoice_detail.id_item)
+                                    .Sum(x => x.Quantity);
                             }
                             else
                             {
-                                Quantity_InStock = (decimal)stock.getItems_ByBranch(CurrentSession.Id_Branch)
-                                    .Where(x=> x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).Sum(x => x.Quantity);
+                                Quantity_InStock = (decimal)ListofStock
+                                    .Where(x => x.ItemID == sales_invoice_detail.id_item)
+                                    .Sum(x => x.Quantity);
                             }
 
                             if (Quantity_InStock < sales_invoice_detail.quantity)
@@ -592,7 +596,7 @@ namespace entity.Controller.Sales
                 db.item_movement.AddRange(item_movementList);
 
             }
-            
+
             //Loop through each Item Movement and assign cost to detail for reporting purposes.
             foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail)
             {

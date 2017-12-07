@@ -244,6 +244,9 @@ namespace Cognitivo.Product
 
             ProductTransferDB.SaveChanges();
 
+            entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
+            stockBrillo.getProducts_InStock(item_transfer.id_branch, DateTime.Now, true);
+
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
             {
                 entity.Brillo.Logic.Stock stock = new entity.Brillo.Logic.Stock();
@@ -257,14 +260,14 @@ namespace Cognitivo.Product
                 {
                     if (item_transfer_detail.movement_id > 0)
                     {
-                        entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
+
                         Items_InStockLIST = stockBrillo.ScalarMovement((long)item_transfer_detail.movement_id);
                     }
                 }
                 else
                 {
-                    entity.Brillo.Stock stockBrillo = new entity.Brillo.Stock();
-                   Items_InStockLIST = stockBrillo.getProducts_InStock(app_location.id_branch, DateTime.Now).Where(x => x.LocationID == app_location.id_location && x.ProductID==item_transfer_detail.id_item_product).ToList();
+
+                    Items_InStockLIST = stockBrillo.getProducts_InStock(app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == app_location.id_location && x.ProductID == item_transfer_detail.id_item_product).ToList();
 
                 }
 
@@ -320,7 +323,7 @@ namespace Cognitivo.Product
                                     DimensionList, item_transfer_detail.expire_date, item_transfer_detail.batch_code, item_movement.parent
                                     );
 
-                 //   item_movement_dest.parent = item_movement.parent;
+                    //   item_movement_dest.parent = item_movement.parent;
                     item_movement.barcode = item_movement.parent != null ? item_movement.parent.barcode : entity.Brillo.Barcode.RandomGenerator();
 
                     ProductTransferDB.item_movement.Add(item_movement_dest);

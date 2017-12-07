@@ -78,7 +78,7 @@ namespace cntrl.Class
                                             //if diffrance is greater then the find the new parent
                                             Stock stock = new Stock();
                                             entity.Brillo.Logic.Stock Stock = new entity.Brillo.Logic.Stock();
-                                            List<StockList> Items_InStockLIST = stock.getItems_ByBranch(LocalDetail.app_location.id_branch).Where(x => x.LocationID == (int)LocalDetail.id_location && x.ProductID == LocalDetail.item.item_product.FirstOrDefault().id_item_product).ToList();
+                                            List<StockList> Items_InStockLIST = stock.getProducts_InStock(LocalDetail.app_location.id_branch,DateTime.Now,true).Where(x => x.LocationID == (int)LocalDetail.id_location && x.ProductID == LocalDetail.item.item_product.FirstOrDefault().id_item_product).ToList();
                                             db.item_movement.AddRange(Stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,
                                                                      App.Names.SalesInvoice,
                                                                                     LocalDetail.id_sales_invoice,
@@ -299,7 +299,7 @@ namespace cntrl.Class
                                 sales_invoice_detail.app_location = db.app_location.Find(sales_invoice_detail.id_location);
                             }
 
-                            List<StockList> Items_InStockLIST = stock.getItems_ByBranch(sales_invoice_detail.app_location.id_branch).Where(x => x.LocationID == (int)sales_invoice_detail.id_location && x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).ToList();
+                            List<StockList> Items_InStockLIST = stock.getProducts_InStock(sales_invoice_detail.app_location.id_branch,DateTime.Now,false).Where(x => x.LocationID == (int)sales_invoice_detail.id_location && x.ProductID == sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product).ToList();
                          
 
                             db.item_movement.AddRange(Stock.DebitOnly_MovementLIST(db, Items_InStockLIST, Status.Stock.InStock,

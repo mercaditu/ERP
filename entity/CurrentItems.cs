@@ -23,41 +23,17 @@ namespace entity
         #endregion PropertyChanged
 
         private static Stock stock = new Stock();
-        private static List<StockList> List { get; set; }
-        //private static List<StockList> List
-        //{
-        //    get { return _List; }
-        //    set { _List = value.ToList(); }
-        //}
-        //static List<StockList> _List = new List<StockList>();
-
-        public static List<StockList> List_GroupedByItem
+        //private static List<StockList> List { get; set; }
+        private static List<StockList> List
         {
-            get
-            {
-                List<StockList> list = List
-                    .GroupBy(x => x.ItemID)
-                    .Select(x => new
-                    {
-                        Code = x.Max(y => y.Code),
-                        Name = x.Max(y => y.Name),
-                        Location = x.Max(y => y.Location),
-                        Measurement = x.Max(y => y.Measurement),
-                        Quantity = x.Sum(y => y.Quantity),
-                        Cost = x.Max(y => y.Cost),
-                        MovementID = x.Max(y => y.MovementID),
-                        ProductID = x.Max(y => y.ProductID),
-                        LocationID = x.Max(y => y.LocationID)
-                    }) as List<StockList>;
-
-                return List;
-               // return ((List)list).Cast<dynamic>();
-            }
+            get { return _List; }
+            set { _List = value.ToList(); }
         }
+        static List<StockList> _List = new List<StockList>();
 
-        public static List<StockList> GetList(int BranchID, bool IsForced)
+        public static List<StockList> GetList(int BranchID, bool forceData)
         {
-            if (List.Count() > 0 && IsForced == false)
+            if (List.Count() > 0 && forceData == false)
             {
                 //UpdateStock(BranchID, GroupBy);
                 if (List.Where(x => (x.BranchID == BranchID || x.BranchID == null)).Count() == 0)

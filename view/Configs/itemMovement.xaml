@@ -22,7 +22,7 @@
                 <Image Source="/cntrl;component/Images/Outline_White/museum_filled-100.png"
 					   Height="32" Opacity="0.64" />
             </Border>
-            <Label Content="{lex:Loc Movement}" FontSize="25" Margin="50,0,0,0" />
+            <Label Content="{lex:Loc Movements}" FontSize="25" Margin="50,0,0,0" />
 
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
 					   HorizontalAlignment="Right" MouseUp="btnCancel_Click"

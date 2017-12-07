@@ -155,11 +155,11 @@ namespace cntrl.Controls
                     if (Item != null)
                     {
                         ItemID = Item.ItemID;
-                        if (Item.Quantity!=null)
+                        if (Item.Quantity != null)
                         {
                             QuantityInStock = (decimal)Item.Quantity;
                         }
-                      
+
                         ItemPopUp.IsOpen = false;
                         //  Text = Item.Name;
                         if (Quantity <= 1)
@@ -256,7 +256,7 @@ namespace cntrl.Controls
             }));
 
             LoadData_Thread(LocId, false);
-           // var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
+            // var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
         }
 
         private void forceLoadData(int LocId)
@@ -277,34 +277,23 @@ namespace cntrl.Controls
 
             entity.Brillo.Stock Stock = new entity.Brillo.Stock();
 
-            if (forceData)
+
+            if (LocID == 0)
             {
-                if (LocID == 0)
-                {
-                    Items = Stock.getProducts_InStockGroupBy(entity.CurrentSession.Id_Branch, DateTime.Now).AsQueryable();
-                }
-                else
-                {
-                    Items = Stock.getProducts_InStockGroupBy(entity.CurrentSession.Id_Branch, DateTime.Now).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
-                }
+                Items = Stock.getProducts_InStockGroupBy(entity.CurrentSession.Id_Branch, DateTime.Now, forceData).AsQueryable();
             }
             else
             {
-                if (LocID == 0)
-                {
-                    Items = Stock.getItems_ByBranch(entity.CurrentSession.Id_Branch).AsQueryable();
-                }
-                else
-                {
-                    Items = Stock.getItems_ByBranch(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
-                }
+                Items = Stock.getProducts_InStockGroupBy(entity.CurrentSession.Id_Branch, DateTime.Now, forceData).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
             }
+
+
 
             if (Exclude_OutOfStock)
             {
                 Items = Items.Where(x => x.Quantity > 0).AsQueryable();
             }
-            
+
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
             {
                 tbxSearch.IsEnabled = true;
@@ -410,9 +399,9 @@ namespace cntrl.Controls
             {
                 predicate = (x => (x.CompanyID == entity.CurrentSession.Id_Company) &&
                     (
-                        x.Code.ToLower().Contains(SearchText.ToLower()) 
-                        || x.Name.ToLower().Contains(SearchText.ToLower()) 
-                        //|| x.Brand.ToLower().Contains(SearchText.ToLower())
+                        x.Code.ToLower().Contains(SearchText.ToLower())
+                        || x.Name.ToLower().Contains(SearchText.ToLower())
+                    //|| x.Brand.ToLower().Contains(SearchText.ToLower())
                     ));
 
                 if (item_types != null)

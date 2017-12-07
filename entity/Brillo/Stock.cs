@@ -8,40 +8,60 @@ namespace entity.Brillo
 {
     public class Stock
     {
-        public List<StockList> getItems_ByBranch(int? BranchID)
+        public List<StockList> getItems_ByBranch(int? BranchID,bool forceData)
         {
-            return CurrentItems.GetList((int)BranchID, true);
+            return CurrentItems.GetList((int)BranchID, forceData);
         }
 
-        //public List<StockList> refresh_ItemList(int? BranchID)
-        //{
-        //    return CurrentItems.Refresh((int)BranchID, true);
-        //}
-
-        public List<StockList> getProducts_InStock(int? BranchID, DateTime? TransDate)
+        public List<StockList> getProducts_InStock(int? BranchID, DateTime? TransDate, bool forceData)
         {
             if (TransDate == null)
             {
-                return CurrentItems.GetList((int)BranchID, false).Where(x => x.Quantity > 0).ToList();
+                return CurrentItems.GetList((int)BranchID, forceData).Where(x => x.Quantity > 0).ToList();
             }
             else
             {
                 //Get Specific Data based on date. Fill up NEW DT and send back.
-                return CurrentItems.GetList((int)BranchID, false).Where(x => x.Quantity > 0).ToList();
+                return CurrentItems.GetList((int)BranchID, forceData).Where(x => x.Quantity > 0).ToList();
             }
         }
 
-        public List<StockList> getProducts_InStockGroupBy(int? BranchID, DateTime? TransDate)
+        public IEnumerable<StockList> getProducts_InStockGroupBy(int? BranchID, DateTime? TransDate, bool forceData)
         {
-            if (TransDate == null)
+
+            var list = getProducts_InStock((int)BranchID, TransDate, forceData)
+                .GroupBy(x => x.ItemID)
+                .Select(x => new
+                {
+                    Code = x.Max(y => y.Code),
+                    Name = x.Max(y => y.Name),
+                    Location = x.Max(y => y.Location),
+                    Measurement = x.Max(y => y.Measurement),
+                    Quantity = x.Sum(y => y.Quantity),
+                    Cost = x.Max(y => y.Cost),
+                    MovementID = x.Max(y => y.MovementID),
+                    ProductID = x.Max(y => y.ProductID),
+                    LocationID = x.Max(y => y.LocationID)
+                }).ToList();
+
+            List<StockList> StockList = new List<Brillo.StockList>();
+
+            foreach (dynamic item in list)
             {
-                return CurrentItems.GetList((int)BranchID, true).Where(x => x.Quantity > 0).ToList();
+                StockList Stock = new Brillo.StockList();
+
+                Stock.Code = item.Code;
+                Stock.Name = item.Name;
+                Stock.Location = item.Location;
+                Stock.Measurement = item.Measurement;
+                Stock.Quantity = item.Quantity;
+                Stock.Cost = item.Cost;
+                Stock.MovementID = item.MovementID;
+                Stock.ProductID = item.ProductID;
+                Stock.LocationID = item.LocationID;
+                StockList.Add(Stock);
             }
-            else
-            {
-                //Get Specific Data based on date. Fill up NEW DT and send back.
-                return CurrentItems.GetList((int)BranchID, true).Where(x => x.Quantity > 0).ToList();
-            }
+            return StockList;
         }
 
 
@@ -221,7 +241,7 @@ namespace entity.Brillo
                 {
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
                 }
-                
+
                 if (!DataRow.IsNull("BatchCode"))
                 {
                     Stock.BatchCode = DataRow["BatchCode"].ToString();

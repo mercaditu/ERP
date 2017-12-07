@@ -353,7 +353,7 @@ namespace entity.Controller.Sales
 
                 List<StockList> ListofStock = new List<StockList>();
                 Stock stock = new Stock();
-                ListofStock = stock.getProducts_InStockGroupBy(invoice.id_branch, null);
+                ListofStock = stock.getProducts_InStockGroupBy(invoice.id_branch, null).ToList();
 
                 foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
                 {

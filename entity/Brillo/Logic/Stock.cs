@@ -1342,6 +1342,7 @@ namespace entity.Brillo.Logic
                         item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
                         item_movement_value_rel.item_movement.Add(item_movement);
                         item_movement.item_movement_value_rel = item_movement_value_rel;
+                        item_movement.id_movement_value_rel = item_movement_value_rel.id_movement_value_rel;
                         //create rel
                         //create movement value detail
                         //assign value

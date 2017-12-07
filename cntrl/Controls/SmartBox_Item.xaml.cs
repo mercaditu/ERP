@@ -273,30 +273,30 @@ namespace cntrl.Controls
 
         private void LoadData_Thread(int LocID, bool forceData)
         {
-            Items = null;
+            this.Items = null;
 
-            entity.Brillo.Stock Execute = new entity.Brillo.Stock();
+            entity.Brillo.Stock Stock = new entity.Brillo.Stock();
 
             if (forceData)
             {
                 if (LocID == 0)
                 {
-                    Items = Execute.refresh_ItemList(entity.CurrentSession.Id_Branch).AsQueryable();
+                    Items = Stock.getProducts_InStockGroupBy(entity.CurrentSession.Id_Branch, DateTime.Now).AsQueryable();
                 }
                 else
                 {
-                    Items = Execute.refresh_ItemList(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
+                    Items = Stock.getProducts_InStockGroupBy(entity.CurrentSession.Id_Branch, DateTime.Now).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
                 }
             }
             else
             {
                 if (LocID == 0)
                 {
-                    Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).AsQueryable();
+                    Items = Stock.getItems_ByBranch(entity.CurrentSession.Id_Branch).AsQueryable();
                 }
                 else
                 {
-                    Items = Execute.getItems_ByBranch(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
+                    Items = Stock.getItems_ByBranch(entity.CurrentSession.Id_Branch).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
                 }
             }
 

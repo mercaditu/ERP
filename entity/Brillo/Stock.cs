@@ -13,10 +13,10 @@ namespace entity.Brillo
             return CurrentItems.GetList((int)BranchID, true);
         }
 
-        public List<StockList> refresh_ItemList(int? BranchID)
-        {
-            return CurrentItems.Refresh((int)BranchID, true);
-        }
+        //public List<StockList> refresh_ItemList(int? BranchID)
+        //{
+        //    return CurrentItems.Refresh((int)BranchID, true);
+        //}
 
         public List<StockList> getProducts_InStock(int? BranchID, DateTime? TransDate)
         {

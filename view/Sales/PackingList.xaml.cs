@@ -375,6 +375,9 @@ namespace Cognitivo.Sales
                         _sales_packing_detail.sales_packing_relation.Add(sales_packing_relation);
                     }
                     _sales_packing_detail.id_sales_order_detail = sales_packing_detail.id_sales_order_detail;
+                    sales_packing_detail.verified_quantity = 1;
+                    sales_packing.sales_packing_detail.Add(_sales_packing_detail);
+
                 }
 
                 if (item_movement != null)
@@ -397,8 +400,7 @@ namespace Cognitivo.Sales
                     }
                    
                 }
-                sales_packing_detail.verified_quantity = 1;
-                sales_packing.sales_packing_detail.Add(_sales_packing_detail);
+            
             }
             else
             {

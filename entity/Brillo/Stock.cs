@@ -268,10 +268,13 @@ namespace entity.Brillo
                     Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
                 }
 
-
-                if (!DataRow.IsNull("TranDate") && DataRow["TranDate"].ToString() != "")
+                if (!DataRow.IsNull("expire_date"))
                 {
-                    Stock.TranDate = Convert.ToDateTime(DataRow["TranDate"]);
+                    Stock.ExpiryDate = Convert.ToDateTime(DataRow["expire_date"]);
+                }
+                if (!DataRow.IsNull("TransDate") && DataRow["TransDate"].ToString() != "")
+                {
+                    Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
                 }
 
                 if (!DataRow.IsNull("MovementID"))
@@ -281,6 +284,14 @@ namespace entity.Brillo
                 if (!DataRow.IsNull("MovementRelID"))
                 {
                     Stock.MovementRelID = Convert.ToInt32(DataRow["MovementRelID"]);
+                }
+                if (!DataRow.IsNull("code"))
+                {
+                    Stock.BatchCode = DataRow["code"].ToString();
+                }
+                else
+                {
+                    Stock.BatchCode = "";
                 }
 
 

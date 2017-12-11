@@ -37,12 +37,12 @@
 							  EnableRowVirtualization="True"
 							  RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All" LoadingRowDetails="item_movement_detailDataGrid_LoadingRowDetails">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:Comment}" IsReadOnly="True" Width="*" />
-                    <DataGridTextColumn Binding="{Binding ExpirationDate, UpdateSourceTrigger=PropertyChanged,StringFormat=d}"  Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding QtyBalance, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding ExpiryDate, UpdateSourceTrigger=PropertyChanged,StringFormat=d}"  Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding Quantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*" />
-                    <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding BatchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
 								Header="{lex:Loc Cognitivo:local:BatchCode}" IsReadOnly="True" Width="*" />
                   
 

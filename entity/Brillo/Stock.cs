@@ -102,7 +102,7 @@ namespace entity.Brillo
                     Stock.ExpiryDate = item_movement.expire_date;
                     Stock.BatchCode = item_movement.code;
                     Stock.Quantity = item_movement.debit;
-                    Stock.Cost = item_movement.item_movement_value.Sum(x => x.unit_value);
+                    Stock.Cost = item_movement.item_movement_value_rel!=null? item_movement.item_movement_value_rel.total_value:0;
 
                     StockList.Add(Stock);
                 }

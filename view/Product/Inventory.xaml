@@ -205,7 +205,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}"  ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" SortMemberPath="unit_value">
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Cost}"  ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" SortMemberPath="unit_value" IsReadOnly="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Source={StaticResource item_inventoryitem_inventory_detailViewSource}}">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
@@ -245,7 +245,7 @@
                         <DataGridTemplateColumn Width="Auto" Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Command="customcmd:CustomCommands.EditAll" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                                    <Button Command="customcmd:CustomCommands.EditAll"  IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
 													Style="{StaticResource btnEditChildStyle}"
 													CommandParameter="{Binding}" />
                                 </DataTemplate>

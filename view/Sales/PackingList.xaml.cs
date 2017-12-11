@@ -66,6 +66,7 @@ namespace Cognitivo.Sales
                 }
                 filterDetail();
             }));
+            Refresh_GroupByGrid();
         }
 
         private void filterDetail()
@@ -124,8 +125,10 @@ namespace Cognitivo.Sales
             sales_packing.trans_date = DateTime.Now.AddDays(SalesSettings.TransDate_Offset);
 
             PackingListDB.sales_packing.Add(sales_packing);
-            sales_packingViewSource.View.Refresh();
+            GridVerifiedList.ItemsSource = null;
+           sales_packingViewSource.View.Refresh();
             sales_packingViewSource.View.MoveCurrentToLast();
+
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -270,7 +273,9 @@ namespace Cognitivo.Sales
             {
                 foreach (sales_order sales_order in pnlSalesOrder.selected_sales_order)
                 {
-                    foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
+                    foreach (sales_order_detail sales_order_detail in
+                        sales_order.sales_order_detail.
+                        Where(x => x.item != null && x.item.item_product.Count() > 0))
                     {
                         sales_packing_detail sales_packing_detail = new sales_packing_detail()
                         {
@@ -563,6 +568,7 @@ namespace Cognitivo.Sales
                 .LoadAsync();
             sales_packingViewSource.Source = PackingListDB.sales_packing.Local;
         }
+
      
 
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)

@@ -225,11 +225,13 @@ namespace entity
                 {
                     if (sales_detail.item_movement.FirstOrDefault() != null)
                     {
-                        if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                        if (sales_detail.item_movement.FirstOrDefault().item_movement_value_rel != null)
                         {
-                            sales_detail.unit_cost = Brillo.Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-                            sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                            sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                            //sales_detail.unit_cost = Brillo.Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                            //sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                            //sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+
+                            sales_detail.unit_cost = sales_detail.item_movement.FirstOrDefault().item_movement_value_rel.total_value;
                         }
                     }
                 }

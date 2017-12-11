@@ -63,10 +63,12 @@ namespace entity
             }
             set
             {
+
                 if (_value_counted != value)
                 {
                     _value_counted = value;
                     RaisePropertyChanged("value_counted");
+                   decimal _delta=this.Delta;
                     if (item_product != null)
                     {
                         if (item_product.item != null)
@@ -75,7 +77,7 @@ namespace entity
                             {
                                 _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, Convert.ToDecimal(value_counted), GetDimensionValue());
                                 RaisePropertyChanged("Quantity_Factored");
-                                RaisePropertyChanged("Delta");
+                            
                             }
                         }
                     }
@@ -90,9 +92,25 @@ namespace entity
         {
             get
             {
-                return Convert.ToDecimal(value_counted) - value_system;
+                decimal _delta = Convert.ToDecimal(value_counted) - value_system;
+                if (_delta < 0)
+                {
+                    IsEnabled = true;
+                    RaisePropertyChanged("IsEnabled");
+                }
+                else
+                {
+                    IsEnabled = false;
+                    RaisePropertyChanged("IsEnabled");
+                }
+                return _delta;
             }
         }
+
+        [NotMapped]
+        public bool IsEnabled { get; set; }
+
+
 
         [NotMapped]
         public decimal Quantity_Factored

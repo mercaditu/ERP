@@ -15,7 +15,11 @@ namespace entity.Brillo
 
                     if (ItemMovement != null)
                     {
-                        item_product.item.unit_cost = ItemMovement.item_movement_value.Sum(x => x.unit_value);
+                        if (ItemMovement.item_movement_value_rel!=null)
+                        {
+                            item_product.item.unit_cost = ItemMovement.item_movement_value_rel.total_value;
+                        }
+                      
                     }
                 }
             }

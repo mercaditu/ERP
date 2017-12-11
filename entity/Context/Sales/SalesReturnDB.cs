@@ -274,11 +274,12 @@ namespace entity
                             {
                                 if (sales_return_detail.item_movement.FirstOrDefault() != null)
                                 {
-                                    if (sales_return_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                                    if (sales_return_detail.item_movement.FirstOrDefault().item_movement_value_rel != null)
                                     {
-                                        sales_return_detail.unit_cost = Brillo.Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
-                                        sales_return_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
-                                        sales_return_detail.sales_return.id_currencyfx, App.Modules.Sales);
+                                        //sales_return_detail.unit_cost = Brillo.Currency.convert_Values(sales_return_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
+                                        //sales_return_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                                        //sales_return_detail.sales_return.id_currencyfx, App.Modules.Sales);
+                                        sales_return_detail.unit_cost = sales_return_detail.item_movement.FirstOrDefault().item_movement_value_rel.total_value;
                                     }
                                 }
                             }

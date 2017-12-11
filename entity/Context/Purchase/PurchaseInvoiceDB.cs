@@ -179,15 +179,15 @@ namespace entity
                             item_movement.credit = purchase_invoice_detail.quantity;
                         }
 
-                        item_movement_value item_movement_value = item_movement.item_movement_value.FirstOrDefault();
-                        decimal UnitValue = Brillo.Currency.convert_Values(purchase_invoice_detail.unit_cost, invoice.id_currencyfx, CurrentSession.Get_Currency_Default_Rate().id_currencyfx, App.Modules.Purchase);
-                        if (item_movement_value != null)
-                        {
-                            if (item_movement_value.unit_value != UnitValue)
-                            {
-                                item_movement_value.unit_value = UnitValue;
-                            }
-                        }
+                        //item_movement_value item_movement_value = item_movement.item_movement_value.FirstOrDefault();
+                        //decimal UnitValue = Brillo.Currency.convert_Values(purchase_invoice_detail.unit_cost, invoice.id_currencyfx, CurrentSession.Get_Currency_Default_Rate().id_currencyfx, App.Modules.Purchase);
+                        //if (item_movement_value != null)
+                        //{
+                        //    if (item_movement_value.unit_value != UnitValue)
+                        //    {
+                        //        item_movement_value.unit_value = UnitValue;
+                        //    }
+                        //}
                     }
                 }
                 else

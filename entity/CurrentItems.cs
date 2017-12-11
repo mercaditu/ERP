@@ -62,6 +62,7 @@ namespace entity
                     Quantity = x.Sum(y => y.Quantity),
                     Cost = x.Max(y => y.Cost),
                     MovementID = x.Max(y => y.MovementID),
+                    MovementRelID = x.Max(y => y.MovementRelID),
                     ItemID = x.Max(y => y.ItemID),
                     ProductID = x.Max(y => y.ProductID),
                     LocationID = x.Max(y => y.LocationID),
@@ -82,6 +83,7 @@ namespace entity
                 Stock.Quantity = item.Quantity;
                 Stock.Cost = item.Cost;
                 Stock.MovementID = item.MovementID;
+                Stock.MovementRelID = item.MovementRelID;
                 Stock.ItemID = item.ItemID;
                 Stock.ProductID = item.ProductID;
                 Stock.LocationID = item.LocationID;
@@ -106,6 +108,7 @@ namespace entity
                     Quantity = x.Sum(y => y.Quantity),
                     Cost = x.Max(y => y.Cost),
                     MovementID = x.Max(y => y.MovementID),
+                    MovementRelID = x.Max(y => y.MovementRelID),
                     ItemID = x.Max(y => y.ItemID),
                     ProductID = x.Max(y => y.ProductID),
                     LocationID = x.Max(y => y.LocationID),
@@ -131,6 +134,7 @@ namespace entity
                 Stock.Quantity = item.Quantity;
                 Stock.Cost = item.Cost;
                 Stock.MovementID = item.MovementID;
+                Stock.MovementRelID = item.MovementRelID;
                 Stock.ItemID = item.ItemID;
                 Stock.ProductID = item.ProductID;
                 Stock.LocationID = item.LocationID;
@@ -202,6 +206,7 @@ namespace entity
                                 , ip.can_expire
                                 , (im.credit - sum(IFNULL(child.debit,0))) as Quantity
                                 , sum(IFNULL(imvr.total_value, 0)) as Cost
+                                ,im.id_movement_value_rel as MovementRelID
                                 , im.code as BatchCode
                                 , im.expire_date as ExpiryDate
                                 from item_movement as im
@@ -224,6 +229,7 @@ namespace entity
                     int ProductID = Convert.ToInt32(itemRow["ProductID"]);
                     int LocationID = Convert.ToInt32(itemRow["LocationID"]);
                     int MovementID = Convert.ToInt32(itemRow["MovementID"]);
+                    int MovementRelID = Convert.ToInt32(itemRow["MovementRelID"]);
                     decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
                     decimal Cost = Convert.ToDecimal(itemRow["Cost"]);
                     string LocationName = Convert.ToString(itemRow["Location"]);
@@ -245,6 +251,7 @@ namespace entity
                         Row.LocationID = LocationID;
                         Row.Location = LocationName;
                         Row.MovementID = MovementID;
+                        Row.MovementRelID = MovementRelID;
                         Row.BranchID = BranchID;
                         Row.Quantity = Quantity;
                         Row.Cost = Cost;
@@ -265,6 +272,7 @@ namespace entity
                         Row.LocationID = LocationID;
                         Row.Location = LocationName;
                         Row.MovementID = MovementID;
+                        Row.MovementRelID = MovementRelID;
                         Row.BranchID = BranchID;
                         Row.Cost = Cost;
                         Row.BatchCode = BatchCode;
@@ -292,6 +300,7 @@ namespace entity
                         Row.BatchCode = BatchCode;
                         Row.ExpiryDate = ExpiryDate;
                         Row.MovementID = MovementID;
+                        Row.MovementRelID = MovementRelID;
                         Row.TimeStamp = DateTime.Now;
                         Row.can_expire = CanExpire;
                         List.Add(Row);

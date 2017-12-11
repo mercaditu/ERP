@@ -591,7 +591,7 @@ namespace entity.Brillo.Logic
                         Stock.MovementRelID = Convert.ToInt32(_item_movement.id_movement_value_rel);
                         Stock.TranDate = Convert.ToDateTime(_item_movement.trans_date);
                         Stock.Quantity = Convert.ToDecimal(_item_movement.credit);
-                        Stock.Cost = Convert.ToDecimal(_item_movement.item_movement_value.Sum(x => x.unit_value));
+                        Stock.Cost = Convert.ToDecimal(_item_movement.item_movement_value_rel!=null? _item_movement.item_movement_value_rel.total_value:0);
                         Stock.LocationID = _item_movement.id_location;
                         Stock.ExpiryDate = _item_movement.expire_date;
                         Stock.BatchCode = _item_movement.code;
@@ -1009,7 +1009,8 @@ namespace entity.Brillo.Logic
                                 trans_date = item_inventory_detail.item_inventory.trans_date,
                                 timestamp = DateTime.Now,
                                 comment = Localize.StringText("Inventory") + ": " + item_inventory_detail.comment,
-                                parent = item_movement
+                                parent = item_movement,
+                                id_movement_value_rel= item_movement.id_movement_value_rel
                             };
 
                             item_movementList.Add(im);

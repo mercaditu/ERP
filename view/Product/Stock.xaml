@@ -105,8 +105,8 @@
                                                         </MultiBinding>
                                                     </DataGridTextColumn.Binding>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Binding="{Binding code}" ElementStyle="{StaticResource RightAlignStyle}" Header="BatchCode" Width="128" />
-                                                <DataGridTextColumn Binding="{Binding expire_date, StringFormat={}{0:d}}" ElementStyle="{StaticResource RightAlignStyle}" Header="ExpiryDate" Width="128" />
+                                                <DataGridTextColumn Binding="{Binding BatchCode}" ElementStyle="{StaticResource RightAlignStyle}" Header="BatchCode" Width="128" />
+                                                <DataGridTextColumn Binding="{Binding ExpiryDate, StringFormat={}{0:d}}" ElementStyle="{StaticResource RightAlignStyle}" Header="ExpiryDate" Width="128" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </ScrollViewer>

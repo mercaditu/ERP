@@ -1039,7 +1039,7 @@ namespace entity.Brillo.Logic
                                 item_inventory_detail.item_inventory.trans_date,
                                 item_inventory_detail.unit_value,
                                 comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), null,
-                                null, null, null
+                                item_inventory_detail.expire_date, item_inventory_detail.batch_code, null
                                 ));
                     }
                     else if (item_inventory_detail.Delta < 0)

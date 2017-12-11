@@ -30,7 +30,26 @@ namespace entity
         public int? id_project_task { get; set; }
         public int? id_item { get; set; }
         public int? movement_id { get; set; }
-        public string name { get; set; }
+        public string name
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_name) && id_item > 0)
+                {
+                    using (db db = new db())
+                    {
+                        _name = db.items.Find(id_item).name;
+                    }
+                }
+
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+        private string _name;
 
         public bool is_archived { get { return _is_archived; } set { _is_archived = value; RaisePropertyChanged("is_archived"); } }
         private bool _is_archived;
@@ -95,12 +114,12 @@ namespace entity
             {
                 if (_status != value)
                 {
-                    if (value!=null)
+                    if (value != null)
                     {
                         _status = (Status.Production)value;
                         RaisePropertyChanged("status");
                     }
-                 
+
                 }
             }
         }

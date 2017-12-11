@@ -37,7 +37,7 @@ CASE
     END as Type,
                                         pod.is_input as Input,
                                         pod.code as Code,
-                                        pod.name as Item,
+                                        if(pod.name != '', pod.name,i.name) as Item,
                                         pod.quantity as QuantityOrdered,
                                         ped.quantity as QuantityExecuted,
                                         ped.unit_cost as CostExecuted,

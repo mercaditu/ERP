@@ -347,11 +347,8 @@ namespace entity.Brillo.Logic
                                 {
                                     if (packing_detail.item.item_product.FirstOrDefault().can_expire)
                                     {
-                                        if (_item_movement.code == null)
-                                        {
-                                            _item_movement.code = packing_detail.batch_code;
-                                            _item_movement.expire_date = packing_detail.expire_date;
-                                        }
+                                        _item_movement.code = packing_detail.batch_code;
+                                        _item_movement.expire_date = packing_detail.expire_date;
                                     }
                                 }
                             }

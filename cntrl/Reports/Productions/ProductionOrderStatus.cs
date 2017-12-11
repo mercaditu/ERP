@@ -10,7 +10,7 @@ select
 											po.name as ProductionOrder,
 											pod.id_order_detail,
 											pod.parent_id_order_detail as Parent,
-											pod.name as TaskName,
+											if(pod.name != '', pod.name,i.name) as TaskName,
 											pod.code as TaskCode,
 											pod.quantity as EstQuantity,
 											pod.start_date_est as OrderDate,
@@ -23,6 +23,7 @@ select
 											(pe.unit_cost* pe.quantity) as TotalCost,
 											c.name as Employee
 											from production_order_detail as pod
+                                            inner join items as i on pod.id_item = i.id_item
 											inner join production_order as po on pod.id_production_order = po.id_production_order
 											left join production_execution_detail as pe on pe.id_order_detail = pod.id_order_detail
 											left join contacts as c on pe.id_contact = c.id_contact

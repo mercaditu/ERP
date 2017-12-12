@@ -176,13 +176,17 @@ namespace entity
 
             if (loc != null)
             {
-                StockList updatedMovement = getProducts_InStock(loc.id_branch, DateTime.Now, false).Where(x => x.MovementID == mov.parent.id_movement).FirstOrDefault();
-
-                if (updatedMovement != null)
+                if (mov.parent!=null)
                 {
-                    updatedMovement.Quantity += mov.credit - mov.debit;
-                    return true;
+                    StockList updatedMovement = getProducts_InStock(loc.id_branch, DateTime.Now, false).Where(x => x.MovementID == mov.parent.id_movement).FirstOrDefault();
+
+                    if (updatedMovement != null)
+                    {
+                        updatedMovement.Quantity += mov.credit - mov.debit;
+                        return true;
+                    }
                 }
+              
             }
 
             return false;

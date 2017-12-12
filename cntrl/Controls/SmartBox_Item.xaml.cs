@@ -452,7 +452,7 @@ namespace cntrl.Controls
 
         private void Refresh_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            LoadData(LocationID);
+            forceLoadData(LocationID);
         }
 
         public void SmartBoxItem_Focus()

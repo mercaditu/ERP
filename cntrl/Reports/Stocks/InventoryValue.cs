@@ -26,14 +26,14 @@
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
-	                            inner join items as item on prod.id_item = item.id_item
+	                            inner join items as item on ip.id_item = item.id_item
                                 inner join app_location as l on im.id_location = l.id_location
-                                inner join app_branch as branch on loc.id_branch = branch.id_branch
+                                inner join app_branch as branch on l.id_branch = branch.id_branch
                                 left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
                                 where im.id_company = @CompanyID and im.trans_date <= '@EndDate'
                                 group by im.id_movement
                                 order by im.expire_date) as movement 
-                                where Quantity > 0";
+                                where Balance > 0";
 
 
   

@@ -6,14 +6,13 @@ namespace entity.Reporting
     {
         public DateTime Date { get; set; }
         public string Branch { get; set; }
-        public string Tag { get; set; }
+        public string Location { get; set; }
         public string Code { get; set; }
         public string Item { get; set; }
-        public decimal Credit { get; set; }
-        public decimal DebitChild { get; set; }
+      
         public decimal Balance { get; set; }
         public decimal UnitCost { get; set; }
-        public decimal TotalCost { get; set; }
-        public decimal RetailPrice { get; set; }
+        public string BatchCode { get; set; }
+        public DateTime ExpiryDate { get; set; }
     }
 }

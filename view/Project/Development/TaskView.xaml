@@ -12,11 +12,15 @@
       xmlns:lex="http://wpflocalizeextension.codeplex.com"
       xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+          xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+         xmlns:Controller="clr-namespace:entity.Controller.Project;assembly=entity"
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d"
       MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
+
+        <Controller:ProjectController x:Key="ProjectDB"/>
         <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse" />
         <converter:Status2EnableForProject x:Key="Status2Enable" />
@@ -58,6 +62,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                Background="{StaticResource AccentColor_Brush}" HorizontalContentAlignment="Center" Foreground="White" UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
 
         <Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
             <Grid.ColumnDefinitions>

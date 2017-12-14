@@ -317,7 +317,7 @@
 								
 								</DataGrid.Columns>
                             </DataGrid>
-                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"
                                       CanUserDeleteRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="250"
                                       CanUserAddRows="False"
                                       ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}}"
@@ -340,13 +340,13 @@
                                 <DataGrid.RowDetailsTemplate>
                                     <DataTemplate>
                                         <Grid Background="WhiteSmoke" Margin="4" >
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
 
                                                 <StackPanel Width="250">
                                                     <Label Style="{StaticResource H1}" Content="{Binding item.name, FallbackValue=Expense}" />
                                                     <Label Style="{StaticResource H3}" Content="{Binding item.code}" />
                                                 </StackPanel>
-                                                <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}, Converter={StaticResource ExpireDate2Visible}}">
+                                                <StackPanel Height="500" CanVerticallyScroll="True" Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}, Converter={StaticResource ExpireDate2Visible}}">
                                                     <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                                     <TextBox Style="{StaticResource input_textbox}"
 						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />

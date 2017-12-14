@@ -36,7 +36,8 @@ CASE
    WHEN i.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
     END as Type,
                                         pod.is_input as Input,
-                                        pod.code as Code,
+                                      
+                                        if(pod.code != '', pod.code,i.code) as Code,
                                         if(pod.name != '', pod.name,i.name) as Item,
                                         pod.quantity as QuantityOrdered,
                                         ped.quantity as QuantityExecuted,

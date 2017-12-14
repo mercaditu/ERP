@@ -13,7 +13,8 @@ namespace Cognitivo.Project.Development
 {
     public partial class TaskView : Page, INotifyPropertyChanged
     {
-        private ProjectTaskDB ProjectTaskDB = new ProjectTaskDB();
+        // private ProjectTaskDB ProjectTaskDB = new ProjectTaskDB();
+        private entity.Controller.Project.ProjectController ProjectDB;
 
         private CollectionViewSource project_taskViewSource;
         private CollectionViewSource projectViewSource;
@@ -28,33 +29,46 @@ namespace Cognitivo.Project.Development
         public TaskView()
         {
             InitializeComponent();
+
+            ProjectDB = FindResource("ProjectDB") as entity.Controller.Project.ProjectController;
+
+
+            ProjectDB.Initialize();
         }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Load()
         {
-            ProjectTaskDB.Configuration.LazyLoadingEnabled = true;
-
-            project_taskproject_task_dimensionViewSource = FindResource("project_taskproject_task_dimensionViewSource") as CollectionViewSource;
-            project_taskproject_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Local;
-
-            project_taskViewSource = FindResource("project_taskViewSource") as CollectionViewSource;
+            ProjectDB.Load(dataPager.PagedSource.PageIndex);
             projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
 
-            await ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                .Include(x => x.project_tag_detail).LoadAsync();
-            projectViewSource.Source = ProjectTaskDB.projects.Local;
+
+            projectViewSource.Source = ProjectDB.db.projects.Local;
+
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = ProjectDB.PageCount;
+            }
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+           
+
+            project_taskproject_task_dimensionViewSource = FindResource("project_taskproject_task_dimensionViewSource") as CollectionViewSource;
+            project_taskproject_task_dimensionViewSource.Source = ProjectDB.db.project_task_dimension.Local;
+
+            project_taskViewSource = FindResource("project_taskViewSource") as CollectionViewSource;
+         
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            await ProjectTaskDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
-            app_dimensionViewSource.Source = ProjectTaskDB.app_dimension.Local;
+            app_dimensionViewSource.Source = ProjectDB.db.app_dimension.Local;
 
             CollectionViewSource app_propertyViewSource = ((CollectionViewSource)(FindResource("app_propertyViewSource")));
-            await ProjectTaskDB.app_property.LoadAsync();
-            app_propertyViewSource.Source = ProjectTaskDB.app_property.Local;
+          
+            app_propertyViewSource.Source = ProjectDB.db.app_property.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            await ProjectTaskDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
-            app_measurementViewSource.Source = ProjectTaskDB.app_measurement.Local;
+         
+            app_measurementViewSource.Source = ProjectDB.db.app_measurement.Local;
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
 
@@ -160,7 +174,7 @@ namespace Cognitivo.Project.Development
                 if (_project_task != null)
                 {
                     _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
-                    app_document_range app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                    app_document_range app_document_range = ProjectDB.db.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
                     string number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                     foreach (project_task project_task in _project_task)
                     {
@@ -184,7 +198,7 @@ namespace Cognitivo.Project.Development
                         project_task.IsSelected = false;
                     }
 
-                    ProjectTaskDB.SaveChanges();
+                    ProjectDB.SaveChanges_WithValidation();
                     if (_project_task.FirstOrDefault() != null)
                     {
                         if (_project_task.FirstOrDefault().app_document_range != null)
@@ -219,9 +233,9 @@ namespace Cognitivo.Project.Development
                     }
 
                     //Saving Changes
-                    if (ProjectTaskDB.SaveChanges() > 0)
+                    if (ProjectDB.SaveChanges_WithValidation() )
                     {
-                        toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
+                        toolBar.msgAnnulled(ProjectDB.NumberOfRecords);
                     }
 
                     filter_task();
@@ -244,7 +258,7 @@ namespace Cognitivo.Project.Development
             {
                 project projects = projectViewSource.View.CurrentItem as project;
                 projects.is_active = false;
-                ProjectTaskDB.SaveChanges();
+                ProjectDB.SaveChanges_WithValidation();
                 projectViewSource.View.Filter = i =>
                 {
                     project objProject = (project)i;
@@ -291,7 +305,7 @@ namespace Cognitivo.Project.Development
                             n_project_task.parent = project_task;
                             n_project_task.State = EntityState.Added;
                             project_task.child.Add(n_project_task);
-                            ProjectTaskDB.project_task.Add(n_project_task);
+                            ProjectDB.db.project_task.Add(n_project_task);
                             project_taskViewSource.View.Refresh();
                             project_taskViewSource.View.MoveCurrentTo(n_project_task);
 
@@ -306,7 +320,7 @@ namespace Cognitivo.Project.Development
                     n_project_task.id_project = project.id_project;
                     n_project_task.status = entity.Status.Project.Pending;
                     n_project_task.State = EntityState.Added;
-                    ProjectTaskDB.project_task.Add(n_project_task);
+                    ProjectDB.db.project_task.Add(n_project_task);
 
                     project_taskViewSource.View.Filter = null;
                     project_taskViewSource.View.MoveCurrentTo(n_project_task);
@@ -327,7 +341,7 @@ namespace Cognitivo.Project.Development
                 n_project_task.id_project = project.id_project;
                 n_project_task.status = entity.Status.Project.Pending;
                 n_project_task.State = EntityState.Added;
-                ProjectTaskDB.project_task.Add(n_project_task);
+                ProjectDB.db.project_task.Add(n_project_task);
 
                 project_taskViewSource.View.Filter = null;
                 project_taskViewSource.View.MoveCurrentTo(n_project_task);
@@ -357,9 +371,9 @@ namespace Cognitivo.Project.Development
 
         private void btnSaveTask_Click(object sender)
         {
-            if (ProjectTaskDB.SaveChanges() > 0)
+            if (ProjectDB.SaveChanges_WithValidation())
             {
-                toolBar.msgSaved(ProjectTaskDB.NumberOfRecords);
+                toolBar.msgSaved(ProjectDB.NumberOfRecords);
                 stpcode.IsEnabled = false;
             }
         }
@@ -371,7 +385,7 @@ namespace Cognitivo.Project.Development
                 project_taskViewSource.View.Filter = null;
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
 
-                ProjectTaskDB.NumberOfRecords = 0;
+                ProjectDB.NumberOfRecords = 0;
                 foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
                 {
                     if (task.status == Status.Project.Pending)
@@ -385,11 +399,11 @@ namespace Cognitivo.Project.Development
                             }
                             else
                             {
-                                ProjectTaskDB.Entry(task).State = EntityState.Detached;
+                                ProjectDB.db.Entry(task).State = EntityState.Detached;
                             }
                         }
 
-                        ProjectTaskDB.NumberOfRecords += 1;
+                        ProjectDB.NumberOfRecords += 1;
                     }
                     else
                     {
@@ -398,9 +412,9 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
-                ProjectTaskDB = new ProjectTaskDB();
-                ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
-                projectViewSource.Source = ProjectTaskDB.projects.Local;
+                ProjectDB.Initialize();
+                ProjectDB.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
+                projectViewSource.Source = ProjectDB.db.projects.Local;
                 project_taskViewSource.View.Filter = null;
                 project_taskViewSource.View.Refresh();
                 filter_task();
@@ -409,7 +423,7 @@ namespace Cognitivo.Project.Development
 
         private void btnApprove_Click(object sender)
         {
-            ProjectTaskDB.NumberOfRecords += 0;
+            ProjectDB.NumberOfRecords += 0;
 
             if (project_taskViewSource.View != null)
             {
@@ -422,15 +436,15 @@ namespace Cognitivo.Project.Development
                     if ((project_task.status == Status.Project.Pending || project_task.status == null) && project_task.id_item > 0)
                     {
                         project_task.status = Status.Project.Management_Approved;
-                        ProjectTaskDB.NumberOfRecords += 1;
+                        ProjectDB.NumberOfRecords += 1;
                     }
 
                     project_task.IsSelected = false;
                 }
 
-                if (ProjectTaskDB.SaveChanges() > 0)
+                if (ProjectDB.SaveChanges_WithValidation() )
                 {
-                    toolBar.msgApproved(ProjectTaskDB.NumberOfRecords);
+                    toolBar.msgApproved(ProjectDB.NumberOfRecords);
                 }
 
                 filter_task();
@@ -439,7 +453,7 @@ namespace Cognitivo.Project.Development
 
         private void btnAnull_Click(object sender)
         {
-            ProjectTaskDB.NumberOfRecords += 0;
+            ProjectDB.NumberOfRecords += 0;
 
             if (project_taskViewSource.View != null)
             {
@@ -453,7 +467,7 @@ namespace Cognitivo.Project.Development
                     {
                         project_task.status = Status.Project.Rejected;
                     }
-                    ProjectTaskDB.NumberOfRecords += 1;
+                    ProjectDB.NumberOfRecords += 1;
                     project_task.IsSelected = false;
 
                     foreach (production_order_detail production_order_detail in project_task.production_order_detail)
@@ -465,9 +479,9 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
-                if (ProjectTaskDB.SaveChanges() > 0)
+                if (ProjectDB.SaveChanges_WithValidation())
                 {
-                    toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
+                    toolBar.msgAnnulled(ProjectDB.NumberOfRecords);
                 }
 
                 filter_task();
@@ -527,8 +541,8 @@ namespace Cognitivo.Project.Development
             if (crud_modal.Visibility == Visibility.Hidden)
             {
                 projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-                ProjectTaskDB.Database.Initialize(true);
-                projectViewSource.Source = ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).ToList();
+                ProjectDB.db.Database.Initialize(true);
+                projectViewSource.Source = ProjectDB.db.projects.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).ToList();
                 projectViewSource.View.MoveCurrentToLast();
                 filter_task();
             }
@@ -551,7 +565,7 @@ namespace Cognitivo.Project.Development
         {
             if (sbxItem.ItemID > 0)
             {
-                item item = ProjectTaskDB.items.Find(sbxItem.ItemID);
+                item item = ProjectDB.db.items.Find(sbxItem.ItemID);
                 project_task project_task_output = treeProject.SelectedItem_ as project_task;
 
                 if (project_task_output.parent != null)
@@ -623,7 +637,7 @@ namespace Cognitivo.Project.Development
                 project_taskViewSource.View.Refresh();
 
 
-                project_taskproject_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Local;
+                project_taskproject_task_dimensionViewSource.Source = ProjectDB.db.project_task_dimension.Local;
                 project_taskproject_task_dimensionViewSource.View.Refresh();
                 project_task_output.CalcSalePrice_TimerTaks();
             }
@@ -704,18 +718,18 @@ namespace Cognitivo.Project.Development
             if (toolBar.ref_id > 0)
             {
                 projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
-                projectViewSource.Source = ProjectTaskDB.projects.Where(x => x.id_project == toolBar.ref_id).ToList();
+                projectViewSource.Source = ProjectDB.db.projects.Where(x => x.id_project == toolBar.ref_id).ToList();
             }
         }
 
         private void toolBar_btnClear_Click(object sender)
         {
-            ProjectTaskDB = new ProjectTaskDB();
-            projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
-
-            ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-               .Include(x => x.project_tag_detail).LoadAsync();
-            projectViewSource.Source = ProjectTaskDB.projects.Local;
+            ProjectDB.Initialize();
+            Load();
+        }
+        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Load();
         }
     }
 }

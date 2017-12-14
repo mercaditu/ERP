@@ -67,7 +67,9 @@ namespace entity
                     ProductID = x.Max(y => y.ProductID),
                     LocationID = x.Max(y => y.LocationID),
                     CompanyID = x.Max(y => y.CompanyID),
-                    Type = x.Max(y => y.Type)
+                    Type = x.Max(y => y.Type),
+                    BatchCode=x.Max(y=>y.BatchCode),
+                    ExpiryDate = x.Max(y => y.ExpiryDate)
                 }).Where(x => x.Quantity > 0).ToList();
 
             List<StockList> StockList = new List<StockList>();
@@ -89,6 +91,8 @@ namespace entity
                 Stock.LocationID = item.LocationID;
                 Stock.CompanyID = item.CompanyID;
                 Stock.Type = item.Type;
+                Stock.BatchCode = item.BatchCode;
+                Stock.ExpiryDate = item.ExpiryDate;
                 StockList.Add(Stock);
             }
 
@@ -113,7 +117,10 @@ namespace entity
                     ProductID = x.Max(y => y.ProductID),
                     LocationID = x.Max(y => y.LocationID),
                     CompanyID = x.Max(y => y.CompanyID),
-                    Type = x.Max(y => y.Type)
+                    Type = x.Max(y => y.Type),
+                    BatchCode = x.Max(y => y.BatchCode),
+                    ExpiryDate = x.Max(y => y.ExpiryDate)
+
                 }).ToList();
 
             if (InStock_Only)
@@ -140,6 +147,8 @@ namespace entity
                 Stock.LocationID = item.LocationID;
                 Stock.CompanyID = item.CompanyID;
                 Stock.Type = item.Type;
+                Stock.BatchCode = item.BatchCode;
+                Stock.ExpiryDate = item.ExpiryDate;
                 StockList.Add(Stock);
             }
             return StockList;

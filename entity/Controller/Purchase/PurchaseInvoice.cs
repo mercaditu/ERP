@@ -131,8 +131,10 @@ namespace entity.Controller.Purchase
                 Invoice.is_archived = Invoice.is_archived ? false : true;
                 Invoice.IsSelected = false;
             }
-
+           
             db.SaveChanges();
+       
+
         }
 
         #endregion

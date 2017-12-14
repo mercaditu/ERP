@@ -73,6 +73,10 @@ namespace Cognitivo.Production
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
 
             production_orderViewSource.Source = ExecutionDB.db.production_order.Local.Where(x => x.is_archived == false);
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = ExecutionDB.PageCount;
+            }
         }
 
         private void toolBar_btnSave_Click(object sender)

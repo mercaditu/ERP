@@ -108,10 +108,22 @@ namespace Cognitivo.Purchase
 
         private void Delete_Click(object sender)
         {
-            if (MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Do You Want to Archived..", "Cognitivo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                PurchaseDB.Archived();
+                foreach (purchase_invoice invoice in PurchaseDB.db.purchase_invoice.Local.Where(x => x.IsSelected))
+                {
+                    if (invoice != null && invoice.State != EntityState.Added)
+                    {
+                        invoice.is_archived = true;
+                    }
+                }
+
+                PurchaseDB.db.SaveChanges();
             }
+            PurchaseDB.Initialize();
+            Load_PrimaryDataThread();
+
+     
         }
 
         private void Save_Click(object sender)

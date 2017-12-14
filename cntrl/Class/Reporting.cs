@@ -339,38 +339,38 @@ namespace cntrl.Class
                 Query = Reports.Stock.PriceList.query,
                 Parameters = new List<Report.Types> { }
             },
-            new Report
-            {
-                Application = entity.App.Names.Stock,
-                Name = entity.Brillo.Localize.StringText("Items"),
-                Path = "cntrl.Reports.Stocks.Items.rdlc",
-                Query = Reports.Stock.Item.query,
-                Parameters = new List<Report.Types> { }
-            },
-                new Report
-            {
-                Application = entity.App.Names.Stock,
-                Name =entity.Brillo.Localize.StringText("StockMovement"),
-                Path = "cntrl.Reports.Stocks.StockMovement.rdlc",
-                Query = Reports.Stock.Stock.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-            },
-            new Report
-            {
-                Application = entity.App.Names.Stock,
-                Name = entity.Brillo.Localize.StringText("StockAnalysis")!= string.Empty ? entity.Brillo.Localize.StringText("StockAnalysis") :"StockAnalysis",
-                Path = "cntrl.Reports.Stocks.StockAnalysis.rdlc",
-                Query = Reports.Stock.StockAnalysis.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
-            },
-              new Report
-            {
-                Application = entity.App.Names.Stock,
-                Name =entity.Brillo.Localize.StringText("StockFlow")!= string.Empty ? entity.Brillo.Localize.StringText("StockFlow") :"StockFlow",
-                Path = "cntrl.Reports.Stocks.StockFlow.rdlc",
-                Query = Reports.Stock.Stock.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-            },
+            //new Report
+            //{
+            //    Application = entity.App.Names.Stock,
+            //    Name = entity.Brillo.Localize.StringText("Items"),
+            //    Path = "cntrl.Reports.Stocks.Items.rdlc",
+            //    Query = Reports.Stock.Item.query,
+            //    Parameters = new List<Report.Types> { }
+            //},
+            //    new Report
+            //{
+            //    Application = entity.App.Names.Stock,
+            //    Name =entity.Brillo.Localize.StringText("StockMovement"),
+            //    Path = "cntrl.Reports.Stocks.StockMovement.rdlc",
+            //    Query = Reports.Stock.Stock.query,
+            //    Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            //},
+            //new Report
+            //{
+            //    Application = entity.App.Names.Stock,
+            //    Name = entity.Brillo.Localize.StringText("StockAnalysis")!= string.Empty ? entity.Brillo.Localize.StringText("StockAnalysis") :"StockAnalysis",
+            //    Path = "cntrl.Reports.Stocks.StockAnalysis.rdlc",
+            //    Query = Reports.Stock.StockAnalysis.query,
+            //    Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            //},
+            //  new Report
+            //{
+            //    Application = entity.App.Names.Stock,
+            //    Name =entity.Brillo.Localize.StringText("StockFlow")!= string.Empty ? entity.Brillo.Localize.StringText("StockFlow") :"StockFlow",
+            //    Path = "cntrl.Reports.Stocks.StockFlow.rdlc",
+            //    Query = Reports.Stock.Stock.query,
+            //    Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            //},
                  new Report
             {
                 Application = entity.App.Names.Stock,

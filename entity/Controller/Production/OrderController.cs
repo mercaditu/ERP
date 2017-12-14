@@ -1,4 +1,5 @@
-﻿using System;
+﻿using entity.Brillo;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -26,17 +27,33 @@ namespace entity.Controller.Production
 
         public async void Load(production_order.ProductionOrderTypes ProductionOrderTypes, int PageIndex)
         {
+            var predicate = PredicateBuilder.True<production_order>();
+            predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
+            predicate = predicate.And(x => x.production_line.app_location.id_branch == CurrentSession.Id_Branch);
+
+
             if (ProductionOrderTypes==production_order.ProductionOrderTypes.Fraction)
             {
-                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.type == ProductionOrderTypes && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).Include(x=>x.production_order_detail).OrderByDescending(x => x.trans_date)
+                predicate = predicate.And(x => x.type == ProductionOrderTypes);
+                if (Count == 0)
+                {
+                    Count = db.production_order.Where(predicate).Count();
+                }
+                await db.production_order.Where(predicate).Include(x=>x.production_order_detail).OrderByDescending(x => x.trans_date)
                     .Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
             }
             else
             {
-                await db.production_order.Where(a => a.id_company == CurrentSession.Id_Company && (a.type == ProductionOrderTypes || a.type == production_order.ProductionOrderTypes.Internal) && a.production_line.app_location.id_branch == CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date)
+                predicate = predicate.And(x => (x.type == ProductionOrderTypes || x.type == production_order.ProductionOrderTypes.Internal));
+                if (Count == 0)
+                {
+                    Count = db.production_order.Where(predicate).Count();
+                }
+                await db.production_order.Where(predicate).OrderByDescending(x => x.trans_date)
                     .Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
             }
-            
+
+         
             await db.production_line.Where(x => x.id_company == CurrentSession.Id_Company && x.app_location.id_branch == CurrentSession.Id_Branch).LoadAsync();
             await db.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();

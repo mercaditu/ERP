@@ -4,7 +4,7 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:Stock="clr-namespace:Cognitivo.Class"
+	  xmlns:Stock="clr-namespace:entity.Brillo;assembly=entity"
        xmlns:mainpref="clr-namespace:Cognitivo.Properties"
        xmlns:converter="clr-namespace:Cognitivo.Converters"
 	  xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
@@ -105,8 +105,8 @@
                                                         </MultiBinding>
                                                     </DataGridTextColumn.Binding>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Binding="{Binding BatchCode}" ElementStyle="{StaticResource RightAlignStyle}" Header="BatchCode" Width="128" />
-                                                <DataGridTextColumn Binding="{Binding ExpiryDate, StringFormat={}{0:d}}" ElementStyle="{StaticResource RightAlignStyle}" Header="ExpiryDate" Width="128" />
+                                                <DataGridTextColumn Binding="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}" Header="BatchCode" Width="128" />
+                                                <DataGridTextColumn Binding="{Binding expire_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" ElementStyle="{StaticResource RightAlignStyle}" Header="ExpiryDate" Width="128" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </ScrollViewer>

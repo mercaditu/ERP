@@ -168,7 +168,7 @@ namespace Cognitivo.Sales
 
                 SalesDB.db.SaveChanges();
             }
-
+            SalesDB.Initialize();
             Load_PrimaryDataThread(null, null);
         }
 

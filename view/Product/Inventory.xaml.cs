@@ -504,7 +504,7 @@ namespace Cognitivo.Product
                         objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                         item_inventory_detail.IsSelected = true;
 
-                        objpnl_ItemMovement.Items_InStockLIST = CurrentItems.getProducts_InStock(app_location.id_branch, DateTime.Now,false)
+                        objpnl_ItemMovement.Items_InStockLIST = CurrentItems.getProducts_InStock(app_location.id_branch, DateTime.Now,true)
                             .Where(x => 
                             x.LocationID == app_location.id_location && 
                             x.ProductID == item_inventory_detail.id_item_product)

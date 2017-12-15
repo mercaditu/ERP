@@ -60,11 +60,11 @@ namespace Cognitivo.Product
 
             if (app_branch != null)
             {
-                  inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
+                inventoryViewSource = FindResource("inventoryViewSource") as CollectionViewSource;
 
                 if (chkstock.IsChecked == true)
                 {
-                    inventoryViewSource.Source = CurrentItems.getProducts_InStock(app_branch.id_branch, InventoryDate, true);
+                    inventoryViewSource.Source = CurrentItems.getProducts_InStock_GroupByLocationBatch(app_branch.id_branch, InventoryDate, true);
                 }
                 else
                 {

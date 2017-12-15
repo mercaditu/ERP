@@ -98,6 +98,104 @@ namespace entity
 
             return StockList;
         }
+        public static IEnumerable<StockList> getProducts_InStock_GroupByLocationBatch(int? BranchID, DateTime? TransDate, bool forceData)
+        {
+            var list = getItems_ByBranch((int)BranchID, forceData)
+                .GroupBy(x => new { x.LocationID, x.ItemID,x.BatchCode })
+                .Select(x => new
+                {
+                    Code = x.Max(y => y.Code),
+                    Name = x.Max(y => y.Name),
+                    Location = x.Max(y => y.Location),
+                    Measurement = x.Max(y => y.Measurement),
+                    Quantity = x.Sum(y => y.Quantity),
+                    Cost = x.Max(y => y.Cost),
+                    MovementID = x.Max(y => y.MovementID),
+                    MovementRelID = x.Max(y => y.MovementRelID),
+                    ItemID = x.Max(y => y.ItemID),
+                    ProductID = x.Max(y => y.ProductID),
+                    LocationID = x.Max(y => y.LocationID),
+                    CompanyID = x.Max(y => y.CompanyID),
+                    Type = x.Max(y => y.Type),
+                    BatchCode = x.Max(y => y.BatchCode),
+                    ExpiryDate = x.Max(y => y.ExpiryDate)
+                }).Where(x => x.Quantity > 0).ToList();
+
+            List<StockList> StockList = new List<StockList>();
+
+            foreach (dynamic item in list)
+            {
+                StockList Stock = new StockList();
+
+                Stock.Code = item.Code;
+                Stock.Name = item.Name;
+                Stock.Location = item.Location;
+                Stock.Measurement = item.Measurement;
+                Stock.Quantity = item.Quantity;
+                Stock.Cost = item.Cost;
+                Stock.MovementID = item.MovementID;
+                Stock.MovementRelID = item.MovementRelID;
+                Stock.ItemID = item.ItemID;
+                Stock.ProductID = item.ProductID;
+                Stock.LocationID = item.LocationID;
+                Stock.CompanyID = item.CompanyID;
+                Stock.Type = item.Type;
+                Stock.BatchCode = item.BatchCode;
+                Stock.ExpiryDate = item.ExpiryDate;
+                StockList.Add(Stock);
+            }
+
+            return StockList;
+        }
+        public static IEnumerable<StockList> getProducts_InStock_GroupByLocation(int? BranchID, DateTime? TransDate, bool forceData)
+        {
+            var list = getItems_ByBranch((int)BranchID, forceData)
+                .GroupBy(x => new { x.LocationID, x.ItemID })
+                .Select(x => new
+                {
+                    Code = x.Max(y => y.Code),
+                    Name = x.Max(y => y.Name),
+                    Location = x.Max(y => y.Location),
+                    Measurement = x.Max(y => y.Measurement),
+                    Quantity = x.Sum(y => y.Quantity),
+                    Cost = x.Max(y => y.Cost),
+                    MovementID = x.Max(y => y.MovementID),
+                    MovementRelID = x.Max(y => y.MovementRelID),
+                    ItemID = x.Max(y => y.ItemID),
+                    ProductID = x.Max(y => y.ProductID),
+                    LocationID = x.Max(y => y.LocationID),
+                    CompanyID = x.Max(y => y.CompanyID),
+                    Type = x.Max(y => y.Type),
+                    BatchCode = x.Max(y => y.BatchCode),
+                    ExpiryDate = x.Max(y => y.ExpiryDate)
+                }).Where(x => x.Quantity > 0).ToList();
+
+            List<StockList> StockList = new List<StockList>();
+
+            foreach (dynamic item in list)
+            {
+                StockList Stock = new StockList();
+
+                Stock.Code = item.Code;
+                Stock.Name = item.Name;
+                Stock.Location = item.Location;
+                Stock.Measurement = item.Measurement;
+                Stock.Quantity = item.Quantity;
+                Stock.Cost = item.Cost;
+                Stock.MovementID = item.MovementID;
+                Stock.MovementRelID = item.MovementRelID;
+                Stock.ItemID = item.ItemID;
+                Stock.ProductID = item.ProductID;
+                Stock.LocationID = item.LocationID;
+                Stock.CompanyID = item.CompanyID;
+                Stock.Type = item.Type;
+                Stock.BatchCode = item.BatchCode;
+                Stock.ExpiryDate = item.ExpiryDate;
+                StockList.Add(Stock);
+            }
+
+            return StockList;
+        }
 
         public static IEnumerable<StockList> getItems_GroupBy(int? BranchID, DateTime? TransDate, bool forceData, bool InStock_Only)
         {

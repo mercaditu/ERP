@@ -105,7 +105,7 @@ xmlns:mainpref="clr-namespace:Cognitivo.Properties"
                     <StackPanel>
                         <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}" />
                         <ComboBox x:Name="id_branch_destinComboBox" Grid.Column="1" DisplayMemberPath="name" Width="111"
-                          SelectedValuePath="id_branch" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
+                          SelectedValuePath="id_branch" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True,ValidatesOnNotifyDataErrors=True}"
                           ItemsSource="{Binding Source={StaticResource branch_destViewSource}}"
                           Style="{StaticResource input_combobox}" />
                     </StackPanel>

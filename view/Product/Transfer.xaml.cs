@@ -41,15 +41,16 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if ((item_transfer)item_transferViewSource.View.CurrentItem != null)
+            if ((item_transfer)item_transferViewSource.View.CurrentItem != null && id_branch_destinComboBox.SelectedItem!=null && id_branch_originComboBox!=null)
             {
                 ((item_transfer)item_transferViewSource.View.CurrentItem).app_branch_destination = (id_branch_destinComboBox.SelectedItem as app_branch);
                 ((item_transfer)item_transferViewSource.View.CurrentItem).app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
                 ((item_transfer)item_transferViewSource.View.CurrentItem).app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
                 ((item_transfer)item_transferViewSource.View.CurrentItem).app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
+                ProductTransferDB.SaveChanges();
             }
 
-            ProductTransferDB.SaveChanges();
+           
         }
 
         private void toolBar_btnCancel_Click(object sender)

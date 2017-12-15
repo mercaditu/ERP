@@ -943,7 +943,8 @@ namespace entity.Brillo.Logic
                                 (decimal)item_inventory_detail.Delta,
                                 item_inventory_detail.item_inventory.trans_date,
                                 item_inventory_detail.unit_value,
-                                comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment), item_movement_dimensionLIST
+                                comment_Generator(App.Names.Inventory, Localize.Text<string>("Inventory"), item_inventory_detail.comment)
+                                , item_movement_dimensionLIST
                                 , null, null, null
                                 ));
                     }

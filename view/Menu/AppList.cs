@@ -90,7 +90,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.FixedAssets", entity.App.Names.FixedAssets, "FixedAsset", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Recipe", entity.App.Names.Recipe, "Recipe", entity.CurrentSession.Versions.Basic, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.SuppliesRequest", entity.App.Names.RequestResource, "ProjectPlan", entity.CurrentSession.Versions.Basic, "0");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.BarCodePrint", entity.App.Names.BarCodePrint, "", entity.CurrentSession.Versions.Basic, "0");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.BarCodePrint", entity.App.Names.BarCodePrint, "", entity.CurrentSession.Versions.Lite, "0");
 
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Product.Stock", entity.App.Names.Stock, "ProductStock", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Product.InventoryFlow", entity.App.Names.InventoryFlow, "ProductStockAdjust", entity.CurrentSession.Versions.Basic, "1");

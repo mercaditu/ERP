@@ -68,8 +68,10 @@ namespace entity
                     LocationID = x.Max(y => y.LocationID),
                     CompanyID = x.Max(y => y.CompanyID),
                     Type = x.Max(y => y.Type),
-                    BatchCode=x.Max(y=>y.BatchCode),
-                    ExpiryDate = x.Max(y => y.ExpiryDate)
+                    BatchCode = x.Max(y => y.BatchCode),
+                    ExpiryDate = x.Max(y => y.ExpiryDate),
+                    TranDate = x.Max(y => y.TranDate),
+                    BarCode = x.Max(y => y.BarCode)
                 }).Where(x => x.Quantity > 0).ToList();
 
             List<StockList> StockList = new List<StockList>();
@@ -78,6 +80,7 @@ namespace entity
             {
                 StockList Stock = new StockList();
 
+                Stock.IsSelected = false;
                 Stock.Code = item.Code;
                 Stock.Name = item.Name;
                 Stock.Location = item.Location;
@@ -93,6 +96,8 @@ namespace entity
                 Stock.Type = item.Type;
                 Stock.BatchCode = item.BatchCode;
                 Stock.ExpiryDate = item.ExpiryDate;
+                Stock.TranDate = item.TranDate;
+                Stock.BarCode = item.BarCode;
                 StockList.Add(Stock);
             }
 
@@ -101,7 +106,7 @@ namespace entity
         public static IEnumerable<StockList> getProducts_InStock_GroupByLocationBatch(int? BranchID, DateTime? TransDate, bool forceData)
         {
             var list = getItems_ByBranch((int)BranchID, forceData)
-                .GroupBy(x => new { x.LocationID, x.ItemID,x.BatchCode })
+                .GroupBy(x => new { x.LocationID, x.ItemID, x.BatchCode })
                 .Select(x => new
                 {
                     Code = x.Max(y => y.Code),
@@ -118,7 +123,9 @@ namespace entity
                     CompanyID = x.Max(y => y.CompanyID),
                     Type = x.Max(y => y.Type),
                     BatchCode = x.Max(y => y.BatchCode),
-                    ExpiryDate = x.Max(y => y.ExpiryDate)
+                    ExpiryDate = x.Max(y => y.ExpiryDate),
+                     TranDate = x.Max(y => y.TranDate),
+                    BarCode = x.Max(y => y.BarCode)
                 }).Where(x => x.Quantity > 0).ToList();
 
             List<StockList> StockList = new List<StockList>();
@@ -126,7 +133,7 @@ namespace entity
             foreach (dynamic item in list)
             {
                 StockList Stock = new StockList();
-
+                Stock.IsSelected = false;
                 Stock.Code = item.Code;
                 Stock.Name = item.Name;
                 Stock.Location = item.Location;
@@ -142,6 +149,8 @@ namespace entity
                 Stock.Type = item.Type;
                 Stock.BatchCode = item.BatchCode;
                 Stock.ExpiryDate = item.ExpiryDate;
+                Stock.TranDate = item.TranDate;
+                Stock.BarCode = item.BarCode;
                 StockList.Add(Stock);
             }
 
@@ -217,7 +226,9 @@ namespace entity
                     CompanyID = x.Max(y => y.CompanyID),
                     Type = x.Max(y => y.Type),
                     BatchCode = x.Max(y => y.BatchCode),
-                    ExpiryDate = x.Max(y => y.ExpiryDate)
+                    ExpiryDate = x.Max(y => y.ExpiryDate),
+                    TranDate = x.Max(y => y.TranDate),
+                    BarCode = x.Max(y => y.BarCode)
 
                 }).ToList();
 
@@ -231,7 +242,7 @@ namespace entity
             foreach (dynamic item in list)
             {
                 StockList Stock = new StockList();
-
+                Stock.IsSelected = false;
                 Stock.Code = item.Code;
                 Stock.Name = item.Name;
                 Stock.Location = item.Location;
@@ -247,6 +258,8 @@ namespace entity
                 Stock.Type = item.Type;
                 Stock.BatchCode = item.BatchCode;
                 Stock.ExpiryDate = item.ExpiryDate;
+                Stock.TranDate = item.TranDate;
+                Stock.BarCode = item.BarCode;
                 StockList.Add(Stock);
             }
             return StockList;
@@ -283,7 +296,7 @@ namespace entity
 
             if (loc != null)
             {
-                if (mov.parent!=null)
+                if (mov.parent != null)
                 {
                     StockList updatedMovement = getProducts_InStock(loc.id_branch, DateTime.Now, false).Where(x => x.MovementID == mov.parent.id_movement).FirstOrDefault();
 
@@ -293,7 +306,7 @@ namespace entity
                         return true;
                     }
                 }
-              
+
             }
 
             return false;
@@ -320,6 +333,9 @@ namespace entity
                                 ,im.id_movement_value_rel as MovementRelID
                                 , im.code as BatchCode
                                 , im.expire_date as ExpiryDate
+                                ,im.trans_date as TransDate
+                                ,im.barcode as BarCode
+
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
@@ -346,6 +362,8 @@ namespace entity
                     string LocationName = Convert.ToString(itemRow["Location"]);
                     string BatchCode = Convert.ToString(itemRow["BatchCode"]);
                     bool CanExpire = Convert.ToBoolean(itemRow["can_expire"]);
+                    DateTime TranDate = Convert.ToDateTime(itemRow["TransDate"]);
+                    string BarCode = Convert.ToString(itemRow["BarCode"]);
 
                     DateTime? ExpiryDate = null;
 
@@ -370,6 +388,8 @@ namespace entity
                         Row.ExpiryDate = ExpiryDate;
                         Row.TimeStamp = DateTime.Now;
                         Row.can_expire = CanExpire;
+                        Row.TranDate = TranDate;
+                        Row.BarCode = BarCode;
                         //Since movement exists, there is no need to update other data, just get out and continue for.
                         continue;
                     }
@@ -390,6 +410,8 @@ namespace entity
                         Row.ExpiryDate = ExpiryDate;
                         Row.TimeStamp = DateTime.Now;
                         Row.can_expire = CanExpire;
+                        Row.TranDate = TranDate;
+                        Row.BarCode = BarCode;
                     }
                     else if (List.Where(x => x.ItemID == ItemID).Count() > 0)
                     {
@@ -414,6 +436,8 @@ namespace entity
                         Row.MovementRelID = MovementRelID;
                         Row.TimeStamp = DateTime.Now;
                         Row.can_expire = CanExpire;
+                        Row.TranDate = TranDate;
+                        Row.BarCode = BarCode;
                         List.Add(Row);
                     }
                 }

@@ -1,0 +1,52 @@
+﻿<Page x:Class="Cognitivo.Product.BarcodePrint"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+          xmlns:Stock="clr-namespace:entity.Brillo;assembly=entity"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:lex="http://wpflocalizeextension.codeplex.com"
+		lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+		lex:ResxLocalizationProvider.DefaultDictionary="local"
+		lex:LocalizeDictionary.DesignCulture="en-US"
+        xmlns:local="clr-namespace:Cognitivo.Product"
+        mc:Ignorable="d"
+        Title="BarcodePrint" Height="500" Width="800" Loaded="Window_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type Stock:StockList}, CreateList=True}" />
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Controls:SmartBox_Item  x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select"
+														QuantityIntegration="True"  Type="InStock_Only"
+                                                        IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
+            <Button Content="Print" Click="Button_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <DataGrid x:Name="item_inventoryDataGrid" CanUserSortColumns="True"
+					VerticalScrollBarVisibility="Auto" SelectionMode="Single"
+					AutoGenerateColumns="False" Grid.Column="1" CanUserReorderColumns="True"
+					EnableRowVirtualization="True"  Grid.Row="1" 
+					RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{ Binding Source={StaticResource inventoryViewSource}}">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="Auto" />
+                    <DataGridTextColumn Binding="{Binding Location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding Code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+										Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" />
+                    <DataGridTextColumn Binding="{Binding BatchCode}" Header="{lex:Loc Cognitivo:local:Batch}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding ExpiryDate}" Header="{lex:Loc Cognitivo:local:ExpiryDate}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding TranDate}" Header="{lex:Loc Cognitivo:local:Date}" Width="Auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding BarCode}" Header="{lex:Loc Cognitivo:local:BarCode}" Width="Auto" IsReadOnly="True"/>
+
+                </DataGrid.Columns>
+         
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -65,7 +65,7 @@ namespace cntrl.Controls
                                         Quantity = item.debit,
                                         Cost = item.item_movement_value.Sum(x => x.unit_value),
                                         Comment = item.comment,
-                                        DisplayImage = item.debit > 0 ? true : false,
+                                        DisplayImage =true,
                                         IsTransfer = item.id_transfer_detail != null ? true : false,
                                         file=attach.file
                                     })

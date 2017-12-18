@@ -496,6 +496,9 @@
       <DependentUpon>Execution.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Product\BarcodePrint.xaml.cs">
+      <DependentUpon>BarcodePrint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product\BranchWalkin.xaml.cs">
       <DependentUpon>BranchWalkin.xaml</DependentUpon>
     </Compile>
@@ -1368,6 +1371,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Production\Execution.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Product\BarcodePrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -200,9 +200,9 @@ namespace cntrl
 				Name = "ParameterCost"
 			};
 
-			ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
+            ParametersCost.Values.Add((!CurrentSession.UserRole.see_cost).ToString());
 
-			ReportParameter Parameters = new ReportParameter()
+            ReportParameter Parameters = new ReportParameter()
 			{
 				Name = "Parameters"
 			};
@@ -285,7 +285,7 @@ namespace cntrl
 
 			ReportParameter ParametersCost = new ReportParameter();
 			ParametersCost.Name = "ParameterCost";
-			ParametersCost.Values.Add(CurrentSession.UserRole.see_cost.ToString());
+			ParametersCost.Values.Add((!CurrentSession.UserRole.see_cost).ToString());
 			ReportParameter Parameters = new ReportParameter();
 			Parameters.Name = "Parameters";
 			Parameters.Values.Add(_StartDate.ToString() + " - " + _EndDate.ToString());

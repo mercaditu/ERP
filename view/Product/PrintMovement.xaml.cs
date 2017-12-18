@@ -42,7 +42,11 @@ namespace Cognitivo.Product
                     {
 
                         cntrl.Controls.MovementPrint _MovementPrint = new cntrl.Controls.MovementPrint();
-                        _MovementPrint.ParentID = item_movement.id_movement;
+                        if (item_movement.parent!=null)
+                        {
+                            _MovementPrint.ParentID = item_movement.parent.id_movement;
+                        }
+                  
 
                         stackFlow.Children.Add(_MovementPrint);
                     }

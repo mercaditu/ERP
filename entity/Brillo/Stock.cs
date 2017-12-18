@@ -304,6 +304,8 @@ namespace entity.Brillo
 
     public class StockList
     {
+        public bool IsSelected { get; set; }
+
         public int ItemID { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
@@ -318,6 +320,7 @@ namespace entity.Brillo
         public decimal? Cost { get; set; }
         public string Measurement { get; set; }
         public string BatchCode { get; set; }
+        public string BarCode { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public bool can_expire { get; set; }
         public DateTime TranDate { get; set; }

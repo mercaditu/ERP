@@ -108,20 +108,28 @@ namespace entity.Brillo.Document
                 };
                 item_movement item_movement = (item_movement)Document;
                 BarcodeLib.Barcode b = new BarcodeLib.Barcode();
-                Image img = b.Encode(BarcodeLib.TYPE.CODE128,item_movement.barcode ,250 , 100);
-                using (var ms = new MemoryStream())
+                try
                 {
-                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    ms.Position = 0;
+                    Image img = b.Encode(BarcodeLib.TYPE.CODE128, item_movement.barcode, 250, 100);
+                    using (var ms = new MemoryStream())
+                    {
+                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        ms.Position = 0;
 
-                    var bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.CacheOption = BitmapCacheOption.OnLoad;
-                    bi.StreamSource = ms;
-                    bi.EndInit();
-                    Parameters.Values.Add(Convert.ToBase64String(ms.ToArray()));
+                        var bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.CacheOption = BitmapCacheOption.OnLoad;
+                        bi.StreamSource = ms;
+                        bi.EndInit();
+                        Parameters.Values.Add(Convert.ToBase64String(ms.ToArray()));
 
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("please Update Barcode From Startup Window...");
+                }
+              
 
               
 

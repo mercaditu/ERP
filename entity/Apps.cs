@@ -448,7 +448,9 @@ namespace entity
 			[LocalizedDescription("Restaurant")]
             Restaurant = 144,
             [LocalizedDescription("Audit")]
-            Audit = 144
+            Audit = 144,
+            [LocalizedDescription("BarCodePrint")]
+            BarCodePrint = 145
         }
     }
 }

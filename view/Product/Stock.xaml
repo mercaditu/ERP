@@ -53,6 +53,7 @@
 					EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="item_movementDataGrid_SelectionChanged"
 					RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" ItemsSource="{Binding Source={StaticResource inventoryViewSource}}">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding MovementID}" Header="{lex:Loc Cognitivo:local:ID}" Width="Auto" />
                     <DataGridTextColumn Binding="{Binding Location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto" />
                     <DataGridTextColumn Binding="{Binding Code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
                     <DataGridTextColumn Binding="{Binding Name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />

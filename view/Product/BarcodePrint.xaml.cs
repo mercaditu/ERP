@@ -25,11 +25,15 @@ namespace Cognitivo.Product
         {
             InitializeComponent();
         }
+
         private void Item_Select(object sender, RoutedEventArgs e)
         {
             if (sbxItem.ItemID > 0)
             {
-                inventoryViewSource.Source = CurrentItems.getProducts_InStock(CurrentSession.Id_Branch, DateTime.Now, false).Where(x => x.ItemID == sbxItem.ItemID).ToList();
+                inventoryViewSource.Source = CurrentItems
+                    .getProducts_InStock(CurrentSession.Id_Branch, DateTime.Now, true)
+                    .Where(x => x.ItemID == sbxItem.ItemID)
+                    .ToList();
             }
         }
 

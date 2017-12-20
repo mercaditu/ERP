@@ -106,7 +106,8 @@ namespace entity
         public static IEnumerable<StockList> getProducts_InStock_GroupByLocationBatch(int? BranchID, DateTime? TransDate, bool forceData)
         {
             var list = getItems_ByBranch((int)BranchID, forceData)
-                .GroupBy(x => new { x.LocationID, x.ItemID, x.BatchCode })
+               //  .GroupBy(x => new { x.LocationID, x.ItemID, x.m })
+               .GroupBy(x => new { x.MovementID })
                 .Select(x => new
                 {
                     Code = x.Max(y => y.Code),
@@ -276,7 +277,7 @@ namespace entity
                     UpdateStock(BranchID);
                 }
             }
-            else
+            else //List.Count() == 0 || ForceData == True
             {
                 //If IsForced is True or Count is 0 then make a new list. Clean.
                 List = new List<StockList>();

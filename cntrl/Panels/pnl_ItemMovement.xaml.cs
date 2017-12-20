@@ -95,7 +95,7 @@ namespace cntrl.Panels
                     item_inventory_detail.State = EntityState.Added;
                     item_inventory_detail.unit_value = (decimal)item.Cost;
                     item_inventory_detail.timestamp = item.TranDate;
-
+                    item_inventory_detail.movement_id = item.MovementID;
 
                     if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
                     {
@@ -119,7 +119,7 @@ namespace cntrl.Panels
                                     item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
                                     item_inventory_dimension.id_dimension = item_movement_dimension.id_dimension;
                                     item_inventory_dimension.value = item_movement_dimension.value;
-                                    item_inventory_detail.movement_id = item.MovementID;
+                              
                                     item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                                 }
                             }

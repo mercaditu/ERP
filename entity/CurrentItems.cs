@@ -325,7 +325,7 @@ namespace entity
                                 l.id_location as LocationID
                                 , l.name as Location
                                 , l.id_branch as BranchID
-                                , max(im.id_movement) as MovementID
+                                , im.id_movement as MovementID
                                 , ip.id_item as ItemID
                                 , ip.id_item_product as ProductID
                                 , ip.can_expire
@@ -357,7 +357,11 @@ namespace entity
                     int ProductID = Convert.ToInt32(itemRow["ProductID"]);
                     int LocationID = Convert.ToInt32(itemRow["LocationID"]);
                     int MovementID = Convert.ToInt32(itemRow["MovementID"]);
-                    int MovementRelID = Convert.ToInt32(itemRow["MovementRelID"]);
+                    int? MovementRelID=null;
+                    if (!(itemRow["MovementRelID"] is DBNull))
+                    {
+                        MovementRelID = Convert.ToInt32(itemRow["MovementRelID"]);
+                    }
                     decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
                     decimal Cost = Convert.ToDecimal(itemRow["Cost"]);
                     string LocationName = Convert.ToString(itemRow["Location"]);

@@ -4,6 +4,7 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Drawing;
 
     public partial class item_inventory_detail : Audit
     {
@@ -68,7 +69,7 @@ namespace entity
                 {
                     _value_counted = value;
                     RaisePropertyChanged("value_counted");
-                   decimal _delta=this.Delta;
+                    decimal _delta = this.Delta;
                     if (item_product != null)
                     {
                         if (item_product.item != null)
@@ -77,22 +78,46 @@ namespace entity
                             {
                                 _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, Convert.ToDecimal(value_counted), GetDimensionValue());
                                 RaisePropertyChanged("Quantity_Factored");
-                            
+
                             }
                         }
                     }
                 }
+
+                RaisePropertyChanged("Delta");
+                RaisePropertyChanged("Foreground");
+
             }
         }
 
         private decimal? _value_counted;
 
         [NotMapped]
+        public decimal InternalValue_Counted
+        {
+            get
+            {
+                if (value_counted==null)
+                {
+                    _InternalValue_Counted = value_system;
+
+                }
+                else
+                {
+                    _InternalValue_Counted = Convert.ToDecimal(value_counted);
+                }
+
+                return _InternalValue_Counted;
+            }
+        }
+        decimal _InternalValue_Counted;
+
+        [NotMapped]
         public decimal Delta
         {
             get
             {
-                decimal _delta = Convert.ToDecimal(value_counted) - value_system;
+                decimal _delta = Convert.ToDecimal(InternalValue_Counted) - value_system;
                 if (_delta < 0)
                 {
                     IsEnabled = true;
@@ -110,7 +135,27 @@ namespace entity
         [NotMapped]
         public bool IsEnabled { get; set; }
 
+        [NotMapped]
 
+        public Brush Foreground
+        {
+            get
+            {
+                if (Delta>0)
+                {
+                    return Brushes.Green;
+                }
+                else if (Delta < 0)
+                {
+                    return Brushes.Crimson;
+                }
+                else
+                {
+                    return Brushes.Black;
+                }
+            }
+           
+        }
 
         [NotMapped]
         public decimal Quantity_Factored

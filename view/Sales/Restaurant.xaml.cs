@@ -273,6 +273,7 @@ namespace Cognitivo.Sales
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			SalesDB.Initialize();
+            tabTable.IsSelected = true;
             item i = new item();
             
 			sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
@@ -315,7 +316,7 @@ namespace Cognitivo.Sales
             //}
 
             //This will only bring Products into view, not Raw Materials or Services.
-            sbxItem.item_types = item.item_type.Product;
+           // sbxItem.item_types = item.item_type.Product;
 
         }
 

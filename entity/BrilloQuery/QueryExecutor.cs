@@ -24,5 +24,24 @@ namespace entity.BrilloQuery
             }
             return dt;
         }
+
+        public static object Scalar(string sql)
+        {
+            object scalar;
+            try
+            {
+                MySqlConnection sqlConn = new MySqlConnection(CurrentSession.ConnectionString);
+                sqlConn.Open();
+                MySqlCommand cmd = new MySqlCommand(sql, sqlConn);
+                scalar = cmd.ExecuteScalar();
+                sqlConn.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return scalar;
+        }
     }
 }

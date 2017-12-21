@@ -193,7 +193,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn  Width="64" ElementStyle="{StaticResource RightAlignStyle}" SortMemberPath="value_counted">
+                        <DataGridTextColumn Foreground="{Binding Foreground, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Width="64" ElementStyle="{StaticResource RightAlignStyle}" SortMemberPath="value_counted">
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}" /><Run Text=" Real" /></TextBlock>
                             </DataGridTextColumn.Header>

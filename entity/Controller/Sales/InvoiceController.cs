@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using MoreLinq;
+using entity.BrilloQuery;
+using System.Data;
 
 namespace entity.Controller.Sales
 {
@@ -596,35 +598,37 @@ namespace entity.Controller.Sales
 
             }
 
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
             //Loop through each Item Movement and assign cost to detail for reporting purposes.
             foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail)
             {
-                item_movement item_movement = null;
-                if (sales_detail.item_movement.Count() > 0)
-                {
-                    item_movement = sales_detail.item_movement.FirstOrDefault();
-                }
-                else
-                {
-                    if (sales_detail.sales_packing_relation.FirstOrDefault() != null)
-                    {
-                        if (sales_detail.sales_packing_relation.FirstOrDefault().sales_packing_detail != null)
-                        {
-                            item_movement = sales_detail.sales_packing_relation.FirstOrDefault().sales_packing_detail.item_movement.FirstOrDefault();
-                        }
-                    }
+                string Cost = @"
+                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                select (im.debit * sum(c.unit_value) / sid.quantity) as Cost from item_movement_value_detail as c
+                                join item_movement_value_rel as rel on c.id_movement_value_rel = rel.id_movement_value_rel
+                                join item_movement as im on rel.id_movement_value_rel = im.id_movement_value_rel
+                                join sales_invoice_detail as sid on im.id_sales_invoice_detail = sid.id_sales_invoice_detail
+                                where sid.id_sales_invoice_detail = " + sales_detail.id_sales_invoice_detail;
+
+
+
+
+                DataTable dt = QueryExecutor.DT(Cost);
+                if (dt.Rows.Count>0)
+                { 
+                    sales_detail.unit_cost = Convert.ToDecimal(dt.Rows[0]["Cost"] is DBNull ? 0 : dt.Rows[0]["Cost"]); ;
                 }
 
-                if (item_movement != null)
-                {
-                    if (item_movement.item_movement_value_rel != null)
-                    {
-                        if (sales_detail.unit_cost == 0)
-                        {
-                            sales_detail.unit_cost = item_movement.item_movement_value_rel.total_value;
-                        }
-                    }
-                }
+
             }
 
             try

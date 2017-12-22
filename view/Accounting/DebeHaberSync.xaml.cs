@@ -600,17 +600,23 @@ namespace Cognitivo.Accounting
 
                 Production.branch = ProductionOrder.id_branch > 0 ? db.db.app_branch.Find(ProductionOrder.id_branch).name : "";
                 Production.name = ProductionOrder.name;
-                Production.trans_date = ProductionOrder.trans_date;
+                
+                DateTime productionDate = ProductionOrder.trans_date;
 
-                foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task))
+                IQueryable<production_order_detail> ProductionOrder2 = ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task).AsQueryable().Include(x => x.production_execution_detail);
+
+                foreach (production_order_detail Detail in ProductionOrder2)
                 {
                     if (Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed).Count() > 0)
                     {
                         DebeHaber.Production_Detail Production_Detail = new DebeHaber.Production_Detail();
                         Production_Detail.Fill_ByExecution(Detail, db.db);
                         Production.Production_Detail.Add(Production_Detail);
+                        productionDate = Production_Detail.trans_date;
                     }
                 }
+
+                Production.trans_date = productionDate;
 
                 Transaction.Production.Add(Production);
                 Integration.Transactions.Add(Transaction);

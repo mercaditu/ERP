@@ -69,7 +69,7 @@ namespace entity
                 {
                     _value_counted = value;
                     RaisePropertyChanged("value_counted");
-                    decimal _delta = this.Delta;
+                    //decimal _delta = this.Delta;
                     if (item_product != null)
                     {
                         if (item_product.item != null)
@@ -84,8 +84,8 @@ namespace entity
                     }
                 }
 
-                RaisePropertyChanged("Delta");
-                RaisePropertyChanged("Foreground");
+                decimal _delta = this.Delta;
+                Brush Color = this.Foreground;
 
             }
         }

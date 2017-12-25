@@ -605,6 +605,8 @@ namespace Cognitivo.Accounting
 
                 IQueryable<production_order_detail> ProductionOrder2 = ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task).AsQueryable().Include(x => x.production_execution_detail);
 
+                int DetailCount = 0;
+
                 foreach (production_order_detail Detail in ProductionOrder2)
                 {
                     if (Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed).Count() > 0)
@@ -613,41 +615,48 @@ namespace Cognitivo.Accounting
                         Production_Detail.Fill_ByExecution(Detail, db.db);
                         Production.Production_Detail.Add(Production_Detail);
                         productionDate = Production_Detail.trans_date;
+                        DetailCount += 1;
                     }
+                    
                 }
 
                 Production.trans_date = productionDate;
 
-                Transaction.Production.Add(Production);
-                Integration.Transactions.Add(Transaction);
-
-                try
+                if (DetailCount > 0)
                 {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
-                    Send2API(Sales_Json);
+                    Transaction.Production.Add(Production);
+                    Integration.Transactions.Add(Transaction);
 
-                    ProductionOrder.IsSelected = false;
 
-                    foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task))
+
+                    try
                     {
-                        foreach (production_execution_detail Exe in Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed))
+                        var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                        Send2API(Sales_Json);
+
+                        ProductionOrder.IsSelected = false;
+
+                        foreach (production_order_detail Detail in ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task))
                         {
-                            Exe.is_accounted = true;
+                            foreach (production_execution_detail Exe in Detail.production_execution_detail.Where(x => x.is_accounted == false && x.status == Status.Production.Executed))
+                            {
+                                Exe.is_accounted = true;
+                            }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            MessageBox.Show(ex.Message, "Error Message");
+                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        }
                     }
-                }
-                finally
-                {
-                    db.db.SaveChanges();
-                    fill();
+                    finally
+                    {
+                        db.db.SaveChanges();
+                        fill();
+                    }
                 }
             }
         }

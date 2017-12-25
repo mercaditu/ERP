@@ -518,14 +518,15 @@ namespace DebeHaber
 
         public void Fill_ByExecution(production_order_detail Detail, db db)
         {
+            trans_date = Detail.trans_date;
+            comment = Detail.name;
+
             //Loop through each Execution multiplying Quantity by Unit Cost.
             foreach (production_execution_detail exe in Detail.production_execution_detail.Where(x => x.is_accounted == false))
             {
                 value += exe.quantity * exe.unit_cost;
+                trans_date = exe.trans_date;
             }
-
-            comment = Detail.name;
-            trans_date = Detail.trans_date;
 
             CostCenter CCOutput = new CostCenter();
             CostCenter CCInput = new CostCenter();

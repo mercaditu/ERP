@@ -23,6 +23,8 @@ namespace DebeHaber
         }
 
         public string Key { get; set; }
+        public string GovCode { get; set; }
+
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 

@@ -29,6 +29,7 @@ namespace Cognitivo.Accounting
         private dbContext db = new dbContext();
 
         private string RelationshipHash = string.Empty;
+        private string GovCode = string.Empty;
 
         public DateTime StartDate
         {
@@ -59,12 +60,12 @@ namespace Cognitivo.Accounting
             sales_returnViewSource = FindResource("sales_returnViewSource") as CollectionViewSource;
             purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
             purchase_returnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
-            payment_detailViewSource =FindResource("payment_detailViewSource") as CollectionViewSource;
+            payment_detailViewSource = FindResource("payment_detailViewSource") as CollectionViewSource;
             item_assetViewSource = FindResource("item_assetViewSource") as CollectionViewSource;
             production_order_detailViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
 
             RelationshipHash = db.db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
-
+            GovCode = db.db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().gov_code;
             var timer = new System.Threading.Timer(
                 e => btnData_Refresh(null, null),
                 null,
@@ -193,7 +194,8 @@ namespace Cognitivo.Accounting
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration()
                 {
-                    Key = RelationshipHash
+                    Key = RelationshipHash,
+                    GovCode = GovCode
                 };
 
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
@@ -300,7 +302,8 @@ namespace Cognitivo.Accounting
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration()
                 {
-                    Key = RelationshipHash
+                    Key = RelationshipHash,
+                    GovCode = GovCode
                 };
 
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
@@ -382,6 +385,7 @@ namespace Cognitivo.Accounting
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration();
                 Integration.Key = RelationshipHash;
+                Integration.GovCode = GovCode;
 
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
 
@@ -463,6 +467,7 @@ namespace Cognitivo.Accounting
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration();
                 Integration.Key = RelationshipHash;
+                Integration.GovCode = GovCode;
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
 
                 DebeHaber.Commercial_Invoice PurchaseReturn = new DebeHaber.Commercial_Invoice();
@@ -544,6 +549,7 @@ namespace Cognitivo.Accounting
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration();
                 Integration.Key = RelationshipHash;
+                Integration.GovCode = GovCode;
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
 
                 DebeHaber.Payments Payment = new DebeHaber.Payments();
@@ -594,13 +600,13 @@ namespace Cognitivo.Accounting
             {
                 DebeHaber.Integration Integration = new DebeHaber.Integration();
                 Integration.Key = RelationshipHash;
-
+                Integration.GovCode = GovCode;
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
                 DebeHaber.Production Production = new DebeHaber.Production();
 
                 Production.branch = ProductionOrder.id_branch > 0 ? db.db.app_branch.Find(ProductionOrder.id_branch).name : "";
                 Production.name = ProductionOrder.name;
-                
+
                 DateTime productionDate = ProductionOrder.trans_date;
 
                 IQueryable<production_order_detail> ProductionOrder2 = ProductionOrder.production_order_detail.Where(x => x.item.id_item_type != item.item_type.Task).AsQueryable().Include(x => x.production_execution_detail);
@@ -617,7 +623,7 @@ namespace Cognitivo.Accounting
                         productionDate = Production_Detail.trans_date;
                         DetailCount += 1;
                     }
-                    
+
                 }
 
                 Production.trans_date = productionDate;
@@ -819,7 +825,7 @@ namespace Cognitivo.Accounting
 
         private void Send2API(object Json)
         {
-            var webAddr = Settings.Default.DebeHaberConnString + "/api/transactions";
+            var webAddr = Settings.Default.DebeHaberConnString + "/api/transactionsV2";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";

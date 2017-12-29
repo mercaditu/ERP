@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Cognitivo.Configs"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="500" d:DesignWidth="300"
       Title="Configuration" 
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:mainpref="clr-namespace:Cognitivo.Properties"
@@ -24,7 +24,7 @@
             <Label Content="{lex:Loc Configuration}" Style="{StaticResource H1}" HorizontalAlignment="Center" />
             <Rectangle Style="{StaticResource line_Bar}" />
 
-            <Label Content="{lex:Loc QuantityDecimal}" Style="{StaticResource H3}" />
+            <Label Content="{lex:Loc Stock}" Style="{StaticResource H3}" />
             <Slider Minimum="0" Maximum="9" TickFrequency="1" TickPlacement="Both" IsSnapToTickEnabled="True"
                                                         Value="{Binding Source={x:Static
                                                     mainpref:Settings.Default}, 
@@ -32,7 +32,7 @@
                                                     Mode=TwoWay,
                                                     UpdateSourceTrigger=PropertyChanged,Converter={StaticResource DecimalFormat}
                                                     }"/>
-            <Label Content="{lex:Loc CurrencyDecimal}" Style="{StaticResource H3}" />
+            <Label Content="{lex:Loc Currency}" Style="{StaticResource H3}" />
             <Slider Minimum="0" Maximum="9" TickFrequency="1" TickPlacement="Both" IsSnapToTickEnabled="True"
                                                         Value="{Binding Source={x:Static
                                                     mainpref:Settings.Default}, 
@@ -46,6 +46,27 @@
 
 
             <Button Style="{StaticResource btn_green}" Content="{lex:Loc Save}" Click="ButtonSave_Click" Margin="8" />
+            <Button IsDefault="True" Click="btnSalesCost_Clicked" Background="Transparent"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
+                    <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
+                    <Label Content="Update Sales Cost" FontSize="10" HorizontalContentAlignment="Center" />
+                </Grid>
+            </Button>
+            <Button IsDefault="True" Click="btnMovementChiled_Clicked" Background="Transparent"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
+                    <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
+                    <Label Content="Update Movement Child Cost" FontSize="10" HorizontalContentAlignment="Center" />
+                </Grid>
+            </Button>
+            <Button IsDefault="True" Click="btnMovementValue_Clicked" Background="Transparent"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
+                    <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
+                    <Label Content="Update Movement Values" FontSize="10" HorizontalContentAlignment="Center" />
+                </Grid>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

@@ -139,27 +139,9 @@
                         <Label Content="Decode Barcode" FontSize="10" HorizontalContentAlignment="Center" />
                     </Grid>
                 </Button>
-                <Button IsDefault="True" Click="btnSalesCost_Clicked" Background="Transparent"
-                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
-                        <ProgressBar Margin="0" Width="128" Height="24" HorizontalAlignment="Stretch" />
-                        <Label Content="Update Sales Cost" FontSize="10" HorizontalContentAlignment="Center" />
-                    </Grid>
-                </Button>
-                <Button IsDefault="True" Click="btnMovementValue_Clicked" Background="Transparent"
-                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
-                        <ProgressBar Margin="0" Width="128" Height="24" HorizontalAlignment="Stretch" />
-                        <Label Content="Update Movement Values" FontSize="10" HorizontalContentAlignment="Center" />
-                    </Grid>
-                </Button>
-                <Button IsDefault="True" Click="Button_Click_2" Background="Transparent"
-                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
-                        <ProgressBar Margin="0" Width="128" Height="24" HorizontalAlignment="Stretch" />
-                        <Label Content="Update Movement Child Cost" FontSize="10" HorizontalContentAlignment="Center" />
-                    </Grid>
-                </Button>
+               
+                
+               
               
             </StackPanel>
         </Grid>

@@ -20,7 +20,7 @@
                                 , ip.id_item_product as ProductID
                                 , ip.can_expire
                                 , (im.credit - sum(IFNULL(child.debit,0))) as Balance
-                                , sum(IFNULL(imvr.total_value, 0)) as UnitCost
+                                , (select sum(imvd.unit_value) from item_movement_value_detail as imvd where imvd.id_movement_value_rel=im.id_movement_value_rel) as UnitCost
                                 , im.code as BatchCode
                                 , im.expire_date as ExpiryDate
                                 from item_movement as im

@@ -379,6 +379,15 @@ namespace cntrl.Class
                 Query = Reports.Stock.InventoryValue.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
+                 new Report
+            {
+                Application = entity.App.Names.Stock,
+                Name =entity.Brillo.Localize.StringText("StockValueByBranch")!= string.Empty ? entity.Brillo.Localize.StringText("StockValueByBranch") :"StockValueByBranch",
+                Path = "cntrl.Reports.Stocks.StockValueByBranch.rdlc",
+                Query = Reports.Stock.InventoryValue.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+
                   new Report
             {
                 Application = entity.App.Names.Inventory,

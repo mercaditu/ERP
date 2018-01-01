@@ -764,6 +764,7 @@
     <EmbeddedResource Include="Reports\Stocks\StockValue.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Stocks\StockValueByBranch.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\StockValueold.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

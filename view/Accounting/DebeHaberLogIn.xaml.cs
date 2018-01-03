@@ -1,4 +1,5 @@
-﻿using Cognitivo.Properties;
+﻿using Cognitivo.Menu;
+using Cognitivo.Properties;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,14 @@ namespace Cognitivo.Accounting
 
         public class DebeHaberCompany
         {
+            public int id { get; set; }
             public string gov_code { get; set; }
             public string name { get; set; }
             public string alias { get; set; }
+            public DateTime deadline { get; set; }
+
         }
+       
 
         public class DebeHaberRegistration
         {
@@ -43,23 +48,47 @@ namespace Cognitivo.Accounting
                 }
 
                 Company_RUC = company.gov_code;
+
                 Company_Name = company.name;
 
-                if (string.IsNullOrEmpty(company.hash_debehaber) == false)
+                //if (string.IsNullOrEmpty(company.hash_debehaber) == false)
+                //{
+                //    tabUpLoad.IsSelected = true;
+                //    frameDebeHaberIntg.Refresh();
+                //}
+                try
                 {
-                    tabUpLoad.IsSelected = true;
-                    frameDebeHaberIntg.Refresh();
+                    check_api(company.hash_debehaber, Company_RUC);
+                    if (_DebeHaberCompanyList.Count()>0)
+                    {
+                        tabUpLoad.IsSelected = true;
+                        frameDebeHaberIntg.Refresh();
+                    }
+                  else
+                    {
+                        tabLogIn.IsSelected = true;
+                    }
+
                 }
+                catch (Exception)
+                {
+                    tabLogIn.IsSelected = true;
+
+                }
+
+               
+
             }
         }
 
         private List<DebeHaberCompany> _DebeHaberCompanyList = new List<DebeHaberCompany>();
+       
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string server = Settings.Default.DebeHaberConnString + "/api/verification/" + UserName + "/" + tbxPassword.Password;
+                string server = Settings.Default.DebeHaberConnString + "/api/transactionsverfiyV2/" + UserName + "/" + Company_RUC;
                 var json = await DownloadPage(server);
                 _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
             }
@@ -82,7 +111,7 @@ namespace Cognitivo.Accounting
             }
         }
 
-        private static async Task<string> DownloadPage(string url)
+        public static async Task<string> DownloadPage(string url)
         {
             using (var client = new HttpClient())
             {
@@ -99,6 +128,7 @@ namespace Cognitivo.Accounting
             try
             {
                 string server = Settings.Default.DebeHaberConnString + "/api/registration/54HY3kXgamBsJ94hhd1DYsFSWzlI4KtF7aJMDxO9D4wnTVaEoqtuI42eC1sM5NMqFvZsHhYPgsudolP8Ug1JhKPyBMKxfbvGSnON/" + Company_RUC;
+
                 var json = await DownloadPage(server);
                 string Hash = JsonConvert.DeserializeObject<DebeHaberRegistration>(json).Key;
                 using (entity.db db = new entity.db())
@@ -124,6 +154,22 @@ namespace Cognitivo.Accounting
 
             Settings.Default.Save();
             SalesSettings = Settings.Default;
+        }
+        public async void check_api(string Hash, string GovCode)
+        {
+            try
+            {
+                string server = Settings.Default.DebeHaberConnString + "/api/transactionsverfiyV2/" + Hash + "/" + Company_RUC;
+                var json = await DownloadPage(server);
+                _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection Error: " + ex.Message);
+                tabLogIn.IsSelected = true;
+                return;
+            }
+
         }
     }
 }

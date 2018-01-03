@@ -18,10 +18,9 @@
         <TabItem x:Name="tabLogIn" Focusable="False">
             <Grid Focusable="True">
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
-                    <Label Content="Usuario" Style="{StaticResource input_label}" />
+                    <Label Content="llave" Style="{StaticResource input_label}" />
                     <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" />
-                    <Label Content="Contrasena" Style="{StaticResource input_label}" />
-                    <PasswordBox x:Name="tbxPassword" Style="{StaticResource input_password}" />
+                
                     <Button Click="btnLogin_Click" Content="LogIn" Style="{StaticResource btn_green}" Margin="16,8" />
                     <Rectangle Style="{StaticResource line_Bar}" />
                     <Label Style="{StaticResource input_label}" Content="Server :" HorizontalAlignment="Center" />

@@ -1,4 +1,5 @@
 ﻿using cntrl;
+using Cognitivo.Menu;
 using Cognitivo.Properties;
 using entity;
 using System;
@@ -172,8 +173,21 @@ namespace Cognitivo.Accounting
 
         #endregion LoadData
 
-        private void btnData_Sync(object sender, RoutedEventArgs e)
+        private  void btnData_Sync(object sender, RoutedEventArgs e)
         {
+            DebeHaberLogIn DebeHaberLogIn = new DebeHaberLogIn();
+            try
+            {
+                DebeHaberLogIn.check_api(RelationshipHash, GovCode);
+            }
+            catch (Exception)
+            {
+
+                return;
+            }
+            
+            
+
             //Loops through each set of data and syncs each record individually.
             Sales_Sync();
             Purchase_Sync();
@@ -272,10 +286,24 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception ex)
                 {
-                    if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    if (ex.Message.Contains("403"))
                     {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+
+
+                        DebeHaberLogIn page = new DebeHaberLogIn();
+                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                        rootWindow.mainFrame.Navigate(page);
+
+
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            MessageBox.Show(ex.Message, "Error Message");
+                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        }
                     }
 
                     //Error Sales Invoice keep Is Accounted to False.
@@ -355,10 +383,24 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception ex)
                 {
-                    if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    if (ex.Message.Contains("403"))
                     {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+
+                       
+                        DebeHaberLogIn page = new DebeHaberLogIn();
+                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+                       
+                        rootWindow.mainFrame.Navigate(page);
+
+
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            MessageBox.Show(ex.Message, "Error Message");
+                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        }
                     }
 
                     //Error Sales Invoice keep Is Accounted to False.
@@ -437,10 +479,25 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception ex)
                 {
-                    if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+
+                    if (ex.Message.Contains("403"))
                     {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+
+
+                        DebeHaberLogIn page = new DebeHaberLogIn();
+                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                        rootWindow.mainFrame.Navigate(page);
+
+
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            MessageBox.Show(ex.Message, "Error Message");
+                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        }
                     }
 
                     //Error Sales Invoice keep Is Accounted to False.
@@ -519,12 +576,26 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception ex)
                 {
-                    if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
-                    {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
-                    }
 
+                    if (ex.Message.Contains("403"))
+                    {
+
+
+                        DebeHaberLogIn page = new DebeHaberLogIn();
+                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                        rootWindow.mainFrame.Navigate(page);
+
+
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            MessageBox.Show(ex.Message, "Error Message");
+                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        }
+                    }
                     //Error Sales Invoice keep Is Accounted to False.
                     purchase_return.is_accounted = false;
                 }
@@ -571,10 +642,25 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception ex)
                 {
-                    if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+
+                    if (ex.Message.Contains("403"))
                     {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+
+
+                        DebeHaberLogIn page = new DebeHaberLogIn();
+                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                        rootWindow.mainFrame.Navigate(page);
+
+
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            MessageBox.Show(ex.Message, "Error Message");
+                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        }
                     }
 
                     //Error Sales Invoice keep Is Accounted to False.
@@ -652,10 +738,25 @@ namespace Cognitivo.Accounting
                     }
                     catch (Exception ex)
                     {
-                        if (MessageBox.Show("Error in Production Sync. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+
+                        if (ex.Message.Contains("403"))
                         {
-                            MessageBox.Show(ex.Message, "Error Message");
-                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+
+
+                            DebeHaberLogIn page = new DebeHaberLogIn();
+                            MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                            rootWindow.mainFrame.Navigate(page);
+
+
+                        }
+                        else
+                        {
+                            if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                            {
+                                MessageBox.Show(ex.Message, "Error Message");
+                                Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            }
                         }
                     }
                     finally
@@ -841,6 +942,7 @@ namespace Cognitivo.Accounting
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
+
                 if (result.ToString().Contains("Error"))
                 {
                     MessageBox.Show(result.ToString());

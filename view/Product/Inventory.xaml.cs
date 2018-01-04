@@ -84,10 +84,10 @@ namespace Cognitivo.Product
                 if (app_location != null)
                 {
                     List<item_product> item_productLIST = InventoryController.db.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).Include(y => y.item).ToList(); //.Select(x=>x.id_item_product).ToList();
-                    //Class.StockCalculations Stock = new Class.StockCalculations();
-                    
-                    List< StockList> StockList = CurrentItems.getProducts_InStock_GroupByLocation(app_location.id_branch, item_inventory.trans_date,true).Where(x=>x.LocationID== app_location.id_location).ToList();
-                    List< StockList> BatchList = CurrentItems.getProducts_InStock_GroupByLocation(app_location.id_branch, item_inventory.trans_date,false).Where(x => x.can_expire && x.LocationID == app_location.id_location).ToList();
+                                                                                                                                                                                                       //Class.StockCalculations Stock = new Class.StockCalculations();
+
+                    List<StockList> StockList = CurrentItems.getProducts_InStock_GroupByLocation(app_location.id_branch, item_inventory.trans_date, true).Where(x => x.LocationID == app_location.id_location).ToList();
+                    List<StockList> BatchList = CurrentItems.getProducts_InStock_GroupByLocation(app_location.id_branch, item_inventory.trans_date, false).Where(x => x.can_expire && x.LocationID == app_location.id_location).ToList();
 
                     ///List through the entire product list.
                     foreach (item_product item_product in item_productLIST.OrderBy(x => x.item.name))
@@ -180,12 +180,12 @@ namespace Cognitivo.Product
                                 item_inventory_detail = item_inventory.item_inventory_detail.Where(x => x.id_item_product == i && x.id_location == app_location.id_location).FirstOrDefault();
 
                                 decimal Quantity_Original = item_inventory_detail.value_system;
-                                decimal Quantity_Updated = (decimal) (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0);
+                                decimal Quantity_Updated = (decimal)(StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Quantity : 0);
                                 decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
 
                                 item_inventory_detail.value_system = Quantity_Updated;
                                 item_inventory_detail.value_counted += Quantity_Difference;
-                                item_inventory_detail.unit_value = (decimal) (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0);
+                                item_inventory_detail.unit_value = (decimal)(StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0);
                             }
                             else
                             {
@@ -195,8 +195,8 @@ namespace Cognitivo.Product
                                 item_inventory_detail.app_location = app_location;
                                 item_inventory_detail.id_location = app_location.id_location;
                                 item_inventory_detail.timestamp = DateTime.Now;
-                                item_inventory_detail.value_system = (decimal) (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).Sum(x => x.Quantity) : 0);
-                                item_inventory_detail.unit_value = (decimal) (StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0);
+                                item_inventory_detail.value_system = (decimal)(StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).Sum(x => x.Quantity) : 0);
+                                item_inventory_detail.unit_value = (decimal)(StockList.Where(x => x.ProductID == i).FirstOrDefault() != null ? StockList.Where(x => x.ProductID == i).FirstOrDefault().Cost : 0);
 
                                 if (CurrentSession.Get_Currency_Default_Rate() != null)
                                 { item_inventory_detail.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx; }
@@ -370,6 +370,7 @@ namespace Cognitivo.Product
             }
         }
 
+
         private void Excel_Create(object sender, RoutedEventArgs e)
         {
             item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
@@ -423,7 +424,7 @@ namespace Cognitivo.Product
 
                     if (_item_inventory_detail == null)
                     {
-                       
+
                         item_inventory_detail.value_system = 0;
                         item_inventory_detail.unit_value = 0;
                     }
@@ -504,9 +505,9 @@ namespace Cognitivo.Product
                         objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                         item_inventory_detail.IsSelected = true;
 
-                        objpnl_ItemMovement.Items_InStockLIST = CurrentItems.getProducts_InStock(app_location.id_branch, DateTime.Now,true)
-                            .Where(x => 
-                            x.LocationID == app_location.id_location && 
+                        objpnl_ItemMovement.Items_InStockLIST = CurrentItems.getProducts_InStock(app_location.id_branch, DateTime.Now, true)
+                            .Where(x =>
+                            x.LocationID == app_location.id_location &&
                             x.ProductID == item_inventory_detail.id_item_product)
                             .ToList();
                         objpnl_ItemMovement.item_inventoryList = item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product && x.id_location == item_inventory_detail.id_location).ToList();
@@ -536,6 +537,28 @@ namespace Cognitivo.Product
                 }
             }
             InventoryController.db.SaveChanges();
+        }
+
+        private void StackPanel_Drop(object sender, DragEventArgs e)
+        {
+            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
+            app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+            entity.Brillo.Inventory2Excel Inv2Excel = new entity.Brillo.Inventory2Excel();
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Note that you can have more than one file.
+                string[] file = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (Inv2Excel.UploadAStrilloExcel(file.FirstOrDefault(), item_inventory, app_location.id_location,ref InventoryController))
+                {
+                    toolBar.msgSaved(1);
+
+                    item_inventoryViewSource.View.Refresh();
+                    item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                    item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
+                }
+            }
         }
 
         private void location_ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)

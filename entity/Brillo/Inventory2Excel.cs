@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using entity.Controller.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,14 @@ namespace entity.Brillo
 {
     public class Inventory2Excel
     {
-        public bool Create(item_inventory item_inventory,int id_location)
+        public bool Create(item_inventory item_inventory, int id_location)
         {
             if (item_inventory != null)
             {
                 var wb = new XLWorkbook();
                 List<InventoryDetail> DetailList = new List<InventoryDetail>();
 
-                foreach (var inv_detail in item_inventory.item_inventory_detail.Where(x=>x.id_location== id_location).OrderBy(x => x.app_location.name).ToList())
+                foreach (var inv_detail in item_inventory.item_inventory_detail.Where(x => x.id_location == id_location).OrderBy(x => x.app_location.name).ToList())
                 {
                     InventoryDetail Detail = new InventoryDetail()
                     {
@@ -107,7 +108,7 @@ namespace entity.Brillo
 
                         //Reuse or Create the Detail.
                         item_inventory_detail detail = item_inventory.item_inventory_detail.Where(x => x.id_inventory_detail == InvDetailID).FirstOrDefault();
-                        
+
                         //Allow you to create new rows into Excel and load that into the System.
                         if (detail == null)
                         {
@@ -187,6 +188,110 @@ namespace entity.Brillo
 
             return false;
         }
+
+        public bool UploadAStrilloExcel(string Path, item_inventory item_inventory, int id_location, ref InventoryController InventoryController)
+        {
+            if (string.IsNullOrEmpty(Path) == false && item_inventory != null)
+            {
+                XLWorkbook workbook = new XLWorkbook(Path);
+                foreach (var ws in workbook.Worksheets)
+                {
+
+
+                    //Ignore 1st Row due to Header
+                    foreach (IXLRow row in ws.RowsUsed().Where(x => x.RowNumber() > 1))
+                    {
+                        int LocationID = id_location;
+                        decimal Cost = 0;
+                        decimal Stock = 0;
+                        if (decimal.TryParse(row.Cell(4).GetValue<string>(), out var n))
+                        {
+                            Stock = row.Cell(4).GetValue<decimal>();
+                        }
+                        if (decimal.TryParse(row.Cell(5).GetValue<string>(), out var b))
+                        {
+                            Cost = row.Cell(5).GetValue<decimal>();
+                        }
+
+
+
+
+
+                        //Allow you to create new rows into Excel and load that into the System.
+
+                        item_inventory_detail detail = new item_inventory_detail();
+                        string ItemCode = row.Cell(1).GetValue<string>();
+                        if (ItemCode != "")
+                        {
+
+                            item_product item_product = InventoryController.db.item_product.Where(x => x.item.code == ItemCode).FirstOrDefault();
+
+                            if (item_product == null)
+                            {
+                                using (db db = new db())
+                                {
+                                    item item = new item();
+                                    item.name = row.Cell(3).GetValue<string>();
+                                    item.code = row.Cell(1).GetValue<string>();
+                                    item.id_item_type = item.item_type.Product;
+                                    app_vat_group app_vat_group = db.app_vat_group.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
+                                    if (app_vat_group != null) {
+                                        item.id_vat_group = app_vat_group.id_vat_group;
+                                    }
+                                    else { break; }
+                                   
+
+                                    item_product _product = new item_product();
+                                    item.item_product.Add(_product);
+                                    db.items.Add(item);
+                                    db.SaveChanges();
+                                }
+                                item_product = InventoryController.db.item_product.Where(x => x.item.code == ItemCode).FirstOrDefault();
+                                detail.item_product = item_product;
+                                detail.id_item_product = item_product.id_item_product;
+                            }
+                            else
+                            {
+                                detail.item_product = item_product;
+                                detail.id_item_product = item_product.id_item_product;
+                            }
+
+
+                            detail.unit_value = 0;
+                            detail.value_system = 0;
+                            detail.id_location = LocationID;
+
+
+
+
+                            if (Stock > 0)
+                            {
+                                detail.value_counted = Stock;
+                            }
+
+
+
+                            if (Cost > 0 && Stock > 0)
+                            {
+                                detail.unit_value = Cost / Stock;
+                            }
+
+
+                            item_inventory.item_inventory_detail.Add(detail);
+                        }
+
+                      
+
+
+
+
+
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 
     internal class InventoryDetail
@@ -194,7 +299,7 @@ namespace entity.Brillo
         public int DetailID { get; set; } //1
         public int LocationID { get; set; }
         public int ProductID { get; set; }
-        
+
         public string Location { get; set; } //4
 
         public string Tag { get; set; }

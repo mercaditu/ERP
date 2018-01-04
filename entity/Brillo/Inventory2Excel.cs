@@ -194,6 +194,8 @@ namespace entity.Brillo
             if (string.IsNullOrEmpty(Path) == false && item_inventory != null)
             {
                 XLWorkbook workbook = new XLWorkbook(Path);
+                app_dimension app_dimensionlargo = InventoryController.db.app_dimension.Where(x => x.id_company == CurrentSession.Id_Company && x.name == "LARGO").FirstOrDefault();
+                app_dimension app_dimensionancho = InventoryController.db.app_dimension.Where(x => x.id_company == CurrentSession.Id_Company && x.name == "ANCHO").FirstOrDefault();
                 foreach (var ws in workbook.Worksheets)
                 {
 
@@ -204,13 +206,23 @@ namespace entity.Brillo
                         int LocationID = id_location;
                         decimal Cost = 0;
                         decimal Stock = 0;
-                        if (decimal.TryParse(row.Cell(4).GetValue<string>(), out var n))
+                        decimal Largo = 0;
+                        decimal Ancho = 0;
+                        if (decimal.TryParse(row.Cell(3).GetValue<string>(), out var s))
                         {
-                            Stock = row.Cell(4).GetValue<decimal>();
+                            Stock = row.Cell(3).GetValue<decimal>();
                         }
-                        if (decimal.TryParse(row.Cell(5).GetValue<string>(), out var b))
+                        if (decimal.TryParse(row.Cell(4).GetValue<string>(), out var c))
                         {
-                            Cost = row.Cell(5).GetValue<decimal>();
+                            Cost = row.Cell(4).GetValue<decimal>();
+                        }
+                        if (decimal.TryParse(row.Cell(6).GetValue<string>(), out var l))
+                        {
+                            Largo = row.Cell(6).GetValue<decimal>();
+                        }
+                        if (decimal.TryParse(row.Cell(5).GetValue<string>(), out var a))
+                        {
+                            Ancho = row.Cell(5).GetValue<decimal>();
                         }
 
 
@@ -231,15 +243,16 @@ namespace entity.Brillo
                                 using (db db = new db())
                                 {
                                     item item = new item();
-                                    item.name = row.Cell(3).GetValue<string>();
+                                    item.name = row.Cell(2).GetValue<string>();
                                     item.code = row.Cell(1).GetValue<string>();
                                     item.id_item_type = item.item_type.Product;
                                     app_vat_group app_vat_group = db.app_vat_group.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
-                                    if (app_vat_group != null) {
+                                    if (app_vat_group != null)
+                                    {
                                         item.id_vat_group = app_vat_group.id_vat_group;
                                     }
                                     else { break; }
-                                   
+
 
                                     item_product _product = new item_product();
                                     item.item_product.Add(_product);
@@ -264,23 +277,46 @@ namespace entity.Brillo
 
 
 
-                            if (Stock > 0)
+
+                            detail.value_counted = Stock;
+
+
+
+
+                            if (Cost > 0)
                             {
-                                detail.value_counted = Stock;
+                                detail.unit_value = Cost;
                             }
 
-
-
-                            if (Cost > 0 && Stock > 0)
+                            if (Largo > 0)
                             {
-                                detail.unit_value = Cost / Stock;
+
+                                if (app_dimensionlargo != null)
+                                {
+                                    item_inventory_dimension item_inventory_dimensionlargo = new item_inventory_dimension();
+                                    item_inventory_dimensionlargo.id_dimension = app_dimensionlargo.id_dimension;
+                                    item_inventory_dimensionlargo.app_dimension = app_dimensionlargo;
+                                    item_inventory_dimensionlargo.value = Largo;
+                                    detail.item_inventory_dimension.Add(item_inventory_dimensionlargo);
+                                }
+
+                                if (app_dimensionancho != null && Ancho > 0)
+                                {
+                                    item_inventory_dimension item_inventory_dimensionancho = new item_inventory_dimension();
+                                    item_inventory_dimensionancho.id_dimension = app_dimensionancho.id_dimension;
+                                    item_inventory_dimensionancho.app_dimension = app_dimensionancho;
+                                    item_inventory_dimensionancho.value = Ancho;
+                                    detail.item_inventory_dimension.Add(item_inventory_dimensionancho);
+                                }
+
+
+
                             }
-
-
+                            detail.item_inventory = item_inventory;
                             item_inventory.item_inventory_detail.Add(detail);
                         }
 
-                      
+
 
 
 

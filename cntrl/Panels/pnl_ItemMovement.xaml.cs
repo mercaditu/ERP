@@ -36,14 +36,30 @@ namespace cntrl.Panels
 
             if (Items_InStockLIST != null)
             {
-                    if (Items_InStockLIST.FirstOrDefault() != null)
+                if (Items_InStockLIST.FirstOrDefault() != null)
+                {
+                    if (item_inventoryList.FirstOrDefault().value_counted == 0)
                     {
                         item_inventoryList.FirstOrDefault().value_system = (decimal)Items_InStockLIST.FirstOrDefault().Quantity;
+                    }
+                    if (item_inventoryList.FirstOrDefault().batch_code == "")
+                    {
                         item_inventoryList.FirstOrDefault().batch_code = Items_InStockLIST.FirstOrDefault().BatchCode;
+                    }
+                    if (item_inventoryList.FirstOrDefault().expire_date == null)
+                    {
                         item_inventoryList.FirstOrDefault().expire_date = Items_InStockLIST.FirstOrDefault().ExpiryDate;
+                    }
+                    if (item_inventoryList.FirstOrDefault().unit_value == 0)
+                    {
                         item_inventoryList.FirstOrDefault().unit_value = (decimal)Items_InStockLIST.FirstOrDefault().Cost;
-                        item_inventoryList.FirstOrDefault().timestamp = Items_InStockLIST.FirstOrDefault().TranDate;
-                        item_inventoryList.FirstOrDefault().item_inventory_dimension.Clear();
+                    }
+
+
+                    item_inventoryList.FirstOrDefault().timestamp = Items_InStockLIST.FirstOrDefault().TranDate;
+
+                    if (item_inventoryList.FirstOrDefault().item_inventory_dimension.Count()==0)
+                    {
                         int MovementID = (int)Items_InStockLIST.FirstOrDefault().MovementID;
                         if (MovementID > 0)
                         {
@@ -52,6 +68,7 @@ namespace cntrl.Panels
                                 item_movement item_movement = InventoryDB.item_movement.Where(x => x.id_movement == MovementID).FirstOrDefault();
                                 if (item_movement.item_movement_dimension != null)
                                 {
+                                    item_inventoryList.FirstOrDefault().item_inventory_dimension.Clear();
 
                                     foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
                                     {
@@ -63,15 +80,21 @@ namespace cntrl.Panels
                                 }
                             }
                         }
+                    }
+                   
 
 
-                        if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                    if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                    {
+                        if (item_inventoryList.FirstOrDefault().id_currencyfx == 0)
                         {
                             item_inventoryList.FirstOrDefault().id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                             item_inventoryList.FirstOrDefault().currency = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().app_currency.name;
                         }
+                       
                     }
-              //  }
+                }
+                //  }
                 for (int i = item_inventoryList.Count(); i < Items_InStockLIST.Count(); i++)
                 {
                     item_inventory_detail item_inventory_detail;
@@ -119,7 +142,7 @@ namespace cntrl.Panels
                                     item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
                                     item_inventory_dimension.id_dimension = item_movement_dimension.id_dimension;
                                     item_inventory_dimension.value = item_movement_dimension.value;
-                              
+
                                     item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                                 }
                             }
@@ -127,7 +150,7 @@ namespace cntrl.Panels
                     }
                 }
 
-               
+
 
             }
 
@@ -136,7 +159,7 @@ namespace cntrl.Panels
             int id_location = item_inventoryList.FirstOrDefault().id_location;
             item_inventory_detailViewSource = FindResource("item_inventory_detailViewSource") as CollectionViewSource;
 
-            item_inventory_detailViewSource.Source = item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Where(x=>x.id_item_product== id_item_product && x.id_location == id_location).ToList();
+            item_inventory_detailViewSource.Source = item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Where(x => x.id_item_product == id_item_product && x.id_location == id_location).ToList();
             CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
             InventoryDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_dimensionViewSource.Source = InventoryDB.app_dimension.Local;

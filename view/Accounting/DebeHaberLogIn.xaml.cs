@@ -25,10 +25,18 @@ namespace Cognitivo.Accounting
             public string gov_code { get; set; }
             public string name { get; set; }
             public string alias { get; set; }
-            public DateTime deadline { get; set; }
+            public deadlines deadline { get; set; }
 
         }
-       
+        public class deadlines
+        {
+            private DateTime date { get; set; }
+            private int timezone_type { get; set; }
+            private string timezone { get; set; }
+
+        }
+
+
 
         public class DebeHaberRegistration
         {

@@ -634,10 +634,12 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
+              
+
+                project_taskViewSource.View.MoveCurrentTo(project_task_output);
                 project_taskViewSource.View.Refresh();
 
-
-                project_taskproject_task_dimensionViewSource.Source = ProjectDB.db.project_task_dimension.Local;
+                //project_taskproject_task_dimensionViewSource.Source = ProjectDB.db.project_task_dimension.Local;
                 project_taskproject_task_dimensionViewSource.View.Refresh();
                 project_task_output.CalcSalePrice_TimerTaks();
             }

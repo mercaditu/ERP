@@ -59,7 +59,7 @@ select
 											left join app_geography on app_geography.id_geography=contacts.id_geography
 											left join items on purchase_invoice_detail.id_item = items.id_item
 											LEFT OUTER JOIN
-														 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef ,app_vat_group.name as Vat
+														 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient * app_vat_group_details.percentage) + 1 AS coef ,app_vat_group.name as Vat
 															FROM  app_vat_group
 																LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
 																LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat

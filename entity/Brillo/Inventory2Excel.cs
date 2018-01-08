@@ -236,52 +236,50 @@ namespace entity.Brillo
                         if (ItemCode != "")
                         {
 
-                            item_product item_product = InventoryController.db.item_product.Where(x => x.item.code == ItemCode).FirstOrDefault();
-
-                            if (item_product == null)
+                            if (InventoryController.db.items.Where(x => x.code == ItemCode).FirstOrDefault() == null)
                             {
                                 using (db db = new db())
                                 {
-                                    item item = new item();
-                                    item.name = row.Cell(2).GetValue<string>();
-                                    item.code = row.Cell(1).GetValue<string>();
-                                    item.id_item_type = item.item_type.Product;
-                                    app_vat_group app_vat_group = db.app_vat_group.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
-                                    if (app_vat_group != null)
+                                    item i = new item();
+
+                                    i.name = row.Cell(2).GetValue<string>();
+                                    i.code = row.Cell(1).GetValue<string>();
+                                    i.id_item_type = entity.item.item_type.Product;
+
+                                    if (CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault() != null)
                                     {
-                                        item.id_vat_group = app_vat_group.id_vat_group;
+                                        i.id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group;
                                     }
-                                    else { break; }
 
-
-                                    item_product _product = new item_product();
-                                    item.item_product.Add(_product);
-                                    db.items.Add(item);
+                                    db.items.Add(i);
                                     db.SaveChanges();
                                 }
-                                item_product = InventoryController.db.item_product.Where(x => x.item.code == ItemCode).FirstOrDefault();
-                                detail.item_product = item_product;
-                                detail.id_item_product = item_product.id_item_product;
-                            }
-                            else
-                            {
-                                detail.item_product = item_product;
-                                detail.id_item_product = item_product.id_item_product;
                             }
 
+                            item item = InventoryController.db.items.Where(x => x.code == ItemCode).FirstOrDefault();
+
+                            if (item.item_product.FirstOrDefault() == null)
+                            {
+                                using (db db = new db())
+                                {
+                                    item items = db.items.Where(x => x.code == ItemCode).FirstOrDefault();
+                                    item_product ip = new item_product();
+                                    ip.item = items;
+                                    db.item_product.Add(ip);
+                                    db.SaveChanges();
+                                }
+                            }
+
+
+                            item_product item_product = InventoryController.db.item_product.Where(x => x.id_item == item.id_item).FirstOrDefault();
+                            detail.item_product = item_product;
+                            detail.id_item_product = item_product.id_item_product;
 
                             detail.unit_value = 0;
                             detail.value_system = 0;
                             detail.id_location = LocationID;
 
-
-
-
-
                             detail.value_counted = Stock;
-
-
-
 
                             if (Cost > 0)
                             {
@@ -308,20 +306,10 @@ namespace entity.Brillo
                                     item_inventory_dimensionancho.value = Ancho;
                                     detail.item_inventory_dimension.Add(item_inventory_dimensionancho);
                                 }
-
-
-
                             }
                             detail.item_inventory = item_inventory;
                             item_inventory.item_inventory_detail.Add(detail);
                         }
-
-
-
-
-
-
-
                     }
                 }
             }

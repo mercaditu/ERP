@@ -23,12 +23,12 @@
     <PublishUrl>C:\Users\ashah\Desktop\ERP17.110\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
+    <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>http://10.50.0.2/instalador/</UpdateUrl>
     <SupportUrl>http://www.cognitivo.in/support</SupportUrl>
@@ -481,6 +481,9 @@
     <Compile Include="Converters\Bool2Color.cs" />
     <Compile Include="Converters\ProductionPending2BooleanConverter.cs" />
     <Compile Include="Converters\ToStringFormatConverter.cs" />
+    <Compile Include="ErpWeb\WebSync.xaml.cs">
+      <DependentUpon>WebSync.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Menu\Audit.xaml.cs">
       <DependentUpon>Audit.xaml</DependentUpon>
     </Compile>
@@ -1354,6 +1357,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\Version.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ErpWeb\WebSync.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

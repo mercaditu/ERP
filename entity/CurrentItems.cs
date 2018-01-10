@@ -265,6 +265,7 @@ namespace entity
             }
             return StockList;
         }
+   
 
         public static List<StockList> GetList(int BranchID, bool forceData)
         {

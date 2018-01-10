@@ -20,7 +20,7 @@
                     <Label Content="llave" Style="{StaticResource input_label}" />
             <TextBox Text=""/>
 
-            <Button Click="btnLogin_Click" Content="Sync Item And Customer" Style="{StaticResource btn_green}" Margin="16,8" />
+            <Button Content="Sync Item And Customer" Style="{StaticResource btn_green}" Margin="16,8" />
                     <Rectangle Style="{StaticResource line_Bar}" />
                   
                 </StackPanel>

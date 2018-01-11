@@ -711,7 +711,7 @@
                                   <Value>=Fields!TaskCode.Value</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -745,7 +745,7 @@
                                   <Value>=Fields!Task.Value</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -779,7 +779,7 @@
                                   <Value>=Sum(Fields!QuantityEst.Value)</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
                                   </Style>
@@ -802,7 +802,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -817,7 +816,7 @@
                                   <Value>=Sum(Fields!QuantityReal.Value)</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
                                   </Style>
@@ -840,7 +839,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -855,7 +853,7 @@
                                   <Value>=Sum(Fields!QuantityAddition.Value)</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>n2</Format>
                                   </Style>
@@ -878,7 +876,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -893,7 +890,7 @@
                                   <Value>=Sum(Fields!ConversionQuantity.Value)</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                     <Format>N2</Format>
                                   </Style>
@@ -916,7 +913,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -931,7 +927,7 @@
                                   <Value>=Fields!Dimension.Value</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
-                                    <FontSize>8pt</FontSize>
+                                    <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -953,7 +949,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -978,7 +973,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>EmployeeName</rd:DefaultName>

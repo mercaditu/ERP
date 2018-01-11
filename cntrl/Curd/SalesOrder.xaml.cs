@@ -61,7 +61,7 @@ namespace cntrl
                 bool Error = false;
 
                 //contact contact = db.contacts.Find((int)project.id_contact);
-                int ContactID = (int)project.id_contact;
+                int ContactID = project.id_contact!=null?(int)project.id_contact:0;
                 if (ContactID == 0)
                 {
                     toolBar.msgWarning("Contact not Assigned...");

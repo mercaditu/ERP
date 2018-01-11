@@ -15,6 +15,7 @@ namespace entity.Reporting
         public string Contact { get; set; }
         public string ContactCode { get; set; }
         public string GovermentId { get; set; }
+        public string EmployeeName { get; set; }
         public decimal QuantityEst { get; set; }
         public string Dimension { get; set; }
         public decimal Factor { get; set; }

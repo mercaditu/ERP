@@ -17,9 +17,9 @@
     <Grid Focusable="True">
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
             <Label Content="llave" Style="{StaticResource input_label}" />
-            <TextBox Text=""/>
+            <TextBox Text="" Name="txtName"/>
 
-            <Button Content="Sync Item And Customer" Style="{StaticResource btn_green}" Margin="16,8" />
+            <Button Content="Sync Item And Customer" Style="{StaticResource btn_green}" Margin="16,8" Click="Button_Click" />
             <Rectangle Style="{StaticResource line_Bar}" />
         </StackPanel>
 

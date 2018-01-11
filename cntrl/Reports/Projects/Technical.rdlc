@@ -991,6 +991,7 @@
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1430,7 +1431,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value />
+                                            <Value>Employee</Value>
                                             <Style>
                                               <FontFamily>courier New</FontFamily>
                                               <FontSize>8pt</FontSize>

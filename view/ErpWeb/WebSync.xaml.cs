@@ -80,29 +80,38 @@ namespace Cognitivo.ErpWeb
         }
         private void Send2API(object Json ,string apiname)
         {
-            var webAddr = txtName.Text + "/" + apiname;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            try
             {
-                streamWriter.Write(Json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
+                var webAddr = txtName.Text + "/" + apiname;
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
 
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-
-                if (result.ToString().Contains("Error"))
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
+                    streamWriter.Write(Json);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
                     MessageBox.Show(result.ToString());
-                    Class.ErrorLog.DebeHaber(Json.ToString());
+                    if (result.ToString().Contains("Error"))
+                    {
+                        MessageBox.Show(result.ToString());
+                        Class.ErrorLog.DebeHaber(Json.ToString());
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+           
         }
     }
     public class SyncItems

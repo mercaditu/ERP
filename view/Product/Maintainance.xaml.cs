@@ -70,7 +70,7 @@ namespace Cognitivo.Product
             //app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
             //await dbContext.app_currencyfx.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).LoadAsync();
             //app_currencyfxViewSource.Source = dbContext.app_currencyfx.Local;
-            sbxitem.item_types = item.item_type.FixedAssets;
+            //sbxFixedasset.item_types = item.item_type.FixedAssets;
 
         }
 

@@ -74,7 +74,11 @@ namespace Cognitivo.Configs
                     .Skip(StartIndex)
                     .Take(PageSize).ToList();
 
-                dataPager.LoadDynamicItems(StartIndex, ListDetails);
+                if (ListDetails.Count()>0)
+                {
+                    dataPager.LoadDynamicItems(StartIndex, ListDetails);
+                }
+             
 
             }
         }

@@ -64,11 +64,7 @@ namespace Cognitivo.Commercial
             Load_PrimaryDataThread();
             //Logic to bring Data into view.
 
-            payment_detailReceive.Source = PaymentDB.payments.Local;
-            payment_detailMadeViewSource.Source = PaymentDB.payments.Local;
-
-            FilterPaymentsPaid(0);
-            FilterPaymentsRecieved(0);
+           
         }
 
         private async void Load_PrimaryDataThread()
@@ -81,6 +77,11 @@ namespace Cognitivo.Commercial
 
             payment_detailReceive.Source = PaymentDB.payments.Local;
             payment_detailMadeViewSource.Source = PaymentDB.payments.Local;
+
+           
+
+            FilterPaymentsPaid(0);
+            FilterPaymentsRecieved(0);
 
             if (dataPager.PageCount == 0)
             {
@@ -222,6 +223,11 @@ namespace Cognitivo.Commercial
         }
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        {
+            Load_PrimaryDataThread();
+        }
+
+        private void dataPagerreceive_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
             Load_PrimaryDataThread();
         }

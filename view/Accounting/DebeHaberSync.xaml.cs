@@ -996,5 +996,40 @@ namespace Cognitivo.Accounting
             Settings.Default.Save();
             SalesSettings = Settings.Default;
         }
+
+        private void btnSalesData_Refresh(object sender, RoutedEventArgs e)
+        {
+            Get_SalesInvoice();
+
+        }
+
+        private void btnSalesReturnData_Refresh(object sender, RoutedEventArgs e)
+        {
+         
+            Get_SalesReturn();
+           
+        }
+
+        private void btnPurchaseData_Refresh(object sender, RoutedEventArgs e)
+        {
+         
+            Get_PurchaseInvoice();
+           
+        }
+
+        private void btnPurchaseReturnData_Refresh(object sender, RoutedEventArgs e)
+        {
+            Get_PurchaseReturnInvoice();
+        }
+
+        private void btnPaymentData_Refresh(object sender, RoutedEventArgs e)
+        {
+            Get_Payment();
+        }
+
+        private void btnProductionData_Refresh(object sender, RoutedEventArgs e)
+        {
+            Get_ProductionExecution();
+        }
     }
 }

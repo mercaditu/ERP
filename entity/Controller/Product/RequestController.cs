@@ -349,9 +349,17 @@ namespace entity.Controller.Product
                         id_department = item_request.id_department,
                         name = item_request.name,
                         code = 000,
-                        trans_date = item_request.request_date,
-                        comment = item_request.comment
+                        trans_date = item_request.request_date
                     };
+
+                    if (item_request.comment=="")
+                    {
+                        purchase_tender.comment = Convert.ToString(item_request.id_item_request);
+                    }
+                    else
+                    {
+                        purchase_tender.comment = item_request.comment;
+                    }
 
                     foreach (item_request_decision decision in DecisionList
                         .Where(x =>

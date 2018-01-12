@@ -14,6 +14,19 @@ namespace Cognitivo.Commercial
     {
         private CollectionViewSource payment_detailMadeViewSource, payment_detailReceive, contactViewSource;
         private PaymentDB PaymentDB = new PaymentDB();
+        public int Count { get; set; }
+
+        public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
+        public int _PageSize = 100;
+
+
+        public int PageCount
+        {
+            get
+            {
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,15 +55,13 @@ namespace Cognitivo.Commercial
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private  void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             PaymentDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == false).OrderBy(a => a.name).Load();
             contactViewSource.Source = PaymentDB.contacts.Local;
 
-            payment_detailMadeViewSource = FindResource("payment_detailMadeViewSource") as CollectionViewSource;
-            payment_detailReceive = FindResource("payment_detailReceive") as CollectionViewSource;
-            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact).Include(x=>x.payment_detail).LoadAsync();
+            Load_PrimaryDataThread();
             //Logic to bring Data into view.
 
             payment_detailReceive.Source = PaymentDB.payments.Local;
@@ -59,6 +70,25 @@ namespace Cognitivo.Commercial
             FilterPaymentsPaid(0);
             FilterPaymentsRecieved(0);
         }
+
+        private async void Load_PrimaryDataThread()
+        {
+            int PageIndex = dataPager.PagedSource.PageIndex;
+            payment_detailMadeViewSource = FindResource("payment_detailMadeViewSource") as CollectionViewSource;
+            payment_detailReceive = FindResource("payment_detailReceive") as CollectionViewSource;
+            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact).Include(x => x.payment_detail).OrderByDescending(x => x.trans_date).Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
+            //Logic to bring Data into view.
+
+            payment_detailReceive.Source = PaymentDB.payments.Local;
+            payment_detailMadeViewSource.Source = PaymentDB.payments.Local;
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = PageCount;
+            }
+        }
+
+     
 
         private void FilterPaymentsPaid(int id_contact)
         {
@@ -193,7 +223,7 @@ namespace Cognitivo.Commercial
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {
-
+            Load_PrimaryDataThread();
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

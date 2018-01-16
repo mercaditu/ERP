@@ -26,6 +26,8 @@ namespace entity.Reporting
         public decimal CostReal { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime ExecStartDate { get; set; }
+        public DateTime ExecEndDate { get; set; }
         public decimal TotalBudgeted { get; set; }
         public decimal TotalInvoiced { get; set; }
         public decimal TotalPaid { get; set; }

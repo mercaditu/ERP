@@ -34,7 +34,7 @@ task.quantity_est as QuantityEst,
 
 ROUND(task.quantity_est,2) * item_conversion_factor.value * (select ROUND(EXP(SUM(LOG(`value`))),2) as value from project_task_dimension where id_project_task = task.id_project_task) as ConversionQuantity,
 round((select ROUND(EXP(SUM(LOG(`value`/1000))),2 ) as value from project_task_dimension where id_project_task = task.id_project_task) * ROUND(task.quantity_est,2),2) as Factor,
-sum(exe.Quantity) as QuantityReal,max(exe.start_date) as start_date,max(end_date) as end_date,
+sum(exe.Quantity) as QuantityReal,max(exe.start_date) as ExecStartDate,max(end_date) as ExecEndDate,
 	sum(time_to_sec(timediff(end_date,start_date)) / 3600)  as Hours,
 										(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)  as ComputeHours,
                                         (sum(time_to_sec(timediff(end_date,start_date)) / 3600)-(sum(time_to_sec(timediff(end_date,start_date)) / 3600) * htc.coefficient)) as diff,

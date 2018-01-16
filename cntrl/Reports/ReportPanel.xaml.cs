@@ -265,7 +265,12 @@ namespace cntrl
 				}
                 else if (Report.Name.ToLower() == "TechnicalReport".ToLower())
                 {
-                    dt = dt.Select("(id_item_type = 2 or id_item_type = 7) and end_date==null and start_date==null").CopyToDataTable();
+                    if (dt.Select("(id_item_type = 5 or id_item_type = 2 or id_item_type = 7)").Count()>0)
+                    {
+                        dt = dt.Select("(id_item_type = 5  or id_item_type = 2 or id_item_type = 7)").CopyToDataTable();
+                        dt=dt.Select("ExecStartDate is NULL").CopyToDataTable();
+                    }
+                 
                 }
 
             }

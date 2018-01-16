@@ -203,7 +203,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.45448cm</Height>
+                  <Height>0.86017cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -251,6 +251,18 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value rd:LocID="Task" xmlns:p18="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">Task</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value rd:LocID="Task" xmlns:p18="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">Employee</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -991,7 +1003,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -1431,7 +1442,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Employee</Value>
+                                            <Value />
                                             <Style>
                                               <FontFamily>courier New</FontFamily>
                                               <FontSize>8pt</FontSize>
@@ -1468,7 +1479,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Height>1.9546cm</Height>
+            <Height>2.36029cm</Height>
             <Width>26.39124cm</Width>
             <Style>
               <Border>
@@ -1478,7 +1489,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.76953in</Height>
+        <Height>0.92925in</Height>
         <Style />
       </Body>
       <Width>10.39025in</Width>

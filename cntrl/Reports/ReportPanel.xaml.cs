@@ -263,7 +263,12 @@ namespace cntrl
 				{
 					dt = dt.Select("id_item_type = 5 or id_item_type = 1 or id_item_type = 2 or id_item_type = 6").CopyToDataTable();
 				}
-			}
+                else if (Report.Name.ToLower() == "TechnicalReport".ToLower())
+                {
+                    dt = dt.Select("(id_item_type = 2 or id_item_type = 7) and end_date==null and start_date==null").CopyToDataTable();
+                }
+
+            }
 
 			ReportDt = dt;
 			sfdatagrid.ItemsSource = dt;

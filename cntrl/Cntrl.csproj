@@ -738,6 +738,7 @@
     <EmbeddedResource Include="Reports\Projects\ProjectImportance.rdlc" />
     <EmbeddedResource Include="Reports\Projects\ProjectRawMaterial.rdlc" />
     <EmbeddedResource Include="Reports\Projects\Technical.rdlc" />
+    <EmbeddedResource Include="Reports\Projects\Technicalemp.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseByCostCenter.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseBySupplier.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseDetail.rdlc" />

@@ -31,6 +31,7 @@ namespace entity
             is_active = true;
             etd = DateTime.Now;
             eta = DateTime.Now.AddDays(30);
+            timestamp = DateTime.Now;
 
             impex_expense = new List<impex_expense>();
             impex_import = new List<impex_import>();

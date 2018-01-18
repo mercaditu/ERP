@@ -21,11 +21,11 @@
     <Page.Resources>
         <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <CollectionViewSource x:Key="impexViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex}, CreateList=True}" />
-        <CollectionViewSource x:Key="impeximpex_expenseViewSource" Source="{Binding impex_import, Source={StaticResource impexViewSource}}" />
+        <CollectionViewSource x:Key="impeximpex_expenseViewSource" Source="{Binding impex_expense, Source={StaticResource impexViewSource}}" />
         <CollectionViewSource x:Key="incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}" />
         <CollectionViewSource x:Key="statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
-        <CollectionViewSource x:Key="impeximpex_importViewSource" Source="{Binding impex_expense, Source={StaticResource impexViewSource}}" />
+        <CollectionViewSource x:Key="impeximpex_importViewSource" Source="{Binding impex_import, Source={StaticResource impexViewSource}}" />
         <CollectionViewSource x:Key="currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}" />
         <CollectionViewSource x:Key="incotermconditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm_condition}, CreateList=True}" />
     </Page.Resources>
@@ -153,7 +153,7 @@
             </StackPanel>
 
             <GridSplitter Grid.ColumnSpan="2" Grid.Row="1" Margin="0,2" HorizontalAlignment="Stretch" />
-             
+
             <TabControl Grid.Row="2" Grid.ColumnSpan="2" metro:TabControlHelper.IsUnderlined="True" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="{lex:Loc Date}">
                     <Grid>
@@ -181,7 +181,7 @@
                 </TabItem>
                 <TabItem Header="{lex:Loc Purchase}">
                     <Grid>
-                        
+
                         <DataGrid x:Name="impex_importDataGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserDeleteRows="False"
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4" HorizontalScrollBarVisibility="Auto"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
@@ -211,15 +211,39 @@
                                         </MultiBinding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding unit_Importcost, StringFormat={}{0:N2}}"
+                                <DataGridTextColumn 
                                                     Width="64" CellStyle="{StaticResource Number_CellStyle}"
-                                                Header="{lex:Loc Cognitivo:local:Expenses}" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Header="{lex:Loc Cognitivo:local:Expenses}" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="unit_Importcost" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
                                                     Width="64" CellStyle="{StaticResource Number_CellStyle}"
-                                                Header="{lex:Loc Cognitivo:local:FinalCost}" ElementStyle="{StaticResource RightAlignStyle}" />
-                                <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Header="{lex:Loc Cognitivo:local:FinalCost}" ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="prorated_cost" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn 
                                                 Header="{lex:Loc Cognitivo:local:SubTotal}" Width="128"
-                                                ElementStyle="{StaticResource RightAlignStyle}" />
+                                                ElementStyle="{StaticResource RightAlignStyle}" >
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                            <Binding Path="sub_total" TargetNullValue="" Mode="TwoWay" />
+                                            <Binding Source="{x:Static mainpref:Settings.Default}" Path="CurrencyDecimalStringFormat" Mode="OneWay" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

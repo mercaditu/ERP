@@ -52,11 +52,15 @@ task.quantity_est-(if(TIMEDIFF( task.end_date_est, task.start_date_est )is null,
 if(task.importance > 0, task.importance, null) as AveragePercentage,
 if(task.completed > 0, task.completed, null) as Percentage,
 (select value from item_price inner join item_price_list on item_price.id_price_list = item_price_list.id_price_list where item_price.id_item = item.id_item and item_price_list.is_default limit 1) as Price
- ,executionemployee.name as EmployeeName
+ ,executionemployee.name as EmployeeName,project_template.name as ProjectTemplate, 
+(select work_number from production_order where id_project=proj.id_project) as WorkNumber
+
+
 
 from project_task as task
 
 inner join projects  as proj on proj.id_project = task.id_project
+left join project_template on proj.id_project_template=project_template.id_project_template
 inner join contacts   on proj.id_contact = contacts.id_contact
 
 inner join items as item on task.id_item = item.id_item

@@ -56,11 +56,13 @@ CASE
                                         pod.completed * 100 as Percentage,
                                         sum((((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient))/pod.completed) as CompletedHours,
                                         (select GROUP_CONCAT(ROUND(value, 2) SEPARATOR ' x ') from production_execution_dimension where id_execution_detail = ped.id_execution_detail) value,
-                                        am.name as Measurement
+                                        am.name as Measurement,project_template.name as ProjectTemplate
+
 
                                         from production_order as po
 
                                         left join projects as p on po.id_project = p.id_project
+                                        left join project_template on p.id_project_template=project_template.id_project_template
                                         left join contacts as c on p.id_contact = c.id_contact
                                         inner join production_line as l on po.id_production_line = l.id_production_line
                                         inner join production_order_detail as pod on po.id_production_order = pod.id_production_order

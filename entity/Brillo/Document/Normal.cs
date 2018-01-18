@@ -125,7 +125,7 @@ namespace entity.Brillo.Document
 
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     MessageBox.Show("please Update Barcode From Startup Window...");
                 }

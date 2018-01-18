@@ -672,7 +672,6 @@
     <None Include="Properties\DataSources\entity.Reporting.PendingPayable.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PendingReceivable.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PriceList.datasource" />
-    <None Include="Properties\DataSources\entity.Reporting.ProductionOrder.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ProductionStatus.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PurchaseTender.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Project.datasource" />

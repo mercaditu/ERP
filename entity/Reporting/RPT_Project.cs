@@ -41,5 +41,7 @@ namespace entity.Reporting
         public decimal Percentage { get; set; }
         public decimal AveragePercentage { get; set; }
         public decimal Price { get; set; }
+        public string ProjectTemplate { get; set; }
+        public string WorkNumber { get; set; }
     }
 }

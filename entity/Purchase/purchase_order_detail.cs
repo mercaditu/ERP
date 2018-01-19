@@ -78,6 +78,25 @@ namespace entity
         }
 
         [NotMapped]
+        public string DimensionString
+        {
+            get
+            {
+                string s = string.Empty;
+
+                foreach (purchase_order_dimension dimensionList in purchase_order_dimension)
+                {
+                    if (dimensionList.app_dimension != null && dimensionList.app_measurement != null)
+                    {
+                        s = (string.IsNullOrEmpty(s) ? "" : s + " x ") + dimensionList.app_dimension.name + ": " + dimensionList.value + " " + dimensionList.app_measurement.code_iso;
+                    }
+                }
+
+                return s;
+            }
+        }
+
+        [NotMapped]
         public decimal balance
         {
             get

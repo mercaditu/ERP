@@ -1359,9 +1359,7 @@ namespace entity.Brillo.Logic
                         item_movement_value_detail.unit_value = Unitcost;
 
                         item_movement_value_detail.comment = Localize.StringText("DirectCost");
-
-
-
+                        
                         item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
 
                         item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);

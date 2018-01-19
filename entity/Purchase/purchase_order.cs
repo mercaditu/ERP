@@ -174,6 +174,8 @@ namespace entity
             }
         }
 
+       
+
         private System.Data.Entity.EntityState _State;
 
         //TimeCapsule

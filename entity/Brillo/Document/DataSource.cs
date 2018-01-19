@@ -697,6 +697,7 @@ namespace entity.Brillo.Document
                     Contract = g.purchase_order != null ? g.purchase_order.app_contract.name : "",
                     Currency = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.name : "",
                     code = g.purchase_order.code,
+                    DimensionString = g.DimensionString,
                     Measurement = g.item != null ? g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",
                     trans_date = g.purchase_order.trans_date,
                     id_vat_group = g.id_vat_group,

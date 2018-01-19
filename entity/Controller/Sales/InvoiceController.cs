@@ -595,7 +595,6 @@ namespace entity.Controller.Sales
             if (item_movementList.Count() > 0)
             {
                 db.item_movement.AddRange(item_movementList);
-
             }
 
             try
@@ -613,22 +612,21 @@ namespace entity.Controller.Sales
                 string Cost = @"
                                 set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                select (im.debit * sum(c.unit_value) / sid.quantity) as Cost from item_movement_value_detail as c
+                                select sum(im.debit * c.unit_value / sid.quantity) as Cost from item_movement_value_detail as c
                                 join item_movement_value_rel as rel on c.id_movement_value_rel = rel.id_movement_value_rel
                                 join item_movement as im on rel.id_movement_value_rel = im.id_movement_value_rel
                                 join sales_invoice_detail as sid on im.id_sales_invoice_detail = sid.id_sales_invoice_detail
                                 where sid.id_sales_invoice_detail = " + sales_detail.id_sales_invoice_detail;
 
-
-
-
                 DataTable dt = QueryExecutor.DT(Cost);
                 if (dt.Rows.Count>0)
                 { 
-                    sales_detail.unit_cost = Convert.ToDecimal(dt.Rows[0]["Cost"] is DBNull ? 0 : dt.Rows[0]["Cost"]); ;
+                    sales_detail.unit_cost = Brillo.Currency.convert_Values(Convert.ToDecimal(dt.Rows[0]["Cost"] is DBNull ? 0 : dt.Rows[0]["Cost"]), 
+                                   CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                sales_detail.sales_invoice.id_currencyfx,
+                                entity.App.Modules.Sales
+                                ); 
                 }
-
-
             }
 
             try

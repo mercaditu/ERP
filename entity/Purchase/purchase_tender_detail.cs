@@ -221,7 +221,7 @@ namespace entity
                 {
                     if (dimensionList.app_dimension != null && dimensionList.app_measurement != null)
                     {
-                        s = s + dimensionList.app_dimension.name + ": " + dimensionList.value + " x " + dimensionList.app_measurement.name;
+                        s = (string.IsNullOrEmpty(s) ? "" : s + " x ") + dimensionList.app_dimension.name + ": " + dimensionList.value + " " + dimensionList.app_measurement.code_iso;
                     }
                 }
 

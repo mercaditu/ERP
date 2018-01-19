@@ -8,11 +8,13 @@
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US"
              VerticalAlignment="Center"
-             xmlns:converter="clr-namespace:Cognitivo.Converters"
+              xmlns:converter="clr-namespace:Cognitivo.Converters"
+            
              xmlns:entity="clr-namespace:entity;assembly=entity"
              mc:Ignorable="d" Width="500" Loaded="UserControl_Loaded"
              BorderBrush="{StaticResource AccentColor_Brush}" BorderThickness="2" Background="White">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <converter:ActiveValueConverter x:Key="ActiveValueConverter" />
         <CollectionViewSource x:Key="production_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_service_account}, CreateList=True}" />
     </UserControl.Resources>
@@ -42,15 +44,19 @@
                             <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
-
+                            
+                            <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" IsReadOnly="True" />
+                            
                             <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}"
                                                 Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True" />
 
                             <DataGridTextColumn Binding="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" IsReadOnly="True" />
 
-                            <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
+                            <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole},Path=see_cost, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:Cost}" Width="*" IsReadOnly="True" />
+                            
                             <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>

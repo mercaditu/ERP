@@ -417,11 +417,11 @@ namespace Cognitivo.Purchase
                     {
                         decimal percentage = ((Detail.unit_cost * Detail.quantity) / GrandTotal);
                         decimal participation = percentage * totalExpense;
-                        Detail.unit_Importcost = Math.Round(participation / Detail.quantity, 2);
+                        Detail.unit_Importcost = participation / Detail.quantity;
                         Detail.prorated_cost = Detail.unit_cost + Detail.unit_Importcost;
 
                         decimal SubTotal = (Detail.quantity * Detail.prorated_cost);
-                        Detail.sub_total = Math.Round(SubTotal, 2);
+                        Detail.sub_total = SubTotal;
                     }
                 }
             }

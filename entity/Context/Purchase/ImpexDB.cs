@@ -140,32 +140,6 @@ namespace entity
                                 List<item_movement> item_movementlIST = base.item_movement.Where(x => x.id_purchase_invoice_detail == Impex_CostDetail.id_invoice_detail).ToList();
                                 foreach (item_movement item_movement in item_movementlIST)
                                 {
-
-                                    //base cost already insert by purchase invoice so no need to add new cost
-                                    //if (item_movement != null)
-                                    //{
-                                       
-
-
-
-
-                                    //    item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
-                                    //    {
-                                    //        unit_value = Brillo.Currency
-                                    //        .convert_Values
-                                    //        (
-                                    //            Impex_CostDetail.unit_cost,
-                                    //            impex.impex_import.FirstOrDefault().purchase_invoice.id_currencyfx,
-                                    //            CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                    //            App.Modules.Purchase
-                                    //        ),
-                                    //        comment = "Base Cost"
-
-                                    //    };
-                                    //    item_movement_value_rel item_movement_value_rel = item_movement.item_movement_value_rel;
-                                    //    item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
-                                    //}
-
                                     if (item_movement != null)
                                     {
                                         foreach (impex_expense _impex_expense in impex_expenses)
@@ -176,8 +150,7 @@ namespace entity
                                                 decimal participation = percentage * Convert.ToDecimal(_impex_expense.value);
                                                 Impex_CostDetail.unit_Importcost = participation / Impex_CostDetail.quantity;
                                             }
-
-
+                                            
                                             //Coeficient is used to get prorated cost of one item
                                             item_movement_value_detail item_movement_value_detail = new item_movement_value_detail()
                                             {
@@ -201,8 +174,7 @@ namespace entity
                                                 item_movement_value_rel.item_movement_value_detail.Add(item_movement_value_detail);
                                             }
                                         }
-
-                                      //  item_movement.Update_ChildVales(Impex_CostDetail.unit_Importcost, true, DateTime.Now);
+                                        
                                     }
                                 }
                             }

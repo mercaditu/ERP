@@ -191,6 +191,7 @@
                             </TextBlock>
                         </CheckBox>
                         <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="Button_Click" />
+                        <Button Content="{lex:Loc Print}" Style="{StaticResource btn_green}" Click="Print_Click" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

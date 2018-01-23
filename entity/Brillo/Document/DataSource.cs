@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using Humanizer;
+using entity.BrilloQuery;
+using System.Data;
 
 namespace entity.Brillo.Document
 {
@@ -129,6 +131,94 @@ namespace entity.Brillo.Document
             return null;
         }
 
+        public ReportDataSource Technical(project project)
+        {
+            reportDataSource.Name = "DataSet1";
+
+            string query = @"
+                                    set global sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                                set session sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
+                                                select proj.name as ProjectName,
+                                    task.id_project_task,
+                                    task.parent_id_project_task as ParentTask,
+                                    item.name as Item,
+                                    item.code as ItemCode,
+                                    item.id_item_type,
+                                    CASE
+                                          WHEN item.id_item_type = 1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
+                                          WHEN item.id_item_type = 2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"'
+                                          WHEN item.id_item_type = 3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"'
+                                          WHEN item.id_item_type = 4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"'
+                                          WHEN item.id_item_type = 5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+                                          WHEN item.id_item_type = 6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"'
+                                          WHEN item.id_item_type = 7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
+                                    END as ItemType,
+                                    task.code as TaskCode,
+                                    task.item_description as Task,
+                                    task.status,
+                                    contacts.name as Contact,
+                                    contacts.code as ContactCode,
+                                    contacts.gov_code as GovermentId,
+                                    task.quantity_est as QuantityEst,
+
+                                    (SELECT GROUP_CONCAT(ROUND(value, 2) SEPARATOR ' x ')
+                                     from project_task_dimension where id_project_task = task.id_project_task) as Dimension,
+
+                                    ROUND(task.quantity_est, 2) * item_conversion_factor.value * (select ROUND(EXP(SUM(LOG(`value`))), 2) as value from project_task_dimension where id_project_task = task.id_project_task) as ConversionQuantity,
+                                    round((select ROUND(EXP(SUM(LOG(`value`/ 1000))), 2) as value from project_task_dimension where id_project_task = task.id_project_task) * ROUND(task.quantity_est, 2),2) as Factor,
+                                    sum(exe.Quantity) as QuantityReal,max(exe.start_date) as ExecStartDate,max(end_date) as ExecEndDate,
+	                                    sum(time_to_sec(timediff(end_date, start_date)) / 3600) as Hours,
+										                                    (sum(time_to_sec(timediff(end_date, start_date)) / 3600) * htc.coefficient) as ComputeHours,
+                                                                            (sum(time_to_sec(timediff(end_date, start_date)) / 3600) - (sum(time_to_sec(timediff(end_date, start_date)) / 3600) * htc.coefficient)) as diff,
+                                    (1 - ((sum(time_to_sec(timediff(end_date, start_date)) / 3600) - (sum(time_to_sec(timediff(end_date, start_date)) / 3600) * htc.coefficient)) / sum(time_to_sec(timediff(end_date, start_date)) / 3600))) * 100 as diffPer,
+                                    (((sum(time_to_sec(timediff(end_date, start_date)) / 3600) * htc.coefficient)) / task.completed) as CompletedHours,
+                                    task.unit_cost_est as CostEst,
+                                    sum(exe.unit_cost) as CostReal,
+                                    task.start_date_est as StartDate,
+                                    task.end_date_est as EndDate,
+                                    
+                                 
+                                   
+                                    task.quantity_est - (if (TIMEDIFF(task.end_date_est, task.start_date_est) is null,0,TIMEDIFF(task.end_date_est, task.start_date_est))) as QuantityAdditional,
+                                    if (task.importance > 0, task.importance, null) as AveragePercentage,
+                                    if (task.completed > 0, task.completed, null) as Percentage,
+                                    (select value from item_price inner join item_price_list on item_price.id_price_list = item_price_list.id_price_list where item_price.id_item = item.id_item and item_price_list.is_default limit 1) as Price
+                                     ,executionemployee.name as EmployeeName,project_template.name as ProjectTemplate, 
+                                    (select max(work_number) from production_order where id_project = proj.id_project) as WorkNumber,
+                                    exe.id_contact as EmpId
+
+
+
+                                    from project_task as task
+
+                                    inner join projects as proj on proj.id_project = task.id_project
+                                    left join project_template on proj.id_project_template = project_template.id_project_template
+                                    inner join contacts on proj.id_contact = contacts.id_contact
+
+                                    inner join items as item on task.id_item = item.id_item
+                                    left join  item_product on item_product.id_item = item.id_item
+                                    left join item_conversion_factor on item_conversion_factor.id_item_product = item_product.id_item_product
+                                    left join  production_execution_detail as exe on task.id_project_task = exe.id_project_task
+                                     left join  contacts as executionemployee   on exe.id_contact = executionemployee.id_contact
+                                    left join hr_time_coefficient as htc on exe.id_time_coefficient = htc.id_time_coefficient
+
+                                    where proj.id_company = @CompanyID and proj.id_project = @ProjectID
+
+                                    group by task.id_project_task ";
+            query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            query = query.Replace("@ProjectID", project.id_project.ToString());
+            DataTable dt= QueryExecutor.DT(query);
+            if (dt.Select("EmpId>0").Count() > 0)
+            {
+                   dt = dt.Select("EmpId>0").CopyToDataTable();
+            }
+            reportDataSource.Value = QueryExecutor.DT(query);
+           
+
+
+            return reportDataSource;
+        }
         public ReportDataSource SalesBudget(sales_budget sales_budget)
         {
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
@@ -250,7 +340,7 @@ namespace entity.Brillo.Document
         public ReportDataSource SalesInvoice(sales_invoice sales_invoice)
         {
             reportDataSource.Name = "DataSet1";
-           
+
             List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.AsQueryable().Include(x => x.app_vat_group).ToList();
             if (sales_invoice_detail.Count < sales_invoice.app_document_range.app_document.line_limit)
             {
@@ -354,7 +444,7 @@ namespace entity.Brillo.Document
                 Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).DecimalToText(),
                 //NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
 
-                AmountWordsFactored =Convert.ToInt32(g.sales_invoice!=null?g.sales_invoice.sub_Total_Factoredvat : 0).ToWords(),
+                AmountWordsFactored = Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.sub_Total_Factoredvat : 0).ToWords(),
             }).ToList();
 
             return reportDataSource;
@@ -377,7 +467,7 @@ namespace entity.Brillo.Document
             {
                 if (app_vat_group_details.app_vat.name.ToUpper().Contains("CGST"))
                 {
-                    return Math.Round(app_vat_group_details.app_vat.coefficient *100,2) + "%"; 
+                    return Math.Round(app_vat_group_details.app_vat.coefficient * 100, 2) + "%";
                 }
             }
             return 0 + "%";
@@ -410,12 +500,12 @@ namespace entity.Brillo.Document
             {
                 if (app_vat_group_details.app_vat.name.ToUpper().Contains("SGST"))
                 {
-                    return Math.Round(app_vat_group_details.app_vat.coefficient,2) * 100 + "%";
+                    return Math.Round(app_vat_group_details.app_vat.coefficient, 2) * 100 + "%";
                 }
             }
             return 0 + "%";
         }
-        private decimal GetVatSGSTAmt(app_vat_group app_vat_group,decimal subtotal)
+        private decimal GetVatSGSTAmt(app_vat_group app_vat_group, decimal subtotal)
         {
             foreach (app_vat_group_details app_vat_group_details in app_vat_group.app_vat_group_details)
             {
@@ -424,7 +514,7 @@ namespace entity.Brillo.Document
                     return Math.Round(subtotal * app_vat_group_details.app_vat.coefficient * app_vat_group_details.percentage, 2);
                 }
             }
-            return 0 ;
+            return 0;
         }
         private string GetVatIGST(app_vat_group app_vat_group)
         {
@@ -443,7 +533,7 @@ namespace entity.Brillo.Document
             {
                 if (app_vat_group_details.app_vat.name.ToUpper().Contains("IGST"))
                 {
-                    return Math.Round(app_vat_group_details.app_vat.coefficient * 100,2) + "%";
+                    return Math.Round(app_vat_group_details.app_vat.coefficient * 100, 2) + "%";
                 }
             }
             return 0 + "%";
@@ -890,11 +980,11 @@ namespace entity.Brillo.Document
                     EndDate = g.production_execution_detail.FirstOrDefault() != null ? g.production_execution_detail.FirstOrDefault().end_date != null ? g.production_execution_detail.FirstOrDefault().end_date.ToString() : "" : "",
                     item_input = g.parent != null ? g.parent.item != null ? g.parent.item.name != null ? g.parent.item.name : "" : "" : "",
                     item_input_quantity = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Sum(x => x.quantity) : 0,
-                    ParentDimension = g.parent != null ? g.parent.production_execution_detail.Count() > 0 ? g.parent.production_execution_detail.FirstOrDefault()!=null? g.parent.production_execution_detail.FirstOrDefault().DimensionString:"" : "" : "",
-                    item_code = g.item != null ? g.item.code!=null? g.item.code : "" : "",
-                    item_name = g.item != null ? g.item.name!=null ? g.item.name : "" : "",
-                    Dimension = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.FirstOrDefault() != null ? g.production_execution_detail.FirstOrDefault().DimensionString:"" : "",
-                    trans_date = g.trans_date!=null? g.trans_date :DateTime.Now,
+                    ParentDimension = g.parent != null ? g.parent.production_execution_detail.Count() > 0 ? g.parent.production_execution_detail.FirstOrDefault() != null ? g.parent.production_execution_detail.FirstOrDefault().DimensionString : "" : "" : "",
+                    item_code = g.item != null ? g.item.code != null ? g.item.code : "" : "",
+                    item_name = g.item != null ? g.item.name != null ? g.item.name : "" : "",
+                    Dimension = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.FirstOrDefault() != null ? g.production_execution_detail.FirstOrDefault().DimensionString : "" : "",
+                    trans_date = g.trans_date != null ? g.trans_date : DateTime.Now,
                     EmpName = g.production_execution_detail.FirstOrDefault() != null ? g.production_execution_detail.FirstOrDefault().contact != null ? g.production_execution_detail.FirstOrDefault().contact.name : "" : "",
                     Hours = g.production_execution_detail.Count() > 0 ? g.production_execution_detail.Where(x => x.hours > 0).Sum(x => x.hours) : 0,
 

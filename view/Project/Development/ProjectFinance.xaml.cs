@@ -224,6 +224,14 @@ namespace Cognitivo.Project
             }
         }
 
-      
+        private void Print_Click(object sender, RoutedEventArgs e)
+        {
+            project project = projectViewSource.View.CurrentItem as project;
+            if (project!=null)
+            {
+                entity.Brillo.Document.Start.Automatic(project, "Project");
+            }
+         
+        }
     }
 }

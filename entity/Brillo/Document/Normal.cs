@@ -100,6 +100,10 @@ namespace entity.Brillo.Document
                 DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(0));
                 DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Impex((impex)Document).ElementAt(1));
             }
+            else if (AppName == typeof(project).ToString() || BaseName == typeof(project).ToString())
+            {
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Technical((project)Document));
+            }
             else
             {
                 ReportParameter Parameters = new ReportParameter()

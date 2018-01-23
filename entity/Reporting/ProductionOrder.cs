@@ -36,5 +36,7 @@ namespace entity.Reporting
         public string Dimension { get; set; }
         public decimal value { get; set; }
         public string Measurement { get; set; }
+        public string ParentCode { get; set; }
+        public string ParentTask { get; set; }
     }
 }

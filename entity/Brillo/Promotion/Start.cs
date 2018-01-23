@@ -73,8 +73,8 @@ namespace entity.Brillo.Promotion
                         quantity = Best_Promotion.Quantity,
                         unit_price = Best_Promotion.Price,
                         discount = Best_Promotion.Discount,
-                        //sales_promotion = Best_Promotion.Promotion,
-                        id_sales_promotion = Best_Promotion.PromotionID
+                        //sales_promotion=Best_Promotion.Promotion,
+                        id_sales_promotion=Best_Promotion.PromotionID
 
                     };
 

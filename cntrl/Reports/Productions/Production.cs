@@ -57,6 +57,7 @@ CASE
                                         sum((((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient))/pod.completed) as CompletedHours,
                                         (select GROUP_CONCAT(ROUND(value, 2) SEPARATOR ' x ') from production_execution_dimension where id_execution_detail = ped.id_execution_detail) value,
                                         am.name as Measurement,project_template.name as ProjectTemplate
+                                        , parent.code as ParentCode, parent.name  as ParentTask
 
 
                                         from production_order as po
@@ -66,6 +67,7 @@ CASE
                                         left join contacts as c on p.id_contact = c.id_contact
                                         inner join production_line as l on po.id_production_line = l.id_production_line
                                         inner join production_order_detail as pod on po.id_production_order = pod.id_production_order
+                                        left join production_order_detail as parent on parent.id_order_detail = pod.parent_id_order_detail
                                         inner join items as i on pod.id_item = i.id_item
                                         left join item_product as ip on i.id_item = ip.id_item
                                         left join item_conversion_factor as icf on ip.id_item_product = icf.id_item_product

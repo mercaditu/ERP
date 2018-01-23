@@ -1028,7 +1028,9 @@
     <EmbeddedResource Include="bin\Debug\PaymentOrder.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\ProductionOrder.rdlc" />
+    <EmbeddedResource Include="bin\Debug\ProductionOrder.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="bin\Debug\PurchaseInvoice.rdlc" />
     <EmbeddedResource Include="bin\Debug\SalesInvoice.rdlc">
       <SubType>Designer</SubType>
@@ -1055,6 +1057,7 @@
     <Content Include="bin\Debug\RequestManagement.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="bin\Debug\Technical.rdlc" />
     <EmbeddedResource Include="bin\SalesBudget.rdlc" />
     <EmbeddedResource Include="Project\PrintingPress\Reports\PrintingPress.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -209,14 +209,14 @@ namespace entity.Brillo.Document
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
             query = query.Replace("@ProjectID", project.id_project.ToString());
             DataTable dt= QueryExecutor.DT(query);
+
             if (dt.Select("EmpId>0").Count() > 0)
             {
-                   dt = dt.Select("EmpId>0").CopyToDataTable();
+                   //dt = dt.Select("EmpId>0").CopyToDataTable();
             }
-            reportDataSource.Value = QueryExecutor.DT(query);
+
+            reportDataSource.Value = dt;
            
-
-
             return reportDataSource;
         }
         public ReportDataSource SalesBudget(sales_budget sales_budget)

@@ -811,7 +811,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!QuantityEst.Value)</Value>
+                                  <Value>=Fields!QuantityEst.Value</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -885,7 +885,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!QuantityAddition.Value)</Value>
+                                  <Value>=Fields!QuantityAddition.Value</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -922,7 +922,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!ConversionQuantity.Value)</Value>
+                                  <Value>=Fields!ConversionQuantity.Value</Value>
                                   <Style>
                                     <FontFamily>courier New</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -1832,25 +1832,9 @@
       <Width>9.6726in</Width>
       <Page>
         <PageHeader>
-          <Height>2.54cm</Height>
+          <Height>1.50812cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Image Name="Image1">
-              <Source>Embedded</Source>
-              <Value>image1</Value>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.24818cm</Top>
-              <Left>0.3937cm</Left>
-              <Height>1.87854cm</Height>
-              <Width>5.02708cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Image>
-          </ReportItems>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1866,6 +1850,7 @@
               <Source>Embedded</Source>
               <Value>Cognitivo64</Value>
               <Sizing>FitProportional</Sizing>
+              <Top>0in</Top>
               <Height>0.15972in</Height>
               <Width>0.16471in</Width>
               <Style>
@@ -1900,6 +1885,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox1</rd:DefaultName>
+              <Top>0in</Top>
               <Left>0.19249in</Left>
               <Height>0.15972in</Height>
               <Width>2.81445in</Width>

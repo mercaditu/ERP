@@ -53,7 +53,7 @@ if(task.importance > 0, task.importance, null) as AveragePercentage,
 if(task.completed > 0, task.completed, null) as Percentage,
 (select value from item_price inner join item_price_list on item_price.id_price_list = item_price_list.id_price_list where item_price.id_item = item.id_item and item_price_list.is_default limit 1) as Price
  ,executionemployee.name as EmployeeName,project_template.name as ProjectTemplate, 
-(select work_number from production_order where id_project=proj.id_project) as WorkNumber
+(select max(work_number) from production_order where id_project=proj.id_project) as WorkNumber
 
 
 

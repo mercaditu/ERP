@@ -91,6 +91,7 @@ namespace Cognitivo.Product
 
         private void Approve_Click(object sender)
         {
+            
             if (RequestController.Approve())
             {
                 toolBar.msgSaved(1);
@@ -341,8 +342,11 @@ namespace Cognitivo.Product
 
         private void Save_Click(object sender)
         {
+            item_request item_request = item_requestViewSource.View.CurrentItem as item_request;
+
             if (RequestController.db.SaveChanges() > 0)
             {
+                item_request.State = EntityState.Unchanged;
                 item_requestViewSource.View.Refresh();
                 toolBar.msgSaved(1);
             }

@@ -186,6 +186,11 @@ namespace entity
         /// </summary>
         public int? id_project { get; set; }
 
+
+        public long? cloud_id { get; set; }
+
+        public bool is_finalize { get; set; }
+
         #region Project => Navigation
 
         public virtual project project { get; set; }

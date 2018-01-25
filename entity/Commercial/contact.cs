@@ -175,6 +175,10 @@ namespace entity
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }
 
+        public long? cloud_id { get; set; }
+
+        public bool is_finalize { get; set; }
+
         public string geo_longlat
         {
             get

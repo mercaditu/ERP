@@ -243,6 +243,10 @@ namespace entity
         /// </summary>
         public DateTime trans_date { get; set; }
 
+        public long? cloud_id { get; set; }
+
+        public bool is_finalize { get; set; }
+
         /// <summary>
         ///
         /// </summary>

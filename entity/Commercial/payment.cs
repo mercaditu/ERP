@@ -189,6 +189,10 @@ namespace entity
         /// </summary>
         public int? id_terminal { get; set; }
 
+        public long? cloud_id { get; set; }
+
+        public bool is_finalize { get; set; }
+
         #region Terminal => Navigation
 
         public virtual app_terminal app_terminal { get; set; }

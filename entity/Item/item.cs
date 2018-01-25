@@ -177,6 +177,10 @@ namespace entity
 
         public string sku { get; set; }
 
+        public long? cloud_id { get; set; }
+
+        public bool is_finalize { get; set; }
+
         [NotMapped]
         public bool is_shared
         {

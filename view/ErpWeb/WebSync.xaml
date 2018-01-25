@@ -17,9 +17,11 @@
     <Grid Focusable="True">
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
             <Label Content="llave" Style="{StaticResource input_label}" />
-            <TextBox Text="" Name="txtName"/>
+            <TextBox Text="http://localhost:8000/api/cognitivo-ahmedabad" Name="txtName"/>
 
             <Button Content="Sync Item And Customer" Style="{StaticResource btn_green}" Margin="16,8" Click="Button_Click" />
+            <Button Content="Sync Sales" Style="{StaticResource btn_green}" Margin="16,8" Click="Sales_click" />
+            <Button Content="Download Sales" Style="{StaticResource btn_green}" Margin="16,8" Click="Download_Click" />
             <Rectangle Style="{StaticResource line_Bar}" />
         </StackPanel>
 

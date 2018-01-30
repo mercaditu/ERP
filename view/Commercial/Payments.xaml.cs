@@ -64,7 +64,9 @@ namespace Cognitivo.Commercial
             Load_PrimaryDataThread();
             //Logic to bring Data into view.
 
-           
+         
+
+
         }
 
         private async void Load_PrimaryDataThread()
@@ -72,7 +74,8 @@ namespace Cognitivo.Commercial
             int PageIndex = dataPager.PagedSource.PageIndex;
             payment_detailMadeViewSource = FindResource("payment_detailMadeViewSource") as CollectionViewSource;
             payment_detailReceive = FindResource("payment_detailReceive") as CollectionViewSource;
-            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact).Include(x => x.payment_detail).OrderByDescending(x => x.trans_date).Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
+            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact)
+                .Include(x => x.payment_detail).OrderByDescending(x => x.trans_date).Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
             //Logic to bring Data into view.
 
             payment_detailReceive.Source = PaymentDB.payments.Local;

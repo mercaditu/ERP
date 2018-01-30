@@ -228,12 +228,13 @@ namespace entity.Brillo.Document
                                     set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
                                 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 SELECT
-										p.name as Project,
+										p.name as ProjectName,
                                         p.code as ProjectCode,
                                         c.name as Contact,
+                                        c.gov_code as GovermentId,
                                         l.name as Line,
                                         po.name as Production,
-                                        po.work_number as Number,
+                                        po.work_number as WorkNumber,
                                         po.trans_date as Date,
                                         po.project_cost_center as CostCenter,
                                         pod.id_order_detail as OrderID,
@@ -258,11 +259,14 @@ CASE
    WHEN i.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
     END as Type,
                                         pod.is_input as Input,
-                                      
+                                        pt.quantity_est as QuantityEst,
+                                       pt.code as TaskCode,
+                                       pt.item_description as Task,
                                         if(pod.code != '', pod.code,i.code) as Code,
                                         if(pod.name != '', pod.name,i.name) as Item,
+
                                         pod.quantity as QuantityOrdered,
-                                        ped.quantity as QuantityExecuted,
+                                        ped.quantity as QuantityReal,
                                         ped.unit_cost as CostExecuted,
                                         pt.unit_cost_est as CostEstimated,
                                         pod.start_date_est as StartDate,
@@ -277,7 +281,7 @@ CASE
                                         pod.completed as Completed, 
                                         pod.completed * 100 as Percentage,
                                         sum((((time_to_sec(timediff(ped.end_date, ped.start_date)) / 3600) * htc.coefficient))/pod.completed) as CompletedHours,
-                                        (select GROUP_CONCAT(ROUND(value, 2) SEPARATOR ' x ') from production_execution_dimension where id_execution_detail = ped.id_execution_detail) value,
+                                        (select GROUP_CONCAT(ROUND(value, 2) SEPARATOR ' x ') from production_execution_dimension where id_execution_detail = ped.id_execution_detail) as Dimension,
                                         am.name as Measurement,project_template.name as ProjectTemplate
                                         , parent.code as ParentCode, parent.name  as ParentTask
 

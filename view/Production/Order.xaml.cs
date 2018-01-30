@@ -894,7 +894,11 @@ namespace Cognitivo.Production
 
         private void TechnicalReport_Click(object sender, RoutedEventArgs e)
         {
-
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            if (production_order != null)
+            {
+                entity.Brillo.Document.Start.Automatic(production_order, "TechnicalOrder");
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -887,6 +887,16 @@ namespace Cognitivo.Production
 
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TechnicalReport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string prop)

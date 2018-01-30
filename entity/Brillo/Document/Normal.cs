@@ -102,7 +102,11 @@ namespace entity.Brillo.Document
             }
             else if (AppName == typeof(project).ToString() || BaseName == typeof(project).ToString())
             {
-                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Technical((project)Document));
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.TechnicalProject((project)Document));
+            }
+            else if (AppName == typeof(production_order).ToString() || BaseName == typeof(production_order).ToString())
+            {
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.TechnicalProduction((production_order)Document));
             }
             else
             {

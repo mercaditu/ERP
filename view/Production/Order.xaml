@@ -169,7 +169,9 @@
                                     <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
                                     <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}" />
                                     <DatePicker SelectedDate="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
+                                    <Button Content="Technical Report" Style="{StaticResource btn_green}" Click="TechnicalReport_Click"/>
                                 </StackPanel>
+                                
                             </TabItem>
                             <TabItem Header="Item">
                                 <StackPanel DataContext="{Binding SelectedItem_, ElementName=treeProject}">

@@ -26,6 +26,12 @@ namespace Cognitivo.Product
         {
             if (dbContext.SaveChanges() > 0)
             {
+                item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
+                if (item_asset_maintainance != null)
+                {
+                    item_asset_maintainance.State = EntityState.Unchanged;
+                    item_asset_maintainance.IsSelected = false;
+                }
                 toolBar.msgSaved(0);
             }
         }

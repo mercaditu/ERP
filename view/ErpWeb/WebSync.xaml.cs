@@ -32,58 +32,68 @@ namespace Cognitivo.ErpWeb
             InitializeComponent();
             db.db = new db();
         }
+        private void fill()
+        {
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
+                List<contact> contacts = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).ToList();
 
+
+                List<SyncCustomers> synccustomers = new List<SyncCustomers>();
+                List<SyncItems> SyncItems = new List<SyncItems>();
+
+                foreach (item item in items)
+                {
+                    SyncItems SyncItem = new SyncItems
+                    {
+                        name = item.name,
+                        code = item.code,
+                        comment = item.description,
+                        unit_price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().valuewithVAT : 0,
+                    };
+                    SyncItems.Add(SyncItem);
+                }
+                foreach (contact contact in contacts)
+                {
+
+                    SyncCustomers SyncCustomer = new SyncCustomers
+                    {
+                        name = contact.name,
+                        govcode = contact.gov_code,
+                        alias = contact.alias,
+                        address = contact.address,
+                        telephone = contact.telephone,
+                        email = contact.email,
+                    };
+                    synccustomers.Add(SyncCustomer);
+                }
+               
+
+                try
+                {
+                    var Customer_Json = new JavaScriptSerializer().Serialize(synccustomers);
+                    Send2API(Customer_Json, "synccustomer");
+
+                    var Item_Json = new JavaScriptSerializer().Serialize(SyncItems);
+                    Send2API(Item_Json, "syncitem");
+
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+                Sales_click(null, null);
+            }));
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
-            List<contact> contacts = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).ToList();
-
-
-            List<SyncCustomers> synccustomers = new List<SyncCustomers>();
-            List<SyncItems> SyncItems = new List<SyncItems>();
-
-            foreach (item item in items)
-            {
-                SyncItems SyncItem = new SyncItems
-                {
-                    name = item.name,
-                    code = item.code,
-                    comment = item.description,
-                    unit_price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().valuewithVAT : 0,
-                };
-                SyncItems.Add(SyncItem);
-            }
-            foreach (contact contact in contacts)
-            {
-
-                SyncCustomers SyncCustomer = new SyncCustomers
-                {
-                    name = contact.name,
-                    govcode = contact.gov_code,
-                    alias = contact.alias,
-                    address = contact.address,
-                    telephone = contact.telephone,
-                    email = contact.email,
-                };
-                synccustomers.Add(SyncCustomer);
-            }
-
-            try
-            {
-                var Customer_Json = new JavaScriptSerializer().Serialize(synccustomers);
-                Send2API(Customer_Json, "synccustomer");
-
-                var Item_Json = new JavaScriptSerializer().Serialize(SyncItems);
-                Send2API(Item_Json, "syncitem");
-
-
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            Task taskAuth = Task.Factory.StartNew(() => fill());
+           
         }
         private void Send2API(object Json, string apiname)
         {
@@ -138,6 +148,8 @@ namespace Cognitivo.ErpWeb
                             }
                         }
                         db.db.SaveChanges();
+
+                        MessageBox.Show("Sucess..");
                     }
                 }
             }
@@ -181,7 +193,7 @@ namespace Cognitivo.ErpWeb
             try
             {
                 List<sales_invoice> salesinvoices = db.db.sales_invoice.Include("contact")
-                   .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                   .Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
 
                 List<Invoice> SyncInvoices = new List<Invoice>();
 
@@ -194,7 +206,8 @@ namespace Cognitivo.ErpWeb
                         alias = sales_invoice.contact.alias,
                         address = sales_invoice.contact.address,
                         telephone = sales_invoice.contact.telephone,
-                        email = sales_invoice.contact.email,
+                        email = sales_invoice.contact.email
+
                     };
 
                     Invoice SyncInvoice = new Invoice
@@ -208,7 +221,9 @@ namespace Cognitivo.ErpWeb
                         currency_code = sales_invoice.app_currencyfx.app_currency.code,
                         currency_rate = sales_invoice.app_currencyfx.sell_value,
                         comment = sales_invoice.comment,
-                        customer = SyncCustomer
+                        customer = SyncCustomer,
+                        branch_id=sales_invoice.app_branch.id_branch,
+                        branch_name = sales_invoice.app_branch.name,
                     };
 
                     foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
@@ -249,11 +264,7 @@ namespace Cognitivo.ErpWeb
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+       
         private void Download_Click(object sender, RoutedEventArgs e)
         {
             var result = Receive2API("downloadOrder");
@@ -421,6 +432,8 @@ namespace Cognitivo.ErpWeb
         public enum Status { Invoiced = 3, Packed = 4 }
 
         public int my_id { get; set; }
+        public int branch_id { get; set; }
+        public string branch_name { get; set; }
         public long cloud_id { get; set; }
         public SyncCustomers customer { get; set; }
         public string number { get; set; }
@@ -431,6 +444,7 @@ namespace Cognitivo.ErpWeb
         public decimal currency_rate { get; set; }
         public string comment { get; set; }
         public Status status { get; set; }
+
 
         public List<Detail> details { get; set; }
     }
@@ -446,6 +460,7 @@ namespace Cognitivo.ErpWeb
         public decimal discount { get; set; }
         public SyncItems item { get; set; }
     }
+
 
     public class DownloadInvoice
     {

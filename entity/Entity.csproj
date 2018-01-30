@@ -364,6 +364,10 @@
     <Compile Include="Migrations\201709251253534_Movement_Packinglist.Designer.cs">
       <DependentUpon>201709251253534_Movement_Packinglist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801251013029_SocialIntegration.cs" />
+    <Compile Include="Migrations\201801251013029_SocialIntegration.Designer.cs">
+      <DependentUpon>201801251013029_SocialIntegration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
     <Compile Include="Production\production_execution_dimension.cs" />
@@ -834,6 +838,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709251253534_Movement_Packinglist.resx">
       <DependentUpon>201709251253534_Movement_Packinglist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801251013029_SocialIntegration.resx">
+      <DependentUpon>201801251013029_SocialIntegration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

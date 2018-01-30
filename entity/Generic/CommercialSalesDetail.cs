@@ -15,6 +15,10 @@ namespace entity
         /// </summary>
         public int? id_location { get; set; }
 
+        public long? cloud_id { get; set; }
+
+        public bool is_finalize { get; set; }
+
         /// <summary>
         ///
         /// </summary>

@@ -35,9 +35,10 @@
                 <DataGridTextColumn Header="Item" Binding="{Binding item.name, Mode=OneWay}" IsReadOnly="True" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel x:Name="stackFlow" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Background="{StaticResource appConfig}" CanHorizontallyScroll="True" CanVerticallyScroll="True">
-            
-        </StackPanel>
-       
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"  Grid.Row="1" Grid.Column="1">
+            <StackPanel x:Name="stackFlow" Orientation="Horizontal" Background="{StaticResource appConfig}" CanHorizontallyScroll="True" CanVerticallyScroll="True">
+
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

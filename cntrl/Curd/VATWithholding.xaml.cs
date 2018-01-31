@@ -95,7 +95,23 @@ namespace cntrl
 
             PaymentDB.payment_withholding_tax.Add(payment_withholding_tax);
 
-            payment_schedual _payment_schedual = new payment_schedual();
+            payment_schedual _payment_schedual = new payment_schedual
+            {
+                parent = payment_schedual,
+                number = txtnumber.Text,
+                expire_date = payment_schedual.expire_date,
+                status = payment_schedual.status,
+                id_contact = payment_schedual.id_contact,
+                id_currencyfx = payment_schedual.id_currencyfx,
+                id_purchase_invoice = payment_schedual.id_purchase_invoice,
+                id_purchase_order = payment_schedual.id_purchase_order,
+                id_purchase_return = payment_schedual.id_purchase_return,
+                id_sales_invoice = payment_schedual.id_sales_invoice,
+                id_sales_order = payment_schedual.id_sales_order,
+                id_sales_return = payment_schedual.id_sales_return,
+                trans_date = (DateTime)DtpTransdate.SelectedDate
+            };
+
 
             if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
             {
@@ -106,30 +122,23 @@ namespace cntrl
                 _payment_schedual.debit = Convert.ToDecimal(lbltotalvat.Content);
             }
 
-            _payment_schedual.parent = payment_schedual;
-            _payment_schedual.number = txtnumber.Text;
-            _payment_schedual.expire_date = payment_schedual.expire_date;
-            _payment_schedual.status = payment_schedual.status;
-            _payment_schedual.id_contact = payment_schedual.id_contact;
-            _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
-            _payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
-            _payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
-            _payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
-            _payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
-            _payment_schedual.id_sales_order = payment_schedual.id_sales_order;
-            _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
-            _payment_schedual.trans_date = (DateTime)DtpTransdate.SelectedDate;
-
-
             payment payment = new payment();
             payment = PaymentDB.New(true);
             payment.id_contact = payment_schedual.id_contact;
             payment.number = txtnumber.Text;
+
             payment_detail payment_detail = new payment_detail();
             payment_detail.payment = payment;
             payment_detail.Default_id_currencyfx = payment_schedual.id_currencyfx;
             payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
             payment_detail.payment.id_currencyfx = payment_schedual.id_currencyfx;
+            payment_detail.IsLocked = false;
+
+            if (CurrentSession.Id_Account > 0)
+            {
+                payment_detail.id_account = CurrentSession.Id_Account;
+            }
+
             if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
             {
                 payment_detail.value = Convert.ToDecimal(lbltotalvat.Content);
@@ -138,8 +147,7 @@ namespace cntrl
             {
                 payment_detail.value = Convert.ToDecimal(lbltotalvat.Content);
             }
-            payment_detail.IsLocked = false;
-            payment_detail.id_account = CurrentSession.Id_Account;
+
             if (PaymentDB.payment_type.Where(x=>x.payment_behavior==payment_type.payment_behaviours.WithHoldingVAT).Any())
             {
                 payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.WithHoldingVAT).FirstOrDefault().id_payment_type;

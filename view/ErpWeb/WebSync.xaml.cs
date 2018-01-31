@@ -6,18 +6,10 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cognitivo.ErpWeb
 {
@@ -27,16 +19,33 @@ namespace Cognitivo.ErpWeb
     public partial class WebSync : Page
     {
         private dbContext db = new dbContext();
+
         public WebSync()
         {
             InitializeComponent();
             db.db = new db();
         }
-        private void fill()
+
+        private void SyncData()
         {
+            //Start Threading
+            lblInformation.Text = entity.Brillo.Localize.StringText("Items");
+            SyncItems();
+        }
+
+        private void SyncItems()
+        {
+            List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.cloud_id == null).ToList();
+
+            foreach (var item in items)
+            {
+
+            }
+
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
+                
+
                 List<contact> contacts = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).ToList();
 
 
@@ -77,10 +86,6 @@ namespace Cognitivo.ErpWeb
 
                     var Item_Json = new JavaScriptSerializer().Serialize(SyncItems);
                     Send2API(Item_Json, "syncitem");
-
-
-
-
                 }
                 catch (Exception ex)
                 {
@@ -92,14 +97,14 @@ namespace Cognitivo.ErpWeb
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Task taskAuth = Task.Factory.StartNew(() => fill());
-           
+            //Task taskAuth = Task.Factory.StartNew(() => fill());
         }
+
         private void Send2API(object Json, string apiname)
         {
             try
             {
-                var webAddr = txtName.Text + "/" + apiname;
+                var webAddr = "/" + apiname;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
@@ -147,45 +152,38 @@ namespace Cognitivo.ErpWeb
                                 }
                             }
                         }
-                        db.db.SaveChanges();
 
+                        db.db.SaveChanges();
                         MessageBox.Show("Sucess..");
                     }
                 }
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString());
             }
-
         }
+
         private string Receive2API(string apiname)
         {
             try
             {
-                var webAddr = txtName.Text + "/" + apiname;
+                var webAddr = "/" + apiname;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "GET";
-
-
-
+                
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     return streamReader.ReadToEnd();
-
-
                 }
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.ToString());
                 return "";
             }
-
         }
 
         private void Sales_click(object sender, RoutedEventArgs e)
@@ -207,7 +205,6 @@ namespace Cognitivo.ErpWeb
                         address = sales_invoice.contact.address,
                         telephone = sales_invoice.contact.telephone,
                         email = sales_invoice.contact.email
-
                     };
 
                     Invoice SyncInvoice = new Invoice
@@ -243,8 +240,8 @@ namespace Cognitivo.ErpWeb
                             vat = sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault() != null ? sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault().percentage : 0,
                             quantity = sales_invoice_detail.quantity,
                             price = sales_invoice_detail.unit_price
-
                         };
+
                         Detail.item = SyncItem;
                         SyncInvoice.details.Add(Detail);
                     }
@@ -253,24 +250,21 @@ namespace Cognitivo.ErpWeb
 
                 var Sales_Json = new JavaScriptSerializer().Serialize(SyncInvoices);
                 Send2API(Sales_Json, "synctransaction");
-
-
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-
         }
-
        
         private void Download_Click(object sender, RoutedEventArgs e)
         {
+
             var result = Receive2API("downloadOrder");
             List<DownloadInvoice> Sales_Json = new JavaScriptSerializer().Deserialize<List<DownloadInvoice>>(result);
             entity.Controller.Sales.InvoiceController SalesDB = new entity.Controller.Sales.InvoiceController();
             SalesDB.Initialize();
+
             foreach (DownloadInvoice DownloadInvoice in Sales_Json)
             {
                 if (DownloadInvoice.cloud_id == null)
@@ -302,9 +296,11 @@ namespace Cognitivo.ErpWeb
                         contact = SalesDB.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == DownloadInvoice.relationship_id).FirstOrDefault();
 
                     }
+
                     sales_invoice.id_contact = contact.id_contact;
                     sales_invoice.contact = contact;
                     sales_invoice.cloud_id = DownloadInvoice.id;
+
                     foreach (details details in DownloadInvoice.details)
                     {
 
@@ -468,9 +464,7 @@ namespace Cognitivo.ErpWeb
         {
             details = new List<details>();
         }
-
-
-
+        
         public int id { get; set; }
         public int? cloud_id { get; set; }
         public int? location_id { get; set; }
@@ -485,9 +479,8 @@ namespace Cognitivo.ErpWeb
         public string customer_telephone { get; set; }
         public string customer_email { get; set; }
         public List<details> details { get; set; }
-
-
     }
+
     public class details
     {
         public int id { get; set; }
@@ -498,9 +491,5 @@ namespace Cognitivo.ErpWeb
         public decimal? quantity { get; set; }
         public decimal? unit_price { get; set; }
         public decimal? unit_cost { get; set; }
-
     }
-
-
-
 }

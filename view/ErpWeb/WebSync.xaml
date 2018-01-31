@@ -3,29 +3,29 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Cognitivo.ErpWeb"
       mc:Ignorable="d" 
-     d:DesignHeight="600" d:DesignWidth="800"
-      Title="WebSync">
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+     d:DesignHeight="600" d:DesignWidth="800" Title="Cognitivo Sync">
     <Page.Background>
         <RadialGradientBrush>
-            <GradientStop Color="#FFC7C7C7" Offset="1" />
+            <GradientStop Color="#FFDEE1FF" Offset="1" />
             <GradientStop Color="#FFF6F6F6" Offset="0" />
         </RadialGradientBrush>
     </Page.Background>
 
     <Grid Focusable="True">
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
-            <Label Content="llave" Style="{StaticResource input_label}" />
-            <TextBox Text="http://localhost:8000/api/cognitivo-ahmedabad" Name="txtName"/>
-
-            <Button Content="Sync Item And Customer" Style="{StaticResource btn_green}" Margin="16,8" Click="Button_Click" />
-           
-            <Button Content="Download Sales" Style="{StaticResource btn_green}" Margin="16,8" Click="Download_Click" />
-            <Rectangle Style="{StaticResource line_Bar}" />
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,64,0,0">
+            <Image Source="/Cognitivo;component/Images/Cognitivo-128.png" Height="54"/>
         </StackPanel>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
+            <Label Content="{Binding Source={x:Static mainpref:Settings.Default}, Path=CognitivoKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                   Style="{StaticResource input_label}" />
+            <Button Content="Sync Data" Style="{StaticResource btn_green}" Margin="16,8" Click="Button_Click" />
 
-        <!--<Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="54" Margin="0,64,0,0"
-               VerticalAlignment="Top" HorizontalAlignment="Center" />-->
+            <TextBlock x:Name="lblInformation" Text="Update" FontSize="10" Style="{StaticResource text_Instructions}"/>
+            <ProgressBar x:Name="progStatus" Margin="8, 0, 8, 8"/>
+            <Rectangle Style="{StaticResource line_Bar}" />
+            <Label Style="{StaticResource generic_Label}" Content="Please do not close or go back until job is done"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -42,7 +42,7 @@ namespace cntrl.Panels
                     {
                         item_inventoryList.FirstOrDefault().value_system = (decimal)Items_InStockLIST.FirstOrDefault().Quantity;
                     }
-                    if (item_inventoryList.FirstOrDefault().batch_code == "")
+                    if (item_inventoryList.FirstOrDefault().batch_code == null || item_inventoryList.FirstOrDefault().batch_code == "")
                     {
                         item_inventoryList.FirstOrDefault().batch_code = Items_InStockLIST.FirstOrDefault().BatchCode;
                     }

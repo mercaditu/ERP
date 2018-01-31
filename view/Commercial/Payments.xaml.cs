@@ -1,4 +1,5 @@
 ﻿using entity;
+using entity.Brillo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -74,7 +75,16 @@ namespace Cognitivo.Commercial
             int PageIndex = dataPager.PagedSource.PageIndex;
             payment_detailMadeViewSource = FindResource("payment_detailMadeViewSource") as CollectionViewSource;
             payment_detailReceive = FindResource("payment_detailReceive") as CollectionViewSource;
-            await PaymentDB.payments.Where(x => x.id_company == CurrentSession.Id_Company).Include(x => x.contact)
+
+            var predicate = PredicateBuilder.True<payment>();
+            predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
+           
+
+            if (Count == 0)
+            {
+                Count = PaymentDB.payments.Where(predicate).Count();
+            }
+            await PaymentDB.payments.Where(predicate).Include(x => x.contact)
                 .Include(x => x.payment_detail).OrderByDescending(x => x.trans_date).Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
             //Logic to bring Data into view.
 
@@ -89,6 +99,10 @@ namespace Cognitivo.Commercial
             if (dataPager.PageCount == 0)
             {
                 dataPager.PageCount = PageCount;
+            }
+            if (dataPagerreceive.PageCount == 0)
+            {
+                dataPagerreceive.PageCount = PageCount;
             }
         }
 

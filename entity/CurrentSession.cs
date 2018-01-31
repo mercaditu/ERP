@@ -160,6 +160,15 @@ namespace entity
             {
                 if (_Id_Account == 0)
                 {
+                    if (Properties.Settings.Default.account_ID == 0)
+                    {
+                        using (db db = new db())
+                        {
+                            Properties.Settings.Default.account_ID = db.app_account.Where(x => x.id_company == CurrentSession.Id_Company).Select(x => x.id_account).First();
+                            Properties.Settings.Default.Save();
+                        }
+                    }
+
                     _Id_Account = Properties.Settings.Default.account_ID;
                 };
                 return _Id_Account;

@@ -313,6 +313,13 @@ namespace Cognitivo.Commercial
             {
                 contactViewSource.View.Filter = null;
             }
+
+            contact SelectedContact = contactViewSource.View.CurrentItem as contact;
+            if (SelectedContact != null)
+            {
+                FilterPaymentsRecieved(SelectedContact.id_contact);
+                FilterPaymentsPaid(SelectedContact.id_contact);
+            }
         }
     }
 }

@@ -539,12 +539,12 @@ CASE
 
                 // Text -> Words
                 AmountWords = HasRounding ?
-                Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).ToWords()
+                Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).ToWords()
                 :
                 Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0).DecimalToText(),
                 //NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))),
 
-                AmountWordsFactored = Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.sub_Total_Factoredvat : 0).ToWords(),
+                AmountWordsFactored = Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.sub_Total_Factoredvat : 0).ToWords(),
             }).ToList();
 
             return reportDataSource;

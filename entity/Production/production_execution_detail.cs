@@ -20,6 +20,7 @@ namespace entity
             start_date = DateTime.Now;
             end_date = DateTime.Now;
             item_movement = new List<item_movement>();
+            item_mov_archive = new List<item_mov_archive>();
         }
 
         [Key]
@@ -149,6 +150,7 @@ namespace entity
         public virtual ICollection<production_account> production_account { get; set; }
         public virtual production_service_account production_service_account { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
+        public virtual ICollection<item_mov_archive> item_mov_archive { get; set; }
         public virtual hr_time_coefficient hr_time_coefficient { get; set; }
         public virtual production_order_detail production_order_detail { get; set; }
         public virtual project_task project_task { get; set; }

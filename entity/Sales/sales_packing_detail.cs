@@ -17,7 +17,8 @@ namespace entity
 			id_item = 0;
 			sales_packing_relation = new List<sales_packing_relation>();
 			item_movement = new List<item_movement>();
-		}
+            item_mov_archive = new List<item_mov_archive>();
+        }
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -110,7 +111,8 @@ namespace entity
 		public virtual sales_order_detail sales_order_detail { get; set; }
 		public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }
 		public virtual ICollection<item_movement> item_movement { get; set; }
-		public virtual app_measurement measurement_weight { get; set; }
+        public virtual ICollection<item_mov_archive> item_mov_archive { get; set; }
+        public virtual app_measurement measurement_weight { get; set; }
 		public virtual app_measurement measurement_volume { get; set; }
 		public virtual app_location app_location { get; set; }
 		public virtual app_branch app_branch { get; set; }

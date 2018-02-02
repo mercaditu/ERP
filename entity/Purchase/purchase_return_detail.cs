@@ -16,6 +16,7 @@ namespace entity
             is_head = true;
             quantity = 1;
             item_movement = new List<item_movement>();
+            item_mov_archive = new List<item_mov_archive>();
         }
 
         [Key]
@@ -136,6 +137,7 @@ namespace entity
         public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
         public virtual ICollection<purchase_return_dimension> purchase_return_dimension { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
+        public virtual ICollection<item_mov_archive> item_mov_archive { get; set; }
 
         #region "Validation"
 

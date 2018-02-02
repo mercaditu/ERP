@@ -311,6 +311,7 @@
     <Compile Include="Item\item_asset_maintainance.cs" />
     <Compile Include="Item\item_branch_safety.cs" />
     <Compile Include="Item\item_inventory_dimension.cs" />
+    <Compile Include="Item\item_mov_archive.cs" />
     <Compile Include="Item\item_movement_value.cs" />
     <Compile Include="Item\item_movement_value_detail.cs" />
     <Compile Include="Item\item_movement_value_rel.cs" />

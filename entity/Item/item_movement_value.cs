@@ -30,7 +30,8 @@ namespace entity
         public bool is_estimate { get; set; }
 
         public virtual item_movement item_movement { get; set; }
-        
+        public virtual item_mov_archive item_mov_archive { get; set; }
+
         public virtual app_currencyfx app_currencyfx { get; set; }
     }
 }

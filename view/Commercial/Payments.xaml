@@ -98,8 +98,8 @@
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
-                    <syncfusion:SfDataPager x:Name="dataPager" Foreground="White" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
-                                Background="{StaticResource AccentColor_Brush}" UseOnDemandPaging="True" PagedSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" OnDemandLoading="dataPager_OnDemandLoading" Height="36" Margin="0,0,0,-0.5"/>
+                    <!--<syncfusion:SfDataPager x:Name="dataPager" Foreground="White" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                Background="{StaticResource AccentColor_Brush}" UseOnDemandPaging="True" PagedSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" OnDemandLoading="dataPager_OnDemandLoading" Height="36" Margin="0,0,0,-0.5"/>-->
                     <cntrl:toolBar_Mini btnAnull_Click="toolBar_btnAnull_Click" 
                                         btnEdit_Click="toolBar_btnEdit_Click"
 			                            btnCancel_Click="toolBar_btnCancel_Click"
@@ -151,8 +151,8 @@
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </DataGrid>
-                    <syncfusion:SfDataPager x:Name="dataPagerreceive" Foreground="White" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
-                                Background="{StaticResource AccentColor_Brush}" UseOnDemandPaging="True" PagedSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" OnDemandLoading="dataPagerreceive_OnDemandLoading" Height="36" Margin="0,0,0,-0.5"/>
+                    <!--<syncfusion:SfDataPager x:Name="dataPagerreceive" Foreground="White" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" PageSize="5"
+                                Background="{StaticResource AccentColor_Brush}" UseOnDemandPaging="True" PagedSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" OnDemandLoading="dataPagerreceive_OnDemandLoading" Height="36" Margin="0,0,0,-0.5"/>-->
                     <cntrl:toolBar_Mini btnAnull_Click="toolBar_btnAnull_Click" 
                                         btnEdit_Click="toolBar_btnEdit_Click"
 			                            btnCancel_Click="toolBar_btnCancel_Click"

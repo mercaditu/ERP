@@ -72,7 +72,7 @@ namespace Cognitivo.Commercial
 
         private async void Load_PrimaryDataThread()
         {
-            int PageIndex = dataPager.PagedSource.PageIndex;
+           // int PageIndex = dataPager.PagedSource.PageIndex;
             payment_detailMadeViewSource = FindResource("payment_detailMadeViewSource") as CollectionViewSource;
             payment_detailReceive = FindResource("payment_detailReceive") as CollectionViewSource;
 
@@ -84,8 +84,11 @@ namespace Cognitivo.Commercial
             {
                 Count = PaymentDB.payments.Where(predicate).Count();
             }
+            //await PaymentDB.payments.Where(predicate).Include(x => x.contact)
+            //    .Include(x => x.payment_detail).OrderByDescending(x => x.trans_date).Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
+
             await PaymentDB.payments.Where(predicate).Include(x => x.contact)
-                .Include(x => x.payment_detail).OrderByDescending(x => x.trans_date).Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
+                .Include(x => x.payment_detail).OrderByDescending(x => x.trans_date).LoadAsync();
             //Logic to bring Data into view.
 
             payment_detailReceive.Source = PaymentDB.payments.Local;
@@ -96,14 +99,14 @@ namespace Cognitivo.Commercial
             FilterPaymentsPaid(0);
             FilterPaymentsRecieved(0);
 
-            if (dataPager.PageCount == 0)
-            {
-                dataPager.PageCount = PageCount;
-            }
-            if (dataPagerreceive.PageCount == 0)
-            {
-                dataPagerreceive.PageCount = PageCount;
-            }
+            //if (dataPager.PageCount == 0)
+            //{
+            //    dataPager.PageCount = PageCount;
+            //}
+            //if (dataPagerreceive.PageCount == 0)
+            //{
+            //    dataPagerreceive.PageCount = PageCount;
+            //}
         }
 
      
@@ -239,15 +242,15 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
-        {
-            Load_PrimaryDataThread();
-        }
+        //private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        //{
+        //    Load_PrimaryDataThread();
+        //}
 
-        private void dataPagerreceive_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
-        {
-            Load_PrimaryDataThread();
-        }
+        //private void dataPagerreceive_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
+        //{
+        //    Load_PrimaryDataThread();
+        //}
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

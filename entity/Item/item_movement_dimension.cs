@@ -24,7 +24,7 @@ namespace entity
         public int? id_measurement { get; set; }
 
         public virtual item_movement item_movement { get; set; }
-        public virtual item_mov_archive item_mov_archive { get; set; }
+        //public virtual item_mov_archive item_mov_archive { get; set; }
         public virtual app_dimension app_dimension { get; set; }
         public virtual app_measurement app_measurement { get; set; }
     }

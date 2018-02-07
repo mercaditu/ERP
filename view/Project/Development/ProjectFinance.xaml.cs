@@ -229,7 +229,7 @@ namespace Cognitivo.Project
             project project = projectViewSource.View.CurrentItem as project;
             if (project!=null)
             {
-                entity.Brillo.Document.Start.Automatic(project, "Technical");
+                entity.Brillo.Document.Start.Automatic(project, "Project");
             }
          
         }

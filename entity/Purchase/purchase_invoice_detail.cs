@@ -20,7 +20,7 @@ namespace entity
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();
             purchase_packing_detail_relation = new List<purchase_packing_detail_relation>();
             item_movement = new List<item_movement>();
-            item_mov_archive = new List<item_mov_archive>();
+            //item_mov_archive = new List<item_mov_archive>();
             timestamp = DateTime.Now;
         }
 
@@ -111,7 +111,7 @@ namespace entity
 
         private ICollection<purchase_invoice_dimension> _purchase_invoice_dimension;
         public virtual ICollection<item_movement> item_movement { get; set; }
-        public virtual ICollection<item_mov_archive> item_mov_archive { get; set; }
+        //public virtual ICollection<item_mov_archive> item_mov_archive { get; set; }
         public virtual ICollection<production_service_account> production_service_account { get; set; }
         public virtual ICollection<production_account> production_account { get; set; }
         public virtual ICollection<purchase_packing_detail_relation> purchase_packing_detail_relation { get; set; }

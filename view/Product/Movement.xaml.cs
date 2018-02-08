@@ -244,7 +244,7 @@ namespace Cognitivo.Product
 
             ProductTransferDB.SaveChanges();
 
-           
+
             CurrentItems.getProducts_InStock(item_transfer.id_branch, DateTime.Now, true);
 
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
@@ -449,10 +449,11 @@ namespace Cognitivo.Product
                     item_transfer item_transfer = i as item_transfer;
                     if (item_transfer != null)
                     {
+                        string name = item_transfer.item_request != null ? item_transfer.item_request.name : "";
                         string number = item_transfer.number != null ? item_transfer.number : "";
-                        string origin = item_transfer.app_location_origin.name != null ? item_transfer.app_location_origin.name : "";
+                        string origin = item_transfer.app_location_origin != null ? item_transfer.app_location_origin.name != null ? item_transfer.app_location_origin.name : "" : "";
                         //string
-                        if (number.ToLower().Contains(query.ToLower()) || origin.ToLower().Contains(query.ToLower()))
+                        if (name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()) || origin.ToLower().Contains(query.ToLower()))
                         {
                             return true;
                         }

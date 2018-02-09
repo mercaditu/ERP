@@ -306,7 +306,7 @@ CASE
                                         left join project_task pt on pt.id_project_task=pod.id_project_task
                                         left join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient
 
-                                        where po.id_company = @CompanyID and (ped.id_contact is null || i.id_item_type=1 ||  i.id_item_type=5) and po.id_production_order=@ProductionID
+                                        where po.id_company = @CompanyID and (ped.id_contact is null) and po.id_production_order=@ProductionID
 
                                     group by ped.id_execution_detail ";
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());

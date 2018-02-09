@@ -102,6 +102,10 @@ namespace Cognitivo.Project
                     crud_modal.Visibility = Visibility.Visible;
                     crud_modal.Children.Add(objSalesOrder);
                 }
+                else
+                {
+                    toolBar.msgWarning("Plase Select Task from List...");
+                }
               
             }
         }

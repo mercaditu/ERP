@@ -78,7 +78,7 @@
                                 </Grid>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                    
+
                                         <Label Style="{StaticResource H3}" Content="{Binding name}" />
                                         <Label Style="{StaticResource generic_Label}" Content="{Binding code}" />
                                     </StackPanel>

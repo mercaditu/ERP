@@ -39,6 +39,7 @@ namespace entity
                     using (db db = new db())
                     {
                         _name = db.items.Find(id_item).name;
+                        RaisePropertyChanged("name");
                     }
                 }
 

@@ -186,6 +186,7 @@ namespace Cognitivo.Product
                     item_request_detail.quantity = data.quantity;
 
                     item_request.item_request_detail.Add(item_request_detail);
+                    data.IsSelected = false;
                 }
 
                 dbContext.item_request.Add(item_request);

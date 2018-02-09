@@ -85,18 +85,24 @@ namespace Cognitivo.Project
 
             if (project != null)
             {
-                cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
+                List<project_task> project_taskLIST = new List<project_task>();
+                project_taskLIST = project.project_task.Where(x => x.IsSelected).ToList();
+                if (project_taskLIST.Count()>0)
+                {
+                    cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
 
-                objSalesOrder.project = project;
-                objSalesOrder.db = SalesOrderDB;
-                objSalesOrder.Percentage = 0;
+                    objSalesOrder.project = project;
+                    objSalesOrder.db = SalesOrderDB;
+                    objSalesOrder.Percentage = 0;
 
-                objSalesOrder.Generate_Invoice = (bool)chkinvoice.IsChecked;
-                objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
+                    objSalesOrder.Generate_Invoice = (bool)chkinvoice.IsChecked;
+                    objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
 
-                ///Crud Modal Visibility and Add.
-                crud_modal.Visibility = Visibility.Visible;
-                crud_modal.Children.Add(objSalesOrder);
+                    ///Crud Modal Visibility and Add.
+                    crud_modal.Visibility = Visibility.Visible;
+                    crud_modal.Children.Add(objSalesOrder);
+                }
+              
             }
         }
 

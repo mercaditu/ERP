@@ -240,7 +240,7 @@ namespace Cognitivo.Menu
 
             entity.App.Names App = (entity.App.Names)Enum.Parse(typeof(entity.App.Names), appIcon.Uid, true);
 
-            if (App > 0)
+            if (App > 0 && CurrentSession.NotificationCounts!=null)
             {
                 if (CurrentSession.NotificationCounts.Where(x => x.Name == App).FirstOrDefault() != null)
                 {

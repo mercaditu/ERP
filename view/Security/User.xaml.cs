@@ -80,7 +80,7 @@ namespace Cognitivo.Security
 
                         app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
 
-                        if (app_company != null)
+                        if (app_company != null && security_user.security_role!=null)
                         {
                             Licence.VerifyCompanyLicence(app_company.serial, (int)security_user.security_role.Version, security_user.security_role.security_user.Count());
                         }

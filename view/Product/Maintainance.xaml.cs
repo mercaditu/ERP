@@ -198,7 +198,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            foreach (item_asset_maintainance item_asset_maintainance in item_asset_maintainanceViewSource.View.OfType<item_asset_maintainance>().ToList())
+            foreach (item_asset_maintainance item_asset_maintainance in item_asset_maintainanceViewSource.View.OfType<item_asset_maintainance>().ToList().Where(x=>x.IsSelected).ToList())
             {
                 item_asset_maintainance.status = item_asset_maintainance.Status.Done;
             }

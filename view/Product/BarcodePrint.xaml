@@ -24,9 +24,9 @@
 														QuantityIntegration="False" Type="InStock_Only" />
             <Button Content="{lex:Loc Print}" Click="Button_Click" Style="{StaticResource btn_green}"/>
         </StackPanel>
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" CanVerticallyScroll="True">
             <DataGrid x:Name="item_inventoryDataGrid" CanUserSortColumns="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-					VerticalScrollBarVisibility="Visible" SelectionMode="Single" CanUserAddRows="False"
+					VerticalScrollBarVisibility="Visible" SelectionMode="Single" CanUserAddRows="False" HorizontalScrollBarVisibility="Visible"
 					AutoGenerateColumns="False" Grid.Column="1" CanUserReorderColumns="True"
 					EnableRowVirtualization="True"  Grid.Row="1" 
 					RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{ Binding Source={StaticResource inventoryViewSource}}">

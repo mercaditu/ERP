@@ -46,7 +46,7 @@ namespace Cognitivo.Production
                     production_orderViewSource.View.Filter = i =>
                     {
                         production_order production_order = i as production_order;
-                        if (production_order.name.ToLower().Contains(query.ToLower()) && production_order.type == entity.production_order.ProductionOrderTypes.Production)
+                        if (production_order.name.ToLower().Contains(query.ToLower()) && (production_order.type == entity.production_order.ProductionOrderTypes.Production || production_order.type == entity.production_order.ProductionOrderTypes.Internal))
                         {
                             return true;
                         }
@@ -180,7 +180,7 @@ namespace Cognitivo.Production
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().ToList();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(OrderDB.db, entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
-          
+
         }
 
         private void Load()
@@ -898,6 +898,15 @@ namespace Cognitivo.Production
             if (production_order != null)
             {
                 entity.Brillo.Document.Start.Automatic(production_order, "Technical");
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in itemDataGrid.ItemsSource)
+            {
+                production_order_detail production_order_detail = (production_order_detail)item;
+                production_order_detail.IsSelected = !production_order_detail.IsSelected;
             }
         }
 

@@ -3,6 +3,7 @@ using Cognitivo.Properties;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -14,6 +15,15 @@ namespace Cognitivo.Accounting
 {
     public partial class DebeHaberLogIn : Page
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
         public string UserName { get; set; }
 
         private string Company_RUC = string.Empty;
@@ -66,6 +76,8 @@ namespace Cognitivo.Accounting
                 //}
                 try
                 {
+                    UserName = company.hash_debehaber;
+                    RaisePropertyChanged("UserName");
                     check_api(company.hash_debehaber, Company_RUC);
                     if (_DebeHaberCompanyList.Count()>0)
                     {

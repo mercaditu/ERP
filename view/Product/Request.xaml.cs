@@ -64,7 +64,6 @@ namespace Cognitivo.Product
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource app_departmentViewSource = FindResource("app_departmentViewSource") as CollectionViewSource;
-            CollectionViewSource itemsViewSource = FindResource("itemsViewSource") as CollectionViewSource;
             CollectionViewSource security_userViewSource = FindResource("security_userViewSource") as CollectionViewSource;
             item_requestViewSource = FindResource("item_requestViewSource") as CollectionViewSource;
 
@@ -72,7 +71,7 @@ namespace Cognitivo.Product
 
             item_requestViewSource.Source = RequestController.db.item_request.Local.Where(x => x.is_archived == false);
             app_departmentViewSource.Source = RequestController.db.app_department.Local;
-            itemsViewSource.Source = RequestController.db.items.Local;
+
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(RequestController.db, entity.App.Names.RequestManagement, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             security_userViewSource.Source = RequestController.db.security_user.Local;
             cmburgency.ItemsSource = Enum.GetValues(typeof(item_request_detail.Urgencies));
@@ -91,7 +90,7 @@ namespace Cognitivo.Product
 
         private void Approve_Click(object sender)
         {
-            
+
             if (RequestController.Approve())
             {
                 toolBar.msgSaved(1);

@@ -366,8 +366,11 @@
 															 Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 															 Icon="" Click="btnRequestResource_Click"
 															 VerticalAlignment="Top" HorizontalAlignment="Center" />
+                                <Button Content="Select/Deselect All" Click="Button_Click_2"/>
+
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,20,0,0">
+                             
                             <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,48,0,0"
 										  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalScrollBarVisibility="Auto"
 								SelectionChanged="itemDataGrid_SelectionChanged" IsEnabled="{Binding is_request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">

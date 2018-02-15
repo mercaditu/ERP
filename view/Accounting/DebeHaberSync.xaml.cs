@@ -270,6 +270,7 @@ namespace Cognitivo.Accounting
                 try
                 {
                     var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                    MessageBox.Show(Sales_Json);
                     Send2API(Sales_Json);
 
                     sales_invoice.IsSelected = false;

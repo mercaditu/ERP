@@ -33,7 +33,7 @@
         <Controller:RequestController x:Key="RequestController"/>
 
         <CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}" />
-        <CollectionViewSource x:Key="itemsViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}" />
+        
 
         <CollectionViewSource x:Key="item_requestitem_request_detailViewSource" Source="{Binding item_request_detail, Source={StaticResource item_requestViewSource}}" />
         <CollectionViewSource x:Key="item_requestitem_request_detailDimensionViewSource" Source="{Binding item_request_dimension, Source={StaticResource item_requestitem_request_detailViewSource}}" />
@@ -182,10 +182,9 @@
                           ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
                           RowDetailsVisibilityMode="Collapsed" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn  Header="{lex:Loc Cognitivo:local:Items}" Width="*" SelectedValueBinding="{Binding id_item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="name" SelectedValuePath="id_item" 
-                                                     ItemsSource="{Binding Source={StaticResource itemsViewSource}}" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Item}" Width="SizeToHeader" IsReadOnly="True" />
 
-                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:NeededbyDate}" Width="SizeToHeader">
+                                <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:NeededbyDate}" Width="SizeToHeader">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <DatePicker SelectedDate="{Binding date_needed_by, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
@@ -239,8 +238,7 @@
                                       ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
                                       RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
                                 <DataGrid.Columns>
-                                    <DataGridComboBoxColumn  Header="{lex:Loc Cognitivo:local:Items}" Width="*" SelectedValueBinding="{Binding id_item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="name" SelectedValuePath="id_item" 
-                                                     ItemsSource="{Binding Source={StaticResource itemsViewSource}}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Item}" Width="SizeToHeader" IsReadOnly="True" />
                                     <DataGridTextColumn Binding="{Binding Balance, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                                         Header="{lex:Loc Cognitivo:local:Available}" Width="64" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True" />
                                 </DataGrid.Columns>

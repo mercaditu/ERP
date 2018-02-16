@@ -76,7 +76,7 @@ namespace Cognitivo.Accounting
                 //}
                 try
                 {
-                    UserName = company.hash_debehaber;
+                    txtusername.Text = company.hash_debehaber;
                     RaisePropertyChanged("UserName");
                     check_api(company.hash_debehaber, Company_RUC);
                     if (_DebeHaberCompanyList.Count()>0)
@@ -108,7 +108,7 @@ namespace Cognitivo.Accounting
         {
             try
             {
-                string server = Settings.Default.DebeHaberConnString + "/api/transactionsverfiyV2/" + UserName + "/" + Company_RUC;
+                string server = Settings.Default.DebeHaberConnString + "/api/transactionsverfiyV2/" + txtusername.Text + "/" + Company_RUC;
                 var json = await DownloadPage(server);
                 _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
             }
@@ -154,7 +154,7 @@ namespace Cognitivo.Accounting
                 using (entity.db db = new entity.db())
                 {
                     entity.app_company company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
-                    company.hash_debehaber = UserName;
+                    company.hash_debehaber = txtusername.Text;
                     db.SaveChanges();
                 }
 

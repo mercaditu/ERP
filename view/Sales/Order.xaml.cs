@@ -681,5 +681,7 @@ namespace Cognitivo.Sales
             sales_orderViewSource = FindResource("sales_orderViewSource") as CollectionViewSource;
             Load_PrimaryDataThread( );
         }
+
+        
     }
 }

@@ -86,6 +86,11 @@ namespace Cognitivo.Product
             app_currencyViewSource.Source = CurrentSession.Currencies;
 
             cbxLocation.ItemsSource = CurrentSession.Locations.ToList();
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = RequestController.PageCount;
+            }
         }
 
         private void Approve_Click(object sender)

@@ -1,4 +1,5 @@
-﻿using MoreLinq;
+﻿using entity.Brillo;
+using MoreLinq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -22,8 +23,17 @@ namespace entity.Controller.Product
 
         public async void Load(int PageIndex)
         {
+            var predicate = PredicateBuilder.True<item_request>();
+            predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
+            predicate = predicate.And(x => x.is_archived == false);
+
+            if (Count == 0)
+            {
+                Count = db.item_request.Where(predicate).Count();
+            }
+
             await db.item_request
-                    .Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false)
+                    .Where(predicate)
                     .Include(x => x.production_order)
                     .Include(x => x.sales_order)
                     .Include(x => x.project)

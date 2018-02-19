@@ -411,8 +411,9 @@ namespace entity.Controller.Product
                             }
 
                             purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
+                            purchase_tender.item_request_decision.Add(decision);
                         }
-                        purchase_tender.item_request_decision.Add(decision);
+                       
                         db.purchase_tender.Add(purchase_tender);
                     }
 

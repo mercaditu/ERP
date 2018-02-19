@@ -47,6 +47,7 @@ namespace entity
 
         public virtual app_currency app_currency { get; set; }
         public virtual IEnumerable<app_account_detail> app_account_detail { get; set; }
+        public virtual ICollection<app_account_detail_archive> app_account_detail_archive { get; set; }
         public virtual IEnumerable<item_movement_value> item_movement_detail { get; set; }
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerable<sales_return> sales_return { get; set; }

@@ -32,6 +32,14 @@
         public int? movement_id { get; set; }
 
         public virtual item_request_detail item_request_detail { get; set; }
+        public virtual item_movement item_movement { get; set; }
+        public virtual item_transfer item_transfer { get; set; }
+        public virtual purchase_tender purchase_tender { get; set; }
+        public virtual production_order production_order { get; set; }
+
+      
+
+
         public virtual app_location app_location { get; set; }
     }
 }

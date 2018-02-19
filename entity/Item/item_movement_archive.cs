@@ -6,7 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class item_movement : Audit
+    public partial class item_movement_archive : Audit
     {
         public enum Actions
         {
@@ -21,24 +21,23 @@ namespace entity
             Red
         }
 
-        public item_movement()
+        public item_movement_archive()
         {
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
             item_movement_value = new List<item_movement_value>();
             item_movement_dimension = new List<item_movement_dimension>();
-            item_request_decision = new List<item_request_decision>();
             timestamp = DateTime.Now;
             trans_date = DateTime.Now;
             debit = 0;
             credit = 0;
-            child = new List<item_movement>();
+            child = new List<item_movement_archive>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long id_movement
+        public long id_movement_archieve
         {
             get
             {
@@ -59,6 +58,7 @@ namespace entity
         }
 
         private long _id_movement;
+
         public int id_item_product { get; set; }
         public int? id_transfer_detail { get; set; }
         public int? id_execution_detail { get; set; }
@@ -176,9 +176,9 @@ namespace entity
 
 
         //Heirarchy For Movement
-        public virtual ICollection<item_movement> child { get; set; }
+        public virtual ICollection<item_movement_archive> child { get; set; }
 
-        public virtual item_movement parent { get; set; }
+        public virtual item_movement_archive parent { get; set; }
 
         public virtual app_location app_location { get; set; }
 
@@ -193,7 +193,6 @@ namespace entity
         public virtual ICollection<item_movement_value> item_movement_value { get; set; }
         public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
         public virtual item_movement_value_rel item_movement_value_rel { get; set; }
-        public virtual ICollection<item_request_decision> item_request_decision { get; set; }
 
         public virtual item_product item_product
         {
@@ -241,14 +240,14 @@ namespace entity
                     );
             }
 
-            foreach (item_movement this_child in child)
+            foreach (item_movement_archive this_child in child)
             {
                 this_child.Update_ChildVales(item_movement_value_rel.total_value, true,DateTime.Now);
             }
         }
         public void Update_ChildBatch(string BatchCode,DateTime? ExpireDate)
         {
-            foreach (item_movement item_movement in child)
+            foreach (item_movement_archive item_movement in child)
             {
                 item_movement.code = BatchCode;
                 item_movement.expire_date = expire_date??null;

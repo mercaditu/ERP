@@ -365,6 +365,7 @@ namespace entity.Controller.Product
                             name = item_request.name,
                             code = 000,
                             trans_date = item_request.request_date
+
                         };
 
                         if (item_request.comment == "")
@@ -389,7 +390,7 @@ namespace entity.Controller.Product
                             {
                                 purchase_tender.id_project = project.id_project;
                             }
-
+                            
                             purchase_tender_item purchase_tender_item = new purchase_tender_item()
                             {
                                 id_item = decision.item_request_detail.id_item,
@@ -411,6 +412,7 @@ namespace entity.Controller.Product
 
                             purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                         }
+                        purchase_tender.item_request_decision.Add(decision);
                         db.purchase_tender.Add(purchase_tender);
                     }
 

@@ -302,6 +302,7 @@ namespace entity
         public virtual payment_schedual payment_schedual { get; set; }
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
+        public virtual ICollection<app_account_detail_archive> app_account_detail_archive { get; set; }
 
         #region Validation
 

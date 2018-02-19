@@ -18,7 +18,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             item_movement = new List<item_movement>();
-            //item_mov_archive = new List<item_mov_archive>();
+            item_movement_archive = new List<item_movement_archive>();
             timestamp = DateTime.Now;
             InStock = true;
         }
@@ -148,7 +148,7 @@ namespace entity
         public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }
         public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
-        //public virtual ICollection<item_mov_archive> item_mov_archive { get; set; }
+        public virtual ICollection<item_movement_archive> item_movement_archive { get; set; }
 
         #endregion "Nav Properties"
 

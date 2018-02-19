@@ -196,6 +196,7 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Application\app_account_detail_archive.cs" />
     <Compile Include="Application\app_comment.cs" />
     <Compile Include="Application\app_notification.cs" />
     <Compile Include="Application\app_company_interest.cs" />
@@ -311,6 +312,7 @@
     <Compile Include="Item\item_asset_maintainance.cs" />
     <Compile Include="Item\item_branch_safety.cs" />
     <Compile Include="Item\item_inventory_dimension.cs" />
+    <Compile Include="Item\item_movement_archive.cs" />
     <Compile Include="Item\item_movement_value.cs" />
     <Compile Include="Item\item_movement_value_detail.cs" />
     <Compile Include="Item\item_movement_value_rel.cs" />
@@ -367,6 +369,10 @@
     <Compile Include="Migrations\201801251013029_SocialIntegration.cs" />
     <Compile Include="Migrations\201801251013029_SocialIntegration.Designer.cs">
       <DependentUpon>201801251013029_SocialIntegration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802191150538_Archievetableanditemdesicion.cs" />
+    <Compile Include="Migrations\201802191150538_Archievetableanditemdesicion.Designer.cs">
+      <DependentUpon>201802191150538_Archievetableanditemdesicion.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
@@ -841,6 +847,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801251013029_SocialIntegration.resx">
       <DependentUpon>201801251013029_SocialIntegration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802191150538_Archievetableanditemdesicion.resx">
+      <DependentUpon>201802191150538_Archievetableanditemdesicion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

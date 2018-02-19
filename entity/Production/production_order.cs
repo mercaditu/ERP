@@ -25,6 +25,7 @@ namespace entity
             trans_date = DateTime.Now;
             production_order_detail = new List<production_order_detail>();
             item_request = new List<item_request>();
+            item_request_decision = new List<item_request_decision>();
 
             id_branch = CurrentSession.Id_Branch;
             id_terminal = CurrentSession.Id_Terminal;
@@ -145,6 +146,7 @@ namespace entity
 
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
+        public virtual ICollection<item_request_decision> item_request_decision { get; set; }
 
         #region Error
 

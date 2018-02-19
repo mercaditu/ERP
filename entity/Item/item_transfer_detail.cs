@@ -15,7 +15,7 @@ namespace entity
 			id_user = CurrentSession.Id_User;
 			is_head = true;
 			item_movement = new List<item_movement>();
-            //item_mov_archive = new List<item_mov_archive>();
+            item_movement_archive = new List<item_movement_archive>();
             item_transfer_dimension = new List<item_transfer_dimension>();
 		}
 
@@ -108,7 +108,7 @@ namespace entity
 		public virtual app_measurement measurement_weight { get; set; }
 		public virtual app_measurement measurement_volume { get; set; }
 		public virtual ICollection<item_movement> item_movement { get; set; }
-        //public virtual ICollection<item_mov_archive> item_mov_archive { get; set; }
+        public virtual ICollection<item_movement_archive> item_movement_archive { get; set; }
         public virtual ICollection<item_transfer_dimension> item_transfer_dimension { get; set; }
 		#region "Validation"
 

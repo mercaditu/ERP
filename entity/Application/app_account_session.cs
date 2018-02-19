@@ -31,6 +31,7 @@ namespace entity
         public int id_account { get; set; }
         public bool is_active { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
+        public virtual ICollection<app_account_detail_archive> app_account_detail_archive { get; set; }
         public virtual app_account app_account { get; set; }
 
         public string Error

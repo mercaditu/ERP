@@ -18,6 +18,7 @@ namespace entity
 
         public item_transfer()
         {
+            item_request_decision = new List<item_request_decision>();
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
@@ -165,6 +166,7 @@ namespace entity
         public virtual contact employee { get; set; }
         public virtual security_user user_requested { get; set; }
         public virtual security_user user_given { get; set; }
+        public virtual ICollection<item_request_decision> item_request_decision { get; set; }
 
         public string Error
         {

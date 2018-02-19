@@ -22,6 +22,7 @@ namespace entity
             purchase_order = new List<purchase_order>();
             purchase_tender_contact_detail = new List<purchase_tender_contact>();
             purchase_tender_item_detail = new List<purchase_tender_item>();
+            item_request_decision = new List<item_request_decision>();
         }
 
         [Key]
@@ -125,5 +126,6 @@ namespace entity
         public virtual app_terminal app_terminal { get; set; }
         public virtual app_document_range app_document_range { get; set; }
         public virtual project project { get; set; }
+        public virtual ICollection<item_request_decision> item_request_decision { get; set; }
     }
 }

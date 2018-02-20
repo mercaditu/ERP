@@ -866,7 +866,7 @@ namespace Cognitivo.Production
                     x =>
                     x.name.Contains(query) &&
                     x.type == production_order.ProductionOrderTypes.Production
-                    ).ToListAsync();
+                    ).ToList();
             }
         }
 

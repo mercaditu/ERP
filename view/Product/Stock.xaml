@@ -67,6 +67,16 @@
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
+                    <DataGridTextColumn ElementStyle="{StaticResource RightAlignStyle}"
+										Header="{lex:Loc Cognitivo:local:ConversionQuantity}" Width="Auto" >
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
+                                   ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
+                                <Binding Path="ConversionQuantity" TargetNullValue="" Mode="TwoWay" />
+                                <Binding Source="{x:Static mainpref:Settings.Default}" Path="QuantityDecimalStringFormat" Mode="OneWay" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Measurement}" Header="{lex:Loc Cognitivo:local:Measurement}" Width="Auto" />
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>

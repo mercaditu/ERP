@@ -1335,6 +1335,7 @@ CASE
                                 number = g.payment_approve != null ? g.payment_approve.number : "Not Ref",
                                 //SalesNumber = g.payment_schedual != null ? g.payment_schedual.sales_invoice != null ? g.payment_schedual.sales_invoice.number : "" : "",
                                 PurchaseNumber = g.payment_schedual != null ? g.payment_schedual.purchase_invoice != null ? g.payment_schedual.purchase_invoice.number : "" : "",
+                                PurchaseDate = g.payment_schedual != null ? g.payment_schedual.purchase_invoice != null ? g.payment_schedual.purchase_invoice.trans_date : DateTime.Now : DateTime.Now,
                                 BankAccount = g.app_account != null ? g.app_account.name : "",
                                 AmountWords = g != null ? g.app_currency != null ? g.app_currency.has_rounding ?
 

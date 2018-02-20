@@ -125,7 +125,7 @@ namespace entity
                     Type = x.Max(y => y.Type),
                     BatchCode = x.Max(y => y.BatchCode),
                     ExpiryDate = x.Max(y => y.ExpiryDate),
-                     TranDate = x.Max(y => y.TranDate),
+                    TranDate = x.Max(y => y.TranDate),
                     BarCode = x.Max(y => y.BarCode)
                 }).Where(x => x.Quantity > 0).ToList();
 
@@ -265,7 +265,7 @@ namespace entity
             }
             return StockList;
         }
-   
+
 
         public static List<StockList> GetList(int BranchID, bool forceData)
         {
@@ -331,6 +331,7 @@ namespace entity
                                 , ip.id_item_product as ProductID
                                 , ip.can_expire
                                 , (im.credit - sum(IFNULL(child.debit,0))) as Quantity
+                                , (im.credit - sum(IFNULL(child.debit,0))) * max(icf.value) * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from item_movement_dimension where id_movement = im.id_movement) as ConversionQuantity
                                 , sum(IFNULL(imvr.total_value, 0)) as Cost
                                 ,im.id_movement_value_rel as MovementRelID
                                 , im.code as BatchCode
@@ -341,6 +342,7 @@ namespace entity
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
                                 inner join item_product as ip on im.id_item_product = ip.id_item_product
+                                left join item_conversion_factor as icf on ip.id_item_product = icf.id_item_product
                                 inner join app_location as l on im.id_location = l.id_location
                                 left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
                                 where im.id_company = {0} and l.id_branch = {1}
@@ -358,12 +360,17 @@ namespace entity
                     int ProductID = Convert.ToInt32(itemRow["ProductID"]);
                     int LocationID = Convert.ToInt32(itemRow["LocationID"]);
                     int MovementID = Convert.ToInt32(itemRow["MovementID"]);
-                    int? MovementRelID=null;
+                    int? MovementRelID = null;
                     if (!(itemRow["MovementRelID"] is DBNull))
                     {
                         MovementRelID = Convert.ToInt32(itemRow["MovementRelID"]);
                     }
                     decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
+                    decimal? ConversionQuantity = null;
+                    if (!(itemRow["ConversionQuantity"] is DBNull))
+                    {
+                        ConversionQuantity = Convert.ToDecimal(itemRow["ConversionQuantity"]);
+                    }
                     decimal Cost = Convert.ToDecimal(itemRow["Cost"]);
                     string LocationName = Convert.ToString(itemRow["Location"]);
                     string BatchCode = Convert.ToString(itemRow["BatchCode"]);
@@ -388,6 +395,7 @@ namespace entity
                         Row.MovementID = MovementID;
                         Row.MovementRelID = MovementRelID;
                         Row.BranchID = BranchID;
+                        Row.ConversionQuantity = ConversionQuantity;
                         Row.Quantity = Quantity;
                         Row.Cost = Cost;
                         Row.BatchCode = BatchCode;
@@ -405,6 +413,7 @@ namespace entity
                         StockList Row = List.Where(x => x.ItemID == ItemID && x.Quantity == null).FirstOrDefault();
 
                         Row.Quantity = Quantity;
+                        Row.ConversionQuantity = ConversionQuantity;
                         Row.ProductID = ProductID;
                         Row.LocationID = LocationID;
                         Row.Location = LocationName;
@@ -435,6 +444,7 @@ namespace entity
                         Row.CompanyID = Original.CompanyID;
                         Row.Type = Original.Type;
                         Row.Quantity = Quantity;
+                        Row.ConversionQuantity = ConversionQuantity;
                         Row.Cost = Cost;
                         Row.BatchCode = BatchCode;
                         Row.ExpiryDate = ExpiryDate;

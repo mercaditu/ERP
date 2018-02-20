@@ -264,6 +264,7 @@ namespace entity.Controller.Product
                                 }
                             }
                             item_transfer.item_transfer_detail.Add(item_transfer_detail);
+                            item_transfer.item_request_decision.Add(decision);
                         }
 
                         db.item_transfer.Add(item_transfer);
@@ -469,6 +470,7 @@ namespace entity.Controller.Product
                             }
 
                             production_order.production_order_detail.Add(production_order_detail);
+                            production_order.item_request_decision.Add(decision);
                         }
 
                         if (production_order.production_order_detail.Count() > 0)

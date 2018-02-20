@@ -133,13 +133,13 @@
 											   HorizontalAlignment="Stretch"
 											   IsInput="{Binding is_input, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											   Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-											   Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-											   TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
+											   TaskName="{Binding item_description, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
 											   Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
 											   QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                OutOfStock="{Binding OutOfStock,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                               
                                                />
+                        <!--Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"-->
+
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
                 <Grid DataContext="{StaticResource production_orderViewSource}">

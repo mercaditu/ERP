@@ -58,6 +58,7 @@ namespace entity.Controller.Production
             await db.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+            await db.items.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
         }
 
         public production_order Create_Fraction(int Line)

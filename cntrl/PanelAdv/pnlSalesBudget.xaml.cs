@@ -127,7 +127,7 @@ namespace cntrl.PanelAdv
                             && (x.sales_order.status == Status.Documents_General.Approved || x.sales_order.status == Status.Documents_General.Pending))
                             .GroupBy(x => x.id_sales_budget_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
 
-                        sales_order_detail.quantity = sales_budget_detail.quantity - quantity;
+                        sales_order_detail.quantity = sales_budget_detail.id_project_task != null ? sales_budget_detail.quantity : sales_budget_detail.quantity - quantity;
 
                         if (sales_order_detail.quantity <= 0)
                         {

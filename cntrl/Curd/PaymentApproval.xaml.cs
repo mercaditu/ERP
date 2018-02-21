@@ -161,17 +161,20 @@ namespace cntrl.Curd
                 {
                     TotalPaid += entity.Brillo.Currency.convert_Values(payment_approve_detail.value, payment_approve_detail.id_currencyfx, payment_approve_detail.Default_id_currencyfx, App.Modules.Sales);
                 }
-                if (Math.Round(TotalPaid) > Math.Round(TotalPayable))
-                {
-                    String Currency = PaymentDB.app_currency.Where(x => x.id_currency == id.id_currency).FirstOrDefault().name;
-                    MessageBox.Show("Your Amount Is Higher Than :-" + TotalPayable + Currency);
-                    return;
-                }
+                //if (Math.Round(TotalPaid) > Math.Round(TotalPayable))
+                //{
+                //    String Currency = PaymentDB.app_currency.Where(x => x.id_currency == id.id_currency).FirstOrDefault().name;
+
+                //    MessageBox.Show("Your Amount Is Higher Than :-" + TotalPayable + Currency);
+                //    return;
+                //}
             }
             try
             {
-                PaymentDB.SaveChanges();
                 app_document_range app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment_approve.id_range).FirstOrDefault();
+                payment_approve.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                PaymentDB.SaveChanges();
+                
                 if (app_document_range != null)
                 {
                     entity.Brillo.Document.Start.Automatic(payment_approve, app_document_range);

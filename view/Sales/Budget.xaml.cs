@@ -481,7 +481,7 @@ namespace Cognitivo.Sales
         {
             sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
 
-            if (sales_budget != null && sales_budget.status == Status.Documents_General.Approved)
+            if (sales_budget != null && sales_budget.status == Status.Documents_General.Approved )
             {
                 sales_order sales_order = new sales_order()
                 {
@@ -504,6 +504,9 @@ namespace Cognitivo.Sales
 
                 foreach (sales_budget_detail sales_budget_detail in sales_budget.sales_budget_detail)
                 {
+                    decimal _qty = sales_budget_detail.quantity - sales_budget_detail.sales_order_detail
+                                                                  .Where(x => x.sales_order.status != Status.Documents_General.Annulled)
+                                                                  .Sum(x => x.quantity);
                     sales_order_detail sales_order_detail = new sales_order_detail()
                     {
                         comment = sales_budget_detail.comment,
@@ -514,9 +517,7 @@ namespace Cognitivo.Sales
                         id_project_task = sales_budget_detail.id_project_task,
                         id_sales_budget_detail = sales_budget_detail.id_sales_budget_detail,
                         id_vat_group = sales_budget_detail.id_vat_group,
-                        quantity = sales_budget_detail.quantity - sales_budget_detail.sales_order_detail
-                                                                    .Where(x => x.sales_order.status != Status.Documents_General.Annulled)
-                                                                    .Sum(x => x.quantity),
+                        quantity = sales_budget_detail.id_project_task!=null ?sales_budget_detail.quantity :_qty,
                         unit_cost = sales_budget_detail.unit_cost,
                         unit_price = sales_budget_detail.unit_price,
                         movement_id = sales_budget_detail.movement_id,

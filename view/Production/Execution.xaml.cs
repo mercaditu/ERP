@@ -69,7 +69,7 @@ namespace Cognitivo.Production
 
         private void Load()
         {
-            ExecutionDB.Load(production_order.ProductionOrderTypes.Production,dataPager.PagedSource.PageIndex);
+            ExecutionDB.Load(production_order.ProductionOrderTypes.Production, dataPager.PagedSource.PageIndex);
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
 
             production_orderViewSource.Source = ExecutionDB.db.production_order.Local.Where(x => x.is_archived == false);
@@ -145,14 +145,14 @@ namespace Cognitivo.Production
 
                             if (production_order_detail.item.id_item_type == item.item_type.Service)
                             {
-                                string start_date = string.Format("{0} {1}", dtpstartdate.Text, Convert.ToDateTime(dtpstarttime. Text).ToShortTimeString());
+                                string start_date = string.Format("{0} {1}", dtpstartdate.Text, Convert.ToDateTime(dtpstarttime.Text).ToShortTimeString());
                                 _production_execution_detail.start_date = Convert.ToDateTime(start_date); //Convert.ToDateTime(dtpstartdate.TextInput.);
                                 string end_date = string.Format("{0} {1}", dtpenddate.Text, Convert.ToDateTime(dtpendtime.Text).ToShortTimeString());
                                 _production_execution_detail.end_date = Convert.ToDateTime(end_date); //Convert.ToDateTime(end_date);
                             }
                             else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                             {
-                                string start_date =  string.Format("{0} {1}", dtpscstartdate.Text, Convert.ToDateTime(dtpscstarttime.Value).ToShortTimeString());
+                                string start_date = string.Format("{0} {1}", dtpscstartdate.Text, Convert.ToDateTime(dtpscstarttime.Value).ToShortTimeString());
                                 _production_execution_detail.start_date = Convert.ToDateTime(start_date);
                                 string end_date = string.Format("{0} {1}", dtpscenddate.Text, Convert.ToDateTime(dtpscendtime.Value).ToShortTimeString());
                                 _production_execution_detail.end_date = Convert.ToDateTime(end_date);
@@ -209,8 +209,8 @@ namespace Cognitivo.Production
         private void toolBar_btnApprove_Click(object sender)
         {
             toolBar_btnSave_Click(sender);
-            
-            if (MessageBox.Show("FINALIZAR PRODUCCION: Está seguro de finalizarlo?","Cognitivo",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+
+            if (MessageBox.Show("FINALIZAR PRODUCCION: Está seguro de finalizarlo?", "Cognitivo", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 if (ExecutionDB.Approve(production_order.ProductionOrderTypes.Production))
                 {
@@ -367,11 +367,11 @@ namespace Cognitivo.Production
                     //DeleteDetailGridRow
                     exexustiondetail.CancelEdit();
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
-                    if (production_execution_detail.production_service_account !=null)
+                    if (production_execution_detail.production_service_account != null)
                     {
                         ExecutionDB.db.production_service_account.Remove(production_execution_detail.production_service_account);
                         production_execution_detail.production_service_account = null;
-                        
+
                     }
                     production_execution_detail.State = EntityState.Deleted;
                     production_order_detail.production_execution_detail.Remove(production_execution_detail);
@@ -410,7 +410,7 @@ namespace Cognitivo.Production
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
 
-        private async void btnInsert_Click(object sender, EventArgs e)
+        private void btnInsert_Click(object sender, EventArgs e)
         {
             production_order_detail production_order_detail = null;
             Button btn = sender as Button;
@@ -482,11 +482,16 @@ namespace Cognitivo.Production
                             {
                                 int ProductID = production_order_detail.item.item_product.FirstOrDefault().id_item_product;
 
-                                await ExecutionDB.db.item_movement.Where(x =>
-                                    x.id_item_product == ProductID &&
-                                    x.id_location == LocationID).LoadAsync();
+                                //await ExecutionDB.db.item_movement.Where(x =>
+                                //    x.id_item_product == ProductID &&
+                                //    x.id_location == LocationID).LoadAsync();
 
-                                QuantityInStock = ExecutionDB.db.item_movement.Local.Sum(x => x.credit) - ExecutionDB.db.item_movement.Local.Sum(x => x.debit);
+                                //QuantityInStock = ExecutionDB.db.item_movement.Local.Sum(x => x.credit) - ExecutionDB.db.item_movement.Local.Sum(x => x.debit);
+                                List<entity.Brillo.StockList> stocklist = CurrentItems.getProducts_InStock_GroupBy(production_order_detail.production_order.production_line.app_location.app_branch.id_branch, production_order_detail.production_order.trans_date, true).ToList();
+
+                                QuantityInStock = Convert.ToDecimal(stocklist.Where(x =>
+                                      x.ProductID == ProductID &&
+                                      x.LocationID == LocationID).Max(x => x.Quantity));
                             }
 
                             if (QuantityInStock < (QuantityExe + Quantity))
@@ -553,7 +558,7 @@ namespace Cognitivo.Production
             _production_execution_detail.unit_cost = production_order_detail.item.unit_cost != null ? (decimal)production_order_detail.item.unit_cost : 0;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution_detail.is_input = production_order_detail.is_input;
-            if (_production_execution_detail.item.id_item_type == item.item_type.Product )
+            if (_production_execution_detail.item.id_item_type == item.item_type.Product)
             {
                 if (_production_execution_detail.item.item_product.FirstOrDefault() != null)
                 {
@@ -685,7 +690,7 @@ namespace Cognitivo.Production
                     .Where
                     (
                     x =>
-                    x.name.Contains(query) 
+                    x.name.Contains(query)
                     ).ToListAsync();
             }
         }

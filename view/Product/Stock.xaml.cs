@@ -68,7 +68,7 @@ namespace Cognitivo.Product
                 }
                 else
                 {
-                    inventoryViewSource.Source = CurrentItems.getProducts_InStock_GroupBy(app_branch.id_branch, InventoryDate, true);// CurrentItems.getProducts_InStockGroupBy(app_branch.id_branch, InventoryDate);                                                                                                       //});
+                    inventoryViewSource.Source = CurrentItems.getProducts_InStock_GroupBy(app_branch.id_branch, InventoryDate, true);
                 }
 
                 TextBox_TextChanged(null, null);

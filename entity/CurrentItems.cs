@@ -60,6 +60,7 @@ namespace entity
                     Location = x.Max(y => y.Location),
                     Measurement = x.Max(y => y.Measurement),
                     Quantity = x.Sum(y => y.Quantity),
+                    ConversionQuantity = x.Sum(y => y.ConversionQuantity),
                     Cost = x.Max(y => y.Cost),
                     MovementID = x.Max(y => y.MovementID),
                     MovementRelID = x.Max(y => y.MovementRelID),
@@ -86,6 +87,7 @@ namespace entity
                 Stock.Location = item.Location;
                 Stock.Measurement = item.Measurement;
                 Stock.Quantity = item.Quantity;
+                Stock.ConversionQuantity = item.ConversionQuantity;
                 Stock.Cost = item.Cost;
                 Stock.MovementID = item.MovementID;
                 Stock.MovementRelID = item.MovementRelID;
@@ -115,6 +117,7 @@ namespace entity
                     Location = x.Max(y => y.Location),
                     Measurement = x.Max(y => y.Measurement),
                     Quantity = x.Sum(y => y.Quantity),
+                    ConversionQuantity = x.Sum(y => y.ConversionQuantity),
                     Cost = x.Max(y => y.Cost),
                     MovementID = x.Max(y => y.MovementID),
                     MovementRelID = x.Max(y => y.MovementRelID),
@@ -140,6 +143,7 @@ namespace entity
                 Stock.Location = item.Location;
                 Stock.Measurement = item.Measurement;
                 Stock.Quantity = item.Quantity;
+                Stock.ConversionQuantity = item.ConversionQuantity;
                 Stock.Cost = item.Cost;
                 Stock.MovementID = item.MovementID;
                 Stock.MovementRelID = item.MovementRelID;
@@ -168,6 +172,7 @@ namespace entity
                     Location = x.Max(y => y.Location),
                     Measurement = x.Max(y => y.Measurement),
                     Quantity = x.Sum(y => y.Quantity),
+                    ConversionQuantity = x.Sum(y => y.ConversionQuantity),
                     Cost = x.Max(y => y.Cost),
                     MovementID = x.Max(y => y.MovementID),
                     MovementRelID = x.Max(y => y.MovementRelID),
@@ -191,6 +196,7 @@ namespace entity
                 Stock.Location = item.Location;
                 Stock.Measurement = item.Measurement;
                 Stock.Quantity = item.Quantity;
+                Stock.ConversionQuantity = item.ConversionQuantity;
                 Stock.Cost = item.Cost;
                 Stock.MovementID = item.MovementID;
                 Stock.MovementRelID = item.MovementRelID;
@@ -218,6 +224,7 @@ namespace entity
                     Location = x.Max(y => y.Location),
                     Measurement = x.Max(y => y.Measurement),
                     Quantity = x.Sum(y => y.Quantity),
+                    ConversionQuantity = x.Sum(y => y.ConversionQuantity),
                     Cost = x.Max(y => y.Cost),
                     MovementID = x.Max(y => y.MovementID),
                     MovementRelID = x.Max(y => y.MovementRelID),
@@ -249,6 +256,7 @@ namespace entity
                 Stock.Location = item.Location;
                 Stock.Measurement = item.Measurement;
                 Stock.Quantity = item.Quantity;
+                Stock.ConversionQuantity = item.ConversionQuantity;
                 Stock.Cost = item.Cost;
                 Stock.MovementID = item.MovementID;
                 Stock.MovementRelID = item.MovementRelID;

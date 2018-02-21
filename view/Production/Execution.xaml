@@ -133,7 +133,7 @@
 											   HorizontalAlignment="Stretch"
 											   IsInput="{Binding is_input, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 											   Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-											   TaskName="{Binding item_description, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
+											   TaskName="{Binding name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
 											   Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
 											   QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                OutOfStock="{Binding OutOfStock,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -186,7 +186,7 @@
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
 														Binding="{Binding trans_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" Width="60" />
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
-														Binding="{Binding item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" />
+														Binding="{Binding name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" />
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True">
 
                                         <DataGridTextColumn.Binding>
@@ -247,7 +247,7 @@
 
                             <DataGrid Margin="4" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding}" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100" />
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100" />
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}"  Width="100" IsReadOnly="True" >
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
@@ -365,7 +365,7 @@
 										  ItemsSource="{Binding}" >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
-														Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+														Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 														Width="100" />
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}"
 														Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -458,7 +458,7 @@
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgCapital"  AutoGenerateColumns="False" ItemsSource="{Binding}" >
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100" />
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100" />
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}"  Width="100" >
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
@@ -497,7 +497,7 @@
 									  ItemsSource="{Binding}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True"
-														Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+														Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 														Width="100" />
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}"
 														

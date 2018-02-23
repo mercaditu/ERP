@@ -286,10 +286,11 @@ CASE
                                         , parent.code as ParentCode, parent.name  as ParentTask
 
 
-                                        from production_order as po
+                                        from projects as p
 
-                                        left join projects as p on po.id_project = p.id_project
+                                      
                                         left join project_template on p.id_project_template=project_template.id_project_template
+                                        left join production_order as po on po.id_project = p.id_project
                                         left join contacts as c on p.id_contact = c.id_contact
                                         inner join production_line as l on po.id_production_line = l.id_production_line
                                         inner join production_order_detail as pod on po.id_production_order = pod.id_production_order

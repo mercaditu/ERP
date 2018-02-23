@@ -691,7 +691,7 @@ namespace Cognitivo.Production
                     (
                     x =>
                     x.name.Contains(query)
-                    ).ToListAsync();
+                    ).ToList();
             }
         }
 

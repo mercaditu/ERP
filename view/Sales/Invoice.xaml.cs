@@ -74,10 +74,10 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.Source = await SalesDB.db.sales_invoice
                     .Where
                     (
-                    x =>
-                    x.contact.name.Contains(query) ||
+                    x => x.is_archived==false &&
+                    (x.contact.name.Contains(query) ||
                     x.contact.gov_code.Contains(query) ||
-                    x.number.Contains(query)
+                    x.number.Contains(query))
                     )
                 .OrderByDescending(x => x.trans_date)
                 .ThenBy(x => x.number)

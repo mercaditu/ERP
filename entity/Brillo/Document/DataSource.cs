@@ -307,16 +307,16 @@ CASE
                                         left join project_task pt on pt.id_project_task=pod.id_project_task
                                         left join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient
 
-                                        where po.id_company = @CompanyID and (ped.id_contact is null) and po.id_production_order=@ProductionID and
- ((select name 
+                                        where po.id_company = @CompanyID and (ped.id_contact is null) and p.id_project=@ProductionID and
+ (select count(name) 
  from item_tag_detail 
  inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag 
- where item_tag_detail.id_item = i.id_item 
- order by item_tag_detail.is_default limit 0,1))='report'
+ where item_tag_detail.id_item = pod.id_item and item_tag.name ='report'
+ order by item_tag_detail.is_default ) = 1 
 
                                     group by ped.id_execution_detail ";
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
-            query = query.Replace("@ProductionID", production_order.id_production_order.ToString());
+            query = query.Replace("@ProductionID", production_order.id_project.ToString());
             DataTable dt = QueryExecutor.DT(query);
 
 

@@ -108,15 +108,18 @@ namespace Cognitivo.Sales
             MessageBoxResult res = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
-                if (sales_budget!=null)
+                foreach (sales_budget budget in SalesBudgetDB.db.sales_budget.Local.Where(x => x.IsSelected))
                 {
-                    SalesBudgetDB.db.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);
-                    sales_budgetViewSource.View.MoveCurrentToFirst();
-                    Save_Click(sender);
+                    if (budget != null && budget.State != EntityState.Added)
+                    {
+                        budget.is_archived = true;
+                    }
                 }
-              
+
+                SalesBudgetDB.db.SaveChanges();
             }
+            SalesBudgetDB.Initialize();
+            Page_Loaded(null, null);
         }
 
         private void Cancel_Click(object sender)

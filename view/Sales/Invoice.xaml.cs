@@ -74,7 +74,8 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.Source = await SalesDB.db.sales_invoice
                     .Where
                     (
-                    x => x.is_archived==false &&
+                    x=>x.id_company==CurrentSession.Id_Company &&
+                    x.is_archived==false &&
                     (x.contact.name.Contains(query) ||
                     x.contact.gov_code.Contains(query) ||
                     x.number.Contains(query))

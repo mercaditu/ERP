@@ -307,7 +307,7 @@ CASE
                                         left join project_task pt on pt.id_project_task=pod.id_project_task
                                         left join hr_time_coefficient as htc on ped.id_time_coefficient = htc.id_time_coefficient
 
-                                        where po.id_company = @CompanyID and (ped.id_contact is null) and p.id_project=@ProductionID and
+                                        where po.id_company = @CompanyID and  p.id_project=@ProductionID and
  (select count(name) 
  from item_tag_detail 
  inner join item_tag on item_tag_detail.id_tag = item_tag.id_tag 

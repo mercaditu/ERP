@@ -487,11 +487,11 @@ namespace Cognitivo.Production
                                 //    x.id_location == LocationID).LoadAsync();
 
                                 //QuantityInStock = ExecutionDB.db.item_movement.Local.Sum(x => x.credit) - ExecutionDB.db.item_movement.Local.Sum(x => x.debit);
-                                List<entity.Brillo.StockList> stocklist = CurrentItems.getProducts_InStock_GroupBy(production_order_detail.production_order.production_line.app_location.app_branch.id_branch, production_order_detail.production_order.trans_date, true).ToList();
+                                List<entity.Brillo.StockList> stocklist = CurrentItems.getProducts_InStock_GroupByLocation(production_order_detail.production_order.production_line.app_location.app_branch.id_branch, production_order_detail.production_order.trans_date, true).ToList();
 
                                 QuantityInStock = Convert.ToDecimal(stocklist.Where(x =>
                                       x.ProductID == ProductID &&
-                                      x.LocationID == LocationID).Max(x => x.Quantity));
+                                      x.LocationID == LocationID).Sum(x => x.Quantity));
                             }
 
                             if (QuantityInStock < (QuantityExe + Quantity))

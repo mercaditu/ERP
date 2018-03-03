@@ -1183,6 +1183,14 @@ namespace entity.Brillo.Logic
                     item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_packing_detail == sales_packing_detail.id_sales_packing_detail).ToList());
                 }
             }
+            else if (Application_ID == App.Names.PurchasePacking)
+            {
+                purchase_packing purchase_packing = Transcation as purchase_packing;
+                foreach (purchase_packing_detail purchase_packing_detail in purchase_packing.purchase_packing_detail)
+                {
+                    item_movementList.AddRange(db.item_movement.Where(x => x.id_purchase_packing_detail == purchase_packing_detail.id_purchase_packing_detail).ToList());
+                }
+            }
 
             if (item_movementList.Count() > 0)
             {

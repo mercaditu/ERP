@@ -247,7 +247,7 @@ namespace entity
                               app_currencyfx.id_currencyfx,
                               item_transfer_detail.id_item_product,
                               app_location_dest.id_location,
-                              item_movement.debit,
+                              item_transfer_detail.quantity_destination,
                               item_transfer_detail.item_transfer.trans_date,
                               Unit_cost,
                               stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),

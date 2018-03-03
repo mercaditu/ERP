@@ -204,6 +204,17 @@ namespace entity
                         return "Please select diffrent  Destination";
                 }
 
+                if (columnName == "app_location_origin" || columnName == "app_location_destination")
+                {
+                    if (app_location_origin == app_location_destination && transfer_type == Transfer_Types.Movement)
+                        return "Please select diffrent Origin and Destination";
+                }
+                if (columnName == "app_location_destination")
+                {
+                    if (app_location_origin == null)
+                        return "Please select diffrent  Destination";
+                }
+
 
                 return "";
             }

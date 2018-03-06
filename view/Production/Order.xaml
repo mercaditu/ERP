@@ -170,7 +170,7 @@
                                     <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
                                     <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}" />
                                     <DatePicker SelectedDate="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
-                                    
+
                                     <Button Content="Technical Report" Style="{StaticResource btn_green}" Click="TechnicalReport_Click"/>
 
                                 </StackPanel>
@@ -235,20 +235,23 @@
                                             <TextBox IsEnabled="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProuctionPending2BooleanConverter}}"
 											 Text="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" Style="{StaticResource input_textbox}" />
                                         </StackPanel>
-                                        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"  Width="256"
-                                          ItemsSource="{Binding production_order_dimension,Source={StaticResource production_orderproduction_order_detailViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowDetailsVisibilityMode="Collapsed"
+                                        <StackPanel x:Name="stackDimension" DataContext="{Binding Path=SelectedItem_, ElementName=treeProject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <DataGrid AutoGenerateColumns="False" x:Name="DetailDimension" EnableRowVirtualization="True"  Width="256"
+                                                        ItemsSource="{Binding production_order_dimension, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                           RowDetailsVisibilityMode="Collapsed"
                                           CanUserAddRows="False" >
-                                            <DataGrid.Columns>
-                                                <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
+                                                <DataGrid.Columns>
+                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                                <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100" />
-                                                <DataGridComboBoxColumn x:Name="AppMeasurementComboBox"
+                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100" />
+                                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox"
 									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50" />
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </TabItem>
@@ -287,7 +290,7 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
-                            <!--<TabItem Header="{lex:Loc RawMaterial}">
+                            <TabItem Header="{lex:Loc RawMaterial}">
                                 <TabItem.IsEnabled>
                                     <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
 										 Converter="{StaticResource SecurityConverter}">
@@ -309,7 +312,7 @@
                                         <DataGridTextColumn Binding="{Binding Requested, StringFormat={}{0:N}}" Header="{lex:Loc Requested}" ElementStyle="{StaticResource RightAlignStyle}" Width="SizeToHeader" />
                                     </DataGrid.Columns>
                                 </DataGrid>
-                            </TabItem>-->
+                            </TabItem>
                             <TabItem Header="{lex:Loc FixedAssets}">
                                 <TabItem.IsEnabled>
                                     <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"

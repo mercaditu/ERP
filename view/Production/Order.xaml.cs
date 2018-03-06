@@ -270,7 +270,7 @@ namespace Cognitivo.Production
                     }
 
                     item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Product).ToList();
-                    //item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
+                    item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.RawMaterial).ToList();
                     item_SupplierDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.Supplies).ToList();
                     item_CapitalDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.FixedAssets).ToList();
                     item_ServiceContractDataGrid.ItemsSource = LogisticsList.Where(x => x.Type == item.item_type.ServiceContract).ToList();
@@ -289,10 +289,10 @@ namespace Cognitivo.Production
             {
                 Logistics = (Class.Logistics)item_ProductDataGrid.SelectedItem;
             }
-            //else if (item_RawDataGrid.SelectedItem != null)
-            //{
-            //    Logistics = (Class.Logistics)item_RawDataGrid.SelectedItem;
-            //}
+            else if (item_RawDataGrid.SelectedItem != null)
+            {
+                Logistics = (Class.Logistics)item_RawDataGrid.SelectedItem;
+            }
             else if (item_ServiceContractDataGrid.SelectedItem != null)
             {
                 Logistics = (Class.Logistics)item_ServiceContractDataGrid.SelectedItem;

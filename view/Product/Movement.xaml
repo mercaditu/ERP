@@ -105,7 +105,7 @@
 						  SelectedValuePath="id_location" Grid.Row="2" Width="111"
 						  ItemsSource="{Binding Source={StaticResource location_originViewSource}}"
 						  SelectedItem="{Binding app_location_origin,
-												  Mode=TwoWay, ValidatesOnExceptions=True,
+												  Mode=TwoWay, ValidatesOnExceptions=True,ValidatesOnDataErrors=True,
 												  NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
 						  Style="{StaticResource input_combobox}" />
                     </StackPanel>
@@ -116,7 +116,7 @@
 						  SelectedValuePath="id_location" ItemsSource="{Binding Source={StaticResource location_destViewSource}}"
 						  SelectedItem="{Binding app_location_destination,
 												  Mode=TwoWay,
-												  ValidatesOnExceptions=True,
+												  ValidatesOnExceptions=True,ValidatesOnDataErrors=True,
 												  NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
 						  Style="{StaticResource input_combobox}" />
                     </StackPanel>

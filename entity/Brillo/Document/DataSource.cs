@@ -1046,7 +1046,8 @@ CASE
                     DimensionString = g.DimensionString,
                     Measurement = g.item != null ? g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",
                     request_date = g.item_request.request_date,
-                    trans_date = g.item_request.timestamp
+                    trans_date = g.item_request.timestamp,
+                    number=g.item_request.number
                 }).ToList();
 
             return reportDataSource;

@@ -135,6 +135,14 @@ namespace cntrl.PanelAdv
                     }
 
                     production_order.status = entity.Status.Production.Pending;
+                    foreach (project_task_dimension project_task_dimension in _project_task.project_task_dimension)
+                    {
+                        production_order_dimension production_order_dimension = new production_order_dimension();
+                        production_order_dimension.id_dimension = project_task_dimension.id_dimension;
+                        production_order_dimension.value = project_task_dimension.value;
+                        production_order_dimension.id_measurement = project_task_dimension.id_measurement;
+                        production_order_detail.production_order_dimension.Add(production_order_dimension);
+                    }
                     production_order.production_order_detail.Add(production_order_detail);
                 }
 

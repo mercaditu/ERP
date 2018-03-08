@@ -812,11 +812,10 @@ namespace Cognitivo.Production
         {
             if (itemDataGrid.SelectedItem is production_order_detail obj)
             {
-                if (obj.project_task != null)
+                if (obj != null)
                 {
-                    int _id_task = obj.project_task.id_project_task;
                     project_task_dimensionViewSource = (CollectionViewSource)FindResource("project_task_dimensionViewSource");
-                    project_task_dimensionViewSource.Source = OrderDB.db.project_task_dimension.Where(x => x.id_project_task == _id_task).ToList();
+                    project_task_dimensionViewSource.Source = obj.production_order_dimension.ToList();
                 }
             }
         }

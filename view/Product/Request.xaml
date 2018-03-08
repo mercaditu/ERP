@@ -233,6 +233,7 @@
                         <Grid>
                             <Label Content="{lex:Loc RequestResource}" Style="{StaticResource H2}" VerticalAlignment="Top" Margin="0,20,0,0" />
                             <Button Content="{lex:Loc GetData}" VerticalAlignment="Top" Click="GenerateaMovement_Click"/>
+                            <!--<Button Content="{lex:Loc AddNew}" VerticalAlignment="Top" Click="AddNew_Click"/>-->
                             <DataGrid  Margin="0,70,0,0"
                                       AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False" SelectionChanged="DataGrid_SelectionChanged"
                                       ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" SelectionMode="Single"
@@ -247,7 +248,7 @@
                                         <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
                         		                  EnableRowVirtualization="True" Height="Auto" Margin="8,4"
                         		                  ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailDimensionViewSource}}"
-                        		                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                        		                  RowDetailsVisibilityMode="VisibleWhenSelected" >
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:Dimension}" Width="100" FontWeight="Bold" />
@@ -299,6 +300,7 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
+                                    
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="{lex:Loc Movement}" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource B2V}}">
@@ -312,6 +314,7 @@
                                             <DataGridTextColumn
                                 Header="{lex:Loc Cognitivo:local:Requested}" Binding="{Binding Quantity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="*" />
                                         </DataGrid.Columns>
+                                        
                                     </DataGrid>
                                     
                                 </Grid>

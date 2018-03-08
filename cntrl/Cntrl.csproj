@@ -337,6 +337,7 @@
     <Compile Include="Curd\Promotion\Discount_OnTag.xaml.cs">
       <DependentUpon>Discount_OnTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Item\Item.cs" />
     <Compile Include="toolBarNotification.xaml.cs">
       <DependentUpon>toolBarNotification.xaml</DependentUpon>
     </Compile>
@@ -723,6 +724,7 @@
     <EmbeddedResource Include="Reports\Finances\PaymentRecievableByDate.rdlc" />
     <EmbeddedResource Include="Reports\Finances\PaymentRecievablesBySalesman.rdlc" />
     <EmbeddedResource Include="Reports\Finances\RecievablesBySalesman.rdlc" />
+    <EmbeddedResource Include="Reports\Item\Item.rdlc" />
     <EmbeddedResource Include="Reports\Productions\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reports\Productions\HR.rdlc" />
     <EmbeddedResource Include="Reports\Productions\ProductionOrder.rdlc">

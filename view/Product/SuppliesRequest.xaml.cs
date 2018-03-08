@@ -31,21 +31,36 @@ namespace Cognitivo.Product
 
         private void sbxItem_Select(object sender, RoutedEventArgs e)
         {
+            int? line_number = 100;
+            app_document app_document = ItemDB.app_document.Where(x => x.id_application == entity.App.Names.RequestManagement).FirstOrDefault();
+            if (app_document!=null)
+            {
+                if (app_document.line_limit!=null)
+                {
+                    line_number = app_document.line_limit;
+                }
+              
+            }
             if (sbxItem.ItemID > 0)
             {
+               
                 item item = ItemDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 if (item != null)
                 {
                     item_request item_request = item_requestViewSource.View.CurrentItem as item_request;
                     if (item_request != null)
                     {
-                        item_request_detail item_request_detail = new item_request_detail();
-                        item_request_detail.id_item = sbxItem.ItemID;
-                        item_request_detail.item = item;
-                        item_request_detail.quantity = 1;
-                        item_request_detail.urgency = entity.item_request_detail.Urgencies.Medium;
-                        item_request.item_request_detail.Add(item_request_detail);
-                        item_requestitem_request_detailViewSource.View.Refresh();
+                        if (item_request.item_request_detail.Count()< line_number)
+                        {
+                            item_request_detail item_request_detail = new item_request_detail();
+                            item_request_detail.id_item = sbxItem.ItemID;
+                            item_request_detail.item = item;
+                            item_request_detail.quantity = 1;
+                            item_request_detail.urgency = entity.item_request_detail.Urgencies.Medium;
+                            item_request.item_request_detail.Add(item_request_detail);
+                            item_requestitem_request_detailViewSource.View.Refresh();
+                        }
+                       
                     }
                 }
             }

@@ -125,6 +125,7 @@
         public virtual app_currency app_currency { get; set; }
         public virtual app_department app_department { get; set; }
         public virtual app_branch app_branch { get; set; }
+       // public virtual app_document_range app_document_range { get; set; }
 
         public void GetTotalDecision()
         {

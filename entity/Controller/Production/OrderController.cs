@@ -53,7 +53,7 @@ namespace entity.Controller.Production
                     .Skip(PageIndex * PageSize).Take(PageSize).LoadAsync();
             }
 
-         
+           
             await db.production_line.Where(x => x.id_company == CurrentSession.Id_Company && x.app_location.id_branch == CurrentSession.Id_Branch).LoadAsync();
             await db.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();

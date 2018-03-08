@@ -99,5 +99,37 @@ namespace Cognitivo.Configs
             }
 
         }
+
+
+
+        private void AddDimension_Click(object sender, RoutedEventArgs e)
+        {
+           
+            using (db db = new db())
+            {
+                foreach (production_order_detail production_order_detail in db.production_order_detail.Where(x => x.id_project_task != null).ToList())
+                {
+                    project_task project_task = db.project_task.Where(x => x.id_project_task == production_order_detail.id_project_task).First();
+                    if (project_task != null)
+                    {
+                        if (production_order_detail.production_order_dimension.Count() == 0)
+                        {
+                            foreach (project_task_dimension project_task_dimension in project_task.project_task_dimension)
+                            {
+                                production_order_dimension production_order_dimension = new production_order_dimension();
+                                production_order_dimension.id_dimension = project_task_dimension.id_dimension;
+                                production_order_dimension.value = project_task_dimension.value;
+                                production_order_dimension.id_measurement = project_task_dimension.id_measurement;
+                                production_order_detail.production_order_dimension.Add(production_order_dimension);
+                            }
+                        }
+                    }
+                }
+                db.SaveChanges();
+            }
+
+          
+
+        }
     }
 }

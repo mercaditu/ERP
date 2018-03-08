@@ -225,6 +225,7 @@
     <Compile Include="Brillo\Email.cs" />
     <Compile Include="Brillo\EncryptDecrypt.cs" />
     <Compile Include="Brillo\ImportCostReport.cs" />
+    <Compile Include="Brillo\Task2Excel.cs" />
     <Compile Include="Brillo\Inventory2Excel.cs" />
     <Compile Include="Brillo\IO.cs" />
     <Compile Include="Brillo\Licence.cs" />

@@ -704,6 +704,39 @@ namespace Cognitivo.Product
 
         }
 
+        //private void AddNew_Click(object sender, RoutedEventArgs e)
+        //{
+        //    CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
+        //    item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+
+        //    if (item_request_decisionpurchaseDataGrid.SelectedItem != null)
+        //    {
+        //        Decision desion = item_request_decisionpurchaseDataGrid.SelectedItem as Decision;
+
+        //        if (desion.State == State.Added)
+        //        {
+        //            desion.State = State.Modified;
+        //            item_request_decision item_request_decision = new item_request_decision()
+        //            {
+        //                IsSelected = true,
+        //                quantity = 1
+        //            };
+
+        //            item_request_decision.decision = item_request_decision.Decisions.Purchase;
+        //            item_request_detail.item_request_decision.Add(item_request_decision);
+        //        }
+        //    }
+
+        //    item_request_detail.item_request.GetTotalDecision();
+        //    item_request_detail.RaisePropertyChanged("Balance");
+        //    RequestController.db.SaveChangesAsync();
+
+        //    item_requestViewSource.View.MoveCurrentToLast();
+        //    item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+        //    item_request_detailitem_request_decisionViewSource.View.Refresh();
+        //    Edit_Click(sender);
+        //}
+
         private void RowDetail_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is CheckBox chbx)

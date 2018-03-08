@@ -10,6 +10,17 @@ namespace cntrl.Class
         {
             ReportList = new List<Report>
             {
+
+                 new Report
+            {
+                Application = entity.App.Names.Items,
+                Name = entity.Brillo.Localize.StringText("ItemList")!= string.Empty ? entity.Brillo.Localize.StringText("ItemList") :"ItemList",
+                Path = "cntrl.Reports.Item.Item.rdlc",
+                Query = Reports.Item.Item.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
+
+
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,

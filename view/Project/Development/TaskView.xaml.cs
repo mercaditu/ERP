@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
+
 namespace Cognitivo.Project.Development
 {
     public partial class TaskView : Page, INotifyPropertyChanged
@@ -733,5 +734,22 @@ namespace Cognitivo.Project.Development
         {
             Load();
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void download_excel_click(object sender, RoutedEventArgs e)
+        {
+            entity.Brillo.Task2Excel Task2Excel = new entity.Brillo.Task2Excel();
+            project project = projectViewSource.View.CurrentItem as project;
+            if (project!=null)
+            {
+                Task2Excel.Create(project);
+            }
+           
+        }
+       
     }
 }

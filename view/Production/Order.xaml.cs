@@ -444,7 +444,59 @@ namespace Cognitivo.Production
                         item_request.item_request_detail.Add(item_request_detail);
                     }
 
-                    OrderDB.db.item_request.Add(item_request);
+                    int document_line_limit = 0;
+
+                    if (production_order.app_document_range.app_document.line_limit != null)
+                    {
+                        document_line_limit = (int)production_order.app_document_range.app_document.line_limit;
+                    }
+
+                    if (document_line_limit > 0 && item_request.item_request_detail.Count > document_line_limit)
+                    {
+                        int NoOfRequest = (int)Math.Ceiling(item_request.item_request_detail.Count / (decimal)document_line_limit);
+
+                        //Counter Variable for not loosing place in Detail
+                        int position = 0;
+
+                        for (int i = 1; i <= NoOfRequest; i++)
+                        {
+                            item_request _item_request = new item_request()
+                            {
+
+                                name = item_request.name,
+                                comment = item_request.comment,
+                                id_department = item_request.id_department,
+                                id_production_order = item_request.id_production_order,
+                                id_project = item_request.id_project,
+                                id_branch = item_request.id_branch,
+                                request_date = item_request.request_date
+                            };
+
+                            //Loop through the details. Skipping to page the sales invoices into smaller invoices.
+                            foreach (item_request_detail detail in item_request.item_request_detail.Skip(position).Take(document_line_limit))
+                            {
+                                item_request_detail _item_request_detail = new item_request_detail()
+                                {
+
+
+                                    date_needed_by = detail.date_needed_by,
+                                    id_order_detail = detail.id_order_detail,
+                                    urgency = detail.urgency,
+                                    id_item = detail.id_item,
+                                    item = detail.item,
+                                    comment = detail.comment,
+                                    id_project_task = detail.id_project_task,
+                                    item_request_dimension = detail.item_request_dimension,
+                                    quantity = detail.quantity
+
+                                };
+
+                                _item_request.item_request_detail.Add(_item_request_detail);
+                                position += 1;
+                            }
+                            OrderDB.db.item_request.Add(_item_request);
+                        }
+                    }
                     OrderDB.SaveChanges_WithValidation();
 
                     Logistics_SelectionChanged(sender, null);

@@ -16,10 +16,10 @@ namespace entity.Brillo
                 var wb = new XLWorkbook();
                 List<ProjectDetail> DetailList = new List<ProjectDetail>();
 
-                foreach (var task in project.project_task.ToList())
+                foreach (var task in project.project_task.Where(x => x.project_task_dimension.Count() > 0).ToList())
                 {
                     string dimension = "";
-                    if (task.project_task_dimension.Count()>0)
+                    if (task.project_task_dimension.Count() > 0)
                     {
                         foreach (project_task_dimension item in task.project_task_dimension)
                         {
@@ -27,19 +27,19 @@ namespace entity.Brillo
                         }
                         dimension = dimension.Substring(0, dimension.Length - 1);
                     }
-                   
+
                     ProjectDetail Detail = new ProjectDetail()
                     {
                         //Hidden Columns
                         Description = task.item_description,
-                   
+
                         Dimension = dimension,
                         quantity = task.quantity_est.ToString(),
 
                         code = task.code,
 
                         number = task.number,
-                       
+
                     };
 
                     DetailList.Add(Detail);
@@ -51,7 +51,7 @@ namespace entity.Brillo
                     //Insert Class into Data
                     ws.Cell(2, 1).InsertData(DetailList);
                     //Hide ID Columns
-                 
+
                     //Create Headers
                     PropertyInfo[] properties = DetailList.First().GetType().GetProperties();
                     List<string> headerNames = properties.Select(prop => prop.Name).ToList();
@@ -65,7 +65,7 @@ namespace entity.Brillo
                 //Add code to show save panel.
                 Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog()
                 {
-                    FileName = Localize.StringText("Project") + " " +project.name , // Default file name
+                    FileName = Localize.StringText("Project") + " " + project.name, // Default file name
                     DefaultExt = ".xlsx", // Default file extension
                     Filter = "Text documents (.xlsx)|*.xlsx" // Filter files by extension
                 };
@@ -85,7 +85,7 @@ namespace entity.Brillo
             return false;
         }
 
-    
+
     }
 
     internal class ProjectDetail
@@ -97,6 +97,6 @@ namespace entity.Brillo
         public string code { get; set; } //4
 
         public string number { get; set; }
-       
+
     }
 }

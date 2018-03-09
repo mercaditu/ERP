@@ -306,6 +306,7 @@
     <Compile Include="CurrentItems.cs" />
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="DebeHaber\Sync.cs" />
+    <Compile Include="DebeHaber\SyncLatest.cs" />
     <Compile Include="Execustionstrategy.cs" />
     <Compile Include="Generic\AuditGeneric.cs" />
     <Compile Include="Generic\CommercialVAT.cs" />

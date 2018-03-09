@@ -12,18 +12,18 @@
     {
         public override int SaveChanges()
         {
-            var audit = new Z.EntityFramework.Plus.Audit();
+            //var audit = new Z.EntityFramework.Plus.Audit();
 
-            audit.CreatedBy = CurrentSession.User != null ? CurrentSession.User.name : "Unkown" ;
-            audit.PreSaveChanges(this);
+            //audit.CreatedBy = CurrentSession.User != null ? CurrentSession.User.name : "Unkown" ;
+            //audit.PreSaveChanges(this);
             var rowAffecteds = base.SaveChanges();
-            audit.PostSaveChanges();
+            //audit.PostSaveChanges();
 
-            if (audit.Configuration.AutoSavePreAction != null)
-            {
-                audit.Configuration.AutoSavePreAction(this, audit);
-                base.SaveChanges();
-            }
+            //if (audit.Configuration.AutoSavePreAction != null)
+            //{
+            //    audit.Configuration.AutoSavePreAction(this, audit);
+            //    base.SaveChanges();
+            //}
 
             return rowAffecteds;
         }

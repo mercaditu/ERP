@@ -1036,6 +1036,7 @@ CASE
 
                     DepartmentName = g.item_request != null ? g.item_request.app_department != null ? g.item_request.app_department.name : "" : "",
                     UserName = g.security_user != null ? g.security_user.name : "",
+                    UserFullName = g.security_user != null ? g.security_user.name_full : "",
                     RequstedUserName = g.item_request != null ? g.item_request.request_user != null ? g.item_request.request_user.name : "" : "",
                     RequstedUserCode = g.item_request != null ? g.item_request.request_user != null ? g.item_request.request_user.code : "" : "",
 

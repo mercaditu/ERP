@@ -619,8 +619,9 @@ namespace Cognitivo.Project.Development
 
                 if (item.item_dimension.Count() > 0)
                 {
-                    project_task_output.items = item;
-                    project_task_output.project_task_dimension.Clear();
+
+
+                    ProjectDB.db.project_task_dimension.RemoveRange(project_task_output.project_task_dimension);
                     foreach (item_dimension _item_dimension in item.item_dimension)
                     {
                         project_task_dimension project_task_dimension = new project_task_dimension();
@@ -635,7 +636,7 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
-              
+
 
                 project_taskViewSource.View.MoveCurrentTo(project_task_output);
                 project_taskViewSource.View.Refresh();
@@ -643,6 +644,7 @@ namespace Cognitivo.Project.Development
                 //project_taskproject_task_dimensionViewSource.Source = ProjectDB.db.project_task_dimension.Local;
                 project_taskproject_task_dimensionViewSource.View.Refresh();
                 project_task_output.CalcSalePrice_TimerTaks();
+               
             }
 
         }

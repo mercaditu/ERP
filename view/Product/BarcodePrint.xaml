@@ -25,25 +25,27 @@
             <Button Content="{lex:Loc Print}" Click="Button_Click" Style="{StaticResource btn_green}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" CanVerticallyScroll="True">
-            <DataGrid x:Name="item_inventoryDataGrid" CanUserSortColumns="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <DataGrid x:Name="item_inventoryDataGrid" CanUserSortColumns="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
 					VerticalScrollBarVisibility="Visible" SelectionMode="Single" CanUserAddRows="False" HorizontalScrollBarVisibility="Visible"
 					AutoGenerateColumns="False" Grid.Column="1" CanUserReorderColumns="True"
 					EnableRowVirtualization="True"  Grid.Row="1" 
 					RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{ Binding Source={StaticResource inventoryViewSource}}">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 												EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="Auto" />
-                    <DataGridTextColumn Binding="{Binding Location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto" IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding Code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Name}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" IsReadOnly="True"/>
-                    <DataGridTextColumn ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" IsReadOnly="True"
+                        <DataGridTextColumn Binding="{Binding Location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding Code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" IsReadOnly="True"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" IsReadOnly="True"
 										Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" />
-                    <DataGridTextColumn Binding="{Binding TranDate, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding BatchCode}" Header="{lex:Loc Cognitivo:local:Batch}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding ExpiryDate, StringFormat=d}" Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding BarCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" IsReadOnly="True"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                        <DataGridTextColumn Binding="{Binding TranDate, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding BatchCode}" Header="{lex:Loc Cognitivo:local:Batch}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding ExpiryDate, StringFormat=d}" Header="{lex:Loc Cognitivo:local:ExpirationDate}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding BarCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Page>

@@ -181,6 +181,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Security.UserRole", "UserRole", "UserRole", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.Department", "Department", "", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Accounting.DebeHaberLogin", "DebeHaberSync", "", entity.CurrentSession.Versions.Lite, "0");
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Accounting.DebeHaberLoginLatest", "DebeHaberSyncLatest", "", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "ErpWeb.WebSync", "WebSync", "", entity.CurrentSession.Versions.Lite, "0");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespaces.Company, "Configs.Version", "Version", "Version", entity.CurrentSession.Versions.Lite, "0");
 

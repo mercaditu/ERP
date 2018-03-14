@@ -74,11 +74,15 @@ namespace cntrl.Curd
                 Add_PaymentDetail(id.id_currency, null, null);
             }
 
+            app_document_range app_document_range = PaymentDB.app_document_range.Where(x=>x.id_range==payment.id_range).FirstOrDefault();
+            entity.Brillo.Document.Start.Automatic(payment, app_document_range);
+
             payment.RaisePropertyChanged("GrandTotal");
             payment.RaisePropertyChanged("GrandTotalDetail");
 
             paymentViewSource.View.MoveCurrentTo(payment);
             paymentpayment_detailViewSource.View.MoveCurrentToFirst();
+            
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)

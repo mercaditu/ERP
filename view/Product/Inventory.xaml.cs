@@ -84,8 +84,10 @@ namespace Cognitivo.Product
                     List<item_product> item_productLIST = InventoryController.db.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).Include(y => y.item).ToList(); //.Select(x=>x.id_item_product).ToList();
                                                                                                                                                                                                        //Class.StockCalculations Stock = new Class.StockCalculations();
 
+                    //Hit database only once.
+                    List<StockList> ItemsInStock = CurrentItems.getProducts_InStock(app_location.id_branch, item_inventory.trans_date, true).Where(x => x.LocationID == app_location.id_location).ToList();
                     List<StockList> StockList = CurrentItems.getProducts_InStock_GroupByLocation(app_location.id_branch, item_inventory.trans_date, true).Where(x => x.LocationID == app_location.id_location).ToList();
-                    List<StockList> BatchList = CurrentItems.getProducts_InStock_GroupByLocation(app_location.id_branch, item_inventory.trans_date, false).Where(x => x.can_expire && x.LocationID == app_location.id_location).ToList();
+                    List<StockList> BatchList = ItemsInStock.Where(x => x.can_expire).ToList();
 
                     ///List through the entire product list.
                     foreach (item_product item_product in item_productLIST.OrderBy(x => x.item.name))

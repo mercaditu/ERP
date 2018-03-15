@@ -176,6 +176,7 @@ namespace entity
                     Cost = x.Max(y => y.Cost),
                     MovementID = x.Max(y => y.MovementID),
                     MovementRelID = x.Max(y => y.MovementRelID),
+                    CanExpire = x.Max(y => y.can_expire),
                     ItemID = x.Max(y => y.ItemID),
                     ProductID = x.Max(y => y.ProductID),
                     LocationID = x.Max(y => y.LocationID),
@@ -207,6 +208,7 @@ namespace entity
                 Stock.Type = item.Type;
                 Stock.BatchCode = item.BatchCode;
                 Stock.ExpiryDate = item.ExpiryDate;
+                Stock.can_expire = item.CanExpire;
                 StockList.Add(Stock);
             }
 
@@ -233,6 +235,7 @@ namespace entity
                     LocationID = x.Max(y => y.LocationID),
                     CompanyID = x.Max(y => y.CompanyID),
                     Type = x.Max(y => y.Type),
+                    CanExpire = x.Max(y => y.can_expire),
                     BatchCode = x.Max(y => y.BatchCode),
                     ExpiryDate = x.Max(y => y.ExpiryDate),
                     TranDate = x.Max(y => y.TranDate),
@@ -265,6 +268,7 @@ namespace entity
                 Stock.LocationID = item.LocationID;
                 Stock.CompanyID = item.CompanyID;
                 Stock.Type = item.Type;
+                Stock.can_expire = item.CanExpire;
                 Stock.BatchCode = item.BatchCode;
                 Stock.ExpiryDate = item.ExpiryDate;
                 Stock.TranDate = item.TranDate;
@@ -273,7 +277,6 @@ namespace entity
             }
             return StockList;
         }
-
 
         public static List<StockList> GetList(int BranchID, bool forceData)
         {
@@ -301,7 +304,6 @@ namespace entity
 
         public static bool updateStockList(item_movement mov)
         {
-
             app_location loc = CurrentSession.Locations.Where(x => x.id_location == mov.id_location).FirstOrDefault(); //db.app_location.Find(mov.id_location);
 
             if (loc != null)
@@ -316,7 +318,6 @@ namespace entity
                         return true;
                     }
                 }
-
             }
 
             return false;
@@ -338,10 +339,10 @@ namespace entity
                                 , ip.id_item as ItemID
                                 , ip.id_item_product as ProductID
                                 , ip.can_expire
+                                , im.id_movement_value_rel as MovementRelID
+                                , (select sum(unit_value) from item_movement_value_detail where id_movement_value_rel = im.id_movement_value_rel) as Cost
                                 , (im.credit - sum(IFNULL(child.debit,0))) as Quantity
                                 , (im.credit - sum(IFNULL(child.debit,0))) * max(icf.value) * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from item_movement_dimension where id_movement = im.id_movement) as ConversionQuantity
-                                , sum(IFNULL(imvr.total_value, 0)) as Cost
-                                ,im.id_movement_value_rel as MovementRelID
                                 , im.code as BatchCode
                                 , im.expire_date as ExpiryDate
                                 ,im.trans_date as TransDate
@@ -357,6 +358,7 @@ namespace entity
                                 group by im.id_movement
                                 order by im.expire_date) as movement 
                                 where Quantity > 0";
+                //, sum(IFNULL(imvr.total_value, 0)) as Cost
 
                 strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
 

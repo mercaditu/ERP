@@ -46,10 +46,9 @@
                             <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding customerName,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=OneWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

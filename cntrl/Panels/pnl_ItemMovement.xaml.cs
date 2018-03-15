@@ -58,7 +58,7 @@ namespace cntrl.Panels
 
                     item_inventoryList.FirstOrDefault().timestamp = Items_InStockLIST.FirstOrDefault().TranDate;
 
-                    if (item_inventoryList.FirstOrDefault().item_inventory_dimension.Count()==0)
+                    if (item_inventoryList.FirstOrDefault().item_inventory_dimension.Count() == 0)
                     {
                         int MovementID = (int)Items_InStockLIST.FirstOrDefault().MovementID;
                         if (MovementID > 0)
@@ -81,7 +81,7 @@ namespace cntrl.Panels
                             }
                         }
                     }
-                   
+
 
 
                     if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
@@ -91,10 +91,12 @@ namespace cntrl.Panels
                             item_inventoryList.FirstOrDefault().id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                             item_inventoryList.FirstOrDefault().currency = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().app_currency.name;
                         }
-                       
+
                     }
                 }
                 //  }
+
+
                 for (int i = item_inventoryList.Count(); i < Items_InStockLIST.Count(); i++)
                 {
                     item_inventory_detail item_inventory_detail;
@@ -158,8 +160,9 @@ namespace cntrl.Panels
             int id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
             int id_location = item_inventoryList.FirstOrDefault().id_location;
             item_inventory_detailViewSource = FindResource("item_inventory_detailViewSource") as CollectionViewSource;
-
-            item_inventory_detailViewSource.Source = item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Where(x => x.id_item_product == id_item_product && x.id_location == id_location).ToList();
+            List<item_inventory_detail> DetailList = item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Where(x => x.id_item_product == id_item_product && x.id_location == id_location).ToList();
+            DetailList.RemoveAt(0);
+            item_inventory_detailViewSource.Source = DetailList;
             CollectionViewSource app_dimensionViewSource = FindResource("app_dimensionViewSource") as CollectionViewSource;
             InventoryDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_dimensionViewSource.Source = InventoryDB.app_dimension.Local;
@@ -221,7 +224,10 @@ namespace cntrl.Panels
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+
             item_inventoryList = item_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.value_system > 0).ToList();
+
+
             btnCancel_Click(sender, null);
         }
 

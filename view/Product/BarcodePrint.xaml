@@ -24,8 +24,9 @@
 														QuantityIntegration="False" Type="InStock_Only" />
             <Button Content="{lex:Loc Print}" Click="Button_Click" Style="{StaticResource btn_green}"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" CanVerticallyScroll="True">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+
+            <StackPanel >
                 <DataGrid x:Name="item_inventoryDataGrid" CanUserSortColumns="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
 					VerticalScrollBarVisibility="Visible" SelectionMode="Single" CanUserAddRows="False" HorizontalScrollBarVisibility="Visible"
 					AutoGenerateColumns="False" Grid.Column="1" CanUserReorderColumns="True"
@@ -45,7 +46,7 @@
                         <DataGridTextColumn Binding="{Binding BarCode}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" IsReadOnly="True"/>
                     </DataGrid.Columns>
                 </DataGrid>
-            </ScrollViewer>
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

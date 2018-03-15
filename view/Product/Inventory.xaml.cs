@@ -22,9 +22,7 @@ namespace Cognitivo.Product
         private cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry;
         private cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
         public entity.Controller.Product.InventoryController InventoryController;
-
-
-
+        
         public Inventory()
         {
             InitializeComponent();
@@ -123,12 +121,12 @@ namespace Cognitivo.Product
 
                                         ///Since this item already exists in Inventory, we should update the values. The following code
                                         ///will check for difference between Original and Updated Values and also update the Counted Value for that same difference.
-                                        decimal Quantity_Original = item_inventory_detail.value_system;
-                                        decimal Quantity_Updated = (decimal)(BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null ? BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Quantity : 0);
-                                        decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
+                                        //decimal Quantity_Original = item_inventory_detail.value_system;
+                                        //decimal Quantity_Updated = (decimal)(BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null ? BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault().Quantity : 0);
+                                        //decimal Quantity_Difference = Quantity_Updated - Quantity_Original;
 
-                                        item_inventory_detail.value_system = Quantity_Updated;
-                                        item_inventory_detail.value_counted += Quantity_Difference;
+                                        //item_inventory_detail.value_system = Quantity_Updated;
+                                        //item_inventory_detail.value_counted += Quantity_Difference;
 
                                         //Get the newest Cost.
                                         if (BatchList.Where(x => x.MovementID == Batch.MovementID).FirstOrDefault() != null)
@@ -515,10 +513,7 @@ namespace Cognitivo.Product
                         crud_modal.Children.Add(objpnl_ItemMovement);
 
                     }
-
-
                 }
-
             }
         }
 

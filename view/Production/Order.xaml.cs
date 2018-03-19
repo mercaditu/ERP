@@ -497,6 +497,10 @@ namespace Cognitivo.Production
                             OrderDB.db.item_request.Add(_item_request);
                         }
                     }
+                    else
+                    {
+                        OrderDB.db.item_request.Add(item_request);
+                    }
                     OrderDB.SaveChanges_WithValidation();
 
                     Logistics_SelectionChanged(sender, null);

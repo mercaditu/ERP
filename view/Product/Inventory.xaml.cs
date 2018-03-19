@@ -153,8 +153,8 @@ namespace Cognitivo.Product
                                 {
                                     item_inventory.item_inventory_detail.Add(new item_inventory_detail()
                                     {
-                                        value_system = (int)Batch.Quantity,
-                                        unit_value = (int)Batch.Cost,
+                                        value_system = (decimal)Batch.Quantity,
+                                        unit_value = (decimal)Batch.Cost,
                                         batch_code = Batch.BatchCode,
                                         expire_date = Batch.TranDate,
                                         movement_id = Batch.MovementID,

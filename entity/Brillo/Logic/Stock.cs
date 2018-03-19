@@ -990,9 +990,7 @@ namespace entity.Brillo.Logic
                         }
                         else
                         {
-
                             Items_InStockLIST = CurrentItems.getProducts_InStock(item_inventory_detail.app_location.id_branch, DateTime.Now, false).Where(x => x.LocationID == item_inventory_detail.id_location && x.ProductID == item_inventory_detail.id_item_product).ToList();
-
                         }
 
                         item_movementList.AddRange(

@@ -460,7 +460,8 @@ namespace DebeHaber.SyncLatest
 
     public class Web_Data
     {
-       
+       public Web_Data()
+        { }
 
         public int id { get; set; }
         public int type { get; set; }

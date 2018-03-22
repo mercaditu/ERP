@@ -41,9 +41,9 @@ namespace entity.Controller.Product
                     .OrderByDescending(x => x.request_date)
                     .Skip(PageIndex * PageSize).Take(PageSize)
                     .LoadAsync();
-           
 
-          
+
+
             await db.app_dimension.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.app_measurement.Where(x => x.id_company == CurrentSession.Id_Company).LoadAsync();
             await db.security_user.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).LoadAsync();
@@ -391,7 +391,7 @@ namespace entity.Controller.Product
                             {
                                 purchase_tender.id_project = project.id_project;
                             }
-                            
+
                             purchase_tender_item purchase_tender_item = new purchase_tender_item()
                             {
                                 id_item = decision.item_request_detail.id_item,
@@ -414,7 +414,7 @@ namespace entity.Controller.Product
                             purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                             purchase_tender.item_request_decision.Add(decision);
                         }
-                       
+
                         db.purchase_tender.Add(purchase_tender);
                     }
 
@@ -434,10 +434,15 @@ namespace entity.Controller.Product
                             }
                         }
 
-                        OrderDB orderdb = new OrderDB();
+                       
 
                         production_order production_order = new production_order();
-                        production_order = orderdb.New(item_request.name, production_order.ProductionOrderTypes.Fraction, LineID);
+                        production_order.id_production_line = LineID;
+                        production_order.type = production_order.ProductionOrderTypes.Fraction;
+                        production_order.trans_date = DateTime.Now;
+                        production_order.status = Status.Production.Pending;
+                        production_order.name = item_request.name;
+                        production_order.IsSelected = true;
                         production_order.id_project = item_request.id_project;
 
                         foreach (item_request_decision decision in DecisionList
@@ -477,12 +482,13 @@ namespace entity.Controller.Product
                         {
                             if (production_order.production_line == null)
                             {
-                                production_order.production_line = orderdb.production_line.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                                production_order.production_line = db.production_line.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
                             }
 
-                            orderdb.production_order.Add(production_order);
-                            orderdb.SaveChanges();
+                            db.production_order.Add(production_order);
+
                         }
+                        db.SaveChanges();
                     }
 
                     if (DecisionList

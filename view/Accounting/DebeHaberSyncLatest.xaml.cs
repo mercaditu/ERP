@@ -124,9 +124,11 @@ select
 																inner join app_contract on app_contract.id_contract=sales_invoice.id_contract
                                                                 left join app_contract_detail on app_contract_detail.id_contract=app_contract.id_contract
 																inner join app_condition on app_condition.id_condition=sales_invoice.id_condition
-														 	  where sales_invoice.id_company = @CompanyID
+														 	  where sales_invoice.id_company = @CompanyID and sales_invoice.trans_date between '@startDate' and '@endDate'
                                               order by sales_invoice.trans_date";
             query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            query = query.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            query = query.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
             salesdt = QueryExecutor.DT(query);
 
             sales_invoiceViewSource.Source = salesdt;
@@ -170,10 +172,14 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
 																inner join app_contract on app_contract.id_contract=sales_invoice.id_contract
 																inner join app_condition on app_condition.id_condition=sales_invoice.id_condition
 																left join projects on projects.id_project=sales_invoice.id_project
-											  where sales_invoice.id_company = @CompanyID
+											  where sales_invoice.id_company = @CompanyID and sales_invoice.trans_date between '@startDate' and '@endDate'
                                               order by sales_invoice.trans_date";
             querydetail = querydetail.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            querydetail = querydetail.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            querydetail = querydetail.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
             salesdetaildt = QueryExecutor.DT(querydetail);
+            
+         
 
         }
 
@@ -245,16 +251,16 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
 
         private void btnData_Sync(object sender, RoutedEventArgs e)
         {
-            DebeHaberLogIn DebeHaberLogIn = new DebeHaberLogIn();
-            try
-            {
-                DebeHaberLogIn.check_api(RelationshipHash, GovCode);
-            }
-            catch (Exception)
-            {
+            //DebeHaberLogIn DebeHaberLogIn = new DebeHaberLogIn();
+            //try
+            //{
+            //    DebeHaberLogIn.check_api(RelationshipHash, GovCode);
+            //}
+            //catch (Exception)
+            //{
 
-                return;
-            }
+            //    return;
+            //}
 
 
 
@@ -277,19 +283,19 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
                 GovCode = GovCode
             };
 
-            DebeHaber.SyncLatest.Transaction Transaction = new DebeHaber.SyncLatest.Transaction();
-            DebeHaber.SyncLatest.Commercial_Invoice Sales = new DebeHaber.SyncLatest.Commercial_Invoice();
+           
 
             //Loop through
             foreach (DataRow sales_invoice in salesdt.Rows)
             {
-                
 
+                DebeHaber.SyncLatest.Transaction Transaction = new DebeHaber.SyncLatest.Transaction();
+                DebeHaber.SyncLatest.Commercial_Invoice Sales = new DebeHaber.SyncLatest.Commercial_Invoice();
                 //Loads Data from Sales
                 Sales.Fill_BySales(sales_invoice);
 
-            
-                if (salesdetaildt.Select("id_sales_invoice=" + sales_invoice["id_sales_invoice"].ToString()).Count()>0)
+
+                if (salesdetaildt.Select("id_sales_invoice=" + sales_invoice["id_sales_invoice"].ToString()).Count() > 0)
                 {
                     DataTable dtdetail = salesdetaildt.Select("id_sales_invoice=" + sales_invoice["id_sales_invoice"].ToString()).CopyToDataTable();
                     foreach (DataRow Detail in dtdetail.Rows)
@@ -308,57 +314,68 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
                 Transaction.Commercial_Invoices.Add(Sales);
                 Integration.Transactions.Add(Transaction);
 
-               
-            }
-            try
-            {
-                var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
 
-                var obj = Send2API(Sales_Json);
-                DebeHaber.SyncLatest.Web_Data[] sales_json = new JavaScriptSerializer().Deserialize<DebeHaber.SyncLatest.Web_Data[]>(obj.ToString());
-                using (db db = new db())
+            }
+            int Count = Integration.Transactions.Count;
+            int PageSize = 100;
+            int PageCount = (Count / PageSize) < 1 ? 1 : (int)Math.Ceiling((decimal)Count / PageSize);
+
+            for (int PageIndex =0; PageIndex < PageCount; PageIndex++)
+            {
+
+                try
                 {
-                    foreach (DebeHaber.SyncLatest.Web_Data data in sales_json)
+                    List<DebeHaber.SyncLatest.Transaction> trans = Integration.Transactions.Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                    var Sales_Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(trans);
+
+                    var obj = Send2API(Sales_Json);
+
+                    List<DebeHaber.SyncLatest.Web_Data> sales_json = new JavaScriptSerializer().Deserialize<List<DebeHaber.SyncLatest.Web_Data>>(obj.ToString());
+                    using (db db = new db())
+                    {
+                        foreach (DebeHaber.SyncLatest.Web_Data data in sales_json)
+                        {
+
+                            sales_invoice sales = db.sales_invoice.Where(x => x.id_sales_invoice == data.ref_id).FirstOrDefault();
+                            sales.cloud_id = data.id;
+                        }
+                        db.SaveChanges();
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("403"))
                     {
 
-                        sales_invoice sales = db.sales_invoice.Where(x => x.id_sales_invoice == data.ref_id).FirstOrDefault();
-                        sales.cloud_id = data.id;
+
+                        DebeHaberLogIn page = new DebeHaberLogIn();
+                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                        rootWindow.mainFrame.Navigate(page);
+
+
                     }
-                    db.SaveChanges();
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message.Contains("403"))
-                {
-
-
-                    DebeHaberLogIn page = new DebeHaberLogIn();
-                    MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
-
-                    rootWindow.mainFrame.Navigate(page);
-
-
-                }
-                else
-                {
-                    if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    else
                     {
-                        MessageBox.Show(ex.Message, "Error Message");
-                        Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            MessageBox.Show(ex.Message, "Error Message");
+                           // Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                        }
                     }
+
+                    //Error Sales Invoice keep Is Accounted to False.
+
                 }
-
-                //Error Sales Invoice keep Is Accounted to False.
-
+                finally
+                {
+                    db.db.SaveChanges();
+                    fill();
+                }
             }
-            finally
-            {
-                db.db.SaveChanges();
-                fill();
-            }
+            
         }
 
         #endregion Sales Sync

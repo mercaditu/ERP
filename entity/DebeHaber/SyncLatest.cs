@@ -76,12 +76,14 @@ namespace DebeHaber.SyncLatest
 
         public string comment { get; set; }
 
+        public int status { get; set; }
+
         public DateTime? code_expiry { get; set; }
 
         //Collection Property
         public virtual ICollection<DebeHaber.SyncLatest.CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
 
-        
+
         //Fill Methods
         public void Fill_BySales(DataRow sales_invoice)
         {
@@ -94,35 +96,37 @@ namespace DebeHaber.SyncLatest
             supplierName = sales_invoice["supplierName"].ToString();
             currencyCode = sales_invoice["currencyCode"].ToString();
             paymentCondition = Convert.ToInt32(sales_invoice["paymentCondition"]);
-           
+            status = Convert.ToInt32(sales_invoice["status"]);
+
             number = Convert.ToString(sales_invoice["number"]);
-            
+
             comment = Convert.ToString(sales_invoice["comment"]);
-            
+
 
 
         }
 
-      
+
     }
 
     public class CommercialInvoice_Detail
     {
         public CommercialInvoice_Detail()
         {
-           
+            CostCenter = new List<CostCenter>();
         }
         public int id { get; set; }
 
         public string chart { get; set; }
         public decimal value { get; set; }
         public string vat { get; set; }
+        public decimal coefficient { get; set; }
 
         //Nav Property
         public virtual Commercial_Invoice Commercial_Invoice { get; set; }
 
         //Collection Property
-       
+        public virtual ICollection<CostCenter> CostCenter { get; set; }
 
         #region Methods
 
@@ -130,13 +134,66 @@ namespace DebeHaber.SyncLatest
         {
             id = Convert.ToInt32(Detail["id"]);
             chart = Detail["chart"].ToString();
-            value =Convert.ToDecimal(Detail["value"]);
+            value = Convert.ToDecimal(Detail["UnitPriceVat"]);
             vat = Detail["vat"].ToString();
+            coefficient = Convert.ToDecimal(Detail["coefficient"]);
 
+            CostCenter CC = new CostCenter();
+
+            using (db db= new db())
+            {
+                // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
+                //if (Convert.ToInt32(Detail["id_item_type"]) == 4)
+                //{
+                //    CC.Name = db.item_asset.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_asset_group.name : "";
+                //    CC.Type = CostCenterTypes.FixedAsset;
+
+                //    //Add CostCenter into Detail.
+                //    CostCenter.Add(CC);
+                //}
+                //// If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
+                //else if (Convert.ToInt32(Detail["id_item_type"]) == 3 || Convert.ToInt32(Detail["id_item_type"]) == 5
+                //    || Convert.ToInt32(Detail["id_item_type"]) == 7)
+                //{
+                //    if (db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                //    { CC.Name = db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                //    else
+                //    { CC.Name = Detail["description"].ToString(); }
+
+                //    CC.Type = CostCenterTypes.Income;
+
+                //    //Add CostCenter into Detail.
+                //    CostCenter.Add(CC);
+                //}
+                //// Finally if all else fails, assume Item being sold is Merchendice.
+                //else
+                //{
+                //    if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
+                //    {
+                //        CC.Name = db.app_cost_center.Where(x => x.is_product).Select(x => x.name).FirstOrDefault();
+                //        CC.Type = CostCenterTypes.Merchendice;
+                //    }
+                //    else
+                //    {
+                //        CC.Name = "Mercaderia";
+                //        CC.Type = CostCenterTypes.Merchendice;
+                //    }
+                //    //Add CostCenter into Detail.
+                //    CostCenter.Add(CC);
+                //}
+
+                //TODO this is wrong.
+                CC.Type = CostCenterTypes.Income;
+                CC.Name = "Merchandice Sold";
+
+                CostCenter.Add(CC);
+
+            }
+          
 
         }
 
-     
+
 
         #endregion Methods
     }
@@ -460,7 +517,7 @@ namespace DebeHaber.SyncLatest
 
     public class Web_Data
     {
-       public Web_Data()
+        public Web_Data()
         { }
 
         public int id { get; set; }

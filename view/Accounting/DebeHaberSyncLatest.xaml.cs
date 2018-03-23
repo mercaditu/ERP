@@ -110,8 +110,8 @@ namespace Cognitivo.Accounting
 select
 	   
        sales_invoice.id_sales_invoice ,contacts.gov_code as customerTaxID,contacts.name as customerName,app_company.name as supplierName,app_company.gov_code as supplierTaxID,
-        app_currency.code as currencyCode,app_contract_detail.interval as paymentCondition,Date(sales_invoice.trans_date) as date,sales_invoice.number as number
-        ,sales_invoice.comment as comment
+        app_currency.code as currencyCode,app_currencyfx.buy_value,app_currencyfx.sell_value,app_contract_detail.interval as paymentCondition,Date(sales_invoice.trans_date) as date,sales_invoice.number as number
+        ,sales_invoice.comment as comment,sales_invoice.status
 											
 												
 												from sales_invoice 
@@ -139,11 +139,12 @@ select
   set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 select
 	  
-sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_invoice_detail.id_sales_invoice,
+sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_invoice_detail.id_sales_invoice,items.id_item_type,items.id_item,items.description,
 												
 												sales_invoice_detail.unit_cost as UnitCost,vatco.vat as vat,
 												sales_invoice_detail.unit_price as UnitPrice,
-												round(( (sales_invoice_detail.unit_price) * vatco.coef),4) as UnitPriceVat,
+                                                vatco.coef as coefficient,
+												round(( (sales_invoice_detail.unit_price) * (vatco.coef + 1)),4) as UnitPriceVat,
 												round((sales_invoice_detail.quantity * sales_invoice_detail.unit_price),4) as SubTotal,
 												round((sales_invoice_detail.quantity * sales_invoice_detail.unit_price * vatco.coef),4) as value,
 												round(sales_invoice_detail.discount, 4) as Discount,
@@ -159,7 +160,7 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
 												inner join items on sales_invoice_detail.id_item = items.id_item
 												left join app_terminal on sales_invoice.id_terminal = app_terminal.id_terminal
 													 LEFT OUTER JOIN
-															 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient * app_vat_group_details.percentage) + 1 AS coef, app_vat_group.name as VAT
+															 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient)  AS coef, app_vat_group.name as VAT
 																FROM  app_vat_group
 																	LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
 																	LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat

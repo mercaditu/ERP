@@ -22,6 +22,12 @@ namespace Cognitivo.Accounting
     {
         DataTable salesdt;
         DataTable salesdetaildt;
+        DataTable salesreturndt;
+        DataTable salesreturndetaildt;
+        DataTable purchasedt;
+        DataTable purchasedetaildt;
+        DataTable purchasereturndt;
+        DataTable purchasereturndetaildt;
         private CollectionViewSource sales_invoiceViewSource;
         private CollectionViewSource sales_returnViewSource;
         private CollectionViewSource purchase_invoiceViewSource;
@@ -107,7 +113,7 @@ namespace Cognitivo.Accounting
             string query = @" 
   set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
   set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-select
+select 0 as IsSelected,
 	   
        sales_invoice.id_sales_invoice ,contacts.gov_code as customerTaxID,contacts.name as customerName,app_company.name as supplierName,app_company.gov_code as supplierTaxID,
         app_currency.code as currencyCode,app_currencyfx.buy_value,app_currencyfx.sell_value,app_contract_detail.interval as paymentCondition,Date(sales_invoice.trans_date) as date,sales_invoice.number as number
@@ -139,7 +145,17 @@ select
   set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 select
 	  
-sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_invoice_detail.id_sales_invoice,items.id_item_type,items.id_item,items.description,
+sales_invoice_detail.id_sales_invoice_detail as id,
+CASE
+      WHEN items.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
+      WHEN items.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"'
+      WHEN items.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"'
+      WHEN items.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"'
+      WHEN items.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+      WHEN items.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"'
+      WHEN items.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
+END as chart
+,sales_invoice_detail.id_sales_invoice,items.id_item_type,items.id_item,items.description,
 												
 												sales_invoice_detail.unit_cost as UnitCost,vatco.vat as vat,
 												sales_invoice_detail.unit_price as UnitPrice,
@@ -194,34 +210,270 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
                 x.payment.status == Status.Documents_General.Approved).Include(x => x.payment).ToListAsync();
         }
 
-        public async void Get_SalesReturn()
+        public  void Get_SalesReturn()
         {
-            //x.Is Head replace with Is_Accounted = True.
-            sales_returnViewSource.Source = await db.db.sales_return.Where(x =>
-                x.id_company == CurrentSession.Id_Company &&
-                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
-                x.is_accounted == false &&
-                (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Annulled)).Include(x => x.contact).ToListAsync();
+            string query = @" 
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select 0 as IsSelected,
+	   
+       sales_return.id_sales_return ,contacts.gov_code as customerTaxID,contacts.name as customerName,app_company.name as supplierName,app_company.gov_code as supplierTaxID,
+        app_currency.code as currencyCode,app_currencyfx.buy_value,app_currencyfx.sell_value,app_contract_detail.interval as paymentCondition,Date(sales_return.trans_date) as date,sales_return.number as number
+        ,sales_return.comment as comment,sales_return.status
+											
+												
+												from sales_return 
+                                                inner join app_company on sales_return.id_company = app_company.id_company
+												inner join contacts on sales_return.id_contact = contacts.id_contact
+												left join app_terminal on sales_return.id_terminal = app_terminal.id_terminal
+																inner join app_branch on app_branch.id_branch=sales_return.id_branch
+																inner join app_currencyfx on app_currencyfx.id_currencyfx=sales_return.id_currencyfx
+																inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
+																inner join app_contract on app_contract.id_contract=sales_return.id_contract
+                                                                left join app_contract_detail on app_contract_detail.id_contract=app_contract.id_contract
+																inner join app_condition on app_condition.id_condition=sales_return.id_condition
+														 	  where sales_return.id_company = @CompanyID and sales_return.trans_date between '@startDate' and '@endDate'
+                                              order by sales_return.trans_date";
+            query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            query = query.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            query = query.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
+            salesreturndt = QueryExecutor.DT(query);
+
+            sales_returnViewSource.Source = salesreturndt;
+
+            string querydetail = @" 
+   
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select
+	  
+sales_return_detail.id_sales_return_detail as id,
+CASE
+      WHEN items.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
+      WHEN items.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"'
+      WHEN items.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"'
+      WHEN items.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"'
+      WHEN items.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+      WHEN items.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"'
+      WHEN items.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
+END as chart,
+sales_return_detail.id_sales_return,items.id_item_type,items.id_item,items.description,
+												
+												sales_return_detail.unit_cost as UnitCost,vatco.vat as vat,
+												sales_return_detail.unit_price as UnitPrice,
+                                                vatco.coef as coefficient,
+												round(( (sales_return_detail.unit_price) * (vatco.coef + 1)),4) as UnitPriceVat,
+												round((sales_return_detail.quantity * sales_return_detail.unit_price),4) as SubTotal,
+												round((sales_return_detail.quantity * sales_return_detail.unit_price * vatco.coef),4) as value,
+												round(sales_return_detail.discount, 4) as Discount,
+												round((sales_return_detail.quantity * (sales_return_detail.discount * vatco.coef)),4) as DiscountVat,
+												(sales_return_detail.quantity * sales_return_detail.unit_cost) as SubTotalCost
+                                             
+                                                
+												from sales_return_detail
+												inner join sales_return on sales_return_detail.id_sales_return=sales_return.id_sales_return
+												left join sales_rep on sales_return.id_sales_rep = sales_rep.id_sales_rep
+												inner join contacts on sales_return.id_contact = contacts.id_contact
+												left join app_geography on app_geography.id_geography=contacts.id_geography
+												inner join items on sales_return_detail.id_item = items.id_item
+												left join app_terminal on sales_return.id_terminal = app_terminal.id_terminal
+													 LEFT OUTER JOIN
+															 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient)  AS coef, app_vat_group.name as VAT
+																FROM  app_vat_group
+																	LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
+																	LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
+																GROUP BY app_vat_group.id_vat_group)
+
+																vatco ON vatco.id_vat_group = sales_return_detail.id_vat_group
+																inner join app_branch on app_branch.id_branch=sales_return.id_branch
+																inner join app_currencyfx on app_currencyfx.id_currencyfx=sales_return.id_currencyfx
+																inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
+																inner join app_contract on app_contract.id_contract=sales_return.id_contract
+																inner join app_condition on app_condition.id_condition=sales_return.id_condition
+																left join projects on projects.id_project=sales_return.id_project
+											  where sales_return.id_company = @CompanyID and sales_return.trans_date between '@startDate' and '@endDate'
+                                              order by sales_return.trans_date";
+            querydetail = querydetail.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            querydetail = querydetail.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            querydetail = querydetail.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
+            salesreturndetaildt = QueryExecutor.DT(querydetail);
         }
 
-        public async void Get_PurchaseReturnInvoice()
+        public void Get_PurchaseReturnInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            purchase_returnViewSource.Source = await db.db.purchase_return.Where(x =>
-                x.id_company == CurrentSession.Id_Company &&
-                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
-                x.is_accounted == false &&
-                x.status == Status.Documents_General.Approved).Include(x => x.contact).ToListAsync();
+            string query = @" 
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select 0 as IsSelected,
+	   
+       purchase_return.id_purchase_return ,contacts.gov_code as supplierTaxID,contacts.name as SupplierName,app_company.name as customerName,app_company.gov_code as customerTaxID,
+        app_currency.code as currencyCode,app_currencyfx.buy_value,app_currencyfx.sell_value,app_contract_detail.interval as paymentCondition,Date(purchase_return.trans_date) as date,purchase_return.number as number
+        ,purchase_return.comment as comment,purchase_return.status
+											
+												
+												from purchase_return 
+                                                inner join app_company on purchase_return.id_company = app_company.id_company
+												inner join contacts on purchase_return.id_contact = contacts.id_contact
+												left join app_terminal on purchase_return.id_terminal = app_terminal.id_terminal
+																inner join app_branch on app_branch.id_branch=purchase_return.id_branch
+																inner join app_currencyfx on app_currencyfx.id_currencyfx=purchase_return.id_currencyfx
+																inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
+																inner join app_contract on app_contract.id_contract=purchase_return.id_contract
+                                                                left join app_contract_detail on app_contract_detail.id_contract=app_contract.id_contract
+																inner join app_condition on app_condition.id_condition=purchase_return.id_condition
+														 	  where purchase_return.id_company = @CompanyID and purchase_return.trans_date between '@startDate' and '@endDate'
+                                              order by purchase_return.trans_date";
+            query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            query = query.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            query = query.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
+            purchasereturndt = QueryExecutor.DT(query);
+
+            purchase_returnViewSource.Source = purchasereturndt;
+
+            string querydetail = @" 
+   
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select 
+	  
+purchase_return_detail.id_purchase_return_detail as id,
+CASE
+      WHEN items.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
+      WHEN items.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"'
+      WHEN items.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"'
+      WHEN items.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"'
+      WHEN items.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+      WHEN items.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"'
+      WHEN items.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
+END as chart
+,purchase_return_detail.id_purchase_return,
+items.id_item_type,items.id_item,items.description,
+												
+												purchase_return_detail.unit_cost as UnitCost,vatco.vat as vat,
+											    vatco.coef as coefficient,
+												round(( (purchase_return_detail.unit_cost) * (vatco.coef + 1)),4) as UnitCostVat,
+												round((purchase_return_detail.quantity * purchase_return_detail.unit_cost),4) as SubTotal,
+												round((purchase_return_detail.quantity * purchase_return_detail.unit_cost * vatco.coef),4) as value,
+												round(purchase_return_detail.discount, 4) as Discount,
+												round((purchase_return_detail.quantity * (purchase_return_detail.discount * vatco.coef)),4) as DiscountVat,
+												(purchase_return_detail.quantity * purchase_return_detail.unit_cost) as SubTotalCost
+                                             
+                                                
+												from purchase_return_detail
+												inner join purchase_return on purchase_return_detail.id_purchase_return=purchase_return.id_purchase_return
+												inner join contacts on purchase_return.id_contact = contacts.id_contact
+												left join app_geography on app_geography.id_geography=contacts.id_geography
+												inner join items on purchase_return_detail.id_item = items.id_item
+												left join app_terminal on purchase_return.id_terminal = app_terminal.id_terminal
+													 LEFT OUTER JOIN
+															 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient)  AS coef, app_vat_group.name as VAT
+																FROM  app_vat_group
+																	LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
+																	LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
+																GROUP BY app_vat_group.id_vat_group)
+
+																vatco ON vatco.id_vat_group = purchase_return_detail.id_vat_group
+																inner join app_branch on app_branch.id_branch=purchase_return.id_branch
+																inner join app_currencyfx on app_currencyfx.id_currencyfx=purchase_return.id_currencyfx
+																inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
+																inner join app_contract on app_contract.id_contract=purchase_return.id_contract
+																inner join app_condition on app_condition.id_condition=purchase_return.id_condition
+																left join projects on projects.id_project=purchase_return.id_project
+											  where purchase_return.id_company = @CompanyID and purchase_return.trans_date between '@startDate' and '@endDate'
+                                              order by purchase_return.trans_date";
+            querydetail = querydetail.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            querydetail = querydetail.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            querydetail = querydetail.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
+            purchasereturndetaildt = QueryExecutor.DT(querydetail);
         }
 
-        public async void Get_PurchaseInvoice()
+        public  void Get_PurchaseInvoice()
         {
-            //x.Is Head replace with Is_Accounted = True.
-            purchase_invoiceViewSource.Source = await db.db.purchase_invoice.Where(x =>
-                x.id_company == CurrentSession.Id_Company &&
-                x.trans_date >= DatePanel.StartDate && x.trans_date <= DatePanel.EndDate &&
-                x.is_accounted == false &&
-                x.status == Status.Documents_General.Approved).Include(x => x.contact).ToListAsync();
+            string query = @" 
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select 0 as IsSelected,
+	   
+       purchase_invoice.id_purchase_invoice ,contacts.gov_code as supplierTaxID,contacts.name as SupplierName,app_company.name as customerName,app_company.gov_code as customerTaxID,
+        app_currency.code as currencyCode,app_currencyfx.buy_value,app_currencyfx.sell_value,app_contract_detail.interval as paymentCondition,Date(purchase_invoice.trans_date) as date,purchase_invoice.number as number
+        ,purchase_invoice.comment as comment,purchase_invoice.status
+											
+												
+												from purchase_invoice 
+                                                inner join app_company on purchase_invoice.id_company = app_company.id_company
+												inner join contacts on purchase_invoice.id_contact = contacts.id_contact
+												left join app_terminal on purchase_invoice.id_terminal = app_terminal.id_terminal
+																inner join app_branch on app_branch.id_branch=purchase_invoice.id_branch
+																inner join app_currencyfx on app_currencyfx.id_currencyfx=purchase_invoice.id_currencyfx
+																inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
+																inner join app_contract on app_contract.id_contract=purchase_invoice.id_contract
+                                                                left join app_contract_detail on app_contract_detail.id_contract=app_contract.id_contract
+																inner join app_condition on app_condition.id_condition=purchase_invoice.id_condition
+														 	  where purchase_invoice.id_company = @CompanyID and purchase_invoice.trans_date between '@startDate' and '@endDate'
+                                              order by purchase_invoice.trans_date";
+            query = query.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            query = query.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            query = query.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
+            purchasedt = QueryExecutor.DT(query);
+
+            purchase_invoiceViewSource.Source = purchasedt;
+
+            string querydetail = @" 
+   
+  set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+  set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+select
+	  
+purchase_invoice_detail.id_purchase_invoice_detail as id,
+CASE
+      WHEN items.id_item_type=1 THEN '" + entity.Brillo.Localize.StringText("Product") + @"'
+      WHEN items.id_item_type=2 THEN  '" + entity.Brillo.Localize.StringText("RawMaterial") + @"'
+      WHEN items.id_item_type=3 THEN  '" + entity.Brillo.Localize.StringText("Service") + @"'
+      WHEN items.id_item_type=4 THEN  '" + entity.Brillo.Localize.StringText("FixedAssets") + @"'
+      WHEN items.id_item_type=5 THEN  '" + entity.Brillo.Localize.StringText("Task") + @"'
+      WHEN items.id_item_type=6 THEN  '" + entity.Brillo.Localize.StringText("Supplies") + @"'
+      WHEN items.id_item_type=7 THEN  '" + entity.Brillo.Localize.StringText("ServiceContract") + @"'
+END as chart
+,purchase_invoice_detail.id_purchase_invoice,
+items.id_item_type,items.id_item,items.description,
+												
+												purchase_invoice_detail.unit_cost as UnitCost,vatco.vat as vat,
+											    vatco.coef as coefficient,
+												round(( (purchase_invoice_detail.unit_cost) * (vatco.coef + 1)),4) as UnitCostVat,
+												round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost),4) as SubTotal,
+												round((purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost * vatco.coef),4) as value,
+												round(purchase_invoice_detail.discount, 4) as Discount,
+												round((purchase_invoice_detail.quantity * (purchase_invoice_detail.discount * vatco.coef)),4) as DiscountVat,
+												(purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost) as SubTotalCost
+                                             
+                                                
+												from purchase_invoice_detail
+												inner join purchase_invoice on purchase_invoice_detail.id_purchase_invoice=purchase_invoice.id_purchase_invoice
+												inner join contacts on purchase_invoice.id_contact = contacts.id_contact
+												left join app_geography on app_geography.id_geography=contacts.id_geography
+												inner join items on purchase_invoice_detail.id_item = items.id_item
+												left join app_terminal on purchase_invoice.id_terminal = app_terminal.id_terminal
+													 LEFT OUTER JOIN
+															 (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient)  AS coef, app_vat_group.name as VAT
+																FROM  app_vat_group
+																	LEFT OUTER JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
+																	LEFT OUTER JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
+																GROUP BY app_vat_group.id_vat_group)
+
+																vatco ON vatco.id_vat_group = purchase_invoice_detail.id_vat_group
+																inner join app_branch on app_branch.id_branch=purchase_invoice.id_branch
+																inner join app_currencyfx on app_currencyfx.id_currencyfx=purchase_invoice.id_currencyfx
+																inner join app_currency on app_currency.id_currency=app_currencyfx.id_currency
+																inner join app_contract on app_contract.id_contract=purchase_invoice.id_contract
+																inner join app_condition on app_condition.id_condition=purchase_invoice.id_condition
+																left join projects on projects.id_project=purchase_invoice.id_project
+											  where purchase_invoice.id_company = @CompanyID and purchase_invoice.trans_date between '@startDate' and '@endDate'
+                                              order by purchase_invoice.trans_date";
+            querydetail = querydetail.Replace("@CompanyID", CurrentSession.Id_Company.ToString());
+            querydetail = querydetail.Replace("@startDate", DatePanel.StartDate.ToString("yyyy-MM-dd") + " 00:00:00");
+            querydetail = querydetail.Replace("@endDate", DatePanel.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
+            purchasedetaildt = QueryExecutor.DT(querydetail);
         }
 
         private async void Get_ItemAsset()
@@ -284,98 +536,101 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
                 GovCode = GovCode
             };
 
-           
-
-            //Loop through
-            foreach (DataRow sales_invoice in salesdt.Rows)
+            salesdt = salesdt.Select("IsSelected=1").CopyToDataTable();
+            if (salesdt.Rows.Count>0)
             {
-
-                DebeHaber.SyncLatest.Transaction Transaction = new DebeHaber.SyncLatest.Transaction();
-                DebeHaber.SyncLatest.Commercial_Invoice Sales = new DebeHaber.SyncLatest.Commercial_Invoice();
-                //Loads Data from Sales
-                Sales.Fill_BySales(sales_invoice);
-
-
-                if (salesdetaildt.Select("id_sales_invoice=" + sales_invoice["id_sales_invoice"].ToString()).Count() > 0)
+                //Loop through
+                foreach (DataRow sales_invoice in salesdt.Rows)
                 {
-                    DataTable dtdetail = salesdetaildt.Select("id_sales_invoice=" + sales_invoice["id_sales_invoice"].ToString()).CopyToDataTable();
-                    foreach (DataRow Detail in dtdetail.Rows)
+
+                    DebeHaber.SyncLatest.Transaction Transaction = new DebeHaber.SyncLatest.Transaction();
+                    DebeHaber.SyncLatest.Commercial_Invoice Sales = new DebeHaber.SyncLatest.Commercial_Invoice();
+                    //Loads Data from Sales
+                    Sales.Fill_By(sales_invoice, DebeHaber.SyncLatest.TransactionTypes.Sales);
+
+
+                    if (salesdetaildt.Select("id_sales_invoice=" + sales_invoice["id_sales_invoice"].ToString()).Count() > 0)
                     {
-                        DebeHaber.SyncLatest.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.SyncLatest.CommercialInvoice_Detail();
-                        //Fill and Detail SalesDetail
-                        CommercialInvoice_Detail.Fill_BySales(Detail);
-                        Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+                        DataTable dtdetail = salesdetaildt.Select("id_sales_invoice=" + sales_invoice["id_sales_invoice"].ToString()).CopyToDataTable();
+                        foreach (DataRow Detail in dtdetail.Rows)
+                        {
+                            DebeHaber.SyncLatest.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.SyncLatest.CommercialInvoice_Detail();
+                            //Fill and Detail SalesDetail
+                            CommercialInvoice_Detail.Fill_By(Detail);
+                            Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+                        }
+
                     }
 
+                    //Loop through payments made.
+
+
+                    Transaction.Commercial_Invoices.Add(Sales);
+                    Integration.Transactions.Add(Transaction);
+
+
                 }
+                int Count = Integration.Transactions.Count;
+                int PageSize = 100;
+                int PageCount = (Count / PageSize) < 1 ? 1 : (int)Math.Ceiling((decimal)Count / PageSize);
 
-                //Loop through payments made.
-
-
-                Transaction.Commercial_Invoices.Add(Sales);
-                Integration.Transactions.Add(Transaction);
-
-
-            }
-            int Count = Integration.Transactions.Count;
-            int PageSize = 100;
-            int PageCount = (Count / PageSize) < 1 ? 1 : (int)Math.Ceiling((decimal)Count / PageSize);
-
-            for (int PageIndex =0; PageIndex < PageCount; PageIndex++)
-            {
-
-                try
+                for (int PageIndex = 0; PageIndex < PageCount; PageIndex++)
                 {
-                    List<DebeHaber.SyncLatest.Transaction> trans = Integration.Transactions.Skip(PageIndex * PageSize).Take(PageSize).ToList();
-                    var Sales_Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(trans);
 
-                    var obj = Send2API(Sales_Json);
-
-                    List<DebeHaber.SyncLatest.Web_Data> sales_json = new JavaScriptSerializer().Deserialize<List<DebeHaber.SyncLatest.Web_Data>>(obj.ToString());
-                    using (db db = new db())
+                    try
                     {
-                        foreach (DebeHaber.SyncLatest.Web_Data data in sales_json)
+                        List<DebeHaber.SyncLatest.Transaction> trans = Integration.Transactions.Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                        var Sales_Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(trans);
+
+                        var obj = Send2API(Sales_Json);
+
+                        List<DebeHaber.SyncLatest.Web_Data> sales_json = new JavaScriptSerializer().Deserialize<List<DebeHaber.SyncLatest.Web_Data>>(obj.ToString());
+                        using (db db = new db())
+                        {
+                            foreach (DebeHaber.SyncLatest.Web_Data data in sales_json)
+                            {
+
+                                sales_invoice sales = db.sales_invoice.Where(x => x.id_sales_invoice == data.ref_id).FirstOrDefault();
+                                sales.cloud_id = data.id;
+                            }
+                            db.SaveChanges();
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("403"))
                         {
 
-                            sales_invoice sales = db.sales_invoice.Where(x => x.id_sales_invoice == data.ref_id).FirstOrDefault();
-                            sales.cloud_id = data.id;
+
+                            DebeHaberLogIn page = new DebeHaberLogIn();
+                            MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                            rootWindow.mainFrame.Navigate(page);
+
+
                         }
-                        db.SaveChanges();
-                    }
-
-
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message.Contains("403"))
-                    {
-
-
-                        DebeHaberLogIn page = new DebeHaberLogIn();
-                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
-
-                        rootWindow.mainFrame.Navigate(page);
-
-
-                    }
-                    else
-                    {
-                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        else
                         {
-                            MessageBox.Show(ex.Message, "Error Message");
-                           // Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                            {
+                                MessageBox.Show(ex.Message, "Error Message");
+                                // Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            }
                         }
+
+                        //Error Sales Invoice keep Is Accounted to False.
+
                     }
-
-                    //Error Sales Invoice keep Is Accounted to False.
-
-                }
-                finally
-                {
-                    db.db.SaveChanges();
-                    fill();
+                    finally
+                    {
+                        db.db.SaveChanges();
+                        fill();
+                    }
                 }
             }
+            
             
         }
 
@@ -385,94 +640,106 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
 
         private void Purchase_Sync()
         {
-            //Loop through
-            List<purchase_invoice> PurchaseList = db.db.purchase_invoice.Local.Where(x => x.IsSelected).ToList();
-
-            foreach (purchase_invoice purchase_invoice in PurchaseList)
+            DebeHaber.SyncLatest.Integration Integration = new DebeHaber.SyncLatest.Integration()
             {
-                DebeHaber.Integration Integration = new DebeHaber.Integration()
+                Key = RelationshipHash,
+                GovCode = GovCode
+            };
+
+            purchasedt = purchasedt.Select("IsSelected=1").CopyToDataTable();
+            if (purchasedt.Rows.Count > 0)
+            {
+                //Loop through
+                foreach (DataRow purchase_invoice in purchasedt.Rows)
                 {
-                    Key = RelationshipHash,
-                    GovCode = GovCode
-                };
 
-                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                    DebeHaber.SyncLatest.Transaction Transaction = new DebeHaber.SyncLatest.Transaction();
+                    DebeHaber.SyncLatest.Commercial_Invoice Purchase = new DebeHaber.SyncLatest.Commercial_Invoice();
+                    //Loads Data from Sales
+                    Purchase.Fill_By(purchase_invoice, DebeHaber.SyncLatest.TransactionTypes.Purchase);
 
-                DebeHaber.Commercial_Invoice Purchase = new DebeHaber.Commercial_Invoice();
 
-                //Loads Data from Sales
-                Purchase.Fill_ByPurchase(purchase_invoice);
-
-                ///Loop through Details.
-                foreach (purchase_invoice_detail Detail in purchase_invoice.purchase_invoice_detail)
-                {
-                    DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
-                    //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_ByPurchase(Detail, db.db);
-                    Purchase.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
-                }
-
-                //Loop through payments made.
-                foreach (payment_schedual schedual in purchase_invoice.payment_schedual)
-                {
-                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                    if (purchasedetaildt.Select("id_purchase_invoice=" + purchase_invoice["id_purchase_invoice"].ToString()).Count() > 0)
                     {
-                        DebeHaber.Payments Payments = new DebeHaber.Payments();
-                        //Fill and Add Payments
-                        Payments.FillPayments(schedual);
-                        Purchase.Payments.Add(Payments);
-                    }
-                }
-
-                Transaction.Commercial_Invoices.Add(Purchase);
-                Integration.Transactions.Add(Transaction);
-
-                try
-                {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
-                    Send2API(Sales_Json);
-
-                    purchase_invoice.IsSelected = false;
-                    purchase_invoice.is_accounted = true;
-                    foreach (payment_schedual schedual in purchase_invoice.payment_schedual)
-                    {
-                        if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                        DataTable dtdetail = purchasedetaildt.Select("id_purchase_invoice=" + purchase_invoice["id_purchase_invoice"].ToString()).CopyToDataTable();
+                        foreach (DataRow Detail in dtdetail.Rows)
                         {
-                            //This will make the Sales Invoice hide from the next load.
-                            schedual.payment_detail.payment.is_accounted = true;
+                            DebeHaber.SyncLatest.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.SyncLatest.CommercialInvoice_Detail();
+                            //Fill and Detail SalesDetail
+                            CommercialInvoice_Detail.Fill_By(Detail);
+                            Purchase.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                         }
+
                     }
+
+                    //Loop through payments made.
+
+
+                    Transaction.Commercial_Invoices.Add(Purchase);
+                    Integration.Transactions.Add(Transaction);
+
+
                 }
-                catch (Exception ex)
+                int Count = Integration.Transactions.Count;
+                int PageSize = 100;
+                int PageCount = (Count / PageSize) < 1 ? 1 : (int)Math.Ceiling((decimal)Count / PageSize);
+
+                for (int PageIndex = 0; PageIndex < PageCount; PageIndex++)
                 {
-                    if (ex.Message.Contains("403"))
+
+                    try
                     {
+                        List<DebeHaber.SyncLatest.Transaction> trans = Integration.Transactions.Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                        var Purchase_Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(trans);
 
+                        var obj = Send2API(Purchase_Json);
 
-                        DebeHaberLogIn page = new DebeHaberLogIn();
-                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
-
-                        rootWindow.mainFrame.Navigate(page);
-
-
-                    }
-                    else
-                    {
-                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        List<DebeHaber.SyncLatest.Web_Data> purchase_json = new JavaScriptSerializer().Deserialize<List<DebeHaber.SyncLatest.Web_Data>>(obj.ToString());
+                        using (db db = new db())
                         {
-                            MessageBox.Show(ex.Message, "Error Message");
-                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
-                        }
-                    }
+                            foreach (DebeHaber.SyncLatest.Web_Data data in purchase_json)
+                            {
 
-                    //Error Sales Invoice keep Is Accounted to False.
-                    purchase_invoice.is_accounted = false;
+                                purchase_invoice purchase = db.purchase_invoice.Where(x => x.id_purchase_invoice == data.ref_id).FirstOrDefault();
+                                purchase.cloud_id = data.id;
+                            }
+                            db.SaveChanges();
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("403"))
+                        {
+
+
+                            DebeHaberLogIn page = new DebeHaberLogIn();
+                            MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                            rootWindow.mainFrame.Navigate(page);
+
+
+                        }
+                        else
+                        {
+                            if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                            {
+                                MessageBox.Show(ex.Message, "Error Message");
+                                // Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            }
+                        }
+
+                        //Error Sales Invoice keep Is Accounted to False.
+
+                    }
+                    finally
+                    {
+                        db.db.SaveChanges();
+                        fill();
+                    }
                 }
-                finally
-                {
-                    db.db.SaveChanges();
-                    fill();
-                }
+
             }
         }
 
@@ -482,93 +749,108 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
 
         private void SalesReturn_Sync()
         {
-            List<sales_return> SalesReturnList = db.db.sales_return.Local.Where(x => x.IsSelected).ToList();
 
-            //Loop through
-            foreach (sales_return sales_return in SalesReturnList)
+            DebeHaber.SyncLatest.Integration Integration = new DebeHaber.SyncLatest.Integration()
             {
-                DebeHaber.Integration Integration = new DebeHaber.Integration();
-                Integration.Key = RelationshipHash;
-                Integration.GovCode = GovCode;
+                Key = RelationshipHash,
+                GovCode = GovCode
+            };
 
-                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+            salesreturndt = salesreturndt.Select("IsSelected=1").CopyToDataTable();
+            if (salesreturndt.Rows.Count > 0)
+            {
 
-                DebeHaber.Commercial_Invoice SalesReturn = new DebeHaber.Commercial_Invoice();
 
-                //Loads Data from Sales
-                SalesReturn.Fill_BySalesReturn(sales_return);
 
-                ///Loop through Details.
-                foreach (sales_return_detail Detail in sales_return.sales_return_detail)
+                //Loop through
+                foreach (DataRow sales_return in salesreturndt.Rows)
                 {
-                    DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
-                    //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_BySalesReturn(Detail, db.db);
-                    SalesReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
-                }
 
-                //Loop through payments made.
-                foreach (payment_schedual schedual in sales_return.payment_schedual)
-                {
-                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                    DebeHaber.SyncLatest.Transaction Transaction = new DebeHaber.SyncLatest.Transaction();
+                    DebeHaber.SyncLatest.Commercial_Invoice SalesReturn = new DebeHaber.SyncLatest.Commercial_Invoice();
+                    //Loads Data from Sales
+                    SalesReturn.Fill_By(sales_return, DebeHaber.SyncLatest.TransactionTypes.SalesReturn);
+
+
+                    if (salesreturndetaildt.Select("id_sales_return=" + sales_return["id_sales_return"].ToString()).Count() > 0)
                     {
-                        DebeHaber.Payments Payments = new DebeHaber.Payments();
-                        //Fill and Add Payments
-                        Payments.FillPayments(schedual);
-                        SalesReturn.Payments.Add(Payments);
-                    }
-                }
-
-                Transaction.Commercial_Invoices.Add(SalesReturn);
-                Integration.Transactions.Add(Transaction);
-
-                try
-                {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
-                    Send2API(Sales_Json);
-
-                    //This will make the Sales Invoice hide from the next load.
-                    sales_return.IsSelected = false;
-                    sales_return.is_accounted = true;
-                    //This will make the Payment hide from the next load.
-                    foreach (payment_schedual schedual in sales_return.payment_schedual)
-                    {
-                        if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                        DataTable dtdetail = salesreturndetaildt.Select("id_sales_return=" + sales_return["id_sales_return"].ToString()).CopyToDataTable();
+                        foreach (DataRow Detail in dtdetail.Rows)
                         {
-                            schedual.payment_detail.payment.is_accounted = true;
+                            DebeHaber.SyncLatest.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.SyncLatest.CommercialInvoice_Detail();
+                            //Fill and Detail SalesDetail
+                            CommercialInvoice_Detail.Fill_By(Detail);
+                            SalesReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                         }
+
                     }
+
+                    //Loop through payments made.
+
+
+                    Transaction.Commercial_Invoices.Add(SalesReturn);
+                    Integration.Transactions.Add(Transaction);
+
+
                 }
-                catch (Exception ex)
+                int Count = Integration.Transactions.Count;
+                int PageSize = 100;
+                int PageCount = (Count / PageSize) < 1 ? 1 : (int)Math.Ceiling((decimal)Count / PageSize);
+
+                for (int PageIndex = 0; PageIndex < PageCount; PageIndex++)
                 {
 
-                    if (ex.Message.Contains("403"))
+                    try
                     {
+                        List<DebeHaber.SyncLatest.Transaction> trans = Integration.Transactions.Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                        var Sales_Return_Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(trans);
 
+                        var obj = Send2API(Sales_Return_Json);
 
-                        DebeHaberLogIn page = new DebeHaberLogIn();
-                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
-
-                        rootWindow.mainFrame.Navigate(page);
-
-
-                    }
-                    else
-                    {
-                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        List<DebeHaber.SyncLatest.Web_Data> sales_return_json = new JavaScriptSerializer().Deserialize<List<DebeHaber.SyncLatest.Web_Data>>(obj.ToString());
+                        using (db db = new db())
                         {
-                            MessageBox.Show(ex.Message, "Error Message");
-                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
-                        }
-                    }
+                            foreach (DebeHaber.SyncLatest.Web_Data data in sales_return_json)
+                            {
 
-                    //Error Sales Invoice keep Is Accounted to False.
-                    sales_return.is_accounted = false;
-                }
-                finally
-                {
-                    db.db.SaveChanges();
-                    fill();
+                                sales_return sales_return = db.sales_return.Where(x => x.id_sales_return == data.ref_id).FirstOrDefault();
+                                sales_return.cloud_id = data.id;
+                            }
+                            db.SaveChanges();
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("403"))
+                        {
+
+
+                            DebeHaberLogIn page = new DebeHaberLogIn();
+                            MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                            rootWindow.mainFrame.Navigate(page);
+
+
+                        }
+                        else
+                        {
+                            if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                            {
+                                MessageBox.Show(ex.Message, "Error Message");
+                                // Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            }
+                        }
+
+                        //Error Sales Invoice keep Is Accounted to False.
+
+                    }
+                    finally
+                    {
+                        db.db.SaveChanges();
+                        fill();
+                    }
                 }
             }
         }
@@ -579,92 +861,105 @@ sales_invoice_detail.id_sales_invoice_detail as id,items.name as chart,sales_inv
 
         private void PurchaseReturn_Sync()
         {
-            List<purchase_return> PurchaseReturnList = db.db.purchase_return.Local.Where(x => x.IsSelected).ToList();
-
-            //Loop through
-            foreach (purchase_return purchase_return in PurchaseReturnList)
+            DebeHaber.SyncLatest.Integration Integration = new DebeHaber.SyncLatest.Integration()
             {
-                DebeHaber.Integration Integration = new DebeHaber.Integration();
-                Integration.Key = RelationshipHash;
-                Integration.GovCode = GovCode;
-                DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
+                Key = RelationshipHash,
+                GovCode = GovCode
+            };
 
-                DebeHaber.Commercial_Invoice PurchaseReturn = new DebeHaber.Commercial_Invoice();
+            purchasereturndt = purchasereturndt.Select("IsSelected=1").CopyToDataTable();
+            if (purchasereturndt.Rows.Count > 0)
+            {
 
-                //Loads Data from Sales
-                PurchaseReturn.Fill_ByPurchaseReturn(purchase_return);
-
-                ///Loop through Details.
-                foreach (purchase_return_detail Detail in purchase_return.purchase_return_detail)
+                //Loop through
+                foreach (DataRow purchase_return in purchasereturndt.Rows)
                 {
-                    DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.CommercialInvoice_Detail();
-                    //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_ByPurchaseReturn(Detail, db.db);
-                    PurchaseReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
-                }
 
-                //Loop through payments made.
-                foreach (payment_schedual schedual in purchase_return.payment_schedual)
-                {
-                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                    DebeHaber.SyncLatest.Transaction Transaction = new DebeHaber.SyncLatest.Transaction();
+                    DebeHaber.SyncLatest.Commercial_Invoice PurchaseReturn = new DebeHaber.SyncLatest.Commercial_Invoice();
+                    //Loads Data from Sales
+                    PurchaseReturn.Fill_By(purchase_return, DebeHaber.SyncLatest.TransactionTypes.PurchaseReturn);
+
+
+                    if (purchasereturndetaildt.Select("id_purchase_return=" + purchase_return["id_purchase_return"].ToString()).Count() > 0)
                     {
-                        DebeHaber.Payments Payments = new DebeHaber.Payments();
-                        //Fill and Add Payments
-                        Payments.FillPayments(schedual);
-                        PurchaseReturn.Payments.Add(Payments);
-                    }
-                }
-
-                Transaction.Commercial_Invoices.Add(PurchaseReturn);
-                Integration.Transactions.Add(Transaction);
-
-                try
-                {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
-                    Send2API(Sales_Json);
-
-                    //Marks Is Accounted True so that it does not appear again on next load.
-                    purchase_return.IsSelected = false;
-                    purchase_return.is_accounted = true;
-
-                    //Loop through payments to mark Is Accounted. Same code as above, but required for control.
-                    foreach (payment_schedual schedual in purchase_return.payment_schedual)
-                    {
-                        if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                        DataTable dtdetail = purchasereturndetaildt.Select("id_purchase_return=" + purchase_return["id_purchase_return"].ToString()).CopyToDataTable();
+                        foreach (DataRow Detail in dtdetail.Rows)
                         {
-                            schedual.payment_detail.payment.is_accounted = true;
+                            DebeHaber.SyncLatest.CommercialInvoice_Detail CommercialInvoice_Detail = new DebeHaber.SyncLatest.CommercialInvoice_Detail();
+                            //Fill and Detail SalesDetail
+                            CommercialInvoice_Detail.Fill_By(Detail);
+                            PurchaseReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                         }
+
                     }
+
+                    //Loop through payments made.
+
+
+                    Transaction.Commercial_Invoices.Add(PurchaseReturn);
+                    Integration.Transactions.Add(Transaction);
+
+
                 }
-                catch (Exception ex)
+                int Count = Integration.Transactions.Count;
+                int PageSize = 100;
+                int PageCount = (Count / PageSize) < 1 ? 1 : (int)Math.Ceiling((decimal)Count / PageSize);
+
+                for (int PageIndex = 0; PageIndex < PageCount; PageIndex++)
                 {
 
-                    if (ex.Message.Contains("403"))
+                    try
                     {
+                        List<DebeHaber.SyncLatest.Transaction> trans = Integration.Transactions.Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                        var Purchase_Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(trans);
 
+                        var obj = Send2API(Purchase_Json);
 
-                        DebeHaberLogIn page = new DebeHaberLogIn();
-                        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
-
-                        rootWindow.mainFrame.Navigate(page);
-
-
-                    }
-                    else
-                    {
-                        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        List<DebeHaber.SyncLatest.Web_Data> purchase_return_json = new JavaScriptSerializer().Deserialize<List<DebeHaber.SyncLatest.Web_Data>>(obj.ToString());
+                        using (db db = new db())
                         {
-                            MessageBox.Show(ex.Message, "Error Message");
-                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            foreach (DebeHaber.SyncLatest.Web_Data data in purchase_return_json)
+                            {
+
+                                purchase_return purchase_return = db.purchase_return.Where(x => x.id_purchase_return == data.ref_id).FirstOrDefault();
+                                purchase_return.cloud_id = data.id;
+                            }
+                            db.SaveChanges();
                         }
+
+
                     }
-                    //Error Sales Invoice keep Is Accounted to False.
-                    purchase_return.is_accounted = false;
-                }
-                finally
-                {
-                    db.db.SaveChanges();
-                    fill();
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("403"))
+                        {
+
+
+                            DebeHaberLogIn page = new DebeHaberLogIn();
+                            MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                            rootWindow.mainFrame.Navigate(page);
+
+
+                        }
+                        else
+                        {
+                            if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                            {
+                                MessageBox.Show(ex.Message, "Error Message");
+                                // Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            }
+                        }
+
+                        //Error Sales Invoice keep Is Accounted to False.
+
+                    }
+                    finally
+                    {
+                        db.db.SaveChanges();
+                        fill();
+                    }
                 }
             }
         }

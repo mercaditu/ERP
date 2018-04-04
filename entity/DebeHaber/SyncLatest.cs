@@ -85,22 +85,22 @@ namespace DebeHaber.SyncLatest
 
 
         //Fill Methods
-        public void Fill_BySales(DataRow sales_invoice)
+        public void Fill_By(DataRow rows, TransactionTypes type)
         {
-            Type = TransactionTypes.Sales;
-            id = Convert.ToInt32(sales_invoice["id_sales_invoice"]);
-            date = Convert.ToDateTime(sales_invoice["date"]);
-            customerTaxID = sales_invoice["customerTaxID"].ToString();
-            customerName = sales_invoice["customerName"].ToString();
-            supplierTaxID = sales_invoice["supplierTaxID"].ToString();
-            supplierName = sales_invoice["supplierName"].ToString();
-            currencyCode = sales_invoice["currencyCode"].ToString();
-            paymentCondition = Convert.ToInt32(sales_invoice["paymentCondition"]);
-            status = Convert.ToInt32(sales_invoice["status"]);
+            Type = type;
+            id = Convert.ToInt32(rows["id_sales_invoice"]);
+            date = Convert.ToDateTime(rows["date"]).ToLocalTime();
+            customerTaxID = rows["customerTaxID"].ToString();
+            customerName = rows["customerName"].ToString();
+            supplierTaxID = rows["supplierTaxID"].ToString();
+            supplierName = rows["supplierName"].ToString();
+            currencyCode = rows["currencyCode"].ToString();
+            paymentCondition = Convert.ToInt32(rows["paymentCondition"]);
+            status = Convert.ToInt32(rows["status"]);
 
-            number = Convert.ToString(sales_invoice["number"]);
+            number = Convert.ToString(rows["number"]);
 
-            comment = Convert.ToString(sales_invoice["comment"]);
+            comment = Convert.ToString(rows["comment"]);
 
 
 
@@ -130,7 +130,7 @@ namespace DebeHaber.SyncLatest
 
         #region Methods
 
-        public void Fill_BySales(DataRow Detail)
+        public void Fill_By(DataRow Detail)
         {
             id = Convert.ToInt32(Detail["id"]);
             chart = Detail["chart"].ToString();
@@ -143,50 +143,50 @@ namespace DebeHaber.SyncLatest
             using (db db= new db())
             {
                 // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-                //if (Convert.ToInt32(Detail["id_item_type"]) == 4)
-                //{
-                //    CC.Name = db.item_asset.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_asset_group.name : "";
-                //    CC.Type = CostCenterTypes.FixedAsset;
+                if (Convert.ToInt32(Detail["id_item_type"]) == 4)
+                {
+                    CC.Name = db.item_asset.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_asset_group.name : "";
+                    CC.Type = CostCenterTypes.FixedAsset;
 
-                //    //Add CostCenter into Detail.
-                //    CostCenter.Add(CC);
-                //}
-                //// If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
-                //else if (Convert.ToInt32(Detail["id_item_type"]) == 3 || Convert.ToInt32(Detail["id_item_type"]) == 5
-                //    || Convert.ToInt32(Detail["id_item_type"]) == 7)
-                //{
-                //    if (db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
-                //    { CC.Name = db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
-                //    else
-                //    { CC.Name = Detail["description"].ToString(); }
+                    //Add CostCenter into Detail.
+                    CostCenter.Add(CC);
+                }
+                // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
+                else if (Convert.ToInt32(Detail["id_item_type"]) == 3 || Convert.ToInt32(Detail["id_item_type"]) == 5
+                    || Convert.ToInt32(Detail["id_item_type"]) == 7)
+                {
+                    if (db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                    { CC.Name = db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                    else
+                    { CC.Name = Detail["description"].ToString(); }
 
-                //    CC.Type = CostCenterTypes.Income;
+                    CC.Type = CostCenterTypes.Income;
 
-                //    //Add CostCenter into Detail.
-                //    CostCenter.Add(CC);
-                //}
-                //// Finally if all else fails, assume Item being sold is Merchendice.
-                //else
-                //{
-                //    if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
-                //    {
-                //        CC.Name = db.app_cost_center.Where(x => x.is_product).Select(x => x.name).FirstOrDefault();
-                //        CC.Type = CostCenterTypes.Merchendice;
-                //    }
-                //    else
-                //    {
-                //        CC.Name = "Mercaderia";
-                //        CC.Type = CostCenterTypes.Merchendice;
-                //    }
-                //    //Add CostCenter into Detail.
-                //    CostCenter.Add(CC);
-                //}
+                    //Add CostCenter into Detail.
+                    CostCenter.Add(CC);
+                }
+                // Finally if all else fails, assume Item being sold is Merchendice.
+                else
+                {
+                    if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
+                    {
+                        CC.Name = db.app_cost_center.Where(x => x.is_product).Select(x => x.name).FirstOrDefault();
+                        CC.Type = CostCenterTypes.Merchendice;
+                    }
+                    else
+                    {
+                        CC.Name = "Mercaderia";
+                        CC.Type = CostCenterTypes.Merchendice;
+                    }
+                    //Add CostCenter into Detail.
+                    CostCenter.Add(CC);
+                }
 
-                //TODO this is wrong.
-                CC.Type = CostCenterTypes.Income;
-                CC.Name = "Merchandice Sold";
+                ////TODO this is wrong.
+                //CC.Type = CostCenterTypes.Income;
+                //CC.Name = "Merchandice Sold";
 
-                CostCenter.Add(CC);
+                //CostCenter.Add(CC);
 
             }
           

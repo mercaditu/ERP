@@ -1031,8 +1031,8 @@ namespace entity.Brillo.Logic
                             {
                                 id_item_product = item_inventory_detail.id_item_product,
                                 id_location = item_inventory_detail.id_location,
-                                debit = 0,
-                                credit = item_inventory_detail.Delta,
+                                debit = Math.Abs(item_inventory_detail.Delta),
+                                credit = 0,
                                 status = Status.Stock.InStock,
                                 code = item_movement.code,
                                 expire_date = item_movement.expire_date,

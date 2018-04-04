@@ -620,12 +620,16 @@ namespace entity.Controller.Sales
 
                 DataTable dt = QueryExecutor.DT(Cost);
                 if (dt.Rows.Count>0)
-                { 
-                    sales_detail.unit_cost = Brillo.Currency.convert_Values(Convert.ToDecimal(dt.Rows[0]["Cost"] is DBNull ? 0 : dt.Rows[0]["Cost"]), 
-                                   CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
-                                sales_detail.sales_invoice.id_currencyfx,
-                                entity.App.Modules.Sales
-                                ); 
+                {
+                    if (sales_detail.unit_cost == 0)
+                    {
+                        sales_detail.unit_cost = Brillo.Currency.convert_Values(Convert.ToDecimal(dt.Rows[0]["Cost"] is DBNull ? 0 : dt.Rows[0]["Cost"]),
+                                 CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                              sales_detail.sales_invoice.id_currencyfx,
+                              entity.App.Modules.Sales
+                              );
+                    }
+                  
                 }
             }
 
@@ -850,7 +854,7 @@ namespace entity.Controller.Sales
             //Inoivces if the Product, Batch Code, Expiration Date are the same.
             List<sales_packing_detail> GroupDetail = Packing.sales_packing_detail
                 .AsEnumerable()
-                .Where(x => x.user_verified)
+                .Where(x => x.user_verified == false)
                 .GroupBy(g => new { g.id_item, g.batch_code, g.expire_date, g.id_sales_order_detail })
                 .SelectMany(a => a)
                 .ToList();
@@ -886,12 +890,11 @@ namespace entity.Controller.Sales
                     Detail.Contact = db.contacts.Find(Invoice.id_contact);// sbxContact.Contact;
                     Detail.item = _sales_packing_detail.item;
                     Detail.id_item = _sales_packing_detail.id_item;
-                    Detail.quantity = Convert.ToDecimal(_sales_packing_detail.verified_quantity);
+                    Detail.quantity = Convert.ToDecimal(_sales_packing_detail.quantity);
                     Detail.id_vat_group = sales_order_detail.id_vat_group;
                     Detail.State = EntityState.Added;
                     Detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;
                     Detail.discount = sales_order_detail.discount;
-
                     Invoice.id_sales_rep = sales_order_detail.sales_order.id_sales_rep;
                     Invoice.sales_invoice_detail.Add(Detail);
                 }

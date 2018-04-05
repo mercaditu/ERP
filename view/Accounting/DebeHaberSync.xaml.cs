@@ -176,15 +176,15 @@ namespace Cognitivo.Accounting
         private  void btnData_Sync(object sender, RoutedEventArgs e)
         {
             DebeHaberLogIn DebeHaberLogIn = new DebeHaberLogIn();
-            try
-            {
-                DebeHaberLogIn.check_api(RelationshipHash, GovCode);
-            }
-            catch (Exception)
-            {
+            //try
+            //{
+            //    DebeHaberLogIn.check_api(RelationshipHash, GovCode);
+            //}
+            //catch (Exception)
+            //{
 
-                return;
-            }
+            //    return;
+            //}
             
             
 

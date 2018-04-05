@@ -54,55 +54,51 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc SalesReturn}">
-                <Grid Background="White" DataContext="{StaticResource sales_returnViewSource}">
+                <Grid Background="White" DataContext="{StaticResource sales_returnViewSource}" Margin="0,75,0,0.5">
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="SalesReturn_Checked" Unchecked="SalesReturn_Unchecked" />
                     <Button Content="{lex:Loc Refresh}" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top"  Click="btnSalesReturnData_Refresh" />
-                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid Margin="0,38,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn IsReadOnly="False"
+                           
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=OneWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
+													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding customerName,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                           
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc PurchaseInvoice}">
-                <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}">
+                <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}" Margin="0,75,0,0.5">
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="Purchase_Checked" Unchecked="Purchase_UnChecked" />
                     <Button Content="{lex:Loc Refresh}" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top"  Click="btnPurchaseData_Refresh" />
-                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                    <DataGrid Margin="0,38,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn IsReadOnly="False"
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding customerName,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=OneWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc PurchaseReturn}">
-                <Grid Background="White" DataContext="{StaticResource purchase_returnViewSource}">
+                <Grid Background="White" DataContext="{StaticResource purchase_returnViewSource}" Margin="0,75,0,0.5">
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="PurchaseRetuen_Checked" Unchecked="PurchaseReturn_Unchecked" />
                     <Button Content="{lex:Loc Refresh}" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Top"  Click="btnPurchaseReturnData_Refresh" />
-                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid Margin="0,38,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" >
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn IsReadOnly="False"
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 													ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-													Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+													EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding date,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding customerName,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=OneWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

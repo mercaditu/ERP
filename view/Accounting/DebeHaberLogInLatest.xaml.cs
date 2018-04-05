@@ -78,7 +78,7 @@ namespace Cognitivo.Accounting
                 {
                     txtusername.Text = company.hash_debehaber;
                     RaisePropertyChanged("UserName");
-                    check_api(company.hash_debehaber, Company_RUC);
+                  //  check_api(company.hash_debehaber, Company_RUC);
                     if (_DebeHaberCompanyList.Count()>0)
                     {
                         tabUpLoad.IsSelected = true;

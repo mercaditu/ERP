@@ -67,7 +67,7 @@ namespace DebeHaber.SyncLatest
         public int paymentCondition { get; set; }
 
         public string account { get; set; }
-        public DateTime date { get; set; }
+        public string date { get; set; }
 
         //Invoice Documents
         public string number { get; set; }
@@ -88,8 +88,8 @@ namespace DebeHaber.SyncLatest
         public void Fill_By(DataRow rows, TransactionTypes type)
         {
             Type = type;
-            id = Convert.ToInt32(rows["id_sales_invoice"]);
-            date = Convert.ToDateTime(rows["date"]).ToLocalTime();
+            id = Convert.ToInt32(rows["id_invoice"]);
+            date = rows["date"].ToString();
             customerTaxID = rows["customerTaxID"].ToString();
             customerName = rows["customerName"].ToString();
             supplierTaxID = rows["supplierTaxID"].ToString();
@@ -155,8 +155,9 @@ namespace DebeHaber.SyncLatest
                 else if (Convert.ToInt32(Detail["id_item_type"]) == 3 || Convert.ToInt32(Detail["id_item_type"]) == 5
                     || Convert.ToInt32(Detail["id_item_type"]) == 7)
                 {
-                    if (db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
-                    { CC.Name = db.items.Where(x => x.id_item == Convert.ToInt32(Detail["id_item"])).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                    int id_item= Convert.ToInt32(Detail["id_item"]);
+                    if (db.items.Where(x => x.id_item == id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                    { CC.Name = db.items.Where(x => x.id_item == id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
                     else
                     { CC.Name = Detail["description"].ToString(); }
 

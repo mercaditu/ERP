@@ -134,13 +134,13 @@ namespace DebeHaber.SyncLatest
         {
             id = Convert.ToInt32(Detail["id"]);
             chart = Detail["chart"].ToString();
-            value = Convert.ToDecimal(Detail["UnitPriceVat"]);
+            value = Convert.ToDecimal(Detail["value"]);
             vat = Detail["vat"].ToString();
             coefficient = Convert.ToDecimal(Detail["coefficient"]);
 
             CostCenter CC = new CostCenter();
 
-            using (db db= new db())
+            using (db db = new db())
             {
                 // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
                 if (Convert.ToInt32(Detail["id_item_type"]) == 4)

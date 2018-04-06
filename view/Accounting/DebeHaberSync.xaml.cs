@@ -175,7 +175,7 @@ namespace Cognitivo.Accounting
 
         private  void btnData_Sync(object sender, RoutedEventArgs e)
         {
-            DebeHaberLogIn DebeHaberLogIn = new DebeHaberLogIn();
+            //DebeHaberLogIn DebeHaberLogIn = new DebeHaberLogIn();
             //try
             //{
             //    DebeHaberLogIn.check_api(RelationshipHash, GovCode);
@@ -185,9 +185,11 @@ namespace Cognitivo.Accounting
 
             //    return;
             //}
-            
-            
 
+
+            db.db.app_cost_center.Load();
+            db.db.items.Load();
+            
             //Loops through each set of data and syncs each record individually.
             Sales_Sync();
             Purchase_Sync();
@@ -202,15 +204,15 @@ namespace Cognitivo.Accounting
         private void Sales_Sync()
         {
             List<sales_invoice> SalesList = db.db.sales_invoice.Local.Where(x => x.IsSelected).ToList();
-
+            DebeHaber.Integration Integration = new DebeHaber.Integration()
+            {
+                Key = RelationshipHash,
+                GovCode = GovCode
+            };
             //Loop through
             foreach (sales_invoice sales_invoice in SalesList)
             {
-                DebeHaber.Integration Integration = new DebeHaber.Integration()
-                {
-                    Key = RelationshipHash,
-                    GovCode = GovCode
-                };
+              
 
                 DebeHaber.Transaction Transaction = new DebeHaber.Transaction();
                 DebeHaber.Commercial_Invoice Sales = new DebeHaber.Commercial_Invoice();
@@ -267,23 +269,82 @@ namespace Cognitivo.Accounting
                 Transaction.Commercial_Invoices.Add(Sales);
                 Integration.Transactions.Add(Transaction);
 
+                //try
+                //{
+                //    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
+                //    MessageBox.Show(Sales_Json);
+                //    Send2API(Sales_Json);
+
+                //    sales_invoice.IsSelected = false;
+                //    sales_invoice.is_accounted = true;
+                //    foreach (payment_schedual schedual in sales_invoice.payment_schedual)
+                //    {
+                //        if (schedual.payment_detail != null && schedual.payment_detail.payment != null && schedual.payment_detail.payment.is_accounted == false)
+                //        {
+                //            //This will make the Sales Invoice hide from the next load.
+                //            schedual.payment_detail.payment.is_accounted = true;
+                //        }
+                //    }
+                //    db.db.SaveChanges();
+                //}
+                //catch (Exception ex)
+                //{
+                //    if (ex.Message.Contains("403"))
+                //    {
+
+
+                //        DebeHaberLogIn page = new DebeHaberLogIn();
+                //        MainWindow rootWindow = Window.GetWindow(this) as MainWindow;
+
+                //        rootWindow.mainFrame.Navigate(page);
+
+
+                //    }
+                //    else
+                //    {
+                //        if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                //        {
+                //            MessageBox.Show(ex.Message, "Error Message");
+                //            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                //        }
+                //    }
+
+                //    //Error Sales Invoice keep Is Accounted to False.
+                //    sales_invoice.is_accounted = false;
+                //}
+                //finally
+                //{
+                //    db.db.SaveChanges();
+                //    fill();
+                //}
+            }
+            int Count = Integration.Transactions.Count;
+            int PageSize = 100;
+            int PageCount = (Count / PageSize) < 1 ? 1 : (int)Math.Ceiling((decimal)Count / PageSize);
+
+            for (int PageIndex = 0; PageIndex < PageCount; PageIndex++)
+            {
+
                 try
                 {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Integration);
-                    MessageBox.Show(Sales_Json);
-                    Send2API(Sales_Json);
+                    List<DebeHaber.Transaction> trans = Integration.Transactions.Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                    var Sales_Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(trans);
 
-                    sales_invoice.IsSelected = false;
-                    sales_invoice.is_accounted = true;
-                    foreach (payment_schedual schedual in sales_invoice.payment_schedual)
+                    var obj = Send2API(Sales_Json);
+
+                    List<DebeHaber.SyncLatest.Web_Data> sales_json = new JavaScriptSerializer().Deserialize<List<DebeHaber.SyncLatest.Web_Data>>(obj.ToString());
+                    using (db db = new db())
                     {
-                        if (schedual.payment_detail != null && schedual.payment_detail.payment != null && schedual.payment_detail.payment.is_accounted == false)
+                        foreach (DebeHaber.SyncLatest.Web_Data data in sales_json)
                         {
-                            //This will make the Sales Invoice hide from the next load.
-                            schedual.payment_detail.payment.is_accounted = true;
+
+                            sales_invoice sales = db.sales_invoice.Where(x => x.id_sales_invoice == data.ref_id).FirstOrDefault();
+                            sales.cloud_id = data.id;
                         }
+                        db.SaveChanges();
                     }
-                    db.db.SaveChanges();
+
+
                 }
                 catch (Exception ex)
                 {
@@ -303,12 +364,12 @@ namespace Cognitivo.Accounting
                         if (MessageBox.Show("Error. Would you like to save the file for analysis?", "", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                         {
                             MessageBox.Show(ex.Message, "Error Message");
-                            Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
+                            // Class.ErrorLog.DebeHaber(new JavaScriptSerializer().Serialize(Integration).ToString());
                         }
                     }
 
                     //Error Sales Invoice keep Is Accounted to False.
-                    sales_invoice.is_accounted = false;
+
                 }
                 finally
                 {
@@ -925,7 +986,7 @@ namespace Cognitivo.Accounting
 
         #endregion CheckBox Check/UnCheck Methods
 
-        private void Send2API(object Json)
+        private object Send2API(object Json)
         {
             var webAddr = Settings.Default.DebeHaberConnString + "/api/transactionsV2";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
@@ -949,6 +1010,7 @@ namespace Cognitivo.Accounting
                     MessageBox.Show(result.ToString());
                     Class.ErrorLog.DebeHaber(Json.ToString());
                 }
+                return result;
             }
         }
 

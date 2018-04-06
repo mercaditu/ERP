@@ -186,7 +186,7 @@ namespace Cognitivo.Accounting
             catch (Exception ex)
             {
                 MessageBox.Show("Connection Error: " + ex.Message);
-                tabLogIn.IsSelected = true;
+                tabUpLoad.IsSelected = true;
                 return;
             }
 

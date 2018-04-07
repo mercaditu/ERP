@@ -40,56 +40,60 @@ namespace entity.API
         }
 
         public void LoadPurchase(purchase_invoice data)
-            {
-                Type = InvoiceTypes.Purchase;
-                Taxpayer = data.contact.name;
-                TaxpayerID = data.contact.gov_code;
-                Date = data.trans_date;
-                Code = data.code;
-                CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-                PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-                CurrencyCode = data.app_currencyfx.app_currency.code;
-                CurrencyRate = data.app_currencyfx.sell_value;
-            }
-
-            public void LoadSalesReturn(sales_return data)
-            {
-                Type = InvoiceTypes.SalesReturn;
-                Taxpayer = data.contact.name;
-                TaxpayerID = data.contact.gov_code;
-                Date = data.trans_date;
-                Code = data.code;
-                CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-                PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-                CurrencyCode = data.app_currencyfx.app_currency.code;
-                CurrencyRate = data.app_currencyfx.buy_value;
-            }
-
-            public void LoadPurchaseReturn(purchase_invoice data)
-            {
-                Type = InvoiceTypes.PurchaseReturn;
-                Taxpayer = data.contact.name;
-                TaxpayerID = data.contact.gov_code;
-                Date = data.trans_date;
-                Code = data.code;
-                CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-                PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-                CurrencyCode = data.app_currencyfx.app_currency.code;
-                CurrencyRate = data.app_currencyfx.sell_value;
-            }
-        }
-
-        public class InvoiceDetail
         {
-            public ItemTypes Type { get; set; }
-            public decimal VATPercentage { get; set; }
-            public decimal Value { get; set; }
-            public decimal Cost { get; set; }
+            Type = InvoiceTypes.Purchase;
+            Taxpayer = data.contact.name;
+            TaxpayerID = data.contact.gov_code;
+            Date = data.trans_date;
+            Code = data.code;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+            CurrencyCode = data.app_currencyfx.app_currency.code;
+            CurrencyRate = data.app_currencyfx.sell_value;
         }
 
-        public class AccountMovements
+        public void LoadSalesReturn(sales_return data)
         {
-
+            Type = InvoiceTypes.SalesReturn;
+            Taxpayer = data.contact.name;
+            TaxpayerID = data.contact.gov_code;
+            Date = data.trans_date;
+            Code = data.code;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+            CurrencyCode = data.app_currencyfx.app_currency.code;
+            CurrencyRate = data.app_currencyfx.buy_value;
         }
+
+        public void LoadPurchaseReturn(purchase_invoice data)
+        {
+            Type = InvoiceTypes.PurchaseReturn;
+            Taxpayer = data.contact.name;
+            TaxpayerID = data.contact.gov_code;
+            Date = data.trans_date;
+            Code = data.code;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+            CurrencyCode = data.app_currencyfx.app_currency.code;
+            CurrencyRate = data.app_currencyfx.sell_value;
+        }
+    }
+
+    public class InvoiceDetail
+    {
+        public ItemTypes Type { get; set; }
+        public decimal VATPercentage { get; set; }
+        public decimal Value { get; set; }
+        public decimal Cost { get; set; }
+    }
+
+    public class AccountMovements
+    {
+        public string Account { get; set; }
+        public DateTime Date { get; set; }
+        public string ReferenceInvoice { get; set; }
+        public int? ReferenceInvoiceID { get; set; }
+        public decimal Debit { get; set; }
+        public decimal Credit { get; set; }
     }
 }

@@ -96,4 +96,22 @@ namespace entity.API
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
     }
+
+    public class Production
+    {
+        public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public ItemTypes InputType { get; set; }
+        public ItemTypes OutputType { get; set; }
+        public decimal InputCost { get; set; }
+        public decimal OutputValue { get; set; }
+
+        public void Load(production_execution_detail data)
+        {
+            Name = data.production_order_detail.production_order.name;
+            Date = data.trans_date;
+            InputType = ItemTypes.Inventory;
+            InputCost = 0;
+        }
+    }
 }

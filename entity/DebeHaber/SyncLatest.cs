@@ -97,16 +97,9 @@ namespace DebeHaber.SyncLatest
             currencyCode = rows["currencyCode"].ToString();
             paymentCondition = Convert.ToInt32(rows["paymentCondition"]);
             status = Convert.ToInt32(rows["status"]);
-
             number = Convert.ToString(rows["number"]);
-
             comment = Convert.ToString(rows["comment"]);
-
-
-
         }
-
-
     }
 
     public class CommercialInvoice_Detail
@@ -514,8 +507,7 @@ namespace DebeHaber.SyncLatest
             }
         }
     }
-
-
+    
     public class Web_Data
     {
         public Web_Data()
@@ -532,10 +524,5 @@ namespace DebeHaber.SyncLatest
         public int chart_account_id { get; set; }
         public string number { get; set; }
         public int ref_id { get; set; }
-
-
-
-
-
     }
 }

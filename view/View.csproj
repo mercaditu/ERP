@@ -359,6 +359,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Accounting\DebeHaber.xaml.cs">
+      <DependentUpon>DebeHaber.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Accounting\DebeHaberLogInLatest.xaml.cs">
       <DependentUpon>DebeHaberLogInLatest.xaml</DependentUpon>
     </Compile>
@@ -958,6 +961,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="Images\Application\128\Restaurant.png" />
+    <Resource Include="Images\debehaber_narrow.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1201,6 +1205,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Accounting\DebeHaber.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Accounting\DebeHaberLogInLatest.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

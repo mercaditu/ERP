@@ -20,23 +20,6 @@ namespace Cognitivo.Accounting
 {
     public partial class DebeHaberSyncLatest : Page, IDisposable
     {
-        DataTable salesdt;
-        DataTable salesdetaildt;
-        DataTable salesreturndt;
-        DataTable salesreturndetaildt;
-        DataTable purchasedt;
-        DataTable purchasedetaildt;
-        DataTable purchasereturndt;
-        DataTable purchasereturndetaildt;
-        private CollectionViewSource sales_invoiceViewSource;
-        private CollectionViewSource sales_returnViewSource;
-        private CollectionViewSource purchase_invoiceViewSource;
-        private CollectionViewSource purchase_returnViewSource;
-        private CollectionViewSource payment_detailViewSource;
-        private CollectionViewSource item_assetViewSource;
-        private CollectionViewSource production_order_detailViewSource;
-
-
         //private db db = new db();
         private dbContext db = new dbContext();
 
@@ -68,13 +51,13 @@ namespace Cognitivo.Accounting
             DatePanel.StartDate = DateTime.Now.AddMonths(-1);
             DatePanel.EndDate = DateTime.Now.Date.AddDays(1).AddTicks(-1);
 
-            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-            sales_returnViewSource = FindResource("sales_returnViewSource") as CollectionViewSource;
-            purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
-            purchase_returnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
-            payment_detailViewSource = FindResource("payment_detailViewSource") as CollectionViewSource;
-            item_assetViewSource = FindResource("item_assetViewSource") as CollectionViewSource;
-            production_order_detailViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
+            //sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
+            //sales_returnViewSource = FindResource("sales_returnViewSource") as CollectionViewSource;
+            //purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
+            //purchase_returnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
+            //payment_detailViewSource = FindResource("payment_detailViewSource") as CollectionViewSource;
+            //item_assetViewSource = FindResource("item_assetViewSource") as CollectionViewSource;
+            //production_order_detailViewSource = FindResource("production_order_detailViewSource") as CollectionViewSource;
 
             RelationshipHash = db.db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
             GovCode = db.db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().gov_code;
@@ -504,19 +487,6 @@ items.id_item_type,items.id_item,items.description,
 
         private void btnData_Sync(object sender, RoutedEventArgs e)
         {
-            //DebeHaberLogIn DebeHaberLogIn = new DebeHaberLogIn();
-            //try
-            //{
-            //    DebeHaberLogIn.check_api(RelationshipHash, GovCode);
-            //}
-            //catch (Exception)
-            //{
-
-            //    return;
-            //}
-
-
-
             //Loops through each set of data and syncs each record individually.
             Sales_Sync();
             Purchase_Sync();

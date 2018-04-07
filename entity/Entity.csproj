@@ -196,6 +196,7 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="API\DebeHaber.cs" />
     <Compile Include="Application\app_account_detail_archive.cs" />
     <Compile Include="Application\app_comment.cs" />
     <Compile Include="Application\app_notification.cs" />

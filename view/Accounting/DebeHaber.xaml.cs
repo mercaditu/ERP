@@ -128,7 +128,13 @@ namespace Cognitivo.Accounting
 
         private void LoadAccounts()
         {
-            Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company && x.tran_type == app_account_detail.tran_types.Transaction && x.is_read == false).Include(x => x.app_currencyfx).ToList();
+            Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company && 
+            x.tran_type == app_account_detail.tran_types.Transaction && 
+            x.is_read == false &&
+            x.status == Status.Documents_General.Approved)
+                .Include(x => x.app_currencyfx)
+                .Include(x => x.app_account)
+                .ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progAccounts.IsIndeterminate = false;

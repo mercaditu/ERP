@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace entity.API
+namespace entity.API.DebeHaber
 {
-    public class DebeHaber
-    {
-        
-    }
-
     public enum InvoiceTypes { Purchase = 1, PurchaseReturn = 3, Sales = 4, SalesReturn = 5 }
+
     public enum ItemTypes { Inventory = 1, Expense = 2, RevenueByService = 3, RevenueByProduct = 4, Fixedasset = 5 }
+
     public class Invoice
     {
         public InvoiceTypes Type { get; set; }
@@ -95,23 +90,77 @@ namespace entity.API
         public int? ReferenceInvoiceID { get; set; }
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
+
+        public void LoadPaymentsMade(payment_detail data, string InvoiceNumber, int InvoiceID)
+        {
+            Account = data.app_account.name;
+            Date = data.trans_date;
+            Debit = data.value;
+            Credit = 0;
+
+            ReferenceInvoice = InvoiceNumber;
+            ReferenceInvoiceID = 0;
+        }
+
+        public void LoadPaymentsRecieved(payment_detail data, string InvoiceNumber, int InvoiceID)
+        {
+            Account = data.app_account.name;
+            Date = data.trans_date;
+            Debit = 0;
+            Credit = data.value;
+
+            ReferenceInvoice = InvoiceNumber;
+            ReferenceInvoiceID = 0;
+        }
+
+        public void LoadTransfers(app_account_detail data)
+        {
+            Account = data.app_account.name;
+            Date = data.trans_date;
+            Debit = data.debit;
+            Credit = data.credit;
+        }
     }
 
     public class Production
     {
         public string Name { get; set; }
         public DateTime Date { get; set; }
+        
+        //Input Data
         public ItemTypes InputType { get; set; }
-        public ItemTypes OutputType { get; set; }
         public decimal InputCost { get; set; }
-        public decimal OutputValue { get; set; }
+        
+        //Output Data --> can be null
+        public ItemTypes? OutputType { get; set; }
+        public decimal? OutputValue { get; set; }
 
         public void Load(production_execution_detail data)
         {
             Name = data.production_order_detail.production_order.name;
             Date = data.trans_date;
-            InputType = ItemTypes.Inventory;
-            InputCost = 0;
+
+            if (data.item.id_item_type == item.item_type.Product || 
+                data.item.id_item_type == item.item_type.RawMaterial || 
+                data.item.id_item_type == item.item_type.Supplies)
+            {
+                InputType = ItemTypes.Inventory;
+            }
+            else
+            {
+                InputType = ItemTypes.Expense;
+            }
+
+            InputCost = (data.unit_cost * data.quantity);
+
+            item.item_type type = data.production_order_detail.item.id_item_type;
+
+            if (type == item.item_type.Product ||
+                type == item.item_type.RawMaterial ||
+                type == item.item_type.Supplies)
+            {
+                OutputType = ItemTypes.Inventory;
+            }
         }
     }
 }

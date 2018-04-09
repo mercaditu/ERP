@@ -90,6 +90,7 @@ namespace Cognitivo.Accounting
             {
                 progSales.IsIndeterminate = false;
                 progSales.Maximum = Context.db.sales_invoice.Local.Count();
+                salesMaximum.Text = progSales.Maximum.ToString();
             }));
         }
 

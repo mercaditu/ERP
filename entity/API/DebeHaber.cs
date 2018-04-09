@@ -88,6 +88,8 @@ namespace entity.API.DebeHaber
         public DateTime Date { get; set; }
         public string ReferenceInvoice { get; set; }
         public int? ReferenceInvoiceID { get; set; }
+        public string CurrencyCode { get; set; }
+        public decimal CurrencyRate { get; set; }
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
 
@@ -95,6 +97,8 @@ namespace entity.API.DebeHaber
         {
             Account = data.app_account.name;
             Date = data.trans_date;
+            CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault().code;
+            CurrencyRate = data.app_currencyfx.buy_value > 0 ? data.app_currencyfx.buy_value : data.app_currencyfx.sell_value;
             Debit = data.value;
             Credit = 0;
 
@@ -106,6 +110,8 @@ namespace entity.API.DebeHaber
         {
             Account = data.app_account.name;
             Date = data.trans_date;
+            CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault().code;
+            CurrencyRate = data.app_currencyfx.buy_value > 0 ? data.app_currencyfx.buy_value : data.app_currencyfx.sell_value;
             Debit = 0;
             Credit = data.value;
 
@@ -113,10 +119,13 @@ namespace entity.API.DebeHaber
             ReferenceInvoiceID = 0;
         }
 
+        //Make another API for MoneyTransfers
         public void LoadTransfers(app_account_detail data)
         {
             Account = data.app_account.name;
             Date = data.trans_date;
+            CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault().code;
+            CurrencyRate = data.app_currencyfx.buy_value > 0 ? data.app_currencyfx.buy_value : data.app_currencyfx.sell_value;
             Debit = data.debit;
             Credit = data.credit;
         }

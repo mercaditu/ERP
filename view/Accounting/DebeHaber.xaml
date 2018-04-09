@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <StackPanel.Background>
-                <SolidColorBrush Color="Black" Opacity="0.05" />
+                <SolidColorBrush Color="MediumPurple"  Opacity="0.64" />
             </StackPanel.Background>
             <Image Width="84" Margin="64" Source="/Cognitivo;component/Images/debehaber_narrow.png" />
             <Label Content="{lex:Loc Accounting}" HorizontalAlignment="Center" Style="{StaticResource H1}" />
@@ -43,14 +43,14 @@
             <StackPanel HorizontalAlignment="Center">
                 <Label Style="{StaticResource H3}" Content="{lex:Loc Status}" HorizontalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" Margin="8,0">
-                    <Ellipse Fill="{Binding ElementName=this, Path=serverStatus, Converter={StaticResource Bool2Color}, FallbackValue=Silver}" Width="12" Height="12"/>
+                    <Ellipse Fill="{Binding ElementName=this, Path=serverStatus, Converter={StaticResource Bool2Color}, FallbackValue=Gainsboro}" Width="12" Height="12"/>
                     <Label Content="Server Status"/>
-                    <Label Content="A" Style="{StaticResource btn_Label}" VerticalAlignment="Center" MouseDown="OpenConfig"/>
+                    <Label Content="i" Style="{StaticResource btn_Label}" VerticalAlignment="Center" MouseDown="OpenConfig"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="8,0">
-                    <Ellipse Fill="{Binding ElementName=this, Path=apiStatus, Converter={StaticResource Bool2Color}, FallbackValue=Silver}" Width="12" Height="12"/>
+                    <Ellipse Fill="{Binding ElementName=this, Path=apiStatus, Converter={StaticResource Bool2Color}, FallbackValue=Gainsboro}" Width="12" Height="12"/>
                     <Label Content="API Key Status"/>
-                    <Label Content="A" Style="{StaticResource btn_Label}" VerticalAlignment="Center" MouseDown="OpenConfig"/>
+                    <Label Content="i" Style="{StaticResource btn_Label}" VerticalAlignment="Center" MouseDown="OpenConfig"/>
                 </StackPanel>
             </StackPanel>
 

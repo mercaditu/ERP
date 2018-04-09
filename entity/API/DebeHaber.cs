@@ -11,10 +11,14 @@ namespace entity.API.DebeHaber
     public class Invoice
     {
         public InvoiceTypes Type { get; set; }
-        public string Taxpayer { get; set; }
-        public string TaxpayerID { get; set; }
+        public string CustomerTaxID { get; set; }
+        public string CustomerName { get; set; }
+        public string SupplierTaxID { get; set; }
+        public string SupplierName { get; set; }
         public DateTime Date { get; set; }
         public string Code { get; set; }
+        public string Number { get; set; }
+        public string Comment { get; set; }
         public DateTime? CodeExpiry { get; set; }
         public int PaymentCondition { get; set; }
         public string CurrencyCode { get; set; }
@@ -24,54 +28,88 @@ namespace entity.API.DebeHaber
         public void LoadSales(sales_invoice data)
         {
             Type = InvoiceTypes.Sales;
-            Taxpayer = data.contact.name;
-            TaxpayerID = data.contact.gov_code;
+            CustomerName = data.contact.name;
+            CustomerTaxID = data.contact.gov_code;
+            SupplierName = data.app_company.name;
+            SupplierTaxID = data.app_company.gov_code;
             Date = data.trans_date;
             Code = data.code;
             CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
             PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
             CurrencyCode = data.app_currencyfx.app_currency.code;
             CurrencyRate = data.app_currencyfx.buy_value;
+            Number = data.number;
+            Comment = data.comment;
+
+            Details = new List<InvoiceDetail>();
+            foreach (sales_invoice_detail sales_invoice_detail in data.sales_invoice_detail)
+            {
+                foreach (var VatDetail in sales_invoice_detail.app_vat_group.app_vat_group_details)
+                {
+                    ItemTypes DetailType = ItemTypes.RevenueByService;
+
+                    if (sales_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
+                    {
+                        DetailType = ItemTypes.Fixedasset;
+                    }
+                    else if (sales_invoice_detail.item.id_item_type == item.item_type.Product 
+                        || sales_invoice_detail.item.id_item_type == item.item_type.RawMaterial
+                        || sales_invoice_detail.item.id_item_type == item.item_type.Supplies)
+                    {
+                        DetailType = ItemTypes.RevenueByProduct;
+                    }
+
+                    InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?
+                        Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() :
+                        new InvoiceDetail();
+
+                    Detail.Type = DetailType;
+                    Detail.Cost = sales_invoice_detail.unit_cost;
+                    Detail.Value = sales_invoice_detail.UnitPrice_Vat;
+                    Detail.VATPercentage = sales_invoice_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+                    Details.Add(Detail);
+                }
+            }
         }
 
-        public void LoadPurchase(purchase_invoice data)
-        {
-            Type = InvoiceTypes.Purchase;
-            Taxpayer = data.contact.name;
-            TaxpayerID = data.contact.gov_code;
-            Date = data.trans_date;
-            Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-            CurrencyCode = data.app_currencyfx.app_currency.code;
-            CurrencyRate = data.app_currencyfx.sell_value;
-        }
+        //public void LoadPurchase(purchase_invoice data)
+        //{
+        //    Type = InvoiceTypes.Purchase;
+        //    Taxpayer = data.contact.name;
+        //    TaxpayerID = data.contact.gov_code;
+        //    Date = data.trans_date;
+        //    Code = data.code;
+        //    CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+        //    PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+        //    CurrencyCode = data.app_currencyfx.app_currency.code;
+        //    CurrencyRate = data.app_currencyfx.sell_value;
+        //}
 
-        public void LoadSalesReturn(sales_return data)
-        {
-            Type = InvoiceTypes.SalesReturn;
-            Taxpayer = data.contact.name;
-            TaxpayerID = data.contact.gov_code;
-            Date = data.trans_date;
-            Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-            CurrencyCode = data.app_currencyfx.app_currency.code;
-            CurrencyRate = data.app_currencyfx.buy_value;
-        }
+        //public void LoadSalesReturn(sales_return data)
+        //{
+        //    Type = InvoiceTypes.SalesReturn;
+        //    Taxpayer = data.contact.name;
+        //    TaxpayerID = data.contact.gov_code;
+        //    Date = data.trans_date;
+        //    Code = data.code;
+        //    CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+        //    PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+        //    CurrencyCode = data.app_currencyfx.app_currency.code;
+        //    CurrencyRate = data.app_currencyfx.buy_value;
+        //}
 
-        public void LoadPurchaseReturn(purchase_invoice data)
-        {
-            Type = InvoiceTypes.PurchaseReturn;
-            Taxpayer = data.contact.name;
-            TaxpayerID = data.contact.gov_code;
-            Date = data.trans_date;
-            Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-            CurrencyCode = data.app_currencyfx.app_currency.code;
-            CurrencyRate = data.app_currencyfx.sell_value;
-        }
+        //public void LoadPurchaseReturn(purchase_invoice data)
+        //{
+        //    Type = InvoiceTypes.PurchaseReturn;
+        //    Taxpayer = data.contact.name;
+        //    TaxpayerID = data.contact.gov_code;
+        //    Date = data.trans_date;
+        //    Code = data.code;
+        //    CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+        //    PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+        //    CurrencyCode = data.app_currencyfx.app_currency.code;
+        //    CurrencyRate = data.app_currencyfx.sell_value;
+        //}
     }
 
     public class InvoiceDetail

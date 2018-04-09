@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +23,8 @@ namespace Cognitivo.Accounting
         public bool apiStatus { get; set; }
 
         public dbContext Context { get; set; }
+
+        List<sales_invoice> sales_invoiceList { get; set; }
 
         public DebeHaber()
         {
@@ -60,13 +66,27 @@ namespace Cognitivo.Accounting
             progProduction.IsIndeterminate = true;
 
             //This is a little more code, but will allow all to be loaded at the same time for a quicker startup.
+            //Load();
+            //LoadSales();
+            //LoadSalesReturn();
+            //LoadPurchases();
+            //LoadPurchaseReturns();
+            //LoadAccounts();
+            //LoadProductions();
+
             Task g = Task.Factory.StartNew(() => Load());
+            g.Wait();
             Task a = Task.Factory.StartNew(() => LoadSales());
+            a.Wait();
             Task b = Task.Factory.StartNew(() => LoadSalesReturn());
+            b.Wait();
             Task c = Task.Factory.StartNew(() => LoadPurchases());
+            c.Wait();
             Task d = Task.Factory.StartNew(() => LoadPurchaseReturns());
-            Task e = Task.Factory.StartNew(() => LoadAccounts());
-            Task f = Task.Factory.StartNew(() => LoadProductions());
+            d.Wait();
+            Task f = Task.Factory.StartNew(() => LoadAccounts());
+            f.Wait();
+            Task h = Task.Factory.StartNew(() => LoadProductions());
         }
 
         //Load Basic Data to avoid N+1 Query Problems
@@ -82,10 +102,10 @@ namespace Cognitivo.Accounting
 
         private void LoadSales()
         {
-            Context.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
-                .Include(x => x.sales_invoice_detail)
-                .Include(x => x.app_currencyfx)
-                .ToList();
+           sales_invoiceList = Context.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
+                 .Include(x => x.sales_invoice_detail)
+                 .Include(x => x.app_currencyfx)
+                 .ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progSales.IsIndeterminate = false;
@@ -96,7 +116,7 @@ namespace Cognitivo.Accounting
 
         private void LoadSalesReturn()
         {
-            Context.db.sales_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
+            List<sales_return> sales_returnList = Context.db.sales_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
                 .Include(x => x.sales_return_detail)
                 .Include(x => x.app_currencyfx)
                 .ToList();
@@ -104,33 +124,36 @@ namespace Cognitivo.Accounting
             {
                 progSalesReturn.IsIndeterminate = false;
                 progSalesReturn.Maximum = Context.db.sales_return.Local.Count();
+                salesReturnMaximum.Text = progSalesReturn.Maximum.ToString();
             }));
         }
 
         private void LoadPurchases()
         {
-            Context.db.purchase_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).ToList();
+            List<purchase_invoice> purchase_invoiceList = Context.db.purchase_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progPurchase.IsIndeterminate = false;
                 progPurchase.Maximum = Context.db.purchase_invoice.Local.Count();
+                purchaseMaximum.Text = progPurchase.Maximum.ToString();
             }));
         }
 
         private void LoadPurchaseReturns()
         {
-            Context.db.purchase_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).ToList();
+            List<purchase_return> purchase_returnList = Context.db.purchase_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progPurchaseReturn.IsIndeterminate = false;
                 progPurchaseReturn.Maximum = Context.db.purchase_return.Local.Count();
+                purchaseReturnMaximum.Text = progPurchaseReturn.Maximum.ToString();
             }));
         }
 
         private void LoadAccounts()
         {
-            Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company && 
-            x.tran_type == app_account_detail.tran_types.Transaction && 
+            List<app_account_detail> app_account_detailList = Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
+            x.tran_type == app_account_detail.tran_types.Transaction &&
             x.is_read == false &&
             x.status == Status.Documents_General.Approved)
                 .Include(x => x.app_currencyfx)
@@ -140,20 +163,22 @@ namespace Cognitivo.Accounting
             {
                 progAccounts.IsIndeterminate = false;
                 progAccounts.Maximum = Context.db.app_account_detail.Local.Count();
+                transferMaximum.Text = progAccounts.Maximum.ToString();
             }));
 
         }
 
         private void LoadProductions()
         {
-            Context.db.production_execution_detail.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
+            List<production_execution_detail> production_execution_detailList = Context.db.production_execution_detail.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
                 .Include(x => x.production_order_detail)
                 .Include(x => x.production_order_detail.production_order)
                 .ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                progAccounts.IsIndeterminate = false;
-                progAccounts.Maximum = Context.db.production_execution_detail.Local.Count();
+                progProduction.IsIndeterminate = false;
+                progProduction.Maximum = Context.db.production_execution_detail.Local.Count();
+                productionMaximum.Text = progProduction.Maximum.ToString();
             }));
         }
 
@@ -161,17 +186,26 @@ namespace Cognitivo.Accounting
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            Task basic_Task = Task.Factory.StartNew(() => Start());
+            Start();
+          //  Task basic_Task = Task.Factory.StartNew(() => Start());
         }
 
         private void Start()
         {
-
+            Sales(sales_invoiceList);
         }
 
-        private void Sales()
+        private void Sales(List<sales_invoice> sales_invoiceList)
         {
-
+            List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
+            foreach (sales_invoice sales_invoice in sales_invoiceList)
+            {
+                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                Invoice.LoadSales(sales_invoice);
+                InvoiceList.Add(Invoice);
+            }
+            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+            Send2API(Json, tbxURL.Text + "/api/syncData");
         }
 
         private void SalesReturns()
@@ -197,6 +231,47 @@ namespace Cognitivo.Accounting
         private void Production()
         {
 
+        }
+
+        private void ClickInformation(object sender, MouseButtonEventArgs e)
+        {
+            var obj = Send2API(null, tbxURL.Text + "/api/checkapi");
+            if (obj != null)
+            {
+                popConnBuilder.IsOpen = false;
+            }
+        }
+        private object Send2API(object Json,string uri)
+        {
+
+            var webAddr = uri;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + tbxAPI.Text);
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(Json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                isReady = true;
+
+                if (result.ToString().Contains("Error"))
+                {
+                    tbxAPI.Focus();
+                    isReady = false;
+                    return null;
+                }
+                return result;
+            }
         }
     }
 }

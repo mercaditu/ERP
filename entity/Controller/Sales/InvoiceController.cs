@@ -619,7 +619,7 @@ namespace entity.Controller.Sales
                                 where sid.id_sales_invoice_detail = " + sales_detail.id_sales_invoice_detail;
 
                 DataTable dt = QueryExecutor.DT(Cost);
-                if (dt.Rows.Count>0)
+                if (dt.Rows.Count > 0)
                 {
                     if (sales_detail.unit_cost == 0)
                     {
@@ -629,7 +629,7 @@ namespace entity.Controller.Sales
                               entity.App.Modules.Sales
                               );
                     }
-                  
+
                 }
             }
 
@@ -849,7 +849,7 @@ namespace entity.Controller.Sales
         {
             //Bring into Context.
             sales_packing Packing = db.sales_packing.Find(PackingID);
-
+          
             //Group Packing Detail so as to reduce the amount of lines in 
             //Inoivces if the Product, Batch Code, Expiration Date are the same.
             List<sales_packing_detail> GroupDetail = Packing.sales_packing_detail
@@ -896,6 +896,10 @@ namespace entity.Controller.Sales
                     Detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;
                     Detail.discount = sales_order_detail.discount;
                     Invoice.id_sales_rep = sales_order_detail.sales_order.id_sales_rep;
+                    Invoice.app_contract = sales_order_detail.sales_order.app_contract;
+                    Invoice.RaisePropertyChanged("app_contract");
+                    Invoice.RaisePropertyChanged("id_contract");
+                    Invoice.id_condition = sales_order_detail.sales_order.id_condition;
                     Invoice.sales_invoice_detail.Add(Detail);
                 }
                 else

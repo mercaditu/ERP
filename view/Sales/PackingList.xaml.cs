@@ -50,12 +50,12 @@ namespace Cognitivo.Sales
             CollectionViewSource app_measureweight = FindResource("app_measureweight") as CollectionViewSource;
             app_measurevolume.Source = PackingListDB.app_measurement.Local;
             app_measureweight.Source = PackingListDB.app_measurement.Local;
-            
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PackingListDB, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
-              
+
                 if (sales_packingsales_packinglist_detailViewSource.View != null)
                 {
                     sales_packingsales_packinglist_detailViewSource.View.Refresh();
@@ -126,7 +126,7 @@ namespace Cognitivo.Sales
 
             PackingListDB.sales_packing.Add(sales_packing);
             GridVerifiedList.ItemsSource = null;
-           sales_packingViewSource.View.Refresh();
+            sales_packingViewSource.View.Refresh();
             sales_packingViewSource.View.MoveCurrentToLast();
 
         }
@@ -225,7 +225,7 @@ namespace Cognitivo.Sales
                 {
                     //DeleteDetailGridRow
                     sales_packing_detail sales_packing_detail = e.Parameter as sales_packing_detail;
-                    if(sales_packing_detail.Error==null)
+                    if (sales_packing_detail.Error == null)
                     {
                         PackingListDB.sales_packing_detail.Remove(sales_packing_detail);
                         Refresh_GroupByGrid();
@@ -357,7 +357,7 @@ namespace Cognitivo.Sales
                 _sales_packing_detail.verified_quantity = quantity;
                 _sales_packing_detail.id_item = item.id_item;
                 _sales_packing_detail.user_verified = true;
-             
+
 
 
 
@@ -394,18 +394,18 @@ namespace Cognitivo.Sales
                     _sales_packing_detail.app_location = PackingListDB.app_location.Where(x => x.id_location == (int)item_movement.id_location).FirstOrDefault();
                     _sales_packing_detail.Quantity_InStockLot = item_movement.avlquantity;
 
-				}
+                }
 
                 if (app_branch != null)
                 {
-                    if (_sales_packing_detail.id_location==null)
+                    if (_sales_packing_detail.id_location == null)
                     {
                         _sales_packing_detail.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
                         _sales_packing_detail.app_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault();
                     }
-                   
+
                 }
-            
+
             }
             else
             {
@@ -561,15 +561,15 @@ namespace Cognitivo.Sales
         }
         private void toolBar_btnClear_Click(object sender)
         {
-           
+
             sales_packingViewSource = FindResource("sales_packingViewSource") as CollectionViewSource;
-             PackingListDB.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company)
-                .Include(x => x.contact)
-                .LoadAsync();
+            PackingListDB.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company)
+               .Include(x => x.contact)
+               .LoadAsync();
             sales_packingViewSource.Source = PackingListDB.sales_packing.Local;
         }
 
-     
+
 
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {
@@ -581,6 +581,7 @@ namespace Cognitivo.Sales
                     List<sales_invoice_detail> DetailList = new List<sales_invoice_detail>();
                     //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
                     //I would like to some how check for inconsistancies or let user check for them before approving.
+
                     foreach (sales_packing_detail PackingDetail in packing.sales_packing_detail.Where(x => x.user_verified == false))
                     {
                         sales_invoice_detail detail = new sales_invoice_detail()
@@ -594,8 +595,14 @@ namespace Cognitivo.Sales
                             sales_order_detail = PackingDetail.sales_order_detail,
                             id_location = PackingDetail.sales_order_detail.id_location,
                             unit_price = PackingDetail.sales_order_detail.unit_price + PackingDetail.sales_order_detail.discount
-                           
-                    };
+
+
+                        };
+                        if (PackingDetail.expire_date != null || !string.IsNullOrEmpty(PackingDetail.batch_code))
+                        {
+                            detail.expire_date = PackingDetail.expire_date;
+                            detail.batch_code = PackingDetail.batch_code;
+                        }
                         sales_packing_relation sales_packing_relation = new sales_packing_relation()
                         {
                             //id_sales_invoice_detail = detail.id_sales_invoice_detail,
@@ -619,7 +626,7 @@ namespace Cognitivo.Sales
                                 contact = packing.contact,
                                 id_contact = packing.id_contact,
                                 app_branch = packing.app_branch,
-                                app_contract=Order.app_contract,
+                                app_contract = Order.app_contract,
                                 app_condition = Order.app_condition,
                                 id_contract = Order.id_contract,
                                 id_condition = Order.id_condition,

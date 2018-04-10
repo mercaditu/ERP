@@ -582,21 +582,19 @@ namespace Cognitivo.Sales
                     //For now I only want to bring items not verified. Mainly because I want to prevent duplciating items in Purchase Invoice.
                     //I would like to some how check for inconsistancies or let user check for them before approving.
 
-                    foreach (sales_packing_detail PackingDetail in packing.sales_packing_detail.Where(x => x.user_verified == false))
+                    foreach (sales_packing_detail PackingDetail in packing.sales_packing_detail.Where(x => x.user_verified == true))
                     {
                         sales_invoice_detail detail = new sales_invoice_detail()
                         {
                             item = PackingDetail.item,
                             item_description = PackingDetail.sales_order_detail.item_description,
-                            quantity = PackingDetail.quantity,
+                            quantity = Convert.ToDecimal(PackingDetail.verified_quantity),
                             unit_cost = PackingDetail.sales_order_detail.unit_cost,
                             discount = PackingDetail.sales_order_detail.discount,
                             id_vat_group = PackingDetail.sales_order_detail.id_vat_group,
                             sales_order_detail = PackingDetail.sales_order_detail,
                             id_location = PackingDetail.sales_order_detail.id_location,
                             unit_price = PackingDetail.sales_order_detail.unit_price + PackingDetail.sales_order_detail.discount
-
-
                         };
                         if (PackingDetail.expire_date != null || !string.IsNullOrEmpty(PackingDetail.batch_code))
                         {

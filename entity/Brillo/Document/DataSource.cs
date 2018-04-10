@@ -1030,6 +1030,7 @@ CASE
             reportDataSource.Value = item_request_detail
                 .Select(g => new
                 {
+                    Name = g.item_request != null ? g.item_request.name : "",
                     ProjectName = g.item_request != null ? g.item_request.project != null ? g.item_request.project.name : "" : "",
                     ProjectTaskName = g.project_task != null ? g.project_task.item_description : "",
                     ProjectTaskCode = g.project_task != null ? g.project_task.code : "",

@@ -854,7 +854,7 @@ namespace entity.Controller.Sales
             //Inoivces if the Product, Batch Code, Expiration Date are the same.
             List<sales_packing_detail> GroupDetail = Packing.sales_packing_detail
                 .AsEnumerable()
-                .Where(x => x.user_verified == false)
+                .Where(x => x.user_verified == true)
                 .GroupBy(g => new { g.id_item, g.batch_code, g.expire_date, g.id_sales_order_detail })
                 .SelectMany(a => a)
                 .ToList();
@@ -890,7 +890,7 @@ namespace entity.Controller.Sales
                     Detail.Contact = db.contacts.Find(Invoice.id_contact);// sbxContact.Contact;
                     Detail.item = _sales_packing_detail.item;
                     Detail.id_item = _sales_packing_detail.id_item;
-                    Detail.quantity = Convert.ToDecimal(_sales_packing_detail.quantity);
+                    Detail.quantity = Convert.ToDecimal(_sales_packing_detail.verified_quantity);
                     Detail.id_vat_group = sales_order_detail.id_vat_group;
                     Detail.State = EntityState.Added;
                     Detail.unit_price = sales_order_detail.unit_price + sales_order_detail.discount;

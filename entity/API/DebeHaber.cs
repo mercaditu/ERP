@@ -47,16 +47,18 @@ namespace entity.API.DebeHaber
                 foreach (var VatDetail in sales_invoice_detail.app_vat_group.app_vat_group_details)
                 {
                     ItemTypes DetailType = ItemTypes.RevenueByService;
-
+                    string Name = "Service";
                     if (sales_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
                     {
                         DetailType = ItemTypes.Fixedasset;
+                        Name = "Fixedasset";
                     }
-                    else if (sales_invoice_detail.item.id_item_type == item.item_type.Product 
+                    else if (sales_invoice_detail.item.id_item_type == item.item_type.Product
                         || sales_invoice_detail.item.id_item_type == item.item_type.RawMaterial
                         || sales_invoice_detail.item.id_item_type == item.item_type.Supplies)
                     {
                         DetailType = ItemTypes.RevenueByProduct;
+                        Name = "Product";
                     }
 
                     InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?
@@ -66,58 +68,171 @@ namespace entity.API.DebeHaber
                     Detail.Type = DetailType;
                     Detail.Cost = sales_invoice_detail.unit_cost;
                     Detail.Value = sales_invoice_detail.UnitPrice_Vat;
-                    Detail.VATPercentage = sales_invoice_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+                    Detail.VATPercentage = Convert.ToInt32(sales_invoice_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
+                    Detail.Name = Name;
                     Details.Add(Detail);
                 }
             }
         }
 
-        //public void LoadPurchase(purchase_invoice data)
-        //{
-        //    Type = InvoiceTypes.Purchase;
-        //    Taxpayer = data.contact.name;
-        //    TaxpayerID = data.contact.gov_code;
-        //    Date = data.trans_date;
-        //    Code = data.code;
-        //    CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-        //    PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-        //    CurrencyCode = data.app_currencyfx.app_currency.code;
-        //    CurrencyRate = data.app_currencyfx.sell_value;
-        //}
+        public void LoadPurchase(purchase_invoice data)
+        {
+            Type = InvoiceTypes.Sales;
+            CustomerName = data.contact.name;
+            CustomerTaxID = data.contact.gov_code;
+            SupplierName = data.app_company.name;
+            SupplierTaxID = data.app_company.gov_code;
+            Date = data.trans_date;
+            Code = data.code;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+            CurrencyCode = data.app_currencyfx.app_currency.code;
+            CurrencyRate = data.app_currencyfx.buy_value;
+            Number = data.number;
+            Comment = data.comment;
 
-        //public void LoadSalesReturn(sales_return data)
-        //{
-        //    Type = InvoiceTypes.SalesReturn;
-        //    Taxpayer = data.contact.name;
-        //    TaxpayerID = data.contact.gov_code;
-        //    Date = data.trans_date;
-        //    Code = data.code;
-        //    CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-        //    PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-        //    CurrencyCode = data.app_currencyfx.app_currency.code;
-        //    CurrencyRate = data.app_currencyfx.buy_value;
-        //}
+            Details = new List<InvoiceDetail>();
+            foreach (purchase_invoice_detail purchase_invoice_detail in data.purchase_invoice_detail)
+            {
+                foreach (var VatDetail in purchase_invoice_detail.app_vat_group.app_vat_group_details)
+                {
+                    ItemTypes DetailType = ItemTypes.RevenueByService;
+                    string Name = "Service";
+                    if (purchase_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
+                    {
+                        DetailType = ItemTypes.Fixedasset;
+                        Name = "Fixedasset";
+                    }
+                    else if (purchase_invoice_detail.item.id_item_type == item.item_type.Product
+                        || purchase_invoice_detail.item.id_item_type == item.item_type.RawMaterial
+                        || purchase_invoice_detail.item.id_item_type == item.item_type.Supplies)
+                    {
+                        DetailType = ItemTypes.RevenueByProduct;
+                        Name = "Product";
+                    }
 
-        //public void LoadPurchaseReturn(purchase_invoice data)
-        //{
-        //    Type = InvoiceTypes.PurchaseReturn;
-        //    Taxpayer = data.contact.name;
-        //    TaxpayerID = data.contact.gov_code;
-        //    Date = data.trans_date;
-        //    Code = data.code;
-        //    CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
-        //    PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
-        //    CurrencyCode = data.app_currencyfx.app_currency.code;
-        //    CurrencyRate = data.app_currencyfx.sell_value;
-        //}
+                    InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?
+                        Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() :
+                        new InvoiceDetail();
+
+                    Detail.Type = DetailType;
+                    Detail.Cost = purchase_invoice_detail.unit_cost;
+                    Detail.Value = purchase_invoice_detail.UnitCost_Vat;
+                    Detail.VATPercentage = Convert.ToInt32(purchase_invoice_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
+                    Detail.Name = Name;
+                    Details.Add(Detail);
+                }
+            }
+        }
+
+        public void LoadSalesReturn(sales_return data)
+        {
+            Type = InvoiceTypes.Sales;
+            CustomerName = data.contact.name;
+            CustomerTaxID = data.contact.gov_code;
+            SupplierName = data.app_company.name;
+            SupplierTaxID = data.app_company.gov_code;
+            Date = data.trans_date;
+            Code = data.code;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+            CurrencyCode = data.app_currencyfx.app_currency.code;
+            CurrencyRate = data.app_currencyfx.buy_value;
+            Number = data.number;
+            Comment = data.comment;
+
+            Details = new List<InvoiceDetail>();
+            foreach (sales_return_detail sales_return_detail in data.sales_return_detail)
+            {
+                foreach (var VatDetail in sales_return_detail.app_vat_group.app_vat_group_details)
+                {
+                    ItemTypes DetailType = ItemTypes.RevenueByService;
+                    string Name = "Service";
+                    if (sales_return_detail.item.id_item_type == item.item_type.FixedAssets)
+                    {
+                        DetailType = ItemTypes.Fixedasset;
+                        Name = "Fixedasset";
+                    }
+                    else if (sales_return_detail.item.id_item_type == item.item_type.Product
+                        || sales_return_detail.item.id_item_type == item.item_type.RawMaterial
+                        || sales_return_detail.item.id_item_type == item.item_type.Supplies)
+                    {
+                        DetailType = ItemTypes.RevenueByProduct;
+                        Name = "Product";
+                    }
+
+                    InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?
+                        Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() :
+                        new InvoiceDetail();
+
+                    Detail.Type = DetailType;
+                    Detail.Cost = sales_return_detail.unit_cost;
+                    Detail.Value = sales_return_detail.UnitPrice_Vat;
+                    Detail.VATPercentage = Convert.ToInt32(sales_return_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
+                    Detail.Name = Name;
+                    Details.Add(Detail);
+                }
+            }
+        }
+
+        public void LoadPurchaseReturn(purchase_return data)
+        {
+            Type = InvoiceTypes.Sales;
+            CustomerName = data.contact.name;
+            CustomerTaxID = data.contact.gov_code;
+            SupplierName = data.app_company.name;
+            SupplierTaxID = data.app_company.gov_code;
+            Date = data.trans_date;
+            Code = data.code;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+            CurrencyCode = data.app_currencyfx.app_currency.code;
+            CurrencyRate = data.app_currencyfx.buy_value;
+            Number = data.number;
+            Comment = data.comment;
+
+            Details = new List<InvoiceDetail>();
+            foreach (purchase_return_detail purchase_return_detail in data.purchase_return_detail)
+            {
+                foreach (var VatDetail in purchase_return_detail.app_vat_group.app_vat_group_details)
+                {
+                    ItemTypes DetailType = ItemTypes.RevenueByService;
+                    string Name = "Service";
+                    if (purchase_return_detail.item.id_item_type == item.item_type.FixedAssets)
+                    {
+                        DetailType = ItemTypes.Fixedasset;
+                        Name = "Fixedasset";
+                    }
+                    else if (purchase_return_detail.item.id_item_type == item.item_type.Product
+                        || purchase_return_detail.item.id_item_type == item.item_type.RawMaterial
+                        || purchase_return_detail.item.id_item_type == item.item_type.Supplies)
+                    {
+                        DetailType = ItemTypes.RevenueByProduct;
+                        Name = "Product";
+                    }
+
+                    InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?
+                        Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() :
+                        new InvoiceDetail();
+
+                    Detail.Type = DetailType;
+                    Detail.Cost = purchase_return_detail.unit_cost;
+                    Detail.Value = purchase_return_detail.UnitCost_Vat;
+                    Detail.VATPercentage = Convert.ToInt32(purchase_return_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
+                    Detail.Name = Name;
+                    Details.Add(Detail);
+                }
+            }
+        }
     }
 
     public class InvoiceDetail
     {
         public ItemTypes Type { get; set; }
-        public decimal VATPercentage { get; set; }
+        public Int32 VATPercentage { get; set; }
         public decimal Value { get; set; }
         public decimal Cost { get; set; }
+        public string Name { get; set; }
     }
 
     public class AccountMovements
@@ -173,11 +288,11 @@ namespace entity.API.DebeHaber
     {
         public string Name { get; set; }
         public DateTime Date { get; set; }
-        
+
         //Input Data
         public ItemTypes InputType { get; set; }
         public decimal InputCost { get; set; }
-        
+
         //Output Data --> can be null
         public ItemTypes? OutputType { get; set; }
         public decimal? OutputValue { get; set; }
@@ -187,8 +302,8 @@ namespace entity.API.DebeHaber
             Name = data.production_order_detail.production_order.name;
             Date = data.trans_date;
 
-            if (data.item.id_item_type == item.item_type.Product || 
-                data.item.id_item_type == item.item_type.RawMaterial || 
+            if (data.item.id_item_type == item.item_type.Product ||
+                data.item.id_item_type == item.item_type.RawMaterial ||
                 data.item.id_item_type == item.item_type.Supplies)
             {
                 InputType = ItemTypes.Inventory;

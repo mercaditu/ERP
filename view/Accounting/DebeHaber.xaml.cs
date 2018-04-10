@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows;
@@ -16,8 +18,16 @@ namespace Cognitivo.Accounting
     /// <summary>
     /// Interaction logic for DebeHaber.xaml
     /// </summary>
-    public partial class DebeHaber : Page
+    public partial class DebeHaber : Page,INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
         public bool isReady { get; set; }
         public bool serverStatus { get; set; }
         public bool apiStatus { get; set; }
@@ -25,29 +35,38 @@ namespace Cognitivo.Accounting
         public dbContext Context { get; set; }
 
         List<sales_invoice> sales_invoiceList { get; set; }
+        List<sales_return> sales_returnList { get; set; }
+        List<purchase_invoice> purchase_invoiceList { get; set; }
+        List<purchase_return> purchase_returnList { get; set; }
+
 
         public DebeHaber()
         {
             InitializeComponent();
             Context = new dbContext();
-
+            isReady = false;
+            RaisePropertyChanged("isReady");
             //Check KeyStatus on thread
-            Task basic_Task = Task.Factory.StartNew(() => CheckStatus(null, null));
+            CheckStatus(null, null);
+           // Task basic_Task = Task.Factory.StartNew(() => CheckStatus(null, null));
             LoadData(null, null);
         }
 
         private void CheckStatus(object sender, MouseButtonEventArgs e)
         {
             //TODO, Check if access to server is ok. Make sure to use the URL on the config file.
-            serverStatus = true;
+            //serverStatus = true;
 
             //TODO, Check if API Key is active (not expired). Make sure to use the URL on the config file.
-            apiStatus = true;
+            //apiStatus = true;
 
+            var obj = Send2API(null, tbxURL.Text + "/api/checkapi");
+          
             //If both is Ok, then we are ready to Export.
             if (serverStatus && apiStatus)
             {
                 isReady = true;
+                RaisePropertyChanged("isReady");
             }
         }
 
@@ -102,10 +121,10 @@ namespace Cognitivo.Accounting
 
         private void LoadSales()
         {
-           sales_invoiceList = Context.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
-                 .Include(x => x.sales_invoice_detail)
-                 .Include(x => x.app_currencyfx)
-                 .ToList();
+            sales_invoiceList = Context.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
+                  .Include(x => x.sales_invoice_detail)
+                  .Include(x => x.app_currencyfx)
+                  .ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progSales.IsIndeterminate = false;
@@ -116,7 +135,7 @@ namespace Cognitivo.Accounting
 
         private void LoadSalesReturn()
         {
-            List<sales_return> sales_returnList = Context.db.sales_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
+            sales_returnList = Context.db.sales_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
                 .Include(x => x.sales_return_detail)
                 .Include(x => x.app_currencyfx)
                 .ToList();
@@ -130,7 +149,7 @@ namespace Cognitivo.Accounting
 
         private void LoadPurchases()
         {
-            List<purchase_invoice> purchase_invoiceList = Context.db.purchase_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).ToList();
+            purchase_invoiceList = Context.db.purchase_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progPurchase.IsIndeterminate = false;
@@ -187,12 +206,16 @@ namespace Cognitivo.Accounting
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             Start();
-          //  Task basic_Task = Task.Factory.StartNew(() => Start());
+            //  Task basic_Task = Task.Factory.StartNew(() => Start());
         }
 
         private void Start()
         {
             Sales(sales_invoiceList);
+            SalesReturns(sales_returnList);
+            Purchases(purchase_invoiceList);
+            PurchaseReturns(purchase_returnList);
+
         }
 
         private void Sales(List<sales_invoice> sales_invoiceList)
@@ -208,19 +231,44 @@ namespace Cognitivo.Accounting
             Send2API(Json, tbxURL.Text + "/api/syncData");
         }
 
-        private void SalesReturns()
+        private void SalesReturns(List<sales_return> sales_returnList)
         {
-
+            List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
+            foreach (sales_return sales_return in sales_returnList)
+            {
+                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                Invoice.LoadSalesReturn(sales_return);
+                InvoiceList.Add(Invoice);
+            }
+            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+            Send2API(Json, tbxURL.Text + "/api/syncData");
         }
 
-        private void Purchases()
+        private void Purchases(List<purchase_invoice> purchase_invoiceList)
         {
 
+            List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
+            foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
+            {
+                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                Invoice.LoadPurchase(purchase_invoice);
+                InvoiceList.Add(Invoice);
+            }
+            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+            Send2API(Json, tbxURL.Text + "/api/syncData");
         }
 
-        private void PurchaseReturns()
+        private void PurchaseReturns(List<purchase_return> purchase_returnList)
         {
-
+            List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
+            foreach (purchase_return purchase_return in purchase_returnList)
+            {
+                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                Invoice.LoadPurchaseReturn(purchase_return);
+                InvoiceList.Add(Invoice);
+            }
+            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+            Send2API(Json, tbxURL.Text + "/api/syncData");
         }
 
         private void Accounts()
@@ -235,42 +283,57 @@ namespace Cognitivo.Accounting
 
         private void ClickInformation(object sender, MouseButtonEventArgs e)
         {
+
+          
             var obj = Send2API(null, tbxURL.Text + "/api/checkapi");
             if (obj != null)
             {
                 popConnBuilder.IsOpen = false;
             }
+
+
+
         }
-        private object Send2API(object Json,string uri)
+        private object Send2API(object Json, string uri)
         {
-
-            var webAddr = uri;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + tbxAPI.Text);
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            try
             {
-                streamWriter.Write(Json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
 
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
 
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                isReady = true;
+                var webAddr = uri;
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                httpWebRequest.Headers.Add("Authorization", "Bearer " + tbxAPI.Text);
 
-                if (result.ToString().Contains("Error"))
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    tbxAPI.Focus();
-                    isReady = false;
-                    return null;
+                    streamWriter.Write(Json);
+                    streamWriter.Flush();
+                    streamWriter.Close();
                 }
-                return result;
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    apiStatus = true;
+                    serverStatus = true;
+                    if (result.ToString().Contains("Error"))
+                    {
+                        tbxAPI.Focus();
+                        apiStatus = false;
+                        return null;
+                    }
+                    return result;
+                }
+            }
+            catch(Exception ex)
+            {
+                apiStatus = false;
+                serverStatus = false;
+                return null;
             }
         }
     }

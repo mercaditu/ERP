@@ -446,12 +446,12 @@
                                            Style="{StaticResource text_HyperLinks}"
                                FontSize="16" Margin="5,0" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0">
+                        <!--<StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/AccountingChart.png" />
                             <TextBlock Text="DebeHaber sync" MouseUp="config_MouseUp" Tag="DebeHaberSyncLatest"
                                            Style="{StaticResource text_HyperLinks}"
                                FontSize="16" Margin="5,0" />
-                        </StackPanel>
+                        </StackPanel>-->
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/AccountingChart.png" />
                             <TextBlock Text="{lex:Loc WebSync}" MouseUp="config_MouseUp" Tag="WebSync"

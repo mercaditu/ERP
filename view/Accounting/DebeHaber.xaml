@@ -37,7 +37,7 @@
             </ComboBox>
             <!--<DatePicker x:Name="dtpStartDate" HorizontalAlignment="Center" Style="{StaticResource input_datepicker}"/>-->
 
-            <Button Content="{lex:Loc Export}" Margin="15" IsEnabled="True"
+            <Button Content="{lex:Loc Export}" Margin="15" IsEnabled="{Binding isReady,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                     Style="{StaticResource btn_green}" Click="btnStart_Click" />
             <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
             <StackPanel HorizontalAlignment="Center">

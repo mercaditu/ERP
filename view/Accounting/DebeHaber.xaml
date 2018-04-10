@@ -64,7 +64,7 @@
                             <Label Content="" FontSize="16" Style="{StaticResource btn_Label}" MouseUp="CheckStatus"/>
                         </StackPanel>
                         <Label Content="API Key" Style="{StaticResource input_label}"></Label>
-                        <TextBox x:Name="tbxAPI" Margin="8" MinHeight="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your API Key here."></TextBox>
+                        <TextBox  x:Name="tbxAPI" Margin="8" MinHeight="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your API Key here."></TextBox>
                         <TextBlock Text="{lex:Loc Information}" Style="{StaticResource text_HyperLinks}" MouseDown="ClickInformation"></TextBlock>
                     </StackPanel>
                 </Border>

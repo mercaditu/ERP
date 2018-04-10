@@ -60,7 +60,7 @@ namespace Cognitivo.Accounting
             //TODO, Check if API Key is active (not expired). Make sure to use the URL on the config file.
             //apiStatus = true;
 
-            var obj = Send2API(null, tbxURL.Text + "/api/checkapi");
+            var obj = Send2API(null, tbxURL.Text + "/api/check-api");
           
             //If both is Ok, then we are ready to Export.
             if (serverStatus && apiStatus)
@@ -228,7 +228,7 @@ namespace Cognitivo.Accounting
                 InvoiceList.Add(Invoice);
             }
             var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/syncData");
+            Send2API(Json, tbxURL.Text + "/api/transactions");
         }
 
         private void SalesReturns(List<sales_return> sales_returnList)
@@ -241,7 +241,7 @@ namespace Cognitivo.Accounting
                 InvoiceList.Add(Invoice);
             }
             var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/syncData");
+            Send2API(Json, tbxURL.Text + "/api/transactions");
         }
 
         private void Purchases(List<purchase_invoice> purchase_invoiceList)
@@ -255,7 +255,7 @@ namespace Cognitivo.Accounting
                 InvoiceList.Add(Invoice);
             }
             var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/syncData");
+            Send2API(Json, tbxURL.Text + "/api/transactions");
         }
 
         private void PurchaseReturns(List<purchase_return> purchase_returnList)
@@ -268,7 +268,7 @@ namespace Cognitivo.Accounting
                 InvoiceList.Add(Invoice);
             }
             var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/syncData");
+            Send2API(Json, tbxURL.Text + "/api/transactions");
         }
 
         private void Accounts()
@@ -285,7 +285,7 @@ namespace Cognitivo.Accounting
         {
 
           
-            var obj = Send2API(null, tbxURL.Text + "/api/checkapi");
+            var obj = Send2API(null, tbxURL.Text + "/api/check-key");
             if (obj != null)
             {
                 popConnBuilder.IsOpen = false;

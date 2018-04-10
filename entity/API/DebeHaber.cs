@@ -96,20 +96,23 @@ namespace entity.API.DebeHaber
             {
                 foreach (var VatDetail in purchase_invoice_detail.app_vat_group.app_vat_group_details)
                 {
-                    ItemTypes DetailType = ItemTypes.RevenueByService;
-                    string Name = "Service";
-                    if (purchase_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
+                    ItemTypes DetailType = ItemTypes.Expense;
+                    string Name = purchase_invoice_detail.app_cost_center.name;
+
+                    if (purchase_invoice_detail.item != null)
                     {
-                        DetailType = ItemTypes.Fixedasset;
-                        Name = "Fixedasset";
+                        if (purchase_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
+                        {
+                            DetailType = ItemTypes.Fixedasset;
+                        }
+                        else if (purchase_invoice_detail.item.id_item_type == item.item_type.Product
+                            || purchase_invoice_detail.item.id_item_type == item.item_type.RawMaterial
+                            || purchase_invoice_detail.item.id_item_type == item.item_type.Supplies)
+                        {
+                            DetailType = ItemTypes.Inventory;
+                        }
                     }
-                    else if (purchase_invoice_detail.item.id_item_type == item.item_type.Product
-                        || purchase_invoice_detail.item.id_item_type == item.item_type.RawMaterial
-                        || purchase_invoice_detail.item.id_item_type == item.item_type.Supplies)
-                    {
-                        DetailType = ItemTypes.RevenueByProduct;
-                        Name = "Product";
-                    }
+                   
 
                     InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?
                         Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() :

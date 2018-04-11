@@ -200,18 +200,20 @@ namespace entity.API.DebeHaber
                 foreach (var VatDetail in purchase_return_detail.app_vat_group.app_vat_group_details)
                 {
                     ItemTypes DetailType = ItemTypes.RevenueByService;
-                    string Name = "Service";
-                    if (purchase_return_detail.item.id_item_type == item.item_type.FixedAssets)
+                    string Name = purchase_return_detail.app_cost_center.name;
+
+                    if (purchase_return_detail.item != null)
                     {
-                        DetailType = ItemTypes.Fixedasset;
-                        Name = "Fixedasset";
-                    }
-                    else if (purchase_return_detail.item.id_item_type == item.item_type.Product
-                        || purchase_return_detail.item.id_item_type == item.item_type.RawMaterial
-                        || purchase_return_detail.item.id_item_type == item.item_type.Supplies)
-                    {
-                        DetailType = ItemTypes.RevenueByProduct;
-                        Name = "Product";
+                        if (purchase_return_detail.item.id_item_type == item.item_type.FixedAssets)
+                        {
+                            DetailType = ItemTypes.Fixedasset;
+                        }
+                        else if (purchase_return_detail.item.id_item_type == item.item_type.Product
+                            || purchase_return_detail.item.id_item_type == item.item_type.RawMaterial
+                            || purchase_return_detail.item.id_item_type == item.item_type.Supplies)
+                        {
+                            DetailType = ItemTypes.Inventory;
+                        }
                     }
 
                     InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?

@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
       xmlns:local="clr-namespace:Cognitivo.Accounting"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1024"
@@ -60,11 +61,21 @@
                     <StackPanel>
                         <Label Content="{lex:Loc IPAddress}" Style="{StaticResource input_label}"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Text="https://www.debehaber.com" x:Name="tbxURL" Style="{StaticResource input_textbox}" />
+                            <TextBox Text="{Binding Source={x:Static
+                                                    mainpref:Settings.Default}, 
+                                                    Path=DebeHaberConnString,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged
+                                                    }" x:Name="tbxURL" Style="{StaticResource input_textbox}" />
                             <Label Content="" FontSize="16" Style="{StaticResource btn_Label}" MouseUp="CheckStatus"/>
                         </StackPanel>
                         <Label Content="API Key" Style="{StaticResource input_label}"></Label>
-                        <TextBox  x:Name="tbxAPI" Margin="8" MinHeight="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your API Key here."></TextBox>
+                        <TextBox Text="{Binding Source={x:Static
+                                                    mainpref:Settings.Default}, 
+                                                    Path=CognitivoKey,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged
+                                                    }"  x:Name="tbxAPI" Margin="8" MinHeight="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your API Key here."></TextBox>
                         <TextBlock Text="{lex:Loc Information}" Style="{StaticResource text_HyperLinks}" MouseDown="ClickInformation"></TextBlock>
                     </StackPanel>
                 </Border>

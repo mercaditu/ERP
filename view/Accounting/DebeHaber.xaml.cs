@@ -18,7 +18,7 @@ namespace Cognitivo.Accounting
     /// <summary>
     /// Interaction logic for DebeHaber.xaml
     /// </summary>
-    public partial class DebeHaber : Page,INotifyPropertyChanged
+    public partial class DebeHaber : Page, INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,7 +48,7 @@ namespace Cognitivo.Accounting
             RaisePropertyChanged("isReady");
             //Check KeyStatus on thread
             CheckStatus(null, null);
-           // Task basic_Task = Task.Factory.StartNew(() => CheckStatus(null, null));
+            // Task basic_Task = Task.Factory.StartNew(() => CheckStatus(null, null));
             LoadData(null, null);
         }
 
@@ -61,7 +61,7 @@ namespace Cognitivo.Accounting
             //apiStatus = true;
 
             var obj = Send2API(null, tbxURL.Text + "/api/check-api");
-          
+
             //If both is Ok, then we are ready to Export.
             if (serverStatus && apiStatus)
             {
@@ -160,7 +160,7 @@ namespace Cognitivo.Accounting
 
         private void LoadPurchaseReturns()
         {
-            List<purchase_return> purchase_returnList = Context.db.purchase_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).ToList();
+            purchase_returnList = Context.db.purchase_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progPurchaseReturn.IsIndeterminate = false;
@@ -205,70 +205,123 @@ namespace Cognitivo.Accounting
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            Start();
-            //  Task basic_Task = Task.Factory.StartNew(() => Start());
+            //Start();
+            Task basic_Task = Task.Factory.StartNew(() => Start());
         }
 
         private void Start()
         {
-            Sales(sales_invoiceList);
-            SalesReturns(sales_returnList);
-            Purchases(purchase_invoiceList);
-            PurchaseReturns(purchase_returnList);
+            Task Sales_Task = Task.Factory.StartNew(() => Sales(sales_invoiceList));
+            Sales_Task.Wait();
+            Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(sales_returnList));
+            SalesReturn_Task.Wait();
+            Task Purchase_Task = Task.Factory.StartNew(() => Purchases(purchase_invoiceList));
+            Purchase_Task.Wait();
+            Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(purchase_returnList));
+
+
+
+
+
 
         }
 
         private void Sales(List<sales_invoice> sales_invoiceList)
         {
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-            foreach (sales_invoice sales_invoice in sales_invoiceList)
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
+            for (int i = 0; i < sales_invoiceList.Count(); i = i + 100)
             {
-                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
-                Invoice.LoadSales(sales_invoice);
-                InvoiceList.Add(Invoice);
+
+                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
+                {
+                    entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                    Invoice.LoadSales(sales_invoice);
+                    InvoiceList.Add(Invoice);
+
+                }
+
+                var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
+
+                value += 100;
+                Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
+                Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
             }
-            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/transactions");
+
         }
 
         private void SalesReturns(List<sales_return> sales_returnList)
         {
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-            foreach (sales_return sales_return in sales_returnList)
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
+            for (int i = 0; i < sales_returnList.Count(); i = i + 100)
             {
-                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
-                Invoice.LoadSalesReturn(sales_return);
-                InvoiceList.Add(Invoice);
+                foreach (sales_return sales_return in sales_returnList)
+                {
+                    entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                    Invoice.LoadSalesReturn(sales_return);
+                    InvoiceList.Add(Invoice);
+                }
+                var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
+
+                value += 100;
+                Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
+                Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
             }
-            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/transactions");
+
         }
 
         private void Purchases(List<purchase_invoice> purchase_invoiceList)
         {
 
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-            foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
+            for (int i = 0; i < purchase_invoiceList.Count(); i = i + 100)
             {
-                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
-                Invoice.LoadPurchase(purchase_invoice);
-                InvoiceList.Add(Invoice);
+                foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
+                {
+                    entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                    Invoice.LoadPurchase(purchase_invoice);
+                    InvoiceList.Add(Invoice);
+                }
+                var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
+
+                value += 100;
+                Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
+                Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
             }
-            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/transactions");
         }
 
         private void PurchaseReturns(List<purchase_return> purchase_returnList)
         {
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-            foreach (purchase_return purchase_return in purchase_returnList)
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => purchaseReturnValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
+            for (int i = 0; i < purchase_returnList.Count(); i = i + 100)
             {
-                entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
-                Invoice.LoadPurchaseReturn(purchase_return);
-                InvoiceList.Add(Invoice);
+                foreach (purchase_return purchase_return in purchase_returnList)
+                {
+                    entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
+                    Invoice.LoadPurchaseReturn(purchase_return);
+                    InvoiceList.Add(Invoice);
+                }
+                var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
+
+                value += 100;
+                Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
+                Dispatcher.BeginInvoke((Action)(() => purchaseReturnValue.Text = value.ToString()));
             }
-            var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-            Send2API(Json, tbxURL.Text + "/api/transactions");
         }
 
         private void Accounts()
@@ -284,7 +337,7 @@ namespace Cognitivo.Accounting
         private void ClickInformation(object sender, MouseButtonEventArgs e)
         {
 
-          
+            Cognitivo.Sales.Settings.Default.Save();
             var obj = Send2API(null, tbxURL.Text + "/api/check-key");
             if (obj != null)
             {
@@ -329,7 +382,7 @@ namespace Cognitivo.Accounting
                     return result;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 apiStatus = false;
                 serverStatus = false;

@@ -337,7 +337,7 @@ namespace Cognitivo.Accounting
         private void ClickInformation(object sender, MouseButtonEventArgs e)
         {
 
-            Cognitivo.Sales.Settings.Default.Save();
+            Cognitivo.Properties.Settings.Default.Save();
             var obj = Send2API(null, tbxURL.Text + "/api/check-key");
             if (obj != null)
             {

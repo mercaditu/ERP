@@ -60,7 +60,7 @@ namespace Cognitivo.Accounting
             //TODO, Check if API Key is active (not expired). Make sure to use the URL on the config file.
             //apiStatus = true;
 
-            var obj = Send2API(null, tbxURL.Text + "/api/check-api");
+            var obj = Send2API(null, tbxURL.Text + "/api/check-key");
 
             //If both is Ok, then we are ready to Export.
             if (serverStatus && apiStatus)
@@ -211,12 +211,13 @@ namespace Cognitivo.Accounting
 
         private void Start()
         {
-            Task Sales_Task = Task.Factory.StartNew(() => Sales(sales_invoiceList));
-            Sales_Task.Wait();
-            Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(sales_returnList));
-            SalesReturn_Task.Wait();
-            Task Purchase_Task = Task.Factory.StartNew(() => Purchases(purchase_invoiceList));
-            Purchase_Task.Wait();
+            //Sales(sales_invoiceList);
+            //Task Sales_Task = Task.Factory.StartNew(() => Sales(sales_invoiceList));
+            //Sales_Task.Wait();
+            //Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(sales_returnList));
+            //SalesReturn_Task.Wait();
+            //Task Purchase_Task = Task.Factory.StartNew(() => Purchases(purchase_invoiceList));
+            //Purchase_Task.Wait();
             Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(purchase_returnList));
 
 
@@ -235,7 +236,7 @@ namespace Cognitivo.Accounting
             for (int i = 0; i < sales_invoiceList.Count(); i = i + 100)
             {
 
-                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
+                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(value).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadSales(sales_invoice);
@@ -245,7 +246,7 @@ namespace Cognitivo.Accounting
 
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
                 Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
-
+                Send2API(Json, tbxURL.Text + "/api/transactions");
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
@@ -261,7 +262,7 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
             for (int i = 0; i < sales_returnList.Count(); i = i + 100)
             {
-                foreach (sales_return sales_return in sales_returnList)
+                foreach (sales_return sales_return in sales_returnList.Skip(value).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadSalesReturn(sales_return);
@@ -286,7 +287,7 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
             for (int i = 0; i < purchase_invoiceList.Count(); i = i + 100)
             {
-                foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
+                foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadPurchase(purchase_invoice);
@@ -309,7 +310,7 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
             for (int i = 0; i < purchase_returnList.Count(); i = i + 100)
             {
-                foreach (purchase_return purchase_return in purchase_returnList)
+                foreach (purchase_return purchase_return in purchase_returnList.Skip(value).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadPurchaseReturn(purchase_return);

@@ -131,10 +131,10 @@ namespace entity.API.DebeHaber
         public void LoadSalesReturn(sales_return data)
         {
             Type = InvoiceTypes.SalesReturn;
-            SupplierName = data.contact.name;
-            SupplierTaxID = data.contact.gov_code;
-            CustomerName = data.app_company.name;
-            CustomerTaxID = data.app_company.gov_code;
+            CustomerName = data.contact.name;
+            CustomerTaxID = data.contact.gov_code;
+            SupplierName = data.app_company.name;
+            SupplierTaxID = data.app_company.gov_code;
             Date = data.trans_date;
             Code = data.code;
             CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
@@ -181,10 +181,10 @@ namespace entity.API.DebeHaber
         public void LoadPurchaseReturn(purchase_return data)
         {
             Type = InvoiceTypes.PurchaseReturn;
-            CustomerName = data.contact.name;
-            CustomerTaxID = data.contact.gov_code;
-            SupplierName = data.app_company.name;
-            SupplierTaxID = data.app_company.gov_code;
+            SupplierName = data.contact.name;
+            SupplierTaxID = data.contact.gov_code;
+            CustomerName = data.app_company.name;
+            CustomerTaxID = data.app_company.gov_code;
             Date = data.trans_date;
             Code = data.code;
             CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;

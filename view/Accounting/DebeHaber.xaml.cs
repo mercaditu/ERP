@@ -59,8 +59,8 @@ namespace Cognitivo.Accounting
 
             //TODO, Check if API Key is active (not expired). Make sure to use the URL on the config file.
             //apiStatus = true;
-
-            var obj = Send2API(null, tbxURL.Text + "/api/check-key");
+            string key = tbxAPI.Text;
+            var obj = Send2API(null, tbxURL.Text + "/api/check-key", key);
 
             //If both is Ok, then we are ready to Export.
             if (serverStatus && apiStatus)
@@ -206,19 +206,21 @@ namespace Cognitivo.Accounting
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //Start();
-            Task basic_Task = Task.Factory.StartNew(() => Start());
+            string url = tbxURL.Text;
+            string key = tbxAPI.Text;
+            Task basic_Task = Task.Factory.StartNew(() => Start(url, key));
         }
 
-        private void Start()
+        private void Start(string url, string key)
         {
-            //Sales(sales_invoiceList);
-            //Task Sales_Task = Task.Factory.StartNew(() => Sales(sales_invoiceList));
-            //Sales_Task.Wait();
-            //Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(sales_returnList));
-            //SalesReturn_Task.Wait();
-            //Task Purchase_Task = Task.Factory.StartNew(() => Purchases(purchase_invoiceList));
-            //Purchase_Task.Wait();
-            Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(purchase_returnList));
+            // Sales(sales_invoiceList);
+            Task Sales_Task = Task.Factory.StartNew(() => Sales(url, key, sales_invoiceList));
+            Sales_Task.Wait();
+            Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(url, key, sales_returnList));
+            SalesReturn_Task.Wait();
+            Task Purchase_Task = Task.Factory.StartNew(() => Purchases(url, key, purchase_invoiceList));
+            Purchase_Task.Wait();
+            Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(url, key, purchase_returnList));
 
 
 
@@ -227,7 +229,7 @@ namespace Cognitivo.Accounting
 
         }
 
-        private void Sales(List<sales_invoice> sales_invoiceList)
+        private void Sales(string url, string key, List<sales_invoice> sales_invoiceList)
         {
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
             int value = 0;
@@ -245,8 +247,8 @@ namespace Cognitivo.Accounting
                 }
 
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
-                Send2API(Json, tbxURL.Text + "/api/transactions");
+                Send2API(Json, url + "/api/transactions", key);
+
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
@@ -254,7 +256,7 @@ namespace Cognitivo.Accounting
 
         }
 
-        private void SalesReturns(List<sales_return> sales_returnList)
+        private void SalesReturns(string url, string key, List<sales_return> sales_returnList)
         {
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
             int value = 0;
@@ -269,7 +271,7 @@ namespace Cognitivo.Accounting
                     InvoiceList.Add(Invoice);
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
+                Send2API(Json, url + "/api/transactions", key);
 
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
@@ -278,7 +280,7 @@ namespace Cognitivo.Accounting
 
         }
 
-        private void Purchases(List<purchase_invoice> purchase_invoiceList)
+        private void Purchases(string url, string key, List<purchase_invoice> purchase_invoiceList)
         {
 
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
@@ -294,7 +296,7 @@ namespace Cognitivo.Accounting
                     InvoiceList.Add(Invoice);
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
+                Send2API(Json, url + "/api/transactions", key);
 
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
@@ -302,7 +304,7 @@ namespace Cognitivo.Accounting
             }
         }
 
-        private void PurchaseReturns(List<purchase_return> purchase_returnList)
+        private void PurchaseReturns(string url, string key, List<purchase_return> purchase_returnList)
         {
             List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
             int value = 0;
@@ -317,7 +319,7 @@ namespace Cognitivo.Accounting
                     InvoiceList.Add(Invoice);
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Dispatcher.BeginInvoke((Action)(() => Send2API(Json, tbxURL.Text + "/api/transactions")));
+                Send2API(Json, url + "/api/transactions", key);
 
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
@@ -339,7 +341,8 @@ namespace Cognitivo.Accounting
         {
 
             Cognitivo.Properties.Settings.Default.Save();
-            var obj = Send2API(null, tbxURL.Text + "/api/check-key");
+            string key = tbxAPI.Text;
+            var obj = Send2API(null, tbxURL.Text + "/api/check-key", key);
             if (obj != null)
             {
                 popConnBuilder.IsOpen = false;
@@ -348,7 +351,7 @@ namespace Cognitivo.Accounting
 
 
         }
-        private object Send2API(object Json, string uri)
+        private object Send2API(object Json, string uri, string key)
         {
             try
             {
@@ -358,7 +361,7 @@ namespace Cognitivo.Accounting
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                httpWebRequest.Headers.Add("Authorization", "Bearer " + tbxAPI.Text);
+                httpWebRequest.Headers.Add("Authorization", "Bearer " + key);
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {

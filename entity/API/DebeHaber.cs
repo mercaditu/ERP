@@ -67,7 +67,7 @@ namespace entity.API.DebeHaber
 
                     Detail.Type = DetailType;
                     Detail.Cost = sales_invoice_detail.unit_cost;
-                    Detail.Value = sales_invoice_detail.UnitPrice_Vat;
+                    Detail.Value = sales_invoice_detail.SubTotal_Vat;
                     Detail.VATPercentage = Convert.ToInt32(sales_invoice_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
                     Detail.Name = Name;
                     Details.Add(Detail);
@@ -120,7 +120,7 @@ namespace entity.API.DebeHaber
 
                     Detail.Type = DetailType;
                     Detail.Cost = purchase_invoice_detail.unit_cost;
-                    Detail.Value = purchase_invoice_detail.UnitCost_Vat;
+                    Detail.Value = purchase_invoice_detail.SubTotal_Vat;
                     Detail.VATPercentage = Convert.ToInt32(purchase_invoice_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
                     Detail.Name = Name;
                     Details.Add(Detail);
@@ -170,7 +170,7 @@ namespace entity.API.DebeHaber
 
                     Detail.Type = DetailType;
                     Detail.Cost = sales_return_detail.unit_cost;
-                    Detail.Value = sales_return_detail.UnitPrice_Vat;
+                    Detail.Value = sales_return_detail.SubTotal_Vat;
                     Detail.VATPercentage = Convert.ToInt32(sales_return_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
                     Detail.Name = Name;
                     Details.Add(Detail);
@@ -222,7 +222,7 @@ namespace entity.API.DebeHaber
 
                     Detail.Type = DetailType;
                     Detail.Cost = purchase_return_detail.unit_cost;
-                    Detail.Value = purchase_return_detail.UnitCost_Vat;
+                    Detail.Value = purchase_return_detail.SubTotal_Vat;
                     Detail.VATPercentage = Convert.ToInt32(purchase_return_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
                     Detail.Name = Name;
                     Details.Add(Detail);

@@ -6,7 +6,7 @@ namespace entity.API.DebeHaber
 {
     public enum InvoiceTypes { Purchase = 1, PurchaseReturn = 3, Sales = 4, SalesReturn = 5 }
 
-    public enum ItemTypes { Inventory = 1, Expense = 2, RevenueByService = 3, RevenueByProduct = 4, Fixedasset = 5 }
+    public enum BusineesCenter { RevenueByService = 1, Asset_Inventory = 2, FixedAsset = 3 }
 
     public class Invoice
     {
@@ -46,18 +46,18 @@ namespace entity.API.DebeHaber
             {
                 foreach (var VatDetail in sales_invoice_detail.app_vat_group.app_vat_group_details)
                 {
-                    ItemTypes DetailType = ItemTypes.RevenueByService;
+                    BusineesCenter DetailType = BusineesCenter.RevenueByService;
                     string Name = "Service";
                     if (sales_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
                     {
-                        DetailType = ItemTypes.Fixedasset;
+                        DetailType = BusineesCenter.FixedAsset;
                         Name = "Fixedasset";
                     }
                     else if (sales_invoice_detail.item.id_item_type == item.item_type.Product
                         || sales_invoice_detail.item.id_item_type == item.item_type.RawMaterial
                         || sales_invoice_detail.item.id_item_type == item.item_type.Supplies)
                     {
-                        DetailType = ItemTypes.RevenueByProduct;
+                        DetailType = BusineesCenter.Asset_Inventory;
                         Name = "Product";
                     }
 
@@ -96,20 +96,20 @@ namespace entity.API.DebeHaber
             {
                 foreach (var VatDetail in purchase_invoice_detail.app_vat_group.app_vat_group_details)
                 {
-                    ItemTypes DetailType = ItemTypes.Expense;
+                    BusineesCenter DetailType = BusineesCenter.RevenueByService;
                     string Name = purchase_invoice_detail.app_cost_center.name;
 
                     if (purchase_invoice_detail.item != null)
                     {
                         if (purchase_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
                         {
-                            DetailType = ItemTypes.Fixedasset;
+                            DetailType = BusineesCenter.FixedAsset;
                         }
                         else if (purchase_invoice_detail.item.id_item_type == item.item_type.Product
                             || purchase_invoice_detail.item.id_item_type == item.item_type.RawMaterial
                             || purchase_invoice_detail.item.id_item_type == item.item_type.Supplies)
                         {
-                            DetailType = ItemTypes.Inventory;
+                            DetailType = BusineesCenter.Asset_Inventory;
                         }
                     }
                    
@@ -149,18 +149,18 @@ namespace entity.API.DebeHaber
             {
                 foreach (var VatDetail in sales_return_detail.app_vat_group.app_vat_group_details)
                 {
-                    ItemTypes DetailType = ItemTypes.RevenueByService;
+                    BusineesCenter DetailType = BusineesCenter.RevenueByService;
                     string Name = "Service";
                     if (sales_return_detail.item.id_item_type == item.item_type.FixedAssets)
                     {
-                        DetailType = ItemTypes.Fixedasset;
+                        DetailType = BusineesCenter.FixedAsset;
                         Name = "Fixedasset";
                     }
                     else if (sales_return_detail.item.id_item_type == item.item_type.Product
                         || sales_return_detail.item.id_item_type == item.item_type.RawMaterial
                         || sales_return_detail.item.id_item_type == item.item_type.Supplies)
                     {
-                        DetailType = ItemTypes.RevenueByProduct;
+                        DetailType = BusineesCenter.Asset_Inventory;
                         Name = "Product";
                     }
 
@@ -199,20 +199,20 @@ namespace entity.API.DebeHaber
             {
                 foreach (var VatDetail in purchase_return_detail.app_vat_group.app_vat_group_details)
                 {
-                    ItemTypes DetailType = ItemTypes.RevenueByService;
+                    BusineesCenter DetailType = BusineesCenter.RevenueByService;
                     string Name = purchase_return_detail.app_cost_center.name;
 
                     if (purchase_return_detail.item != null)
                     {
                         if (purchase_return_detail.item.id_item_type == item.item_type.FixedAssets)
                         {
-                            DetailType = ItemTypes.Fixedasset;
+                            DetailType = BusineesCenter.FixedAsset;
                         }
                         else if (purchase_return_detail.item.id_item_type == item.item_type.Product
                             || purchase_return_detail.item.id_item_type == item.item_type.RawMaterial
                             || purchase_return_detail.item.id_item_type == item.item_type.Supplies)
                         {
-                            DetailType = ItemTypes.Inventory;
+                            DetailType = BusineesCenter.Asset_Inventory;
                         }
                     }
 
@@ -233,7 +233,7 @@ namespace entity.API.DebeHaber
 
     public class InvoiceDetail
     {
-        public ItemTypes Type { get; set; }
+        public BusineesCenter Type { get; set; }
         public Int32 VATPercentage { get; set; }
         public decimal Value { get; set; }
         public decimal Cost { get; set; }
@@ -295,11 +295,11 @@ namespace entity.API.DebeHaber
         public DateTime Date { get; set; }
 
         //Input Data
-        public ItemTypes InputType { get; set; }
+        public BusineesCenter InputType { get; set; }
         public decimal InputCost { get; set; }
 
         //Output Data --> can be null
-        public ItemTypes? OutputType { get; set; }
+        public BusineesCenter? OutputType { get; set; }
         public decimal? OutputValue { get; set; }
 
         public void Load(production_execution_detail data)
@@ -311,11 +311,11 @@ namespace entity.API.DebeHaber
                 data.item.id_item_type == item.item_type.RawMaterial ||
                 data.item.id_item_type == item.item_type.Supplies)
             {
-                InputType = ItemTypes.Inventory;
+                InputType = BusineesCenter.Asset_Inventory;
             }
             else
             {
-                InputType = ItemTypes.Expense;
+                InputType = BusineesCenter.RevenueByService;
             }
 
             InputCost = (data.unit_cost * data.quantity);
@@ -326,7 +326,7 @@ namespace entity.API.DebeHaber
                 type == item.item_type.RawMaterial ||
                 type == item.item_type.Supplies)
             {
-                OutputType = ItemTypes.Inventory;
+                OutputType = BusineesCenter.Asset_Inventory;
             }
         }
     }

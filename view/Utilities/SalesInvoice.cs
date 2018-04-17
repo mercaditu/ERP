@@ -29,7 +29,6 @@ namespace Cognitivo.Utilities
                             var iv = 1;
                             iv += iv;
                         }
-
                         if (item_movement.item_movement_value_rel != null)
                         {
                             detail.unit_cost = Currency.convert_Values
@@ -43,9 +42,38 @@ namespace Cognitivo.Utilities
                             i += 1;
                         }
                     }
+                    else
+                    {
+                        if (detail.sales_packing_relation.Count() > 0)
+                        {
+                            if (detail.sales_packing_relation.FirstOrDefault().sales_packing_detail != null)
+                            {
+                                if (detail.sales_packing_relation.FirstOrDefault().sales_packing_detail.item_movement.FirstOrDefault() != null)
+                                {
+                                    item_movement = detail.sales_packing_relation.FirstOrDefault().sales_packing_detail.item_movement.FirstOrDefault();
+                                    if (item_movement.item_movement_value_rel != null)
+                                    {
+                                        detail.unit_cost = Currency.convert_Values
+                                            (
+                                            item_movement.item_movement_value_rel.item_movement_value_detail.Sum(x => x.unit_value),
+                                            CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                            detail.sales_invoice.id_currencyfx,
+                                            entity.App.Modules.Sales
+                                            );
+
+                                        i += 1;
+                                    }
+                                }
+                            }
+
+                        }
+                        
+                    }
+
+
                 }
 
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }
 
             return i;

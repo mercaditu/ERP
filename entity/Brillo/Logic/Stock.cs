@@ -672,12 +672,12 @@ namespace entity.Brillo.Logic
                                 if (sales_packing_detail != null)
                                 {
                                     //Get approved item of this item.
-                                    List<sales_packing_detail> approved_sales_packing = sales_packing_detail.child.ToList();
-                                    foreach (sales_packing_detail sales_packing in approved_sales_packing)
-                                    {
-                                        if (sales_packing.item_movement != null)
+                                    //List<sales_packing_detail> approved_sales_packing = sales_packing_detail.child.ToList();
+                                    //foreach (sales_packing_detail sales_packing in approved_sales_packing)
+                                    //{
+                                        if (sales_packing_detail.item_movement != null)
                                         {
-                                            List<item_movement> MovementList = db.item_movement.Where(x => x.id_sales_packing_detail == sales_packing.id_sales_packing_detail).ToList();
+                                            List<item_movement> MovementList = db.item_movement.Where(x => x.id_sales_packing_detail == sales_packing_detail.id_sales_packing_detail).ToList();
                                             foreach (item_movement mov in MovementList)
                                             {
                                                 mov.id_sales_invoice_detail = detail.id_sales_invoice_detail;
@@ -691,7 +691,7 @@ namespace entity.Brillo.Logic
 
                                             }
                                         }
-                                    }
+                                    //}
 
                                 }
                                 List<item_movement> item_movement = sales_packing_relation.sales_packing_detail.item_movement.ToList();

@@ -15,11 +15,11 @@ namespace entity.API.DebeHaber
         public string CustomerName { get; set; }
         public string SupplierTaxID { get; set; }
         public string SupplierName { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Code { get; set; }
         public string Number { get; set; }
         public string Comment { get; set; }
-        public DateTime? CodeExpiry { get; set; }
+        public string CodeExpiry { get; set; }
         public int PaymentCondition { get; set; }
         public string CurrencyCode { get; set; }
         public decimal CurrencyRate { get; set; }
@@ -32,9 +32,9 @@ namespace entity.API.DebeHaber
             CustomerTaxID = data.contact.gov_code;
             SupplierName = data.app_company.name;
             SupplierTaxID = data.app_company.gov_code;
-            Date = data.trans_date;
+            Date = data.trans_date.Date.ToString();
             Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date !=null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString():null : null;
             PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
             CurrencyCode = data.app_currencyfx.app_currency.code;
             CurrencyRate = data.app_currencyfx.buy_value;
@@ -82,9 +82,9 @@ namespace entity.API.DebeHaber
             SupplierTaxID = data.contact.gov_code;
             CustomerName = data.app_company.name;
             CustomerTaxID = data.app_company.gov_code;
-            Date = data.trans_date;
+            Date = data.trans_date.Date.ToString() ;
             Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date != null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString() : null : null;
             PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
             CurrencyCode = data.app_currencyfx.app_currency.code;
             CurrencyRate = data.app_currencyfx.buy_value;
@@ -135,9 +135,9 @@ namespace entity.API.DebeHaber
             CustomerTaxID = data.contact.gov_code;
             SupplierName = data.app_company.name;
             SupplierTaxID = data.app_company.gov_code;
-            Date = data.trans_date;
+            Date = data.trans_date.Date.ToString();
             Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date != null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString() : null : null;
             PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
             CurrencyCode = data.app_currencyfx.app_currency.code;
             CurrencyRate = data.app_currencyfx.buy_value;
@@ -185,9 +185,9 @@ namespace entity.API.DebeHaber
             SupplierTaxID = data.contact.gov_code;
             CustomerName = data.app_company.name;
             CustomerTaxID = data.app_company.gov_code;
-            Date = data.trans_date;
+            Date = data.trans_date.Date.ToString();
             Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date : null;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date != null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString() : null : null;
             PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
             CurrencyCode = data.app_currencyfx.app_currency.code;
             CurrencyRate = data.app_currencyfx.buy_value;

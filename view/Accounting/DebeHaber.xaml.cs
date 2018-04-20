@@ -121,7 +121,9 @@ namespace Cognitivo.Accounting
 
         private void LoadSales()
         {
-            sales_invoiceList = Context.db.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
+            sales_invoiceList = Context.db.sales_invoice.
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false 
+                && x.status==Status.Documents_General.Approved)
                   .Include(x => x.sales_invoice_detail)
                   .Include(x => x.app_currencyfx)
                   .ToList();
@@ -135,7 +137,9 @@ namespace Cognitivo.Accounting
 
         private void LoadSalesReturn()
         {
-            sales_returnList = Context.db.sales_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false)
+            sales_returnList = Context.db.sales_return.
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+                && x.status == Status.Documents_General.Approved)
                 .Include(x => x.sales_return_detail)
                 .Include(x => x.app_currencyfx)
                 .ToList();
@@ -149,7 +153,10 @@ namespace Cognitivo.Accounting
 
         private void LoadPurchases()
         {
-            purchase_invoiceList = Context.db.purchase_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).ToList();
+            purchase_invoiceList = Context.db.purchase_invoice.
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+            && x.status == Status.Documents_General.Approved
+            ).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progPurchase.IsIndeterminate = false;
@@ -160,7 +167,10 @@ namespace Cognitivo.Accounting
 
         private void LoadPurchaseReturns()
         {
-            purchase_returnList = Context.db.purchase_return.Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false).Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).ToList();
+            purchase_returnList = Context.db.purchase_return.
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+                && x.status == Status.Documents_General.Approved)
+                .Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progPurchaseReturn.IsIndeterminate = false;

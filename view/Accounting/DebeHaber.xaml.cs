@@ -122,7 +122,7 @@ namespace Cognitivo.Accounting
         private void LoadSales()
         {
             sales_invoiceList = Context.db.sales_invoice.
-                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false 
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == true 
                 && x.status==Status.Documents_General.Approved)
                   .Include(x => x.sales_invoice_detail)
                   .Include(x => x.app_currencyfx)
@@ -138,7 +138,7 @@ namespace Cognitivo.Accounting
         private void LoadSalesReturn()
         {
             sales_returnList = Context.db.sales_return.
-                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == true
                 && x.status == Status.Documents_General.Approved)
                 .Include(x => x.sales_return_detail)
                 .Include(x => x.app_currencyfx)
@@ -154,7 +154,7 @@ namespace Cognitivo.Accounting
         private void LoadPurchases()
         {
             purchase_invoiceList = Context.db.purchase_invoice.
-                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == true
             && x.status == Status.Documents_General.Approved
             ).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
@@ -168,7 +168,7 @@ namespace Cognitivo.Accounting
         private void LoadPurchaseReturns()
         {
             purchase_returnList = Context.db.purchase_return.
-                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == true
                 && x.status == Status.Documents_General.Approved)
                 .Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
@@ -247,8 +247,8 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
             for (int i = 0; i < sales_invoiceList.Count(); i = i + 100)
             {
-
-                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(value).Take(100))
+                InvoiceList.Clear();
+                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadSales(sales_invoice);
@@ -274,6 +274,7 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
             for (int i = 0; i < sales_returnList.Count(); i = i + 100)
             {
+                InvoiceList.Clear();
                 foreach (sales_return sales_return in sales_returnList.Skip(value).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
@@ -299,6 +300,7 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
             for (int i = 0; i < purchase_invoiceList.Count(); i = i + 100)
             {
+                InvoiceList.Clear();
                 foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
@@ -322,6 +324,7 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
             for (int i = 0; i < purchase_returnList.Count(); i = i + 100)
             {
+                InvoiceList.Clear();
                 foreach (purchase_return purchase_return in purchase_returnList.Skip(value).Take(100))
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();

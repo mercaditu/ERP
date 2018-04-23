@@ -229,14 +229,14 @@ namespace Cognitivo.Product
                             ItemDB.db.item_asset.Remove(record);
                         }
                     }
-                    if (item.item_product.Count > 0)
-                    {
-                        List<item_product> records = item.item_product.ToList();
-                        foreach (var record in records)
-                        {
-                            ItemDB.db.item_product.Remove(record);
-                        }
-                    }
+                    //if (item.item_product.Count > 0)
+                    //{
+                    //    List<item_product> records = item.item_product.ToList();
+                    //    foreach (var record in records)
+                    //    {
+                    //        ItemDB.db.item_product.Remove(record);
+                    //    }
+                    //}
                 }
             }
         }

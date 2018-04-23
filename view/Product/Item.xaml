@@ -144,7 +144,7 @@
 							  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
 							  metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
 							  Name="cmbitem" SelectionChanged="cmbitem_SelectionChanged"
-
+                              IsEnabled="{Binding IsEnabled,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"  
 							  SelectedValue="{Binding id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
 													  ValidatesOnExceptions=True, NotifyOnValidationError=True,
 													  ValidatesOnDataErrors=True}" />

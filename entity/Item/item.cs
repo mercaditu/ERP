@@ -208,6 +208,22 @@ namespace entity
                 }
             }
         }
+        [NotMapped]
+        public bool IsEnabled
+        {
+            get
+            {
+                if (id_item > 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+           
+        }
 
         public virtual ICollection<item_price> item_price { get; set; }
         public virtual ICollection<contact_subscription> contact_subscription { get; set; }

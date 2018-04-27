@@ -38,6 +38,7 @@ namespace Cognitivo.Accounting
         List<sales_return> sales_returnList { get; set; }
         List<purchase_invoice> purchase_invoiceList { get; set; }
         List<purchase_return> purchase_returnList { get; set; }
+        List<app_account_detail> app_account_detailsalespurchaseList { get; set; }
 
 
         public DebeHaber()
@@ -103,7 +104,7 @@ namespace Cognitivo.Accounting
             c.Wait();
             Task d = Task.Factory.StartNew(() => LoadPurchaseReturns());
             d.Wait();
-            Task f = Task.Factory.StartNew(() => LoadAccounts());
+            Task f = Task.Factory.StartNew(() => LoadAccountsForsalespurchase());
             f.Wait();
             Task h = Task.Factory.StartNew(() => LoadProductions());
         }
@@ -122,8 +123,8 @@ namespace Cognitivo.Accounting
         private void LoadSales()
         {
             sales_invoiceList = Context.db.sales_invoice.
-                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == true 
-                && x.status==Status.Documents_General.Approved)
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == true
+                && x.status == Status.Documents_General.Approved)
                   .Include(x => x.sales_invoice_detail)
                   .Include(x => x.app_currencyfx)
                   .ToList();
@@ -179,11 +180,29 @@ namespace Cognitivo.Accounting
             }));
         }
 
-        private void LoadAccounts()
+        private void LoadAccountsForsalespurchase()
+        {
+            app_account_detailsalespurchaseList = Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
+            x.tran_type == app_account_detail.tran_types.Transaction &&
+            x.is_read == false && x.id_payment_detail != null &&
+            x.status == Status.Documents_General.Approved)
+                .Include(x => x.app_currencyfx)
+                .Include(x => x.app_account)
+                .ToList();
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                progAccounts.IsIndeterminate = false;
+                progAccounts.Maximum = Context.db.app_account_detail.Local.Count();
+                transferMaximum.Text = progAccounts.Maximum.ToString();
+            }));
+
+        }
+
+        private void LoadAccountsForMovement()
         {
             List<app_account_detail> app_account_detailList = Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
             x.tran_type == app_account_detail.tran_types.Transaction &&
-            x.is_read == false &&
+            x.is_read == false && x.id_payment_detail == null &&
             x.status == Status.Documents_General.Approved)
                 .Include(x => x.app_currencyfx)
                 .Include(x => x.app_account)
@@ -223,14 +242,20 @@ namespace Cognitivo.Accounting
 
         private void Start(string url, string key)
         {
-            // Sales(sales_invoiceList);
-            Task Sales_Task = Task.Factory.StartNew(() => Sales(url, key, sales_invoiceList));
-            Sales_Task.Wait();
-            Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(url, key, sales_returnList));
-            SalesReturn_Task.Wait();
-            Task Purchase_Task = Task.Factory.StartNew(() => Purchases(url, key, purchase_invoiceList));
-            Purchase_Task.Wait();
-            Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(url, key, purchase_returnList));
+            
+            //Task Sales_Task = Task.Factory.StartNew(() => Sales(url, key, sales_invoiceList));
+            //Sales_Task.Wait();
+            //Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(url, key, sales_returnList));
+            //SalesReturn_Task.Wait();
+            //Task Purchase_Task = Task.Factory.StartNew(() => Purchases(url, key, purchase_invoiceList));
+            //Purchase_Task.Wait();
+            //Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(url, key, purchase_returnList));
+            //PurchaseReturn_Task.Wait();
+           
+            Task AccountsForSalesPurchase_Task = Task.Factory.StartNew(() => AccountsForSalesPurchase(url, key, app_account_detailsalespurchaseList));
+            //Task AccountsForMovement_Task = Task.Factory.StartNew(() => AccountsForMovement(url, key, purchase_returnList));
+            //AccountsForMovement_Task.Wait();
+
 
 
 
@@ -259,6 +284,12 @@ namespace Cognitivo.Accounting
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
                 Send2API(Json, url + "/api/transactions", key);
 
+                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
+                {
+                    sales_invoice.is_accounted = true;
+
+                }
+                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
@@ -284,6 +315,12 @@ namespace Cognitivo.Accounting
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
                 Send2API(Json, url + "/api/transactions", key);
 
+                foreach (sales_return sales_return in sales_returnList.Skip(value).Take(100))
+                {
+                    sales_return.is_accounted = true;
+
+                }
+                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
@@ -309,7 +346,12 @@ namespace Cognitivo.Accounting
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
                 Send2API(Json, url + "/api/transactions", key);
+                foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
+                {
+                    purchase_invoice.is_accounted = true;
 
+                }
+                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
@@ -333,16 +375,54 @@ namespace Cognitivo.Accounting
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
                 Send2API(Json, url + "/api/transactions", key);
+                foreach (purchase_return purchase_return in purchase_returnList.Skip(value).Take(100))
+                {
+                    purchase_return.is_accounted = true;
 
+                }
+                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => purchaseReturnValue.Text = value.ToString()));
             }
         }
+        
 
-        private void Accounts()
+        private void AccountsForMovement(string url, string key, List<app_account_detail> AccountMovementList)
+        {
+        }
+        private void AccountsForSalesPurchase(string url, string key, List<app_account_detail> AccountSalePurcahseList)
         {
 
+            List<entity.API.DebeHaber.AccountMovements> InvoiceList = new List<entity.API.DebeHaber.AccountMovements>();
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => transferValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = value));
+            for (int i = 0; i < app_account_detailsalespurchaseList.Count(); i = i + 100)
+            {
+                InvoiceList.Clear();
+                foreach (app_account_detail app_account_detail in app_account_detailsalespurchaseList.Skip(value).Take(100))
+                {
+                    entity.API.DebeHaber.AccountMovements AccountMovement = new entity.API.DebeHaber.AccountMovements();
+                    if (app_account_detail.payment_detail.payment_schedual.First().id_sales_invoice>0)
+                    {
+                        AccountMovement.LoadPaymentsRecieved(app_account_detail);
+                    }
+                    else 
+                    {
+                        AccountMovement.LoadPaymentsMade(app_account_detail);
+                    }
+                  
+                    InvoiceList.Add(AccountMovement);
+                }
+                var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+                Send2API(Json, url + "/api/movement", key);
+             
+                Context.db.SaveChanges();
+                value += 100;
+                Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = value));
+                Dispatcher.BeginInvoke((Action)(() => transferValue.Text = value.ToString()));
+            }
         }
 
         private void Production()

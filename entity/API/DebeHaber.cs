@@ -6,6 +6,8 @@ namespace entity.API.DebeHaber
 {
     public enum InvoiceTypes { Purchase = 1, PurchaseReturn = 3, Sales = 4, SalesReturn = 5 }
 
+    public enum AccountTypes { AccountPayable = 1, AccountReceivable = 2, Sales = 3 }
+
     public enum BusineesCenter { RevenueByService = 1, Asset_Inventory = 2, FixedAsset = 3 }
 
     public class Invoice
@@ -23,6 +25,7 @@ namespace entity.API.DebeHaber
         public int PaymentCondition { get; set; }
         public string CurrencyCode { get; set; }
         public decimal CurrencyRate { get; set; }
+        //public string AccountName { get; set; }
         public ICollection<InvoiceDetail> Details { get; set; }
 
         public void LoadSales(sales_invoice data)
@@ -34,13 +37,13 @@ namespace entity.API.DebeHaber
             SupplierTaxID = data.app_company.gov_code;
             Date = data.trans_date.Date.ToString("yyyy-MM-dd");
             Code = data.code;
-            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date !=null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString("yyyy-MM-dd") : null : null;
+            CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date != null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString("yyyy-MM-dd") : null : null;
             PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
             CurrencyCode = data.app_currencyfx.app_currency.code;
             CurrencyRate = data.app_currencyfx.buy_value;
             Number = data.number;
             Comment = data.comment;
-
+           
             Details = new List<InvoiceDetail>();
             foreach (sales_invoice_detail sales_invoice_detail in data.sales_invoice_detail)
             {
@@ -82,7 +85,7 @@ namespace entity.API.DebeHaber
             SupplierTaxID = data.contact.gov_code;
             CustomerName = data.app_company.name;
             CustomerTaxID = data.app_company.gov_code;
-            Date = data.trans_date.Date.ToString("yyyy-MM-dd") ;
+            Date = data.trans_date.Date.ToString("yyyy-MM-dd");
             Code = data.code;
             CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date != null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString("yyyy-MM-dd") : null : null;
             PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
@@ -112,7 +115,7 @@ namespace entity.API.DebeHaber
                             DetailType = BusineesCenter.Asset_Inventory;
                         }
                     }
-                   
+
 
                     InvoiceDetail Detail = Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() != null ?
                         Details.Where(x => x.VATPercentage == VatDetail.app_vat.coefficient && x.Type == DetailType).FirstOrDefault() :
@@ -242,46 +245,68 @@ namespace entity.API.DebeHaber
 
     public class AccountMovements
     {
-        public string Account { get; set; }
-        public DateTime Date { get; set; }
+        public AccountTypes Type { get; set; }
+        public string CustomerTaxID { get; set; }
+        public string CustomerName { get; set; }
+        public string SupplierTaxID { get; set; }
+        public string SupplierName { get; set; }
+        public string AccountName { get; set; }
+        public string Number { get; set; }
+        public string Date { get; set; }
         public string ReferenceInvoice { get; set; }
         public int? ReferenceInvoiceID { get; set; }
         public string CurrencyCode { get; set; }
         public decimal CurrencyRate { get; set; }
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
+        public string Comment { get; set; }
 
-        public void LoadPaymentsMade(payment_detail data, string InvoiceNumber, int InvoiceID)
+        public void LoadPaymentsMade(app_account_detail data)
         {
-            Account = data.app_account.name;
-            Date = data.trans_date;
+            Type = AccountTypes.AccountPayable;
+            CustomerName = data.app_company.name;
+            CustomerTaxID = data.app_company.gov_code;
+            SupplierName = data.payment_detail.payment.contact.name;
+            SupplierTaxID = data.payment_detail.payment.contact.gov_code;
+           
+            Number = data.payment_detail.payment_schedual.First().purchase_invoice.number;
+            Comment = data.payment_detail.comment;
+            AccountName = data.app_account.name;
+            Date = data.trans_date.Date.ToString("yyyy-MM-dd");
             CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault().code;
             CurrencyRate = data.app_currencyfx.buy_value > 0 ? data.app_currencyfx.buy_value : data.app_currencyfx.sell_value;
-            Debit = data.value;
+            Debit = data.payment_detail.value;
             Credit = 0;
 
-            ReferenceInvoice = InvoiceNumber;
-            ReferenceInvoiceID = 0;
+            //ReferenceInvoice = data.payment_detail.payment_schedual.First().purchase_invoice.number;
+            ReferenceInvoiceID = data.payment_detail.payment_schedual.First().id_purchase_invoice;
         }
 
-        public void LoadPaymentsRecieved(payment_detail data, string InvoiceNumber, int InvoiceID)
+        public void LoadPaymentsRecieved(app_account_detail data)
         {
-            Account = data.app_account.name;
-            Date = data.trans_date;
+            Type = AccountTypes.AccountReceivable;
+            CustomerName = data.payment_detail.payment.contact.name;
+            CustomerTaxID = data.payment_detail.payment.contact.gov_code;
+            SupplierName = data.app_company.name;
+            SupplierTaxID = data.app_company.gov_code;
+            Number = data.payment_detail.payment_schedual.First().sales_invoice.number;
+            Comment = data.payment_detail.comment;
+            AccountName = data.app_account.name;
+            Date = data.trans_date.Date.ToString("yyyy-MM-dd"); ;
             CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault().code;
             CurrencyRate = data.app_currencyfx.buy_value > 0 ? data.app_currencyfx.buy_value : data.app_currencyfx.sell_value;
             Debit = 0;
-            Credit = data.value;
+            Credit = data.payment_detail.value;
 
-            ReferenceInvoice = InvoiceNumber;
-            ReferenceInvoiceID = 0;
+            //ReferenceInvoice = data.payment_detail.payment_schedual.First().sales_invoice.number;
+            ReferenceInvoiceID = data.payment_detail.payment_schedual.First().id_sales_invoice;
         }
 
         //Make another API for MoneyTransfers
         public void LoadTransfers(app_account_detail data)
         {
-            Account = data.app_account.name;
-            Date = data.trans_date;
+            AccountName = data.app_account.name;
+            Date = data.trans_date.Date.ToString("yyyy-MM-dd"); ;
             CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault().code;
             CurrencyRate = data.app_currencyfx.buy_value > 0 ? data.app_currencyfx.buy_value : data.app_currencyfx.sell_value;
             Debit = data.debit;

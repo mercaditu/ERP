@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Cognitivo.Configs"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="300"
+      d:DesignHeight="550" d:DesignWidth="300"
       Title="Configuration" 
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:mainpref="clr-namespace:Cognitivo.Properties"
@@ -72,6 +72,13 @@
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
                     <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
                     <Label Content="Update Dimension ProductionOrder" FontSize="10" HorizontalContentAlignment="Center" />
+                </Grid>
+            </Button>
+            <Button IsDefault="True" Click="Create_Click" Background="Transparent"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
+                    <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
+                    <Label Content="Create File Fpr Pending Payment" FontSize="10" HorizontalContentAlignment="Center" />
                 </Grid>
             </Button>
         </StackPanel>

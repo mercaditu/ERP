@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using entity;
+
 
 namespace Cognitivo.Configs
 {
@@ -29,11 +33,11 @@ namespace Cognitivo.Configs
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            using (db db= new db())
+            using (db db = new db())
             {
                 int ContactID = Sales.Settings.Default.Default_Customer;
                 contact contact = await db.contacts.FindAsync(ContactID);
-                if (contact!=null)
+                if (contact != null)
                 {
                     sbxContact.Text = contact.name;
                 }
@@ -104,7 +108,7 @@ namespace Cognitivo.Configs
 
         private void AddDimension_Click(object sender, RoutedEventArgs e)
         {
-           
+
             using (db db = new db())
             {
                 foreach (production_order_detail production_order_detail in db.production_order_detail.Where(x => x.id_project_task != null).ToList())
@@ -128,8 +132,70 @@ namespace Cognitivo.Configs
                 db.SaveChanges();
             }
 
-          
 
+
+        }
+
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            PaymentDB PaymentDB = new PaymentDB();
+            PaymentDB.payment_schedual
+                   .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
+                       && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
+                       && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                       .Include(x => x.sales_invoice)
+                       .Include(x => x.contact)
+                       .OrderBy(x => x.expire_date)
+                       .Load();
+            List<contact> contactLIST = new List<contact>();
+
+            if (PaymentDB.payment_schedual.Local.Count() > 0)
+            {
+                foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.ToList())
+                {
+                    if (contactLIST.Contains(payment.contact) == false)
+                    {
+                        contact contact = new contact();
+                        contact = payment.contact;
+                        contactLIST.Add(contact);
+                    }
+                }
+
+                
+            }
+
+            string fileHeader = @"C:\Users\SMART\Desktop\Header" + DateTime.Now;
+
+            if (!File.Exists(fileHeader))
+            {
+                using (StreamWriter sw = new StreamWriter(fileHeader))
+                {
+                    sw.Write(DateTime.Now.ToString("yyyy-MM-dd") + ";" + contactLIST.Count() + ";" + Environment.NewLine);
+                    foreach (contact contact in contactLIST)
+                    {
+                        
+                        sw.Write(contact.gov_code + ";" + contact.name + ";" + Environment.NewLine);
+                    }
+                }
+            }
+
+            string fileDetail = @"C:\Users\SMART\Desktop\Detail" + DateTime.Now;
+
+            if (!File.Exists(fileDetail))
+            {
+                using (StreamWriter sw = new StreamWriter(fileDetail))
+                {
+                    sw.Write(DateTime.Now.ToString("yyyy-MM-dd") + ";" + PaymentDB.payment_schedual.Local.Count() + ";" + PaymentDB.payment_schedual.Sum(x=>x.AccountReceivableBalance));
+                    foreach (payment_schedual payment_schedual in PaymentDB.payment_schedual)
+                    {
+                        sw.Write(payment_schedual.contact.gov_code + ";" + payment_schedual.number
+                            + ";"+ "" + payment_schedual.trans_date + ";" + payment_schedual.expire_date
+                             + ";"+ payment_schedual.app_currencyfx.app_currency.code == "PYG"?"1":"2" + ";"
+                             + payment_schedual.AccountReceivableBalance.ToString() + ";" + "S" + ";" + Environment.NewLine);
+                    }
+                }
+            }
+            
         }
     }
 }

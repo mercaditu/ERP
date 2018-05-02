@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\SMART\Desktop\ERP19.61\</PublishUrl>
+    <PublishUrl>C:\Users\SMART\Desktop\ERP19.62\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -255,6 +255,8 @@
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
@@ -485,6 +487,9 @@
     </Compile>
     <Compile Include="Configs\ItemTemplate.xaml.cs">
       <DependentUpon>ItemTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configs\PendingReceivable.xaml.cs">
+      <DependentUpon>PendingReceivable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configs\Promotion.xaml.cs">
       <DependentUpon>Promotion.xaml</DependentUpon>
@@ -1380,6 +1385,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Configs\ItemTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\PendingReceivable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,48 @@
+﻿<Page x:Class="Cognitivo.Configs.PendingReceivable"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Cognitivo.Configs"
+       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US"
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="700"
+      
+      Title="PendingReceivable" Loaded="Window_Loaded">
+    <Page.Resources>
+        
+        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Background="{StaticResource appConfig}">
+           
+            <Label Content="{lex:Loc DownloadUpload}" HorizontalAlignment="Center"
+                   Style="{StaticResource H1}" />
+            <Button Content="{lex:Loc Download}" Margin="15"
+                        Style="{StaticResource btn_green}" Click="Download_Click" />
+           
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
+            <StackPanel HorizontalAlignment="Center">
+                <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
+                <ComboBox x:Name="cbxAccount" Style="{StaticResource input_combobox}"
+					
+					  DisplayMemberPath="name" SelectedValuePath="id_account"
+					  ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
+					  />
+                <Button Content="{lex:Loc Upload}" Margin="15"
+                        Style="{StaticResource btn_green}" Click="Upload_Click" />
+            </StackPanel>
+            
+        </ScrollViewer>
+      
+    </Grid>
+</Page>

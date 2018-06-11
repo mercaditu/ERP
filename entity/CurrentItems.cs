@@ -306,14 +306,11 @@ namespace entity
 
         public static List<StockList> GetListwithoutstock(int BranchID)
         {
-
             //If IsForced is True or Count is 0 then make a new list. Clean.
             List = new List<StockList>();
-
             //call data
             GetItems();
             //UpdateStockwithoutstock(BranchID);
-
 
             return List.Where(x => x.BranchID == BranchID || x.BranchID == null).ToList();
         }

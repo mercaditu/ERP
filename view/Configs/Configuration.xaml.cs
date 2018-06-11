@@ -6,9 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
 using entity;
-
 
 namespace Cognitivo.Configs
 {
@@ -45,11 +43,13 @@ namespace Cognitivo.Configs
                 }
             }
         }
+
         private void btnSalesCost_Clicked(object sender, RoutedEventArgs e)
         {
             Utilities.SalesInvoice SI = new Utilities.SalesInvoice();
             MessageBox.Show(SI.Update_SalesCost() + " Records Updated", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
         private void btnMovementChiled_Clicked(object sender, RoutedEventArgs e)
         {
             using (db db = new db())
@@ -64,7 +64,10 @@ namespace Cognitivo.Configs
 
                 db.SaveChanges();
             }
+
+            MessageBox.Show("Done");
         }
+
         private void btnMovementValue_Clicked(object sender, RoutedEventArgs e)
         {
             db db = new db();
@@ -75,7 +78,8 @@ namespace Cognitivo.Configs
                     .Where(x => x.parent == null).OrderBy(x=>x.id_movement).Skip(i).Take(100).ToList();
                 AddItemMovementValue(ref db, parentlessMovements);
             }
-            MessageBox.Show("50% process Done");
+
+            MessageBox.Show("50% proccess Done");
 
             count = db.item_movement.Where(x => x.parent != null).Count();
             for (int i = 0; i < count; i = i + 1000)
@@ -126,7 +130,6 @@ namespace Cognitivo.Configs
 
         private void AddDimension_Click(object sender, RoutedEventArgs e)
         {
-
             using (db db = new db())
             {
                 foreach (production_order_detail production_order_detail in db.production_order_detail.Where(x => x.id_project_task != null).ToList())
@@ -149,9 +152,6 @@ namespace Cognitivo.Configs
                 }
                 db.SaveChanges();
             }
-
-
-
         }
 
         private void AddData_Click(object sender, RoutedEventArgs e)
@@ -159,18 +159,36 @@ namespace Cognitivo.Configs
             if (Microsoft.VisualBasic.Interaction.InputBox("Password?", "Password") == "paraguay")
             {
                 int company_id = CurrentSession.Id_Company;
-                List<item_movement_archive> item_movement_archiveList = new List<item_movement_archive>();
-                List<item_movement> item_movementListDeletechild = new List<item_movement>();
-                List<item_movement> item_movementListDeleteparent = new List<item_movement>();
+
                 using (db db = new db())
                 {
-                    List<entity.Brillo.StockList> StockList = CurrentItems.GetListwithoutstock(CurrentSession.Id_Branch).ToList();
-                    foreach (entity.Brillo.StockList item in StockList.Where(x => x.MovementID > 0))
+                    //Get list of credits that do not have balance.
+                    List<entity.Brillo.StockList> ItemsWithoutBalance = CurrentItems.GetListwithoutstock(CurrentSession.Id_Branch).ToList();
+
+                    //Get list of credits that have balance.
+                    List<entity.Brillo.StockList> ItemsWithBalance = CurrentItems.GetItems().ToList();
+
+                    //Make parent null for items with balance. So that we can remove the 0 balance 
+                    foreach (entity.Brillo.StockList item in ItemsWithBalance.Where(x => x.ParentID > 0))
+                    {
+                        item_movement im = db.item_movement.Find(item.MovementID);
+                        if (im != null)
+                        {
+                            im.parent = null;
+                            db.SaveChanges();
+                        }
+                    }
+
+                    //Take all the 0 Balance items, and move it to archive table. Then delete the detail.
+                    foreach (entity.Brillo.StockList item in ItemsWithoutBalance)
                     {
                         item_movement im = db.item_movement.Where(x => x.id_movement == item.MovementID).First();
                         item_movement_archive item_movement_archive = AddMovement(im);
                         item_movement_archiveList.Add(item_movement_archive);
+
+                        //I don't like this query. Don't call it by parent, but call it by child using navigation property.
                         List<item_movement> item_movementList = db.item_movement.Where(x => x.parent.id_movement == item.MovementID).ToList();
+                        
                         foreach (item_movement item_movement in item_movementList)
                         {
                             item_movement_archive item_movement_archivechild = AddMovement(item_movement);
@@ -178,9 +196,10 @@ namespace Cognitivo.Configs
                             item_movement_archiveList.Add(item_movement_archivechild);
                             item_movementListDeletechild.Add(item_movement);
                         }
-                        item_movementListDeleteparent.Add(im);
 
+                        item_movementListDeleteparent.Add(im);
                     }
+
                     db.item_movement.RemoveRange(item_movementListDeletechild);
                     db.SaveChanges();
                     db.item_movement.RemoveRange(item_movementListDeleteparent);
@@ -189,10 +208,8 @@ namespace Cognitivo.Configs
                     db.SaveChanges();
                 }
             }
-
-
-
         }
+
         public item_movement_archive AddMovement(item_movement im)
         {
             item_movement_archive item_movement_archive = new item_movement_archive();
@@ -222,12 +239,5 @@ namespace Cognitivo.Configs
             item_movement_archive.is_read = im.is_read;
             return item_movement_archive;
         }
-
-
-
-
-
-
-
     }
 }

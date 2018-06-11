@@ -48,11 +48,25 @@ namespace Cognitivo.Configs
         {
             PaymentDB PaymentDB = new PaymentDB();
            
-            List<contact> contactLIST = new List<contact>();
-            payment_schedualList = PaymentDB.payment_schedual.ToList();
-            if (payment_schedualList.Where(x=>x.AccountReceivableBalance>0).Count() > 0)
+            if (Directory.Exists(@Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Payments"))
             {
-                foreach (payment_schedual payment in payment_schedualList.Where(x => x.AccountReceivableBalance > 0).ToList())
+                var dir = new DirectoryInfo(@Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Payments");
+                dir.Delete(true);
+            }
+            
+
+            List<contact> contactLIST = new List<contact>();
+            payment_schedualList = PaymentDB.payment_schedual
+                    .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
+                        && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
+                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                        .Include(x => x.sales_invoice)
+                        .Include(x => x.contact)
+                        .OrderBy(x => x.expire_date)
+                        .ToList(); 
+            if (payment_schedualList.Count() > 0)
+            {
+                foreach (payment_schedual payment in payment_schedualList.ToList())
                 {
                     if (contactLIST.Contains(payment.contact) == false)
                     {
@@ -73,11 +87,22 @@ namespace Cognitivo.Configs
             {
                 using (StreamWriter sw = new StreamWriter(fileHeader))
                 {
-                    sw.Write(DateTime.Now.ToString("yyyy-MM-dd") + ";" + contactLIST.Count() + ";" + Environment.NewLine);
+                    sw.Write(DateTime.Now.ToString("yyyyMMdd") + ";" + contactLIST.Count() + ";" + Environment.NewLine);
                     foreach (contact contact in contactLIST)
                     {
-
-                        sw.Write(contact.gov_code + ";" + contact.name + ";" + Environment.NewLine);
+                        string active = "N";
+                        if (contact.is_active)
+                        {
+                             active = "S";
+                        }
+                        string gov_code = "";
+                        if (contact.gov_code != null)
+                        {
+                            gov_code = contact.gov_code.Replace("-", "");
+                            gov_code = gov_code.Remove(gov_code.Length-1,1).ToString() ;
+                        }
+                        
+                        sw.Write(gov_code + ";" + contact.name + ";" + active + ";" + Environment.NewLine);
                     }
                 }
             }
@@ -90,30 +115,38 @@ namespace Cognitivo.Configs
                 {
                     Decimal Balance = 0;
                   
-                    foreach (payment_schedual payment_schedual in payment_schedualList.Where(x => x.AccountReceivableBalance > 0).ToList())
+                    foreach (payment_schedual payment_schedual in payment_schedualList.ToList())
                     {
                         Balance += payment_schedual.AccountReceivableBalance;
                     }
 
-                    sw.Write(DateTime.Now.ToString("yyyy-MM-dd") + ";" + payment_schedualList.Where(x => x.AccountReceivableBalance > 0).ToList() + ";" + Balance + Environment.NewLine);
-                    foreach (payment_schedual payment_schedual in payment_schedualList.Where(x => x.AccountReceivableBalance > 0).ToList())
+                    sw.Write(DateTime.Now.ToString("yyyyMMdd") + ";" + payment_schedualList.Count() + ";" + Math.Round(Balance,2) + Environment.NewLine);
+                    foreach (payment_schedual payment_schedual in payment_schedualList.ToList())
                     {
-                        string gov_code = payment_schedual.contact.gov_code;
+                        string gov_code = "";
+                        if (payment_schedual.contact.gov_code != null)
+                        {
+                             gov_code = payment_schedual.contact.gov_code.Replace("-", "");
+                            gov_code = gov_code.Remove(gov_code.Length - 1, 1).ToString();
+                        }
+                       
+                       
                         string id_payment_schedual = payment_schedual.id_payment_schedual.ToString();
-                        string comment = "Cuota" + payment_schedual.trans_date.ToString("yyyy-MM-dd");
-                        string date = payment_schedual.expire_date.ToString("yyyy-MM-dd");
+                        string comment = "Cuota" +  " " + DateTime.Now.ToString("yyyyMMdd");
+                        string date = payment_schedual.trans_date.ToString("yyyyMMdd");
+                        string Expdate = payment_schedual.expire_date.ToString("yyyyMMdd");
                         string currency = payment_schedual.app_currencyfx.app_currency.code == "PYG" ? "1" : "2";
-                        string balance = payment_schedual.AccountReceivableBalance.ToString();
+                        string balance =Math.Round(payment_schedual.AccountReceivableBalance,2).ToString();
                         string other = "0;F;0;0;N;1";
-                        string detail = gov_code + ";" + id_payment_schedual + ";" + comment + ";" + date
-                            + date + ";" + balance + ";"
+                        string detail = gov_code + ";" + id_payment_schedual + ";" + comment + ";" + date + ";"
+                            + Expdate + ";" + currency + ";" + balance + ";"
                              + other + ";" + Environment.NewLine;
                         sw.Write(detail);
                     }
                 }
             }
             string startpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Payments";
-            string zippath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + DateTime.Now.ToString("yyyy-mm-dd") + ".zip";
+            string zippath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss") + ".zip";
             ZipFile.CreateFromDirectory(startpath, zippath);
 
         }

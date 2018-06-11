@@ -37,10 +37,7 @@ namespace Cognitivo.ErpWeb
         {
             List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.cloud_id == null).ToList();
 
-            foreach (var item in items)
-            {
-
-            }
+        
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
@@ -60,6 +57,7 @@ namespace Cognitivo.ErpWeb
                         code = item.code,
                         comment = item.description,
                         unit_price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().valuewithVAT : 0,
+                        currency_code = CurrentSession.Currency_Default.code
                     };
                     SyncItems.Add(SyncItem);
                 }
@@ -97,7 +95,7 @@ namespace Cognitivo.ErpWeb
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Task taskAuth = Task.Factory.StartNew(() => fill());
+            Task taskAuth = Task.Factory.StartNew(() => SyncData());
         }
 
         private void Send2API(object Json, string apiname)
@@ -405,7 +403,7 @@ namespace Cognitivo.ErpWeb
         public string comment { get; set; }
         public decimal unit_price { get; set; }
         public long? cloud_id { get; set; }
-
+        public string currency_code { get; set; }
     }
     public class SyncCustomers
     {

@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Data;
+using entity.Brillo;
 
 namespace cntrl.Controls
 {
@@ -191,8 +193,8 @@ namespace cntrl.Controls
 
         public entity.item.item_type? item_types { get; set; }
 
-        //public IQueryable<entity.Brillo.StockList> Items { get; set; }
-        //  public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
+        public List<entity.Brillo.StockList> Items = new List<entity.Brillo.StockList>();
+        // public IQueryable<entity.BrilloQuery.Item> Items { get; set; }
 
         //private Task taskSearch;
         private CancellationTokenSource tokenSource;
@@ -265,20 +267,96 @@ namespace cntrl.Controls
         {
             entity.Brillo.Stock Stock = new entity.Brillo.Stock();
 
-            if (LocID == 0)
+
+            using (db db = new db())
             {
-                CurrentItems.getItems_GroupBy(CurrentSession.Id_Branch, DateTime.Now, forceData, false).AsQueryable();
+                List<item> ItemList = db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
+
+                foreach (item item in ItemList)
+                {
+                    entity.Brillo.StockList data = new entity.Brillo.StockList();
+                    data.ItemID = item.id_item;
+                    data.CompanyID = Convert.ToInt32(item.id_company);
+                    data.Name = item.name;
+                    data.Code = item.code;
+                    data.Type = Convert.ToInt32(item.id_item_type);
+                    data.can_expire = false;
+                    Items.Add(data);
+                }
+
             }
-            else
-            {
-                CurrentItems.getItems_GroupBy(CurrentSession.Id_Branch, DateTime.Now, forceData, false).Where(x => x.LocationID == LocID || x.LocationID == null).AsQueryable();
-            }
+
+            var task = Task.Factory.StartNew(() => AddStock());
+
 
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate ()
             {
                 tbxSearch.IsEnabled = true;
                 progBar.Visibility = Visibility.Collapsed;
             }));
+
+        }
+
+        private void AddStock()
+        {
+            try
+            {
+
+
+                int BranchID = CurrentSession.Id_Branch;
+                string strstock = @"
+                                                                select  
+                                l.id_location as LocationID
+                                , l.name as Location
+                                , l.id_branch as BranchID
+                                , im.id_movement as MovementID
+                                , ip.id_item as ItemID
+                                , ip.id_item_product as ProductID
+                                , ip.can_expire
+                                , im.id_movement_value_rel as MovementRelID
+                                , (select sum(unit_value) from item_movement_value_detail where id_movement_value_rel = im.id_movement_value_rel) as Cost
+                                , (im.credit - sum(IFNULL(child.debit,0))) as Quantity
+                                , (im.credit - sum(IFNULL(child.debit,0))) * max(icf.value) * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from item_movement_dimension where id_movement = im.id_movement) as ConversionQuantity
+                                , im.code as BatchCode
+                                , im.expire_date as ExpiryDate
+                                ,im.trans_date as TransDate
+                                ,im.barcode as BarCode
+
+                                from item_movement as im
+                                left join item_movement as child on im.id_movement = child.parent_id_movement
+                                inner join item_product as ip on im.id_item_product = ip.id_item_product
+                                left join item_conversion_factor as icf on ip.id_item_product = icf.id_item_product
+                                inner join app_location as l on im.id_location = l.id_location
+                                left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
+                                where im.id_company = {0} and l.id_branch = {1}
+                                group by im.id_movement
+                                HAVING  (max(im.credit) - sum(IFNULL(child.debit,0))) >0
+                                order by im.expire_date";
+
+                //, sum(IFNULL(imvr.total_value, 0)) as Cost
+
+                strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
+
+                DataTable dtstock = entity.CurrentItems.stock.exeDT(strstock);
+                foreach (DataRow itemRow in dtstock.Rows)
+                {
+                    decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
+                    decimal ItemID = Convert.ToDecimal(itemRow["ItemID"]);
+                    if (Items.Where(x => x.ItemID == ItemID).Count() > 0)
+                    {
+                        Items.Where(x => x.ItemID == ItemID).FirstOrDefault().Quantity = Quantity;
+                    }
+                }
+
+                List<StockList> DeleteList = Items.Where(x => (x.Type == 1 || x.Type == 2 || x.Type == 6) && (x.Quantity == 0 || x.Quantity==null)).ToList();
+                foreach (StockList item in DeleteList)
+                {
+                    Items.Remove(item);
+                }
+            }
+            catch
+            { }
+
         }
 
         private void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -389,28 +467,32 @@ namespace cntrl.Controls
                 }
             }
 
+            itemViewSource.Source = Items.AsQueryable().Where(predicate).OrderBy(x => x.Name);
 
-            if (Type == Types.InStock_wServices)
-            {
-                itemViewSource.Source = CurrentItems.getItems_GroupBy(CurrentSession.Id_Branch, DateTime.Now, false, true)
-                .AsQueryable()
-                .Where(predicate)
-                .OrderBy(x => x.Name);
-            }
-            else if (Type == Types.InStock_Only)
-            {
-                itemViewSource.Source = CurrentItems.getProducts_InStock_GroupBy(CurrentSession.Id_Branch, DateTime.Now, false)
-                .AsQueryable()
-                .Where(predicate)
-                .OrderBy(x => x.Name);
-            }
-            else
-            {
-                itemViewSource.Source = CurrentItems.getItems_GroupBy(CurrentSession.Id_Branch, DateTime.Now, false, false)
-                .AsQueryable()
-                .Where(predicate)
-                .OrderBy(x => x.Name);
-            }
+
+            //if (Type == Types.InStock_wServices)
+            //{
+            //    itemViewSource.Source = CurrentItems.getItems_GroupBy(CurrentSession.Id_Branch, DateTime.Now, false, true)
+            //    .AsQueryable()
+            //    .Where(predicate)
+            //    .OrderBy(x => x.Name);
+            //}
+            //else if (Type == Types.InStock_Only)
+            //{
+            //    itemViewSource.Source = CurrentItems.getProducts_InStock_GroupBy(CurrentSession.Id_Branch, DateTime.Now, false)
+            //    .AsQueryable()
+            //    .Where(predicate)
+            //    .OrderBy(x => x.Name);
+            //}
+            //else
+            //{
+            //    itemViewSource.Source = CurrentItems.getItems_GroupBy(CurrentSession.Id_Branch, DateTime.Now, false, false)
+            //    .AsQueryable()
+            //    .Where(predicate)
+            //    .OrderBy(x => x.Name);
+            //}
+
+
 
             ItemPopUp.IsOpen = true;
         }

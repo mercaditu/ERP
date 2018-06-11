@@ -74,6 +74,13 @@
                     <Label Content="Update Dimension ProductionOrder" FontSize="10" HorizontalContentAlignment="Center" />
                 </Grid>
             </Button>
+            <Button IsDefault="True" Click="AddData_Click" Background="Transparent" Visibility="Hidden"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
+                    <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
+                    <Label Content="Transfer Data " FontSize="10" HorizontalContentAlignment="Center" />
+                </Grid>
+            </Button>
         
         
         </StackPanel>

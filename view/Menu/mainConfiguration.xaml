@@ -18,7 +18,7 @@
                       HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,0">
             <WrapPanel HorizontalAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningRatio="1"
                        ScrollViewer.VerticalScrollBarVisibility="Auto" Orientation="Horizontal">
-                <StackPanel Margin="16,8" Width="270" Height="533"  VerticalAlignment="Top">
+                <StackPanel Margin="16,8" Width="270" Height="563"  VerticalAlignment="Top">
                     <Label Content="{lex:Loc Preference}" Style="{StaticResource H2}" />
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">

@@ -315,6 +315,7 @@ namespace entity.Brillo
         public string Location { get; set; }
         public string Brand { get; set; }
         public int? ProductID { get; set; }
+        public int? ParentID { get; set; }
         public int? MovementID { get; set; }
         public decimal? Quantity { get; set; }
         public decimal? ConversionQuantity { get; set; }

@@ -247,6 +247,7 @@ namespace cntrl.Controls
                 tbxSearch.IsEnabled = false;
             }));
 
+            
             LoadData_Thread(LocId, false);
             // var task = Task.Factory.StartNew(() => LoadData_Thread(LocId, IgnorStock));
         }
@@ -267,7 +268,7 @@ namespace cntrl.Controls
         {
             entity.Brillo.Stock Stock = new entity.Brillo.Stock();
 
-
+            Items.Clear();
             using (db db = new db())
             {
                 List<item> ItemList = db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();

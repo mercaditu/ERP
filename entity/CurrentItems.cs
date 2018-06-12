@@ -56,6 +56,7 @@ namespace entity
                 .GroupBy(x => x.ItemID)
                 .Select(x => new
                 {
+
                     Code = x.Max(y => y.Code),
                     Name = x.Max(y => y.Name),
                     Location = x.Max(y => y.Location),
@@ -67,6 +68,7 @@ namespace entity
                     MovementRelID = x.Max(y => y.MovementRelID),
                     ItemID = x.Max(y => y.ItemID),
                     ProductID = x.Max(y => y.ProductID),
+                    ParentID = x.Max(y => y.ParentID),
                     LocationID = x.Max(y => y.LocationID),
                     CompanyID = x.Max(y => y.CompanyID),
                     Type = x.Max(y => y.Type),
@@ -94,6 +96,7 @@ namespace entity
                 Stock.MovementRelID = item.MovementRelID;
                 Stock.ItemID = item.ItemID;
                 Stock.ProductID = item.ProductID;
+                Stock.ParentID = item.ParentID;
                 Stock.LocationID = item.LocationID;
                 Stock.CompanyID = item.CompanyID;
                 Stock.Type = item.Type;
@@ -310,7 +313,7 @@ namespace entity
             List = new List<StockList>();
             //call data
             GetItems();
-            //UpdateStockwithoutstock(BranchID);
+            UpdateStockwithoutstock(BranchID);
 
             return List.Where(x => x.BranchID == BranchID || x.BranchID == null).ToList();
         }
@@ -338,14 +341,13 @@ namespace entity
 
         private static void UpdateStock(int BranchID)
         {
-          
+
             //run code to bring stock.
             if (BranchID > 0)
             {
-                                  
-                    string strstock = @"
-                                 select *                                
-                                from (
+
+                string strstock = @"
+                                
                                 select  
                                 l.id_location as LocationID
                                 , l.name as Location
@@ -362,6 +364,7 @@ namespace entity
                                 , im.expire_date as ExpiryDate
                                 ,im.trans_date as TransDate
                                 ,im.barcode as BarCode
+                                ,im.parent_id_movement as ParentID    
 
                                 from item_movement as im
                                 left join item_movement as child on im.id_movement = child.parent_id_movement
@@ -371,15 +374,15 @@ namespace entity
                                 left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
                                 where im.id_company = {0} and l.id_branch = {1}
                                 group by im.id_movement
-                                order by im.expire_date) as movement 
-                                where Quantity > 0";
-                                
+                                HAVING  (max(im.credit) - sum(IFNULL(child.debit,0))) >0
+                                order by im.expire_date";
+
                 //, sum(IFNULL(imvr.total_value, 0)) as Cost
 
                 strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
 
                 DataTable dtstock = stock.exeDT(strstock);
-              //  dtstock = dtstock.Select("Quantity>0").CopyToDataTable();
+                //  dtstock = dtstock.Select("Quantity>0").CopyToDataTable();
                 foreach (DataRow itemRow in dtstock.Rows)
                 {
                     int ItemID = Convert.ToInt32(itemRow["ItemID"]);
@@ -390,6 +393,11 @@ namespace entity
                     if (!(itemRow["MovementRelID"] is DBNull))
                     {
                         MovementRelID = Convert.ToInt32(itemRow["MovementRelID"]);
+                    }
+                    int? ParentID = null;
+                    if (!(itemRow["ParentID"] is DBNull))
+                    {
+                        ParentID = Convert.ToInt32(itemRow["ParentID"]);
                     }
                     decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
                     decimal? ConversionQuantity = null;
@@ -428,6 +436,7 @@ namespace entity
                         Row.BranchID = BranchID;
                         Row.ConversionQuantity = ConversionQuantity;
                         Row.Quantity = Quantity;
+                        Row.ParentID = ParentID;
                         Row.Cost = Cost;
                         Row.BatchCode = BatchCode;
                         Row.ExpiryDate = ExpiryDate;
@@ -451,6 +460,7 @@ namespace entity
                         Row.MovementID = MovementID;
                         Row.MovementRelID = MovementRelID;
                         Row.BranchID = BranchID;
+                        Row.ParentID = ParentID;
                         Row.Cost = Cost;
                         Row.BatchCode = BatchCode;
                         Row.ExpiryDate = ExpiryDate;
@@ -471,6 +481,7 @@ namespace entity
                         Row.BranchID = BranchID;
                         Row.Measurement = Original.Measurement;
                         Row.ProductID = ProductID;
+                        Row.ParentID = ParentID;
                         Row.IsActive = Original.IsActive;
                         Row.CompanyID = Original.CompanyID;
                         Row.Type = Original.Type;
@@ -491,161 +502,161 @@ namespace entity
             }
         }
 
-        //private static void UpdateStockwithoutstock(int BranchID)
-        //{
-        //    //run code to bring stock.
-        //    if (BranchID > 0)
-        //    {
-        //        string strstock = @"
-        //                        select *                                
-        //                        from (
-        //                        select  
-        //                        l.id_location as LocationID
-        //                        , l.name as Location
-        //                        , l.id_branch as BranchID
-        //                        , im.id_movement as MovementID
-        //                        , ip.id_item as ItemID
-        //                        , ip.id_item_product as ProductID
-        //                        , ip.can_expire
-        //                        , im.id_movement_value_rel as MovementRelID
-        //                        , (select sum(unit_value) from item_movement_value_detail where id_movement_value_rel = im.id_movement_value_rel) as Cost
-        //                        , (im.credit - sum(IFNULL(child.debit,0))) as Quantity
-        //                        , (im.credit - sum(IFNULL(child.debit,0))) * max(icf.value) * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from item_movement_dimension where id_movement = im.id_movement) as ConversionQuantity
-        //                        , im.code as BatchCode
-        //                        , im.expire_date as ExpiryDate
-        //                        ,im.trans_date as TransDate
-        //                        ,im.barcode as BarCode
+        private static void UpdateStockwithoutstock(int BranchID)
+        {
+            //run code to bring stock.
+            if (BranchID > 0)
+            {
+                string strstock = @"
+                                select *                                
+                                from (
+                                select  
+                                l.id_location as LocationID
+                                , l.name as Location
+                                , l.id_branch as BranchID
+                                , im.id_movement as MovementID
+                                , ip.id_item as ItemID
+                                , ip.id_item_product as ProductID
+                                , ip.can_expire
+                                , im.id_movement_value_rel as MovementRelID
+                                , (select sum(unit_value) from item_movement_value_detail where id_movement_value_rel = im.id_movement_value_rel) as Cost
+                                , (im.credit - sum(IFNULL(child.debit,0))) as Quantity
+                                , (im.credit - sum(IFNULL(child.debit,0))) * max(icf.value) * (select ROUND(EXP(SUM(LOG(`value`))),4) as value from item_movement_dimension where id_movement = im.id_movement) as ConversionQuantity
+                                , im.code as BatchCode
+                                , im.expire_date as ExpiryDate
+                                ,im.trans_date as TransDate
+                                ,im.barcode as BarCode
 
-        //                        from item_movement as im
-        //                        left join item_movement as child on im.id_movement = child.parent_id_movement
-        //                        inner join item_product as ip on im.id_item_product = ip.id_item_product
-        //                        left join item_conversion_factor as icf on ip.id_item_product = icf.id_item_product
-        //                        inner join app_location as l on im.id_location = l.id_location
-        //                        left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
-        //                        where im.id_company = {0} and l.id_branch = {1} 
-        //                        group by im.id_movement
-        //                        order by im.expire_date) as movement 
-        //                        where Quantity = 0";
-        //        //, sum(IFNULL(imvr.total_value, 0)) as Cost
+                                from item_movement as im
+                                left join item_movement as child on im.id_movement = child.parent_id_movement
+                                inner join item_product as ip on im.id_item_product = ip.id_item_product
+                                left join item_conversion_factor as icf on ip.id_item_product = icf.id_item_product
+                                inner join app_location as l on im.id_location = l.id_location
+                                left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
+                                where im.id_company = {0} and l.id_branch = {1} 
+                                group by im.id_movement
+                                order by im.expire_date) as movement 
+                                where Quantity = 0";
+                //, sum(IFNULL(imvr.total_value, 0)) as Cost
 
-        //        strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
+                strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
 
-        //        DataTable dtstock = stock.exeDT(strstock);
-        //        if (dtstock.Rows.Count > 0)
-        //        {
+                DataTable dtstock = stock.exeDT(strstock);
+                if (dtstock.Rows.Count > 0)
+                {
 
 
-        //            dtstock = dtstock.Select("MovementID>0").CopyToDataTable();
-        //            foreach (DataRow itemRow in dtstock.Rows)
-        //            {
-        //                int ItemID = Convert.ToInt32(itemRow["ItemID"]);
-        //                int ProductID = Convert.ToInt32(itemRow["ProductID"]);
-        //                int LocationID = Convert.ToInt32(itemRow["LocationID"]);
-        //                int MovementID = Convert.ToInt32(itemRow["MovementID"]);
-        //                int? MovementRelID = null;
-        //                if (!(itemRow["MovementRelID"] is DBNull))
-        //                {
-        //                    MovementRelID = Convert.ToInt32(itemRow["MovementRelID"]);
-        //                }
-        //                decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
-        //                decimal? ConversionQuantity = null;
-        //                if (!(itemRow["ConversionQuantity"] is DBNull))
-        //                {
-        //                    ConversionQuantity = Convert.ToDecimal(itemRow["ConversionQuantity"]);
-        //                }
-        //                decimal Cost = 0;
-        //                if (!(itemRow["Cost"] is DBNull))
-        //                {
-        //                    Cost = Convert.ToDecimal(itemRow["Cost"]);
-        //                }
-        //                string LocationName = Convert.ToString(itemRow["Location"]);
-        //                string BatchCode = Convert.ToString(itemRow["BatchCode"]);
-        //                bool CanExpire = Convert.ToBoolean(itemRow["can_expire"]);
-        //                DateTime TranDate = Convert.ToDateTime(itemRow["TransDate"]);
-        //                string BarCode = Convert.ToString(itemRow["BarCode"]);
+                    dtstock = dtstock.Select("MovementID>0").CopyToDataTable();
+                    foreach (DataRow itemRow in dtstock.Rows)
+                    {
+                        int ItemID = Convert.ToInt32(itemRow["ItemID"]);
+                        int ProductID = Convert.ToInt32(itemRow["ProductID"]);
+                        int LocationID = Convert.ToInt32(itemRow["LocationID"]);
+                        int MovementID = Convert.ToInt32(itemRow["MovementID"]);
+                        int? MovementRelID = null;
+                        if (!(itemRow["MovementRelID"] is DBNull))
+                        {
+                            MovementRelID = Convert.ToInt32(itemRow["MovementRelID"]);
+                        }
+                        decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
+                        decimal? ConversionQuantity = null;
+                        if (!(itemRow["ConversionQuantity"] is DBNull))
+                        {
+                            ConversionQuantity = Convert.ToDecimal(itemRow["ConversionQuantity"]);
+                        }
+                        decimal Cost = 0;
+                        if (!(itemRow["Cost"] is DBNull))
+                        {
+                            Cost = Convert.ToDecimal(itemRow["Cost"]);
+                        }
+                        string LocationName = Convert.ToString(itemRow["Location"]);
+                        string BatchCode = Convert.ToString(itemRow["BatchCode"]);
+                        bool CanExpire = Convert.ToBoolean(itemRow["can_expire"]);
+                        DateTime TranDate = Convert.ToDateTime(itemRow["TransDate"]);
+                        string BarCode = Convert.ToString(itemRow["BarCode"]);
 
-        //                DateTime? ExpiryDate = null;
+                        DateTime? ExpiryDate = null;
 
-        //                if (!itemRow.IsNull("ExpiryDate"))
-        //                {
-        //                    ExpiryDate = Convert.ToDateTime(itemRow["ExpiryDate"]);
-        //                }
+                        if (!itemRow.IsNull("ExpiryDate"))
+                        {
+                            ExpiryDate = Convert.ToDateTime(itemRow["ExpiryDate"]);
+                        }
 
-        //                if (List.Where(x => x.MovementID == MovementID).Count() > 0)
-        //                {
-        //                    //Has MovementID
-        //                    StockList Row = List.Where(x => x.MovementID == MovementID).FirstOrDefault();
-        //                    Row.ProductID = ProductID;
-        //                    Row.LocationID = LocationID;
-        //                    Row.Location = LocationName;
-        //                    Row.MovementID = MovementID;
-        //                    Row.MovementRelID = MovementRelID;
-        //                    Row.BranchID = BranchID;
-        //                    Row.ConversionQuantity = ConversionQuantity;
-        //                    Row.Quantity = Quantity;
-        //                    Row.Cost = Cost;
-        //                    Row.BatchCode = BatchCode;
-        //                    Row.ExpiryDate = ExpiryDate;
-        //                    Row.TimeStamp = DateTime.Now;
-        //                    Row.can_expire = CanExpire;
-        //                    Row.TranDate = TranDate;
-        //                    Row.BarCode = BarCode;
-        //                    //Since movement exists, there is no need to update other data, just get out and continue for.
-        //                    continue;
-        //                }
+                        if (List.Where(x => x.MovementID == MovementID).Count() > 0)
+                        {
+                            //Has MovementID
+                            StockList Row = List.Where(x => x.MovementID == MovementID).FirstOrDefault();
+                            Row.ProductID = ProductID;
+                            Row.LocationID = LocationID;
+                            Row.Location = LocationName;
+                            Row.MovementID = MovementID;
+                            Row.MovementRelID = MovementRelID;
+                            Row.BranchID = BranchID;
+                            Row.ConversionQuantity = ConversionQuantity;
+                            Row.Quantity = Quantity;
+                            Row.Cost = Cost;
+                            Row.BatchCode = BatchCode;
+                            Row.ExpiryDate = ExpiryDate;
+                            Row.TimeStamp = DateTime.Now;
+                            Row.can_expire = CanExpire;
+                            Row.TranDate = TranDate;
+                            Row.BarCode = BarCode;
+                            //Since movement exists, there is no need to update other data, just get out and continue for.
+                            continue;
+                        }
 
-        //                if (List.Where(x => x.ItemID == ItemID && (x.Quantity == null)).Count() > 0)
-        //                {
-        //                    StockList Row = List.Where(x => x.ItemID == ItemID && x.Quantity == null).FirstOrDefault();
+                        if (List.Where(x => x.ItemID == ItemID && (x.Quantity == null)).Count() > 0)
+                        {
+                            StockList Row = List.Where(x => x.ItemID == ItemID && x.Quantity == null).FirstOrDefault();
 
-        //                    Row.Quantity = Quantity;
-        //                    Row.ConversionQuantity = ConversionQuantity;
-        //                    Row.ProductID = ProductID;
-        //                    Row.LocationID = LocationID;
-        //                    Row.Location = LocationName;
-        //                    Row.MovementID = MovementID;
-        //                    Row.MovementRelID = MovementRelID;
-        //                    Row.BranchID = BranchID;
-        //                    Row.Cost = Cost;
-        //                    Row.BatchCode = BatchCode;
-        //                    Row.ExpiryDate = ExpiryDate;
-        //                    Row.TimeStamp = DateTime.Now;
-        //                    Row.can_expire = CanExpire;
-        //                    Row.TranDate = TranDate;
-        //                    Row.BarCode = BarCode;
-        //                }
-        //                else if (List.Where(x => x.ItemID == ItemID).Count() > 0)
-        //                {
-        //                    StockList Original = List.Where(x => x.ItemID == ItemID).FirstOrDefault();
-        //                    StockList Row = new StockList();
-        //                    Row.ItemID = Original.ItemID;
-        //                    Row.Code = Original.Code;
-        //                    Row.Name = Original.Name;
-        //                    Row.Location = LocationName;
-        //                    Row.LocationID = LocationID;
-        //                    Row.BranchID = BranchID;
-        //                    Row.Measurement = Original.Measurement;
-        //                    Row.ProductID = ProductID;
-        //                    Row.IsActive = Original.IsActive;
-        //                    Row.CompanyID = Original.CompanyID;
-        //                    Row.Type = Original.Type;
-        //                    Row.Quantity = Quantity;
-        //                    Row.ConversionQuantity = ConversionQuantity;
-        //                    Row.Cost = Cost;
-        //                    Row.BatchCode = BatchCode;
-        //                    Row.ExpiryDate = ExpiryDate;
-        //                    Row.MovementID = MovementID;
-        //                    Row.MovementRelID = MovementRelID;
-        //                    Row.TimeStamp = DateTime.Now;
-        //                    Row.can_expire = CanExpire;
-        //                    Row.TranDate = TranDate;
-        //                    Row.BarCode = BarCode;
-        //                    List.Add(Row);
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+                            Row.Quantity = Quantity;
+                            Row.ConversionQuantity = ConversionQuantity;
+                            Row.ProductID = ProductID;
+                            Row.LocationID = LocationID;
+                            Row.Location = LocationName;
+                            Row.MovementID = MovementID;
+                            Row.MovementRelID = MovementRelID;
+                            Row.BranchID = BranchID;
+                            Row.Cost = Cost;
+                            Row.BatchCode = BatchCode;
+                            Row.ExpiryDate = ExpiryDate;
+                            Row.TimeStamp = DateTime.Now;
+                            Row.can_expire = CanExpire;
+                            Row.TranDate = TranDate;
+                            Row.BarCode = BarCode;
+                        }
+                        else if (List.Where(x => x.ItemID == ItemID).Count() > 0)
+                        {
+                            StockList Original = List.Where(x => x.ItemID == ItemID).FirstOrDefault();
+                            StockList Row = new StockList();
+                            Row.ItemID = Original.ItemID;
+                            Row.Code = Original.Code;
+                            Row.Name = Original.Name;
+                            Row.Location = LocationName;
+                            Row.LocationID = LocationID;
+                            Row.BranchID = BranchID;
+                            Row.Measurement = Original.Measurement;
+                            Row.ProductID = ProductID;
+                            Row.IsActive = Original.IsActive;
+                            Row.CompanyID = Original.CompanyID;
+                            Row.Type = Original.Type;
+                            Row.Quantity = Quantity;
+                            Row.ConversionQuantity = ConversionQuantity;
+                            Row.Cost = Cost;
+                            Row.BatchCode = BatchCode;
+                            Row.ExpiryDate = ExpiryDate;
+                            Row.MovementID = MovementID;
+                            Row.MovementRelID = MovementRelID;
+                            Row.TimeStamp = DateTime.Now;
+                            Row.can_expire = CanExpire;
+                            Row.TranDate = TranDate;
+                            Row.BarCode = BarCode;
+                            List.Add(Row);
+                        }
+                    }
+                }
+            }
+        }
 
         public static void GetItems()
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -160,6 +161,9 @@ namespace Cognitivo.Configs
             if (Microsoft.VisualBasic.Interaction.InputBox("Password?", "Password") == "paraguay")
             {
                 int company_id = CurrentSession.Id_Company;
+                List<item_movement_archive> item_movement_archiveList = new List<item_movement_archive>();
+                List<item_movement> item_movementListDeletechild = new List<item_movement>();
+                List<item_movement> item_movementListDeleteparent = new List<item_movement>();
 
                 using (db db = new db())
                 {
@@ -167,38 +171,49 @@ namespace Cognitivo.Configs
                     List<entity.Brillo.StockList> ItemsWithoutBalance = CurrentItems.GetListwithoutstock(CurrentSession.Id_Branch).ToList();
 
                     //Get list of credits that have balance.
-                    List<entity.Brillo.StockList> ItemsWithBalance = CurrentItems.GetItems().ToList();
+                    List<entity.Brillo.StockList> ItemsWithBalance = CurrentItems.getProducts_InStock_GroupBy(CurrentSession.Id_Branch,DateTime.Now,true).ToList();
+
+                    db.Database.ExecuteSqlCommand("update item_movement set  parent_id_movement=null where" +
+                        " id_movement in (" + ItemsWithBalance.Select(x=>x.MovementID).ToArray() + ")");
 
                     //Make parent null for items with balance. So that we can remove the 0 balance 
-                    foreach (entity.Brillo.StockList item in ItemsWithBalance.Where(x => x.ParentID > 0))
-                    {
-                        item_movement im = db.item_movement.Find(item.MovementID);
-                        if (im != null)
-                        {
-                            im.parent = null;
-                            db.SaveChanges();
-                        }
-                    }
+                    //foreach (entity.Brillo.StockList item in ItemsWithBalance.Where(x => x.ParentID > 0))
+                    //{
+                    //    item_movement im = db.item_movement.Find(item.MovementID);
+                    //    if (im != null)
+                    //    {
+                    //        im.parent = null;
+                    //        db.SaveChanges();
+                    //    }
+                    //}
+                 
+
+
+
 
                     //Take all the 0 Balance items, and move it to archive table. Then delete the detail.
                     foreach (entity.Brillo.StockList item in ItemsWithoutBalance)
                     {
-                        item_movement im = db.item_movement.Where(x => x.id_movement == item.MovementID).First();
-                        item_movement_archive item_movement_archive = AddMovement(im);
-                        item_movement_archiveList.Add(item_movement_archive);
-
-                        //I don't like this query. Don't call it by parent, but call it by child using navigation property.
-                        List<item_movement> item_movementList = db.item_movement.Where(x => x.parent.id_movement == item.MovementID).ToList();
-                        
-                        foreach (item_movement item_movement in item_movementList)
+                        item_movement im = db.item_movement.Where(x => x.id_movement == item.MovementID).FirstOrDefault();
+                        if (im != null)
                         {
-                            item_movement_archive item_movement_archivechild = AddMovement(item_movement);
-                            item_movement_archivechild.parent = item_movement_archive;
-                            item_movement_archiveList.Add(item_movement_archivechild);
-                            item_movementListDeletechild.Add(item_movement);
-                        }
+                            item_movement_archive item_movement_archive = AddMovement(im);
+                            item_movement_archiveList.Add(item_movement_archive);
 
-                        item_movementListDeleteparent.Add(im);
+                            //I don't like this query. Don't call it by parent, but call it by child using navigation property.
+                            List<item_movement> item_movementList = im.child.ToList();
+
+                            foreach (item_movement item_movement in item_movementList)
+                            {
+                                item_movement_archive item_movement_archivechild = AddMovement(item_movement);
+                                item_movement_archivechild.parent = item_movement_archive;
+                                item_movement_archiveList.Add(item_movement_archivechild);
+                                item_movementListDeletechild.Add(item_movement);
+                            }
+
+                            item_movementListDeleteparent.Add(im);
+                        }
+                       
                     }
 
                     db.item_movement.RemoveRange(item_movementListDeletechild);

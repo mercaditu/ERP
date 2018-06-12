@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,11 +69,12 @@ namespace Cognitivo.Configs
         private void btnMovementValue_Clicked(object sender, RoutedEventArgs e)
         {
             db db = new db();
+            
             int count = db.item_movement.Where(x => x.parent == null).Count();
             for (int i = 0; i < count; i = i + 100)
             {
                 List<item_movement> parentlessMovements = db.item_movement
-                    .Where(x => x.parent == null).OrderBy(x=>x.id_movement).Skip(i).Take(100).ToList();
+                    .Where(x => x.parent == null).OrderBy(x => x.id_movement).Skip(i).Take(100).ToList();
                 AddItemMovementValue(ref db, parentlessMovements);
             }
 
@@ -89,13 +88,11 @@ namespace Cognitivo.Configs
                 changeMovementValue(ref db, parentMovements);
             }
 
-
             MessageBox.Show("Done");
         }
 
         public void AddItemMovementValue(ref db db, List<item_movement> parentlessMovements)
         {
-
             foreach (item_movement parentlessMovement in parentlessMovements.Where(x => x.id_movement_value_rel == null))
             {
                 item_movement_value_rel item_movement_value_rel = new item_movement_value_rel();
@@ -141,15 +138,19 @@ namespace Cognitivo.Configs
                         {
                             foreach (project_task_dimension project_task_dimension in project_task.project_task_dimension)
                             {
-                                production_order_dimension production_order_dimension = new production_order_dimension();
-                                production_order_dimension.id_dimension = project_task_dimension.id_dimension;
-                                production_order_dimension.value = project_task_dimension.value;
-                                production_order_dimension.id_measurement = project_task_dimension.id_measurement;
+                                production_order_dimension production_order_dimension = new production_order_dimension
+                                {
+                                    id_dimension = project_task_dimension.id_dimension,
+                                    value = project_task_dimension.value,
+                                    id_measurement = project_task_dimension.id_measurement
+                                };
+
                                 production_order_detail.production_order_dimension.Add(production_order_dimension);
                             }
                         }
                     }
                 }
+
                 db.SaveChanges();
             }
         }
@@ -212,31 +213,34 @@ namespace Cognitivo.Configs
 
         public item_movement_archive AddMovement(item_movement im)
         {
-            item_movement_archive item_movement_archive = new item_movement_archive();
-            item_movement_archive.id_item_product = im.id_item_product;
-            item_movement_archive.id_transfer_detail = im.id_transfer_detail;
-            item_movement_archive.id_execution_detail = im.id_execution_detail;
-            item_movement_archive.id_purchase_invoice_detail = im.id_purchase_invoice_detail;
-            item_movement_archive.id_purchase_return_detail = im.id_purchase_return_detail;
-            item_movement_archive.id_sales_invoice_detail = im.id_sales_invoice_detail;
-            item_movement_archive.id_sales_return_detail = im.id_sales_return_detail;
-            item_movement_archive.id_inventory_detail = im.id_inventory_detail;
-            item_movement_archive.id_sales_packing_detail = im.id_sales_packing_detail;
-            item_movement_archive.id_purchase_packing_detail = im.id_purchase_packing_detail;
-            item_movement_archive.id_location = im.id_location;
-            item_movement_archive.id_movement_value_rel = im.id_movement_value_rel;
-            item_movement_archive.status = im.status;
-            item_movement_archive.debit = im.debit;
-            item_movement_archive.credit = im.credit;
-            item_movement_archive.comment = im.comment;
-            item_movement_archive.code = im.code;
-            item_movement_archive.expire_date = im.expire_date;
-            item_movement_archive.trans_date = im.trans_date;
-            item_movement_archive.id_company = im.id_company;
-            item_movement_archive.id_user = im.id_user;
-            item_movement_archive.is_head = im.is_head;
-            item_movement_archive.timestamp = im.timestamp;
-            item_movement_archive.is_read = im.is_read;
+            item_movement_archive item_movement_archive = new item_movement_archive
+            {
+                id_item_product = im.id_item_product,
+                id_transfer_detail = im.id_transfer_detail,
+                id_execution_detail = im.id_execution_detail,
+                id_purchase_invoice_detail = im.id_purchase_invoice_detail,
+                id_purchase_return_detail = im.id_purchase_return_detail,
+                id_sales_invoice_detail = im.id_sales_invoice_detail,
+                id_sales_return_detail = im.id_sales_return_detail,
+                id_inventory_detail = im.id_inventory_detail,
+                id_sales_packing_detail = im.id_sales_packing_detail,
+                id_purchase_packing_detail = im.id_purchase_packing_detail,
+                id_location = im.id_location,
+                id_movement_value_rel = im.id_movement_value_rel,
+                status = im.status,
+                debit = im.debit,
+                credit = im.credit,
+                comment = im.comment,
+                code = im.code,
+                expire_date = im.expire_date,
+                trans_date = im.trans_date,
+                id_company = im.id_company,
+                id_user = im.id_user,
+                is_head = im.is_head,
+                timestamp = im.timestamp,
+                is_read = im.is_read
+            };
+
             return item_movement_archive;
         }
     }

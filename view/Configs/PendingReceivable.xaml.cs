@@ -47,13 +47,13 @@ namespace Cognitivo.Configs
         private void Download_Click(object sender, RoutedEventArgs e)
         {
             PaymentDB PaymentDB = new PaymentDB();
-           
+
             if (Directory.Exists(@Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Payments"))
             {
                 var dir = new DirectoryInfo(@Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Payments");
                 dir.Delete(true);
             }
-            
+
 
             List<contact> contactLIST = new List<contact>();
             payment_schedualList = PaymentDB.payment_schedual
@@ -63,7 +63,7 @@ namespace Cognitivo.Configs
                         .Include(x => x.sales_invoice)
                         .Include(x => x.contact)
                         .OrderBy(x => x.expire_date)
-                        .ToList(); 
+                        .ToList();
             if (payment_schedualList.Count() > 0)
             {
                 foreach (payment_schedual payment in payment_schedualList.ToList())
@@ -93,15 +93,15 @@ namespace Cognitivo.Configs
                         string active = "N";
                         if (contact.is_active)
                         {
-                             active = "S";
+                            active = "S";
                         }
                         string gov_code = "";
                         if (contact.gov_code != null)
                         {
                             gov_code = contact.gov_code.Replace("-", "");
-                            gov_code = gov_code.Remove(gov_code.Length-1,1).ToString() ;
+                            gov_code = gov_code.Remove(gov_code.Length - 1, 1).ToString();
                         }
-                        
+
                         sw.Write(gov_code + ";" + contact.name + ";" + active + ";" + Environment.NewLine);
                     }
                 }
@@ -114,29 +114,29 @@ namespace Cognitivo.Configs
                 using (StreamWriter sw = new StreamWriter(fileDetail))
                 {
                     Decimal Balance = 0;
-                  
+
                     foreach (payment_schedual payment_schedual in payment_schedualList.ToList())
                     {
                         Balance += payment_schedual.AccountReceivableBalance;
                     }
 
-                    sw.Write(DateTime.Now.ToString("yyyyMMdd") + ";" + payment_schedualList.Count() + ";" + Math.Round(Balance,2) + Environment.NewLine);
+                    sw.Write(DateTime.Now.ToString("yyyyMMdd") + ";" + payment_schedualList.Count() + ";" + Math.Round(Balance, 2) + Environment.NewLine);
                     foreach (payment_schedual payment_schedual in payment_schedualList.ToList())
                     {
                         string gov_code = "";
                         if (payment_schedual.contact.gov_code != null)
                         {
-                             gov_code = payment_schedual.contact.gov_code.Replace("-", "");
+                            gov_code = payment_schedual.contact.gov_code.Replace("-", "");
                             gov_code = gov_code.Remove(gov_code.Length - 1, 1).ToString();
                         }
-                       
-                       
+
+
                         string id_payment_schedual = payment_schedual.id_payment_schedual.ToString();
-                        string comment = "Cuota" +  " " + DateTime.Now.ToString("yyyyMMdd");
+                        string comment = "Cuota" + " " + DateTime.Now.ToString("yyyyMMdd");
                         string date = payment_schedual.trans_date.ToString("yyyyMMdd");
                         string Expdate = payment_schedual.expire_date.ToString("yyyyMMdd");
                         string currency = payment_schedual.app_currencyfx.app_currency.code == "PYG" ? "1" : "2";
-                        string balance =Math.Round(payment_schedual.AccountReceivableBalance,2).ToString();
+                        string balance = Math.Round(payment_schedual.AccountReceivableBalance, 2).ToString();
                         string other = "0;F;0;0;N;1";
                         string detail = gov_code + ";" + id_payment_schedual + ";" + comment + ";" + date + ";"
                             + Expdate + ";" + currency + ";" + balance + ";"
@@ -171,53 +171,87 @@ namespace Cognitivo.Configs
 
                         if (counter > 0)
                         {
-                            string[] values = line.Split(';');
-                            if (values[0] != "" && values.Count()>9)
+                            List<string> values = new List<string>();
+                            values.Add(new string(line.Skip(0).Take(8).ToArray()));
+                            values.Add(new string(line.Skip(8).Take(8).ToArray()));
+                            values.Add(new string(line.Skip(16).Take(6).ToArray()));
+                            values.Add(new string(line.Skip(22).Take(6).ToArray()));
+                            values.Add(new string(line.Skip(28).Take(30).ToArray()));
+                            values.Add(new string(line.Skip(58).Take(14).ToArray()));
+                            values.Add(new string(line.Skip(72).Take(1).ToArray()));
+                            values.Add(new string(line.Skip(73).Take(1).ToArray()));
+                            values.Add(new string(line.Skip(74).Take(14).ToArray()));
+                            values.Add(new string(line.Skip(88).Take(10).ToArray()));
+                            values.Add(new string(line.Skip(98).Take(2).ToArray()));
+                            values.Add(new string(line.Skip(100).Take(4).ToArray()));
+                            values.Add(new string(line.Skip(104).Take(14).ToArray()));
+                            values.Add(new string(line.Skip(118).Take(14).ToArray()));
+                            values.Add(new string(line.Skip(132).Take(3).ToArray()));
+                            values.Add(new string(line.Skip(135).Take(30).ToArray()));
+                            values.Add(new string(line.Skip(165).Take(30).ToArray()));
+
+                            if (values[0] != "" && values.Count() > 0)
                             {
 
 
-                                int id = Convert.ToInt32(values[9]);
+                                int id = Convert.ToInt32(values[4]);
                                 List<payment_schedual> SchedualList = PaymentDB.payment_schedual.Where(x => x.id_payment_schedual == id).ToList();
-                                payment payment = PaymentDB.New(true);
-
-                                if (payment != null)
+                                if (SchedualList.Count() > 0)
                                 {
-                                    payment_detail payment_detail = new payment_detail();
-                                    payment_detail.payment = payment;
-                                    //Get current Active Rate of selected Currency.
-                                    string currency = Convert.ToInt32(values[10]) == 1 ? "PYG" : "USD";
-                                    app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.app_currency.code == currency && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
-                                    if (app_currencyfx != null)
+
+
+                                    payment payment = PaymentDB.New(true);
+                                    payment.trans_date = Convert.ToDateTime(new string(values[1].Take(4).ToArray()) + "/" + new string(values[1].Skip(4).Take(2).ToArray()) + "/" + new string(values[1].Skip(6).Take(2).ToArray()));
+
+                                    if (payment != null)
                                     {
-                                        payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
-                                        payment_detail.id_currencyfx = app_currencyfx.id_currencyfx;
-                                        payment_detail.payment.id_currencyfx = app_currencyfx.id_currencyfx;
-                                        payment_detail.app_currencyfx = app_currencyfx;
+                                        payment_detail payment_detail = new payment_detail();
+                                        payment_detail.payment = payment;
+                                        //Get current Active Rate of selected Currency.
+                                        string currency = Convert.ToInt32(values[10]) == 1 ? "PYG" : "USD";
+                                        app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.app_currency.code == currency && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
+                                        if (app_currencyfx != null)
+                                        {
+                                            payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
+                                            payment_detail.id_currencyfx = app_currencyfx.id_currencyfx;
+                                            payment_detail.payment.id_currencyfx = app_currencyfx.id_currencyfx;
+                                            payment_detail.app_currencyfx = app_currencyfx;
+                                        }
+
+                                        //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
+
+                                        payment_detail.value = Convert.ToDecimal(values[5]);
+
+
+                                        //If PaymentTypeID is not null, then this transaction has a PaymentApproval
+
+                                        payment_detail.IsLocked = true;
+                                        payment_detail.id_account = Convert.ToInt32(cbxAccount.SelectedValue);
+                                        payment_detail.IsLocked = false;
+
+                                        if (Convert.ToInt32(values[7]) == 1)
+                                        {
+                                            payment_type payment_type = PaymentDB.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.is_direct).FirstOrDefault();
+                                            payment_detail.id_payment_type = payment_type.id_payment_type;
+                                        }
+                                        else
+                                        {
+                                            payment_type payment_type = PaymentDB.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.is_direct == false).FirstOrDefault();
+                                            payment_detail.id_payment_type = payment_type.id_payment_type;
+                                        }
+
+
+
+
+
+
+                                        payment_detail.IsSelected = true;
+
+                                        payment.payment_detail.Add(payment_detail);
+
+                                        PaymentDB.payments.Add(payment);
+                                        PaymentDB.Approve(SchedualList, true, false);
                                     }
-
-                                    //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
-
-                                    payment_detail.value = Convert.ToDecimal(values[6]);
-
-
-                                    //If PaymentTypeID is not null, then this transaction has a PaymentApproval
-
-                                    payment_detail.IsLocked = true;
-                                    payment_detail.id_account = Convert.ToInt32(cbxAccount.SelectedValue);
-                                    payment_detail.IsLocked = false;
-
-                                    payment_type payment_type = PaymentDB.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).FirstOrDefault();
-                                    payment_detail.id_payment_type = payment_type.id_payment_type;
-
-
-
-
-                                    payment_detail.IsSelected = true;
-
-                                    payment.payment_detail.Add(payment_detail);
-
-                                    PaymentDB.payments.Add(payment);
-                                    PaymentDB.Approve(SchedualList, true, false);
                                 }
                             }
 

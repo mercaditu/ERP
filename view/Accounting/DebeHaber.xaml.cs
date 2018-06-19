@@ -28,7 +28,7 @@ namespace Cognitivo.Accounting
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        public bool isReady { get; set; }
+        //   public bool isReady { get; set; }
         public bool serverStatus { get; set; }
         public bool apiStatus { get; set; }
 
@@ -45,8 +45,8 @@ namespace Cognitivo.Accounting
         {
             InitializeComponent();
             Context = new dbContext();
-            isReady = false;
-            RaisePropertyChanged("isReady");
+            btnStart.IsEnabled = false;
+            // RaisePropertyChanged("isReady");
             //Check KeyStatus on thread
             CheckStatus(null, null);
             // Task basic_Task = Task.Factory.StartNew(() => CheckStatus(null, null));
@@ -56,18 +56,18 @@ namespace Cognitivo.Accounting
         private void CheckStatus(object sender, MouseButtonEventArgs e)
         {
             //TODO, Check if access to server is ok. Make sure to use the URL on the config file.
-            //serverStatus = true;
+            serverStatus = true;
 
             //TODO, Check if API Key is active (not expired). Make sure to use the URL on the config file.
-            //apiStatus = true;
+            apiStatus = true;
             string key = tbxAPI.Text;
             var obj = Send2API(null, tbxURL.Text + "/api/check-key", key);
 
             //If both is Ok, then we are ready to Export.
             if (serverStatus && apiStatus)
             {
-                isReady = true;
-                RaisePropertyChanged("isReady");
+                btnStart.IsEnabled = true;
+                
             }
         }
 
@@ -234,6 +234,7 @@ namespace Cognitivo.Accounting
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //Start();
+            btnStart.IsEnabled = false;
             string url = tbxURL.Text;
             string key = tbxAPI.Text;
             Task basic_Task = Task.Factory.StartNew(() => Start(url, key));
@@ -252,8 +253,12 @@ namespace Cognitivo.Accounting
             PurchaseReturn_Task.Wait();
 
             Task AccountsForSalesPurchase_Task = Task.Factory.StartNew(() => AccountsForSalesPurchase(url, key, app_account_detailsalespurchaseList));
+            AccountsForSalesPurchase_Task.Wait();
             //Task AccountsForMovement_Task = Task.Factory.StartNew(() => AccountsForMovement(url, key, purchase_returnList));
             //AccountsForMovement_Task.Wait();
+            Dispatcher.BeginInvoke((Action)(() => btnStart.IsEnabled = true));
+           
+           
         }
 
         private void Sales(string url, string key, List<sales_invoice> sales_invoiceList)
@@ -472,7 +477,7 @@ namespace Cognitivo.Accounting
             }
             catch (Exception ex)
             {
-                apiStatus = false;
+               apiStatus = false;
                 serverStatus = false;
                 return null;
             }

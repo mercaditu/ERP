@@ -345,7 +345,7 @@ namespace cntrl.Controls
                     decimal ItemID = Convert.ToDecimal(itemRow["ItemID"]);
                     if (Items.Where(x => x.ItemID == ItemID).Count() > 0)
                     {
-                        Items.Where(x => x.ItemID == ItemID).FirstOrDefault().Quantity = Quantity;
+                        Items.Where(x => x.ItemID == ItemID).FirstOrDefault().Quantity += Quantity;
                     }
                 }
 

@@ -686,7 +686,9 @@ namespace entity.Brillo.Logic
                                                 detail.expire_date = mov.expire_date;
                                                 if (mov.item_movement_value_rel != null)
                                                 {
-                                                    detail.unit_cost = mov.item_movement_value_rel.total_value;
+                                                detail.unit_cost = Brillo.Currency.convert_Values(mov.item_movement_value_rel.total_value,
+                                                    CurrentSession.Get_Currency_Default_Rate().id_currencyfx,
+                                                    detail.sales_invoice.id_currencyfx, App.Modules.Sales);
                                                 }
 
                                             }

@@ -338,6 +338,7 @@
       <DependentUpon>Discount_OnTag.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reports\Item\Item.cs" />
+    <Compile Include="Reports\Stocks\BlankInventory.cs" />
     <Compile Include="toolBarNotification.xaml.cs">
       <DependentUpon>toolBarNotification.xaml</DependentUpon>
     </Compile>
@@ -753,6 +754,7 @@
     <EmbeddedResource Include="Reports\Sales\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesDetail.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesVAT.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\BlankInventory.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\Inventory.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\InventoryByBatch.rdlc" />
     <EmbeddedResource Include="Reports\Stocks\ItemReceipe.rdlc" />
@@ -879,6 +881,7 @@
     <None Include="Properties\DataSources\entity.purchase_tender_contact_detail.datasource" />
     <None Include="Properties\DataSources\entity.purchase_tender_item_detail.datasource" />
     <None Include="Properties\DataSources\entity.refinance.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.BlankInventory.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ContactBalnace.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Contacts.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ContactSubscription.datasource" />

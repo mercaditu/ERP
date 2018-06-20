@@ -464,6 +464,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Reporting\ContactSubscription.cs" />
+    <Compile Include="Reporting\BlankInventory.cs" />
     <Compile Include="Reporting\Payments.cs" />
     <Compile Include="Reporting\Item.cs" />
     <Compile Include="Reporting\Inventory.cs" />

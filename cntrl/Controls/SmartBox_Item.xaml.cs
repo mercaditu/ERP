@@ -345,15 +345,28 @@ namespace cntrl.Controls
                     decimal ItemID = Convert.ToDecimal(itemRow["ItemID"]);
                     if (Items.Where(x => x.ItemID == ItemID).Count() > 0)
                     {
-                        Items.Where(x => x.ItemID == ItemID).FirstOrDefault().Quantity += Quantity;
+                        Items.Where(x => x.ItemID == ItemID).FirstOrDefault().Quantity = Quantity;
+                    }
+                }
+                if (Type==Types.InStock_Only)
+                {
+                    List<StockList> DeleteList = Items.Where(x => (x.Type == 1 || x.Type == 2 || x.Type == 6) && (x.Quantity == 0 || x.Quantity == null)).ToList();
+                    foreach (StockList item in DeleteList)
+                    {
+                        Items.Remove(item);
+                    }
+                    
+                }
+                else if (Type == Types.InStock_wServices)
+                {
+                    List<StockList> DeleteList = Items.Where(x => (x.Quantity == 0 || x.Quantity == null)).ToList();
+                    foreach (StockList item in DeleteList)
+                    {
+                        Items.Remove(item);
                     }
                 }
 
-                List<StockList> DeleteList = Items.Where(x => (x.Type == 1 || x.Type == 2 || x.Type == 6) && (x.Quantity == 0 || x.Quantity==null)).ToList();
-                foreach (StockList item in DeleteList)
-                {
-                    Items.Remove(item);
-                }
+               
             }
             catch
             { }

@@ -10,5 +10,8 @@ namespace entity.Reporting
         public string Variation { get; set; }
         public string Description { get; set; }
         public string Quantity { get; set; }
+        public string Branch { get; set; }
+        public decimal InStock { get; set; }
+
     }
 }

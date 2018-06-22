@@ -208,10 +208,10 @@ namespace cntrl.Controls
             InitializeComponent();
 
 
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+            Security Sec = new Security(App.Names.Items);
             //InStock_Only = Sec.SpecialSecurity_ReturnsBoolean(entity.Privilage.Privilages.Include_OutOfStock) == true ? false : true;
 
-            if (entity.CurrentSession.Allow_BarCodeSearchOnly)
+            if (CurrentSession.Allow_BarCodeSearchOnly)
             {
                 ExactSearch = true;
             }
@@ -266,7 +266,7 @@ namespace cntrl.Controls
 
         private void LoadData_Thread(int LocID, bool forceData)
         {
-            entity.Brillo.Stock Stock = new entity.Brillo.Stock();
+            Stock Stock = new Stock();
 
             Items.Clear();
             using (db db = new db())
@@ -275,13 +275,16 @@ namespace cntrl.Controls
 
                 foreach (item item in ItemList)
                 {
-                    entity.Brillo.StockList data = new entity.Brillo.StockList();
-                    data.ItemID = item.id_item;
-                    data.CompanyID = Convert.ToInt32(item.id_company);
-                    data.Name = item.name;
-                    data.Code = item.code;
-                    data.Type = Convert.ToInt32(item.id_item_type);
-                    data.can_expire = false;
+                    StockList data = new StockList
+                    {
+                        ItemID = item.id_item,
+                        CompanyID = Convert.ToInt32(item.id_company),
+                        Name = item.name,
+                        Code = item.code,
+                        Type = Convert.ToInt32(item.id_item_type),
+                        can_expire = false
+                    };
+
                     Items.Add(data);
                 }
 
@@ -302,8 +305,6 @@ namespace cntrl.Controls
         {
             try
             {
-
-
                 int BranchID = CurrentSession.Id_Branch;
                 string strstock = @"
                                                                 select  
@@ -334,8 +335,6 @@ namespace cntrl.Controls
                                 HAVING  (max(im.credit) - sum(IFNULL(child.debit,0))) >0
                                 order by im.expire_date";
 
-                //, sum(IFNULL(imvr.total_value, 0)) as Cost
-
                 strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
 
                 DataTable dtstock = entity.CurrentItems.stock.exeDT(strstock);
@@ -348,29 +347,28 @@ namespace cntrl.Controls
                         Items.Where(x => x.ItemID == ItemID).FirstOrDefault().Quantity = Quantity;
                     }
                 }
-                if (Type==Types.InStock_Only)
+
+                if (Type == Types.InStock_Only || Type == Types.InStock_wServices)
                 {
+                    //Brings items in stock wihtout services
                     List<StockList> DeleteList = Items.Where(x => (x.Type == 1 || x.Type == 2 || x.Type == 6) && (x.Quantity == 0 || x.Quantity == null)).ToList();
                     foreach (StockList item in DeleteList)
                     {
                         Items.Remove(item);
                     }
-                    
                 }
-                else if (Type == Types.InStock_wServices)
-                {
-                    List<StockList> DeleteList = Items.Where(x => (x.Quantity == 0 || x.Quantity == null)).ToList();
-                    foreach (StockList item in DeleteList)
-                    {
-                        Items.Remove(item);
-                    }
-                }
-
-               
+                //else
+                //{
+                //    //brings items in stock with services
+                //    List<StockList> DeleteList = Items.Where(x => (x.Quantity == 0 || x.Quantity == null) && ).ToList();
+                //    foreach (StockList item in DeleteList)
+                //    {
+                //        Items.Remove(item);
+                //    }
+                //}
             }
             catch
             { }
-
         }
 
         private void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

@@ -126,9 +126,9 @@
                         <Button Click="Excel_Create" Content="Excel" MinWidth="128" FontSize="10" />
                     </StackPanel>-->
 
-                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" AllowDrop="True" Drop="StackPanel_Drop" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" AllowDrop="True" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="" Style="{StaticResource ico_Label}" />
-                        <Button  Content="Excel Astrillo" MinWidth="128" FontSize="10" />
+                        <Button  Content="{lex:Loc Print}" MinWidth="128" FontSize="10" Click="btnPrint_Inventory"/>
                     </StackPanel>
 
                 </StackPanel>

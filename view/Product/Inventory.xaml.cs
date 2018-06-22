@@ -558,6 +558,12 @@ namespace Cognitivo.Product
             }
         }
 
+        private void btnPrint_Inventory(object sender, RoutedEventArgs e)
+        {
+            //TODO Pankeel, please code to print a document that will show the items in the window (don't get data from database).
+            //this is so a user can print out the same info that is on the screen.
+        }
+
         private void location_ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             if (item_inventoryDataGrid.SelectedItem != null)

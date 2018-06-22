@@ -307,7 +307,7 @@ namespace cntrl.Controls
             {
                 int BranchID = CurrentSession.Id_Branch;
                 string strstock = @"
-                                                                select  
+                                select  
                                 l.id_location as LocationID
                                 , l.name as Location
                                 , l.id_branch as BranchID
@@ -332,7 +332,7 @@ namespace cntrl.Controls
                                 left join item_movement_value_rel as imvr on im.id_movement_value_rel = imvr.id_movement_value_rel
                                 where im.id_company = {0} and l.id_branch = {1}
                                 group by im.id_movement
-                                HAVING  (max(im.credit) - sum(IFNULL(child.debit,0))) >0
+                                HAVING (max(im.credit) - sum(IFNULL(child.debit,0))) > 0
                                 order by im.expire_date";
 
                 strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
@@ -342,30 +342,36 @@ namespace cntrl.Controls
                 {
                     decimal Quantity = Convert.ToDecimal(itemRow["Quantity"]);
                     decimal ItemID = Convert.ToDecimal(itemRow["ItemID"]);
+
                     if (Items.Where(x => x.ItemID == ItemID).Count() > 0)
                     {
                         Items.Where(x => x.ItemID == ItemID).FirstOrDefault().Quantity = Quantity;
                     }
                 }
 
-                if (Type == Types.InStock_Only || Type == Types.InStock_wServices)
+                if (Type == Types.InStock_Only)
                 {
-                    //Brings items in stock wihtout services
+                    //delete items without stock and services. should only show items in stock
+                    List<StockList> DeleteList = Items.Where(x => ((x.Type == 1 || x.Type == 2 || x.Type == 6) && (x.Quantity == 0 || x.Quantity == null))
+                    || (x.Type == 3 || x.Type == 4 || x.Type == 5 || x.Type == 7)).ToList();
+                    foreach (StockList item in DeleteList)
+                    {
+                        Items.Remove(item);
+                    }
+                }
+                else if (Type == Types.InStock_wServices)
+                {
+                    //delete items without stock. but keep services
                     List<StockList> DeleteList = Items.Where(x => (x.Type == 1 || x.Type == 2 || x.Type == 6) && (x.Quantity == 0 || x.Quantity == null)).ToList();
                     foreach (StockList item in DeleteList)
                     {
                         Items.Remove(item);
                     }
                 }
-                //else
-                //{
-                //    //brings items in stock with services
-                //    List<StockList> DeleteList = Items.Where(x => (x.Quantity == 0 || x.Quantity == null) && ).ToList();
-                //    foreach (StockList item in DeleteList)
-                //    {
-                //        Items.Remove(item);
-                //    }
-                //}
+                else
+                {
+                    //remove nothing. keep everything.
+                }
             }
             catch
             { }

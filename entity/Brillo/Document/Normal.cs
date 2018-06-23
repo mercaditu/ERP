@@ -163,6 +163,38 @@ namespace entity.Brillo.Document
             window.ShowDialog();
         }
 
+        public Normal(object Document, string DocumentName,app_location app_Location)
+        {
+            string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\" + DocumentName + ".rdlc";
+
+            if (Directory.Exists(PathFull) == false)
+            {
+                CreateFile(DocumentName);
+            }
+
+            DataSource DataSource = new DataSource();
+
+            DocumentViewer DocumentViewer = new DocumentViewer();
+            DocumentViewer.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
+            string BaseName = Document.GetType().BaseType.ToString();
+            string AppName = Document.GetType().ToString();
+
+            if (AppName == typeof(item_inventory).ToString() || BaseName == typeof(item_inventory).ToString())
+            {
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.ItemInventory(Document, app_Location));
+              
+            }
+            DocumentViewer.reportViewer.RefreshReport();
+
+            Window window = new Window
+            {
+                Title = "Report",
+                Content = DocumentViewer
+            };
+
+            window.ShowDialog();
+        }
+
         private void CreateFile(app_document_range app_range)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";

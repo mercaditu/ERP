@@ -102,6 +102,7 @@
             <!-- Right Side Panel -->
             <Grid Grid.Column="2" DataContext="{StaticResource item_inventoryViewSource}">
                 <StackPanel Margin="8">
+                   
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="" Style="{StaticResource ico_Label}" />
                         <CheckBox Content="{lex:Loc LotNumber}" Unchecked="cbxExpiryCode_Unchecked" x:Name="cbxBatchCode" />

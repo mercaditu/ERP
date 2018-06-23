@@ -436,7 +436,7 @@ namespace Cognitivo.Accounting
             {
                 popConnBuilder.IsOpen = false;
             }
-
+            CheckStatus(sender, e);
 
 
         }

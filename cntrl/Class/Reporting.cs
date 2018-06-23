@@ -407,14 +407,6 @@ namespace cntrl.Class
                 Query = Reports.Stock.InventorySummary.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
-                        new Report
-            {
-                Application = entity.App.Names.Inventory,
-                Name =entity.Brillo.Localize.StringText("BlankInventory"),
-                Path = "cntrl.Reports.Stocks.BlankInventory.rdlc",
-                Query = Reports.Stock.BlankInventory.query,
-                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
-            },
              new Report
             {
                 Application = entity.App.Names.Inventory,

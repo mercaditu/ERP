@@ -25,5 +25,13 @@
                 Normal Normal = new Normal(Document, DocumentName);
             }
         }
+
+        public static void Automatic(object Document, string DocumentName,app_location app_Location)
+        {
+            if (DocumentName != "")
+            {
+                Normal Normal = new Normal(Document, DocumentName, app_Location);
+            }
+        }
     }
 }

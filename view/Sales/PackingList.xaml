@@ -316,7 +316,7 @@
                                     <DataGridTextColumn Binding="{Binding VerifiedQuantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+                            <DataGrid Grid.Column="1" x:Name="sales_packinglist_detailVerifiedDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
                                       CanUserDeleteRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="250"
                                       CanUserAddRows="False"
                                       ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailVerifiedViewSource}}"

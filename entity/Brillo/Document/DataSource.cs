@@ -109,6 +109,7 @@ namespace entity.Brillo.Document
                 item_request item_request = (item_request)Document;
                 return ItemRequest(item_request);
             }
+          
             else if (AppName == typeof(item_recepie).ToString() || BaseName == typeof(item_recepie).ToString())
             {
                 item_recepie item_recepie = (item_recepie)Document;
@@ -377,6 +378,25 @@ CASE
                     NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
                     HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false,
+                }).ToList();
+
+            return reportDataSource;
+        }
+
+        public ReportDataSource ItemInventory(object Document, app_location app_Location)
+        {
+            item_inventory item_inventory = (item_inventory)Document;
+           
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<item_inventory_detail> item_inventory_detail = item_inventory.item_inventory_detail.Where(x=>x.id_location== app_Location.id_location).ToList();
+
+            reportDataSource.Value = item_inventory_detail
+                .Select(g => new
+                {
+                    Code = g.item_product.item.code,
+                    Item = g.item_product.item.name,
+                    QuantitySystem = g.value_system,
+                    Quantity = 0
                 }).ToList();
 
             return reportDataSource;
@@ -1049,7 +1069,7 @@ CASE
                     Measurement = g.item != null ? g.item.app_measurement != null ? g.item.app_measurement.name : "" : "",
                     request_date = g.item_request.request_date,
                     trans_date = g.item_request.timestamp,
-                    number=g.item_request.number
+                    number = g.item_request.number
                 }).ToList();
 
             return reportDataSource;

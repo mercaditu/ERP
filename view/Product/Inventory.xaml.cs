@@ -560,8 +560,9 @@ namespace Cognitivo.Product
 
         private void btnPrint_Inventory(object sender, RoutedEventArgs e)
         {
-            //TODO Pankeel, please code to print a document that will show the items in the window (don't get data from database).
-            //this is so a user can print out the same info that is on the screen.
+            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
+            app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+            entity.Brillo.Document.Start.Automatic(item_inventory,"BlankInventory",app_location);
         }
 
         private void location_ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)

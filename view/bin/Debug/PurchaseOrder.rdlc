@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="entity">
@@ -1423,7 +1423,7 @@
               <KeepTogether>true</KeepTogether>
               <Top>0.36152cm</Top>
               <Left>0.35319cm</Left>
-              <Height>2.61501cm</Height>
+              <Height>2.61502cm</Height>
               <Width>6.32763cm</Width>
               <ZIndex>3</ZIndex>
               <Style>

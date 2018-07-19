@@ -268,8 +268,7 @@
                                 <ColumnDefinition Width="2" />
                                 <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
-                            <Controls:SmartBox_Item x:Name="sbxItem"  Grid.Column="2"
-                        VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Select="SmartBox_Item_Select" Type="InStock_Only" />
+                            <Controls:SmartBox_Item x:Name="sbxItem"  Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Select="SmartBox_Item_Select" Type="InStock_Only" />
                             <DataGrid Grid.Column="0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Margin="0,50,0,0"
                                 AutoGenerateColumns="False" EnableRowVirtualization="True" x:Name="GridVerifiedList" SelectionChanged="GridVerifiedList_SelectionChanged"
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
@@ -286,8 +285,7 @@
                                             </MultiBinding>
                                         </DataGridTextColumn.Binding>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn 
-                                                        Header="{lex:Loc Cognitivo:local:quantityverified}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" >
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:quantityverified}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="64" Width="Auto" >
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource ToStringFormatConverter}" UpdateSourceTrigger="PropertyChanged" 
                                    ValidatesOnDataErrors="True" NotifyOnValidationError="True" TargetNullValue="">
@@ -300,9 +298,9 @@
                             </DataGrid>
                             <GridSplitter Grid.Column="1" Background="Gainsboro" Width="2" Margin="0,50,0,0" />
                             <DataGrid Grid.Column="2" CanUserDeleteRows="False" CanUserAddRows="False" x:Name="dgApproved" Margin="0,50,0,0"
-                                AutoGenerateColumns="False" EnableRowVirtualization="True"
-                                  ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
+                                    AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="{Binding ElementName=toolBar, Path=IsEnabled, Converter={StaticResource TrueToFalse}}"
+                                    ItemsSource="{Binding Source={StaticResource purchase_packingpurchase_packing_detailApprovedViewSource}}"
+                                    RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_location" />

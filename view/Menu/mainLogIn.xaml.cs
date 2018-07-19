@@ -1,5 +1,6 @@
 ﻿using entity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -69,6 +70,8 @@ namespace Cognitivo.Menu
                 {
                     Role = User.security_role;
 					User.trans_date = DateTime.Now;
+
+                    
                 }
                 else
                 {

@@ -29,7 +29,11 @@ namespace Cognitivo.ErpWeb
         private void SyncData()
         {
             //Start Threading
-            lblInformation.Text = entity.Brillo.Localize.StringText("Items");
+
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                lblInformation.Text = entity.Brillo.Localize.StringText("Items");
+            }));
             SyncItems();
         }
 
@@ -43,52 +47,52 @@ namespace Cognitivo.ErpWeb
             {
                 
 
-                List<contact> contacts = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).ToList();
+                //List<contact> contacts = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).ToList();
 
 
-                List<SyncCustomers> synccustomers = new List<SyncCustomers>();
-                List<SyncItems> SyncItems = new List<SyncItems>();
+                //List<SyncCustomers> synccustomers = new List<SyncCustomers>();
+                //List<SyncItems> SyncItems = new List<SyncItems>();
 
-                foreach (item item in items)
-                {
-                    SyncItems SyncItem = new SyncItems
-                    {
-                        name = item.name,
-                        code = item.code,
-                        comment = item.description,
-                        unit_price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().valuewithVAT : 0,
-                        currency_code = CurrentSession.Currency_Default.code
-                    };
-                    SyncItems.Add(SyncItem);
-                }
-                foreach (contact contact in contacts)
-                {
+                //foreach (item item in items)
+                //{
+                //    SyncItems SyncItem = new SyncItems
+                //    {
+                //        name = item.name,
+                //        code = item.code,
+                //        comment = item.description,
+                //        unit_price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().valuewithVAT : 0,
+                //        currency_code = CurrentSession.Currency_Default.code
+                //    };
+                //    SyncItems.Add(SyncItem);
+                //}
+                //foreach (contact contact in contacts)
+                //{
 
-                    SyncCustomers SyncCustomer = new SyncCustomers
-                    {
-                        name = contact.name,
-                        govcode = contact.gov_code,
-                        alias = contact.alias,
-                        address = contact.address,
-                        telephone = contact.telephone,
-                        email = contact.email,
-                    };
-                    synccustomers.Add(SyncCustomer);
-                }
+                //    SyncCustomers SyncCustomer = new SyncCustomers
+                //    {
+                //        name = contact.name,
+                //        govcode = contact.gov_code,
+                //        alias = contact.alias,
+                //        address = contact.address,
+                //        telephone = contact.telephone,
+                //        email = contact.email,
+                //    };
+                //    synccustomers.Add(SyncCustomer);
+                //}
                
 
-                try
-                {
-                    var Customer_Json = new JavaScriptSerializer().Serialize(synccustomers);
-                    Send2API(Customer_Json, "synccustomer");
+                //try
+                //{
+                //   var Customer_Json = new JavaScriptSerializer().Serialize(synccustomers);
+                //    Send2API(Customer_Json, "sync/customer");
 
-                    var Item_Json = new JavaScriptSerializer().Serialize(SyncItems);
-                    Send2API(Item_Json, "syncitem");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
+                //    var Item_Json = new JavaScriptSerializer().Serialize(SyncItems);
+                //    Send2API(Item_Json, "sync/item");
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.ToString());
+                //}
 
                 Sales_click(null, null);
             }));
@@ -102,7 +106,7 @@ namespace Cognitivo.ErpWeb
         {
             try
             {
-                var webAddr = "/" + apiname;
+                var webAddr = "http://localhost:8000/api/" + apiname;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
@@ -133,7 +137,7 @@ namespace Cognitivo.ErpWeb
                         List<Invoice> Sales_Json = new JavaScriptSerializer().Deserialize<List<Invoice>>(result);
                         foreach (Invoice invoice in Sales_Json)
                         {
-                            sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == invoice.my_id).FirstOrDefault();
+                            sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == invoice.local_id).FirstOrDefault();
 
                             if (sales_invoice != null)
                             {
@@ -141,7 +145,7 @@ namespace Cognitivo.ErpWeb
                                 sales_invoice.contact.cloud_id = invoice.customer.cloud_id;
                                 foreach (Detail detail in invoice.details)
                                 {
-                                    sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == detail.my_id).FirstOrDefault();
+                                    sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == detail.local_id).FirstOrDefault();
                                     if (sales_invoice_detail != null)
                                     {
                                         sales_invoice_detail.cloud_id = detail.cloud_id;
@@ -189,7 +193,7 @@ namespace Cognitivo.ErpWeb
             try
             {
                 List<sales_invoice> salesinvoices = db.db.sales_invoice.Include("contact")
-                   .Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
+                   .Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved && x.is_archived==false).ToList();
 
                 List<Invoice> SyncInvoices = new List<Invoice>();
 
@@ -208,7 +212,7 @@ namespace Cognitivo.ErpWeb
                     Invoice SyncInvoice = new Invoice
                     {
                         status = Invoice.Status.Invoiced,
-                        my_id = sales_invoice.id_sales_invoice,
+                        local_id = sales_invoice.id_sales_invoice,
                         cloud_id = Convert.ToInt64(sales_invoice.cloud_id),
                         number = sales_invoice.number,
                         trans_date = sales_invoice.trans_date,
@@ -232,7 +236,7 @@ namespace Cognitivo.ErpWeb
                         };
                         Detail Detail = new Detail
                         {
-                            my_id = sales_invoice_detail.id_sales_invoice_detail,
+                            local_id = sales_invoice_detail.id_sales_invoice_detail,
                             cloud_id = Convert.ToInt64(sales_invoice_detail.cloud_id),
                             product_id = sales_invoice_detail.id_item,
                             vat = sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault() != null ? sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault().percentage : 0,
@@ -247,7 +251,7 @@ namespace Cognitivo.ErpWeb
                 }
 
                 var Sales_Json = new JavaScriptSerializer().Serialize(SyncInvoices);
-                Send2API(Sales_Json, "synctransaction");
+                Send2API(Sales_Json, "sync/transaction");
             }
             catch (Exception ex)
             {
@@ -425,7 +429,7 @@ namespace Cognitivo.ErpWeb
 
         public enum Status { Invoiced = 3, Packed = 4 }
 
-        public int my_id { get; set; }
+        public int local_id { get; set; }
         public int branch_id { get; set; }
         public string branch_name { get; set; }
         public long cloud_id { get; set; }
@@ -445,7 +449,7 @@ namespace Cognitivo.ErpWeb
 
     public class Detail
     {
-        public int my_id { get; set; }
+        public int local_id { get; set; }
         public long cloud_id { get; set; }
         public long product_id { get; set; }
         public decimal vat { get; set; }

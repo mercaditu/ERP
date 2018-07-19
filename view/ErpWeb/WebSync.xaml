@@ -18,6 +18,8 @@
             <Image Source="/Cognitivo;component/Images/Cognitivo-128.png" Height="54"/>
         </StackPanel>
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
+          <TextBox x:name="txtapi"
+                  Style="{StaticResource input_textbox}" />
             <TextBox Text="{Binding Source={x:Static mainpref:Settings.Default}, Path=CognitivoKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                    Style="{StaticResource input_textbox}" />
             <Button Content="Sync Data" Style="{StaticResource btn_green}" Margin="16,8" Click="Button_Click" />

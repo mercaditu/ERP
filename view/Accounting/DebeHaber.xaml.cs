@@ -61,7 +61,7 @@ namespace Cognitivo.Accounting
             //TODO, Check if API Key is active (not expired). Make sure to use the URL on the config file.
             apiStatus = true;
             string key = tbxAPI.Text;
-            var obj = Send2API(null, tbxURL.Text + "/api/check-key", key);
+           // var obj = Send2API(null, tbxURL.Text + "/api/check-key", key);
 
             //If both is Ok, then we are ready to Export.
             if (serverStatus && apiStatus)

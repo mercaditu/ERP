@@ -20,7 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\SMART\Desktop\ERP19.83\</PublishUrl>
+    <PublishUrl>C:\Users\SMART\Desktop\ERP19.90\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -39,7 +39,7 @@
     <MinimumRequiredVersion>2.0.6.1</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>84</ApplicationRevision>
+    <ApplicationRevision>91</ApplicationRevision>
     <ApplicationVersion>2.1.19.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -64,7 +64,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -974,7 +974,9 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="bin\Debug\Factura de Venta.rdlc" />
+    <Content Include="bin\Debug\Factura de Venta.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -1037,37 +1039,59 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="bin\Debug\CarnetContact.rdlc" />
-    <EmbeddedResource Include="bin\Debug\Import.rdlc">
+    <Content Include="bin\Debug\CarnetContact.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Import.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\Inventory.rdlc" />
-    <EmbeddedResource Include="bin\Debug\AccountsPayable.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Inventory.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\AccountsPayable.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\MovementLabel.rdlc" />
-    <EmbeddedResource Include="bin\Debug\PaymentType.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\MovementLabel.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\PaymentType.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\PaymentOrder.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\PaymentOrder.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\ProductionOrder.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\ProductionOrder.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\PurchaseInvoice.rdlc" />
-    <EmbeddedResource Include="bin\Debug\SalesInvoice.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\PurchaseInvoice.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\SalesInvoice.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\PromissoryNote.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\PaymentUtility.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\PaymentUtility.rdlc">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\PurchaseTender.rdlc" />
-    <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
-    <EmbeddedResource Include="bin\Debug\PurchaseOrder.rdlc" />
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\PurchaseTender.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\SalesBudget.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\PurchaseOrder.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="bin\Debug\PackingList.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

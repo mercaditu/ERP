@@ -351,6 +351,22 @@ namespace entity
                     VAT_GroupDetails = db.app_vat_group_details.Include("app_vat").Where(x => x.id_company == Id_Company).ToList();
                     VATs = db.app_vat.Where(x => x.id_company == Id_Company && x.is_active).ToList();
                 }
+
+                List<item> items = db.items.Where(x => (x.id_item_type == item.item_type.Product
+                  || x.id_item_type == item.item_type.RawMaterial
+                  || x.id_item_type == item.item_type.Supplies) && x.item_product.Count == 0).ToList();
+
+                if (items.Count() >0)
+                {
+                    foreach (item item in items)
+                    {
+                        item_product item_Product = new item_product();
+                        item.item_product.Add(item_Product);
+                    }
+
+                    db.SaveChanges();
+                }
+               
             }
         }
 

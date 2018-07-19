@@ -217,9 +217,9 @@ namespace entity.Brillo.Document
             if (!File.Exists(path + SubFolder + "\\" + app_range.app_document.name + ".rdlc"))
             {
                 //Add Logic
-                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc"))
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\" + app_range.app_document.id_application.ToString() + ".rdlc"))
                 {
-                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc",
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\" + app_range.app_document.id_application.ToString() + ".rdlc",
                            path + SubFolder + "\\" + app_range.app_document.name + ".rdlc");
                 }
             }
@@ -247,9 +247,9 @@ namespace entity.Brillo.Document
             if (!File.Exists(path + SubFolder + "\\" + app_document.name + ".rdlc"))
             {
                 //Add Logic
-                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc"))
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\" + app_document.id_application.ToString() + ".rdlc"))
                 {
-                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_document.id_application.ToString() + ".rdlc",
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\" + app_document.id_application.ToString() + ".rdlc",
                            path + SubFolder + "\\" + app_document.name + ".rdlc");
                 }
             }
@@ -277,9 +277,10 @@ namespace entity.Brillo.Document
             if (!File.Exists(path + SubFolder + "\\" + app_document + ".rdlc"))
             {
                 //Add Logic
-                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + app_document + ".rdlc"))
+                
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\" + app_document + ".rdlc"))
                 {
-                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_document + ".rdlc",
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\" + app_document + ".rdlc",
                            path + SubFolder + "\\" + app_document + ".rdlc");
                 }
             }

@@ -100,7 +100,7 @@ namespace cntrl
                 parent = payment_schedual,
                 number = txtnumber.Text,
                 expire_date = payment_schedual.expire_date,
-                status = payment_schedual.status,
+                status = Status.Documents_General.Approved,
                 id_contact = payment_schedual.id_contact,
                 id_currencyfx = payment_schedual.id_currencyfx,
                 id_purchase_invoice = payment_schedual.id_purchase_invoice,
@@ -126,6 +126,7 @@ namespace cntrl
             payment = PaymentDB.New(true);
             payment.id_contact = payment_schedual.id_contact;
             payment.number = txtnumber.Text;
+            payment.status = Status.Documents_General.Approved;
 
             payment_detail payment_detail = new payment_detail();
             payment_detail.payment = payment;

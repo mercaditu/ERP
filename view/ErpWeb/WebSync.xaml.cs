@@ -41,11 +41,11 @@ namespace Cognitivo.ErpWeb
         {
             List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.cloud_id == null).ToList();
 
-        
+
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                
+
 
                 //List<contact> contacts = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).ToList();
 
@@ -79,12 +79,12 @@ namespace Cognitivo.ErpWeb
                 //    };
                 //    synccustomers.Add(SyncCustomer);
                 //}
-               
+
 
                 //try
                 //{
                 //   var Customer_Json = new JavaScriptSerializer().Serialize(synccustomers);
-                //    Send2API(Customer_Json, "sync/customer");
+                //    Send2API(Customer_Json, "/sync/customer");
 
                 //    var Item_Json = new JavaScriptSerializer().Serialize(SyncItems);
                 //    Send2API(Item_Json, "sync/item");
@@ -106,10 +106,13 @@ namespace Cognitivo.ErpWeb
         {
             try
             {
-                var webAddr = "http://localhost:8000/api/" + apiname;
+                string key = Cognitivo.Properties.Settings.Default.CognitivoKey;
+                var webAddr = txtpath.Text + apiname;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
+                httpWebRequest.Headers.Add("Authorization", "Bearer " + key);
+
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
@@ -148,7 +151,7 @@ namespace Cognitivo.ErpWeb
                                     sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == detail.local_id).FirstOrDefault();
                                     if (sales_invoice_detail != null)
                                     {
-                                        sales_invoice_detail.cloud_id = detail.cloud_id;
+                                        sales_invoice_detail.cloud_id = detail.detail_cloud_id;
                                         sales_invoice_detail.item.cloud_id = detail.item.cloud_id;
                                     }
                                 }
@@ -170,11 +173,11 @@ namespace Cognitivo.ErpWeb
         {
             try
             {
-                var webAddr = "/" + apiname;
+                var webAddr = txtpath.Text + "/" + apiname;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "GET";
-                
+
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -193,72 +196,81 @@ namespace Cognitivo.ErpWeb
             try
             {
                 List<sales_invoice> salesinvoices = db.db.sales_invoice.Include("contact")
-                   .Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved && x.is_archived==false).ToList();
+                   .Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved && x.is_archived == false).Take(500).ToList();
 
                 List<Invoice> SyncInvoices = new List<Invoice>();
 
                 foreach (sales_invoice sales_invoice in salesinvoices)
                 {
-                    SyncCustomers SyncCustomer = new SyncCustomers
+                    if (sales_invoice.contact != null)
                     {
-                        name = sales_invoice.contact.name,
-                        govcode = sales_invoice.contact.gov_code,
-                        alias = sales_invoice.contact.alias,
-                        address = sales_invoice.contact.address,
-                        telephone = sales_invoice.contact.telephone,
-                        email = sales_invoice.contact.email
-                    };
-
-                    Invoice SyncInvoice = new Invoice
-                    {
-                        status = Invoice.Status.Invoiced,
-                        local_id = sales_invoice.id_sales_invoice,
-                        cloud_id = Convert.ToInt64(sales_invoice.cloud_id),
-                        number = sales_invoice.number,
-                        trans_date = sales_invoice.trans_date,
-                        credit_days = 0,
-                        currency_code = sales_invoice.app_currencyfx.app_currency.code,
-                        currency_rate = sales_invoice.app_currencyfx.sell_value,
-                        comment = sales_invoice.comment,
-                        customer = SyncCustomer,
-                        branch_id=sales_invoice.app_branch.id_branch,
-                        branch_name = sales_invoice.app_branch.name,
-                    };
-
-                    foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
-                    {
-                        SyncItems SyncItem = new SyncItems
+                        SyncCustomers SyncCustomer = new SyncCustomers
                         {
-                            name = sales_invoice_detail.item.name,
-                            code = sales_invoice_detail.item.code,
-                            comment = sales_invoice_detail.item.description,
-                            unit_price = sales_invoice_detail.item.item_price.FirstOrDefault() != null ? sales_invoice_detail.item.item_price.FirstOrDefault().valuewithVAT : 0,
-                        };
-                        Detail Detail = new Detail
-                        {
-                            local_id = sales_invoice_detail.id_sales_invoice_detail,
-                            cloud_id = Convert.ToInt64(sales_invoice_detail.cloud_id),
-                            product_id = sales_invoice_detail.id_item,
-                            vat = sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault() != null ? sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault().percentage : 0,
-                            quantity = sales_invoice_detail.quantity,
-                            price = sales_invoice_detail.unit_price
+
+                            name = sales_invoice.contact.name,
+                            govcode = sales_invoice.contact.gov_code,
+                            alias = sales_invoice.contact.alias,
+                            address = sales_invoice.contact.address,
+                            telephone = sales_invoice.contact.telephone,
+                            email = sales_invoice.contact.email
                         };
 
-                        Detail.item = SyncItem;
-                        SyncInvoice.details.Add(Detail);
+
+                        Invoice SyncInvoice = new Invoice
+                        {
+                            status = Invoice.Status.Invoiced,
+                            relationship_cloud_id=sales_invoice.contact.cloud_id,
+                            local_id = sales_invoice.id_sales_invoice,
+                            cloud_id = Convert.ToInt64(sales_invoice.cloud_id),
+                            number = sales_invoice.number,
+                            trans_date = sales_invoice.trans_date,
+                            credit_days = 0,
+                            currency = sales_invoice.app_currencyfx.app_currency.code,
+                            rate = sales_invoice.app_currencyfx.sell_value,
+                            comment = sales_invoice.comment,
+                            customer = SyncCustomer,
+                            branch_id = sales_invoice.app_branch.id_branch,
+                            branch_name = sales_invoice.app_branch.name,
+                        };
+
+                        foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
+                        {
+                            SyncItems SyncItem = new SyncItems
+                            {
+                                name = sales_invoice_detail.item.name,
+                                code = sales_invoice_detail.item.code,
+                                comment = sales_invoice_detail.item.description,
+                                unit_price = sales_invoice_detail.item.item_price.FirstOrDefault() != null ? sales_invoice_detail.item.item_price.FirstOrDefault().valuewithVAT : 0,
+                            };
+                            Detail Detail = new Detail
+                            {
+                                local_id = sales_invoice_detail.id_sales_invoice_detail,
+                                detail_cloud_id = Convert.ToInt64(sales_invoice_detail.cloud_id),
+                                item_cloud_id= sales_invoice_detail.item.cloud_id,
+                                product_id = sales_invoice_detail.id_item,
+                                vat = sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault() != null ? sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault().percentage : 0,
+                                quantity = sales_invoice_detail.quantity,
+                                price = sales_invoice_detail.unit_price
+                            };
+
+                            Detail.item = SyncItem;
+                            SyncInvoice.details.Add(Detail);
+                        }
+                        SyncInvoices.Add(SyncInvoice);
                     }
-                    SyncInvoices.Add(SyncInvoice);
+
+
                 }
 
                 var Sales_Json = new JavaScriptSerializer().Serialize(SyncInvoices);
-                Send2API(Sales_Json, "sync/transaction");
+                Send2API(Sales_Json, "/sync/transaction");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
-       
+
         private void Download_Click(object sender, RoutedEventArgs e)
         {
 
@@ -422,6 +434,8 @@ namespace Cognitivo.ErpWeb
 
     public class Invoice
     {
+       
+
         public Invoice()
         {
             details = new List<Detail>();
@@ -429,6 +443,7 @@ namespace Cognitivo.ErpWeb
 
         public enum Status { Invoiced = 3, Packed = 4 }
 
+        public long? relationship_cloud_id { get; set; }
         public int local_id { get; set; }
         public int branch_id { get; set; }
         public string branch_name { get; set; }
@@ -438,8 +453,8 @@ namespace Cognitivo.ErpWeb
         public DateTime trans_date { get; set; }
         public DateTime? packing_date { get; set; }
         public int credit_days { get; set; }
-        public string currency_code { get; set; }
-        public decimal currency_rate { get; set; }
+        public string currency { get; set; }
+        public decimal rate { get; set; }
         public string comment { get; set; }
         public Status status { get; set; }
 
@@ -449,8 +464,11 @@ namespace Cognitivo.ErpWeb
 
     public class Detail
     {
+       
+
         public int local_id { get; set; }
-        public long cloud_id { get; set; }
+        public long detail_cloud_id { get; set; }
+        public long? item_cloud_id { get; set; }
         public long product_id { get; set; }
         public decimal vat { get; set; }
         public decimal quantity { get; set; }
@@ -466,7 +484,7 @@ namespace Cognitivo.ErpWeb
         {
             details = new List<details>();
         }
-        
+
         public int id { get; set; }
         public int? cloud_id { get; set; }
         public int? location_id { get; set; }

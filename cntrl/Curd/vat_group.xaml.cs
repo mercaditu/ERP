@@ -109,6 +109,8 @@ namespace cntrl.Curd
                     IEnumerable<DbEntityValidationResult> validationresult = _entity.db.GetValidationErrors();
                     if (validationresult.Count() == 0)
                     {
+                        entity.app_vat_group app_vat_group = app_vat_groupViewSource.View.CurrentItem as entity.app_vat_group;
+                        app_vat_group.timestamp = DateTime.Now;
                         _entity.SaveChanges();
                         btnCancel_Click(sender, null);
                     }
@@ -120,8 +122,10 @@ namespace cntrl.Curd
                     {
                         if (operationMode == Class.clsCommon.Mode.Add)
                         {
-                            mydb.SaveChanges();
                             entity.app_vat_group app_vat_group = myViewSource.View.CurrentItem as entity.app_vat_group;
+                            app_vat_group.timestamp = DateTime.Now;
+                            mydb.SaveChanges();
+
                             mydb.db.Entry(app_vat_group).State = EntityState.Detached;
                             _entity.db.app_vat_group.Attach(app_vat_group);
                             app_vat_groupViewSource.View.Refresh();

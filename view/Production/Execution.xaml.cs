@@ -686,12 +686,17 @@ namespace Cognitivo.Production
             else
             {
                 production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-                production_orderViewSource.Source = ExecutionDB.db.production_order
+                List<production_order> ProductionOrderList = ExecutionDB.db.production_order
                     .Where
                     (
                     x =>
                     x.name.Contains(query)
                     ).ToList();
+                if (ProductionOrderList.Count > 0)
+                {
+                    production_orderViewSource.Source = ProductionOrderList;
+                }
+
             }
         }
 

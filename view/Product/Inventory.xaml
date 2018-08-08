@@ -174,7 +174,7 @@
                 </Grid>
 
                 <Grid Grid.Column="1" Visibility="{Binding ElementName=checkBatch, Path=IsChecked, Converter={StaticResource Bool2Visi}}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="264" Margin="0,1,-1,0">
-                    <Controls:SmartBox_Item x:Name="sbxItem" Type="InStock_Only" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
+                    <Controls:SmartBox_Item x:Name="sbxItem" Type="All" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                 </Grid>
                 <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1" VirtualizingStackPanel.VirtualizationMode="Recycling"
 						  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},

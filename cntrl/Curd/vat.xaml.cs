@@ -36,6 +36,7 @@ namespace cntrl
                 IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
+                    
                     entity.SaveChanges();
                     btnCancel_Click(sender, e);
                 }

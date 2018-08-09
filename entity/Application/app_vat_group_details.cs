@@ -39,6 +39,7 @@
         }
 
         private decimal _percentage;
+       
 
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_vat app_vat { get; set; }

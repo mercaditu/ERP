@@ -63,6 +63,7 @@ namespace entity
         public decimal result_value { get; set; }
         public decimal result_step { get; set; }
         public int reference_bonus { get; set; }
+        public int cloud_id { get; set; }
 
         [NotMapped]
         public string InputName

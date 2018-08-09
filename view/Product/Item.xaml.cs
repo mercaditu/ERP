@@ -253,7 +253,7 @@ namespace Cognitivo.Product
                     toolBar.msgWarning("Product: " + item.name + " Already Exists..");
                     return;
                 }
-               
+              
 
                 if (ItemDB.SaveChanges_WithValidation())
                 {

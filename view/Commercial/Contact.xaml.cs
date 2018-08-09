@@ -161,6 +161,8 @@ namespace Cognitivo.Commercial
 
         private void Save_Click(object sender)
         {
+           
+
             if (ContactDB.SaveChanges_WithValidation())
             {
                 toolBar.msgSaved(ContactDB.NumberOfRecords);

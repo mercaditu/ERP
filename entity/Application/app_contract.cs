@@ -45,6 +45,7 @@ namespace entity
 
         public bool is_purchase { get; set; }
         public bool is_sales { get; set; }
+        public int cloud_id { get; set; }
 
         public app_contract()
         {

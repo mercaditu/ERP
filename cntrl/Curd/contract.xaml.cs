@@ -90,7 +90,7 @@ namespace cntrl
                             item.is_default = false;
                         }
                     }
-
+                    app_contract.timestamp = DateTime.Now;
                     entity.db.SaveChanges();
                     btnCancel_Click(sender, e);
                 }

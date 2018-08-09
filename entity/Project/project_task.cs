@@ -33,6 +33,7 @@ namespace entity
         public int id_project { get; set; }
 
         public Status.Project? status { get; set; }
+        public int? sequence { get; set; }
 
         public int? id_item
         {

@@ -201,6 +201,7 @@
     <Compile Include="Application\app_comment.cs" />
     <Compile Include="Application\app_notification.cs" />
     <Compile Include="Application\app_company_interest.cs" />
+    <Compile Include="Application\app_cloud_sync.cs" />
     <Compile Include="Apps.cs" />
     <Compile Include="Application\app_account_session.cs" />
     <Compile Include="Application\app_branch_walkin.cs" />
@@ -377,9 +378,9 @@
     <Compile Include="Migrations\201802191150538_Archievetableanditemdesicion.Designer.cs">
       <DependentUpon>201802191150538_Archievetableanditemdesicion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808081309075_Updateproductionproject.cs" />
-    <Compile Include="Migrations\201808081309075_Updateproductionproject.Designer.cs">
-      <DependentUpon>201808081309075_Updateproductionproject.cs</DependentUpon>
+    <Compile Include="Migrations\201808101235471_CloudSync.cs" />
+    <Compile Include="Migrations\201808101235471_CloudSync.Designer.cs">
+      <DependentUpon>201808101235471_CloudSync.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
@@ -859,8 +860,8 @@
     <EmbeddedResource Include="Migrations\201802191150538_Archievetableanditemdesicion.resx">
       <DependentUpon>201802191150538_Archievetableanditemdesicion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808081309075_Updateproductionproject.resx">
-      <DependentUpon>201808081309075_Updateproductionproject.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808101235471_CloudSync.resx">
+      <DependentUpon>201808101235471_CloudSync.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

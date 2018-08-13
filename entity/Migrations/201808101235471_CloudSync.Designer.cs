@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Updateproductionproject : IMigrationMetadata
+    public sealed partial class CloudSync : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Updateproductionproject));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CloudSync));
         
         string IMigrationMetadata.Id
         {
-            get { return "201808081309075_Updateproductionproject"; }
+            get { return "201808101235471_CloudSync"; }
         }
         
         string IMigrationMetadata.Source

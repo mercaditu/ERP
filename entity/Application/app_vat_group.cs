@@ -41,7 +41,7 @@
 
         private bool _is_active;
         public bool is_default { get; set; }
-        public int cloud_id { get; set; }
+        public int? cloud_id { get; set; }
 
         public virtual ICollection<app_vat_group_details> app_vat_group_details { get; set; }
         public virtual IEnumerable<sales_invoice_detail> sales_invoice_detail { get; set; }

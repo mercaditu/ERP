@@ -79,8 +79,16 @@
                     <Label Content="Transfer Data " FontSize="10" HorizontalContentAlignment="Center" />
                 </Grid>
             </Button>
-        
-        
+            <Button IsDefault="True" Click="AddSequence_click" Background="Transparent" Visibility="Visible"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
+                    <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
+                    <Label Content="Update Sequence in Task " FontSize="10" HorizontalContentAlignment="Center" />
+                </Grid>
+            </Button>
+
+
+
         </StackPanel>
     </Grid>
 </Page>

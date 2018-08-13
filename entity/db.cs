@@ -99,6 +99,7 @@
         public virtual DbSet<app_branch_walkins> app_branch_walkins { get; set; }
         public virtual DbSet<app_company> app_company { get; set; }
         public virtual DbSet<app_comment> app_comment { get; set; }
+        public virtual DbSet<app_cloud_sync> app_cloud_sync { get; set; }
         public virtual DbSet<app_company_interest> app_company_interest { get; set; }
         public virtual DbSet<app_condition> app_condition { get; set; }
         public virtual DbSet<app_contract> app_contract { get; set; }

@@ -24,6 +24,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
+            revision = 1;
         }
 
         [Key]
@@ -34,6 +35,7 @@ namespace entity
 
         public Status.Project? status { get; set; }
         public int? sequence { get; set; }
+        public Int16? revision { get; set; }
 
         public int? id_item
         {

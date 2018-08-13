@@ -258,5 +258,25 @@ namespace Cognitivo.Configs
 
             return item_movement_archive;
         }
+
+        private void AddSequence_click(object sender, RoutedEventArgs e)
+        {
+            using (db db = new db())
+            {
+                List<project> Projects = db.projects.ToList();
+                foreach (project project in Projects)
+                {
+                    int sequence = 0;
+                    foreach (project_task item in project.project_task)
+                    {
+                        sequence = sequence + 1;
+                        item.sequence = sequence;
+
+                    }
+
+                }
+                db.SaveChanges();
+            }
+        }
     }
 }

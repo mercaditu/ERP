@@ -362,7 +362,8 @@ namespace entity.Controller.Sales
                 {
                     if (sales_invoice_detail.sales_packing_relation.Count() == 0)
                     {
-                        if (sales_invoice_detail.item.item_product.Count() > 0)
+                        item.item_type CurrentItemType = sales_invoice_detail.item.id_item_type;
+                        if (CurrentItemType == item.item_type.Product || CurrentItemType == item.item_type.RawMaterial || CurrentItemType == item.item_type.Supplies)
                         {
                             decimal Quantity_InStock = 0;
 

@@ -49,6 +49,9 @@ namespace entity
         public int? id_session { get; set; }
         public tran_types? tran_type { get; set; }
 
+        public bool is_accounted { get; set; }
+        public bool is_archieved{ get; set; }
+
         public virtual app_account app_account { get; set; }
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual payment_type payment_type { get; set; }

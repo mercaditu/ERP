@@ -35,6 +35,7 @@ namespace entity
 
         public Status.Project? status { get; set; }
         public int? sequence { get; set; }
+        public int parent_child { get; set; }
         public Int16? revision { get; set; }
 
         public int? id_item

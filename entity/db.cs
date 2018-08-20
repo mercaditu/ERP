@@ -1,5 +1,6 @@
 ﻿namespace entity
 {
+    using System;
     using System.Configuration;
     using System.Data.Common;
     using System.Data.Entity;
@@ -51,6 +52,7 @@
 
         public db() : base("name = Cognitivo.Properties.Settings.MySQLconnString")
         {
+            Configuration.ProxyCreationEnabled = true;
             Configuration.LazyLoadingEnabled = true;
             AuditManager.DefaultConfiguration.Exclude<item_inventory_detail>();
             AuditManager.DefaultConfiguration.Exclude<item_movement>();
@@ -62,6 +64,7 @@
         // ADD "Where(x => x.AuditEntryID == 0)" to allow multiple SaveChanges with same Audit
         (context as db).AuditEntries.AddRange(audit.Entries);
         }
+
 
         public static DbConnection GetSqlConnection()
         {
@@ -261,4 +264,7 @@
         public virtual DbSet<loyalty_member_detail> loyalty_member_detail { get; set; }
         public virtual DbSet<loyalty_tier> loyalty_tier { get; set; }
     }
+
+
+ 
 }

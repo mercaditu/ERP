@@ -32,6 +32,7 @@ namespace entity
         public int? id_item { get; set; }
         public int? movement_id { get; set; }
         public int? sequence { get; set; }
+        public int parent_child { get; set; }
         public Int16? revision { get; set; }
 
         public string name

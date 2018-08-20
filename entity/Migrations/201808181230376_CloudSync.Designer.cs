@@ -13,7 +13,7 @@ namespace entity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201808101235471_CloudSync"; }
+            get { return "201808181230376_CloudSync"; }
         }
         
         string IMigrationMetadata.Source

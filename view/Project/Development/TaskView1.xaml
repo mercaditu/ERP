@@ -49,6 +49,18 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged" />
+        <Grid x:Name="parent_level_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="3" Width="500" Height="200" >
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Parent Task" HorizontalAlignment="Left" Width="480"/>
+                    <Button Content="X" Click="Close_model" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </StackPanel>
+                <ComboBox x:Name="cbxParentTask" SelectedValuePath="id_project_task" DisplayMemberPath="item_description" />
+                <Button Click="ReAssignLevel_click" Content="Save"/>
+            </StackPanel>
+        </Grid>
+
+
         <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -68,20 +80,168 @@
         <Grid Grid.Row="1" Grid.Column="1" Background="White"  RenderTransformOrigin="0.687,0.475">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
+
             </Grid.ColumnDefinitions>
-            <Grid Margin="16,0"  DataContext="{StaticResource projectViewSource}">
-                <TextBlock Style="{StaticResource TextAreaH2}" Margin="36,24,0,0"
-                           Text="{Binding name, FallbackValue=Project, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                           HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
-                <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="0,26"  FontSize="16"
+            <Grid  DataContext="{StaticResource projectViewSource}">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" >
+                        <cntrl:toolBar_Mini appName="ActivityPlan" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                    btnParent_Click="btnAddParentTask_Click"
+                     />
+                        <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" FontSize="16"
                               VerticalAlignment="Top" HorizontalAlignment="Left" BorderBrush="{StaticResource AccentColor_Brush2}"
                               Content="&#xE81D;" Background="White"
                               FontFamily="/Cognitivo;component/Resources/#cognitivo" Foreground="RoyalBlue"
                               Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked" />
-                <syncfusion:SfDataGrid x:Name="dgvtaskview"  Margin="0,60,0,0" Drop="dgvtaskview_Drop"
+                        <TextBlock Style="{StaticResource TextAreaH2}" 
+                           Text="{Binding name, FallbackValue=Project, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                           HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
+
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+
+                        <syncfusion:SfTreeGrid Name="dgvtaskview"  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                       AutoExpandMode="RootNodesExpanded"
+                                       AutoGenerateColumns="False"
+                                       ChildPropertyName="parent_child"
+                                       ColumnSizer="Star"
+                                       ExpanderColumn="id_project_task"
+                                       NavigationMode="Cell"
+                                       ParentPropertyName="id_project_task"
+                                       SelfRelationRootValue="0"  Width="800">
+
+                            <syncfusion:SfTreeGrid.Columns>
+                                <syncfusion:TreeGridTextColumn HeaderText="ID"
+                                                       MappingName="id_project_task"
+                                                       TextAlignment="Left" Width="30"/>
+                                <syncfusion:TreeGridTextColumn HeaderText="code" MappingName="code" AllowEditing="True" />
+                                <syncfusion:TreeGridTextColumn HeaderText="Item" MappingName="items.name" AllowEditing="False"  />
+                                <syncfusion:TreeGridTextColumn HeaderText="Description" MappingName="item_description" AllowEditing="True"  />
+                                <syncfusion:TreeGridNumericColumn HeaderText="Quantity" MappingName="quantity_est" AllowEditing="True"  />
+                                <syncfusion:TreeGridNumericColumn HeaderText="Cost" MappingName="cost" AllowEditing="True"  />
+                                <syncfusion:TreeGridDateTimeColumn HeaderText="Start Date" MappingName="start_date_est" AllowEditing="True"  />
+                                <syncfusion:TreeGridDateTimeColumn HeaderText="End Date" MappingName="end_date_est" AllowEditing="True"  />
+                                <syncfusion:TreeGridTextColumn HeaderText="sequence" MappingName="sequence" />
+
+                            </syncfusion:SfTreeGrid.Columns>
+                            <syncfusion:SfTreeGrid.RecordContextMenu>
+                                <ContextMenu  Style="{x:Null}"   >
+                                    <MenuItem Header="_Level Up" Click="MenuLevelUp_Click" />
+                                    <MenuItem Header="_ReAssign Level" Click="MenuReAssignLevel_Click" />
+                                    <MenuItem Header="_UP" Click="MenuUP_Click" />
+                                    <MenuItem Header="_Down" Click="MenuDown_Click" />
+                                    <MenuItem Header="_New Child" Click="MenuNew_Click" />
+
+
+
+
+
+
+
+
+
+
+
+
+                                </ContextMenu>
+                            </syncfusion:SfTreeGrid.RecordContextMenu>
+                        </syncfusion:SfTreeGrid>
+                        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+                        <Expander Grid.Column="2" HorizontalAlignment="Right" DataContext="{Binding ElementName=dgvtaskview,Path=SelectedItem,UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <StackPanel Width="256">
+                                    <Button Content="Save" Click="Save_Click"/>
+                                    <Label Content="{lex:Loc Percentage}" Style="{StaticResource input_label}" />
+                                    <Slider Value="{Binding completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
+                       IsSnapToTickEnabled="True"
+                                LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" ToolTip="{Binding percent, Mode=OneWay}" />
+                                    <Label Content="{lex:Loc Importance}" Style="{StaticResource input_label}" />
+                                    <Slider Value="{Binding importance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=p}"
+                       IsSnapToTickEnabled="True"
+                                LostFocus="Slider_LostFocus" Maximum="1" SmallChange="0.01" TickPlacement="TopLeft" TickFrequency="0.1" Margin="4,0" />
+                                </StackPanel>
+                                <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
+                                <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}"
+                                           IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+                                                                    SelectedValue="{Binding items.id_item_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+
+                                <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+                                  Style="{StaticResource input_textbox}" />
+
+                                <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" />
+                                <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Type="All"
+                                                Text="{Binding items.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}" />
+                                <TextBox Text="{Binding unit_cost_est, StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" Style="{StaticResource input_textbox}" />
+
+                                <Label Content="{lex:Loc Position}" Style="{StaticResource input_label}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox x:Name="cbxproperty" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource app_propertyViewSource}}"
+                                      IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" DisplayMemberPath="name" SelectedValuePath="id_property"
+                                      Width="128" />
+                                    <Button Content="Link" Click="cbxproperty_SelectionChanged" />
+                                </StackPanel>
+                                <StackPanel x:Name="stpdate" Visibility="Collapsed" IsEnabled="False">
+                                    <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
+                                    <DatePicker Style="{StaticResource input_datepicker}" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+                                    SelectedDate="{Binding start_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                    <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}" />
+                                    <DatePicker Style="{StaticResource input_datepicker}" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+                                    SelectedDate="{Binding end_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                </StackPanel>
+
+                                <StackPanel x:Name="stpitem"  >
+                                    <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked" />
+                                    <StackPanel x:Name="stpestimate">
+                                        <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}" />
+                                        <TextBox x:Name="txtqty" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+                                     Text="{Binding quantity_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}" />
+                                    </StackPanel>
+                                    <!--<StackPanel x:Name="stpexcustion">
+                                        <Label Content="{lex:Loc QuantityExecuted}" Style="{StaticResource input_label}" />
+                                        <TextBox x:Name="txtqtyexec" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+                                     Text="{Binding quantity_exe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}" />
+                                    </StackPanel>-->
+                                    <StackPanel x:Name="stackDimension" DataContext="{Binding Path=SelectedItem_, ElementName=treeProject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <Label Content="{lex:Loc ByDimension}" Style="{StaticResource input_label}" />
+                                        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"  Width="256"
+                                          ItemsSource="{Binding project_task_dimension, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" RowDetailsVisibilityMode="Collapsed"
+                                          CanUserAddRows="False" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}">
+                                            <DataGrid.Columns>
+                                                <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
+									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                                <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100" />
+                                                <DataGridComboBoxColumn x:Name="AppMeasurementComboBox"
+									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"
+									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </StackPanel>
+
+
+                <!--<syncfusion:SfDataGrid x:Name="dgvtaskview"  Margin="0,60,0,0" Drop="dgvtaskview_Drop"
                                        AllowDrop="True"
                                        AllowGrouping="True"
-                                       AllowSorting="True"
+                                       AllowSorting="True"parent_id_project_task
                                        AllowDraggingRows="True"
                                        AutoGenerateColumns="False"
                                        ColumnSizer="Star"
@@ -108,47 +268,11 @@
                         <syncfusion:GridTextColumn HeaderText="Sequence" MappingName="sequence"  Width="15"/>
                     
                     </syncfusion:SfDataGrid.Columns>
-                </syncfusion:SfDataGrid>
-                <!--<DataGrid x:Name="dgvtaskview" Margin="0,60,0,0" AllowDrop="True" DragEnter="dgvtaskview_DragEnter"
-								  VerticalScrollBarVisibility="Auto" Height="Auto"
-								  AutoGenerateColumns="False"
-SelectionMode="Extended"
-								  EnableRowVirtualization="True"
-								
-								  RowDetailsVisibilityMode="VisibleWhenSelected">
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-																ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24"
-																EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                </syncfusion:SfDataGrid>-->
 
-                        <DataGridTextColumn Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-										Header="{lex:Loc Cognitivo:local:code}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
-                        <DataGridTextColumn Binding="{Binding item_description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-										Header="{lex:Loc Cognitivo:local:description}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
-                        <DataGridTextColumn Binding="{Binding sequence, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-										Header="{lex:Loc Cognitivo:local:description}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" />
-                        --><!-- UnitPrice_Vat --><!--
-
-                    </DataGrid.Columns>
-                </DataGrid>-->
 
             </Grid>
-            <Grid>
-                <Grid.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type data:project_task}"
-                                              ItemsSource="{Binding child, Mode=TwoWay}">
-                        <Panels:pnl_TreeView StatusColor="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,
-                                                                   Converter={StaticResource ProjectStatus2Color}}"
-                                             Status="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
-                                             Type_Name="{Binding items.id_item_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                             TaskName="{Binding item_description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                             QuantityExec="{Binding importance, StringFormat=p, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             Quantity="{Binding quantity_est, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </HierarchicalDataTemplate>
-                </Grid.Resources>
-            </Grid>
+
         </Grid>
 
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"

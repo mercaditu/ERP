@@ -378,9 +378,9 @@
     <Compile Include="Migrations\201802191150538_Archievetableanditemdesicion.Designer.cs">
       <DependentUpon>201802191150538_Archievetableanditemdesicion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201808101235471_CloudSync.cs" />
-    <Compile Include="Migrations\201808101235471_CloudSync.Designer.cs">
-      <DependentUpon>201808101235471_CloudSync.cs</DependentUpon>
+    <Compile Include="Migrations\201808181230376_CloudSync.cs" />
+    <Compile Include="Migrations\201808181230376_CloudSync.Designer.cs">
+      <DependentUpon>201808181230376_CloudSync.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_account.cs" />
     <Compile Include="Production\production_service_account.cs" />
@@ -860,8 +860,8 @@
     <EmbeddedResource Include="Migrations\201802191150538_Archievetableanditemdesicion.resx">
       <DependentUpon>201802191150538_Archievetableanditemdesicion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808101235471_CloudSync.resx">
-      <DependentUpon>201808101235471_CloudSync.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201808181230376_CloudSync.resx">
+      <DependentUpon>201808181230376_CloudSync.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

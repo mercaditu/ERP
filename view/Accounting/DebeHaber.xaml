@@ -85,7 +85,7 @@
         <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" HorizontalAlignment="Center">
             <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
                     Background="White"
-                    Width="256" MinHeight="64" Margin="16">
+                    Width="256" MinHeight="70" Margin="16">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/Sales.png" Height="32" />
@@ -193,6 +193,24 @@
                         <Run x:Name="productionMaximum" />
                     </TextBlock>
                     <ProgressBar x:Name="progProduction" VerticalAlignment="Bottom" Margin="4"
+                                 Value="0"
+                                 Maximum="100" />
+                </StackPanel>
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" MinHeight="64" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/FixedAsset.png" Height="32" />
+                        <Label Content="{lex:Loc Asset}" Style="{StaticResource H3}" />
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="assetValue" />
+                        <Run Text="/" />
+                        <Run x:Name="assetMaximum" />
+                    </TextBlock>
+                    <ProgressBar x:Name="progAsset" VerticalAlignment="Bottom" Margin="4"
                                  Value="0"
                                  Maximum="100" />
                 </StackPanel>

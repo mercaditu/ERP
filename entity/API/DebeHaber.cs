@@ -335,7 +335,8 @@ namespace entity.API.DebeHaber
                     purchase_invoice = db.purchase_invoice.Find(data.id_purchase_invoice);
                 }
                 contact contact = db.contacts.Find(data.id_contact);
-
+                
+                PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;
 
                 Type = data.credit > 0 ? AccountTypes.AccountReceivable : AccountTypes.AccountPayable;
                 CustomerName = contact.name;
@@ -371,20 +372,28 @@ namespace entity.API.DebeHaber
     public class FixedAsset
     {
         public entity.item.item_type Type { get; set; }
+        public int id { get; set; }
         public string ItemName { get; set; }
+        public string TaxpayerTaxID { get; set; }
+        public string TaxpayerName { get; set; }
         public string ItemCode { get; set; }
         public string ManufactureDate { get; set; }
         public string PurchaseDate { get; set; }
         public int Quantity { get; set; }
-        public decimal PuchaseValue { get; set; }
+        public decimal PurchaseValue { get; set; }
         public decimal CurrentValue { get; set; }
         public string CurrencyCode { get; set; }
+        public string AssetGroup { get; set; }
+        public decimal? LifeSpan { get; set; }
 
         public void LoadAsset(item_asset data)
         {
             Type = item.item_type.FixedAssets;
+            TaxpayerName = data.app_company.name;
+            TaxpayerTaxID = data.app_company.gov_code;
             ItemName = data.item.name;
             ItemCode = data.item.code;
+            id = data.id_item_asset;
             if (data.manufacture_date != null)
             {
                 DateTime Manufacture_date = (DateTime)data.manufacture_date;
@@ -397,10 +406,12 @@ namespace entity.API.DebeHaber
                 PurchaseDate = Purcahse_date.ToString("yyyy-MM-dd");
             }
 
-            PuchaseValue = (decimal)data.purchase_value;
-            CurrentValue = (decimal)data.current_value;
+            PurchaseValue = data.purchase_value != null ? (decimal)data.purchase_value:0;
+            CurrentValue = data.current_value!=null? (decimal)data.current_value:0;
             CurrencyCode = data.app_currency != null ? data.app_currency.code : CurrentSession.Currency_Default.code;
             Quantity = data.quantity ?? 1;
+            AssetGroup = data.item_asset_group != null ? data.item_asset_group.name : "";
+            LifeSpan = data.item_asset_group != null ? data.item_asset_group.depreciation_rate : null;
 
         }
 
@@ -447,5 +458,30 @@ namespace entity.API.DebeHaber
                 OutputType = BusineesCenter.Asset_Inventory;
             }
         }
+    }
+
+    public class ResoponseAssetData
+    {
+      
+        public int ref_id { get; set; }
+
+        public int chart_id { get; set; }
+        public int taxpayer_id { get; set; }
+        public int currency_id { get; set; }
+        public string serial { get; set; }
+        public string name { get; set; }
+        public decimal current_value { get; set; }
+        public string purchase_date { get; set; }
+        public decimal purchase_value { get; set; }
+        public int? quantity { get; set; }
+        public string sync_date { get; set; }
+        public Chart charts { get; set; }
+
+    }
+    public class Chart
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public decimal? asset_years { get; set; }
     }
 }

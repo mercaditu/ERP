@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using entity;
+using entity.API.DebeHaber;
 
 namespace Cognitivo.Accounting
 {
@@ -268,17 +269,17 @@ namespace Cognitivo.Accounting
         private void Start(string url, string key)
         {
 
-            Task Sales_Task = Task.Factory.StartNew(() => Sales(url, key, sales_invoiceList));
-            Sales_Task.Wait();
-            Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(url, key, sales_returnList));
-            SalesReturn_Task.Wait();
-            Task Purchase_Task = Task.Factory.StartNew(() => Purchases(url, key, purchase_invoiceList));
-            Purchase_Task.Wait();
-            Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(url, key, purchase_returnList));
-            PurchaseReturn_Task.Wait();
+            //Task Sales_Task = Task.Factory.StartNew(() => Sales(url, key, sales_invoiceList));
+            //Sales_Task.Wait();
+            //Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(url, key, sales_returnList));
+            //SalesReturn_Task.Wait();
+            //Task Purchase_Task = Task.Factory.StartNew(() => Purchases(url, key, purchase_invoiceList));
+            //Purchase_Task.Wait();
+            //Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(url, key, purchase_returnList));
+            //PurchaseReturn_Task.Wait();
 
-            Task AccountsForSalesPurchase_Task = Task.Factory.StartNew(() => AccountsForSalesPurchase(url, key, app_account_detailsalespurchaseList));
-            AccountsForSalesPurchase_Task.Wait();
+            //Task AccountsForSalesPurchase_Task = Task.Factory.StartNew(() => AccountsForSalesPurchase(url, key, app_account_detailsalespurchaseList));
+            //AccountsForSalesPurchase_Task.Wait();
 
             //Task AccountsForMovement_Task = Task.Factory.StartNew(() => AccountsForMovement(url, key, purchase_returnList));
             //AccountsForMovement_Task.Wait();
@@ -457,28 +458,86 @@ namespace Cognitivo.Accounting
         private void FixedAsset(string url, string key, List<item_asset> ItemAssetList)
         {
             List<entity.API.DebeHaber.FixedAsset> AssetList = new List<entity.API.DebeHaber.FixedAsset>();
-            int value = 0;
-            Dispatcher.BeginInvoke((Action)(() => transferValue.Text = value.ToString()));
-            Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = value));
-            foreach (item_asset item_asset in ItemAssetList.Skip(value).Take(100))
+         
+            Dispatcher.BeginInvoke((Action)(() => assetMaximum.Text = ItemAssetList.Count.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = 0));
+            for (int value = 0; value < ItemAssetList.Count()+1; value= value+100)
             {
                 AssetList.Clear();
+                foreach (item_asset item_asset in ItemAssetList.Skip(value).Take(100))
+                {
+                   
 
 
-                entity.API.DebeHaber.FixedAsset FixedAsset = new entity.API.DebeHaber.FixedAsset();
-                FixedAsset.LoadAsset(item_asset);
+                    entity.API.DebeHaber.FixedAsset FixedAsset = new entity.API.DebeHaber.FixedAsset();
+                    FixedAsset.LoadAsset(item_asset);
 
 
-                AssetList.Add(FixedAsset);
+                    AssetList.Add(FixedAsset);
 
+                  
+
+                }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(AssetList);
-                Send2API(Json, url + "/api/fixedasset", key);
+                HttpWebResponse httpResponse = Send2API(Json, url + "/api/fixedasset", key);
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
+                {
+
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        List<ResoponseAssetData> ReturnJson = new JavaScriptSerializer().Deserialize<List<ResoponseAssetData>>(result);
+                        foreach (ResoponseAssetData resp in ReturnJson)
+                        {
+                            if (resp.ref_id > 0)
+                            {
+                                using (db db = new db())
+                                {
+
+                                    item_asset item_asset = db.item_asset.Where(x=>x.id_item_asset==resp.ref_id).First();
+                                    item_asset.purchase_date =Convert.ToDateTime(resp.purchase_date);
+                                    item_asset.purchase_value = resp.purchase_value;
+                                    item_asset.current_value = resp.current_value;
+                                    item_asset.item.name = resp.name;
+                                    item_asset.item.code = resp.serial;
+                                    item_asset.quantity = resp.quantity;
+
+                                    //create asset group or update values.
+                                    //search asset group by name
+                                    item_asset_group item_asset_group = db.item_asset_group.Where(x => x.ref_id == resp.charts.id).FirstOrDefault();
+
+                                    if (item_asset_group != null)
+                                    {
+                                        item_asset_group.depreciation_rate = resp.charts.asset_years;
+                                    }
+                                    else
+                                    {
+                                        item_asset_group = db.item_asset_group.Where(x => x.name == resp.charts.name).FirstOrDefault() ?? new item_asset_group();
+                                        item_asset_group.ref_id = resp.charts.id;
+                                        item_asset_group.depreciation_rate = resp.charts.asset_years;
+                                        item_asset_group.name = resp.charts.name;
+                                    }
+
+                                    item_asset_group.item_asset.Add(item_asset);
+                                    item_asset.item_asset_group = item_asset_group;
+                                  
+                                    db.SaveChanges();
+                                }
+                               
+                            }
+
+                        }
+                    }
+                }
+                      
 
                 Context.db.SaveChanges();
-                value += 100;
+
                 Dispatcher.BeginInvoke((Action)(() => progAsset.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => assetValue.Text = value.ToString()));
             }
+           
+           
         }
         private void Production()
         {
@@ -499,7 +558,7 @@ namespace Cognitivo.Accounting
 
 
         }
-        private object Send2API(object Json, string uri, string key)
+        private HttpWebResponse Send2API(object Json, string uri, string key)
         {
             try
             {
@@ -519,20 +578,9 @@ namespace Cognitivo.Accounting
                 }
 
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                return httpResponse;
 
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    apiStatus = true;
-                    serverStatus = true;
-                    if (result.ToString().Contains("Error"))
-                    {
-                        tbxAPI.Focus();
-                        apiStatus = false;
-                        return null;
-                    }
-                    return result;
-                }
+
             }
             catch (Exception ex)
             {

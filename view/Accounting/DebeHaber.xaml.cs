@@ -41,7 +41,7 @@ namespace Cognitivo.Accounting
         List<purchase_return> purchase_returnList { get; set; }
         List<payment_detail> app_account_detailsalespurchaseList { get; set; }
         List<item_asset> ItemAssetList { get; set; }
-
+        List<app_account_detail> app_account_detailList { get; set; }
 
         public DebeHaber()
         {
@@ -106,6 +106,8 @@ namespace Cognitivo.Accounting
             c.Wait();
             Task d = Task.Factory.StartNew(() => LoadPurchaseReturns());
             d.Wait();
+            Task j = Task.Factory.StartNew(() => LoadAccountsForMovement());
+            j.Wait();
             Task f = Task.Factory.StartNew(() => LoadAccountsForsalespurchase());
             f.Wait();
             Task h = Task.Factory.StartNew(() => LoadProductions());
@@ -130,7 +132,7 @@ namespace Cognitivo.Accounting
                 Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
                 && x.status == Status.Documents_General.Approved)
                   .Include(x => x.sales_invoice_detail)
-                  .Include(x=>x.app_currencyfx)
+                  .Include(x => x.app_currencyfx)
                   .Include(x => x.app_company)
                   .ToList();
             Dispatcher.BeginInvoke((Action)(() =>
@@ -189,7 +191,7 @@ namespace Cognitivo.Accounting
         private void LoadAccountsForsalespurchase()
         {
             app_account_detailsalespurchaseList = Context.db.payment_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
-            x.app_account_detail.FirstOrDefault().is_accounted == false)
+           x.payment.is_accounted == false)
                 .Include(x => x.app_currencyfx)
                 .Include(x => x.app_account)
                 .Include(x => x.payment_schedual)
@@ -202,25 +204,25 @@ namespace Cognitivo.Accounting
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progAccounts.IsIndeterminate = false;
-                progAccounts.Maximum = Context.db.app_account_detail.Local.Count();
-                transferMaximum.Text = progAccounts.Maximum.ToString();
+                progAccounts.Maximum = Context.db.payment_detail.Local.Count();
+                paymentMaximum.Text = progAccounts.Maximum.ToString();
             }));
         }
 
         private void LoadAccountsForMovement()
         {
-            List<app_account_detail> app_account_detailList = Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
-            x.tran_type == app_account_detail.tran_types.Transaction &&
-            x.is_accounted == false && x.id_payment_detail == null &&
-            x.status == Status.Documents_General.Approved)
-                .Include(x => x.app_currencyfx)
-                .Include(x => x.app_account)
-                .ToList();
+            app_account_detailList = Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
+           x.tran_type == app_account_detail.tran_types.Transaction &&
+           x.is_accounted == false && x.id_payment_detail == null &&
+           x.status == Status.Documents_General.Approved)
+               .Include(x => x.app_currencyfx)
+               .Include(x => x.app_account)
+               .ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                progAccounts.IsIndeterminate = false;
-                progAccounts.Maximum = Context.db.app_account_detail.Local.Count();
-                transferMaximum.Text = progAccounts.Maximum.ToString();
+                progTransfer.IsIndeterminate = false;
+                progTransfer.Maximum = Context.db.app_account_detail.Local.Count();
+                transferMaximum.Text = progTransfer.Maximum.ToString();
             }));
 
         }
@@ -252,7 +254,7 @@ namespace Cognitivo.Accounting
             {
                 progAsset.IsIndeterminate = false;
                 progAsset.Maximum = Context.db.item_asset.Local.Count();
-                assetMaximum.Text = progProduction.Maximum.ToString();
+                assetMaximum.Text = progAsset.Maximum.ToString();
             }));
         }
         #endregion
@@ -281,7 +283,7 @@ namespace Cognitivo.Accounting
             Task AccountsForSalesPurchase_Task = Task.Factory.StartNew(() => AccountsForSalesPurchase(url, key, app_account_detailsalespurchaseList));
             AccountsForSalesPurchase_Task.Wait();
 
-            Task AccountsForMovement_Task = Task.Factory.StartNew(() => AccountsForMovement(url, key, purchase_returnList));
+            Task AccountsForMovement_Task = Task.Factory.StartNew(() => AccountsForMovement(url, key, app_account_detailList));
             AccountsForMovement_Task.Wait();
 
             Task FixedAssetTask = Task.Factory.StartNew(() => FixedAsset(url, key, ItemAssetList));
@@ -310,14 +312,17 @@ namespace Cognitivo.Accounting
                 }
 
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Send2API(Json, url + "/api/transactions", key);
-
-                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
+                HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    sales_invoice.is_accounted = true;
+                    foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
+                    {
+                        sales_invoice.is_accounted = true;
+                    }
+
+                    Context.db.SaveChanges();
                 }
 
-                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
@@ -341,14 +346,17 @@ namespace Cognitivo.Accounting
                     InvoiceList.Add(Invoice);
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Send2API(Json, url + "/api/transactions", key);
-
-                foreach (sales_return sales_return in sales_returnList.Skip(value).Take(100))
+                HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    sales_return.is_accounted = true;
+                    foreach (sales_return sales_return in sales_returnList.Skip(value).Take(100))
+                    {
+                        sales_return.is_accounted = true;
+                    }
+
+                    Context.db.SaveChanges();
                 }
 
-                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
@@ -372,13 +380,16 @@ namespace Cognitivo.Accounting
                     InvoiceList.Add(Invoice);
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Send2API(Json, url + "/api/transactions", key);
-                foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
+                HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    purchase_invoice.is_accounted = true;
+                    foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
+                    {
+                        purchase_invoice.is_accounted = true;
 
+                    }
+                    Context.db.SaveChanges();
                 }
-                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
@@ -401,13 +412,16 @@ namespace Cognitivo.Accounting
                     InvoiceList.Add(Invoice);
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Send2API(Json, url + "/api/transactions", key);
-                foreach (purchase_return purchase_return in purchase_returnList.Skip(value).Take(100))
+                HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    purchase_return.is_accounted = true;
+                    foreach (purchase_return purchase_return in purchase_returnList.Skip(value).Take(100))
+                    {
+                        purchase_return.is_accounted = true;
 
+                    }
+                    Context.db.SaveChanges();
                 }
-                Context.db.SaveChanges();
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => purchaseReturnValue.Text = value.ToString()));
@@ -417,7 +431,47 @@ namespace Cognitivo.Accounting
 
         private void AccountsForMovement(string url, string key, List<app_account_detail> AccountMovementList)
         {
-            //todo 
+            List<entity.API.DebeHaber.AccountMovements> InvoiceList = new List<entity.API.DebeHaber.AccountMovements>();
+            int Loadvalue = 0;
+            Dispatcher.BeginInvoke((Action)(() => paymentValue.Text = ""));
+            Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = 0));
+            for (int i = 0; i < AccountMovementList.Count(); i = i + 100)
+            {
+
+
+                InvoiceList.Clear();
+
+
+
+
+
+
+
+                foreach (app_account_detail app_account_detail in AccountMovementList.Skip(i).Take(100))
+                {
+                    entity.API.DebeHaber.AccountMovements AccountMovement = new entity.API.DebeHaber.AccountMovements();
+                    AccountMovement.LoadTransfers(app_account_detail);
+                    InvoiceList.Add(AccountMovement);
+                }
+
+                Loadvalue = Loadvalue + 100;
+
+
+                var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
+                HttpWebResponse httpResponse = Send2API(Json, url + "/api/movement", key);
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    foreach (app_account_detail app_account_detail in AccountMovementList.Skip(Loadvalue).Take(100))
+                    {
+                        app_account_detail.is_accounted = true;
+                    }
+                    Context.db.SaveChanges();
+                }
+
+                Context.db.SaveChanges();
+                Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = Loadvalue));
+                Dispatcher.BeginInvoke((Action)(() => transferValue.Text = Loadvalue.ToString()));
+            }
         }
 
         private void AccountsForSalesPurchase(string url, string key, List<payment_detail> AccountSalePurcahseList)
@@ -425,7 +479,7 @@ namespace Cognitivo.Accounting
 
             List<entity.API.DebeHaber.AccountMovements> InvoiceList = new List<entity.API.DebeHaber.AccountMovements>();
             int value = 0;
-            Dispatcher.BeginInvoke((Action)(() => transferValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => paymentValue.Text = value.ToString()));
             Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = value));
             for (int i = 0; i < app_account_detailsalespurchaseList.Count(); i = i + 100)
             {
@@ -436,39 +490,48 @@ namespace Cognitivo.Accounting
 
                 foreach (payment_detail payment_detail in app_account_detailsalespurchaseList.Skip(value).Take(100))
                 {
-                    entity.API.DebeHaber.AccountMovements AccountMovement = new entity.API.DebeHaber.AccountMovements();
 
 
                     foreach (payment_schedual schedual in payment_detail.payment_schedual.AsQueryable().Include(x => x.sales_invoice).Include(x => x.purchase_invoice).ToList())
                     {
+                        entity.API.DebeHaber.AccountMovements AccountMovement = new entity.API.DebeHaber.AccountMovements();
+
                         AccountMovement.LoadPaymentsRecieved(schedual);
+
+                        InvoiceList.Add(AccountMovement);
                     }
 
 
-                    InvoiceList.Add(AccountMovement);
+
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
-                Send2API(Json, url + "/api/movement", key);
-
-                Context.db.SaveChanges();
+                HttpWebResponse httpResponse = Send2API(Json, url + "/api/payment", key);
+                if (httpResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    foreach (payment_detail payment_detail in app_account_detailsalespurchaseList.Skip(value).Take(100))
+                    {
+                        payment_detail.payment.is_accounted = true;
+                        Context.db.SaveChanges();
+                    }
+                }
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = value));
-                Dispatcher.BeginInvoke((Action)(() => transferValue.Text = value.ToString()));
+                Dispatcher.BeginInvoke((Action)(() => paymentValue.Text = value.ToString()));
             }
         }
 
         private void FixedAsset(string url, string key, List<item_asset> ItemAssetList)
         {
             List<entity.API.DebeHaber.FixedAsset> AssetList = new List<entity.API.DebeHaber.FixedAsset>();
-         
+
             Dispatcher.BeginInvoke((Action)(() => assetMaximum.Text = ItemAssetList.Count.ToString()));
             Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = 0));
-            for (int value = 0; value < ItemAssetList.Count()+1; value= value+100)
+            for (int value = 0; value < ItemAssetList.Count() + 1; value = value + 100)
             {
                 AssetList.Clear();
                 foreach (item_asset item_asset in ItemAssetList.Skip(value).Take(100))
                 {
-                   
+
 
 
                     entity.API.DebeHaber.FixedAsset FixedAsset = new entity.API.DebeHaber.FixedAsset();
@@ -477,7 +540,7 @@ namespace Cognitivo.Accounting
 
                     AssetList.Add(FixedAsset);
 
-                  
+
 
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(AssetList);
@@ -496,8 +559,8 @@ namespace Cognitivo.Accounting
                                 using (db db = new db())
                                 {
 
-                                    item_asset item_asset = db.item_asset.Where(x=>x.id_item_asset==resp.ref_id).First();
-                                    item_asset.purchase_date =Convert.ToDateTime(resp.purchase_date);
+                                    item_asset item_asset = db.item_asset.Where(x => x.id_item_asset == resp.ref_id).First();
+                                    item_asset.purchase_date = Convert.ToDateTime(resp.purchase_date);
                                     item_asset.purchase_value = resp.purchase_value;
                                     item_asset.current_value = resp.current_value;
                                     item_asset.item.name = resp.name;
@@ -522,24 +585,24 @@ namespace Cognitivo.Accounting
 
                                     item_asset_group.item_asset.Add(item_asset);
                                     item_asset.item_asset_group = item_asset_group;
-                                  
+
                                     db.SaveChanges();
                                 }
-                               
+
                             }
 
                         }
                     }
                 }
-                      
+
 
                 Context.db.SaveChanges();
 
                 Dispatcher.BeginInvoke((Action)(() => progAsset.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => assetValue.Text = value.ToString()));
             }
-           
-           
+
+
         }
 
         private void Production()

@@ -169,11 +169,30 @@
                         <Label Content="{lex:Loc Accounts}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="paymentValue" />
+                        <Run Text="/" />
+                        <Run x:Name="paymentMaximum" />
+                    </TextBlock>
+                    <ProgressBar x:Name="progAccounts" VerticalAlignment="Bottom" Margin="4"
+                                 Value="0"
+                                 Maximum="100" />
+                </StackPanel>
+            </Border>
+
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" MinHeight="64" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Money.png" Height="32" />
+                        <Label Content="{lex:Loc Transfer}" Style="{StaticResource H3}" />
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
                         <Run x:Name="transferValue" />
                         <Run Text="/" />
                         <Run x:Name="transferMaximum" />
                     </TextBlock>
-                    <ProgressBar x:Name="progAccounts" VerticalAlignment="Bottom" Margin="4"
+                    <ProgressBar x:Name="progTransfer" VerticalAlignment="Bottom" Margin="4"
                                  Value="0"
                                  Maximum="100" />
                 </StackPanel>

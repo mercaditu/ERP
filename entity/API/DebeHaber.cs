@@ -324,45 +324,61 @@ namespace entity.API.DebeHaber
         {
             sales_invoice sales_invoice = null;
             purchase_invoice purchase_invoice = null;
+            purchase_return purchase_return = null;
+            sales_return sales_return = null;
+            string number = "";
             using (db db = new db())
             {
                 if (data.credit > 0)
                 {
-                    sales_invoice = db.sales_invoice.Find(data.id_sales_invoice);
+                    if (data.id_sales_invoice > 0)
+                    {
+                        sales_invoice = db.sales_invoice.Find(data.id_sales_invoice);
+                        number = sales_invoice.number;
+                    }
+                    else
+                    {
+                        purchase_return = db.purchase_return.Find(data.id_purchase_return);
+                        number = purchase_return.number;
+                    }
+
                 }
                 else
                 {
-                    purchase_invoice = db.purchase_invoice.Find(data.id_purchase_invoice);
+                    if (data.id_purchase_invoice > 0)
+                    {
+                        purchase_invoice = db.purchase_invoice.Find(data.id_purchase_invoice);
+                        number = purchase_invoice.number;
+                    }
+                    else
+                    {
+
+                        sales_return = db.sales_return.Find(data.id_sales_return);
+                        number = sales_return.number;
+                    }
                 }
                 contact contact = db.contacts.Find(data.id_contact);
-                
-                PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;
-                try
-                {
 
-                
+                PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;
+
+
                 Type = data.credit > 0 ? AccountTypes.AccountReceivable : AccountTypes.AccountPayable;
                 CustomerName = contact.name;
                 CustomerTaxID = contact.gov_code;
                 SupplierName = data.payment_detail.app_company.name;
                 SupplierTaxID = data.payment_detail.app_company.gov_code;
-                Number = data.credit > 0 ? sales_invoice.number : purchase_invoice.number;
+                Number = number;
                 Comment = data.payment_detail.comment;
-                AccountName = data.payment_detail.app_account.name;
+                AccountName = data.payment_detail.app_account != null ? data.payment_detail.app_account.name : "Default Account";
                 Date = data.payment_detail.payment.trans_date.Date.ToString("yyyy-MM-dd");
 
                 CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.payment_detail.app_currencyfx.id_currency).FirstOrDefault().code;
                 CurrencyRate = data.credit > 0 ? data.payment_detail.app_currencyfx.buy_value : data.payment_detail.app_currencyfx.sell_value;
-                ReferenceInvoice = data.credit > 0 ? sales_invoice.number : purchase_invoice.number;
+                ReferenceInvoice = number;
 
                 Debit = data.debit == 0 ? 0 : entity.Brillo.Currency.convert_Values(data.debit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Purchase);
                 Credit = data.credit == 0 ? 0 : entity.Brillo.Currency.convert_Values(data.credit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Sales);
-                }
-                catch (Exception)
-                {
-                    
-                    
-                }
+
             }
         }
 
@@ -370,11 +386,14 @@ namespace entity.API.DebeHaber
         public void LoadTransfers(app_account_detail data)
         {
             AccountName = data.app_account.name;
+            CustomerName = data.app_company.name;
+            CustomerTaxID = data.app_company.gov_code;
             Date = data.trans_date.Date.ToString("yyyy-MM-dd"); ;
             CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault().code;
             CurrencyRate = data.credit > 0 ? data.app_currencyfx.buy_value : data.app_currencyfx.sell_value;
             Debit = data.debit;
             Credit = data.credit;
+            Comment = data.comment;
         }
     }
 
@@ -415,8 +434,8 @@ namespace entity.API.DebeHaber
                 PurchaseDate = Purcahse_date.ToString("yyyy-MM-dd");
             }
 
-            PurchaseValue = data.purchase_value != null ? (decimal)data.purchase_value:0;
-            CurrentValue = data.current_value!=null? (decimal)data.current_value:0;
+            PurchaseValue = data.purchase_value != null ? (decimal)data.purchase_value : 0;
+            CurrentValue = data.current_value != null ? (decimal)data.current_value : 0;
             CurrencyCode = data.app_currency != null ? data.app_currency.code : CurrentSession.Currency_Default.code;
             Quantity = data.quantity ?? 1;
             AssetGroup = data.item_asset_group != null ? data.item_asset_group.name : "";
@@ -471,7 +490,7 @@ namespace entity.API.DebeHaber
 
     public class ResoponseAssetData
     {
-      
+
         public int ref_id { get; set; }
 
         public int chart_id { get; set; }

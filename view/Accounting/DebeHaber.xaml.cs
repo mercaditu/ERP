@@ -163,7 +163,7 @@ namespace Cognitivo.Accounting
             purchase_invoiceList = Context.db.purchase_invoice.
                 Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
             && x.status == Status.Documents_General.Approved
-            ).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).Include(x => x.app_company).ToList();
+            ).Include(x => x.contact).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).Include(x => x.app_company).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progPurchase.IsIndeterminate = false;
@@ -176,7 +176,7 @@ namespace Cognitivo.Accounting
         {
             purchase_returnList = Context.db.purchase_return.
                 Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
-                && x.status == Status.Documents_General.Approved)
+                && x.status == Status.Documents_General.Approved).Include(x => x.contact)
                 .Include(x => x.purchase_return_detail).Include(x => x.app_currencyfx).Include(x => x.app_company).ToList();
             Dispatcher.BeginInvoke((Action)(() =>
             {
@@ -211,7 +211,7 @@ namespace Cognitivo.Accounting
         {
             List<app_account_detail> app_account_detailList = Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
             x.tran_type == app_account_detail.tran_types.Transaction &&
-            x.is_read == false && x.id_payment_detail == null &&
+            x.is_accounted == false && x.id_payment_detail == null &&
             x.status == Status.Documents_General.Approved)
                 .Include(x => x.app_currencyfx)
                 .Include(x => x.app_account)
@@ -269,20 +269,20 @@ namespace Cognitivo.Accounting
         private void Start(string url, string key)
         {
 
-            //Task Sales_Task = Task.Factory.StartNew(() => Sales(url, key, sales_invoiceList));
-            //Sales_Task.Wait();
-            //Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(url, key, sales_returnList));
-            //SalesReturn_Task.Wait();
-            //Task Purchase_Task = Task.Factory.StartNew(() => Purchases(url, key, purchase_invoiceList));
-            //Purchase_Task.Wait();
-            //Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(url, key, purchase_returnList));
-            //PurchaseReturn_Task.Wait();
+            Task Sales_Task = Task.Factory.StartNew(() => Sales(url, key, sales_invoiceList));
+            Sales_Task.Wait();
+            Task SalesReturn_Task = Task.Factory.StartNew(() => SalesReturns(url, key, sales_returnList));
+            SalesReturn_Task.Wait();
+            Task Purchase_Task = Task.Factory.StartNew(() => Purchases(url, key, purchase_invoiceList));
+            Purchase_Task.Wait();
+            Task PurchaseReturn_Task = Task.Factory.StartNew(() => PurchaseReturns(url, key, purchase_returnList));
+            PurchaseReturn_Task.Wait();
 
-            //Task AccountsForSalesPurchase_Task = Task.Factory.StartNew(() => AccountsForSalesPurchase(url, key, app_account_detailsalespurchaseList));
-            //AccountsForSalesPurchase_Task.Wait();
+            Task AccountsForSalesPurchase_Task = Task.Factory.StartNew(() => AccountsForSalesPurchase(url, key, app_account_detailsalespurchaseList));
+            AccountsForSalesPurchase_Task.Wait();
 
-            //Task AccountsForMovement_Task = Task.Factory.StartNew(() => AccountsForMovement(url, key, purchase_returnList));
-            //AccountsForMovement_Task.Wait();
+            Task AccountsForMovement_Task = Task.Factory.StartNew(() => AccountsForMovement(url, key, purchase_returnList));
+            AccountsForMovement_Task.Wait();
 
             Task FixedAssetTask = Task.Factory.StartNew(() => FixedAsset(url, key, ItemAssetList));
             FixedAssetTask.Wait();
@@ -417,7 +417,9 @@ namespace Cognitivo.Accounting
 
         private void AccountsForMovement(string url, string key, List<app_account_detail> AccountMovementList)
         {
+            //todo 
         }
+
         private void AccountsForSalesPurchase(string url, string key, List<payment_detail> AccountSalePurcahseList)
         {
 
@@ -539,9 +541,10 @@ namespace Cognitivo.Accounting
            
            
         }
+
         private void Production()
         {
-
+            //tpdp
         }
 
         private void ClickInformation(object sender, MouseButtonEventArgs e)

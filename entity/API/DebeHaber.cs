@@ -199,7 +199,7 @@ namespace entity.API.DebeHaber
                     Detail.Type = DetailType;
                     Detail.Cost = sales_return_detail.unit_cost;
                     Detail.Value = (sales_return_detail.SubTotal_Vat) * (VatDetail.percentage);
-                    Detail.VATPercentage = Convert.ToInt32(sales_return_detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
+                    Detail.VATPercentage = Convert.ToInt32(app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient) * 100);
                     Detail.Name = Name;
                     Details.Add(Detail);
                 }
@@ -337,7 +337,10 @@ namespace entity.API.DebeHaber
                 contact contact = db.contacts.Find(data.id_contact);
                 
                 PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;
+                try
+                {
 
+                
                 Type = data.credit > 0 ? AccountTypes.AccountReceivable : AccountTypes.AccountPayable;
                 CustomerName = contact.name;
                 CustomerTaxID = contact.gov_code;
@@ -354,6 +357,12 @@ namespace entity.API.DebeHaber
 
                 Debit = data.debit == 0 ? 0 : entity.Brillo.Currency.convert_Values(data.debit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Purchase);
                 Credit = data.credit == 0 ? 0 : entity.Brillo.Currency.convert_Values(data.credit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Sales);
+                }
+                catch (Exception)
+                {
+                    
+                    
+                }
             }
         }
 

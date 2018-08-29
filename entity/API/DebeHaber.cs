@@ -329,34 +329,30 @@ namespace entity.API.DebeHaber
             string number = "";
             using (db db = new db())
             {
-                if (data.credit > 0)
-                {
-                    if (data.id_sales_invoice > 0)
-                    {
-                        sales_invoice = db.sales_invoice.Find(data.id_sales_invoice);
-                        number = sales_invoice.number;
-                    }
-                    else
-                    {
-                        purchase_return = db.purchase_return.Find(data.id_purchase_return);
-                        number = purchase_return.number;
-                    }
 
-                }
-                else
+                if (data.id_sales_invoice > 0)
                 {
-                    if (data.id_purchase_invoice > 0)
-                    {
-                        purchase_invoice = db.purchase_invoice.Find(data.id_purchase_invoice);
-                        number = purchase_invoice.number;
-                    }
-                    else
-                    {
-
-                        sales_return = db.sales_return.Find(data.id_sales_return);
-                        number = sales_return.number;
-                    }
+                    sales_invoice = db.sales_invoice.Find(data.id_sales_invoice);
+                    number = sales_invoice.number;
                 }
+                else if (data.id_purchase_return > 0)
+                {
+                    purchase_return = db.purchase_return.Find(data.id_purchase_return);
+                    number = purchase_return.number;
+                }
+
+                else if (data.id_purchase_invoice > 0)
+                {
+                    purchase_invoice = db.purchase_invoice.Find(data.id_purchase_invoice);
+                    number = purchase_invoice.number;
+                }
+                else if (data.id_sales_return > 0)
+                {
+
+                    sales_return = db.sales_return.Find(data.id_sales_return);
+                    number = sales_return.number;
+                }
+
                 contact contact = db.contacts.Find(data.id_contact);
 
                 PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;

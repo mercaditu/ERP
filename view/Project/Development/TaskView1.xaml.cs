@@ -625,14 +625,15 @@ namespace Cognitivo.Project.Development
                 dgvtaskview.ItemsSource = null;
                 ProjectDB.db.SaveChanges();
                 LoadTask(project);
-             
-                
+
+
             }
 
         }
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {
+            dgvtaskview.ItemsSource = null;
 
             project projects = projectViewSource.View.CurrentItem as project;
             LoadTask(projects);
@@ -641,14 +642,14 @@ namespace Cognitivo.Project.Development
         }
         public void LoadTask(project projects)
         {
-            if (projectasklist.Count()==0)
+            if (projectasklist.Count() == 0)
             {
                 projectasklist = ProjectDB.db.project_task.Where(x => x.id_project == projects.id_project)
                     .Include(x => x.items)
                     .Include(x => x.project_task_dimension)
                     .ToList();
             }
-           
+
             dgvtaskview.ItemsSource = projectasklist;
             cbxParentTask.ItemsSource = projectasklist;
         }
@@ -765,19 +766,21 @@ namespace Cognitivo.Project.Development
 
             project_task project_task = dgvtaskview.SelectedItem as project_task;
             project projects = projectViewSource.View.CurrentItem as project;
-            if (project_task.parent !=null && project_task.parent.parent!=null)
+            if (project_task.parent != null && project_task.parent.parent != null)
             {
                 project_task.parent_child = project_task.parent.parent.id_project_task;
                 project_task.parent = project_task.parent.parent;
-                //ProjectDB.db.SaveChanges();
-                projectasklist = ProjectDB.db.project_task.Where(x => x.id_project == projects.id_project).ToList();
-                LoadTask(projects);
-            }
-         
-           
-         
+                int sequence = 0;
+                foreach (project_task parent in projects.project_task.Where(x => x.parent == project_task.parent))
+                {
+                    sequence = sequence + 1;
+                    parent.SetSequence(sequence);
+                }
 
-           
+                //ProjectDB.db.SaveChanges();
+                btnExpandAll_Checked(null, null);
+            }
+
 
         }
 
@@ -799,9 +802,9 @@ namespace Cognitivo.Project.Development
 
         }
 
-      
 
-       
+
+
 
         private void Close_model(object sender, RoutedEventArgs e)
         {
@@ -812,12 +815,12 @@ namespace Cognitivo.Project.Development
         {
             project_task project_task = dgvtaskview.SelectedItem as project_task;
             project projects = projectViewSource.View.CurrentItem as project;
-            if (cbxParentTask.SelectedItem!=null)
+            if (cbxParentTask.SelectedItem != null)
             {
                 project_task parent_project_task = cbxParentTask.SelectedItem as project_task;
                 project_task.parent_child = parent_project_task.id_project_task;
                 project_task.parent = parent_project_task;
-               // ProjectDB.db.SaveChanges();
+                // ProjectDB.db.SaveChanges();
                 LoadTask(projects);
             }
             Close_model(null, null);
@@ -832,17 +835,38 @@ namespace Cognitivo.Project.Development
 
         private void MenuUP_Click(object sender, RoutedEventArgs e)
         {
-
+            project projects = projectViewSource.View.CurrentItem as project;
+            project_task selectedtask = dgvtaskview.SelectedItem as project_task;
+            int? currentsequence = selectedtask.sequence;
+            project_task selectedUPtask = projectasklist.Where(x => x.sequence == currentsequence - 1 && x.parent == selectedtask.parent).FirstOrDefault();
+            if (selectedUPtask!=null)
+            {
+                selectedtask.sequence = selectedUPtask.sequence;
+                selectedUPtask.sequence = currentsequence;
+            }
+          
+            btnExpandAll_Checked(null, null);
+            //LoadTask(projects);
         }
 
         private void MenuDown_Click(object sender, RoutedEventArgs e)
         {
-
+            project projects = projectViewSource.View.CurrentItem as project;
+            project_task selectedtask = dgvtaskview.SelectedItem as project_task;
+            int? currentsequence = selectedtask.sequence;
+            project_task selectedUPtask = projectasklist.Where(x => x.sequence == currentsequence + 1 && x.parent == selectedtask.parent).FirstOrDefault();
+            if (selectedUPtask!=null)
+            {
+                selectedtask.sequence = selectedUPtask.sequence;
+                selectedUPtask.sequence = currentsequence;
+            }
+         
+            btnExpandAll_Checked(null, null);
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (projectasklist.Where(x=>(x.id_item==0 || x.id_item==null)).Count()==0 )
+            if (projectasklist.Where(x => (x.id_item == 0 || x.id_item == null)).Count() == 0)
             {
                 ProjectDB.db.SaveChanges();
             }
@@ -851,5 +875,6 @@ namespace Cognitivo.Project.Development
                 toolBar.msgWarning("Item Is Not Assigned...");
             }
         }
+
     }
 }

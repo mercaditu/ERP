@@ -575,6 +575,28 @@ namespace entity
             return Dimension;
         }
 
+        public void SetSequence(int sequence)
+        {
+            if (this.parent == null)
+            {
+                this.parent_child = 0;
+            }
+            else
+            {
+                this.parent_child = this.parent.id_project_task;
+            }
+
+            this.sequence = sequence;
+
+            int sequencechild = 0;
+            foreach (project_task child in this.child)
+            {
+                sequencechild = sequencechild + 1;
+                child.SetSequence(sequencechild);
+            }
+
+        }
+
         #endregion
     }
 }

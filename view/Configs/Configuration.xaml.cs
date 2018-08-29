@@ -70,7 +70,7 @@ namespace Cognitivo.Configs
         private void btnMovementValue_Clicked(object sender, RoutedEventArgs e)
         {
             db db = new db();
-            
+
             int count = db.item_movement.Where(x => x.parent == null).Count();
             for (int i = 0; i < count; i = i + 100)
             {
@@ -171,10 +171,10 @@ namespace Cognitivo.Configs
                     List<entity.Brillo.StockList> ItemsWithoutBalance = CurrentItems.GetListwithoutstock(CurrentSession.Id_Branch).ToList();
 
                     //Get list of credits that have balance.
-                    List<entity.Brillo.StockList> ItemsWithBalance = CurrentItems.getProducts_InStock_GroupBy(CurrentSession.Id_Branch,DateTime.Now,true).ToList();
+                    List<entity.Brillo.StockList> ItemsWithBalance = CurrentItems.getProducts_InStock_GroupBy(CurrentSession.Id_Branch, DateTime.Now, true).ToList();
 
                     db.Database.ExecuteSqlCommand("update item_movement set  parent_id_movement=null where" +
-                        " id_movement in (" + ItemsWithBalance.Select(x=>x.MovementID).ToArray() + ")");
+                        " id_movement in (" + ItemsWithBalance.Select(x => x.MovementID).ToArray() + ")");
 
                     //Make parent null for items with balance. So that we can remove the 0 balance 
                     //foreach (entity.Brillo.StockList item in ItemsWithBalance.Where(x => x.ParentID > 0))
@@ -186,7 +186,7 @@ namespace Cognitivo.Configs
                     //        db.SaveChanges();
                     //    }
                     //}
-                 
+
 
 
 
@@ -213,7 +213,7 @@ namespace Cognitivo.Configs
 
                             item_movementListDeleteparent.Add(im);
                         }
-                       
+
                     }
 
                     db.item_movement.RemoveRange(item_movementListDeletechild);
@@ -267,10 +267,13 @@ namespace Cognitivo.Configs
                 foreach (project project in Projects)
                 {
                     int sequence = 0;
-                    foreach (project_task item in project.project_task)
+                    foreach (project_task parent in project.project_task.Where(x => x.parent == null))
                     {
-                        sequence = sequence + 1;
-                        item.sequence = sequence;
+
+                         sequence = sequence + 1;
+                         parent.SetSequence(sequence);
+
+
 
                     }
 
@@ -278,6 +281,7 @@ namespace Cognitivo.Configs
                 db.SaveChanges();
             }
         }
+       
 
     }
 }

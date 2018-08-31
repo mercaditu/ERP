@@ -56,7 +56,7 @@ namespace cntrl
             {
                 toolBar toolBar = new toolBar();
                 List<project_task> project_taskLIST = new List<project_task>();
-                project_taskLIST = project.project_task.Where(x => x.IsSelected).ToList();
+                project_taskLIST = project.project_task.Where(x => x.IsSelectedFinance).ToList();
 
                 bool Error = false;
 
@@ -136,7 +136,7 @@ namespace cntrl
                             sales_budget_detail.UnitPrice_Vat = UnitPrice_Vat;
 
                             sales_budget_detail.id_project_task = _project_task.id_project_task;
-                            _project_task.IsSelected = false;
+                            _project_task.IsSelectedFinance = false;
 
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
@@ -216,7 +216,7 @@ namespace cntrl
                                 sales_order_detail.UnitPrice_Vat = UnitPrice_Vat;
 
                                 sales_order_detail.id_project_task = _project_task.id_project_task;
-                                _project_task.IsSelected = false;
+                                _project_task.IsSelectedFinance = false;
                                 _project_task.sales_detail = sales_order_detail;
                             }
 
@@ -284,7 +284,7 @@ namespace cntrl
                                     sales_invoice_detail.UnitPrice_Vat = UnitPrice_Vat;
 
                                     sales_invoice_detail.id_project_task = _project_task.id_project_task;
-                                    _project_task.IsSelected = false;
+                                    _project_task.IsSelectedFinance = false;
 
                                     sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                                 }

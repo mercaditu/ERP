@@ -151,47 +151,48 @@ namespace Cognitivo.Project.Development
             //if (project_taskViewSource.View != null)
             //{
             //    project_taskViewSource.View.Filter = null;
-            //    List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+            //List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+            List<project_task> _project_task = dgvtaskview.SelectedItems.Cast<project_task>().ToList();
 
-            //    if (_project_task != null)
-            //    {
-            //        _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
-            //        app_document_range app_document_range = ProjectDB.db.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
-            //        string number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
-            //        foreach (project_task project_task in _project_task)
-            //        {
-            //            project_task.project.code = Project_TaskApprove.code;
-            //            if (Project_TaskApprove.id_range != null)
-            //            {
-            //                project_task.id_range = Project_TaskApprove.id_range;
-            //                // app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
-            //                if (app_document_range != null)
-            //                {
-            //                    project_task.app_document_range = app_document_range;
-            //                    project_task.number = number;
-            //                }
-            //            }
-            //            // project_task.number = number;
+            if (_project_task != null)
+            {
+                _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
+                app_document_range app_document_range = ProjectDB.db.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                string number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                foreach (project_task project_task in _project_task)
+                {
+                    project_task.project.code = Project_TaskApprove.code;
+                    if (Project_TaskApprove.id_range != null)
+                    {
+                        project_task.id_range = Project_TaskApprove.id_range;
+                        // app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                        if (app_document_range != null)
+                        {
+                            project_task.app_document_range = app_document_range;
+                            project_task.number = number;
+                        }
+                    }
+                    // project_task.number = number;
 
-            //            if (project_task.status == Status.Project.Management_Approved)
-            //            {
-            //                project_task.status = Status.Project.Approved;
-            //            }
-            //            project_task.IsSelected = false;
-            //        }
+                    if (project_task.status == Status.Project.Management_Approved)
+                    {
+                        project_task.status = Status.Project.Approved;
+                    }
+                    project_task.IsSelected = false;
+                }
 
-            //        ProjectDB.SaveChanges_WithValidation();
-            //        if (_project_task.FirstOrDefault() != null)
-            //        {
-            //            if (_project_task.FirstOrDefault().app_document_range != null)
-            //            {
-            //                entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
-            //            }
-            //        }
+                ProjectDB.SaveChanges_WithValidation();
+                if (_project_task.FirstOrDefault() != null)
+                {
+                    if (_project_task.FirstOrDefault().app_document_range != null)
+                    {
+                        entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
+                    }
+                }
 
-            //       
-            //    }
-            //}
+
+            }
+            // }
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -200,29 +201,30 @@ namespace Cognitivo.Project.Development
             //{
             //    project_taskViewSource.View.Filter = null;
 
-            //    List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
-            //    if (project_taskLIST != null)
-            //    {
-            //        project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+            List<project_task> project_taskLIST = dgvtaskview.SelectedItems.Cast<project_task>().ToList();
+            // List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
+            if (project_taskLIST != null)
+            {
+                project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
 
-            //        foreach (project_task project_task in project_taskLIST)
-            //        {
-            //            if (project_task.items.id_item_type != item.item_type.Task)
-            //            {
-            //                project_task.status = Status.Project.Rejected;
-            //            }
-            //            project_task.IsSelected = false;
-            //        }
+                foreach (project_task project_task in project_taskLIST)
+                {
+                    if (project_task.items.id_item_type != item.item_type.Task)
+                    {
+                        project_task.status = Status.Project.Rejected;
+                    }
+                    project_task.IsSelected = false;
+                }
 
-            //        //Saving Changes
-            //        if (ProjectDB.SaveChanges_WithValidation() )
-            //        {
-            //            toolBar.msgAnnulled(ProjectDB.NumberOfRecords);
-            //        }
+                //Saving Changes
+                if (ProjectDB.SaveChanges_WithValidation())
+                {
+                    toolBar.msgAnnulled(ProjectDB.NumberOfRecords);
+                }
 
-            //        
-            //    }
-            //}
+
+            }
+            // }
         }
 
         private void toolBar_btnNew_Click(object sender)
@@ -321,14 +323,16 @@ namespace Cognitivo.Project.Development
 
             if (project != null)
             {
+                int? sequence = projectasklist.Where(x => x.parent == null).Max(x => x.sequence);
                 project_task n_project_task = new project_task();
                 n_project_task.id_project = project.id_project;
                 n_project_task.status = entity.Status.Project.Pending;
                 n_project_task.State = EntityState.Added;
-                n_project_task.sequence = -1;
+                n_project_task.sequence = sequence + 1;
                 ProjectDB.db.project_task.Add(n_project_task);
                 projectasklist.Add(n_project_task);
                 LoadTask(project);
+                dgvtaskview.SelectedItem = n_project_task;
             }
             else
             {
@@ -363,112 +367,103 @@ namespace Cognitivo.Project.Development
 
         private void btnDeleteTask_Click(object sender)
         {
-            //if (project_taskViewSource.View != null)
-            //{
-            //    project_taskViewSource.View.Filter = null;
-            //    //List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
 
-            //    ProjectDB.NumberOfRecords = 0;
-            //    //foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
-            //    //{
-            //    //    if (task.status == Status.Project.Pending)
-            //    //    {
-            //    //        using (db db = new db())
-            //    //        {
-            //    //            if (task.id_project_task != 0)
-            //    //            {
-            //    //                db.project_task.Remove(db.project_task.Where(x => x.id_project_task == task.id_project_task).FirstOrDefault());
-            //    //                db.SaveChanges();
-            //    //            }
-            //    //            else
-            //    //            {
-            //    //                ProjectDB.db.Entry(task).State = EntityState.Detached;
-            //    //            }
-            //    //        }
+            List<project_task> _project_task = dgvtaskview.SelectedItems.Cast<project_task>().ToList();
+            project project = projectViewSource.View.CurrentItem as project;
+            ProjectDB.NumberOfRecords = 0;
+            foreach (project_task task in _project_task)
+            {
+                if (task.status == Status.Project.Pending)
+                {
+                    using (db db = new db())
+                    {
+                        if (task.id_project_task != 0)
+                        {
+                            db.project_task.Remove(db.project_task.Where(x => x.id_project_task == task.id_project_task).FirstOrDefault());
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            ProjectDB.db.Entry(task).State = EntityState.Detached;
+                        }
+                    }
 
-            //    //        ProjectDB.NumberOfRecords += 1;
-            //    //    }
-            //    //    else
-            //    //    {
-            //    //        //ProjectTaskDB.SaveChanges();
-            //    //        toolBar_btnAnull_Click(sender);
-            //    //    }
-            //    //}
+                    ProjectDB.NumberOfRecords += 1;
+                }
+                else
+                {
+                    //ProjectTaskDB.SaveChanges();
+                    toolBar_btnAnull_Click(sender);
+                }
+            }
 
-            //    ProjectDB.Initialize();
-            //    ProjectDB.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
-            //    projectViewSource.Source = ProjectDB.db.projects.Local;
-            //    project_taskViewSource.View.Filter = null;
-            //    project_taskViewSource.View.Refresh();
+           
+            ProjectDB.db.SaveChanges();
+            LoadTask(project);
 
-            // }
+
+
         }
 
         private void btnApprove_Click(object sender)
         {
-            //ProjectDB.NumberOfRecords += 0;
+            ProjectDB.NumberOfRecords += 0;
 
-            //if (project_taskViewSource.View != null)
-            //{
-            //    project_taskViewSource.View.Filter = null;
-            //    List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-            //    _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
 
-            //    foreach (project_task project_task in _project_task)
-            //    {
-            //        if ((project_task.status == Status.Project.Pending || project_task.status == null) && project_task.id_item > 0)
-            //        {
-            //            project_task.status = Status.Project.Management_Approved;
-            //            ProjectDB.NumberOfRecords += 1;
-            //        }
 
-            //        project_task.IsSelected = false;
-            //    }
+            List<project_task> _project_task = dgvtaskview.SelectedItems.Cast<project_task>().ToList();
+            // _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
 
-            //    if (ProjectDB.SaveChanges_WithValidation() )
-            //    {
-            //        toolBar.msgApproved(ProjectDB.NumberOfRecords);
-            //    }
+            foreach (project_task project_task in _project_task)
+            {
+                if ((project_task.status == Status.Project.Pending || project_task.status == null) && project_task.id_item > 0)
+                {
+                    project_task.status = Status.Project.Management_Approved;
+                    ProjectDB.NumberOfRecords += 1;
+                }
 
-            //  
-            //}
+                project_task.IsSelected = false;
+            }
+
+            if (ProjectDB.SaveChanges_WithValidation())
+            {
+                toolBar.msgApproved(ProjectDB.NumberOfRecords);
+            }
+
+
+
         }
 
         private void btnAnull_Click(object sender)
         {
             ProjectDB.NumberOfRecords += 0;
 
-            //if (project_taskViewSource.View != null)
-            //{
-            //    //project_taskViewSource.View.Filter = null;
-            //    //List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
-            //    //project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+            List<project_task> project_taskLIST = dgvtaskview.SelectedItems.Cast<project_task>().ToList();
+            foreach (project_task project_task in project_taskLIST)
+            {
+                if (project_task.items.id_item_type != item.item_type.Task)
+                {
+                    project_task.status = Status.Project.Rejected;
+                }
+                ProjectDB.NumberOfRecords += 1;
+                project_task.IsSelected = false;
 
-            //    //foreach (project_task project_task in project_taskLIST)
-            //    //{
-            //    //    if (project_task.items.id_item_type != item.item_type.Task)
-            //    //    {
-            //    //        project_task.status = Status.Project.Rejected;
-            //    //    }
-            //    //    ProjectDB.NumberOfRecords += 1;
-            //    //    project_task.IsSelected = false;
+                foreach (production_order_detail production_order_detail in project_task.production_order_detail)
+                {
+                    if (production_order_detail.item.id_item_type != item.item_type.Task)
+                    {
+                        production_order_detail.status = Status.Production.Anull;
+                    }
+                }
+            }
 
-            //    //    foreach (production_order_detail production_order_detail in project_task.production_order_detail)
-            //    //    {
-            //    //        if (production_order_detail.item.id_item_type != item.item_type.Task)
-            //    //        {
-            //    //            production_order_detail.status = Status.Production.Anull;
-            //    //        }
-            //    //    }
-            //    //}
-
-            //    //if (ProjectDB.SaveChanges_WithValidation())
-            //    //{
-            //    //    toolBar.msgAnnulled(ProjectDB.NumberOfRecords);
-            //    //}
+            if (ProjectDB.SaveChanges_WithValidation())
+            {
+                toolBar.msgAnnulled(ProjectDB.NumberOfRecords);
+            }
 
 
-            //}
+
         }
 
         #endregion Project Task Events
@@ -549,78 +544,82 @@ namespace Cognitivo.Project.Development
                 project project = projectViewSource.View.CurrentItem as project;
                 project_task project_task_output = dgvtaskview.SelectedItem as project_task;
 
-
-                if (project_task_output.parent != null)
+                if (project_task_output != null)
                 {
-                    if (project_task_output.parent.items.is_autorecepie)
+                    if (project_task_output.parent != null)
                     {
-                        MessageBox.Show("Can't add becuse item is Auto-Recipe");
-                    }
-                }
-
-                if (item != null && item.id_item > 0 && item.is_autorecepie)
-                {
-                    project_task_output.id_item = item.id_item;
-                    project_task_output.items = item;
-                    project_task_output.RaisePropertyChanged("item");
-                    project_task_output.quantity_est = 1;
-                    foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
-                    {
-                        project_task project_task = new project_task();
-
-                        project_task.code = item_recepie_detail.item.name;
-                        project_task.item_description = item_recepie_detail.item.name;
-                        project_task.id_item = item_recepie_detail.item.id_item;
-                        project_task.items = item_recepie_detail.item;
-                        project_task.id_project = project_task_output.id_project;
-                        project_task.status = Status.Project.Pending;
-                        project_task.RaisePropertyChanged("item");
-                        if (item_recepie_detail.quantity > 0)
+                        if (project_task_output.parent.items.is_autorecepie)
                         {
-                            project_task.quantity_est = (decimal)item_recepie_detail.quantity;
+                            MessageBox.Show("Can't add becuse item is Auto-Recipe");
+                        }
+                    }
+                    if (item != null && item.id_item > 0 && item.is_autorecepie)
+                    {
+                        project_task_output.id_item = item.id_item;
+                        project_task_output.items = item;
+                        project_task_output.RaisePropertyChanged("item");
+                        project_task_output.quantity_est = 1;
+                        foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                        {
+                            project_task project_task = new project_task();
+
+                            project_task.code = item_recepie_detail.item.name;
+                            project_task.item_description = item_recepie_detail.item.name;
+                            project_task.id_item = item_recepie_detail.item.id_item;
+                            project_task.items = item_recepie_detail.item;
+                            project_task.id_project = project_task_output.id_project;
+                            project_task.status = Status.Project.Pending;
+                            project_task.RaisePropertyChanged("item");
+                            if (item_recepie_detail.quantity > 0)
+                            {
+                                project_task.quantity_est = (decimal)item_recepie_detail.quantity;
+                            }
+
+                            project_task_output.child.Add(project_task);
                         }
 
-                        project_task_output.child.Add(project_task);
                     }
-
-                }
-                else
-                {
-                    if (project_task_output.code == "")
+                    else
                     {
-                        project_task_output.code = item.code;
+                        if (project_task_output.code == "")
+                        {
+                            project_task_output.code = item.code;
+                        }
+                        project_task_output.id_item = item.id_item;
+                        project_task_output.items = item;
+                        project_task_output.item_description = item.name;
+                        project_task_output.RaisePropertyChanged("item_description");
+                        project_task_output.RaisePropertyChanged("item");
+                        project_task_output.quantity_est = 1;
                     }
-                    project_task_output.id_item = item.id_item;
-                    project_task_output.items = item;
-                    project_task_output.item_description = item.name;
-                    project_task_output.RaisePropertyChanged("item_description");
-                    project_task_output.RaisePropertyChanged("item");
-                    project_task_output.quantity_est = 1;
-                }
 
-                if (item.item_dimension.Count() > 0)
-                {
-
-
-                    ProjectDB.db.project_task_dimension.RemoveRange(project_task_output.project_task_dimension);
-                    foreach (item_dimension _item_dimension in item.item_dimension)
+                    if (item.item_dimension.Count() > 0)
                     {
-                        project_task_dimension project_task_dimension = new project_task_dimension();
-                        project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
-                        project_task_dimension.app_dimension = _item_dimension.app_dimension;
-                        project_task_dimension.value = _item_dimension.value;
-                        project_task_dimension.id_measurement = _item_dimension.id_measurement;
-                        project_task_dimension.app_measurement = _item_dimension.app_measurement;
 
-                        project_task_output.project_task_dimension.Add(project_task_dimension);
-                        project_task_output.RaisePropertyChanged("project_task_dimension");
+
+                        ProjectDB.db.project_task_dimension.RemoveRange(project_task_output.project_task_dimension);
+                        foreach (item_dimension _item_dimension in item.item_dimension)
+                        {
+                            project_task_dimension project_task_dimension = new project_task_dimension();
+                            project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
+                            project_task_dimension.app_dimension = _item_dimension.app_dimension;
+                            project_task_dimension.value = _item_dimension.value;
+                            project_task_dimension.id_measurement = _item_dimension.id_measurement;
+                            project_task_dimension.app_measurement = _item_dimension.app_measurement;
+
+                            project_task_output.project_task_dimension.Add(project_task_dimension);
+                            project_task_output.RaisePropertyChanged("project_task_dimension");
+                        }
                     }
+
+
+
+
+                    project_task_output.CalcSalePrice_TimerTaks();
                 }
 
 
 
-
-                project_task_output.CalcSalePrice_TimerTaks();
 
                 dgvtaskview.ItemsSource = null;
                 ProjectDB.db.SaveChanges();
@@ -787,15 +786,49 @@ namespace Cognitivo.Project.Development
         private void MenuNew_Click(object sender, RoutedEventArgs e)
         {
 
+
             project project = projectViewSource.View.CurrentItem as project;
             project_task project_task = dgvtaskview.SelectedItem as project_task;
-            project_task n_project_task = new project_task();
-            n_project_task.id_project = project.id_project;
-            n_project_task.status = entity.Status.Project.Pending;
-            n_project_task.State = EntityState.Added;
-            n_project_task.parent_child = project_task.id_project_task;
-            project_task.child.Add(n_project_task);
-            projectasklist.Add(n_project_task);
+
+            if (project != null)
+            {
+                if (project_task != null && project_task.items != null && project_task.items.item_recepie.Count() == 0)
+                {
+                    //Adding a Child Item.
+                    if (project_task.items != null)
+                    {
+                        if (project_task.items.id_item_type == item.item_type.Task)
+                        {
+                            int? sequence = projectasklist.Where(x => x.parent == project_task).Max(x => x.sequence);
+                            project_task n_project_task = new project_task();
+                            n_project_task.id_project = project.id_project;
+                            n_project_task.status = Status.Project.Pending;
+                            n_project_task.quantity_est = 0;
+                            n_project_task.parent = project_task;
+                            n_project_task.State = EntityState.Added;
+                            n_project_task.sequence = sequence + 1;
+                            n_project_task.parent_child = project_task.id_project_task;
+                            project_task.child.Add(n_project_task);
+                            ProjectDB.db.project_task.Add(n_project_task);
+                            projectasklist.Add(n_project_task);
+
+                        }
+                    }
+                }
+                else
+                {
+                    project_task n_project_task = new project_task();
+                    n_project_task.id_project = project.id_project;
+                    n_project_task.status = entity.Status.Project.Pending;
+                    n_project_task.State = EntityState.Added;
+                    ProjectDB.db.project_task.Add(n_project_task);
+                    projectasklist.Add(n_project_task);
+
+                }
+            }
+
+
+
             //ProjectDB.db.SaveChanges();
             dgvtaskview.ItemsSource = null;
             LoadTask(project);
@@ -839,12 +872,12 @@ namespace Cognitivo.Project.Development
             project_task selectedtask = dgvtaskview.SelectedItem as project_task;
             int? currentsequence = selectedtask.sequence;
             project_task selectedUPtask = projectasklist.Where(x => x.sequence == currentsequence - 1 && x.parent == selectedtask.parent).FirstOrDefault();
-            if (selectedUPtask!=null)
+            if (selectedUPtask != null)
             {
                 selectedtask.sequence = selectedUPtask.sequence;
                 selectedUPtask.sequence = currentsequence;
             }
-          
+
             btnExpandAll_Checked(null, null);
             //LoadTask(projects);
         }
@@ -855,26 +888,15 @@ namespace Cognitivo.Project.Development
             project_task selectedtask = dgvtaskview.SelectedItem as project_task;
             int? currentsequence = selectedtask.sequence;
             project_task selectedUPtask = projectasklist.Where(x => x.sequence == currentsequence + 1 && x.parent == selectedtask.parent).FirstOrDefault();
-            if (selectedUPtask!=null)
+            if (selectedUPtask != null)
             {
                 selectedtask.sequence = selectedUPtask.sequence;
                 selectedUPtask.sequence = currentsequence;
             }
-         
+
             btnExpandAll_Checked(null, null);
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            if (projectasklist.Where(x => (x.id_item == 0 || x.id_item == null)).Count() == 0)
-            {
-                ProjectDB.db.SaveChanges();
-            }
-            else
-            {
-                toolBar.msgWarning("Item Is Not Assigned...");
-            }
-        }
-
+    
     }
 }

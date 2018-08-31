@@ -35,6 +35,7 @@ namespace entity
 
         public Status.Project? status { get; set; }
         public int? sequence { get; set; }
+
         public int parent_child { get; set; }
         public Int16? revision { get; set; }
 
@@ -220,8 +221,11 @@ namespace entity
                 return i;
             }
         }
-
         [NotMapped]
+        public bool IsSelectedFinance
+        { get; set; }
+
+            [NotMapped]
         public new bool IsSelected
         {
             get { return _is_selected; }

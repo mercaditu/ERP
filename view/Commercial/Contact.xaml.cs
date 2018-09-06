@@ -414,8 +414,8 @@ namespace Cognitivo.Commercial
                 using (db db = new db())
                 {
                     CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
-                    app_attachmentViewSource.Source = await db.app_attachment
-                        .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
+                   // app_attachmentViewSource.Source = await db.app_attachment
+                     //   .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
                 }
             }
         }

@@ -74,11 +74,12 @@ namespace Cognitivo.Configs
                     .Skip(StartIndex)
                     .Take(PageSize).ToList();
 
-                if (ListDetails.Count()>0)
-                {
+                //if (ListDetails.Count() > 0)
+                //{
                     dataPager.LoadDynamicItems(StartIndex, ListDetails);
-                }
-             
+               // }
+
+
 
             }
         }
@@ -177,7 +178,8 @@ namespace Cognitivo.Configs
                         app_account_detailDataGrid.ItemsSource =
                                               app_account_session.app_account_detail
                                           .Where
-                                          (x => x.status == Status.Documents_General.Approved) //Gets only Approved Items into view.
+                                           (x => x.id_session == SessionID &&
+                                          x.status == Status.Documents_General.Approved) //Gets only Approved Items into view.
                                           .GroupBy(ad => new { ad.app_currencyfx.id_currency })
                                           .Select(s => new
                                           {
@@ -192,7 +194,7 @@ namespace Cognitivo.Configs
                                           app_account_session.app_account_detail
                                       .Where
                                       (x => x.id_session == SessionID && //Gets Current Session Items Only.
-                                      (x.status == Status.Documents_General.Approved)) //Gets only Approved Items into view.
+                                      (x.status == Status.Documents_General.Approved || x.status==Status.Documents_General.Pending)) //Gets only Approved Items into view.
                                       .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
                                       .Select(s => new
                                       {

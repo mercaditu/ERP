@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Commercial.Reconciliation"
+﻿<Page x:Class="Cognitivo.Commercial.Reconciliation" x:Name="this"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -29,6 +29,9 @@
         <converter:Status2ColorConverter x:Key="Status2ColorConverter" />
         <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
         <CollectionViewSource x:Key="app_accountapp_account_detailViewSource" Source="{Binding app_account_detail, Source={StaticResource app_accountViewSource}}" />
+        <CollectionViewSource x:Key="app_accountapp_account_detailApproveViewSource" Source="{Binding app_account_detail, Source={StaticResource app_accountViewSource}}" />
+        <CollectionViewSource x:Key="app_accountapp_account_detailAnulledViewSource" Source="{Binding app_account_detail, Source={StaticResource app_accountViewSource}}" />
+        
     </Page.Resources>
     <Grid Background="{StaticResource winBackground}" DataContext="{StaticResource app_accountViewSource}">
         <Grid.RowDefinitions>
@@ -56,36 +59,130 @@
         <Grid Grid.Row="1" Grid.Column="1" Background="Azure">
             <Grid Grid.Column="2">
                 <Label Content="System" Style="{StaticResource H2}" />
-                <DataGrid x:Name="dgvAccountDetail" Style="{StaticResource detail_Datagrid}" Margin="0,50,0,0"
+                <Label Content="{Binding Balance,StringFormat=N2, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H2}"  HorizontalAlignment="Right"/>
+                <TabControl  Background="WhiteSmoke"  Margin="0,50,0,0">
+                    <TabItem Header="Pending">
+                        <DataGrid x:Name="dgvAccountDetail" Style="{StaticResource detail_Datagrid}"
 						  ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}">
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">
-                            <Setter Property="Background" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}" />
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Header="" Width="32"
+                          
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Header="" Width="32"
 											ElementStyle="{DynamicResource MetroDataGridCheckBox}"
 											EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
-                        <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}" Width="Auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentType}" Binding="{Binding payment_type.name, Mode=OneWay}" />
-                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentTypeNumber}" Binding="{Binding payment_detail.payment_type_number, Mode=OneWay}" />
+                                <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentType}" Binding="{Binding payment_type.name, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentTypeNumber}" Binding="{Binding payment_detail.payment_type_number, Mode=OneWay}" />
 
-                        <!-- Balance -->
-                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Debit}" Binding="{Binding debit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Credit}" Binding="{Binding credit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <!-- Match -->
-                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Currency}" Binding="{Binding app_currencyfx.app_currency.code, Mode=OneWay}" />
-                        <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Comment}" Binding="{Binding comment, Mode=OneWay}" />
-                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding external_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                                <!-- Balance -->
+                                <DataGridTemplateColumn  Header="{lex:Loc Cognitivo:local:Debit}" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding debit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn  Header="{lex:Loc Cognitivo:local:Credit}" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding credit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!-- Match -->
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Currency}" Binding="{Binding app_currencyfx.app_currency.code, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Comment}" Binding="{Binding comment, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding external_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Approved">
+                        <DataGrid x:Name="dgvAccountDetailApproved" Style="{StaticResource detail_Datagrid}"
+						  ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailApproveViewSource}}">
+                          
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Header="" Width="32"
+											ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+											EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                                <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentType}" Binding="{Binding payment_type.name, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentTypeNumber}" Binding="{Binding payment_detail.payment_type_number, Mode=OneWay}" />
+
+                                <!-- Balance -->
+                                <DataGridTemplateColumn  Header="{lex:Loc Cognitivo:local:Debit}" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding debit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn  Header="{lex:Loc Cognitivo:local:Credit}" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding credit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!-- Match -->
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Currency}" Binding="{Binding app_currencyfx.app_currency.code, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Comment}" Binding="{Binding comment, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding external_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Anulled">
+                        <DataGrid x:Name="dgvAccountDetailAnulled" Style="{StaticResource detail_Datagrid}"
+						  ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailAnulledViewSource}}">
+                           
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Header="" Width="32"
+											ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+											EditingElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                                <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}" Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentType}" Binding="{Binding payment_type.name, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Cognitivo:local:PaymentTypeNumber}" Binding="{Binding payment_detail.payment_type_number, Mode=OneWay}" />
+
+                                <!-- Balance -->
+                                <DataGridTemplateColumn  Header="{lex:Loc Cognitivo:local:Debit}" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding debit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn  Header="{lex:Loc Cognitivo:local:Credit}" Width="Auto" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding credit, StringFormat=N2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!-- Match -->
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Currency}" Binding="{Binding app_currencyfx.app_currency.code, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Header="{lex:Loc Comment}" Binding="{Binding comment, Mode=OneWay}" />
+                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding external_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
             </Grid>
         </Grid>
         <!--<cntrl:toolBar x:Name="toolBar" appName="Reconciliation"

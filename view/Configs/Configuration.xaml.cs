@@ -270,8 +270,8 @@ namespace Cognitivo.Configs
                     foreach (project_task parent in project.project_task.Where(x => x.parent == null))
                     {
 
-                         sequence = sequence + 1;
-                         parent.SetSequence(sequence);
+                        sequence = sequence + 1;
+                        parent.SetSequence(sequence);
 
 
 
@@ -281,7 +281,54 @@ namespace Cognitivo.Configs
                 db.SaveChanges();
             }
         }
-       
 
+        private void AddAccontdetail_click(object sender, RoutedEventArgs e)
+        {
+            using (db db = new db())
+            {
+                //List<int?> payment_detailid = db.app_account_detail.Where(x => x.id_payment_detail > 0).Select(x => x.id_payment_detail).ToList();
+
+                //List<payment_detail> payment_detailList = db.payment_detail
+                //    .Where(x => !payment_detailid.Contains(x.id_payment_detail) && (x.id_payment_type == 1 || x.id_payment_type == 2))
+                //    .Include(x=>x.payment_schedual).ToList();
+
+                List<payment_detail> payment_details = db.payment_detail.Where(x => x.payment_type.payment_behavior == payment_type.payment_behaviours.Normal)
+                    .Where(x => x.app_account_detail.Count() == 0)
+                    .Where(x => x.payment.status != Status.Documents_General.Annulled)
+                    .ToList();
+
+                foreach (payment_detail payment_detail in payment_details)
+                {
+                    app_account_detail app_account_detail = new app_account_detail();
+                    app_account_session app_account_session = db.app_account_session.Where(x => x.op_date >= payment_detail.trans_date && x.cl_date <= payment_detail.trans_date).FirstOrDefault();
+
+                    if (app_account_session != null)
+                    {
+                        app_account_detail.id_session = app_account_session.id_session;
+                    }
+
+                    app_account_detail.id_payment_detail = payment_detail.id_payment_detail;
+                    app_account_detail.id_account = (int)payment_detail.id_account;
+                    app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
+                    app_account_detail.id_payment_type = payment_detail.id_payment_type;
+                    app_account_detail.status = payment_detail.payment_type.is_direct ? Status.Documents_General.Approved : Status.Documents_General.Pending;
+
+                    if (payment_detail.payment_schedual.FirstOrDefault().id_purchase_invoice > 0 || payment_detail.payment_schedual.FirstOrDefault().id_purchase_order > 0)
+                    {
+                        app_account_detail.debit = Convert.ToDecimal(payment_detail.value);
+                    }
+                    else if (payment_detail.payment_schedual.FirstOrDefault().id_sales_invoice > 0 || payment_detail.payment_schedual.FirstOrDefault().id_sales_order > 0)
+                    {
+                        app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
+                    }
+
+                    app_account_detail.comment = "Insert Through Configuration";
+                    db.app_account_detail.Add(app_account_detail);
+                }
+
+                db.SaveChanges();
+            }
+
+        }
     }
 }

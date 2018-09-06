@@ -13,6 +13,7 @@ namespace entity.API.DebeHaber
     public class Invoice
     {
         public InvoiceTypes Type { get; set; }
+        public int id { get; set; }
         public string CustomerTaxID { get; set; }
         public string CustomerName { get; set; }
         public string SupplierTaxID { get; set; }
@@ -36,6 +37,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
+            id = data.id_sales_invoice;
             Type = InvoiceTypes.Sales;
             CustomerName = data.contact.name;
             CustomerTaxID = data.contact.gov_code;
@@ -93,6 +95,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
+            id = data.id_purchase_invoice;
             Type = InvoiceTypes.Purchase;
             SupplierName = data.contact.name;
             SupplierTaxID = data.contact.gov_code;
@@ -157,6 +160,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
+            id = data.id_sales_return;
             Type = InvoiceTypes.SalesReturn;
             CustomerName = data.contact.name;
             CustomerTaxID = data.contact.gov_code;
@@ -213,6 +217,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
+            id = data.id_purchase_return;
             Type = InvoiceTypes.PurchaseReturn;
             SupplierName = data.contact.name;
             SupplierTaxID = data.contact.gov_code;
@@ -283,6 +288,7 @@ namespace entity.API.DebeHaber
     {
         public AccountTypes Type { get; set; }
         public payment_type.payment_behaviours PaymentType { get; set; }
+        public int id { get; set; }
         public string CustomerTaxID { get; set; }
         public string CustomerName { get; set; }
         public string SupplierTaxID { get; set; }
@@ -327,53 +333,77 @@ namespace entity.API.DebeHaber
             purchase_return purchase_return = null;
             sales_return sales_return = null;
             string number = "";
+            int id_company = 0;
             using (db db = new db())
             {
-
-                if (data.id_sales_invoice > 0)
+                contact contact = db.contacts.Find(data.id_contact);
+                if (data.id_sales_invoice > 0 )
                 {
                     sales_invoice = db.sales_invoice.Find(data.id_sales_invoice);
                     number = sales_invoice.number;
+                    id_company = sales_invoice.id_company;
+                    CustomerName = contact.name;
+                    CustomerTaxID = contact.gov_code;
+                    SupplierName = data.payment_detail.app_company.name;
+                    SupplierTaxID = data.payment_detail.app_company.gov_code;
+
                 }
                 else if (data.id_purchase_return > 0)
                 {
                     purchase_return = db.purchase_return.Find(data.id_purchase_return);
                     number = purchase_return.number;
+                    id_company = purchase_return.id_company;
+                    CustomerName = contact.name;
+                    CustomerTaxID = contact.gov_code;
+                    SupplierName = data.payment_detail.app_company.name;
+                    SupplierTaxID = data.payment_detail.app_company.gov_code;
                 }
 
                 else if (data.id_purchase_invoice > 0)
                 {
                     purchase_invoice = db.purchase_invoice.Find(data.id_purchase_invoice);
                     number = purchase_invoice.number;
+                    id_company = purchase_invoice.id_company;
+                    SupplierName = contact.name;
+                    SupplierTaxID = contact.gov_code;
+                    CustomerName = data.payment_detail.app_company.name;
+                    CustomerTaxID = data.payment_detail.app_company.gov_code;
                 }
                 else if (data.id_sales_return > 0)
                 {
 
                     sales_return = db.sales_return.Find(data.id_sales_return);
                     number = sales_return.number;
+                    id_company = sales_return.id_company;
+                    SupplierName = contact.name;
+                    SupplierTaxID = contact.gov_code;
+                    CustomerName = data.payment_detail.app_company.name;
+                    CustomerTaxID = data.payment_detail.app_company.gov_code;
                 }
 
-                contact contact = db.contacts.Find(data.id_contact);
+                if (id_company==CurrentSession.Id_Company)
+                {
+                   
 
-                PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;
+                    PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;
+                    id = data.id_payment_schedual;
 
+                    Type = data.credit > 0 ? AccountTypes.AccountReceivable : AccountTypes.AccountPayable;
+                    
+                    Number = number;
+                    Comment = data.payment_detail.comment;
+                    AccountName = data.payment_detail.app_account != null ? data.payment_detail.app_account.name : "Default Account";
+                    Date = data.payment_detail.payment.trans_date!=null? data.payment_detail.payment.trans_date.Date.ToString("yyyy-MM-dd"):DateTime.Now.ToString("yyyy-MM-dd");
 
-                Type = data.credit > 0 ? AccountTypes.AccountReceivable : AccountTypes.AccountPayable;
-                CustomerName = contact.name;
-                CustomerTaxID = contact.gov_code;
-                SupplierName = data.payment_detail.app_company.name;
-                SupplierTaxID = data.payment_detail.app_company.gov_code;
-                Number = number;
-                Comment = data.payment_detail.comment;
-                AccountName = data.payment_detail.app_account != null ? data.payment_detail.app_account.name : "Default Account";
-                Date = data.payment_detail.payment.trans_date.Date.ToString("yyyy-MM-dd");
+                    CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.payment_detail.app_currencyfx.id_currency).FirstOrDefault().code;
+                    CurrencyRate = data.credit > 0 ? data.payment_detail.app_currencyfx.buy_value : data.payment_detail.app_currencyfx.sell_value;
+                    ReferenceInvoice = number;
 
-                CurrencyCode = CurrentSession.Currencies.Where(x => x.id_currency == data.payment_detail.app_currencyfx.id_currency).FirstOrDefault().code;
-                CurrencyRate = data.credit > 0 ? data.payment_detail.app_currencyfx.buy_value : data.payment_detail.app_currencyfx.sell_value;
-                ReferenceInvoice = number;
+                    Debit = data.debit; //: entity.Brillo.Currency.convert_Values(data.debit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Purchase);
+                    Credit = data.credit; // : entity.Brillo.Currency.convert_Values(data.credit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Sales);
+                }
 
-                Debit = data.debit == 0 ? 0 : entity.Brillo.Currency.convert_Values(data.debit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Purchase);
-                Credit = data.credit == 0 ? 0 : entity.Brillo.Currency.convert_Values(data.credit, data.id_currencyfx, data.payment_detail.id_currencyfx, App.Modules.Sales);
+               
 
             }
         }
@@ -381,6 +411,7 @@ namespace entity.API.DebeHaber
         //Make another API for MoneyTransfers
         public void LoadTransfers(app_account_detail data)
         {
+            id = data.id_account_detail;
             AccountName = data.app_account.name;
             CustomerName = data.app_company.name;
             CustomerTaxID = data.app_company.gov_code;
@@ -492,14 +523,23 @@ namespace entity.API.DebeHaber
         public int chart_id { get; set; }
         public int taxpayer_id { get; set; }
         public int currency_id { get; set; }
+        public decimal rate { get; set; }
         public string serial { get; set; }
         public string name { get; set; }
         public decimal current_value { get; set; }
         public string purchase_date { get; set; }
         public decimal purchase_value { get; set; }
-        public int? quantity { get; set; }
+        public decimal? quantity { get; set; }
         public string sync_date { get; set; }
-        public Chart charts { get; set; }
+        public Chart chart { get; set; }
+
+    }
+    public class ResoponseData
+    {
+
+        public int ref_id { get; set; }
+
+       
 
     }
     public class Chart

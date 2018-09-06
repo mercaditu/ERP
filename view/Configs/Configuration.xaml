@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="300"
+      d:DesignHeight="700" d:DesignWidth="300"
       Title="Configuration" 
       xmlns:mainpref="clr-namespace:Cognitivo.Properties"
         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
@@ -85,6 +85,14 @@
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
                     <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
                     <Label Content="Update Sequence in Task " FontSize="10" HorizontalContentAlignment="Center" />
+                </Grid>
+            </Button>
+
+            <Button IsDefault="True" Click="AddAccontdetail_click" Background="Transparent" Visibility="Visible"
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="200">
+                    <ProgressBar Margin="0"  Height="24" HorizontalAlignment="Stretch" />
+                    <Label Content="Add Account Detail From Paymnet detail " FontSize="10" HorizontalContentAlignment="Center" />
                 </Grid>
             </Button>
 

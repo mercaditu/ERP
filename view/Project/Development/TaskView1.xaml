@@ -195,18 +195,20 @@
                            ExpanderColumn="id_project_task"
                            NavigationMode="Cell"
                            ParentPropertyName="id_project_task"
-                           SelfRelationRootValue="0" SelectionMode="Single" >
-                  
-                  
+                          SelfRelationRootValue="0" SelectionMode="Single" CurrentCellBeginEdit="dgvtaskview_CurrentCellBeginEdit">
+                               <syncfusion:SfTreeGrid.SortColumnDescriptions>
+                        <syncfusion:SortColumnDescription ColumnName="sequence" SortDirection="Ascending" />
+                    </syncfusion:SfTreeGrid.SortColumnDescriptions>
+
                     <syncfusion:SfTreeGrid.Columns>
-                        <syncfusion:TreeGridCheckBoxColumn MappingName="IsSelected" AllowEditing="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" />
-                        <syncfusion:TreeGridTextColumn HeaderText="code" MappingName="code" AllowEditing="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" />
+                        <syncfusion:TreeGridCheckBoxColumn MappingName="IsSelected"  />
+                        <syncfusion:TreeGridTextColumn HeaderText="code" MappingName="code"  />
                         <syncfusion:TreeGridTextColumn HeaderText="Item" MappingName="items.name" AllowEditing="False"  />
-                        <syncfusion:TreeGridTextColumn HeaderText="Description" MappingName="item_description" AllowEditing="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"  />
-                        <syncfusion:TreeGridNumericColumn HeaderText="Quantity" MappingName="quantity_est" AllowEditing="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"  />
-                        <syncfusion:TreeGridNumericColumn HeaderText="Cost" MappingName="unit_cost_est" AllowEditing="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"  />
-                        <syncfusion:TreeGridDateTimeColumn HeaderText="Start Date" MappingName="start_date_est" AllowEditing="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"  />
-                        <syncfusion:TreeGridDateTimeColumn HeaderText="End Date" MappingName="end_date_est" AllowEditing="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" />
+                        <syncfusion:TreeGridTextColumn HeaderText="Description" MappingName="item_description" />
+                        <syncfusion:TreeGridNumericColumn HeaderText="Quantity" MappingName="quantity_est" />
+                        <syncfusion:TreeGridNumericColumn HeaderText="Cost" MappingName="unit_cost_est" AllowEditing="True" />
+                        <syncfusion:TreeGridDateTimeColumn HeaderText="Start Date" MappingName="start_date_est"   />
+                        <syncfusion:TreeGridDateTimeColumn HeaderText="End Date" MappingName="end_date_est"  />
                         <syncfusion:TreeGridTextColumn HeaderText="sequence" MappingName="sequence" />
 
                     </syncfusion:SfTreeGrid.Columns>

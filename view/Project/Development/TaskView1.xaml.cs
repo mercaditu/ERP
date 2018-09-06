@@ -1,5 +1,6 @@
 using entity;
 using Syncfusion.UI.Xaml.Grid;
+using Syncfusion.UI.Xaml.TreeGrid;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -397,7 +398,7 @@ namespace Cognitivo.Project.Development
                 }
             }
 
-           
+
             ProjectDB.db.SaveChanges();
             LoadTask(project);
 
@@ -897,6 +898,13 @@ namespace Cognitivo.Project.Development
             btnExpandAll_Checked(null, null);
         }
 
-    
+        private void dgvtaskview_CurrentCellBeginEdit(object sender, TreeGridCurrentCellBeginEditEventArgs e)
+        {
+            project_task selectedtask = dgvtaskview.SelectedItem as project_task;
+            if (selectedtask.status!=Status.Project.Pending)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

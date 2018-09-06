@@ -207,7 +207,7 @@ namespace Cognitivo.Accounting
           x.tran_type == app_account_detail.tran_types.Transaction &&
           x.is_accounted == false && x.id_payment_detail == null &&
           x.status == Status.Documents_General.Approved).Count();
-                
+
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
@@ -314,11 +314,22 @@ namespace Cognitivo.Accounting
                 HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        sales_invoice.is_accounted = true;
-                    }
+                        var result = streamReader.ReadToEnd();
+                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
+                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        {
 
+                            sales_invoice sales_invoice = sales_invoiceList.Where(x => x.id_sales_invoice == ReturnJson.ref_id).FirstOrDefault();
+                            if (sales_invoice != null)
+                            {
+                                sales_invoice.is_accounted = true;
+                            }
+
+
+                        }
+                    }
                     Context.db.SaveChanges();
                 }
 
@@ -356,9 +367,22 @@ namespace Cognitivo.Accounting
                 HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    foreach (sales_return sales_return in sales_returnList.Skip(value).Take(100))
+
+                    using(var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        sales_return.is_accounted = true;
+                        var result = streamReader.ReadToEnd();
+                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
+                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        {
+
+                            sales_return sales_return = sales_returnList.Where(x => x.id_sales_return == ReturnJson.ref_id).FirstOrDefault();
+                            if (sales_return != null)
+                            {
+                                sales_return.is_accounted = true;
+                            }
+
+
+                        }
                     }
 
                     Context.db.SaveChanges();
@@ -395,10 +419,21 @@ namespace Cognitivo.Accounting
                 HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        purchase_invoice.is_accounted = true;
+                        var result = streamReader.ReadToEnd();
+                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
+                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        {
 
+                            purchase_invoice purchase_invoice = purchase_invoiceList.Where(x => x.id_purchase_invoice == ReturnJson.ref_id).FirstOrDefault();
+                            if (purchase_invoice != null)
+                            {
+                                purchase_invoice.is_accounted = true;
+                            }
+
+
+                        }
                     }
                     Context.db.SaveChanges();
                 }
@@ -431,10 +466,21 @@ namespace Cognitivo.Accounting
                 HttpWebResponse httpResponse = Send2API(Json, url + "/api/transactions", key);
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    foreach (purchase_return purchase_return in purchase_returnList.Skip(value).Take(100))
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        purchase_return.is_accounted = true;
+                        var result = streamReader.ReadToEnd();
+                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
+                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        {
 
+                            purchase_return purchase_return = purchase_returnList.Where(x => x.id_purchase_return == ReturnJson.ref_id).FirstOrDefault();
+                            if (purchase_return != null)
+                            {
+                                purchase_return.is_accounted = true;
+                            }
+
+                           
+                        }
                     }
                     Context.db.SaveChanges();
                 }
@@ -468,10 +514,6 @@ namespace Cognitivo.Accounting
 
 
 
-
-
-
-
                 foreach (app_account_detail app_account_detail in AccountMovementList.Skip(i).Take(100))
                 {
                     entity.API.DebeHaber.AccountMovements AccountMovement = new entity.API.DebeHaber.AccountMovements();
@@ -486,11 +528,21 @@ namespace Cognitivo.Accounting
                 HttpWebResponse httpResponse = Send2API(Json, url + "/api/movement", key);
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    foreach (app_account_detail app_account_detail in AccountMovementList.Skip(i).Take(100))
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        app_account_detail.is_accounted = true;
-                    }
+                        var result = streamReader.ReadToEnd();
+                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
+                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        {
 
+                            app_account_detail app_account_detail = AccountMovementList.Where(x => x.id_account_detail == ReturnJson.ref_id).FirstOrDefault();
+                            if (app_account_detail != null)
+                            {
+                                app_account_detail.is_accounted = true;
+                            }
+
+                        }
+                    }
                 }
 
                 Context.db.SaveChanges();
@@ -514,6 +566,7 @@ namespace Cognitivo.Accounting
 
             List<entity.API.DebeHaber.AccountMovements> InvoiceList = new List<entity.API.DebeHaber.AccountMovements>();
             int value = 0;
+
             Dispatcher.BeginInvoke((Action)(() => paymentValue.Text = value.ToString()));
             Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = value));
             for (int i = 0; i < app_account_detailsalespurchaseList.Count(); i = i + 100)
@@ -527,13 +580,22 @@ namespace Cognitivo.Accounting
                 {
 
 
-                    foreach (payment_schedual schedual in payment_detail.payment_schedual.AsQueryable().Include(x => x.sales_invoice).Include(x => x.purchase_invoice).ToList())
+                    foreach (payment_schedual schedual in payment_detail.payment_schedual
+                        .AsQueryable().Include(x => x.sales_invoice).Include(x => x.purchase_invoice).ToList())
                     {
                         entity.API.DebeHaber.AccountMovements AccountMovement = new entity.API.DebeHaber.AccountMovements();
 
+
+
                         AccountMovement.LoadPaymentsRecieved(schedual);
 
-                        InvoiceList.Add(AccountMovement);
+                        if (AccountMovement.Credit > 0 || AccountMovement.Debit > 0)
+                        {
+                            InvoiceList.Add(AccountMovement);
+                        }
+
+
+
                     }
 
 
@@ -543,11 +605,23 @@ namespace Cognitivo.Accounting
                 HttpWebResponse httpResponse = Send2API(Json, url + "/api/payment", key);
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    foreach (payment_detail payment_detail in app_account_detailsalespurchaseList.Skip(value).Take(100))
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        payment_detail.payment.is_accounted = true;
+                        var result = streamReader.ReadToEnd();
+                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
+                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        {
+                            payment_detail payment_detail = Context.db.payment_schedual.Where(x => x.id_payment_schedual == ReturnJson.ref_id).Include(x=>x.payment_detail).FirstOrDefault().payment_detail;
+                            if (payment_detail != null)
+                            {
+                                payment_detail.payment.is_accounted = true;
+                            }
+
+
+                        }
                         Context.db.SaveChanges();
                     }
+
                 }
                 value += 100;
                 Dispatcher.BeginInvoke((Action)(() => progAccounts.Value = value));
@@ -583,6 +657,7 @@ namespace Cognitivo.Accounting
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
 
+
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
@@ -594,28 +669,28 @@ namespace Cognitivo.Accounting
                                 using (db db = new db())
                                 {
 
-                                    item_asset item_asset = db.item_asset.Where(x => x.id_item_asset == resp.ref_id).First();
+                                    item_asset item_asset = db.item_asset.Where(x => x.id_item_asset == resp.ref_id).FirstOrDefault();
                                     item_asset.purchase_date = Convert.ToDateTime(resp.purchase_date);
                                     item_asset.purchase_value = resp.purchase_value;
                                     item_asset.current_value = resp.current_value;
                                     item_asset.item.name = resp.name;
                                     item_asset.item.code = resp.serial;
-                                    item_asset.quantity = resp.quantity;
+                                    item_asset.quantity = Convert.ToInt32(resp.quantity);
 
                                     //create asset group or update values.
                                     //search asset group by name
-                                    item_asset_group item_asset_group = db.item_asset_group.Where(x => x.ref_id == resp.charts.id).FirstOrDefault();
+                                    item_asset_group item_asset_group = db.item_asset_group.Where(x => x.ref_id == resp.chart.id).FirstOrDefault();
 
                                     if (item_asset_group != null)
                                     {
-                                        item_asset_group.depreciation_rate = resp.charts.asset_years;
+                                        item_asset_group.depreciation_rate = resp.chart.asset_years;
                                     }
                                     else
                                     {
-                                        item_asset_group = db.item_asset_group.Where(x => x.name == resp.charts.name).FirstOrDefault() ?? new item_asset_group();
-                                        item_asset_group.ref_id = resp.charts.id;
-                                        item_asset_group.depreciation_rate = resp.charts.asset_years;
-                                        item_asset_group.name = resp.charts.name;
+                                        item_asset_group = db.item_asset_group.Where(x => x.name == resp.chart.name).FirstOrDefault() ?? new item_asset_group();
+                                        item_asset_group.ref_id = resp.chart.id;
+                                        item_asset_group.depreciation_rate = resp.chart.asset_years;
+                                        item_asset_group.name = resp.chart.name;
                                     }
 
                                     item_asset_group.item_asset.Add(item_asset);
@@ -663,13 +738,13 @@ namespace Cognitivo.Accounting
         {
             try
             {
-               
+
 
                 var webAddr = uri;
                 WebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-               
+
                 httpWebRequest.Headers.Add("Authorization", "Bearer " + key);
 
                 using (var requestStream = httpWebRequest.GetRequestStream())
@@ -682,14 +757,14 @@ namespace Cognitivo.Accounting
                         streamWriter.Dispose();
 
                     }
-                   
-                 
+
+
                 }
 
-                
 
-                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                httpWebRequest.Abort();
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                //httpWebRequest.Abort();
                 return httpResponse;
 
 

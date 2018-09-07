@@ -13,7 +13,8 @@ namespace entity.API.DebeHaber
     public class Invoice
     {
         public InvoiceTypes Type { get; set; }
-        public int id { get; set; }
+        public int local_id { get; set; }
+        public int cloud_id { get; set; }
         public string CustomerTaxID { get; set; }
         public string CustomerName { get; set; }
         public string SupplierTaxID { get; set; }
@@ -37,7 +38,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
-            id = data.id_sales_invoice;
+            local_id = data.id_sales_invoice;
             Type = InvoiceTypes.Sales;
             CustomerName = data.contact.name;
             CustomerTaxID = data.contact.gov_code;
@@ -95,7 +96,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
-            id = data.id_purchase_invoice;
+            local_id = data.id_purchase_invoice;
             Type = InvoiceTypes.Purchase;
             SupplierName = data.contact.name;
             SupplierTaxID = data.contact.gov_code;
@@ -160,7 +161,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
-            id = data.id_sales_return;
+            local_id = data.id_sales_return;
             Type = InvoiceTypes.SalesReturn;
             CustomerName = data.contact.name;
             CustomerTaxID = data.contact.gov_code;
@@ -217,7 +218,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
-            id = data.id_purchase_return;
+            local_id = data.id_purchase_return;
             Type = InvoiceTypes.PurchaseReturn;
             SupplierName = data.contact.name;
             SupplierTaxID = data.contact.gov_code;
@@ -288,7 +289,8 @@ namespace entity.API.DebeHaber
     {
         public AccountTypes Type { get; set; }
         public payment_type.payment_behaviours PaymentType { get; set; }
-        public int id { get; set; }
+        public int local_id { get; set; }
+        public int cloud_id { get; set; }
         public string CustomerTaxID { get; set; }
         public string CustomerName { get; set; }
         public string SupplierTaxID { get; set; }
@@ -386,7 +388,7 @@ namespace entity.API.DebeHaber
                    
 
                     PaymentType = db.payment_type.Find(data.payment_detail.id_payment_type).payment_behavior;
-                    id = data.id_payment_schedual;
+                    local_id = data.id_payment_schedual;
 
                     Type = data.credit > 0 ? AccountTypes.AccountReceivable : AccountTypes.AccountPayable;
                     
@@ -411,7 +413,7 @@ namespace entity.API.DebeHaber
         //Make another API for MoneyTransfers
         public void LoadTransfers(app_account_detail data)
         {
-            id = data.id_account_detail;
+            local_id = data.id_account_detail;
             AccountName = data.app_account.name;
             CustomerName = data.app_company.name;
             CustomerTaxID = data.app_company.gov_code;

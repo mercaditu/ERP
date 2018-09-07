@@ -59,7 +59,11 @@
         <Grid Grid.Row="1" Grid.Column="1" Background="Azure">
             <Grid Grid.Column="2">
                 <Label Content="System" Style="{StaticResource H2}" />
-                <Label Content="{Binding Balance,StringFormat=N2, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H2}"  HorizontalAlignment="Right"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Label Content="Balance" Style="{StaticResource H2}" HorizontalAlignment="Right" />
+                    <Label Content="{Binding Balance,StringFormat=N2, ElementName=this, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H2}"  HorizontalAlignment="Right" />
+                </StackPanel>
+                
                 <TabControl  Background="WhiteSmoke"  Margin="0,50,0,0">
                     <TabItem Header="Pending">
                         <DataGrid x:Name="dgvAccountDetail" Style="{StaticResource detail_Datagrid}"

@@ -177,6 +177,13 @@ namespace Cognitivo.Commercial
                             sales_invoice.id_condition = app_contract.id_condition;
                             sales_invoice.id_contract = app_contract.id_contract;
                         }
+                        app_document_range app_document_range = db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).FirstOrDefault();
+                        if (app_document_range!=null)
+                        {
+                            sales_invoice.id_range = app_document_range.id_range;
+                        }
+
+                        
 
                         sales_invoice.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                         sales_invoice.comment = "Subscription";

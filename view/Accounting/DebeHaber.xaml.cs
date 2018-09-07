@@ -317,14 +317,15 @@ namespace Cognitivo.Accounting
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
-                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        List<entity.API.DebeHaber.Invoice> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.Invoice>>(result);
+                        foreach (entity.API.DebeHaber.Invoice ReturnJson in ReturnJsonList)
                         {
 
-                            sales_invoice sales_invoice = sales_invoiceList.Where(x => x.id_sales_invoice == ReturnJson.ref_id).FirstOrDefault();
+                            sales_invoice sales_invoice = sales_invoiceList.Where(x => x.id_sales_invoice == ReturnJson.local_id).FirstOrDefault();
                             if (sales_invoice != null)
                             {
                                 sales_invoice.is_accounted = true;
+                                sales_invoice.cloud_id = ReturnJson.cloud_id;
                             }
 
 
@@ -371,14 +372,15 @@ namespace Cognitivo.Accounting
                     using(var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
-                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        List<entity.API.DebeHaber.Invoice> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.Invoice>>(result);
+                        foreach (entity.API.DebeHaber.Invoice ReturnJson in ReturnJsonList)
                         {
 
-                            sales_return sales_return = sales_returnList.Where(x => x.id_sales_return == ReturnJson.ref_id).FirstOrDefault();
+                            sales_return sales_return = sales_returnList.Where(x => x.id_sales_return == ReturnJson.local_id).FirstOrDefault();
                             if (sales_return != null)
                             {
                                 sales_return.is_accounted = true;
+                                sales_return.cloud_id = ReturnJson.cloud_id;
                             }
 
 
@@ -422,14 +424,15 @@ namespace Cognitivo.Accounting
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
-                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        List<entity.API.DebeHaber.Invoice> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.Invoice>>(result);
+                        foreach (entity.API.DebeHaber.Invoice ReturnJson in ReturnJsonList)
                         {
 
-                            purchase_invoice purchase_invoice = purchase_invoiceList.Where(x => x.id_purchase_invoice == ReturnJson.ref_id).FirstOrDefault();
+                            purchase_invoice purchase_invoice = purchase_invoiceList.Where(x => x.id_purchase_invoice == ReturnJson.local_id).FirstOrDefault();
                             if (purchase_invoice != null)
                             {
                                 purchase_invoice.is_accounted = true;
+                                purchase_invoice.cloud_id = ReturnJson.cloud_id;
                             }
 
 
@@ -469,14 +472,15 @@ namespace Cognitivo.Accounting
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
-                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        List<entity.API.DebeHaber.Invoice> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.Invoice>>(result);
+                        foreach (entity.API.DebeHaber.Invoice ReturnJson in ReturnJsonList)
                         {
 
-                            purchase_return purchase_return = purchase_returnList.Where(x => x.id_purchase_return == ReturnJson.ref_id).FirstOrDefault();
+                            purchase_return purchase_return = purchase_returnList.Where(x => x.id_purchase_return == ReturnJson.local_id).FirstOrDefault();
                             if (purchase_return != null)
                             {
                                 purchase_return.is_accounted = true;
+                                purchase_return.cloud_id = ReturnJson.cloud_id;
                             }
 
                            
@@ -531,14 +535,16 @@ namespace Cognitivo.Accounting
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
-                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        List<entity.API.DebeHaber.AccountMovements> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.AccountMovements>>(result);
+                        foreach (entity.API.DebeHaber.AccountMovements ReturnJson in ReturnJsonList)
                         {
 
-                            app_account_detail app_account_detail = AccountMovementList.Where(x => x.id_account_detail == ReturnJson.ref_id).FirstOrDefault();
+                            app_account_detail app_account_detail = AccountMovementList.Where(x => x.id_account_detail == ReturnJson.local_id).FirstOrDefault();
                             if (app_account_detail != null)
                             {
+
                                 app_account_detail.is_accounted = true;
+                                
                             }
 
                         }
@@ -608,13 +614,14 @@ namespace Cognitivo.Accounting
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        List<ResoponseData> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<ResoponseData>>(result);
-                        foreach (ResoponseData ReturnJson in ReturnJsonList)
+                        List<entity.API.DebeHaber.AccountMovements> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.AccountMovements>>(result);
+                        foreach (entity.API.DebeHaber.AccountMovements ReturnJson in ReturnJsonList)
                         {
-                            payment_detail payment_detail = Context.db.payment_schedual.Where(x => x.id_payment_schedual == ReturnJson.ref_id).Include(x=>x.payment_detail).FirstOrDefault().payment_detail;
+                            payment_detail payment_detail = Context.db.payment_schedual.Where(x => x.id_payment_schedual == ReturnJson.local_id).Include(x=>x.payment_detail).FirstOrDefault().payment_detail;
                             if (payment_detail != null)
                             {
                                 payment_detail.payment.is_accounted = true;
+                                payment_detail.payment.cloud_id = ReturnJson.cloud_id;
                             }
 
 

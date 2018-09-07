@@ -331,8 +331,8 @@
 									  SelectedValue="{Binding id_contract, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 									  ItemsSource="{Binding Source={StaticResource appContractViewSource}}" Style="{StaticResource input_combobox}" />
                         <Label Content="{lex:Loc CreditLimit}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="txtCreditLimit" Style="{StaticResource input_textbox}"
-									 Text="{Binding credit_limit, Mode=TwoWay,StringFormat={}{0:N0}, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                        <TextBox x:Name="txtCreditLimit" Style="{StaticResource input_textbox}" 
+									 Text="{Binding credit_limit, Mode=TwoWay,StringFormat=N0,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}" />
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}" />
                             <Label x:Name="lblCancelCurrency" Content="c" FontSize="12" VerticalAlignment="Center"

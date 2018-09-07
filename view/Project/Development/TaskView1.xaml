@@ -214,12 +214,12 @@
                     </syncfusion:SfTreeGrid.Columns>
                     <syncfusion:SfTreeGrid.RecordContextMenu>
                         <ContextMenu  Style="{x:Null}">
-                            <MenuItem Header="_UP" Click="MenuUP_Click" />
-                            <MenuItem Header="_Down" Click="MenuDown_Click" />
+                            <MenuItem Header="Ascender" Click="MenuUP_Click" />
+                            <MenuItem Header="Mover hacia abajo" Click="MenuDown_Click" />
 
-                            <MenuItem Header="_Level Up" Click="MenuLevelUp_Click" />
-                            <MenuItem Header="_ReAssign Level" Click="MenuReAssignLevel_Click" />
-                            <MenuItem Header="_New Child" Click="MenuNew_Click" />
+                            <MenuItem Header="Elevar a mismo nivel" Click="MenuLevelUp_Click" />
+                            <MenuItem Header="Reasignar nivel" Click="MenuReAssignLevel_Click" />
+                            <MenuItem Header="Agregar nuevo hijo" Click="MenuNew_Click" />
 
                         </ContextMenu>
                     </syncfusion:SfTreeGrid.RecordContextMenu>

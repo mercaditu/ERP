@@ -21,6 +21,7 @@ namespace entity
         public dbContext()
         {
             dbCntxt.Configuration.LazyLoadingEnabled = true;
+            
         }
 
         public bool HasUnsavedChanges()

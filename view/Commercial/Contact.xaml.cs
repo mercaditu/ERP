@@ -692,5 +692,15 @@ namespace Cognitivo.Commercial
                 };
             }
         }
+
+        private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null && contact.id_contact > 0)
+            {
+                
+               entity.Brillo.Document.Start.Automatic(contact,"Contact");
+            }
+        }
     }
 }

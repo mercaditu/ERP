@@ -1,4 +1,5 @@
-﻿using Cognitivo.Sales;
+﻿using Cognitivo.API.Models;
+using Cognitivo.Sales;
 using entity;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,12 @@ namespace Cognitivo.ErpWeb
     public partial class WebSync : Page
     {
         private dbContext db = new dbContext();
-
+        Cognitivo.API.Upload send;
         public WebSync()
         {
             InitializeComponent();
             db.db = new db();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,12 +40,12 @@ namespace Cognitivo.ErpWeb
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 lblInformation.Text = entity.Brillo.Localize.StringText("Items");
-                // Vat_click(null, null);
-                // Contract_click(null, null);
-                // SyncItems();
+               // Vat_click(null, null);
+                //    Contract_click(null, null);
+               // SyncItems();
                 //SyncPromotion();
-                //  SyncCustomer();
-                Sales_click(null, null);
+                   SyncCustomer();
+                //  Sales_click(null, null);
 
 
             }));
@@ -56,80 +58,116 @@ namespace Cognitivo.ErpWeb
 
         private void Vat_click(object sender, RoutedEventArgs e)
         {
-            db dbvat = new db();
+            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, Cognitivo.API.Enums.SyncWith.Playground);
+
             List<app_vat_group> app_vat_groupList = db.db.app_vat_group
                    .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            List<SyncVAT> SyncVATList = new List<SyncVAT>();
+
+            List<object> SyncVATList = new List<object>();
+
             foreach (app_vat_group app_vat_group in app_vat_groupList)
             {
-                SyncVAT syncVAT = new SyncVAT();
-                syncVAT.local_id = app_vat_group.id_vat_group;
-                syncVAT.cloud_id = app_vat_group.cloud_id;
+                Vat syncVAT = new Vat();
+                syncVAT.localId = app_vat_group.id_vat_group;
+                syncVAT.cloudId = app_vat_group.cloud_id ?? 0;
                 syncVAT.name = app_vat_group.name;
-                syncVAT.updated_at = app_vat_group.timestamp.ToString("yyyy-MM-dd hh:mm:ss");
+                syncVAT.updatedAt = app_vat_group.timestamp.ToUniversalTime();
 
                 foreach (app_vat_group_details app_vat_group_details in app_vat_group.app_vat_group_details)
                 {
-                    VATDETAIL vatdetail = new VATDETAIL();
-                    vatdetail.id = app_vat_group_details.id_vat_group_detail;
+                    VatDetail vatdetail = new VatDetail();
                     vatdetail.coefficient = app_vat_group_details.app_vat.coefficient;
-                    vatdetail.percent = app_vat_group_details.percentage;
+                    vatdetail.percentage = app_vat_group_details.percentage;
                     syncVAT.details.Add(vatdetail);
                 }
+
                 SyncVATList.Add(syncVAT);
             }
 
+            SyncVATList = send.Vats("PQR", SyncVATList).OfType<object>().ToList();
+            List<app_vat> app_vatList = db.db.app_vat.ToList();
 
-            var Vat_Json = new JavaScriptSerializer().Serialize(SyncVATList);
-            HttpWebResponse httpResponse = Send2API(Vat_Json, "/sync/saletax");
-            if (httpResponse.StatusCode == HttpStatusCode.OK)
+
+
+            //foreach (var item in collection)
+            //{
+            //    //create on server : assign cloudID
+            //    //create on local
+            //    //update on local
+            //}
+
+            foreach (Cognitivo.API.Models.Vat ResoponseData in SyncVATList)
             {
-                List<app_vat> app_vatList = db.db.app_vat.ToList();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
                 {
-                    var result = streamReader.ReadToEnd();
-                    List<ResoponseVatData> Json = new JavaScriptSerializer().Deserialize<List<ResoponseVatData>>(result);
-                    foreach (ResoponseVatData ResoponseData in Json)
+                    app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                    app_vat_group.cloud_id = ResoponseData.cloudId;
+
+                }
+                else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                {
+
+                    app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                    app_vat_group.cloud_id = ResoponseData.cloudId;
+
+                    if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > app_vat_group.timestamp)
                     {
-                        if (ResoponseData.local_id > 0)
+                        app_vat_group.name = ResoponseData.name;
+                    }
+                }
+
+                else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                {
+                    app_vat_group app_vat_group = new app_vat_group();
+                    app_vat_group.cloud_id = ResoponseData.cloudId;
+                    app_vat_group.name = ResoponseData.name;
+
+                    foreach (VatDetail details in ResoponseData.details)
+                    {
+                        //create group.
+                        app_vat app_vat = app_vatList.Where(x => x.coefficient == details.coefficient).FirstOrDefault();
+                        int vatId = 0;
+
+                        if (app_vat == null)
                         {
-                            app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.id_vat_group == ResoponseData.local_id).FirstOrDefault();
-                            app_vat_group.cloud_id = ResoponseData.cloud_id;
+                            vatId = 0;
+
+                            using (db db = new db())
+                            {
+                                app_vat = new app_vat();
+                                app_vat.coefficient = details.coefficient;
+                                app_vat.on_product = true;
+
+                                db.app_vat.Add(app_vat);
+                                db.SaveChanges();
+
+                                vatId = app_vat.id_vat;
+                            }
                         }
                         else
                         {
-                            app_vat_group app_vat_group = new app_vat_group();
-                            app_vat_group.cloud_id = ResoponseData.cloud_id;
-                            app_vat_group.name = ResoponseData.name;
-                            foreach (ResoponseVatDetail details in ResoponseData.details)
-                            {
-                                app_vat_group_details app_vat_group_details;
-                                app_vat app_vat = app_vatList.Where(x => x.coefficient == details.coefficient).FirstOrDefault();
-                                if (app_vat == null)
-                                {
-                                    app_vat = new app_vat();
-                                    app_vat.coefficient = (decimal)details.coefficient;
-                                    app_vat.on_product = true;
-                                    dbvat.app_vat.Add(app_vat);
-                                    dbvat.SaveChanges();
-                                }
-                                app_vat_group_details = new app_vat_group_details();
-                                app_vat_group_details.id_vat = app_vat.id_vat;
-                                app_vat_group_details.percentage = details.percent;
-                                app_vat_group.app_vat_group_details.Add(app_vat_group_details);
-                                // create vat group...
-                                // foreach detail
-                                // check coefficient in detail.
-                                // create if not exist app_vat.
-                            }
-                            db.db.app_vat_group.Add(app_vat_group);
+                            vatId = app_vat.id_vat;
                         }
 
-                        db.db.SaveChanges();
+                        app_vat_group_details app_vat_group_details = new app_vat_group_details
+                        {
+                            id_vat = vatId,
+                            percentage = details.percentage
+                        };
+
+                        app_vat_group.app_vat_group_details.Add(app_vat_group_details);
                     }
 
+                    db.db.app_vat_group.Add(app_vat_group);
                 }
+
             }
+
+
+            db.db.SaveChanges();
+
+
+
 
         }
 
@@ -137,19 +175,20 @@ namespace Cognitivo.ErpWeb
         {
             List<app_contract> app_contractList = db.db.app_contract
                    .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            List<SyncContract> SyncContractList = new List<SyncContract>();
+            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, Cognitivo.API.Enums.SyncWith.Playground);
+            List<object> SyncContractList = new List<object>();
             foreach (app_contract app_contract in app_contractList)
             {
-                SyncContract SyncContract = new SyncContract();
-                SyncContract.updated_at = app_contract.timestamp.ToString("yyyy-MM-dd hh:mm:ss");
-                SyncContract.local_id = app_contract.id_contract;
-                SyncContract.cloud_id = app_contract.cloud_id;
+                PaymentContract SyncContract = new PaymentContract();
+                SyncContract.updatedAt = app_contract.timestamp.ToUniversalTime();
+                SyncContract.localId = app_contract.id_contract;
+                SyncContract.cloudId = app_contract.cloud_id ?? 0;
                 SyncContract.name = app_contract.name;
 
                 foreach (app_contract_detail app_contract_detail in app_contract.app_contract_detail)
                 {
-                    contract_detail contractdetail = new contract_detail();
-                    contractdetail.id = app_contract_detail.id_contract_detail;
+                    PaymentContractDetail contractdetail = new PaymentContractDetail();
+                    contractdetail.localId = app_contract_detail.id_contract_detail;
                     contractdetail.percent = app_contract_detail.coefficient;
                     contractdetail.offset = app_contract_detail.interval;
                     SyncContract.details.Add(contractdetail);
@@ -157,123 +196,162 @@ namespace Cognitivo.ErpWeb
                 SyncContractList.Add(SyncContract);
             }
 
+            SyncContractList = send.PaymentContracts("PQR", SyncContractList).OfType<object>().ToList();
 
-            var Contract_Json = new JavaScriptSerializer().Serialize(SyncContractList);
-            HttpWebResponse httpResponse = Send2API(Contract_Json, "/sync/contract");
-
-            if (httpResponse.StatusCode == HttpStatusCode.OK)
+            foreach (Cognitivo.API.Models.PaymentContract ResoponseData in SyncContractList)
             {
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
                 {
-                    var result = streamReader.ReadToEnd();
-                    List<ResoponseContractData> Json = new JavaScriptSerializer().Deserialize<List<ResoponseContractData>>(result);
-                    foreach (ResoponseContractData ResoponseData in Json)
-                    {
-                        if (ResoponseData.local_id > 0)
-                        {
-                            app_contract app_contract = db.db.app_contract.Where(x => x.id_contract == ResoponseData.local_id).FirstOrDefault();
-                            app_contract.cloud_id = ResoponseData.cloud_id;
-                        }
-                        else
-                        {
-                            app_contract app_contract = new app_contract();
-                            app_contract.cloud_id = ResoponseData.cloud_id;
-                            app_contract.name = ResoponseData.name;
-                            app_condition app_condition = db.db.app_condition.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                            app_contract.id_condition = app_condition.id_condition;
-                            foreach (ResoponseContractDetail details in ResoponseData.details)
-                            {
-                                app_contract_detail app_contract_detail = new app_contract_detail();
-                                app_contract_detail.id_contract = app_contract.id_contract;
-                                app_contract_detail.coefficient = details.percent;
-                                app_contract_detail.interval = (short)details.offset;
-                                app_contract.app_contract_detail.Add(app_contract_detail);
-                                // create vat group...
-                                // foreach detail
-                                // check coefficient in detail.
-                                // create if not exist app_vat.
-                            }
-                            db.db.app_contract.Add(app_contract);
-                        }
+                    app_contract app_contract = db.db.app_contract.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                    app_contract.cloud_id = ResoponseData.cloudId;
 
+                }
+                else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                {
+
+                    app_contract app_contract = db.db.app_contract.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                    app_contract.cloud_id = ResoponseData.cloudId;
+
+                    if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > app_contract.timestamp)
+                    {
+                        app_contract.name = ResoponseData.name;
                     }
-                    db.db.SaveChanges();
+                }
+
+                else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                {
+                    app_contract app_contract = new app_contract();
+                    app_contract.cloud_id = ResoponseData.cloudId;
+                    app_contract.name = ResoponseData.name;
+                    app_condition app_condition = db.db.app_condition.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    app_contract.id_condition = app_condition.id_condition;
+                    foreach (PaymentContractDetail details in ResoponseData.details)
+                    {
+                        app_contract_detail app_contract_detail = new app_contract_detail();
+                        app_contract_detail.id_contract = app_contract.id_contract;
+                        app_contract_detail.coefficient = details.percent;
+                        app_contract_detail.interval = (short)details.offset;
+                        app_contract.app_contract_detail.Add(app_contract_detail);
+                        // create vat group...
+                        // foreach detail
+                        // check coefficient in detail.
+                        // create if not exist app_vat.
+                    }
+                    db.db.app_contract.Add(app_contract);
                 }
 
             }
+
+
+            db.db.SaveChanges();
+
+
+
         }
 
         private void SyncItems()
         {
-            List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.cloud_id == null).ToList();
+            List<item> items = db.db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
+            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, Cognitivo.API.Enums.SyncWith.Playground);
 
 
-
-            List<SyncItems> SyncItems = new List<SyncItems>();
+            List<object> SyncItems = new List<object>();
 
             foreach (item item in items)
             {
-                SyncItems SyncItem = new SyncItems
+                Cognitivo.API.Models.Item SyncItem = new Cognitivo.API.Models.Item
                 {
-                    cloud_id = item.cloud_id,
-                    local_id = item.id_item,
+                    cloudId = item.cloud_id != null ? (int)item.cloud_id : 0,
+                    localId = item.id_item,
                     name = item.name,
-                    code = item.code,
-                    comment = item.description,
-                    unit_price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().valuewithVAT : 0,
-                    currency_code = CurrentSession.Currency_Default.code,
-                    updated_at = item.timestamp.ToString("yyyy-MM-dd hh:mm:ss")
+                    sku = item.code,
+                    shortDescription = item.description,
+                    price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().valuewithVAT : 0,
+                    currencyCode = CurrentSession.Currency_Default.code,
+                    updatedAt = item.timestamp.ToUniversalTime()
                 };
                 SyncItems.Add(SyncItem);
             }
 
-            for (int i = 0; i < 100; i++)
+            if (SyncItems.Count() > 0)
             {
-                var Item_Json = new JavaScriptSerializer().Serialize(SyncItems.Skip(i).Take(100));
-                HttpWebResponse httpResponse = Send2API(Item_Json, "/sync/item");
-                if (httpResponse.StatusCode == HttpStatusCode.OK)
+
+
+                SyncItems = send.Item("cozent", SyncItems).OfType<object>().ToList();
+
+                foreach (Cognitivo.API.Models.Item ResoponseData in SyncItems)
                 {
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
                     {
-                        var result = streamReader.ReadToEnd();
-                        List<ResoponseItemData> Json = new JavaScriptSerializer().Deserialize<List<ResoponseItemData>>(result);
-                        foreach (ResoponseItemData ResoponseData in Json)
+                        item item = db.db.items.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                        item.cloud_id = ResoponseData.cloudId;
+
+                    }
+                    else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                    {
+
+                        item item = db.db.items.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                        item.cloud_id = ResoponseData.cloudId;
+
+                        if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > item.timestamp)
                         {
-                            if (ResoponseData.local_id > 0)
+                            item.name = ResoponseData.name;
+                            app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatId).FirstOrDefault();
+                            if (app_vat_group != null)
                             {
-                                item item = db.db.items.Where(x => x.id_item == ResoponseData.local_id).FirstOrDefault();
-                                item.cloud_id = ResoponseData.cloud_id;
+                                item.id_vat_group = app_vat_group.id_vat_group;
                             }
                             else
                             {
-                                item item = new item();
-                                item.cloud_id = ResoponseData.cloud_id;
-                                item.name = ResoponseData.name;
-                                app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vat_cloud_id).FirstOrDefault();
-                                if (app_vat_group != null)
-                                {
-                                    item.id_vat_group = app_vat_group.id_vat_group;
-                                }
-                                else
-                                {
-                                    app_vat_group = db.db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                                    item.id_vat_group = app_vat_group.id_vat_group;
-                                }
-                                item.sku = ResoponseData.code;
-                                item.description = ResoponseData.description;
-                                item_price item_price = new item_price();
-                                item_price.item = item;
-                                item_price.value = ResoponseData.price;
-                                item.item_price.Add(item_price);
-                                db.db.items.Add(item);
+                                app_vat_group = db.db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                                item.id_vat_group = app_vat_group.id_vat_group;
                             }
+                            item.sku = ResoponseData.sku;
+                        }
+                    }
+
+                    else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                    {
+                        item item = new item();
+                        item.cloud_id = ResoponseData.cloudId;
+                        item.name = ResoponseData.name;
+                        item.id_item_type = item.item_type.Product;
+
+                        app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatId).FirstOrDefault();
+                        if (app_vat_group != null)
+                        {
+                            item.id_vat_group = app_vat_group.id_vat_group;
+                        }
+                        else
+                        {
+                            app_vat_group = db.db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                            item.id_vat_group = app_vat_group.id_vat_group;
+                        }
+                        item.sku = ResoponseData.sku;
+                        item_price item_price = new item_price();
+                        item_price.id_price_list = (CurrentSession.PriceLists.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault() ?? CurrentSession.PriceLists.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault()).id_price_list;
+                        item_price.item = item;
+                        item_price.value = ResoponseData.price;
+                        app_currency app_currency = CurrentSession.Currencies.Where(x => x.code == ResoponseData.currencyCode).FirstOrDefault();
+                        if (app_currency != null)
+                        {
+                            item_price.id_currency = app_currency.id_currency;
 
                         }
-                        db.db.SaveChanges();
+                        else
+                        {
+                            item_price.id_currency = CurrentSession.Currency_Default.id_currency;
+                        }
+
+                        item.item_price.Add(item_price);
+                        db.db.items.Add(item);
                     }
 
                 }
+                db.db.SaveChanges();
+
             }
+
 
 
             //run code based on timestamp.
@@ -299,9 +377,9 @@ namespace Cognitivo.ErpWeb
         }
         private void SyncCustomer()
         {
-            List<SyncCustomers> synccustomers = new List<SyncCustomers>();
+            List<object> synccustomers = new List<object>();
             List<contact> contacts = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active && x.is_customer).ToList();
-
+            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, Cognitivo.API.Enums.SyncWith.Playground);
 
 
 
@@ -309,17 +387,16 @@ namespace Cognitivo.ErpWeb
             foreach (contact contact in contacts)
             {
 
-                SyncCustomers SyncCustomer = new SyncCustomers
+                Customer SyncCustomer = new Customer
                 {
-                    cloud_id = contact.cloud_id,
-                    local_id = contact.id_contact,
+                    cloudId = Convert.ToInt32(contact.cloud_id ?? 0),
+                    localId = contact.id_contact,
                     name = contact.name,
-                    govcode = contact.gov_code,
-                    alias = contact.alias,
+                    taxid = contact.gov_code,
                     address = contact.address,
                     telephone = contact.telephone,
                     email = contact.email,
-                    updated_at = contact.timestamp.ToString("yyyy-MM-dd hh:mm:ss")
+                    updatedAt = contact.timestamp.ToUniversalTime()
                 };
                 synccustomers.Add(SyncCustomer);
             }
@@ -327,37 +404,57 @@ namespace Cognitivo.ErpWeb
 
             try
             {
-                var Customer_Json = new JavaScriptSerializer().Serialize(synccustomers);
-                HttpWebResponse httpResponse = Send2API(Customer_Json, "/sync/customer");
-                if (httpResponse.StatusCode == HttpStatusCode.OK)
+
+                synccustomers = send.Customer("PQR", synccustomers).OfType<object>().ToList();
+
+
+                foreach (Cognitivo.API.Models.Customer ResoponseData in synccustomers)
                 {
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    if (ResoponseData.name!=null)
                     {
-                        var result = streamReader.ReadToEnd();
-                        List<ResoponseCustomerData> Json = new JavaScriptSerializer().Deserialize<List<ResoponseCustomerData>>(result);
-                        foreach (ResoponseCustomerData ResoponseData in Json)
+                        if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
                         {
-                            if (ResoponseData.local_id > 0)
+                            contact contact = db.db.contacts.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                            contact.cloud_id = ResoponseData.cloudId;
+
+                        }
+                        else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                        {
+
+                            contact contact = db.db.contacts.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                            contact.cloud_id = ResoponseData.cloudId;
+
+                            if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > contact.timestamp)
                             {
-                                contact contact = db.db.contacts.Where(x => x.id_contact == ResoponseData.local_id).FirstOrDefault();
-                                contact.cloud_id = ResoponseData.cloud_id;
-                            }
-                            else
-                            {
-                                contact contact = new contact();
-                                contact.cloud_id = ResoponseData.cloud_id;
                                 contact.name = ResoponseData.name;
-                                contact.gov_code = ResoponseData.code;
+                                contact.gov_code = ResoponseData.taxid;
                                 contact.address = ResoponseData.address;
                                 contact.telephone = ResoponseData.telephone;
                                 contact.email = ResoponseData.email;
-                                db.db.contacts.Add(contact);
                             }
-
                         }
-                        db.db.SaveChanges();
+
+                        else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                        {
+                            contact contact = new contact();
+                            contact.cloud_id = ResoponseData.cloudId;
+                            contact.name = ResoponseData.name;
+                            contact.gov_code = ResoponseData.taxid;
+                            contact.address = ResoponseData.address;
+                            contact.telephone = ResoponseData.telephone;
+                            contact.email = ResoponseData.email;
+                            db.db.contacts.Add(contact);
+                        }
+
                     }
+              
+
                 }
+
+             
+                db.db.SaveChanges();
+
+
             }
             catch (Exception ex)
             {
@@ -374,71 +471,55 @@ namespace Cognitivo.ErpWeb
                 List<sales_invoice> salesinvoices = db.db.sales_invoice
                    .Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false).Take(1).ToList();
 
-                List<Invoice> SyncInvoices = new List<Invoice>();
+                List<object> SyncInvoices = new List<object>();
 
                 foreach (sales_invoice sales_invoice in salesinvoices)
                 {
                     if (sales_invoice.contact != null)
                     {
-                        SyncCustomers SyncCustomer = new SyncCustomers
+
+
+                        Cognitivo.API.Models.Sales SyncInvoice = new Cognitivo.API.Models.Sales
                         {
-
-                            name = sales_invoice.contact.name,
-                            govcode = sales_invoice.contact.gov_code,
-                            alias = sales_invoice.contact.alias,
-                            address = sales_invoice.contact.address,
-                            telephone = sales_invoice.contact.telephone,
-                            email = sales_invoice.contact.email
-                        };
-
-
-                        Invoice SyncInvoice = new Invoice
-                        {
-                            relationship_cloud_id = sales_invoice.contact.cloud_id,
-                            local_id = sales_invoice.id_sales_invoice,
-                            cloud_id = Convert.ToInt64(sales_invoice.cloud_id),
-                            number = sales_invoice.number,
-                            trans_date = sales_invoice.trans_date,
-                            credit_days = 0,
+                            customerCloudId = Convert.ToInt32(sales_invoice.contact.cloud_id ?? 0),
+                            localId = sales_invoice.id_sales_invoice,
+                            cloudId = Convert.ToInt32(sales_invoice.cloud_id ?? 0),
+                            invoiceNumber = sales_invoice.number,
+                            Date = sales_invoice.trans_date,
                             currency = sales_invoice.app_currencyfx.app_currency.code,
-                            rate = sales_invoice.app_currencyfx.sell_value,
-                            comment = sales_invoice.comment,
-                            customer = SyncCustomer,
-                            branch_id = sales_invoice.app_branch.id_branch,
-                            branch_name = sales_invoice.app_branch.name,
+                            currencyRate = sales_invoice.app_currencyfx.sell_value,
+                            updatedAt = sales_invoice.timestamp
                         };
 
                         if (sales_invoice.status == Status.Documents_General.Approved)
                         {
-                            SyncInvoice.status = Invoice.Status.Invoiced;
+                            SyncInvoice.status = API.Enums.Status.Approved;
                         }
 
                         foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail)
                         {
-                            SyncItems SyncItem = new SyncItems
+                            //SyncItems SyncItem = new SyncItems
+                            //{
+                            //    local_id = sales_invoice_detail.item.id_item,
+                            //    name = sales_invoice_detail.item.name,
+                            //    code = sales_invoice_detail.item.code,
+                            //    comment = sales_invoice_detail.item.description,
+                            //    unit_price = sales_invoice_detail.item.item_price.FirstOrDefault() != null ? sales_invoice_detail.item.item_price.FirstOrDefault().valuewithVAT : 0,
+                            //};
+                            Cognitivo.API.Models.SalesDetail Detail = new Cognitivo.API.Models.SalesDetail
                             {
-                                local_id = sales_invoice_detail.item.id_item,
-                                name = sales_invoice_detail.item.name,
-                                code = sales_invoice_detail.item.code,
-                                comment = sales_invoice_detail.item.description,
-                                unit_price = sales_invoice_detail.item.item_price.FirstOrDefault() != null ? sales_invoice_detail.item.item_price.FirstOrDefault().valuewithVAT : 0,
-                            };
-                            Detail Detail = new Detail
-                            {
-                                local_id = sales_invoice_detail.id_sales_invoice_detail,
-                                detail_cloud_id = Convert.ToInt64(sales_invoice_detail.cloud_id),
-                                item_cloud_id = sales_invoice_detail.item.cloud_id,
-                                name = sales_invoice_detail.item.name,
-                                code = sales_invoice_detail.item.code,
-                                is_shipped = sales_invoice_detail.item_movement.Count() > 0 ? true : false,
+                                localId = sales_invoice_detail.id_sales_invoice_detail,
+                                cloudId = Convert.ToInt32(sales_invoice_detail.cloud_id ?? 0),
+                                itemCloudId = Convert.ToInt32(sales_invoice_detail.item.cloud_id ?? 0),
+                                itemDescription = sales_invoice_detail.item.name,
                                 //product_id = sales_invoice_detail.id_item,
                                 //cloud_id
-                                vat = sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault() != null ? sales_invoice_detail.app_vat_group.app_vat_group_details.FirstOrDefault().percentage : 0,
+                                vatCloudId = sales_invoice_detail.app_vat_group != null ? sales_invoice_detail.app_vat_group.cloud_id != null ? (int)sales_invoice_detail.app_vat_group.cloud_id : 0 : 0,
                                 quantity = sales_invoice_detail.quantity,
                                 price = sales_invoice_detail.unit_price
                             };
 
-                            Detail.item = SyncItem;
+                            //  Detail.item = SyncItem;
                             SyncInvoice.details.Add(Detail);
                         }
                         SyncInvoices.Add(SyncInvoice);
@@ -446,98 +527,93 @@ namespace Cognitivo.ErpWeb
 
                     //archive?
                 }
+                SyncInvoices = send.Item("PQR", SyncInvoices).OfType<object>().ToList();
 
-                var Sales_Json = new JavaScriptSerializer().Serialize(SyncInvoices);
-                HttpWebResponse httpResponse = Send2API(Sales_Json, "/sync/transaction");
-                if (httpResponse.StatusCode == HttpStatusCode.OK)
+
+                entity.Controller.Sales.InvoiceController SalesDB = new entity.Controller.Sales.InvoiceController();
+                SalesDB.Initialize();
+                List<app_document_range> app_document_rangeList = SalesDB.db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PointOfSale && x.is_active).ToList();
+
+                foreach (Cognitivo.API.Models.Sales ResoponseData in SyncInvoices)
                 {
-                    entity.Controller.Sales.InvoiceController SalesDB = new entity.Controller.Sales.InvoiceController();
-                    SalesDB.Initialize();
-                    List<app_document_range> app_document_rangeList = SalesDB.db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PointOfSale && x.is_active).ToList();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    if (ResoponseData.localId > 0)
                     {
-                        var result = streamReader.ReadToEnd();
-                        List<ResoponseInvoiceData> Json = new JavaScriptSerializer().Deserialize<List<ResoponseInvoiceData>>(result);
-                        foreach (ResoponseInvoiceData ResoponseData in Json)
+                        sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.localId).FirstOrDefault();
+                        sales_invoice.cloud_id = ResoponseData.cloudId;
+                    }
+                    else
+                    {
+                        sales_invoice sales_invoice = SalesDB.Create(0, false);
+                        sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
+                        app_document_range app_document_range = app_document_rangeList.FirstOrDefault();
+                        if (app_document_range != null)
                         {
-                            if (ResoponseData.local_id > 0)
-                            {
-                                sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.local_id).FirstOrDefault();
-                                sales_invoice.cloud_id = ResoponseData.cloud_id;
-                            }
-                            else
-                            {
-                                sales_invoice sales_invoice = SalesDB.Create(0, false);
-                                sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
-                                app_document_range app_document_range = app_document_rangeList.FirstOrDefault();
-                                if (app_document_range != null)
-                                {
-                                    sales_invoice.id_range = app_document_range.id_range;
-                                    sales_invoice.RaisePropertyChanged("id_range");
-                                    sales_invoice.app_document_range = app_document_range;
-                                }
-                                contact contact = SalesDB.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == ResoponseData.relationship_id).FirstOrDefault();
-                                if (contact != null)
+                            sales_invoice.id_range = app_document_range.id_range;
+                            sales_invoice.RaisePropertyChanged("id_range");
+                            sales_invoice.app_document_range = app_document_range;
+                        }
+                        contact contact = SalesDB.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == ResoponseData.customerCloudId).FirstOrDefault();
+                        if (contact != null)
 
-                                {
-                                    sales_invoice.id_contact = contact.id_contact;
-                                    sales_invoice.contact = contact;
-
-                                }
-
-                              
-                                sales_invoice.cloud_id = ResoponseData.cloud_id;
-
-                                foreach (ResoponseInvoiceDetail details in ResoponseData.details)
-                                {
-
-                                    item item = SalesDB.db.items.Where(x => x.cloud_id == details.item_id).FirstOrDefault();
-                                    if (item != null)
-                                    {
-                                        sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail()
-                                        {
-                                            State = EntityState.Added,
-                                            sales_invoice = sales_invoice,
-                                            quantity = Convert.ToDecimal(details.quantity),
-                                            unit_price= Convert.ToDecimal(details.unit_price),
-                                            Contact = sales_invoice.contact,
-                                            item_description = item.name,
-                                            item = item,
-                                            id_item = item.id_item,
-                                            id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group,
-                                            cloud_id = details.cloud_id
-
-                                        };
-                                        sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
-
-                                    }
-
-
-
-                                   
-
-                                }
-
-
-                                crm_opportunity crm_opportunity = new crm_opportunity()
-                                {
-                                    id_contact = sales_invoice.id_contact,
-                                    id_currency = sales_invoice.id_currencyfx,
-                                    value = sales_invoice.GrandTotal
-                                };
-
-                                crm_opportunity.sales_invoice.Add(sales_invoice);
-                                SalesDB.db.crm_opportunity.Add(crm_opportunity);
-
-                                SalesDB.db.sales_invoice.Add(sales_invoice);
-                                db.db.contacts.Add(contact);
-                            }
+                        {
+                            sales_invoice.id_contact = contact.id_contact;
+                            sales_invoice.contact = contact;
 
                         }
-                        db.db.SaveChanges();
+
+
+                        sales_invoice.cloud_id = ResoponseData.cloudId;
+
+                        foreach (Cognitivo.API.Models.SalesDetail details in ResoponseData.details)
+                        {
+
+                            item item = SalesDB.db.items.Where(x => x.cloud_id == details.itemLocalId).FirstOrDefault();
+                            if (item != null)
+                            {
+                                sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail()
+                                {
+                                    State = EntityState.Added,
+                                    sales_invoice = sales_invoice,
+                                    quantity = Convert.ToDecimal(details.quantity),
+                                    unit_price = Convert.ToDecimal(details.price),
+                                    Contact = sales_invoice.contact,
+                                    item_description = item.name,
+                                    item = item,
+                                    id_item = item.id_item,
+                                    id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group,
+                                    cloud_id = details.cloudId
+
+                                };
+                                sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
+
+                            }
+
+
+
+
+
+                        }
+
+
+                        crm_opportunity crm_opportunity = new crm_opportunity()
+                        {
+                            id_contact = sales_invoice.id_contact,
+                            id_currency = sales_invoice.id_currencyfx,
+                            value = sales_invoice.GrandTotal
+                        };
+
+                        crm_opportunity.sales_invoice.Add(sales_invoice);
+                        SalesDB.db.crm_opportunity.Add(crm_opportunity);
+
+                        SalesDB.db.sales_invoice.Add(sales_invoice);
+                        db.db.contacts.Add(contact);
                     }
 
                 }
+                db.db.SaveChanges();
+
+
+
 
                 //return and aasign ids
                 //archive? if approved or annull and if older than one month.
@@ -1040,14 +1116,17 @@ namespace Cognitivo.ErpWeb
     }
     public class SyncItems
     {
-        public long? local_id { get; set; }
+
+
+        public long? localId { get; set; }
         public string name { get; set; }
-        public string code { get; set; }
+        public string sku { get; set; }
         public string comment { get; set; }
-        public decimal unit_price { get; set; }
-        public long? cloud_id { get; set; }
-        public string currency_code { get; set; }
-        public string updated_at { get; set; }
+        public decimal price { get; set; }
+        public long? cloudId { get; set; }
+        public int vatId { get; set; }
+        public string currencyCode { get; set; }
+        public string updatedAt { get; set; }
     }
 
     public class SyncLocation
@@ -1082,11 +1161,11 @@ namespace Cognitivo.ErpWeb
     {
         public long? local_id { get; set; }
         public string name { get; set; }
-        public string govcode { get; set; }
-        public string alias { get; set; }
-        public string address { get; set; }
-        public string telephone { get; set; }
-        public string email { get; set; }
+        public string customer_taxid { get; set; }
+        public string customer_alias { get; set; }
+        public string customer_address { get; set; }
+        public string customer_telephone { get; set; }
+        public string customer_email { get; set; }
         public long? cloud_id { get; set; }
         public string updated_at { get; set; }
     }
@@ -1164,8 +1243,8 @@ namespace Cognitivo.ErpWeb
         public string name { get; set; }
         public string code { get; set; }
         public string description { get; set; }
-        public decimal price { get; set; }
-        public int vat_cloud_id { get; set; }
+        public decimal? price { get; set; }
+        public int? vat_cloud_id { get; set; }
         public int local_id { get; set; }
 
 
@@ -1223,7 +1302,7 @@ namespace Cognitivo.ErpWeb
         public long detail_cloud_id { get; set; }
         public long? item_cloud_id { get; set; }
         public long product_id { get; set; }
-        public decimal vat { get; set; }
+        public int vat_id { get; set; }
         public decimal quantity { get; set; }
         public decimal price { get; set; }
         public string name { get; set; }

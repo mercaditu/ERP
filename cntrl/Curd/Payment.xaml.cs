@@ -181,11 +181,15 @@ namespace cntrl.Curd
                 {
                     TotalPaid += entity.Brillo.Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                 }
-                if (Math.Round(TotalPaid,2) > Math.Round(TotalPayable,2))
+                if (Math.Round(TotalPaid, 2) > Math.Round(TotalPayable, 2))
                 {
                     String Currency = PaymentDB.app_currency.Where(x => x.id_currency == id.id_currency).FirstOrDefault().name;
-                    MessageBox.Show("Your amount is higher than : -" + TotalPayable + " " + Currency);
-                    return;
+                  MessageBoxResult MsgBoxResult = MessageBox.Show("Your amount is higher than : -" + TotalPayable + " " + Currency  + ". Do You Want To Continue..","Cognitivo",MessageBoxButton.YesNo);
+                    if (MsgBoxResult == MessageBoxResult.No)
+                    {
+                        return;
+                    }
+                   
                 }
             }
 

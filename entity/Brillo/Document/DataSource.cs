@@ -14,6 +14,8 @@ namespace entity.Brillo.Document
     {
         private ReportDataSource reportDataSource = new ReportDataSource();
 
+
+
         public ReportDataSource Create(object Document)
         {
             string BaseName = Document.GetType().BaseType.ToString();
@@ -130,6 +132,28 @@ namespace entity.Brillo.Document
             }
 
             return null;
+        }
+
+        public ReportDataSource Contact(contact contact)
+        {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<contact> contactlist = new List<contact>();
+            contactlist.Add(contact);
+
+
+            reportDataSource.Value = contactlist
+                .Select(g => new
+                {
+                    Name = g.name,
+                    Alias = g.alias,
+                    GovCode=g.gov_code,
+                    Address=g.address,
+                    Email=g.email,
+                    Telephone=g.telephone
+
+                }).ToList();
+
+            return reportDataSource;
         }
 
         public ReportDataSource TechnicalProject(project project)
@@ -462,6 +486,9 @@ CASE
 
             return reportDataSource;
         }
+
+
+        
 
         public ReportDataSource SalesInvoice(sales_invoice sales_invoice)
         {

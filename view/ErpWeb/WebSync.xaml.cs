@@ -40,12 +40,12 @@ namespace Cognitivo.ErpWeb
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 lblInformation.Text = entity.Brillo.Localize.StringText("Items");
-               // Vat_click(null, null);
-                //    Contract_click(null, null);
-               // SyncItems();
+                Vat_click(null, null);
+                Contract_click(null, null);
+                SyncItems();
                 //SyncPromotion();
-                   SyncCustomer();
-                //  Sales_click(null, null);
+                 SyncCustomer();
+                Sales_click(null, null);
 
 
             }));
@@ -98,13 +98,13 @@ namespace Cognitivo.ErpWeb
 
             foreach (Cognitivo.API.Models.Vat ResoponseData in SyncVATList)
             {
-                if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
+                if (ResoponseData.action == API.Enums.Action.CreatedOnCloud)
                 {
                     app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
                     app_vat_group.cloud_id = ResoponseData.cloudId;
 
                 }
-                else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                else if (ResoponseData.action == API.Enums.Action.UpdatedOnLocal)
                 {
 
                     app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
@@ -116,7 +116,7 @@ namespace Cognitivo.ErpWeb
                     }
                 }
 
-                else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
                 {
                     app_vat_group app_vat_group = new app_vat_group();
                     app_vat_group.cloud_id = ResoponseData.cloudId;
@@ -200,13 +200,13 @@ namespace Cognitivo.ErpWeb
 
             foreach (Cognitivo.API.Models.PaymentContract ResoponseData in SyncContractList)
             {
-                if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
+                if (ResoponseData.action == API.Enums.Action.CreatedOnCloud)
                 {
                     app_contract app_contract = db.db.app_contract.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
                     app_contract.cloud_id = ResoponseData.cloudId;
 
                 }
-                else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                else if (ResoponseData.action == API.Enums.Action.UpdatedOnLocal)
                 {
 
                     app_contract app_contract = db.db.app_contract.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
@@ -218,7 +218,7 @@ namespace Cognitivo.ErpWeb
                     }
                 }
 
-                else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
                 {
                     app_contract app_contract = new app_contract();
                     app_contract.cloud_id = ResoponseData.cloudId;
@@ -277,40 +277,44 @@ namespace Cognitivo.ErpWeb
             {
 
 
-                SyncItems = send.Item("cozent", SyncItems).OfType<object>().ToList();
+                SyncItems = send.Item("cognitivo-1", SyncItems.Take(20).ToList()).OfType<object>().ToList();
 
                 foreach (Cognitivo.API.Models.Item ResoponseData in SyncItems)
                 {
-                    if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
+                    if (ResoponseData.action == API.Enums.Action.CreatedOnCloud)
                     {
                         item item = db.db.items.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
                         item.cloud_id = ResoponseData.cloudId;
 
                     }
-                    else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                    else if (ResoponseData.action == API.Enums.Action.UpdatedOnLocal)
                     {
 
                         item item = db.db.items.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
-                        item.cloud_id = ResoponseData.cloudId;
-
-                        if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > item.timestamp)
+                        if (item!=null)
                         {
-                            item.name = ResoponseData.name;
-                            app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatId).FirstOrDefault();
-                            if (app_vat_group != null)
+                            item.cloud_id = ResoponseData.cloudId;
+
+                            if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > item.timestamp)
                             {
-                                item.id_vat_group = app_vat_group.id_vat_group;
+                                item.name = ResoponseData.name;
+                                app_vat_group app_vat_group = db.db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatId).FirstOrDefault();
+                                if (app_vat_group != null)
+                                {
+                                    item.id_vat_group = app_vat_group.id_vat_group;
+                                }
+                                else
+                                {
+                                    app_vat_group = db.db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                                    item.id_vat_group = app_vat_group.id_vat_group;
+                                }
+                                item.sku = ResoponseData.sku;
                             }
-                            else
-                            {
-                                app_vat_group = db.db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                                item.id_vat_group = app_vat_group.id_vat_group;
-                            }
-                            item.sku = ResoponseData.sku;
                         }
+                      
                     }
 
-                    else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                    else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
                     {
                         item item = new item();
                         item.cloud_id = ResoponseData.cloudId;
@@ -410,15 +414,15 @@ namespace Cognitivo.ErpWeb
 
                 foreach (Cognitivo.API.Models.Customer ResoponseData in synccustomers)
                 {
-                    if (ResoponseData.name!=null)
+                    if (ResoponseData.name != null)
                     {
-                        if (ResoponseData.status == API.Enums.RowStatus.UpdateCloudID)
+                        if (ResoponseData.action == API.Enums.Action.CreatedOnCloud)
                         {
                             contact contact = db.db.contacts.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
                             contact.cloud_id = ResoponseData.cloudId;
 
                         }
-                        else if (ResoponseData.status == API.Enums.RowStatus.Update)
+                        else if (ResoponseData.action == API.Enums.Action.UpdatedOnLocal)
                         {
 
                             contact contact = db.db.contacts.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
@@ -434,7 +438,7 @@ namespace Cognitivo.ErpWeb
                             }
                         }
 
-                        else if (ResoponseData.status == API.Enums.RowStatus.Create)
+                        else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
                         {
                             contact contact = new contact();
                             contact.cloud_id = ResoponseData.cloudId;
@@ -447,11 +451,11 @@ namespace Cognitivo.ErpWeb
                         }
 
                     }
-              
+
 
                 }
 
-             
+
                 db.db.SaveChanges();
 
 
@@ -472,6 +476,7 @@ namespace Cognitivo.ErpWeb
                    .Where(x => x.id_company == CurrentSession.Id_Company && x.is_archived == false).Take(1).ToList();
 
                 List<object> SyncInvoices = new List<object>();
+                send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, Cognitivo.API.Enums.SyncWith.Playground);
 
                 foreach (sales_invoice sales_invoice in salesinvoices)
                 {
@@ -527,7 +532,7 @@ namespace Cognitivo.ErpWeb
 
                     //archive?
                 }
-                SyncInvoices = send.Item("PQR", SyncInvoices).OfType<object>().ToList();
+                SyncInvoices = send.Transaction("PQR", SyncInvoices).OfType<object>().ToList();
 
 
                 entity.Controller.Sales.InvoiceController SalesDB = new entity.Controller.Sales.InvoiceController();
@@ -536,13 +541,15 @@ namespace Cognitivo.ErpWeb
 
                 foreach (Cognitivo.API.Models.Sales ResoponseData in SyncInvoices)
                 {
-                    if (ResoponseData.localId > 0)
+
+                    if (ResoponseData.action == API.Enums.Action.CreatedOnCloud)
                     {
                         sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.localId).FirstOrDefault();
                         sales_invoice.cloud_id = ResoponseData.cloudId;
                     }
-                    else
+                    else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
                     {
+
                         sales_invoice sales_invoice = SalesDB.Create(0, false);
                         sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
                         app_document_range app_document_range = app_document_rangeList.FirstOrDefault();
@@ -608,6 +615,56 @@ namespace Cognitivo.ErpWeb
                         SalesDB.db.sales_invoice.Add(sales_invoice);
                         db.db.contacts.Add(contact);
                     }
+                    else if (ResoponseData.action == API.Enums.Action.UpdatedOnLocal)
+                    {
+
+                        sales_invoice sales_invoice = SalesDB.Create(0, false);
+                        contact contact = SalesDB.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == ResoponseData.customerCloudId).FirstOrDefault();
+                        if (contact != null)
+
+                        {
+                            sales_invoice.id_contact = contact.id_contact;
+                            sales_invoice.contact = contact;
+
+                        }
+
+
+                        sales_invoice.cloud_id = ResoponseData.cloudId;
+
+                        foreach (Cognitivo.API.Models.SalesDetail details in ResoponseData.details)
+                        {
+
+                            item item = SalesDB.db.items.Where(x => x.cloud_id == details.itemLocalId).FirstOrDefault();
+                            if (item != null)
+                            {
+                                sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail()
+                                {
+                                    State = EntityState.Added,
+                                    sales_invoice = sales_invoice,
+                                    quantity = Convert.ToDecimal(details.quantity),
+                                    unit_price = Convert.ToDecimal(details.price),
+                                    Contact = sales_invoice.contact,
+                                    item_description = item.name,
+                                    item = item,
+                                    id_item = item.id_item,
+                                    id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group,
+                                    cloud_id = details.cloudId
+
+                                };
+                                sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
+
+                            }
+
+
+
+
+
+                        }
+
+
+
+                    }
+
 
                 }
                 db.db.SaveChanges();

@@ -1,48 +1,54 @@
-﻿namespace entity
+namespace entity
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Net;
     using System.Text;
 
-    public partial class app_vat_group_details : Audit, IDataErrorInfo
+    public partial class app_cloud_sync: Audit, IDataErrorInfo
     {
-        public app_vat_group_details()
+        public app_cloud_sync()
         {
+           
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
         }
+       public enum SyncTypes
+        {
+            Complete=1,
+            Transaction=2,
+            Base=3,
+            Vat=4,
+            Contract=5,
+            Item=6,
+            Contact=7,
+            Promostion=8
 
+
+
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_vat_group_detail { get; set; }
+        public int id_cloud_sync { get; set; }
 
-        public int id_vat_group { get; set; }
+      
+        [Required]
+        public SyncTypes type { get; set; }
 
         [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
-        public int id_vat { get; set; }
+        public string comment { get; set; }
 
-        public decimal percentage
-        {
-            get
-            {
-                if (_percentage == 0)
-                {
-                    _percentage = 1;
-                }
-                return _percentage;
-            }
-            set { _percentage = value; }
-        }
+        [Required]
+        public HttpStatusCode status { get; set; }
 
-        private decimal _percentage;
-       
 
-        public virtual app_vat_group app_vat_group { get; set; }
-        public virtual app_vat app_vat { get; set; }
+
+
+
 
         public string Error
         {
@@ -70,11 +76,8 @@
         {
             get
             {
-                if (columnName == "id_vat")
-                {
-                    if (id_vat == 0)
-                        return "VAT needs to be Selected";
-                }
+                // apply property level validation rules
+               
                 return "";
             }
         }

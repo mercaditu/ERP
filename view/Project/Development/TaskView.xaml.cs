@@ -752,6 +752,10 @@ namespace Cognitivo.Project.Development
             }
            
         }
-       
+
+        private void cbxproperty_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

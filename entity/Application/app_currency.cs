@@ -55,6 +55,7 @@ namespace entity
         public virtual ICollection<app_currencyfx> app_currencyfx { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
         public virtual ICollection<impex_expense> impex_expense { get; set; }
+        public virtual ICollection<item_asset> item_asset { get; set; }
 
         public string Error
         {

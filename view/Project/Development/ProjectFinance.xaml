@@ -93,7 +93,7 @@
                         <Panels:pnl_TreeView StatusColor="{Binding sales_detail.sales_order.status, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged,
 																   Converter={StaticResource Status2ColorConverter}}"
 
-											 IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
+											 IsChecked="{Binding IsSelectedFinance, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
 											 Code="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
 											 Type_Name="{Binding items.id_item_type, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"
 											 TaskName="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

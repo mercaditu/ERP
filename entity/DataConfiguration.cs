@@ -1,4 +1,6 @@
-﻿namespace entity
+﻿using System;
+
+namespace entity
 {
     public class DataConfiguration : System.Data.Entity.DbConfiguration
     {
@@ -8,6 +10,7 @@
 
             //for Azure, retry common transient exceptions
             SetExecutionStrategy("MySql.Data.MySqlClient", () => new Execustionstrategy());
+            
         }
     }
 }

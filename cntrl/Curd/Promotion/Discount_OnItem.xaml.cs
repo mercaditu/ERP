@@ -64,6 +64,7 @@ namespace cntrl.Curd.Promotion
             if (sales_promotionViewSource.View.CurrentItem is sales_promotion sales_promotion)
             {
                 sales_promotion.type = sales_promotion.salesPromotion.Discount_onItem;
+                sales_promotion.timestamp = DateTime.Now;
 
             }
 

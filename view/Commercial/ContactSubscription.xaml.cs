@@ -101,7 +101,7 @@ namespace Cognitivo.Commercial
                     contact_subscription.item = item;
                     contact_subscription.id_vat_group = item.id_vat_group;
                     contact_subscription.id_contract = contact.app_contract == null ? 0 : (int)contact.id_contract;
-
+                    contact.contact_subscription.Add(contact_subscription);
                     ContactDB.contact_subscription.Add(contact_subscription);
                     contactViewSource.View.Refresh();
                     contact_subscriptionViewSource.View.Refresh();
@@ -154,18 +154,18 @@ namespace Cognitivo.Commercial
         {
             app_vat_group VatGroup = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault();
 
-            foreach (contact Contact in ContactList)
+            foreach (contact contact in ContactList)
             {
                 try
                 {
-                    using (db db = new db())
-                    {
-                        contact contact = db.contacts.Find(Contact.id_contact);
+                   // using (db db = new db())
+                   // {
+                       // contact contact = db.contacts.Find(Contact.id_contact);
                         sales_invoice sales_invoice = new sales_invoice();
                         sales_invoice.id_contact = contact.id_contact;
                         sales_invoice.contact = contact;
 
-                        app_contract app_contract = db.app_contract.Find(contact.id_contract);
+                        app_contract app_contract = ContactDB.app_contract.Find(contact.id_contract);
                         if (app_contract != null)
                         {
                             sales_invoice.id_condition = app_contract.id_condition;
@@ -173,10 +173,17 @@ namespace Cognitivo.Commercial
                         }
                         else
                         {
-                            app_contract = db.app_contract.Where(x => x.is_default && x.is_active).FirstOrDefault();
+                            app_contract = ContactDB.app_contract.Where(x => x.is_default && x.is_active).FirstOrDefault();
                             sales_invoice.id_condition = app_contract.id_condition;
                             sales_invoice.id_contract = app_contract.id_contract;
                         }
+                        app_document_range app_document_range = ContactDB.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true).FirstOrDefault();
+                        if (app_document_range!=null)
+                        {
+                            sales_invoice.id_range = app_document_range.id_range;
+                        }
+
+                        
 
                         sales_invoice.id_currencyfx = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
                         sales_invoice.comment = "Subscription";
@@ -192,7 +199,7 @@ namespace Cognitivo.Commercial
                                 sales_invoice_detail = new sales_invoice_detail();
                                 sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
                                 sales_invoice_detail.sales_invoice = sales_invoice;
-                                item item = db.items.Find(contact_subscription.id_item);
+                                item item = ContactDB.items.Find(contact_subscription.id_item);
 
                                 if (item != null)
                                 {
@@ -224,12 +231,12 @@ namespace Cognitivo.Commercial
 
                                 crm_opportunity.sales_invoice.Add(sales_invoice);
 
-                                db.crm_opportunity.Add(crm_opportunity);
-                                db.SaveChanges();
+                            ContactDB.crm_opportunity.Add(crm_opportunity);
+                            ContactDB.SaveChanges();
                                 Dispatcher.BeginInvoke((Action)(() => { progBar.Value += 1; }));
                             }
                         }
-                    }
+                    //}
                 }
                 catch (Exception ex)
                 {

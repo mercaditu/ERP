@@ -179,6 +179,10 @@ namespace entity
 
         public long? cloud_id { get; set; }
 
+        public long? ref_id { get; set; }
+
+        public long? chart_id { get; set; }
+
         public bool is_finalize { get; set; }
 
         [NotMapped]

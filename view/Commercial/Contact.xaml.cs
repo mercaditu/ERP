@@ -161,6 +161,8 @@ namespace Cognitivo.Commercial
 
         private void Save_Click(object sender)
         {
+           
+
             if (ContactDB.SaveChanges_WithValidation())
             {
                 toolBar.msgSaved(ContactDB.NumberOfRecords);
@@ -412,8 +414,8 @@ namespace Cognitivo.Commercial
                 using (db db = new db())
                 {
                     CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
-                    app_attachmentViewSource.Source = await db.app_attachment
-                        .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
+                   // app_attachmentViewSource.Source = await db.app_attachment
+                     //   .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
                 }
             }
         }
@@ -688,6 +690,16 @@ namespace Cognitivo.Commercial
 
                     return false;
                 };
+            }
+        }
+
+        private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null && contact.id_contact > 0)
+            {
+                
+               entity.Brillo.Document.Start.Automatic(contact,"Contact");
             }
         }
     }

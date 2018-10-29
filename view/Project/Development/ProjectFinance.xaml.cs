@@ -86,7 +86,7 @@ namespace Cognitivo.Project
             if (project != null)
             {
                 List<project_task> project_taskLIST = new List<project_task>();
-                project_taskLIST = project.project_task.Where(x => x.IsSelected).ToList();
+                project_taskLIST = project.project_task.Where(x => x.IsSelectedFinance).ToList();
                 if (project_taskLIST.Count()>0)
                 {
                     cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
@@ -198,7 +198,7 @@ namespace Cognitivo.Project
                 {
                     if (project != null)
                     {
-                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).OrderByDescending(x => x.id_project_task).ToList();
+                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelectedFinance).OrderByDescending(x => x.id_project_task).ToList();
                         foreach (project_task project_task in project_taskLIST)
                         {
                             if (project_task.items.id_item_type == item.item_type.Task)
@@ -224,7 +224,7 @@ namespace Cognitivo.Project
                 {
                     if (project != null)
                     {
-                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).OrderByDescending(x => x.id_project_task).ToList();
+                        List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelectedFinance).OrderByDescending(x => x.id_project_task).ToList();
                         foreach (project_task project_task in project_taskLIST)
                         {
                             project_task.CalcExecutedQty_TimerTaks();

@@ -108,6 +108,10 @@ namespace entity.Brillo.Document
             {
                 DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.TechnicalProduction((production_order)Document));
             }
+            else if (AppName == typeof(contact).ToString() || BaseName == typeof(contact).ToString())
+            {
+                DocumentViewer.reportViewer.LocalReport.DataSources.Add(DataSource.Contact((contact)Document));
+            }
             else
             {
                 ReportParameter Parameters = new ReportParameter()

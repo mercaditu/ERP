@@ -41,22 +41,23 @@
 
         private bool _is_active;
         public bool is_default { get; set; }
+        public int? cloud_id { get; set; }
 
         public virtual ICollection<app_vat_group_details> app_vat_group_details { get; set; }
-        public virtual IEnumerable<sales_invoice_detail> sales_invoice_detail { get; set; }
-        public virtual IEnumerable<sales_budget_detail> sales_budget_detail { get; set; }
-        public virtual IEnumerable<sales_order_detail> sales_order_detail { get; set; }
+        public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
+        public virtual ICollection<sales_budget_detail> sales_budget_detail { get; set; }
+        public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
 
         internal static object Where(Func<object, object> p)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IEnumerable<sales_return_detail> sales_return_detail { get; set; }
-        public virtual IEnumerable<purchase_invoice_detail> purchase_invoice_detail { get; set; }
-        public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
-        public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
-        public virtual IEnumerable<item> item { get; set; }
+        public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
+        public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail { get; set; }
+        public virtual ICollection<purchase_order_detail> purchase_order_detail { get; set; }
+        public virtual ICollection<purchase_return_detail> purchase_return_detail { get; set; }
+        public virtual ICollection<item> item { get; set; }
 
         public string Error
         {

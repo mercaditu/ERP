@@ -154,14 +154,14 @@ namespace entity
                     payment_detail.id_account = CurrentSession.Id_Account;
                     payment_detail.app_account = await app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefaultAsync();
                 }
-
+                decimal ChildBalance = 0;
                 ///If PaymentDetail Value is Negative.
                 if (IsRecievable == false)
                 {
-                    decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
+                    ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountPayableBalance > 0))
                     {
-                     
+
                         if (ChildBalance > 0)
                         {
                             payment_schedual child_schedual = new payment_schedual();
@@ -187,8 +187,8 @@ namespace entity
                                 ChildBalance -= ChildBalance;
                             }
 
-                         
-                            if (Parent_Schedual.purchase_invoice!=null)
+
+                            if (Parent_Schedual.purchase_invoice != null)
                             {
                                 number = Parent_Schedual.purchase_invoice.number;
                             }
@@ -213,16 +213,16 @@ namespace entity
                             }
                             schedualList.Add(child_schedual);
                         }
-                     
+
                     }
                 }
                 else
                 {
                     ///If PaymentDetail Value is Positive.
-                    decimal ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
+                    ChildBalance = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment_detail.Default_id_currencyfx, App.Modules.Sales);
                     foreach (payment_schedual parent in payment_schedualList.Where(x => x.AccountReceivableBalance > 0))
                     {
-                        
+
                         if (ChildBalance > 0)
                         {
                             payment_schedual child_schedual = new payment_schedual();
@@ -243,11 +243,11 @@ namespace entity
                             }
 
                             ///
-                            if (Parent_Schedual.sales_invoice!=null)
+                            if (Parent_Schedual.sales_invoice != null)
                             {
                                 number = Parent_Schedual.sales_invoice.number;
                             }
-                      
+
 
                             if (Parent_Schedual.id_sales_invoice != null)
                             {
@@ -269,7 +269,7 @@ namespace entity
                             }
                             schedualList.Add(child_schedual);
                         }
-                     
+
                     }
                     //End Mode IF
                 }
@@ -333,9 +333,17 @@ namespace entity
                     base.app_account_detail.Add(app_account_detail);
                 }
 
+                ChildBalance = Currency.convert_Values(ChildBalance, payment_detail.Default_id_currencyfx, payment_detail.id_currencyfx, App.Modules.Sales);
+                if (ChildBalance > 0)
+                {
+                    payment_detail.value = payment_detail.value - ChildBalance;
+                }
+
+
                 ///Logic for Value in Balance Payment Schedual.
                 foreach (payment_schedual payment_schedual in schedualList)
                 {
+
                     //Create a Parent Schedual Object.
 
                     payment_schedual _Parent_Schedual = payment_schedual.parent;

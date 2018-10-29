@@ -33,10 +33,13 @@ namespace entity
         public int id_item_asset { get; set; }
 
         public int id_item { get; set; }
+
         public int? id_branch { get; set; }
         public int? id_item_asset_group { get; set; }
         public DateTime? manufacture_date { get; set; }
         public DateTime? purchase_date { get; set; }
+        public int? quantity { get; set; }
+        public int? id_currency { get; set; }
         public decimal? purchase_value { get; set; }
         public decimal? current_value { get; set; }
 
@@ -57,7 +60,7 @@ namespace entity
 
         //Nav Properties
         public virtual item item { get; set; }
-
+        public virtual app_currency app_currency { get; set; }
         public virtual item_asset_group item_asset_group { get; set; }
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }

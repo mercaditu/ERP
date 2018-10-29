@@ -20,6 +20,7 @@ namespace entity
             production_execution_detail = new List<production_execution_detail>();
             item_request_detail = new List<item_request_detail>();
             trans_date = DateTime.Now;
+            revision = 1;
         }
 
         [Key]
@@ -30,6 +31,10 @@ namespace entity
         public int? id_project_task { get; set; }
         public int? id_item { get; set; }
         public int? movement_id { get; set; }
+        public int? sequence { get; set; }
+        public int parent_child { get; set; }
+        public Int16? revision { get; set; }
+
         public string name
         {
             get

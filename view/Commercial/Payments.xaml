@@ -83,6 +83,8 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:Date}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding app_account.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
+                                        Header="{lex:Loc Cognitivo:local:Account}" Width="auto" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding payment_type.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:PaymentType}" Width="100" FontWeight="Bold" />
                                        <DataGridTextColumn Binding="{Binding payment_type_number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -136,6 +138,8 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:Date}" Width="100" FontWeight="Bold" />
+                                        <DataGridTextColumn Binding="{Binding app_account.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}"
+                                        Header="{lex:Loc Cognitivo:local:Account}" Width="auto" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding payment_type.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                         Header="{lex:Loc Cognitivo:local:PaymentType}" Width="100" FontWeight="Bold" />
                                         <DataGridTextColumn Binding="{Binding payment_type_number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

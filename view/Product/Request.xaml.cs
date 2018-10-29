@@ -132,8 +132,13 @@ namespace Cognitivo.Product
                         item_requestitem_request_detailViewSource.View.Refresh();
                         item_request_detailitem_request_decisionViewSource.View.Refresh();
 
-                        item_request_detail.item_request.GetTotalDecision();
-                        item_request_detail.RaisePropertyChanged("Balance");
+                        if (item_request_detail.item_request != null)
+                        {
+                            item_request_detail.item_request.GetTotalDecision();
+                            item_request_detail.RaisePropertyChanged("Balance");
+
+                        }
+
                     }
                 }
             }
@@ -161,104 +166,106 @@ namespace Cognitivo.Product
                     if (item_request_detail != null)
                     {
                         item _item = RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault();
-                        var movements =
-                                (from items in RequestController.db.item_movement
-                                 where items.status == Status.Stock.InStock
-                                 && items.item_product.id_item == item_request_detail.id_item
-                                 && items.app_location.id_branch == CurrentSession.Id_Branch
-                                 group items by new { items.app_location }
-                                     into last
-                                 select new
-                                 {
-                                     id_location = last.Key.app_location.id_location,
-                                     Location = last.Key.app_location.name,
-                                     Quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                                 }).ToList();
-
-
-
-                        foreach (dynamic movement in movements)
+                        if (_item!=null)
                         {
-                            list_desion.Add(new Decision()
+                            var movements =
+                                    (from items in RequestController.db.item_movement
+                                     where items.status == Status.Stock.InStock
+                                     && items.item_product.id_item == item_request_detail.id_item
+                                     && items.app_location.id_branch == CurrentSession.Id_Branch
+                                     group items by new { items.app_location }
+                                         into last
+                                     select new
+                                     {
+                                         id_location = last.Key.app_location.id_location,
+                                         Location = last.Key.app_location.name,
+                                         Quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                                     }).ToList();
+
+
+
+                            foreach (dynamic movement in movements)
+                            {
+                                list_desion.Add(new Decision()
+                                {
+                                    id = id,
+                                    id_item = _item.id_item,
+                                    id_location = movement.id_location,
+                                    location = movement.Location,
+                                    name = _item.name,
+                                    avlqty = movement.Quantity,
+                                    Quantity = 0,
+                                    State = State.Added
+                                });
+                            }
+
+
+
+                            var transfer =
+                            (from items in RequestController.db.item_movement
+                             where items.status == Status.Stock.InStock
+                             && items.item_product.id_item == item_request_detail.id_item
+
+                             group items by new { items.app_location.app_branch }
+                                 into last
+                             select new
+                             {
+                                 id_location = last.Key.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault(),
+                                 branch = last.Key.app_branch.name,
+                                 quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                             }).ToList();
+
+
+                            foreach (dynamic item in transfer)
+                            {
+                                list_desion_transfer.Add(new Decision()
+                                {
+                                    id = id,
+                                    branch = item.branch,
+                                    id_location = item.id_location,
+                                    id_item = _item.id_item,
+                                    name = _item.name,
+                                    avlqty = item.quntitiy,
+                                    Quantity = 0,
+                                    State = State.Added
+                                });
+                            }
+
+
+
+
+                            list_desion_purchase.Add(new Decision()
                             {
                                 id = id,
-                                id_item = _item.id_item,
-                                id_location = movement.id_location,
-                                location = movement.Location,
-                                name = _item.name,
-                                avlqty = movement.Quantity,
-                                Quantity = 0,
-                                State = State.Added
+                                State = State.Added,
+                                Quantity = 0
                             });
-                        }
 
 
 
-                        var transfer =
-                        (from items in RequestController.db.item_movement
-                         where items.status == Status.Stock.InStock
-                         && items.item_product.id_item == item_request_detail.id_item
-
-                         group items by new { items.app_location.app_branch }
-                             into last
-                         select new
-                         {
-                             id_location = last.Key.app_branch.app_location.Where(x => x.is_default).Select(x => x.id_location).FirstOrDefault(),
-                             branch = last.Key.app_branch.name,
-                             quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                         }).ToList();
-
-
-                        foreach (dynamic item in transfer)
-                        {
-                            list_desion_transfer.Add(new Decision()
+                            Decision InternalDecision = new Decision()
                             {
                                 id = id,
-                                branch = item.branch,
-                                id_location = item.id_location,
-                                id_item = _item.id_item,
-                                name = _item.name,
-                                avlqty = item.quntitiy,
+                                State = State.Added,
+                                Quantity = 0
+                            };
+
+                            list_desion_internal.Add(InternalDecision);
+
+
+
+                            Decision ProductionDecision = new Decision()
+                            {
+                                id = id,
+                                name = item_request_detail.item.name,
                                 Quantity = 0,
                                 State = State.Added
-                            });
+                            };
+
+                            ProductionDecision.RaisePropertyChanged("name");
+
+                            list_desion_production.Add(ProductionDecision);
                         }
-
-
-
-
-                        list_desion_purchase.Add(new Decision()
-                        {
-                            id = id,
-                            State = State.Added,
-                            Quantity = 0
-                        });
-
-
-
-                        Decision InternalDecision = new Decision()
-                        {
-                            id = id,
-                            State = State.Added,
-                            Quantity = 0
-                        };
-
-                        list_desion_internal.Add(InternalDecision);
-
-
-
-                        Decision ProductionDecision = new Decision()
-                        {
-                            id = id,
-                            name = item_request_detail.item.name,
-                            Quantity = 0,
-                            State = State.Added
-                        };
-
-                        ProductionDecision.RaisePropertyChanged("name");
-
-                        list_desion_production.Add(ProductionDecision);
-
                     }
                 }
 
@@ -317,12 +324,19 @@ namespace Cognitivo.Product
                 }
             }
 
-            item_request_detail.item_request.GetTotalDecision();
-            item_request_detail.RaisePropertyChanged("Balance");
+            if (item_request_detail.item_request!=null)
+            {
+                item_request_detail.item_request.GetTotalDecision();
+                item_request_detail.RaisePropertyChanged("Balance");
+            }
+         
             RequestController.db.SaveChanges();
 
-            item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
-            item_request_detailitem_request_decisionViewSource.View.Refresh();
+            if (item_request_detail.item_request != null)
+            {
+                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                item_request_detailitem_request_decisionViewSource.View.Refresh();
+            }
             Edit_Click(sender);
         }
 
@@ -362,59 +376,69 @@ namespace Cognitivo.Product
             if (item_requestitem_request_detailViewSource.View != null)
             {
 
-            }
 
-            item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
 
-            if (item_request_decisiontransferDataGrid.SelectedItem != null)
-            {
-                Decision desion = (Decision)item_request_decisiontransferDataGrid.SelectedItem;
-                if (desion.avlqty < desion.Quantity)
+                item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
+
+                if (item_request_decisiontransferDataGrid.SelectedItem != null)
                 {
-                    toolBar.msgWarning("Quantity is greater than Available");
-                    return;
+                    Decision desion = (Decision)item_request_decisiontransferDataGrid.SelectedItem;
+                    if (desion.avlqty < desion.Quantity)
+                    {
+                        toolBar.msgWarning("Quantity is greater than Available");
+                        return;
+                    }
+                    if (desion.State == State.Added)
+                    {
+                        if (RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
+                        {
+                            crud_modal.Children.Clear();
+                            Configs.itemMovement itemMovement = new Configs.itemMovement()
+                            {
+                                id_item = item_request_detail.id_item,
+                                id_location = desion.id_location,
+                                Quantity = desion.Quantity,
+                                db = RequestController.db,
+                                Decision = item_request_decision.Decisions.Transfer
+                            };
+
+                            itemMovement.Save += pnlMovement_SaveChanges;
+
+                            crud_modal.Visibility = Visibility.Visible;
+                            crud_modal.Children.Add(itemMovement);
+                        }
+                        else
+                        {
+                            desion.State = State.Modified;
+                            item_request_decision item_request_decision = new item_request_decision()
+                            {
+                                IsSelected = true,
+                                id_location = desion.id_location,
+                                quantity = desion.Quantity,
+                                decision = entity.item_request_decision.Decisions.Transfer
+                            };
+                            item_request_detail.item_request_decision.Add(item_request_decision);
+                        }
+                    }
                 }
-                if (desion.State == State.Added)
+
+
+                if (item_request_detail.item_request!=null)
                 {
-                    if (RequestController.db.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
-                    {
-                        crud_modal.Children.Clear();
-                        Configs.itemMovement itemMovement = new Configs.itemMovement()
-                        {
-                            id_item = item_request_detail.id_item,
-                            id_location = desion.id_location,
-                            Quantity = desion.Quantity,
-                            db = RequestController.db,
-                            Decision = item_request_decision.Decisions.Transfer
-                        };
-
-                        itemMovement.Save += pnlMovement_SaveChanges;
-
-                        crud_modal.Visibility = Visibility.Visible;
-                        crud_modal.Children.Add(itemMovement);
-                    }
-                    else
-                    {
-                        desion.State = State.Modified;
-                        item_request_decision item_request_decision = new item_request_decision()
-                        {
-                            IsSelected = true,
-                            id_location = desion.id_location,
-                            quantity = desion.Quantity,
-                            decision = entity.item_request_decision.Decisions.Transfer
-                        };
-                        item_request_detail.item_request_decision.Add(item_request_decision);
-                    }
+                    item_request_detail.item_request.GetTotalDecision();
+                    item_request_detail.RaisePropertyChanged("Balance");
                 }
+              
+
+                RequestController.db.SaveChangesAsync();
+
+                if (item_request_detail.item_request != null)
+                {
+                    item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                    item_request_detailitem_request_decisionViewSource.View.Refresh();
+                }
+                Edit_Click(sender);
             }
-
-            item_request_detail.item_request.GetTotalDecision();
-            item_request_detail.RaisePropertyChanged("Balance");
-            RequestController.db.SaveChangesAsync();
-
-            item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
-            item_request_detailitem_request_decisionViewSource.View.Refresh();
-            Edit_Click(sender);
         }
 
         private void PurchaseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -440,12 +464,19 @@ namespace Cognitivo.Product
                 }
             }
 
-            item_request_detail.item_request.GetTotalDecision();
-            item_request_detail.RaisePropertyChanged("Balance");
+
+            if (item_request_detail.item_request != null)
+            {
+                item_request_detail.item_request.GetTotalDecision();
+                item_request_detail.RaisePropertyChanged("Balance");
+            }
             RequestController.db.SaveChangesAsync();
 
-            item_requestViewSource.View.MoveCurrentToLast();
-            item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+            if (item_request_detail.item_request != null)
+            {
+                item_requestViewSource.View.MoveCurrentToLast();
+                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+            }
             item_request_detailitem_request_decisionViewSource.View.Refresh();
             Edit_Click(sender);
         }
@@ -486,12 +517,18 @@ namespace Cognitivo.Product
                 }
             }
 
-            item_request_detail.item_request.GetTotalDecision();
-            item_request_detail.RaisePropertyChanged("Balance");
-            RequestController.db.SaveChanges();
+            if (item_request_detail.item_request != null)
+            {
+                item_request_detail.item_request.GetTotalDecision();
+                item_request_detail.RaisePropertyChanged("Balance");
+            }
 
-            item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
-            item_request_detailitem_request_decisionViewSource.View.Refresh();
+            RequestController.db.SaveChanges();
+            if (item_request_detail.item_request != null)
+            {
+                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                item_request_detailitem_request_decisionViewSource.View.Refresh();
+            }
             Edit_Click(sender);
         }
 
@@ -530,17 +567,22 @@ namespace Cognitivo.Product
                         quantity = Convert.ToDecimal(itemMovement.Quantity),
                         decision = itemMovement.Decision
                     };
+                    if (item_request_detail.item_request != null)
+                    {
 
-                    item_request_detail.item_request_decision.Add(item_request_decision);
-                    item_request_detail.item_request.GetTotalDecision();
-                    item_request_detail.RaisePropertyChanged("Balance");
+                        item_request_detail.item_request_decision.Add(item_request_decision);
+                        item_request_detail.item_request.GetTotalDecision();
+                        item_request_detail.RaisePropertyChanged("Balance");
+                    }
 
                     RequestController.db.SaveChangesAsync();
                 }
 
-
-                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
-                item_request_detailitem_request_decisionViewSource.View.Refresh();
+                if (item_request_detail.item_request != null)
+                {
+                    item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                    item_request_detailitem_request_decisionViewSource.View.Refresh();
+                }
 
                 Edit_Click(null);
                 GenerateaMovement_Click(null, null);
@@ -639,12 +681,18 @@ namespace Cognitivo.Product
                 }
             }
 
-            item_request_detail.item_request.GetTotalDecision();
-            item_request_detail.RaisePropertyChanged("Balance");
+            if (item_request_detail.item_request != null)
+            {
+                item_request_detail.item_request.GetTotalDecision();
+                item_request_detail.RaisePropertyChanged("Balance");
+            }
             RequestController.db.SaveChanges();
 
-            item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
-            item_request_detailitem_request_decisionViewSource.View.Refresh();
+            if (item_request_detail.item_request != null)
+            {
+                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                item_request_detailitem_request_decisionViewSource.View.Refresh();
+            }
             Edit_Click(sender);
         }
 

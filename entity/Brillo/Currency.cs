@@ -14,8 +14,8 @@ namespace entity.Brillo
         /// Convert values from one currency to another.
         /// </summary>
         /// <param name="OriginalValue"></param>
-        /// <param name="Old_CurrencyID"></param>
-        /// <param name="id_app_currencyfx"></param>
+        /// <param name="Old_CurrencyfxID"></param>
+        /// <param name="New_currencyfxID"></param>
         /// <param name="Modules"></param>
         /// <returns></returns>
         public static decimal convert_Values(decimal originalValue, int old_app_currencyfx, int id_app_currencyfx, App.Modules? Modules)
@@ -183,12 +183,6 @@ namespace entity.Brillo
                 }
             }
             return originalValue;
-        }
-
-
-        public static decimal convert_Values(decimal v, int id_currencyfx1, int id_currencyfx2, object sales)
-        {
-            throw new NotImplementedException();
         }
 
         private static decimal AwayFromDefault(decimal Rate, decimal OriginalValue, bool IsReverse)

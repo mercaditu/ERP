@@ -101,11 +101,11 @@ namespace entity
             {
                 _name = value;
                 RaisePropertyChanged("name");
+
                 if (code == "" || code == null)
                 {
                     _code = value;
                     RaisePropertyChanged("code");
-
                 }
 
                 supplier_name = value;

@@ -86,7 +86,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespaces.Financial, "Configs.Hr_position", entity.App.Names.Position, "EntryExit", entity.CurrentSession.Versions.Medium, "0");
 
             //Stock
-            
+
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Reports, "Product.Item", entity.App.Names.Items, "Item", entity.CurrentSession.Versions.Lite, "1");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.FixedAssets", entity.App.Names.FixedAssets, "FixedAsset", entity.CurrentSession.Versions.Medium, "0");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespaces.Form, "Product.Recipe", entity.App.Names.Recipe, "Recipe", entity.CurrentSession.Versions.Basic, "1");

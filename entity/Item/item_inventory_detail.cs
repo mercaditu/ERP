@@ -136,7 +136,6 @@ namespace entity
         public bool IsEnabled { get; set; }
 
         [NotMapped]
-
         public Brush Foreground
         {
             get
@@ -179,7 +178,6 @@ namespace entity
                 }
             }
         }
-
         private decimal _Quantity_Factored;
 
         public string comment
@@ -187,7 +185,6 @@ namespace entity
             get { return _comment; }
             set { _comment = value; RaisePropertyChanged("comment"); }
         }
-
         private string _comment;
 
         public int id_currencyfx { get; set; }

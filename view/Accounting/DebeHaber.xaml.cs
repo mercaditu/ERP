@@ -289,7 +289,7 @@ namespace Cognitivo.Accounting
 
 
 
-            for (int i = 0; i < progSales.Maximum ; i = i + 100)
+            for (int i = 0; i < progSales.Maximum; i = i + 100)
             {
                 sales_invoiceList = Context.db.sales_invoice.
               Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
@@ -402,17 +402,25 @@ namespace Cognitivo.Accounting
         private void Purchases(string url, string key)
         {
 
-            purchase_invoiceList = Context.db.purchase_invoice.
-                   Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
-               && x.status == Status.Documents_General.Approved)
-               .Include(x => x.contact).Include(x => x.purchase_invoice_detail).Include(x => x.app_currencyfx).Include(x => x.app_company).ToList();
 
-            List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-            int value = 0;
-            Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
-            Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
-            for (int i = 0; i < purchase_invoiceList.Count(); i = i + 100)
+            for (int i = 0; i < progPurchase.Maximum; i = i + 100)
             {
+                purchase_invoiceList = Context.db.purchase_invoice.
+              Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+          && x.status == Status.Documents_General.Approved)
+          .Include(x => x.contact)
+          .Include(x => x.purchase_invoice_detail)
+          .Include(x => x.app_currencyfx)
+          .Include(x => x.app_company)
+          .Skip(i)
+          .Take(100)
+          .ToList();
+
+                List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
+                int value = 0;
+                Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
+                Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
+
                 InvoiceList.Clear();
                 foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
                 {

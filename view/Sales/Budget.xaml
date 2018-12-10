@@ -58,7 +58,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" PageSize="5"
+        
+        <syncfusion:SfDataPager x:Name="dataPager" VerticalAlignment="Bottom" PageSize="5" Grid.Row="1"
                                                 UseOnDemandPaging="True" PagedSource="{Binding}" OnDemandLoading="dataPager_OnDemandLoading"/>
         <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource winBackground}" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid.RowDefinitions>

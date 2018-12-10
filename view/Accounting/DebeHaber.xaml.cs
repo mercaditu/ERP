@@ -282,26 +282,30 @@ namespace Cognitivo.Accounting
             FixedAssetTask.Wait();
 
             Dispatcher.BeginInvoke((Action)(() => btnStart.IsEnabled = true));
-
-
         }
 
         private void Sales(string url, string key)
         {
-            sales_invoiceList = Context.db.sales_invoice.
-               Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
-               && x.status == Status.Documents_General.Approved)
-                 .Include(x => x.sales_invoice_detail)
-                 .Include(x => x.app_currencyfx)
-                 .Include(x => x.app_company)
-                 .ToList();
-            List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-            int value = 0;
-            Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
-            Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
 
-            for (int i = 0; i < sales_invoiceList.Count(); i = i + 100)
+
+
+            for (int i = 0; i < progSales.Maximum ; i = i + 100)
             {
+                sales_invoiceList = Context.db.sales_invoice.
+              Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+              && x.status == Status.Documents_General.Approved)
+                .Include(x => x.sales_invoice_detail)
+                .Include(x => x.app_currencyfx)
+                .Include(x => x.app_company)
+                .Skip(i)
+                .Take(100)
+                .ToList();
+
+                List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
+                int value = 0;
+                Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
+                Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
+
                 InvoiceList.Clear();
                 foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
                 {
@@ -327,7 +331,6 @@ namespace Cognitivo.Accounting
                                 sales_invoice.is_accounted = true;
                                 sales_invoice.cloud_id = ReturnJson.cloud_id;
                             }
-
 
                         }
                     }
@@ -369,7 +372,7 @@ namespace Cognitivo.Accounting
                 if (httpResponse.StatusCode == HttpStatusCode.OK)
                 {
 
-                    using(var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
                         List<entity.API.DebeHaber.Invoice> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.Invoice>>(result);
@@ -483,7 +486,7 @@ namespace Cognitivo.Accounting
                                 purchase_return.cloud_id = ReturnJson.cloud_id;
                             }
 
-                           
+
                         }
                     }
                     Context.db.SaveChanges();
@@ -544,7 +547,7 @@ namespace Cognitivo.Accounting
                             {
 
                                 app_account_detail.is_accounted = true;
-                                
+
                             }
 
                         }
@@ -617,7 +620,7 @@ namespace Cognitivo.Accounting
                         List<entity.API.DebeHaber.AccountMovements> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.AccountMovements>>(result);
                         foreach (entity.API.DebeHaber.AccountMovements ReturnJson in ReturnJsonList)
                         {
-                            payment_detail payment_detail = Context.db.payment_schedual.Where(x => x.id_payment_schedual == ReturnJson.local_id).Include(x=>x.payment_detail).FirstOrDefault().payment_detail;
+                            payment_detail payment_detail = Context.db.payment_schedual.Where(x => x.id_payment_schedual == ReturnJson.local_id).Include(x => x.payment_detail).FirstOrDefault().payment_detail;
                             if (payment_detail != null)
                             {
                                 payment_detail.payment.is_accounted = true;

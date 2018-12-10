@@ -21,10 +21,9 @@ namespace entity.Controller.Sales
         {
             get
             {
-                return (Count % PageSize) == 0 ? (Count % PageSize) : (Count / PageSize) + 1;
+                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
             }
-        }
-
+        }   
 
         public BudgetController()
         {

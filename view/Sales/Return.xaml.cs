@@ -304,16 +304,16 @@ namespace Cognitivo.Sales
                     }
                     else
                     {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item, sbxItem.Quantity));
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, SalesSettings.BlockExcessItem ,item, sbxItem.Quantity));
                     }
                 }
                 sales_return.RaisePropertyChanged("GrandTotal");
             }
         }
 
-        private void select_Item(sales_return sales_return, item item, decimal quantity)
+        private void select_Item(sales_return sales_return,bool AllowDuplicateItem, item item, decimal quantity)
         {
-            if (sales_return.sales_return_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
+            if (sales_return.sales_return_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_return_detail _sales_return_detail = new sales_return_detail();
                 _sales_return_detail.State = EntityState.Added;
@@ -411,60 +411,65 @@ namespace Cognitivo.Sales
             sales_return _sales_return = (sales_return)salesReturnViewSource.View.CurrentItem;
             if (_sales_return != null)
             {
-                sbxContact.Text = pnlSalesInvoice.selected_sales_invoice.FirstOrDefault().contact.name;
-
-                foreach (sales_invoice sales_invoice in pnlSalesInvoice.selected_sales_invoice)
+                if (pnlSalesInvoice.selected_sales_invoice.FirstOrDefault() != null)
                 {
-                    _sales_return.State = EntityState.Modified;
-                    _sales_return.id_condition = sales_invoice.id_condition;
-                    _sales_return.id_contract = sales_invoice.id_contract;
-                    _sales_return.id_currencyfx = sales_invoice.id_currencyfx;
-                    _sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
 
-                    contact contact = SalesReturnDB.db.contacts.Where(x => x.id_contact == sales_invoice.id_contact).FirstOrDefault();
-                    _sales_return.id_contact = contact.id_contact;
-                    _sales_return.contact = contact;
-                    sbxContact.Text = contact.name;
 
-                    foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.Balance > 0))
+                    sbxContact.Text = pnlSalesInvoice.selected_sales_invoice.FirstOrDefault().contact.name;
+
+                    foreach (sales_invoice sales_invoice in pnlSalesInvoice.selected_sales_invoice)
                     {
-                        sales_return_detail sales_return_detail = new sales_return_detail();
-                        if (SalesReturnDB.db.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
-                        {
-                            sales_return_detail.sales_invoice_detail = SalesReturnDB.db.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-                        }
+                        _sales_return.State = EntityState.Modified;
+                        _sales_return.id_condition = sales_invoice.id_condition;
+                        _sales_return.id_contract = sales_invoice.id_contract;
+                        _sales_return.id_currencyfx = sales_invoice.id_currencyfx;
+                        _sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
 
-                        sales_return_detail.sales_return = _sales_return;
+                        contact contact = SalesReturnDB.db.contacts.Where(x => x.id_contact == sales_invoice.id_contact).FirstOrDefault();
+                        _sales_return.id_contact = contact.id_contact;
+                        _sales_return.contact = contact;
+                        sbxContact.Text = contact.name;
 
-                        if (SalesReturnDB.db.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
+                        foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice.sales_invoice_detail.Where(x => x.Balance > 0))
                         {
-                            sales_return_detail.item = SalesReturnDB.db.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
-                            sales_return_detail.item_description = _sales_invoice_detail.item_description;
-                            sales_return_detail.movement_id = _sales_invoice_detail.movement_id;
-                            sales_return_detail.batch_code = _sales_invoice_detail.batch_code;
-                            sales_return_detail.expire_date = _sales_invoice_detail.expire_date;
-                            //Automatically Checks Products to go back in Stock. This is most likely scenario.
-                            if (sales_return_detail.item.item_product.Count() > 0)
+                            sales_return_detail sales_return_detail = new sales_return_detail();
+                            if (SalesReturnDB.db.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
                             {
-                                sales_return_detail.IsSelected = true;
+                                sales_return_detail.sales_invoice_detail = SalesReturnDB.db.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
                             }
+
+                            sales_return_detail.sales_return = _sales_return;
+
+                            if (SalesReturnDB.db.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
+                            {
+                                sales_return_detail.item = SalesReturnDB.db.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
+                                sales_return_detail.item_description = _sales_invoice_detail.item_description;
+                                sales_return_detail.movement_id = _sales_invoice_detail.movement_id;
+                                sales_return_detail.batch_code = _sales_invoice_detail.batch_code;
+                                sales_return_detail.expire_date = _sales_invoice_detail.expire_date;
+                                //Automatically Checks Products to go back in Stock. This is most likely scenario.
+                                if (sales_return_detail.item.item_product.Count() > 0)
+                                {
+                                    sales_return_detail.IsSelected = true;
+                                }
+                            }
+
+                            sales_return_detail.id_item = _sales_invoice_detail.id_item;
+                            sales_return_detail.quantity = _sales_invoice_detail.Balance;
+
+                            sales_return_detail.id_vat_group = _sales_invoice_detail.id_vat_group;
+                            sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
+                            sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
+                            sales_return_detail.unit_cost = _sales_invoice_detail.unit_cost;
+                            _sales_return.sales_return_detail.Add(sales_return_detail);
+
+                            SalesReturnDB.db.Entry(_sales_return).Entity.State = EntityState.Added;
+                            crud_modal.Children.Clear();
+                            crud_modal.Visibility = Visibility.Collapsed;
+                            salesReturnViewSource.View.Refresh();
+
+                            sales_returnsales_return_detailViewSource.View.Refresh();
                         }
-
-                        sales_return_detail.id_item = _sales_invoice_detail.id_item;
-                        sales_return_detail.quantity = _sales_invoice_detail.Balance;
-
-                        sales_return_detail.id_vat_group = _sales_invoice_detail.id_vat_group;
-                        sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
-                        sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
-						sales_return_detail.unit_cost = _sales_invoice_detail.unit_cost;
-						_sales_return.sales_return_detail.Add(sales_return_detail);
-
-                        SalesReturnDB.db.Entry(_sales_return).Entity.State = EntityState.Added;
-                        crud_modal.Children.Clear();
-                        crud_modal.Visibility = Visibility.Collapsed;
-                        salesReturnViewSource.View.Refresh();
-
-                        sales_returnsales_return_detailViewSource.View.Refresh();
                     }
                 }
             }
@@ -485,10 +490,12 @@ namespace Cognitivo.Sales
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            ReturnSetting _pref_SalesReturn = new ReturnSetting();
+           
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            ReturnSetting.Default.Save();
-            _pref_SalesReturn = ReturnSetting.Default;
+            Settings.Default.Save();
+            Cognitivo.Properties.Settings.Default.Save();
+            Settings _pref_SalesReturn = new Settings();
+            _pref_SalesReturn = Settings.Default;
             popupCustomize.IsOpen = false;
         }
 
@@ -510,6 +517,8 @@ namespace Cognitivo.Sales
             salesReturnViewSource = FindResource("salesReturnViewSource") as CollectionViewSource;
             load_PrimaryDataThread();
         }
+
+        
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {

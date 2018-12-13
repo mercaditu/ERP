@@ -831,6 +831,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612221308116_PaymentSchedualUpdate.resx">
       <DependentUpon>201612221308116_PaymentSchedualUpdate.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701231331109_GeneralERPUpdate.resx">
       <DependentUpon>201701231331109_GeneralERPUpdate.cs</DependentUpon>

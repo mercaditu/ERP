@@ -143,7 +143,7 @@
                                         </TextBox>
                                         <Label Content="Offset Date" Style="{StaticResource generic_Label}" />
                                         <CheckBox Margin="6,0,0,0" x:Name="chkspiltReturmn"
-													  IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=BlockExcessItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+													 IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=BlockExcessItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                             <Label Content="{lex:Loc BlockExcessItem}" Style="{StaticResource generic_Label}" />
                                         </CheckBox>
                                     </WrapPanel>

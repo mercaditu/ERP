@@ -38,6 +38,7 @@ namespace entity.API.DebeHaber
             {
                 app_currency = CurrentSession.Currencies.Where(x => x.id_currency == data.app_currencyfx.id_currency).FirstOrDefault();
             }
+
             local_id = data.id_sales_invoice;
             Type = InvoiceTypes.Sales;
             CustomerName = data.contact.name;
@@ -47,7 +48,7 @@ namespace entity.API.DebeHaber
             Date = data.trans_date.Date.ToString("yyyy-MM-dd");
             Code = data.code;
             CodeExpiry = data.app_document_range != null ? data.app_document_range.expire_date != null ? Convert.ToDateTime(data.app_document_range.expire_date).Date.ToString("yyyy-MM-dd") : null : null;
-            PaymentCondition = data.app_contract.app_contract_detail.Max(x => x.interval);
+            PaymentCondition = data.app_contract != null ? data.app_contract.app_contract_detail.Max(x => x.interval) : 0;
             CurrencyCode = app_currency != null ? app_currency.code : CurrentSession.Currency_Default.code;
             CurrencyRate = data.app_currencyfx.buy_value;
             Number = data.number;

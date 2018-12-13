@@ -50,7 +50,7 @@ namespace entity.Controller.Sales
 
         public List<Messages> Msg { get; set; }
 
-        public int Count { get; set; }
+        public decimal Count { get; set; }
 
         public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
         public int _PageSize = 100;
@@ -60,7 +60,7 @@ namespace entity.Controller.Sales
         {
             get
             {
-                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+                return Math.Ceiling((Count / (decimal)PageSize)) < 1 ? 1 : Convert.ToInt32(Math.Ceiling((Count / (decimal)PageSize)));
             }
         }
 

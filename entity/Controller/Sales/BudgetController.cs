@@ -11,17 +11,17 @@ namespace entity.Controller.Sales
     public class BudgetController : Base
     {
         public Brillo.Promotion.Start Promotions { get; set; }
-        public int Count { get; set; }
+        public decimal Count { get; set; }
 
         public int PageSize { get { return _PageSize; } set { _PageSize = value; } }
         public int _PageSize = 100;
 
-
+      
         public int PageCount
         {
             get
             {
-                return (Count / PageSize) < 1 ? 1 : (Count / PageSize);
+                return Math.Ceiling((Count / (decimal)PageSize)) < 1 ? 1 : Convert.ToInt32(Math.Ceiling((Count / (decimal)PageSize)));
             }
         }   
 
@@ -61,7 +61,7 @@ namespace entity.Controller.Sales
 
             if (Count == 0)
             {
-                Count = db.sales_budget.Where(predicate).Count();
+                           Count = db.sales_budget.Where(predicate).Count();
             }
 
             await db.sales_budget.Where(predicate)

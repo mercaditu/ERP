@@ -191,8 +191,6 @@ namespace Cognitivo.Accounting
            x.payment.is_accounted == false)
                .Count();
 
-
-
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 progAccounts.IsIndeterminate = false;
@@ -286,10 +284,15 @@ namespace Cognitivo.Accounting
 
         private void Sales(string url, string key)
         {
+            int count = Context.db.sales_invoice.
+                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
+                && x.status == Status.Documents_General.Approved).Count();
 
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
 
-
-            for (int i = 0; i < progSales.Maximum; i = i + 100)
+            for (int i = 0; i < count; i = i + 100)
             {
                 sales_invoiceList = Context.db.sales_invoice.
               Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
@@ -297,17 +300,17 @@ namespace Cognitivo.Accounting
                 .Include(x => x.sales_invoice_detail)
                 .Include(x => x.app_currencyfx)
                 .Include(x => x.app_company)
+                .OrderBy(x => x.trans_date)
                 .Skip(i)
                 .Take(100)
                 .ToList();
 
                 List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-                int value = 0;
-                Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
-                Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
+               
 
                 InvoiceList.Clear();
-                foreach (sales_invoice sales_invoice in sales_invoiceList.Skip(i).Take(100))
+
+                foreach (sales_invoice sales_invoice in sales_invoiceList)
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadSales(sales_invoice);
@@ -346,8 +349,12 @@ namespace Cognitivo.Accounting
 
         private void SalesReturns(string url, string key)
         {
-           
-            for (int i = 0; i < progSalesReturn.Maximum; i = i + 100)
+            int max = 0;
+            Dispatcher.BeginInvoke((Action)(() => { max = Convert.ToInt32(progSalesReturn.Maximum); }));
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
+            for (int i = 0; i < max; i = i + 100)
             {
                 sales_returnList = Context.db.sales_return.
                Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
@@ -355,14 +362,13 @@ namespace Cognitivo.Accounting
                .Include(x => x.sales_return_detail)
                .Include(x => x.app_currencyfx)
                  .Include(x => x.app_company)
+                 .OrderBy(x => x.trans_date)
                  .Skip(i)
                  .Take(100)
                .ToList();
 
                 List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-                int value = 0;
-                Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
-                Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
+              
 
                 InvoiceList.Clear();
                 foreach (sales_return sales_return in sales_returnList.Skip(value).Take(100))
@@ -405,9 +411,12 @@ namespace Cognitivo.Accounting
 
         private void Purchases(string url, string key)
         {
-
-
-            for (int i = 0; i < progPurchase.Maximum; i = i + 100)
+            int max = 0;
+            Dispatcher.BeginInvoke((Action)(() => { max = Convert.ToInt32(progPurchase.Maximum); }));
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
+            for (int i = 0; i < max; i = i + 100)
             {
                 purchase_invoiceList = Context.db.purchase_invoice.
               Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
@@ -416,17 +425,16 @@ namespace Cognitivo.Accounting
           .Include(x => x.purchase_invoice_detail)
           .Include(x => x.app_currencyfx)
           .Include(x => x.app_company)
+          .OrderBy(x => x.trans_date)
           .Skip(i)
           .Take(100)
           .ToList();
 
                 List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-                int value = 0;
-                Dispatcher.BeginInvoke((Action)(() => purchaseValue.Text = value.ToString()));
-                Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
+                
 
                 InvoiceList.Clear();
-                foreach (purchase_invoice purchase_invoice in purchase_invoiceList.Skip(value).Take(100))
+                foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadPurchase(purchase_invoice);
@@ -463,8 +471,12 @@ namespace Cognitivo.Accounting
 
         private void PurchaseReturns(string url, string key)
         {
-           
-            for (int i = 0; i < purchase_returnList.Count(); i = i + 100)
+            int max = 0;
+            Dispatcher.BeginInvoke((Action)(() => { max = Convert.ToInt32(progPurchaseReturn.Maximum); }));
+            int value = 0;
+            Dispatcher.BeginInvoke((Action)(() => purchaseReturnValue.Text = value.ToString()));
+            Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
+            for (int i = 0; i < max; i = i + 100)
             {
                 purchase_returnList = Context.db.purchase_return.
               Where(x => x.id_company == CurrentSession.Id_Company && x.is_accounted == false
@@ -472,17 +484,15 @@ namespace Cognitivo.Accounting
               .Include(x => x.purchase_return_detail)
               .Include(x => x.app_currencyfx)
               .Include(x => x.app_company)
-              .Skip(i)
+              .OrderBy(x => x.trans_date).Skip(i)
               .Take(100)
               .ToList();
 
                 List<entity.API.DebeHaber.Invoice> InvoiceList = new List<entity.API.DebeHaber.Invoice>();
-                int value = 0;
-                Dispatcher.BeginInvoke((Action)(() => purchaseReturnValue.Text = value.ToString()));
-                Dispatcher.BeginInvoke((Action)(() => progPurchaseReturn.Value = value));
+              
 
                 InvoiceList.Clear();
-                foreach (purchase_return purchase_return in purchase_returnList.Skip(value).Take(100))
+                foreach (purchase_return purchase_return in purchase_returnList)
                 {
                     entity.API.DebeHaber.Invoice Invoice = new entity.API.DebeHaber.Invoice();
                     Invoice.LoadPurchaseReturn(purchase_return);
@@ -517,12 +527,12 @@ namespace Cognitivo.Accounting
             }
         }
 
-
         private void AccountsForMovement(string url, string key)
         {
+            int max = 0;
+            Dispatcher.BeginInvoke((Action)(() => { max = Convert.ToInt32(progTransfer.Maximum); }));
 
-          
-            for (int i = 0; i < progTransfer.Maximum; i = i + 100)
+            for (int i = 0; i < max; i = i + 100)
             {
                 AccountMovementList = Context.db.app_account_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
        x.tran_type == app_account_detail.tran_types.Transaction &&
@@ -530,7 +540,7 @@ namespace Cognitivo.Accounting
        x.status == Status.Documents_General.Approved)
            .Include(x => x.app_currencyfx)
            .Include(x => x.app_account)
-           .Skip(i)
+           .OrderBy(x => x.trans_date).Skip(i)
            .Take(100)
            .ToList();
 
@@ -541,17 +551,12 @@ namespace Cognitivo.Accounting
 
                 InvoiceList.Clear();
 
-
-
-                foreach (app_account_detail app_account_detail in AccountMovementList.Skip(i).Take(100))
+                foreach (app_account_detail app_account_detail in AccountMovementList)
                 {
                     entity.API.DebeHaber.AccountMovements AccountMovement = new entity.API.DebeHaber.AccountMovements();
                     AccountMovement.LoadTransfers(app_account_detail);
                     InvoiceList.Add(AccountMovement);
                 }
-
-
-
 
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
                 HttpWebResponse httpResponse = Send2API(Json, url + "/api/movement", key);
@@ -563,7 +568,6 @@ namespace Cognitivo.Accounting
                         List<entity.API.DebeHaber.AccountMovements> ReturnJsonList = new JavaScriptSerializer().Deserialize<List<entity.API.DebeHaber.AccountMovements>>(result);
                         foreach (entity.API.DebeHaber.AccountMovements ReturnJson in ReturnJsonList)
                         {
-
                             app_account_detail app_account_detail = AccountMovementList.Where(x => x.id_account_detail == ReturnJson.local_id).FirstOrDefault();
                             if (app_account_detail != null)
                             {
@@ -584,8 +588,10 @@ namespace Cognitivo.Accounting
 
         private void AccountsForSalesPurchase(string url, string key)
         {
-            
-            for (int i = 0; i < progAccounts.Maximum; i = i + 100)
+            int max = 0;
+            Dispatcher.BeginInvoke((Action)(() => { max = Convert.ToInt32(progAccounts.Maximum); }));
+
+            for (int i = 0; i < max; i = i + 100)
             {
                 //get records with skip and take.
                 app_account_detailsalespurchaseList = Context.db.payment_detail.Where(x => x.id_company == CurrentSession.Id_Company &&
@@ -596,7 +602,7 @@ namespace Cognitivo.Accounting
              .Include(x => x.app_company)
              .Include(x => x.payment)
              .Include(x => x.app_account)
-             .Skip(i)
+             .OrderBy(x => x.trans_date).Skip(i)
              .Take(100)
              .ToList();
 
@@ -630,8 +636,6 @@ namespace Cognitivo.Accounting
 
 
                     }
-
-
 
                 }
                 var Json = new JavaScriptSerializer() { MaxJsonLength = 86753090 }.Serialize(InvoiceList);
@@ -751,7 +755,7 @@ namespace Cognitivo.Accounting
 
         private void Production()
         {
-            //tpdp
+            //TODO
         }
 
         private void ClickInformation(object sender, MouseButtonEventArgs e)

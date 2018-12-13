@@ -38,10 +38,6 @@ namespace Cognitivo.Sales
 			Settings SalesSettings = new Settings();
             SalesBudgetDB.Load(false, SalesSettings.FilterByBranch, dataPager.PagedSource.PageIndex);
 
-            if (dataPager.PageCount == 0)
-            {
-                dataPager.PageCount = SalesBudgetDB.PageCount;
-            }
 
             sales_budgetViewSource = FindResource("sales_budgetViewSource") as CollectionViewSource;
             sales_budgetViewSource.Source = SalesBudgetDB.db.sales_budget.Local;
@@ -49,6 +45,11 @@ namespace Cognitivo.Sales
 
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
             app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB.db, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+
+            if (dataPager.PageCount == 0)
+            {
+                dataPager.PageCount = SalesBudgetDB.PageCount;
+            }
         }
 
         private void Print_Click(object sender, MouseButtonEventArgs e)

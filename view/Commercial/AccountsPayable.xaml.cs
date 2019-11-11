@@ -46,7 +46,7 @@ namespace Cognitivo.Commercial
         private void toolBar_btnApprove_Click(object sender)
         {
             List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
-            
+
 
             if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
             {
@@ -70,31 +70,39 @@ namespace Cognitivo.Commercial
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            contact contact = contactViewSource.View.CurrentItem as contact;
-            if (contact != null && payment_schedualViewSource != null)
+            if (contactViewSource.View != null)
             {
-                payment_schedualViewSource.View.Filter = i =>
+                contact contact = contactViewSource.View.CurrentItem as contact;
+                if (contact != null && payment_schedualViewSource != null)
                 {
-                    payment_schedual payment_schedual = i as payment_schedual;
-                    if (payment_schedual.id_contact == contact.id_contact)
+                    payment_schedualViewSource.View.Filter = i =>
                     {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                };
+                        payment_schedual payment_schedual = i as payment_schedual;
+                        if (payment_schedual.id_contact == contact.id_contact)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    contactViewSource.View.Filter = null;
+                }
             }
-            else
-            {
-                contactViewSource.View.Filter = null;
-            }
+           
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            load_Schedual();
+            if (Cognitivo.Properties.Settings.Default.PaymentLoadData == true)
+            {
+                load_Schedual();
+            }
+
         }
 
         private async void load_Schedual()
@@ -106,6 +114,41 @@ namespace Cognitivo.Commercial
                                                         .Where(x => x.payment_detail.id_payment == null && x.id_company == CurrentSession.Id_Company
                                                            && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
                                                            && (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0)
+                                                           .Include(y => y.purchase_invoice)
+                                                           .Include(z => z.contact)
+                                                           .OrderBy(x => x.expire_date)
+                                                        .ToListAsync();
+            }
+
+            contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
+            List<contact> contactLIST = new List<contact>();
+
+            if (PaymentDB.payment_schedual.Local.Count() > 0)
+            {
+                foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.OrderBy(x => x.contact.name).ToList())
+                {
+                    if (contactLIST.Contains(payment.contact) == false)
+                    {
+                        contact contact = new contact();
+                        contact = payment.contact;
+                        contactLIST.Add(contact);
+                    }
+                }
+            }
+
+            contactViewSource.Source = contactLIST;
+        }
+
+        private async void load_Schedual(string query)
+        {
+            payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
+            if (payment_schedualViewSource != null)
+            {
+                payment_schedualViewSource.Source = await PaymentDB.payment_schedual
+                                                        .Where(x => x.payment_detail.id_payment == null && x.id_company == CurrentSession.Id_Company
+                                                           && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
+                                                           && (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0
+                                                           && (x.contact.name.Contains(query) || x.contact.gov_code.Contains(query) || x.contact.code.Contains(query)))
                                                            .Include(y => y.purchase_invoice)
                                                            .Include(z => z.contact)
                                                            .OrderBy(x => x.expire_date)
@@ -159,46 +202,50 @@ namespace Cognitivo.Commercial
         {
             try
             {
-                if (!string.IsNullOrEmpty(query))
+                if (Cognitivo.Properties.Settings.Default.PaymentLoadData == true)
                 {
-                    contactViewSource.View.Filter = i =>
+                    if (!string.IsNullOrEmpty(query))
                     {
-                        contact contact = i as contact;
-                        string name = "";
-                        string code = "";
-                        string gov_code = "";
+                        contactViewSource.View.Filter = i =>
+                        {
+                            contact contact = i as contact;
+                            string name = "";
+                            string code = "";
+                            string gov_code = "";
 
-                        if (contact.name != null)
-                        {
-                            name = contact.name.ToLower();
-                        }
+                            if (contact.name != null)
+                            {
+                                name = contact.name.ToLower();
+                            }
 
-                        if (contact.code != null)
-                        {
-                            code = contact.code.ToLower();
-                        }
+                            if (contact.code != null)
+                            {
+                                code = contact.code.ToLower();
+                            }
 
-                        if (contact.gov_code != null)
-                        {
-                            gov_code = contact.gov_code.ToLower();
-                        }
+                            if (contact.gov_code != null)
+                            {
+                                gov_code = contact.gov_code.ToLower();
+                            }
 
-                        if (name.Contains(query.ToLower())
-                            || code.Contains(query.ToLower())
-                            || gov_code.Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
+                            if (name.Contains(query.ToLower())
+                                || code.Contains(query.ToLower())
+                                || gov_code.Contains(query.ToLower()))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        };
+                    }
+                    else
+                    {
+                        contactViewSource.View.Filter = null;
+                    }
                 }
-                else
-                {
-                    contactViewSource.View.Filter = null;
-                }
+
             }
             catch (Exception ex)
             {
@@ -220,7 +267,7 @@ namespace Cognitivo.Commercial
                     VATWithholding.invoiceList.Add(purchase_invoice);
                     VATWithholding.PaymentDB = PaymentDB;
                     VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
-                    if (purchase_invoice.vatwithholdingpercentage==0)
+                    if (purchase_invoice.vatwithholdingpercentage == 0)
                     {
                         purchase_invoice.vatwithholdingpercentage = Commercial.PaymentSetting.Default.vatwithholdingpercent;
                     }
@@ -279,13 +326,24 @@ namespace Cognitivo.Commercial
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             Commercial.PaymentSetting _pref_PaymentSetting = new Commercial.PaymentSetting();
-
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             Commercial.PaymentSetting.Default.Save();
+            Cognitivo.Properties.Settings.Default.Save();
             _pref_PaymentSetting = Commercial.PaymentSetting.Default;
             popupCustomize.IsOpen = false;
         }
 
         #endregion PrefSettings
+
+        private void Toolbar_btnSearchInSource_Click(object sender, KeyEventArgs e, string query)
+        {
+
+            contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
+            contactViewSource.Source = null;
+            if (Cognitivo.Properties.Settings.Default.PaymentLoadData == false)
+            {
+                load_Schedual(query);
+            }
+        }
     }
 }

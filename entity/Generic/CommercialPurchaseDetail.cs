@@ -105,7 +105,7 @@ namespace entity
                     using (db db = new db())
                     {
 
-                        
+
                         item _item = db.items.Find(_id_item);
                         _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_item, quantity, 0);
                         RaisePropertyChanged("_Quantity_Factored");

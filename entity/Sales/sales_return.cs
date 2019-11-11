@@ -50,6 +50,7 @@ namespace entity
                 {
                     _id_currencyfx = value;
                     RaisePropertyChanged("id_currencyfx");
+                    RaisePropertyChanged("app_currencyfx");
 
                     if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
@@ -73,12 +74,9 @@ namespace entity
         {
             get
             {
-                _GrandTotal = 0;
-                foreach (sales_return_detail _sales_return_detail in sales_return_detail)
-                {
-                    _GrandTotal += _sales_return_detail.SubTotal_Vat;
-                }
-                return Math.Round(_GrandTotal, 2);
+                _GrandTotal = sales_return_detail.Sum(x => x.SubTotal_Vat);
+
+                return _GrandTotal;
             }
             set
             {

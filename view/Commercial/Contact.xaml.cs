@@ -1,6 +1,7 @@
 ﻿using entity;
 using Microsoft.Maps.MapControl.WPF;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace Cognitivo.Commercial
                 ContactDB.LoadSuppliers();
                 toolBar.appName = entity.App.Names.Supplier;
             }
-          
+
             contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
             contactViewSource.Source = ContactDB.db.contacts.Local;
 
@@ -66,7 +67,15 @@ namespace Cognitivo.Commercial
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = FindResource("contactRoleViewSource") as CollectionViewSource;
-            contactRoleViewSource.Source = await ContactDB.db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            if (entity.Properties.Settings.Default.DisplayMainContact)
+            {
+                contactRoleViewSource.Source = await ContactDB.db.contact_role.Where(a => a.is_principal == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            }
+            else
+            {
+                contactRoleViewSource.Source = await ContactDB.db.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToListAsync();
+            }
+
 
             //AppContract
             CollectionViewSource appContractViewSource = FindResource("appContractViewSource") as CollectionViewSource;
@@ -121,7 +130,7 @@ namespace Cognitivo.Commercial
         private void New_Click(object sender)
         {
             contact contact = ContactDB.Create();
-            
+
             ContactDB.db.contacts.Add(contact);
             contactViewSource.View.Refresh();
             contactViewSource.View.MoveCurrentToLast();
@@ -137,8 +146,9 @@ namespace Cognitivo.Commercial
                     contact.is_head = false;
                     contact.State = EntityState.Deleted;
                     contact.IsSelected = true;
-                    
-                  
+                    ContactDB.db.SaveChanges();
+                    Page_Loaded(sender, null);
+
                 }
             }
             catch (Exception ex)
@@ -161,7 +171,7 @@ namespace Cognitivo.Commercial
 
         private void Save_Click(object sender)
         {
-           
+
 
             if (ContactDB.SaveChanges_WithValidation())
             {
@@ -184,15 +194,6 @@ namespace Cognitivo.Commercial
             if (cbxContactRole.SelectedItem != null)
             {
                 contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
-
-                if (contact_role.is_principal == true)
-                {
-                    cbxRelation.IsEnabled = false;
-                }
-                else
-                {
-                    cbxRelation.IsEnabled = true;
-                }
 
                 if (contact_role.can_transact == true)
                 {
@@ -267,46 +268,46 @@ namespace Cognitivo.Commercial
 
         private void Search_Click(object sender, string query)
         {
-                if (!string.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(query))
+            {
+                contactViewSource.View.Filter = i =>
                 {
-                    contactViewSource.View.Filter = i =>
+                    contact contact = i as contact;
+                    string name = "";
+                    string code = "";
+                    string gov_code = "";
+
+                    if (contact.name != null)
                     {
-                        contact contact = i as contact;
-                        string name = "";
-                        string code = "";
-                        string gov_code = "";
+                        name = contact.name.ToLower();
+                    }
 
-                        if (contact.name != null)
-                        {
-                            name = contact.name.ToLower();
-                        }
+                    if (contact.code != null)
+                    {
+                        code = contact.code.ToLower();
+                    }
 
-                        if (contact.code != null)
-                        {
-                            code = contact.code.ToLower();
-                        }
+                    if (contact.gov_code != null)
+                    {
+                        gov_code = contact.gov_code.ToLower();
+                    }
 
-                        if (contact.gov_code != null)
-                        {
-                            gov_code = contact.gov_code.ToLower();
-                        }
-
-                        if (name.Contains(query.ToLower())
-                            || code.Contains(query.ToLower())
-                            || gov_code.Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    contactViewSource.View.Filter = null;
-                }
+                    if (name.Contains(query.ToLower())
+                        || code.Contains(query.ToLower())
+                        || gov_code.Contains(query.ToLower()))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
+            }
+            else
+            {
+                contactViewSource.View.Filter = null;
+            }
         }
 
         private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -327,35 +328,24 @@ namespace Cognitivo.Commercial
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-                MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    //DeleteDetailGridRow
-                    if (e.Parameter as contact_field_value != null)
-                    {
-                        //ontact_field_valueDataGrid.CancelEdit();
-                        ContactDB.db.contact_field_value.Remove(e.Parameter as contact_field_value);
-                        //contactcontact_field_valueViewSource.View.Refresh();
-                    }
-                    else if (e.Parameter as contact_tag_detail != null)
-                    {
-                        contact_tag_detailDataGrid.CancelEdit();
-                        ContactDB.db.contact_tag_detail.Remove(e.Parameter as contact_tag_detail);
-
-                        CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
-                        contactcontact_tag_detailViewSource.View.Refresh();
-                    }
-                }
-        }
-
-        private void LoadRelatedContactOnThread(contact ParentContact)
-        {
-            if (contactChildListViewSource != null)
+            MessageBoxResult result = MessageBox.Show(entity.Brillo.Localize.Question_Delete, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
-                contactChildListViewSource.Source = ContactDB.db.contacts
-                    .Where(x => x.parent.id_contact == ParentContact.id_contact || x.id_contact == ParentContact.id_contact).OrderBy(x => x.name).ToList();
-                contactChildListViewSource.View.Refresh();
+                //DeleteDetailGridRow
+                if (e.Parameter as contact_field_value != null)
+                {
+                    //ontact_field_valueDataGrid.CancelEdit();
+                    ContactDB.db.contact_field_value.Remove(e.Parameter as contact_field_value);
+                    //contactcontact_field_valueViewSource.View.Refresh();
+                }
+                else if (e.Parameter as contact_tag_detail != null)
+                {
+                    contact_tag_detailDataGrid.CancelEdit();
+                    ContactDB.db.contact_tag_detail.Remove(e.Parameter as contact_tag_detail);
+
+                    CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
+                    contactcontact_tag_detailViewSource.View.Refresh();
+                }
             }
         }
 
@@ -409,34 +399,33 @@ namespace Cognitivo.Commercial
         {
             if (contactViewSource.View.CurrentItem is contact contact)
             {
-                LoadRelatedContactOnThread(contact);
 
                 using (db db = new db())
                 {
                     CollectionViewSource app_attachmentViewSource = ((CollectionViewSource)(FindResource("app_attachmentViewSource")));
-                   // app_attachmentViewSource.Source = await db.app_attachment
-                     //   .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
+                    // app_attachmentViewSource.Source = await db.app_attachment
+                    //   .Where(x => x.application == entity.App.Names.Contact && x.reference_id == contact.id_contact && x.mime.Contains("image")).Take(1).ToListAsync();
                 }
             }
         }
 
-        private void cbxRelation_Select(object sender, RoutedEventArgs e)
-        {
-            contact SelectedContact = (contact)contactViewSource.View.CurrentItem;
-            if (SelectedContact != null && cbxRelation.ContactID > 0)
-            {
-                contact ParentContact = ContactDB.db.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefault();
-                if (ParentContact != null)
-                {
-                    //Clean these values to prevent Selected Contact from appearing in further reports or windows.
-                    SelectedContact.is_customer = false;
-                    SelectedContact.is_supplier = false;
+        //private void cbxRelation_Select(object sender, RoutedEventArgs e)
+        //{
+        //    contact SelectedContact = (contact)contactViewSource.View.CurrentItem;
+        //    if (SelectedContact != null && cbxRelation.ContactID > 0)
+        //    {
+        //        contact ParentContact = ContactDB.db.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefault();
+        //        if (ParentContact != null)
+        //        {
+        //            //Clean these values to prevent Selected Contact from appearing in further reports or windows.
+        //            SelectedContact.is_customer = false;
+        //            SelectedContact.is_supplier = false;
 
-                    ParentContact.child.Add(SelectedContact);
-                    LoadRelatedContactOnThread(ParentContact);
-                }
-            }
-        }
+        //            ParentContact.child.Add(SelectedContact);
+        //            LoadRelatedContactOnThread(ParentContact);
+        //        }
+        //    }
+        //}
 
         private void MapsDropPin_Click(object sender, MouseButtonEventArgs e)
         {
@@ -698,8 +687,27 @@ namespace Cognitivo.Commercial
             contact contact = contactViewSource.View.CurrentItem as contact;
             if (contact != null && contact.id_contact > 0)
             {
-                
-               entity.Brillo.Document.Start.Automatic(contact,"Contact");
+
+                entity.Brillo.Document.Start.Automatic(contact, "Contact");
+            }
+        }
+
+     
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LoadContact_Click(object sender, RoutedEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null && contact.id_contact > 0)
+            {
+
+                List<contact> ContactList = ContactDB.db.contacts.Where(x => x.id_contact_role == contact.id_contact_role && x.id_contact != contact.id_contact).ToList();
+                contact.child.ToList().AddRange(ContactList);
+                contactChildListViewSource.View.Refresh();
             }
         }
     }

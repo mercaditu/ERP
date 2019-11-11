@@ -95,8 +95,10 @@ namespace Cognitivo.Configs
 				int new_CompanyID = ((entity.app_company)app_companyViewSource.View.CurrentItem).id_company;
 
 				entity.Properties.Settings.Default.Save();
+                Cognitivo.Properties.Settings.Default.Save();
 
-				if (new_CompanyID != entity.CurrentSession.Id_Company &&
+
+                if (new_CompanyID != entity.CurrentSession.Id_Company &&
 					MessageBox.Show(entity.Brillo.Localize.StringText("Applicationrestartwillberequired"), "Cognitivo ERP",
 					MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.OK) == MessageBoxResult.OK)
 				{

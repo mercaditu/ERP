@@ -323,7 +323,7 @@ namespace entity.Controller.Sales
         /// Approves the Sales Invoice, discounting from Stock and creating a Payment Schedual.
         /// </summary>
         /// <returns></returns>
-        public bool Approve()
+        public bool Approve(string key = "", string slug = "",Cognitivo.API.Enums.SyncWith synctype=Cognitivo.API.Enums.SyncWith.Production)
         {
             bool ApprovalStatus = false;
             Msg = new List<Messages>();
@@ -464,6 +464,15 @@ namespace entity.Controller.Sales
 
                     NumberOfRecords += 1;
                     invoice.IsSelected = false;
+                    try
+                    {
+                        SyncInvoice(invoice, key, slug, synctype);
+                    }
+                    catch (Exception)
+                    {
+
+                        //throw;
+                    }
                 }
                 else
                 {
@@ -478,6 +487,98 @@ namespace entity.Controller.Sales
             return ApprovalStatus;
         }
 
+        public void SyncInvoice(sales_invoice invoice,string key,string slug,Cognitivo.API.Enums.SyncWith synctype = Cognitivo.API.Enums.SyncWith.Production)
+        {
+            if (key != "" && slug != "")
+            {
+                List<object> SyncInvoices = new List<object>();
+                app_branch app_branch = CurrentSession.Branches.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                string location = "";
+                if (app_branch != null)
+                {
+                    location = app_branch.name;
+                }
+
+                if (invoice.contact != null)
+                {
+
+                    Cognitivo.API.Models.Sales SyncInvoice = new Cognitivo.API.Models.Sales
+                    {
+                        customerCloudId = Convert.ToInt32(invoice.contact.cloud_id ?? 0),
+                        localId = invoice.id_sales_invoice,
+                        cloudId = Convert.ToInt32(invoice.cloud_id ?? 0),
+                        invoiceNumber = invoice.number,
+                        date = invoice.trans_date.Date.ToUniversalTime(),
+                        currencyCode = invoice.app_currencyfx.app_currency.code,
+                        rate = invoice.app_currencyfx.sell_value,
+                        locationName = location,
+                        updatedAt = invoice.timestamp,
+                        createdAt = invoice.timestamp,
+                        sentMail = true
+                    };
+
+                    if (invoice.status == Status.Documents_General.Approved)
+                    {
+                        SyncInvoice.status = Cognitivo.API.Enums.Status.Approved;
+                    }
+                    else if (invoice.status == Status.Documents_General.Annulled)
+                    {
+                        SyncInvoice.status = Cognitivo.API.Enums.Status.Annulled;
+                    }
+                    else
+                    {
+                        SyncInvoice.status = Cognitivo.API.Enums.Status.Pending;
+                    }
+
+                    foreach (sales_invoice_detail sales_invoice_detail in invoice.sales_invoice_detail)
+                    {
+                        //SyncItems SyncItem = new SyncItems
+                        //{
+                        //    local_id = sales_invoice_detail.item.id_item,
+                        //    name = sales_invoice_detail.item.name,
+                        //    code = sales_invoice_detail.item.code,
+                        //    comment = sales_invoice_detail.item.description,
+                        //    unit_price = sales_invoice_detail.item.item_price.FirstOrDefault() != null ? sales_invoice_detail.item.item_price.FirstOrDefault().valuewithVAT : 0,
+                        //};
+                        Cognitivo.API.Models.SalesDetail Detail = new Cognitivo.API.Models.SalesDetail
+                        {
+                            localId = sales_invoice_detail.id_sales_invoice_detail,
+                            cloudId = Convert.ToInt32(sales_invoice_detail.cloud_id ?? 0),
+                            itemCloudId = Convert.ToInt32(sales_invoice_detail.item.cloud_id ?? 0),
+                            name = sales_invoice_detail.item.name ?? "",
+                            sku = sales_invoice_detail.item.sku ?? "",
+                            //description = sales_invoice_detail.item.description ?? "",
+                            cost = sales_invoice_detail.item.unit_cost ?? 0,
+                            //product_id = sales_invoice_detail.id_item,
+                            //cloud_id
+                            vatCloudId = sales_invoice_detail.app_vat_group != null ? sales_invoice_detail.app_vat_group.cloud_id != null ? (int?)sales_invoice_detail.app_vat_group.cloud_id : null : null,
+                            quantity = sales_invoice_detail.quantity,
+                            price = sales_invoice_detail.unit_price
+                        };
+
+                        //  Detail.item = SyncItem;
+                        SyncInvoice.details.Add(Detail);
+                    }
+                    if (SyncInvoice.customerCloudId > 0)
+                    {
+                        SyncInvoices.Add(SyncInvoice);
+                    }
+                    Cognitivo.API.Upload send = new Cognitivo.API.Upload(key, synctype);
+                    SyncInvoices = send.Transaction(slug, SyncInvoices.ToList()).OfType<object>().ToList();
+                    foreach (Cognitivo.API.Models.Sales ResoponseData in SyncInvoices)
+                    {
+
+                        if (ResoponseData.action == Cognitivo.API.Enums.Action.CreateOnCloud || ResoponseData.action == Cognitivo.API.Enums.Action.UpdateOnCloud || ResoponseData.action == Cognitivo.API.Enums.Action.UpdateOnLocal)
+                        {
+                            sales_invoice sales_invoice = db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.localId).FirstOrDefault();
+                            sales_invoice.cloud_id = ResoponseData.cloudId;
+                        }
+                       
+                    }
+                    db.SaveChanges();
+                }
+            }
+        }
         /// <summary>
         /// Split Invoice from the particular invoice
         /// </summary>
@@ -779,6 +880,7 @@ namespace entity.Controller.Sales
 
                     foreach (sales_invoice_detail detail in Invoice.sales_invoice_detail)
                     {
+                        detail.id_sales_order_detail = null;
                         List<item_movement> ItemMovementList = detail.item_movement.ToList();
                         foreach (item_movement item_movement in ItemMovementList)
                         {
@@ -850,7 +952,7 @@ namespace entity.Controller.Sales
         {
             //Bring into Context.
             sales_packing Packing = db.sales_packing.Find(PackingID);
-          
+
             //Group Packing Detail so as to reduce the amount of lines in 
             //Inoivces if the Product, Batch Code, Expiration Date are the same.
             List<sales_packing_detail> GroupDetail = Packing.sales_packing_detail

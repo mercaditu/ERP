@@ -152,6 +152,11 @@ namespace entity
                         base.item_movement.RemoveRange(item_movementList);
                     }
 
+                    foreach (purchase_packing_detail purchase_packing_detail in purchase_packing.purchase_packing_detail)
+                    {
+                        purchase_packing_detail.id_purchase_order_detail = null;
+                    }
+
                     purchase_packing.status = Status.Documents_General.Annulled;
                     SaveChanges();
                 }

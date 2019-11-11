@@ -97,7 +97,7 @@ namespace entity
 
         #endregion Save
 
-        public void Approve(List<payment_schedual> payment_schedualList, bool IsRecievable, bool is_print)
+        public void Approve(List<payment_schedual> payment_schedualList, bool IsRecievable, bool is_print, bool clean_balance)
         {
             foreach (payment payment in payments.Local.Where(x => x.status != Status.Documents_General.Approved && x.IsSelected))
             {
@@ -109,11 +109,11 @@ namespace entity
                 //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
 
                 //Creates Balanced Payment Schedual and Account Detail (if necesary).
-                MakePayment(payment_schedualList, payment, IsRecievable, is_print);
+                MakePayment(payment_schedualList, payment, IsRecievable, is_print, clean_balance);
             }
         }
 
-        public async void MakePayment(List<payment_schedual> payment_schedualList, payment payment, bool IsRecievable, bool is_print)
+        public async void MakePayment(List<payment_schedual> payment_schedualList, payment payment, bool IsRecievable, bool is_print, bool clean_balance)
         {
             string ModuleName = string.Empty;
             string number = string.Empty;
@@ -178,13 +178,28 @@ namespace entity
                             }
                             else
                             {
-                                child_schedual.debit = ChildBalance;
-                                if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
+                                if (clean_balance)
                                 {
-                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
-                                    Parent_Schedual = child_schedual.parent;
+                                    child_schedual.debit = parent.AccountPayableBalance;
+                                    if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
+                                    {
+                                        child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                        Parent_Schedual = child_schedual.parent;
+                                    }
+                                    ChildBalance = 0;
                                 }
-                                ChildBalance -= ChildBalance;
+                                else
+                                {
+                                    child_schedual.debit = ChildBalance;
+                                    if (base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault() != null)
+                                    {
+                                        child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                        Parent_Schedual = child_schedual.parent;
+                                    }
+                                    ChildBalance -= ChildBalance;
+                                }
+
+
                             }
 
 
@@ -236,10 +251,20 @@ namespace entity
                             }
                             else
                             { //Schedual is greater than Payment Detail.
-                                child_schedual.credit = ChildBalance;
-                                child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
-                                Parent_Schedual = child_schedual.parent;
-                                ChildBalance -= ChildBalance;
+                                if (clean_balance)
+                                {
+                                    child_schedual.credit = parent.AccountReceivableBalance;
+                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                    Parent_Schedual = child_schedual.parent;
+                                    ChildBalance = 0;
+                                }
+                                else
+                                {
+                                    child_schedual.credit = ChildBalance;
+                                    child_schedual.parent = base.payment_schedual.Where(x => x.id_payment_schedual == parent.id_payment_schedual).FirstOrDefault();
+                                    Parent_Schedual = child_schedual.parent;
+                                    ChildBalance -= ChildBalance;
+                                }
                             }
 
                             ///
@@ -327,8 +352,15 @@ namespace entity
 
                     ///Comment with Module Name and Contact.
                     ///Insert AccountDetail into Context.
-
-                    app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
+                    ///
+                    string customerName = "";
+                    if (Parent_Schedual.contact != null)
+                    {
+                        customerName = Parent_Schedual.contact.name;
+                    }
+                    
+                  
+                    app_account_detail.comment = Localize.StringText(ModuleName) + " " + number + " | " + customerName;
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                     base.app_account_detail.Add(app_account_detail);
                 }
@@ -336,7 +368,7 @@ namespace entity
                 ChildBalance = Currency.convert_Values(ChildBalance, payment_detail.Default_id_currencyfx, payment_detail.id_currencyfx, App.Modules.Sales);
                 if (ChildBalance > 0)
                 {
-                    payment_detail.value = payment_detail.value - ChildBalance;
+                    payment_detail.value = payment_detail.value;
                 }
 
 

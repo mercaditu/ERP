@@ -27,6 +27,7 @@ namespace entity
 
             payment_withholding_detail = new List<payment_withholding_detail>();
             impex_expense = new List<impex_expense>();
+            impex_import = new List<impex_import>();
         }
 
         [Key]
@@ -294,7 +295,7 @@ namespace entity
         public virtual IEnumerable<purchase_packing_relation> purchase_packing_relation { get; set; }
         public virtual ICollection<impex_import> impex_import { get; set; }
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }
-        public virtual IEnumerable<impex_expense> impex_expense { get; set; }
+        public virtual ICollection<impex_expense> impex_expense { get; set; }
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
 

@@ -1130,6 +1130,46 @@ namespace Cognitivo.Purchase
             Load_PrimaryDataThread();
         }
 
+        private void toolBar_btnAtachment_Click(object sender, MouseButtonEventArgs e)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
 
+            if (purchase_invoice != null)
+            {
+                crud_modal.Visibility = Visibility.Visible;
+                cntrl.Curd.PurchaseAttachment attachment = new cntrl.Curd.PurchaseAttachment();
+                attachment.PurchaseInvoiceDB = PurchaseDB.db;
+                attachment.purchase_Invoice_Details = purchase_invoice.purchase_invoice_detail.Where(x=>x.item_movement!=null).ToList();
+                crud_modal.Children.Add(attachment);
+            }
+        }
+
+        private void toolBar_btnRegenrate_Click(object sender, MouseButtonEventArgs e)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+
+            if (purchase_invoice != null)
+            {
+                if (purchase_invoice.payment_schedual.Count() == 0)
+                {
+                    List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                    entity.Brillo.Logic.Payment _Payment = new entity.Brillo.Logic.Payment();
+                    ///Insert Payment Schedual Logic
+                    payment_schedualList = _Payment.insert_Schedual(purchase_invoice);
+
+
+                    if (payment_schedualList != null && payment_schedualList.Count > 0)
+                    {
+                        PurchaseDB.db.payment_schedual.AddRange(payment_schedualList);
+                    }
+                    PurchaseDB.db.SaveChanges();
+                    toolBar.msgWarning("Done");
+                }
+                else
+                {
+                    toolBar.msgWarning("Exists");
+                }
+            }
+        }
     }
 }

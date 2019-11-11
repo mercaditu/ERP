@@ -525,5 +525,23 @@ namespace Cognitivo.Product
                 item_transfer_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
         }
+
+        private void ToolBar_Mini_btnAnull_Click(object sender)
+        {
+            item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+            int NumberOfRecords = 0;
+            if (item_transfer != null)
+            {
+                item_transfer.IsSelected = true;
+                NumberOfRecords = ProductTransferDB.AnullTransfer(item_transfer);
+                if (NumberOfRecords == 0)
+                {
+                    toolBar.msgWarning("Movement Can Not Be Anulled..,Movement used in Other Transaction..");
+                }
+
+            }
+        }
+
+
     }
 }

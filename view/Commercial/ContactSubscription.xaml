@@ -14,7 +14,7 @@
 	 MinHeight="500" MinWidth="800"
 	Title="ContactSubscription" Loaded="Page_Loaded">
     <Page.Resources>
-        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
+       <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
         <!--<CollectionViewSource x:Key="contact_subscriptionViewSource" Source="{Binding contact_subscription, Source={StaticResource contactViewSource}}" />-->
         <CollectionViewSource x:Key="contact_subscriptionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_subscription}, CreateList=True}" />
         <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
@@ -51,12 +51,14 @@
             <StackPanel Orientation="Horizontal">
                 <cntrls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_select"
                                           IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
+                <Button Content="{lex:Loc Clear}"  Width="150" Click="Clear_Click"/>
                 <Label Content="Invoice Date" Style="{StaticResource input_label}" />
                 <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}" />
+                <TextBox x:Name="txtQuantity" />
                 <Button Click="Button_Click" Style="{StaticResource btn_green}" VerticalAlignment="Top" Padding="0">
                     <Grid>
                         <ProgressBar x:Name="progBar" Height="32" Width="256" Minimum="1" Maximum="100" Value="23" />
-                        <Label Content="{lex:Loc SalesInvoice}" Foreground="White" />
+                        <Label Content="{lex:Loc SalesOrder}" Foreground="White" />
                     </Grid>
                 </Button>
             </StackPanel>
@@ -96,19 +98,22 @@
 					                            SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True,
                                                 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"
-                                                Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" />
+                    <!--<DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"
+                                                Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" />-->
 
                     <!-- UnitPrice_Vat -->
+
+                    <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
 
                     <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                                 Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
 
                     <!-- SubTotal -->
 
-                    <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
+                    <!--<DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
                                                 Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
-                                                ElementStyle="{StaticResource RightAlignStyle}" />
+                                                ElementStyle="{StaticResource RightAlignStyle}" />-->
 
                     <!-- SubTotal_VAT -->
 

@@ -289,6 +289,7 @@ namespace entity.Controller.Purchase
 
                     foreach (purchase_invoice_detail detail in Invoice.purchase_invoice_detail)
                     {
+                        detail.id_purchase_order_detail = null;
                         List<item_movement> ItemMovementList = detail.item_movement.ToList();
                         foreach (item_movement item_movement in ItemMovementList)
                         {

@@ -27,16 +27,14 @@
             <StackPanel.Background>
                 <SolidColorBrush Color="MediumPurple"  Opacity="0.64" />
             </StackPanel.Background>
-            <Image Width="84" Margin="64" Source="/Cognitivo;component/Images/debehaber_narrow.png" />
+            <Image Width="128" Margin="64" Source="/Cognitivo;component/Images/debehaber_narrow.png" />
             <Label Content="{lex:Loc Accounting}" HorizontalAlignment="Center" Style="{StaticResource H1}" />
 
             <Label Style="{StaticResource input_label}" HorizontalAlignment="Center" Content="{lex:Loc StartDate}"/>
-            <ComboBox Style="{StaticResource ComboToLabelStyle}">
-                <ComboBoxItem>30 Days</ComboBoxItem>
-                <ComboBoxItem>90 Days</ComboBoxItem>
-                <ComboBoxItem>365 Days</ComboBoxItem>
-            </ComboBox>
-            <!--<DatePicker x:Name="dtpStartDate" HorizontalAlignment="Center" Style="{StaticResource input_datepicker}"/>-->
+            <Label Content="Start Date"/>
+            <DatePicker x:Name="startDate" Style="{StaticResource input_datepicker}"></DatePicker>
+            <Label Content="End Date"/>
+            <DatePicker x:Name="endDate" Style="{StaticResource input_datepicker}" ></DatePicker>
 
             <Button Content="{lex:Loc Export}" Margin="15" Name="btnStart"
                     Style="{StaticResource btn_green}" Click="btnStart_Click" />
@@ -76,7 +74,8 @@
                                                     Mode=TwoWay,
                                                     UpdateSourceTrigger=PropertyChanged
                                                     }"  x:Name="tbxAPI" Margin="8" MinHeight="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your API Key here."></TextBox>
-                        <TextBlock Text="{lex:Loc Information}" Style="{StaticResource text_HyperLinks}" MouseDown="ClickInformation"></TextBlock>
+                        
+                        <Controls:ToggleSwitch OnLabel="Close" OffLabel="Open" IsChecked="{Binding ElementName=popConnBuilder, Path=IsOpen, Mode=TwoWay}" Checked="ToggleSwitch_Checked" Unchecked="ToggleSwitch_Checked"/>
                     </StackPanel>
                 </Border>
             </Popup>
@@ -89,7 +88,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/Sales.png" Height="32" />
-                        <!--<CheckBox x:Name="chbxSalesInvoice" Style="{StaticResource input_checkbox}" Width="Auto" Margin="4"/>-->
+                        <CheckBox Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncSales,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc SalesInvoice}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -109,7 +108,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/SalesReturn.png" Height="32" />
-                        <!--<CheckBox x:Name="chbxSalesReturns" Style="{StaticResource input_checkbox}" Width="Auto" Margin="4"/>-->
+                        <CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncSalesReturn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc SalesReturn}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -128,7 +127,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/Purchase.png" Height="32" />
-                        <!--<CheckBox x:Name="chbxPurchaseInvoice" Style="{StaticResource input_checkbox}" Width="Auto" Margin="4"/>-->
+                        <CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncPurchase,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -147,6 +146,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/PurchaseReturn.png" Height="32" />
+                        <CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncPurchaseReturn,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc PurchaseReturn}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -166,7 +166,8 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/Money.png" Height="32" />
-                        <Label Content="{lex:Loc Accounts}" Style="{StaticResource H3}" />
+                        <CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncPayments,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
+                        <Label Content="{lex:Loc Payment}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
                         <Run x:Name="paymentValue" />
@@ -185,6 +186,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/Money.png" Height="32" />
+                        <CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncMovements,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
                         <Label Content="{lex:Loc Transfer}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -204,6 +206,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/ProductionExecution.png" Height="32" />
+                        <!--<CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncMovements,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>-->
                         <Label Content="{lex:Loc Production}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
@@ -222,7 +225,8 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="8,4">
                         <Image Source="/Cognitivo;component/Images/Application/128/FixedAsset.png" Height="32" />
-                        <Label Content="{lex:Loc Asset}" Style="{StaticResource H3}" />
+                        <CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncFixedAsset,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
+                        <Label Content="{lex:Loc FixedAssets}" Style="{StaticResource H3}" />
                     </StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}">
                         <Run x:Name="assetValue" />
@@ -230,6 +234,25 @@
                         <Run x:Name="assetMaximum" />
                     </TextBlock>
                     <ProgressBar x:Name="progAsset" VerticalAlignment="Bottom" Margin="4"
+                                 Value="0"
+                                 Maximum="100" />
+                </StackPanel>
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" MinHeight="64" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/import.png" Height="32" />
+                        <CheckBox  Style="{StaticResource input_checkbox}" IsChecked="{Binding ElementName=this, Path=SyncImpex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Margin="4"/>
+                        <Label Content="{lex:Loc Impex}" Style="{StaticResource H3}" />
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="importValue" />
+                        <Run Text="/" />
+                        <Run x:Name="importMaximum" />
+                    </TextBlock>
+                    <ProgressBar x:Name="progImport" VerticalAlignment="Bottom" Margin="4"
                                  Value="0"
                                  Maximum="100" />
                 </StackPanel>

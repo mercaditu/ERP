@@ -152,9 +152,27 @@ namespace entity
                     List<item_movement> item_movementList = new List<item_movement>();
                     item_movementList = _Stock.revert_Stock(this, App.Names.PackingList, sales_packing);
 
+
+
                     if (item_movementList != null && item_movementList.Count > 0)
                     {
-                        base.item_movement.RemoveRange(item_movementList);
+                        foreach (item_movement item_movement in item_movementList)
+                        {
+                            if (item_movement.id_sales_invoice_detail == null)
+                            {
+                                base.item_movement.Remove(item_movement);
+                            }
+                            else
+                            {
+                                item_movement.id_sales_packing_detail = null;
+                            }
+                        }
+                       
+                    }
+
+                    foreach (sales_packing_detail sales_packing_detail in sales_packing.sales_packing_detail)
+                    {
+                        sales_packing_detail.id_sales_order_detail = null;
                     }
 
                     sales_packing.status = Status.Documents_General.Annulled;

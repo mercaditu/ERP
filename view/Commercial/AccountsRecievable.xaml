@@ -6,6 +6,7 @@
 	  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 	  xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
 	x:Name="_AccountsRecievable"
+       xmlns:cognitivoprop="clr-namespace:Cognitivo.Properties"
 	  xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="Cognitivo.Commercial.AccountsRecievable"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
 	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
@@ -106,9 +107,36 @@
 
         <StackPanel Grid.Column="2" Background="WhiteSmoke" Grid.Row="1">
             <StackPanel Margin="8,0">
+                <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
+                                AllowDrop="True" Drop="Excel_Drop"
+                                IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="" Style="{StaticResource ico_Label}" />
+                        <Button Click="Excel_Create" Content="Excel" MinWidth="128" FontSize="10" />
+                    </StackPanel>
                 <Label Content="{lex:Loc Filter}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4" />
                 <StackPanel x:Name="stckFilter" />
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4" />
+                <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
+                    <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
+                        <Label Content="A" Style="{StaticResource btn_Label}" />
+                        <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
+                                    <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}" /></Hyperlink></TextBlock>
+                        <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
+                               PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
+                            <Border BorderThickness="1" BorderBrush="Gray">
+                                <StackPanel Background="WhiteSmoke" Width="180">
+                                    <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="MediumVioletRed" />
+                                    <WrapPanel>
+                                        <Label Content="{lex:Loc PaymentOnLoad}" Style="{StaticResource generic_Label}" />
+                                        <CheckBox Style="{StaticResource input_checkbox}" HorizontalAlignment="Center"
+                                            IsChecked="{Binding PaymentLoadData, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Source={x:Static cognitivoprop:Settings.Default}}" Width="160" />
+                                    </WrapPanel>
+
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+                </StackPanel>
                 <Button Content="{lex:Loc ReArrange}" Style="{StaticResource btn_green}" Background="White" Margin="0,4"
 						Click="Rearrange_Click" Visibility="Collapsed" />
                 <Button Content="{lex:Loc Bulk}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="PaymentGroup_Click" />
@@ -121,9 +149,9 @@
         </StackPanel>
 
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3" appName="AccountsReceivable"
-			btnSearch_Click="toolBar_btnSearch_Click" />
+			btnSearch_Click="toolBar_btnSearch_Click" btnSearchInSource_Click="Toolbar_btnSearchInSource_Click"/>
         <Grid Grid.Column="1" Visibility="Collapsed">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"> 
                 <Label Content="{Binding AccountDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}" />
             </StackPanel>
         </Grid>

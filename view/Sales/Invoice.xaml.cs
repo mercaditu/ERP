@@ -200,7 +200,7 @@ namespace Cognitivo.Sales
 
         private void Approve_Click(object sender)
         {
-            if (SalesDB.Approve())
+            if (SalesDB.Approve(Cognitivo.Properties.Settings.Default.CognitivoKey,Cognitivo.Properties.Settings.Default.Slug,(Cognitivo.API.Enums.SyncWith)Cognitivo.Properties.Settings.Default.SyncType))
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesDB.db, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;

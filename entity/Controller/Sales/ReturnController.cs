@@ -646,6 +646,12 @@ namespace entity.Controller.Sales
                     db.item_movement.RemoveRange(item_movementList);
                 }
 
+                sales_return.id_sales_invoice = null;
+
+                foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail)
+                {
+                    sales_return_detail.sales_invoice_detail = null;
+                }
                 sales_return.status = Status.Documents_General.Annulled;
                 SaveChanges_WithValidation();
             }

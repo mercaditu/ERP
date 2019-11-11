@@ -13,8 +13,8 @@ namespace Cognitivo.Purchase
 {
     public partial class Return : Page
     {
-	
-		private entity.Controller.Purchase.ReturnController PurchaseReturnDB;
+
+        private entity.Controller.Purchase.ReturnController PurchaseReturnDB;
         private CollectionViewSource
             purchaseReturnViewSource,
             purchase_returnpurchase_return_detailViewSource;
@@ -44,10 +44,10 @@ namespace Cognitivo.Purchase
 
             //PurchaseReturn
             purchaseReturnViewSource = FindResource("purchase_returnViewSource") as CollectionViewSource;
-           
+
             purchaseReturnViewSource.Source = PurchaseReturnDB.db.purchase_return.Local;
 
-			purchase_returnpurchase_return_detailViewSource = FindResource("purchase_returnpurchase_return_detailViewSource") as CollectionViewSource;
+            purchase_returnpurchase_return_detailViewSource = FindResource("purchase_returnpurchase_return_detailViewSource") as CollectionViewSource;
 
             CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
             app_cost_centerViewSource.Source = PurchaseReturnDB.db.app_cost_center.Local;
@@ -71,6 +71,8 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnNew_Click(object sender)
         {
+            sbxContact.Text = "";
+            cbxReturnType.SelectedIndex = 0;
             purchase_return purchase_return = PurchaseReturnDB.Create();
             purchaseReturnViewSource.View.MoveCurrentToLast();
         }
@@ -130,7 +132,7 @@ namespace Cognitivo.Purchase
         {
             if (string.IsNullOrEmpty(query))
             {
-                Page_Loaded(null,null);
+                Page_Loaded(null, null);
                 //Brings data into view.
                 toolBar_btnSearch_Click(sender, query);
             }
@@ -144,7 +146,7 @@ namespace Cognitivo.Purchase
                     x.contact.name.Contains(query) ||
                     x.contact.gov_code.Contains(query) ||
                     x.number.Contains(query)
-                    
+
                     )
                 .OrderByDescending(x => x.trans_date)
                 .ThenBy(x => x.number)
@@ -159,7 +161,7 @@ namespace Cognitivo.Purchase
                 {
                     purchase_return purchase_return = i as purchase_return;
                     string name = purchase_return.contact != null ? purchase_return.contact.name : "";
-                    string number =purchase_return.number!= null ? purchase_return.number : "";
+                    string number = purchase_return.number != null ? purchase_return.number : "";
                     string total = purchase_return.GrandTotal.ToString();
 
                     if (name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()) || total.ToLower().Contains(query.ToLower()))
@@ -307,7 +309,7 @@ namespace Cognitivo.Purchase
                     _purchase_return_detail.batch_code = item_movement.code;
                     _purchase_return_detail.expire_date = item_movement.expire_date;
                     _purchase_return_detail.movement_id = (int)item_movement.id_movement;
-					
+
                 }
 
                 _purchase_return_detail.purchase_return = purchase_return;
@@ -420,6 +422,18 @@ namespace Cognitivo.Purchase
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
             //calculate_total(sender, e);
+            purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;
+            if (_purchase_return != null)
+            {
+                if (_purchase_return.id_currencyfx > 0)
+                {
+                    app_currencyfx app_currencyfx = PurchaseReturnDB.db.app_currencyfx.Find(_purchase_return.id_currencyfx);
+                    if (app_currencyfx != null)
+                    {
+                        _purchase_return.app_currencyfx = app_currencyfx;
+                    }
+                }
+            }
             calculate_vat(sender, e);
         }
 

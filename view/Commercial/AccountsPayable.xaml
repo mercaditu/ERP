@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Cognitivo.Commercial"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+       xmlns:cognitivoprop="clr-namespace:Cognitivo.Properties"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:entity="clr-namespace:entity;assembly=entity"
@@ -129,6 +130,12 @@
                                                          Text="{Binding Source={x:Static local:PaymentSetting.Default}, Path=vatwithholdingpercent, Mode=TwoWay}"
                                                          Margin="6,2,2,2" />
                                     </WrapPanel>
+                                    <WrapPanel>
+                                        <Label Content="{lex:Loc PaymentOnLoad}" Style="{StaticResource generic_Label}" />
+                                        <CheckBox Style="{StaticResource input_checkbox}" HorizontalAlignment="Center" Margin="6,2,2,2" 
+                                            IsChecked="{Binding PaymentLoadData, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Source={x:Static cognitivoprop:Settings.Default}}" Width="147" />
+                                    </WrapPanel>
+                                  
                                 </StackPanel>
                             </Border>
                         </Popup>
@@ -144,7 +151,7 @@
 
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3"
 			           btnApprove_Click="toolBar_btnApprove_Click"
-                       btnSearch_Click="toolBar_btnSearch_Click"
+                       btnSearch_Click="toolBar_btnSearch_Click" btnSearchInSource_Click="Toolbar_btnSearchInSource_Click"
                           State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 

@@ -9,7 +9,7 @@
       <Value Profile="(Default)">0.30</Value>
     </Setting>
     <Setting Name="vatwithholdingPersent" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0.30</Value>
+      <Value Profile="(Default)">0.03</Value>
     </Setting>
   </Settings>
 </SettingsFile>

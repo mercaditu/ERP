@@ -98,9 +98,18 @@ namespace Cognitivo.Configs
                         string gov_code = "";
                         if (contact.gov_code != null)
                         {
-                            gov_code = contact.gov_code.Replace("-", "");
-                            gov_code = gov_code.Remove(gov_code.Length - 1, 1).ToString();
+                            if (contact.gov_code.Contains("-"))
+                            {
+                                gov_code = contact.gov_code.Replace("-", "");
+                                gov_code = gov_code.Remove(gov_code.Length - 1, 1).ToString();
+                            }
+                            else
+                            {
+                                gov_code = contact.gov_code;
+                            }
+
                         }
+                      
 
                         sw.Write(gov_code + ";" + contact.name + ";" + active + ";" + Environment.NewLine);
                     }
@@ -126,8 +135,16 @@ namespace Cognitivo.Configs
                         string gov_code = "";
                         if (payment_schedual.contact.gov_code != null)
                         {
-                            gov_code = payment_schedual.contact.gov_code.Replace("-", "");
-                            gov_code = gov_code.Remove(gov_code.Length - 1, 1).ToString();
+                            if (payment_schedual.contact.gov_code.Contains("-"))
+                            {
+                                gov_code = payment_schedual.contact.gov_code.Replace("-", "");
+                                gov_code = gov_code.Remove(gov_code.Length - 1, 1).ToString();
+                            }
+                            else
+                            {
+                                gov_code = payment_schedual.contact.gov_code;
+                            }
+                            
                         }
 
 
@@ -250,7 +267,7 @@ namespace Cognitivo.Configs
                                         payment.payment_detail.Add(payment_detail);
 
                                         PaymentDB.payments.Add(payment);
-                                        PaymentDB.Approve(SchedualList, true, false);
+                                        PaymentDB.Approve(SchedualList, true, false,false);
                                     }
                                 }
                             }

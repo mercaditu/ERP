@@ -210,14 +210,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox39">
+                        <Textbox Name="Balance1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Balance.Value)</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Courier New</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -232,7 +232,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox39</rd:DefaultName>
+                          <rd:DefaultName>Balance1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -501,7 +501,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Balance.Value)</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>Courier New</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1159,11 +1159,12 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Sum((Fields!UnitCost.Value) * (Fields!Balance.Value))</Value>
                                   <Style>
                                     <FontFamily>Courier New</FontFamily>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
+                                    <Format>N2</Format>
                                     <Color>White</Color>
                                   </Style>
                                 </TextRun>
@@ -1668,9 +1669,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixMembers>
-                        <TablixMember>
-                          <KeepWithGroup>After</KeepWithGroup>
-                        </TablixMember>
+                        <TablixMember />
                         <TablixMember>
                           <Group Name="Date">
                             <GroupExpressions>
@@ -1711,11 +1710,13 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.1875in</Height>
+        <Height>1.92708in</Height>
         <Style />
       </Body>
-      <Width>7.9375in</Width>
+      <Width>8.92708in</Width>
       <Page>
+        <PageHeight>11.69in</PageHeight>
+        <PageWidth>8.27in</PageWidth>
         <LeftMargin>1in</LeftMargin>
         <RightMargin>1in</RightMargin>
         <TopMargin>1in</TopMargin>

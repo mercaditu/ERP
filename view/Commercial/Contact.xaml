@@ -9,13 +9,14 @@
 	  lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
 	  lex:ResxLocalizationProvider.DefaultDictionary="local"
 	  lex:LocalizeDictionary.DesignCulture="en-US"
+       
 		  xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
 		  xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
 		  xmlns:customcmd="clr-namespace:Cognitivo.Class"
            xmlns:Controller="clr-namespace:entity.Controller.Commercial;assembly=entity"
 		  xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
 		  xmlns:entity="clr-namespace:entity;assembly=entity"
-		  mc:Ignorable="d" MinHeight="500" MinWidth="800"
+		  mc:Ignorable="d" MinHeight="550" MinWidth="800"
 		  Loaded="Page_Loaded">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
@@ -39,7 +40,7 @@
         <CollectionViewSource x:Key="contactcontact_field_valuephoneViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}" Filter="CollectionViewSource_Telephone_Filter" />
         <CollectionViewSource x:Key="app_fieldphoneViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}" />
         <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}" />
-        <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}" />
+        <CollectionViewSource x:Key="contactChildListViewSource" Source="{Binding child, Source={StaticResource contactViewSource}}" />
         <CollectionViewSource x:Key="bankViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_bank}, CreateList=True}" />
     </Page.Resources>
     <Page.CommandBindings>
@@ -83,15 +84,16 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Grid.Column="1" Grid.Row="1"
+        <StackPanel IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Grid.Column="1" Grid.Row="1" Orientation="Horizontal"
 					HorizontalAlignment="Right" VerticalAlignment="Top" Margin="16">
             <Label Content="{lex:Loc Properties}" FontWeight="Medium" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Margin="5" />
             <Custom:ToggleSwitch Content="{lex:Loc Active}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
             <Custom:ToggleSwitch Content="{lex:Loc Share}" OnSwitchBrush="PaleGreen" IsChecked="{Binding is_shared, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
+           
         </StackPanel>
 
         <TabControl Custom:TabControlHelper.IsUnderlined="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
-					SelectedIndex="0" Margin="0,128,0,0">
+					SelectedIndex="0" Margin="0,100,0,0">
             <TabItem Header="{lex:Loc Information}">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="8">
@@ -264,21 +266,35 @@
                 <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
                     <Label Content="{lex:Loc ContactRole}" Style="{StaticResource H2}" />
                     <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}" />
-                    <ComboBox x:Name="cbxContactRole" Style="{StaticResource input_combobox}"
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox x:Name="cbxContactRole" Style="{StaticResource input_combobox}"
 							  DisplayMemberPath="name" SelectedValuePath="id_contact_role"
 							  ItemsSource="{Binding Source={StaticResource contactRoleViewSource}}"
 							  SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
 							  SelectionChanged="cbxContactRole_SelectionChanged" />
-                    <Label Content="{lex:Loc RelatedTo}" Style="{StaticResource input_label}" />
-                    <cntrls:SmartBox_Contact x:Name="cbxRelation" Margin="4" Width="256" HorizontalAlignment="Left" Select="cbxRelation_Select" />
+                        <Button Content="Load Contact From Role" Click="LoadContact_Click"/>
+                    </StackPanel>
+                   
                     <Label Content="{lex:Loc Relationship}" Style="{StaticResource H2}" />
-                    <DataGrid Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="4,6,8,6" IsReadOnly="True"
+                    <DataGrid Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="4,6,8,6" CanUserAddRows="True"
 							  ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
+
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" Binding="{Binding code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Width="*" FontWeight="Medium" Binding="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovernmentID}" Width="Auto" Binding="{Binding gov_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:ContactRole}" Width="Auto" Binding="{Binding contact_role.name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Telephone}" Width="Auto" Binding="{Binding telephone, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTemplateColumn x:Name="birth_dateColumn" Header="{lex:Loc Cognitivo:local:BirthDate}" Width="120">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding date_birth, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Email}" Width="Auto" Binding="{Binding email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridComboBoxColumn x:Name="cbxRole"  ItemsSource="{Binding Source={StaticResource contactRoleViewSource}}"
+							   Header="{lex:Loc Cognitivo:local:Role}" SelectedValueBinding="{Binding id_contact_role,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+															DisplayMemberPath="name" SelectedValuePath="id_contact_role" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

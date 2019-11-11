@@ -408,7 +408,16 @@ namespace entity.Controller.Sales
                         if (sales_order.number == null && sales_order.id_range != null)
                         {
                             Brillo.Logic.Range.branch_Code = CurrentSession.Branches.Where(x => x.id_branch == sales_order.id_branch).FirstOrDefault().code;
-                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == sales_order.id_terminal).FirstOrDefault().code;
+                            int? terminal_id;
+                            if (sales_order.id_terminal ==null)
+                            {
+                                terminal_id = CurrentSession.Id_Terminal;
+                            }
+                            else
+                            {
+                                terminal_id = sales_order.id_terminal;
+                            }
+                            Brillo.Logic.Range.terminal_Code = CurrentSession.Terminals.Where(x => x.id_terminal == terminal_id).FirstOrDefault().code;
 
                             app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == sales_order.id_range).FirstOrDefault();
                             sales_order.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
@@ -527,6 +536,11 @@ namespace entity.Controller.Sales
 
                         sales_order.status = Status.Documents_General.Annulled;
                         db.SaveChanges();
+                    }
+
+                    foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail)
+                    {
+                        sales_order_detail.id_sales_budget_detail = null;
                     }
                 }
 

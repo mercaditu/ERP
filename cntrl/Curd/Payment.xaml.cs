@@ -25,6 +25,7 @@ namespace cntrl.Curd
         private CollectionViewSource paymentViewSource;
         private CollectionViewSource app_accountViewSource;
         public List<payment_schedual> payment_schedualList { get; set; }
+        public bool clean_balance { get; set; }
 
         public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList, ref PaymentDB PaymentDB)
         {
@@ -54,27 +55,69 @@ namespace cntrl.Curd
                 payment.id_contact = contacts.id_contact;
                 payment.contact = contacts;
             }
-
-            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail != null)
+            var list = payment_schedualList.Where(x => x.payment_approve_detail != null)
                 .GroupBy(x => new
                 {
                     payment_type = x.payment_approve_detail.id_payment_type,
                     Account = x.payment_approve_detail.id_account,
-                    Currency = x.payment_approve_detail.id_currency
-                }).Select(x => new { x.Key.payment_type, x.Key.Account, x.Key.Currency }))
+                    Currency = x.payment_approve_detail.id_currency,
+                }).Select(x => new { x.Key.payment_type, x.Key.Account, x.Key.Currency });
+            foreach (var id in list)
             {
-                //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
+
                 Add_PaymentDetail(id.Currency, id.payment_type, id.Account);
+                // }
+                //else
+                //{
+                //    decimal buy_value = id.CurrencyFx.buy_value;
+                //    decimal sell_value = id.CurrencyFx.sell_value;
+                //    app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.buy_value == buy_value && x.sell_value == sell_value && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                //    if (app_currencyfx != null)
+                //    {
+                //        Add_PaymentDetail(app_currencyfx.id_currency, id.payment_type, id.Account);
+                //    }
+                //    else
+                //    {
+                //        using (db db = new db())
+                //        {
+                //            app_currency app_currencyNew = new app_currency();
+                //            app_currency.name = id.CurrencyFx.app_currency.name;
+                //            app_currency.is_priority = id.CurrencyFx.app_currency.is_priority;
+                //            app_currency.has_rounding = id.CurrencyFx.app_currency.has_rounding;
+                //            app_currency.code = id.CurrencyFx.app_currency.code;
+
+                //            app_currencyfx currencyfx = new app_currencyfx();
+                //            currencyfx.id_currency = app_currencyNew.id_currency;
+                //            currencyfx.app_currency = app_currencyNew;
+                //            currencyfx.buy_value = id.CurrencyFx.buy_value;
+                //            currencyfx.sell_value = id.CurrencyFx.sell_value;
+                //            currencyfx.is_reverse = id.CurrencyFx.is_reverse;
+                //            app_currency.app_currencyfx.Add(currencyfx);
+
+                //            db.app_currency.Add(app_currencyNew);
+                //            db.SaveChanges();
+
+                //            Add_PaymentDetail(app_currencyNew.id_currency, id.payment_type, id.Account);
+
+                //        }
+
+
+
+
+                //    }
+                //}
+
             }
 
-            foreach (var id in payment_schedualList.Where(x => x.payment_approve_detail == null)
-                .GroupBy(x => x.app_currencyfx).Select(x => new { x.Key.id_currency }))
+            var paymentlistCurrency = payment_schedualList.Where(x => x.payment_approve_detail == null)
+                .GroupBy(x => x.app_currencyfx.app_currency).Select(x => new { x.Key.id_currency });
+            foreach (var id in paymentlistCurrency)
             {
                 //Get list by Currency, not CurrencyFX as Rates can change. You can buy at 65 INR but pay at 67.
                 Add_PaymentDetail(id.id_currency, null, null);
             }
 
-            app_document_range app_document_range = PaymentDB.app_document_range.Where(x=>x.id_range==payment.id_range).FirstOrDefault();
+            app_document_range app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
             entity.Brillo.Document.Start.Automatic(payment, app_document_range);
 
             payment.RaisePropertyChanged("GrandTotal");
@@ -82,8 +125,10 @@ namespace cntrl.Curd
 
             paymentViewSource.View.MoveCurrentTo(payment);
             paymentpayment_detailViewSource.View.MoveCurrentToFirst();
-            
+
         }
+
+
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -108,7 +153,7 @@ namespace cntrl.Curd
 
             await PaymentDB.app_account
                 .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company &&
-                    (a.id_account_type == app_account.app_account_type.Bank || 
+                    (a.id_account_type == app_account.app_account_type.Bank ||
                     a.id_terminal == CurrentSession.Id_Terminal))
             .LoadAsync();
 
@@ -184,18 +229,18 @@ namespace cntrl.Curd
                 if (Math.Round(TotalPaid, 2) > Math.Round(TotalPayable, 2))
                 {
                     String Currency = PaymentDB.app_currency.Where(x => x.id_currency == id.id_currency).FirstOrDefault().name;
-                  MessageBoxResult MsgBoxResult = MessageBox.Show("Your amount is higher than : -" + TotalPayable + " " + Currency  + ". Do You Want To Continue..","Cognitivo",MessageBoxButton.YesNo);
+                    MessageBoxResult MsgBoxResult = MessageBox.Show("Your amount is higher than : -" + TotalPayable + " " + Currency + ". Do You Want To Continue..", "Cognitivo", MessageBoxButton.YesNo);
                     if (MsgBoxResult == MessageBoxResult.No)
                     {
                         return;
                     }
-                   
+
                 }
             }
 
             bool IsRecievable = Mode == Modes.Recievable ? true : false;
             bool IsPrintable = Mode == Modes.Recievable ? true : false;
-            PaymentDB.Approve(payment_schedualList, IsRecievable, IsPrintable);
+            PaymentDB.Approve(payment_schedualList, IsRecievable, IsPrintable, clean_balance);
 
             Cancel_MouseDown(null, null);
         }
@@ -232,9 +277,9 @@ namespace cntrl.Curd
 
                             CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
                             PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Include(x => x.payment_schedual).Load();
-                            purchase_returnViewSource.Source = 
+                            purchase_returnViewSource.Source =
                                 PaymentDB.purchase_return.Local
-                                .Where(x => 
+                                .Where(x =>
                                 (x.payment_schedual.Sum(y => y.debit) < x.payment_schedual.Sum(y => y.credit)));
                         }
                         else
@@ -322,8 +367,50 @@ namespace cntrl.Curd
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.payment = payment;
                 //Get current Active Rate of selected Currency.
+                int OldCurrencyID = CurrencyID;
+                app_currency app_currency = PaymentDB.app_currency.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID).FirstOrDefault();
+                if (app_currency == null)
+                {
+                    decimal buy_value = app_currencyfx.buy_value;
+                    decimal sell_value = app_currencyfx.sell_value;
+                    app_currencyfx app_currencyfxNew = PaymentDB.app_currencyfx.Where(x => x.buy_value == buy_value && x.sell_value == sell_value && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    if (app_currencyfxNew != null)
+                    {
+                        app_currencyfx = app_currencyfxNew;
+                        CurrencyID = app_currencyfxNew.id_currency;
+                    }
+                    else
+                    {
+                        using (db db = new db())
+                        {
+                            app_currency app_currencyNew = new app_currency();
+                            app_currency.name = app_currencyfx.app_currency.name;
+                            app_currency.is_priority = app_currencyfx.app_currency.is_priority;
+                            app_currency.has_rounding = app_currencyfx.app_currency.has_rounding;
+                            app_currency.code = app_currencyfx.app_currency.code;
 
-                app_currencyfx app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
+                            app_currencyfx currencyfx = new app_currencyfx();
+                            currencyfx.id_currency = app_currencyNew.id_currency;
+                            currencyfx.app_currency = app_currencyNew;
+                            currencyfx.buy_value = app_currencyfx.buy_value;
+                            currencyfx.sell_value = app_currencyfx.sell_value;
+                            currencyfx.is_reverse = app_currencyfx.is_reverse;
+                            app_currency.app_currencyfx.Add(currencyfx);
+
+                            db.app_currency.Add(app_currencyNew);
+                            db.SaveChanges();
+
+                            CurrencyID = app_currencyNew.id_currency;
+                            app_currencyfx = currencyfx;
+                        }
+                    }
+                }
+                else
+                {
+                    app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currency == CurrencyID && x.id_company == CurrentSession.Id_Company && x.is_active).FirstOrDefault();
+                }
+
                 if (app_currencyfx != null)
                 {
                     payment_detail.Default_id_currencyfx = app_currencyfx.id_currencyfx;
@@ -335,12 +422,12 @@ namespace cntrl.Curd
                 //Always get total value of Accounts Receivable from a particular Currency, and not Currency Rate. This is very important when Currency Fluctates.
                 if (Mode == Modes.Recievable)
                 {
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.AccountReceivableBalance)
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == OldCurrencyID).Sum(x => x.AccountReceivableBalance)
                                                                            - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID).Sum(x => x.value);
                 }
                 else
                 {
-                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == CurrencyID && x.payment_approve_detail == null).Sum(x => x.AccountPayableBalance)
+                    payment_detail.value = payment_schedualList.Where(x => x.app_currencyfx.id_currency == OldCurrencyID && x.payment_approve_detail == null).Sum(x => x.AccountPayableBalance)
                                                                             - payment.payment_detail.Where(x => x.app_currencyfx.id_currency == CurrencyID && x.IsLocked == false).Sum(x => x.value);
                 }
 
@@ -415,7 +502,7 @@ namespace cntrl.Curd
             if (app_account != null)
             {
                 if (app_account.id_currency != null || app_account.id_currency > 0)
-                {   
+                {
                     sbxCurrency.id_currency = (int)app_account.id_currency;
                 }
             }

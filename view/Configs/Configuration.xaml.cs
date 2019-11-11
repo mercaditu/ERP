@@ -155,6 +155,10 @@ namespace Cognitivo.Configs
                 db.SaveChanges();
             }
         }
+        private void RemoveTransferMovement()
+        {
+           
+        }
 
         private void AddData_Click(object sender, RoutedEventArgs e)
         {
@@ -173,8 +177,19 @@ namespace Cognitivo.Configs
                     //Get list of credits that have balance.
                     List<entity.Brillo.StockList> ItemsWithBalance = CurrentItems.getProducts_InStock_GroupBy(CurrentSession.Id_Branch, DateTime.Now, true).ToList();
 
-                    db.Database.ExecuteSqlCommand("update item_movement set  parent_id_movement=null where" +
-                        " id_movement in (" + ItemsWithBalance.Select(x => x.MovementID).ToArray() + ")");
+                    string movementList = "";
+                    foreach (entity.Brillo.StockList item in ItemsWithBalance)
+                    {
+                        if (movementList != "")
+                        {
+                            movementList = movementList + "," + item.MovementID;
+                        }
+                        else
+                        {
+                            movementList = movementList + item.MovementID;
+                        }
+                    }
+                    db.Database.ExecuteSqlCommand("update item_movement set  parent_id_movement=null where" + " id_movement in (" + movementList + ")");
 
                     //Make parent null for items with balance. So that we can remove the 0 balance 
                     //foreach (entity.Brillo.StockList item in ItemsWithBalance.Where(x => x.ParentID > 0))
@@ -327,7 +342,7 @@ namespace Cognitivo.Configs
                         app_account_detail.comment = "Insert Through Configuration";
                         db.app_account_detail.Add(app_account_detail);
                     }
-                  
+
                 }
 
                 db.SaveChanges();

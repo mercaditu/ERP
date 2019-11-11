@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="entity.ExcelPaymentViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                        mc:Ignorable="d" 
+              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+		        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+		        lex:ResxLocalizationProvider.DefaultDictionary="local"
+		        lex:LocalizeDictionary.DesignCulture="en-US"
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <Grid>
+        <StackPanel>
+            <DataGrid x:Name="dgPaymnet" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+             >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding name}" Header="{lex:Loc Cognitivo:local:Name}" MinWidth="50" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding taxId}" Header="{lex:Loc Cognitivo:local:TaxId}" MinWidth="32" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding month}" Header="{lex:Loc Cognitivo:local:Month}" MinWidth="64" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding amount,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Amount}" MinWidth="64" CellStyle="{StaticResource Number_CellStyle}"/>
+                <DataGridTextColumn Binding="{Binding status}" Header="{lex:Loc Cognitivo:local:Status}" MinWidth="64" IsReadOnly="True" />
+                </DataGrid.Columns>
+          
+        </DataGrid>
+            <Line Width="25"></Line>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Receive Payment" Click="Button_Click"/>
+                <Button Content="Close" Click="Button_Click_1"/>
+                
+            </StackPanel>
+           
+        </StackPanel>
+    </Grid>
+</UserControl>

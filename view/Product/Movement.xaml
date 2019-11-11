@@ -61,7 +61,7 @@
 				 ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordName="{Binding item_request.name}" recordSecondaryName="{Binding trans_date}"
+                    <cntrl:navList recordName="{Binding number}" recordSecondaryName="{Binding trans_date}"
 								   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 								   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 								   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -274,6 +274,7 @@
             </Grid>
         </Grid>
         <cntrl:toolBar Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top"
+                       btnAnull_Click="ToolBar_Mini_btnAnull_Click"
 					   btnNew_Click="toolBar_btnNew_Click"
 					   btnSave_Click="toolBar_btnSave_Click"
 					   btnDelete_Click="toolBar_btnDelete_Click"

@@ -202,8 +202,10 @@ namespace Cognitivo.Product
             if (item_transfer != null)
             {
                 item_transfer.IsSelected = true;
+               
                 ProductTransferDB.ApproveOrigin(item_transfer, false);
                 ProductTransferDB.ApproveDestination(item_transfer, false);
+               
             }
         }
 
@@ -391,6 +393,22 @@ namespace Cognitivo.Product
                 }
 
                 ProductTransferDB.SaveChanges();
+            }
+        }
+
+        private void ToolBar_Mini_btnAnull_Click(object sender)
+        {
+            item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
+            int NumberOfRecords = 0;
+            if (item_transfer != null)
+            {
+                item_transfer.IsSelected = true;
+                NumberOfRecords=ProductTransferDB.AnullTransfer(item_transfer);
+                if (NumberOfRecords==0)
+                {
+                    toolBar.msgWarning("Transfer Can Not Be Anulled..,Transfer used in Other Transaction..");
+                }
+
             }
         }
 

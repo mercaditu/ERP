@@ -12,7 +12,7 @@ namespace Cognitivo.Commercial {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     public sealed partial class PaymentSetting : global::System.Configuration.ApplicationSettingsBase {
         
         private static PaymentSetting defaultInstance = ((PaymentSetting)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new PaymentSetting())));
@@ -49,7 +49,7 @@ namespace Cognitivo.Commercial {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.03")]
         public string vatwithholdingPersent {
             get {
                 return ((string)(this["vatwithholdingPersent"]));

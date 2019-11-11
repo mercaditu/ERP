@@ -59,7 +59,7 @@ xmlns:mainpref="clr-namespace:Cognitivo.Properties"
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding app_location_origin.app_branch.name}"
-                                   recordSecondaryName="{Binding trans_date}"
+                                   recordSecondaryName="{Binding number}"
                                    recordName="{Binding app_location_destination.app_branch.name}"
                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -173,10 +173,10 @@ xmlns:mainpref="clr-namespace:Cognitivo.Properties"
                         </Grid.ColumnDefinitions>
                         <!--<Grid Grid.Column="1" DataContext="{Binding Source={StaticResource item_transferViewSource}}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" VerticalAlignment="Top">
 
-                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_ClicktoolBar_btnApproveDestination_Click" Status="{Binding status, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>-->
                         <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top" Type="InStock_Only" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" />
-                        <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
+                        <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0" IsReadOnly="{Binding ElementName=toolBar,Path=IsEditable,Converter={StaticResource True2False}}"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}"
                                     RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,29,0,3">
@@ -257,11 +257,11 @@ xmlns:mainpref="clr-namespace:Cognitivo.Properties"
                                             <StackPanel Visibility="{Binding item,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
                                                 <Label Content="{lex:Loc LotNumber}" Style="{StaticResource input_label}" />
                                                 <TextBox Style="{StaticResource input_textbox}"
-						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+						 Text="{Binding batch_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True" />
                                                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}" />
                                                 <DatePicker x:Name="expiry_dateDatePicker" Style="{StaticResource input_datepicker}"
 								SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true,
-								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+								ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsEnabled="False" />
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
@@ -278,10 +278,10 @@ xmlns:mainpref="clr-namespace:Cognitivo.Properties"
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="1"
                                     DataContext="{Binding Source={StaticResource item_transferViewSource}}">
-                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}" />
+                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" btnAnull_Click="ToolBar_Mini_btnAnull_Click" Status="{Binding status}" />
                             <ToggleButton Content="Check All" Margin="8" Click="btnCheckDestination_Click" />
                         </StackPanel>
-                        <DataGrid AutoGenerateColumns="False" Grid.Column="0"   IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
+                        <DataGrid AutoGenerateColumns="False" Grid.Column="0"   IsReadOnly="{Binding ElementName=toolBar,Path=IsEditable,Converter={StaticResource True2False}}"
                                   EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
                                   ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}"
                                   Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">

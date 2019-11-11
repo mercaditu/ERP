@@ -57,6 +57,33 @@ namespace entity
             }
         }
 
+        public int AnullTransfer(item_transfer item_transfer)
+        {
+            NumberOfRecords = 0;
+            foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
+            {
+                List<item_movement> itemMovementList = item_transfer_detail.item_movement.ToList();
+                foreach (item_movement item_movement in itemMovementList)
+                {
+                    if (item_movement.child.Count()>0)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        base.item_movement.Remove(item_movement);
+                        NumberOfRecords  += 1;
+                        
+                    }
+                }    
+                
+            }
+            item_transfer.status = Status.Transfer.Annulled;
+            base.SaveChanges();
+
+            return NumberOfRecords;
+        }
+
         /// <summary>
         /// Should only
         /// </summary>
@@ -99,15 +126,19 @@ namespace entity
             //{
             foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
             {
-                if (item_transfer_detail.item_product != null)
+                if (item_transfer_detail.quantity_origin >= item_transfer_detail.quantity_destination)
                 {
-                    Credit_Items_Destination(item_transfer_detail, MoveByTruck);
+                    if (item_transfer_detail.item_product != null)
+                    {
+                        Credit_Items_Destination(item_transfer_detail, MoveByTruck);
 
-                    NumberOfRecords += 1;
-                    item_transfer_detail.timestamp = DateTime.Now;
-                    item_transfer_detail.status = Status.Documents_General.Approved;
-                    item_transfer_detail.RaisePropertyChanged("status");
+                        NumberOfRecords += 1;
+                        item_transfer_detail.timestamp = DateTime.Now;
+                        item_transfer_detail.status = Status.Documents_General.Approved;
+                        item_transfer_detail.RaisePropertyChanged("status");
+                    }
                 }
+               
             }
 
             if (item_transfer.item_transfer_detail.Count() == item_transfer.item_transfer_detail.Where(x => x.status == Status.Documents_General.Approved).Count())

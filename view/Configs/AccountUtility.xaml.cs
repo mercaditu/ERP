@@ -67,20 +67,38 @@ namespace Cognitivo.Configs
             app_account app_account = app_accountDataGrid.SelectedItem as app_account;
             if (app_account != null)
             {
-                List<app_account_detail> ListDetails = db.app_account_detail
-                    .Where(x => x.id_account == app_account.id_account && x.status == Status.Documents_General.Approved)
-                    .Include(y => y.app_currencyfx.app_currency)
+                app_account_session app_account_session = app_account.app_account_session.LastOrDefault();
+                if (app_account_session != null)
+                {
+                    IsActive = app_account_session.is_active;
+                    LastUsed = app_account_session.app_account_detail.Select(x => x.trans_date).LastOrDefault();
+
+                    int SessionID = 0;
+                    //Sets the SessionID.
+                    if (app_account_session.is_active)
+                    {
+                        SessionID = app_account_session.id_session;
+                        //app_account.app_account_session
+                        //.OrderByDescending(x => x.op_date)
+                        //.Select(x => x.id_session)
+                        //.FirstOrDefault();
+                    }
+                    
+                    List<app_account_detail> ListDetails = app_account_session.app_account_detail.AsQueryable().Include(x => x.app_currencyfx.app_currency)
+                                          .Where
+                                           (x => x.id_session == SessionID &&
+                                          x.status == Status.Documents_General.Approved)
                     .OrderByDescending(y => y.trans_date)
                     .Skip(StartIndex)
                     .Take(PageSize).ToList();
 
-                //if (ListDetails.Count() > 0)
-                //{
+                    //if (ListDetails.Count() > 0)
+                    //{
                     dataPager.LoadDynamicItems(StartIndex, ListDetails);
-               // }
+                    // }
 
 
-
+                }
             }
         }
 
@@ -194,7 +212,7 @@ namespace Cognitivo.Configs
                                           app_account_session.app_account_detail
                                       .Where
                                       (x => x.id_session == SessionID && //Gets Current Session Items Only.
-                                      (x.status == Status.Documents_General.Approved || x.status==Status.Documents_General.Pending)) //Gets only Approved Items into view.
+                                      (x.status == Status.Documents_General.Approved || x.status == Status.Documents_General.Pending)) //Gets only Approved Items into view.
                                       .GroupBy(ad => new { ad.app_currencyfx.id_currency, ad.id_payment_type })
                                       .Select(s => new
                                       {
@@ -298,12 +316,12 @@ namespace Cognitivo.Configs
                     app_account_detail app_account_detail = new app_account_detail();
                     app_account_detail.id_account = app_account.id_account;
                     app_account_session app_account_session = app_account.app_account_session.Where(x => x.is_active).FirstOrDefault();
-                    if (app_account_session!=null)
+                    if (app_account_session != null)
                     {
                         app_account_detail.id_session = app_account_session.id_session;
                     }
-                
-                    
+
+
 
                     if (cmbpayment.SelectedItem != null)
                     {
@@ -341,7 +359,7 @@ namespace Cognitivo.Configs
                     }
                     else
                     {
-                        app_account_detail.debit = Convert.ToInt32(txtdebit.Text);
+                        app_account_detail.debit = Convert.ToDecimal(txtdebit.Text);
                     }
 
                     if (txtcredit.Text == "")
@@ -350,7 +368,7 @@ namespace Cognitivo.Configs
                     }
                     else
                     {
-                        app_account_detail.credit = Convert.ToInt32(txtcredit.Text);
+                        app_account_detail.credit = Convert.ToDecimal(txtcredit.Text);
                     }
 
                     app_account_detail.comment = tbxCommentAdjust.Text;

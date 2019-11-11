@@ -58,7 +58,7 @@ namespace entity.Controller.Purchase
                 app_branch = db.app_branch.Find(CurrentSession.Id_Branch),
                 app_terminal = db.app_terminal.Find(CurrentSession.Id_Terminal),
                 IsSelected = true,
-
+                return_type=Status.ReturnTypes.ItemDefect,
                 //Navigation Properties
                 app_currencyfx = db.app_currencyfx.Find(CurrentSession.Get_Currency_Default_Rate().id_currencyfx)
 
@@ -349,6 +349,11 @@ namespace entity.Controller.Purchase
                     }
                     //Remove Schedual from history.
                     db.payment_schedual.RemoveRange(purchase_return.payment_schedual);
+                }
+
+                foreach (purchase_return_detail purchase_return_detail in purchase_return.purchase_return_detail)
+                {
+                    purchase_return_detail.id_purchase_invoice_detail = null;
                 }
 
                 Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();

@@ -1,4 +1,5 @@
 ﻿using entity;
+using entity.Brillo;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -35,7 +36,7 @@ namespace Cognitivo.Purchase
 
             impexViewSource = FindResource("impexViewSource") as CollectionViewSource;
             await ImpexDB.impex
-                .Where(x => x.impex_type == impex.ImpexTypes.Import && x.is_active == true && x.id_company == CurrentSession.Id_Company).Include(y => y.contact)
+                .Where(x => x.impex_type == impex.ImpexTypes.Import && x.id_company == CurrentSession.Id_Company).Include(y => y.contact)
                 .LoadAsync();
             impexViewSource.Source = ImpexDB.impex.Local;
             impeximpex_expenseViewSource = FindResource("impeximpex_expenseViewSource") as CollectionViewSource;
@@ -568,7 +569,39 @@ namespace Cognitivo.Purchase
             { }
         }
 
-      
+        private void ToolBar_btnAnull_Click(object sender)
+        {
+            impex impex = impexDataGrid.SelectedItem as impex;
+            foreach (impex_import impex_import in impex.impex_import)
+            {
+                purchase_invoice purchase_invoice = impex_import.purchase_invoice;
+                int ID_CurrencyFX_Default = CurrentSession.Get_Currency_Default_Rate().id_currencyfx;
+
+                if (purchase_invoice!=null)
+                {
+
+                    foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail.
+                   Where(x => (x.item.id_item_type == item.item_type.Product) || (x.item.id_item_type == item.item_type.RawMaterial)).ToList())
+                    {
+
+                        foreach (item_movement item_movement in purchase_invoice_detail.item_movement)
+                        {
+                            item_movement_value_detail item_movement_value_detail = item_movement.item_movement_value_rel.item_movement_value_detail.FirstOrDefault();
+                            decimal defaultcurrency_cost = entity.Brillo.Currency.convert_Values(purchase_invoice_detail.unit_cost, purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+
+                            item_movement_value_detail.unit_value = defaultcurrency_cost;
+
+                            item_movement_value_detail.comment = entity.Brillo.Localize.StringText("directcost");
+
+                        }
+
+                    }
+                }
+               
+            }
+            impex.is_active = false;
+            ImpexDB.SaveChanges();
+        }
 
         private void impeximpex_expenseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {

@@ -238,6 +238,7 @@
                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}" />
                 <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"  
                                         Type="All" />
+                <Button Content="Add New" Click="Item_Select" HorizontalAlignment="Right" />
                 <TabControl>
                     <TabItem  Header="{lex:Loc Items}">
                         <DataGrid x:Name="sales_packinglist_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserDeleteRows="False" Height="250"

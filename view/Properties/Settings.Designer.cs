@@ -12,7 +12,7 @@ namespace Cognitivo.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -109,7 +109,7 @@ namespace Cognitivo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.debehaber.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://debehaber.com")]
         public string DebeHaberConnString {
             get {
                 return ((string)(this["DebeHaberConnString"]));
@@ -208,7 +208,7 @@ namespace Cognitivo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Copy Token Here...")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImYzNDE0NGYxOTdjZWJlODEwMWM2NTFlYzZiNzhiNTA4OWY4NWM2MDFmYzk5ZjQ3M2E1MTc0MDNiOTQ0YTkzYTE2NzQ0NDkwZjE5OTEwYzFhIn0.eyJhdWQiOiIxIiwianRpIjoiZjM0MTQ0ZjE5N2NlYmU4MTAxYzY1MWVjNmI3OGI1MDg5Zjg1YzYwMWZjOTlmNDczYTUxNzQwM2I5NDRhOTNhMTY3NDQ0OTBmMTk5MTBjMWEiLCJpYXQiOjE1NTA2NDMyMzksIm5iZiI6MTU1MDY0MzIzOSwiZXhwIjoxNTgyMTc5MjM5LCJzdWIiOiI1MyIsInNjb3BlcyI6W119.P3GfOT78zmgezJ48w0cCkuw0JA7fxZxNbAbellPBX4fOP2dJ4TAqqRzHugIazsBJ83sCIVrLIrZhljEXtcAGqFB-AVwxoIk7VRFr93AN6MZBATKUmgjl9cOoGOZZLf7TPJxwO-jxf05eq3O239Eb-CWtkAP4F6Kc2pBW5Rj0p27MSxet_MFHavv2airTJKMAI1FFnwdOUL47bQ0LiwERez6puDUcpAgNlJ-MQiLlTbykpB3hh-otMr9MnXZ9P0ogFujh5zLQaBIBdxyKByFEyZ9BcScy6p2v-Qvb9gOFf-iYqP8DTDZIzrUlGfBXkAA40OEb_twLES4pF9HNTriu6IuNK6Vpwdh8ZHq00eXXaR4aGAK2OFUyIYT889H0bus661kaAFPnO-hLyzYJxKlc6uLHpxLcVseOQQET9hUvOvi_HDWvQRSd1jfyHBZSAZnEB7Pvg7R4H-HfsbTVBKwt5jy-eTE58dwXeC3F-zSWM5qkyYZ8i5Evt_kaNz6lALUCiSezSgzVcByw48c1UYz46XAV-UnZvBt_SlHQb5ebhKjbovm2bNiPnrqno2QNynxMsjGMplah3CkzVsWffhLPH3lPlRwBsCxuD3rEOs4BNvRU1oDjW6xGK02X3u-mk-q7tUXKzjaW9NS8sj0Ys1D-rG2gffWkwwM5B8LFqr53Jao")]
         public string CognitivoKey {
             get {
                 return ((string)(this["CognitivoKey"]));
@@ -226,6 +226,54 @@ namespace Cognitivo.Properties {
         public string MySQLconnString {
             get {
                 return ((string)(this["MySQLconnString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("bym")]
+        public string Slug {
+            get {
+                return ((string)(this["Slug"]));
+            }
+            set {
+                this["Slug"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int SyncType {
+            get {
+                return ((int)(this["SyncType"]));
+            }
+            set {
+                this["SyncType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PaymentLoadData {
+            get {
+                return ((bool)(this["PaymentLoadData"]));
+            }
+            set {
+                this["PaymentLoadData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisplayMainContact {
+            get {
+                return ((bool)(this["DisplayMainContact"]));
+            }
+            set {
+                this["DisplayMainContact"] = value;
             }
         }
     }

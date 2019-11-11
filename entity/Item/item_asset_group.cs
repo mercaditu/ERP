@@ -25,7 +25,10 @@ namespace entity
         public string name { get; set; }
         public decimal? depreciation_rate { get; set; }
         public DateTime? depreciation_run { get; set; }
+
         public int ref_id { get; set; }
+
+
         //Nav Properties
         public virtual ICollection<item_asset> item_asset { get; set; }
     }

@@ -88,7 +88,7 @@ namespace cntrl.Curd
                 PaymentDB.payments.Add(payment);
                 List<payment_schedual> listschedual = new List<payment_schedual>();
                 listschedual.Add(schedual);
-                PaymentDB.Approve(listschedual, true, false);
+                PaymentDB.Approve(listschedual, true, false,false);
 
                 //dispatcher
                 Dispatcher.BeginInvoke((Action)(() =>

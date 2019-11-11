@@ -252,6 +252,7 @@ namespace entity
             {
                 item_movement.code = BatchCode;
                 item_movement.expire_date = expire_date??null;
+                item_movement.Update_ChildBatch(BatchCode, ExpireDate);
             }
         }
 

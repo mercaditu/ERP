@@ -331,7 +331,7 @@
         <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1"
                     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,55,0,0">
             <Label Content="{lex:Loc Code}" />
-            <Label Content="{Binding code, ElementName=tbxCode}" FontWeight="Medium" />
+            <Label Content="{Binding Path=Text, ElementName=tbxCode}" FontWeight="Medium" />
         </StackPanel>
         <cntrl:toolBar x:Name="toolBar"
                        btnSearch_Click="toolBar_btnSearch_Click"

@@ -24,7 +24,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DebeHaberConnString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://www.debehaber.com</Value>
+      <Value Profile="(Default)">https://debehaber.com</Value>
     </Setting>
     <Setting Name="ModFavList" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -60,7 +60,7 @@
       <Value Profile="(Default)">N2</Value>
     </Setting>
     <Setting Name="CognitivoKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Copy Token Here...</Value>
+      <Value Profile="(Default)">eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImYzNDE0NGYxOTdjZWJlODEwMWM2NTFlYzZiNzhiNTA4OWY4NWM2MDFmYzk5ZjQ3M2E1MTc0MDNiOTQ0YTkzYTE2NzQ0NDkwZjE5OTEwYzFhIn0.eyJhdWQiOiIxIiwianRpIjoiZjM0MTQ0ZjE5N2NlYmU4MTAxYzY1MWVjNmI3OGI1MDg5Zjg1YzYwMWZjOTlmNDczYTUxNzQwM2I5NDRhOTNhMTY3NDQ0OTBmMTk5MTBjMWEiLCJpYXQiOjE1NTA2NDMyMzksIm5iZiI6MTU1MDY0MzIzOSwiZXhwIjoxNTgyMTc5MjM5LCJzdWIiOiI1MyIsInNjb3BlcyI6W119.P3GfOT78zmgezJ48w0cCkuw0JA7fxZxNbAbellPBX4fOP2dJ4TAqqRzHugIazsBJ83sCIVrLIrZhljEXtcAGqFB-AVwxoIk7VRFr93AN6MZBATKUmgjl9cOoGOZZLf7TPJxwO-jxf05eq3O239Eb-CWtkAP4F6Kc2pBW5Rj0p27MSxet_MFHavv2airTJKMAI1FFnwdOUL47bQ0LiwERez6puDUcpAgNlJ-MQiLlTbykpB3hh-otMr9MnXZ9P0ogFujh5zLQaBIBdxyKByFEyZ9BcScy6p2v-Qvb9gOFf-iYqP8DTDZIzrUlGfBXkAA40OEb_twLES4pF9HNTriu6IuNK6Vpwdh8ZHq00eXXaR4aGAK2OFUyIYT889H0bus661kaAFPnO-hLyzYJxKlc6uLHpxLcVseOQQET9hUvOvi_HDWvQRSd1jfyHBZSAZnEB7Pvg7R4H-HfsbTVBKwt5jy-eTE58dwXeC3F-zSWM5qkyYZ8i5Evt_kaNz6lALUCiSezSgzVcByw48c1UYz46XAV-UnZvBt_SlHQb5ebhKjbovm2bNiPnrqno2QNynxMsjGMplah3CkzVsWffhLPH3lPlRwBsCxuD3rEOs4BNvRU1oDjW6xGK02X3u-mk-q7tUXKzjaW9NS8sj0Ys1D-rG2gffWkwwM5B8LFqr53Jao</Value>
     </Setting>
     <Setting Name="MySQLconnString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -69,6 +69,18 @@
   &lt;ProviderName&gt;MySql.Data.MySqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">server=localhost;user id=root;password=root;persistsecurityinfo=True;database=bym</Value>
+    </Setting>
+    <Setting Name="Slug" Type="System.String" Scope="User">
+      <Value Profile="(Default)">bym</Value>
+    </Setting>
+    <Setting Name="SyncType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="PaymentLoadData" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DisplayMainContact" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

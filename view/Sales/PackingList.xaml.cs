@@ -30,6 +30,7 @@ namespace Cognitivo.Sales
             sales_packingViewSource = FindResource("sales_packingViewSource") as CollectionViewSource;
             await PackingListDB.sales_packing.Where(a => a.id_company == CurrentSession.Id_Company)
                 .Include(x => x.contact)
+                .OrderByDescending(x=>x.trans_date)
                 .LoadAsync();
             sales_packingViewSource.Source = PackingListDB.sales_packing.Local;
 
@@ -316,12 +317,17 @@ namespace Cognitivo.Sales
 
         private void Item_Select(object sender, EventArgs e)
         {
+            AddItem(sbxItem.ItemID, sbxItem.Quantity);
+        }
+
+        public void AddItem(int ItemID, decimal Quantity)
+        {
             app_branch app_branch = null;
-            if (sbxItem.ItemID > 0)
+            if (ItemID > 0)
             {
                 sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
 
-                item item = PackingListDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = PackingListDB.items.Where(x => x.id_item == ItemID).FirstOrDefault();
 
                 if (item != null && item.id_item > 0 && sales_packing != null)
                 {
@@ -339,12 +345,11 @@ namespace Cognitivo.Sales
                     }
                     else
                     {
-                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null, sbxItem.Quantity));
+                        Task Thread = Task.Factory.StartNew(() => select_Item(sales_packing, item, app_branch, null, Quantity));
                     }
                 }
             }
         }
-
         private void select_Item(sales_packing sales_packing, item item, app_branch app_branch, item_movement item_movement, decimal quantity)
         {
             long id_movement = item_movement != null ? item_movement.id_movement : 0;
@@ -436,6 +441,7 @@ namespace Cognitivo.Sales
                     .GroupBy(x => x.id_item)
                     .Select(x => new
                     {
+
                         ItemName = x.Max(y => y.item.name),
                         ItemCode = x.Max(y => y.item.code),
                         VerifiedQuantity = sales_packing.sales_packing_detail.Where(y => y.user_verified && y.id_item == x.Max(z => z.id_item)).Sum(y => y.verified_quantity), //Only sum Verified Quantity if IsVerifiyed is True.
@@ -569,7 +575,14 @@ namespace Cognitivo.Sales
             sales_packingViewSource.Source = PackingListDB.sales_packing.Local;
         }
 
-
+        private void Item_Select(object sender, RoutedEventArgs e)
+        {
+            dynamic _selectedpacking = GridVerifiedList.SelectedItem;
+            if (_selectedpacking != null)
+            {
+                AddItem(_selectedpacking.id_item, 1);
+            }
+        }
 
         private void btnSalesInvoice_Click(object sender, MouseButtonEventArgs e)
         {

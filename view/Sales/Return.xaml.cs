@@ -124,16 +124,29 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnNew_Click(object sender)
         {
+            sbxContact.Text = "";
+         
             ReturnSetting _pref_SalesReturn = new ReturnSetting();
             sales_return objSalRtn = SalesReturnDB.Create(_pref_SalesReturn.TransDate_OffSet,false);
             objSalRtn.trans_date = DateTime.Now.AddDays(_pref_SalesReturn.TransDate_OffSet);
+            objSalRtn.return_type = Status.ReturnTypes.ItemDefect;
             SalesReturnDB.db.sales_return.Add(objSalRtn);
             salesReturnViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-            SalesReturnDB.SaveChanges_WithValidation();
+            sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
+            if (sales_return.id_contact>0)
+            {
+                SalesReturnDB.SaveChanges_WithValidation();
+                
+            }
+            else
+            {
+                toolBar.msgWarning("Contact Not Seleced...");
+            }
+           
         }
 
         #endregion Toolbar
@@ -358,6 +371,18 @@ namespace Cognitivo.Sales
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
+            sales_return _sales_return = (sales_return)salesReturnViewSource.View.CurrentItem;
+            if (_sales_return != null)
+            {
+                if (_sales_return.id_currencyfx > 0)
+                {
+                    app_currencyfx app_currencyfx = SalesReturnDB.db.app_currencyfx.Find(_sales_return.id_currencyfx);
+                    if (app_currencyfx != null)
+                    {
+                        _sales_return.app_currencyfx = app_currencyfx;
+                    }
+                }
+            }
             calculate_vat(sender, e);
         }
 
@@ -518,7 +543,7 @@ namespace Cognitivo.Sales
             load_PrimaryDataThread();
         }
 
-        
+      
 
         private void dataPager_OnDemandLoading(object sender, Syncfusion.UI.Xaml.Controls.DataPager.OnDemandLoadingEventArgs e)
         {

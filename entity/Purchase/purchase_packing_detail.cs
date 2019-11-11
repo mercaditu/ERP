@@ -6,7 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-
+    using System.Linq;
     public partial class purchase_packing_detail : Audit, IDataErrorInfo
     {
         public purchase_packing_detail()
@@ -49,18 +49,19 @@ namespace entity
         private int _id_item;
 
         [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+        [CustomValidation(typeof(Class.EntityValidation), "CheckIddecimal")]
         public decimal quantity
         {
             get { return _quantity; }
             set
             {
-                if (value > 0)
+                if (Convert.ToDecimal(value) > 0)
                 {
                     _quantity = value;
                 }
             }
         }
+
 
         private decimal _quantity;
 
@@ -72,6 +73,17 @@ namespace entity
         public decimal? volume { get; set; }
 
         public int? id_branch { get; set; }
+
+        decimal _VerifiedQuantity;
+        [NotMapped]
+        public decimal VerifiedQuantity
+        {
+            get { return Convert.ToDecimal(child.Sum(x=>x.verified_quantity)); }
+            set
+            {
+                _VerifiedQuantity = value;
+            }
+        }
 
         public decimal? verified_quantity
         {

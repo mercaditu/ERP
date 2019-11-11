@@ -21,6 +21,14 @@ namespace cntrl.Class
             },
 
 
+             new Report
+            {
+                Application = entity.App.Names.PackingList,
+                Name = entity.Brillo.Localize.StringText("SalesPackingDetail")!= string.Empty ? entity.Brillo.Localize.StringText("SalesPackingDetail") :"SalesPackingDetail",
+                Path = "cntrl.Reports.Sales.SalesPackingDetail.rdlc",
+                Query = Reports.Sales.SalesPacking.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
+            },
             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
@@ -29,7 +37,7 @@ namespace cntrl.Class
                 Query = Reports.Sales.Sales.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate}
             },
-            new Report
+             new Report
             {
                 Application = entity.App.Names.SalesInvoice,
                 Name = entity.Brillo.Localize.StringText("SalesDetails")!= string.Empty ? entity.Brillo.Localize.StringText("SalesDetails") :"SalesDetails",
@@ -337,6 +345,14 @@ namespace cntrl.Class
                 Name =entity.Brillo.Localize.StringText("PurchaseTender"),
                 Path = "cntrl.Reports.Purchases.PurchaseTender.rdlc",
                 Query = Reports.Purchase.PurchaseTender.query,
+                Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
+            },
+                     new Report
+            {
+                Application = entity.App.Names.Imports,
+                Name =entity.Brillo.Localize.StringText("Import"),
+                Path = "cntrl.Reports.Purchases.Import.rdlc",
+                Query = Reports.Purchase.Import.query,
                 Parameters = new List<Report.Types> { Report.Types.StartDate, Report.Types.EndDate},
             },
 

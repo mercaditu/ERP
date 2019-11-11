@@ -319,6 +319,7 @@
       <DependentUpon>NotificationIcon.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\AttachmentConverter.cs" />
     <Compile Include="Curd\Promotion\BuyTag_GetThat.xaml.cs">
       <DependentUpon>BuyTag_GetThat.xaml</DependentUpon>
     </Compile>
@@ -337,7 +338,12 @@
     <Compile Include="Curd\Promotion\Discount_OnTag.xaml.cs">
       <DependentUpon>Discount_OnTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\PurchaseAttachment.xaml.cs">
+      <DependentUpon>PurchaseAttachment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Item\Item.cs" />
+    <Compile Include="Reports\Purchases\Import.cs" />
+    <Compile Include="Reports\Sales\SalesPacking.cs" />
     <Compile Include="Reports\Stocks\BlankInventory.cs" />
     <Compile Include="toolBarNotification.xaml.cs">
       <DependentUpon>toolBarNotification.xaml</DependentUpon>
@@ -742,10 +748,13 @@
     <EmbeddedResource Include="Reports\Projects\ProjectRawMaterial.rdlc" />
     <EmbeddedResource Include="Reports\Projects\Technical.rdlc" />
     <EmbeddedResource Include="Reports\Projects\Technicalemp.rdlc" />
+    <EmbeddedResource Include="Reports\Purchases\Import.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseByCostCenter.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseBySupplier.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseDetail.rdlc" />
     <EmbeddedResource Include="Reports\Purchases\PurchaseTender.rdlc" />
+    <EmbeddedResource Include="Reports\Sales\SalesPackingDetail.rdlc" />
+    <EmbeddedResource Include="Reports\Stocks\StockValue1.rdlc" />
     <EmbeddedResource Include="Reports\Sales\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesAnalysis.rdlc" />
     <EmbeddedResource Include="Reports\Sales\SalesByBranch.rdlc" />
@@ -904,10 +913,12 @@
     <None Include="Properties\DataSources\entity.Reporting.ProductionOrder.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.ProductionStatus.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.PurchaseTender.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Import.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Project.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Purchase.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_Sales.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.RPT_SalesGst.datasource" />
+    <None Include="Properties\DataSources\entity.Reporting.RPT_Sales_Packing.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.SalesAnalysis.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.SalesPayment.datasource" />
     <None Include="Properties\DataSources\entity.Reporting.Stock.datasource" />
@@ -1029,6 +1040,10 @@
     <Page Include="Curd\Promotion\Discount_OnTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\PurchaseAttachment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="toolBarNotification.xaml">
       <SubType>Designer</SubType>

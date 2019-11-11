@@ -14,7 +14,7 @@
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type local:ItemMovement}, CreateList=True}" />
     </UserControl.Resources>
      <DataGrid x:Name="dgItemMovement" Width="256" FontSize="10" Margin="5" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
-              ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged" CellEditEnding="dgItemMovement_CellEditEnding">
+              ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionChanged="DataGrid_SelectionChanged" CellEditEnding="dgItemMovement_CellEditEnding" MaxHeight="500">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding Date, StringFormat=d}" Header="{lex:Loc Cognitivo:local:Date}" MinWidth="50" Width="*" IsReadOnly="True"/>
             <DataGridTextColumn Binding="{Binding Branch}" Header="{lex:Loc Cognitivo:local:Branch}" MinWidth="32" Width="*" IsReadOnly="True"/>

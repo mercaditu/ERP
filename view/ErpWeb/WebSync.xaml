@@ -188,7 +188,26 @@
                 </StackPanel>
             </Border>
 
-            
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" MinHeight="64" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/project.png" Height="32" />
+                        <Label Content="{lex:Loc Opportunity}" Style="{StaticResource H3}" />
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="opportunityValue" />
+                        <Run Text="/" />
+                        <Run x:Name="OpportunityMaximum" />
+                    </TextBlock>
+                    <ProgressBar x:Name="progOpportunity" VerticalAlignment="Bottom" Margin="4"
+                                 Value="0"
+                                 Maximum="100" />
+                </StackPanel>
+            </Border>
+
+
         </WrapPanel>
     </Grid>
 

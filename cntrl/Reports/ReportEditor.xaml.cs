@@ -20,7 +20,7 @@ namespace cntrl.Reports
         {
             string ReportName = Path.Replace("cntrl.Reports.", "");
             ReportName = ReportName.Remove(0, ReportName.IndexOf(".") + 1);
-            string path = entity.Brillo.IO.CreateIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Reports\\" + Application + "\\" + ReportName);
+            string path = entity.Brillo.IO.CreateIfNotExists(AppDomain.CurrentDomain.BaseDirectory + "\\CogntivoERP\\Reports\\" + Application + "\\" + ReportName);
 
             if (entity.Brillo.IO.FileExists(path))
             {

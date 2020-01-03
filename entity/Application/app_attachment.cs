@@ -24,6 +24,7 @@ namespace entity
             set
             {
                 _reference_id =value; FileName = id_attachment + "." + mime.Substring(mime.IndexOf("/") + 1);
+                Extension = mime.Substring(mime.IndexOf("/") + 1);
             }
         }
         int _reference_id;
@@ -32,7 +33,9 @@ namespace entity
 
         [NotMapped]
         public string FileName { get; set; }
-    
+        [NotMapped]
+        public string Extension { get; set; }
+
 
         public virtual ICollection<item_attachment> item_attachment { get; set; }
     }

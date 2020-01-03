@@ -326,7 +326,7 @@ namespace cntrl
             Class.Generate Generate = new Class.Generate();
             Generate.GenerateReportList();
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\Reports\\" + ApplicationName + "\\";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\CogntivoERP\\Reports\\" + ApplicationName + "\\";
 
             foreach (var Report in Generate.ReportList.Where(x => x.Application == ApplicationName).ToList())
             {
@@ -343,9 +343,7 @@ namespace cntrl
                         {
                             throw new ArgumentException("Resource Not Found", "resourceName");
                         }
-
-
-                        using (FileStream output = File.Open(@path + ReportName,FileMode.Open))
+                        using (FileStream output = File.OpenWrite(@path + ReportName))
                         {
                             resource.CopyTo(output);
 

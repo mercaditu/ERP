@@ -96,10 +96,14 @@ namespace Cognitivo.ErpWeb
             Task Item_Task = Task.Factory.StartNew(() => SyncItem(slug, SyncType));
             Item_Task.Wait();
 
-            // Task Item_Upload_Task = Task.Factory.StartNew(() => Image_upload(slug, SyncType));
+           // Task Item_Upload_Task = Task.Factory.StartNew(() => Image_upload(slug, SyncType));
 
 
              Task Sale_Task = Task.Factory.StartNew(() => Sales_click(slug, SyncType, start, end));
+               Sale_Task.Wait();
+
+            Task Opportunity_Task = Task.Factory.StartNew(() => SyncOpportunity(slug, SyncType));
+
 
         }
 
@@ -590,7 +594,7 @@ namespace Cognitivo.ErpWeb
                 List<item> items = db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
                 List<int> item_attachments = db.app_attachment.Where(x => x.application == entity.App.Names.Items).Select(x=>x.reference_id).ToList();
                 List<item> ItemWithAttachment = items.Where(x => item_attachments.Contains(x.id_item)).ToList();
-                
+               
                 foreach (item item in ItemWithAttachment)
                 {
                     try
@@ -600,15 +604,13 @@ namespace Cognitivo.ErpWeb
                         foreach (app_attachment app_attachment in item_Attachments)
                         {
                             Cognitivo.API.Models.Attachments attachment = new Attachments();
-                            attachment.attachment = app_attachment.file;
-                            attachment.cloudId = item.cloud_id;
-                            Attachments.Add(attachment);
+                            send.ItemImage(slug, app_attachment.file);
                         }
-                        send.ItemImage(slug, Attachments);
+                       
                     }
-                    catch 
+                    catch (Exception ex)
                     {
-
+                        throw ex;
                     }
                    
 
@@ -933,6 +935,46 @@ namespace Cognitivo.ErpWeb
                 Dispatcher.BeginInvoke((Action)(() => progBranch.IsIndeterminate = true));
                 SyncBranchList = send.Locations(slug, SyncBranchList).OfType<object>().ToList();
                 Dispatcher.BeginInvoke((Action)(() => progBranch.IsIndeterminate = false));
+
+                db.SaveChanges();
+            }
+        }
+
+        private void SyncOpportunity(string slug, Cognitivo.API.Enums.SyncWith SyncType)
+        {
+            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, SyncType);
+
+            using (db db = new db())
+            {
+                List<project> projectList = db.projects
+                   .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+
+                Dispatcher.BeginInvoke((Action)(() => OpportunityMaximum.Text = projectList.Count.ToString()));
+                Dispatcher.BeginInvoke((Action)(() => progBranch.Value = 0));
+                int count = 0;
+
+                List<object> SyncProjectList = new List<object>();
+
+                foreach (project project in projectList)
+                {
+                    Opportunity syncOpportunity = new Opportunity();
+                    syncOpportunity.localId = project.id_branch;
+                    syncOpportunity.updatedAt = project.timestamp;
+                    syncOpportunity.name = project.name;
+                    syncOpportunity.description = project.comment;
+                    syncOpportunity.deadlineDate = Convert.ToDateTime(project.est_end_date);
+
+
+                    SyncProjectList.Add(syncOpportunity);
+
+                    count = count + 1;
+                    Dispatcher.BeginInvoke((Action)(() => progBranch.Value = count));
+                    Dispatcher.BeginInvoke((Action)(() => branchValue.Text = count.ToString()));
+                }
+
+                Dispatcher.BeginInvoke((Action)(() => progOpportunity.IsIndeterminate = true));
+                SyncProjectList = send.oppo(slug, SyncProjectList).OfType<object>().ToList();
+                Dispatcher.BeginInvoke((Action)(() => progOpportunity.IsIndeterminate = false));
 
                 db.SaveChanges();
             }

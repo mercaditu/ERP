@@ -83,11 +83,11 @@ namespace Cognitivo.ErpWeb
         {
 
             Task Branch_Task = Task.Factory.StartNew(() => SyncBranch(slug, SyncType));
-            Task Contract_Task = Task.Factory.StartNew(() => SyncContract(slug, SyncType));
+            //Task Contract_Task = Task.Factory.StartNew(() => SyncContract(slug, SyncType));
           
 
             Branch_Task.Wait();
-            Contract_Task.Wait();
+           // Contract_Task.Wait();
           
 
             //Task Customer_Task = Task.Factory.StartNew(() => SyncCustomer(slug, SyncType));
@@ -102,7 +102,7 @@ namespace Cognitivo.ErpWeb
              Task Sale_Task = Task.Factory.StartNew(() => Sales_click(slug, SyncType, start, end));
                Sale_Task.Wait();
 
-            Task Opportunity_Task = Task.Factory.StartNew(() => SyncOpportunity(slug, SyncType));
+           
 
 
         }
@@ -585,39 +585,39 @@ namespace Cognitivo.ErpWeb
             }
         }
 
-        private void Image_upload(string slug, Cognitivo.API.Enums.SyncWith SyncType)
-        {
-            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, SyncType);
+        //private void Image_upload(string slug, Cognitivo.API.Enums.SyncWith SyncType)
+        //{
+        //    send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, SyncType);
 
-            using (db db = new db())
-            {
-                List<item> items = db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
-                List<int> item_attachments = db.app_attachment.Where(x => x.application == entity.App.Names.Items).Select(x=>x.reference_id).ToList();
-                List<item> ItemWithAttachment = items.Where(x => item_attachments.Contains(x.id_item)).ToList();
+        //    using (db db = new db())
+        //    {
+        //        List<item> items = db.items.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
+        //        List<int> item_attachments = db.app_attachment.Where(x => x.application == entity.App.Names.Items).Select(x=>x.reference_id).ToList();
+        //        List<item> ItemWithAttachment = items.Where(x => item_attachments.Contains(x.id_item)).ToList();
                
-                foreach (item item in ItemWithAttachment)
-                {
-                    try
-                    {
-                        List<object> Attachments = new List<object>();
-                        List<app_attachment> item_Attachments = db.app_attachment.Where(x => x.application == entity.App.Names.Items && x.reference_id == item.id_item).ToList();
-                        foreach (app_attachment app_attachment in item_Attachments)
-                        {
-                            Cognitivo.API.Models.Attachments attachment = new Attachments();
-                            send.ItemImage(slug, app_attachment.file);
-                        }
+        //        foreach (item item in ItemWithAttachment)
+        //        {
+        //            try
+        //            {
+        //                List<object> Attachments = new List<object>();
+        //                List<app_attachment> item_Attachments = db.app_attachment.Where(x => x.application == entity.App.Names.Items && x.reference_id == item.id_item).ToList();
+        //                foreach (app_attachment app_attachment in item_Attachments)
+        //                {
+        //                    Cognitivo.API.Models.Attachments attachment = new Attachments();
+        //                    send.ItemImage(slug, app_attachment.file);
+        //                }
                        
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                throw ex;
+        //            }
                    
 
                    
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
         private void Sales_click(string slug, Cognitivo.API.Enums.SyncWith SyncType, DateTime start, DateTime end)
         {
             try
@@ -940,45 +940,45 @@ namespace Cognitivo.ErpWeb
             }
         }
 
-        private void SyncOpportunity(string slug, Cognitivo.API.Enums.SyncWith SyncType)
-        {
-            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, SyncType);
+        //private void SyncOpportunity(string slug, Cognitivo.API.Enums.SyncWith SyncType)
+        //{
+        //    send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, SyncType);
 
-            using (db db = new db())
-            {
-                List<project> projectList = db.projects
-                   .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+        //    using (db db = new db())
+        //    {
+        //        List<project> projectList = db.projects
+        //           .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-                Dispatcher.BeginInvoke((Action)(() => OpportunityMaximum.Text = projectList.Count.ToString()));
-                Dispatcher.BeginInvoke((Action)(() => progBranch.Value = 0));
-                int count = 0;
+        //        Dispatcher.BeginInvoke((Action)(() => OpportunityMaximum.Text = projectList.Count.ToString()));
+        //        Dispatcher.BeginInvoke((Action)(() => progBranch.Value = 0));
+        //        int count = 0;
 
-                List<object> SyncProjectList = new List<object>();
+        //        List<object> SyncProjectList = new List<object>();
 
-                foreach (project project in projectList)
-                {
-                    Opportunity syncOpportunity = new Opportunity();
-                    syncOpportunity.localId = project.id_branch;
-                    syncOpportunity.updatedAt = project.timestamp;
-                    syncOpportunity.name = project.name;
-                    syncOpportunity.description = project.comment;
-                    syncOpportunity.deadlineDate = Convert.ToDateTime(project.est_end_date);
+        //        foreach (project project in projectList)
+        //        {
+        //            Opportunity syncOpportunity = new Opportunity();
+        //            syncOpportunity.localId = project.id_branch;
+        //            syncOpportunity.updatedAt = project.timestamp;
+        //            syncOpportunity.name = project.name;
+        //            syncOpportunity.description = project.comment;
+        //            syncOpportunity.deadlineDate = Convert.ToDateTime(project.est_end_date);
 
 
-                    SyncProjectList.Add(syncOpportunity);
+        //            SyncProjectList.Add(syncOpportunity);
 
-                    count = count + 1;
-                    Dispatcher.BeginInvoke((Action)(() => progBranch.Value = count));
-                    Dispatcher.BeginInvoke((Action)(() => branchValue.Text = count.ToString()));
-                }
+        //            count = count + 1;
+        //            Dispatcher.BeginInvoke((Action)(() => progBranch.Value = count));
+        //            Dispatcher.BeginInvoke((Action)(() => branchValue.Text = count.ToString()));
+        //        }
 
-                Dispatcher.BeginInvoke((Action)(() => progOpportunity.IsIndeterminate = true));
-                SyncProjectList = send.oppo(slug, SyncProjectList).OfType<object>().ToList();
-                Dispatcher.BeginInvoke((Action)(() => progOpportunity.IsIndeterminate = false));
+        //        Dispatcher.BeginInvoke((Action)(() => progOpportunity.IsIndeterminate = true));
+        //        SyncProjectList = send.oppo(slug, SyncProjectList).OfType<object>().ToList();
+        //        Dispatcher.BeginInvoke((Action)(() => progOpportunity.IsIndeterminate = false));
 
-                db.SaveChanges();
-            }
-        }
+        //        db.SaveChanges();
+        //    }
+        //}
 
 
 

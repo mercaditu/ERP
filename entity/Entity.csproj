@@ -263,6 +263,7 @@
     <Compile Include="Brillo\Promotion\Start.cs" />
     <Compile Include="Brillo\Stock.cs" />
     <Compile Include="Brillo\VerificationCode.cs" />
+    <Compile Include="myMigrationSQLGenerator.cs" />
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsMovement.cs" />
     <Compile Include="Class\clsImpex.cs" />

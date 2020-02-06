@@ -231,76 +231,76 @@ namespace Cognitivo.ErpWeb
         //    }
         //}
 
-        private void SyncContract(string slug, Cognitivo.API.Enums.SyncWith SyncType)
-        {
-            send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, SyncType);
+        //private void SyncContract(string slug, Cognitivo.API.Enums.SyncWith SyncType)
+        //{
+        //    send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, SyncType);
 
-            using (db db = new db())
-            {
-                List<app_contract> app_contractList = db.app_contract
-                   .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+        //    using (db db = new db())
+        //    {
+        //        List<app_contract> app_contractList = db.app_contract
+        //           .Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-                Dispatcher.BeginInvoke((Action)(() => contractMaximum.Text = app_contractList.Count.ToString()));
-                Dispatcher.BeginInvoke((Action)(() => progContract.Value = 0));
-                int count = 0;
+        //        Dispatcher.BeginInvoke((Action)(() => contractMaximum.Text = app_contractList.Count.ToString()));
+        //        Dispatcher.BeginInvoke((Action)(() => progContract.Value = 0));
+        //        int count = 0;
 
-                List<object> SyncContractList = new List<object>();
+        //        List<object> SyncContractList = new List<object>();
 
-                foreach (app_contract app_contract in app_contractList)
-                {
-                    PaymentContract syncContract = new PaymentContract();
-                    syncContract.localId = app_contract.id_contract;
-                    syncContract.cloudId = app_contract.cloud_id != null ? (int)app_contract.cloud_id : 0;
-                    syncContract.updatedAt = app_contract.timestamp;
-                    syncContract.createdAt = app_contract.timestamp;
-                    syncContract.name = app_contract.name;
-                    foreach (app_contract_detail app_contract_detail in app_contract.app_contract_detail)
-                    {
-                        Cognitivo.API.Models.PaymentContractDetail PaymentContractDetail = new Cognitivo.API.Models.PaymentContractDetail();
-                        PaymentContractDetail.offset = app_contract_detail.interval;
-                        PaymentContractDetail.percent = app_contract_detail.coefficient;
-                        PaymentContractDetail.updatedAt = app_contract_detail.timestamp;
-                        syncContract.details.Add(PaymentContractDetail);
-                    }
+        //        foreach (app_contract app_contract in app_contractList)
+        //        {
+        //            PaymentContract syncContract = new PaymentContract();
+        //            syncContract.localId = app_contract.id_contract;
+        //            syncContract.cloudId = app_contract.cloud_id != null ? (int)app_contract.cloud_id : 0;
+        //            syncContract.updatedAt = app_contract.timestamp;
+        //            syncContract.createdAt = app_contract.timestamp;
+        //            syncContract.name = app_contract.name;
+        //            foreach (app_contract_detail app_contract_detail in app_contract.app_contract_detail)
+        //            {
+        //                Cognitivo.API.Models.PaymentContractDetail PaymentContractDetail = new Cognitivo.API.Models.PaymentContractDetail();
+        //                PaymentContractDetail.offset = app_contract_detail.interval;
+        //                PaymentContractDetail.percent = app_contract_detail.coefficient;
+        //                PaymentContractDetail.updatedAt = app_contract_detail.timestamp;
+        //                syncContract.details.Add(PaymentContractDetail);
+        //            }
 
-                    SyncContractList.Add(syncContract);
+        //            SyncContractList.Add(syncContract);
 
-                    count = count + 1;
-                    Dispatcher.BeginInvoke((Action)(() => progContract.Value = count));
-                    Dispatcher.BeginInvoke((Action)(() => contractValue.Text = count.ToString()));
-                }
+        //            count = count + 1;
+        //            Dispatcher.BeginInvoke((Action)(() => progContract.Value = count));
+        //            Dispatcher.BeginInvoke((Action)(() => contractValue.Text = count.ToString()));
+        //        }
 
-                SyncContractList = send.PaymentContracts(slug, SyncContractList).OfType<object>().ToList();
-                // List<app_contract> app_contracts = CurrentSession.Contracts;
-                List<app_contract> app_contracts = db.app_contract.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+        //        SyncContractList = send.PaymentContracts(slug, SyncContractList).OfType<object>().ToList();
+        //        // List<app_contract> app_contracts = CurrentSession.Contracts;
+        //        List<app_contract> app_contracts = db.app_contract.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-                Dispatcher.BeginInvoke((Action)(() => progContract.IsIndeterminate = true));
-                foreach (Cognitivo.API.Models.PaymentContract ResoponseData in SyncContractList)
-                {
-                    if (ResoponseData.action == API.Enums.Action.CreateOnCloud)
-                    {
-                        app_contract app_contract = app_contracts.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
-                        app_contract.cloud_id = ResoponseData.cloudId;
+        //        Dispatcher.BeginInvoke((Action)(() => progContract.IsIndeterminate = true));
+        //        foreach (Cognitivo.API.Models.PaymentContract ResoponseData in SyncContractList)
+        //        {
+        //            if (ResoponseData.action == API.Enums.Action.CreateOnCloud)
+        //            {
+        //                app_contract app_contract = app_contracts.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+        //                app_contract.cloud_id = ResoponseData.cloudId;
 
-                    }
-                    else if (ResoponseData.action == API.Enums.Action.UpdateOnLocal)
-                    {
+        //            }
+        //            else if (ResoponseData.action == API.Enums.Action.UpdateOnLocal)
+        //            {
 
-                        app_contract app_contract = app_contracts.Where(x => x.id_contract == ResoponseData.localId).FirstOrDefault();
-                        app_contract.cloud_id = ResoponseData.cloudId;
+        //                app_contract app_contract = app_contracts.Where(x => x.id_contract == ResoponseData.localId).FirstOrDefault();
+        //                app_contract.cloud_id = ResoponseData.cloudId;
 
-                        if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > app_contract.timestamp)
-                        {
-                            app_contract.name = ResoponseData.name;
-                        }
-                    }
+        //                if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > app_contract.timestamp)
+        //                {
+        //                    app_contract.name = ResoponseData.name;
+        //                }
+        //            }
 
-                }
+        //        }
 
-                Dispatcher.BeginInvoke((Action)(() => progContract.IsIndeterminate = false));
-                db.SaveChanges();
-            }
-        }
+        //        Dispatcher.BeginInvoke((Action)(() => progContract.IsIndeterminate = false));
+        //        db.SaveChanges();
+        //    }
+        //}
 
         //private void SyncCustomer(string slug, Cognitivo.API.Enums.SyncWith SyncType)
         //{
@@ -720,14 +720,14 @@ namespace Cognitivo.ErpWeb
                             //  Detail.item = SyncItem;
                             SyncInvoice.details.Add(Detail);
                         }
-                        if (SyncInvoice.customerCloudId > 0)
-                        {
+                        //if (SyncInvoice.customerCloudId > 0)
+                        //{
                             SyncInvoices.Add(SyncInvoice);
-                        }
-                        else
-                        {
-                            ErrorInvoices.Add(sales_invoice);
-                        }
+                        //}
+                        //else
+                        //{
+                        //    ErrorInvoices.Add(sales_invoice);
+                        //}
 
                         count = count + 1;
                         Dispatcher.BeginInvoke((Action)(() => progSales.Value = count));

@@ -712,8 +712,8 @@ namespace entity.Controller.Sales
             foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail)
             {
                 string Cost = @"
-                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                                set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+                                set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
                                 select sum(im.debit * c.unit_value / sid.quantity) as Cost from item_movement_value_detail as c
                                 join item_movement_value_rel as rel on c.id_movement_value_rel = rel.id_movement_value_rel
                                 join item_movement as im on rel.id_movement_value_rel = im.id_movement_value_rel

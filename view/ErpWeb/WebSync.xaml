@@ -111,6 +111,7 @@
                                  Maximum="1" />
                 </StackPanel>
             </Border>
+
             <!--<Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
                     Background="White"
                     Width="256" MinHeight="70" Margin="16">
@@ -130,7 +131,7 @@
                                  Maximum="1" />
                 </StackPanel>
             </Border>-->
-            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+            <!--<Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
                     Background="White"
                     Width="256" MinHeight="64" Margin="16">
 
@@ -148,7 +149,7 @@
                                  Value="0" x:Name="progContract"
                                  Maximum="1" />
                 </StackPanel>
-            </Border>
+            </Border>-->
             <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
                     Background="White"
                     Width="256" MinHeight="64" Margin="16">
@@ -188,7 +189,7 @@
                 </StackPanel>
             </Border>
 
-            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+            <!--<Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
                     Background="White"
                     Width="256" MinHeight="64" Margin="16">
                 <StackPanel>
@@ -205,7 +206,7 @@
                                  Value="0"
                                  Maximum="100" />
                 </StackPanel>
-            </Border>
+            </Border>-->
 
 
         </WrapPanel>

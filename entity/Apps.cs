@@ -42,6 +42,7 @@ namespace entity
 
             [LocalizedDescription("Report")]
             Report,
+           
         }
 
         //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
@@ -450,7 +451,9 @@ namespace entity
             [LocalizedDescription("Audit")]
             Audit = 144,
          
-            BarCodePrint = 145
+            BarCodePrint = 145,
+            [LocalizedDescription("CurrencyFixOut")]
+            CurrencyFixOut = 146
         }
     }
 }

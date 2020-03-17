@@ -45,41 +45,49 @@
         </ListBox>
 
         <DataGrid x:Name="currencyfxDataGrid" Margin="0,55,0,0" AutoGenerateColumns="False" SelectionMode="Single" CanUserDeleteRows="False"
-						   CanUserAddRows="False" Grid.Row="1" Grid.Column="1" SelectionChanged="currencyfxDataGrid_SelectionChanged"
+						   CanUserAddRows="False" Grid.Row="1" Grid.Column="1" SelectionChanged="currencyfxDataGrid_SelectionChanged" IsReadOnly="True"
 						  >
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" 
+                <DataGridTextColumn Header="Date" 
 											Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:BuyRate}"
+                <DataGridTextColumn Header="BuyRate"
 											Binding="{Binding buy_value,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SellRate}" 
+                <DataGridTextColumn Header="SellRate" 
 											Binding="{Binding sell_value,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Company}"
+                <DataGridTextColumn Header="Company"
 											Binding="{Binding CompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             </DataGrid.Columns>
                      
         </DataGrid>
         <DataGrid x:Name="AccountDetaildataDataGrid" Margin="0,55,0,0" AutoGenerateColumns="False" SelectionMode="Single" CanUserDeleteRows="False"
-						   CanUserAddRows="False" Grid.Row="1" Grid.Column="2"
+						   CanUserAddRows="False" Grid.Row="1" Grid.Column="2" CellEditEnding="accountdetailDataGrid_CellEditEnding"
 						  >
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" 
+                <DataGridTextColumn Header="Date" IsReadOnly="True" 
 											Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" 
-											Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Debit}" 
-											Binding="{Binding debit,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Credit}" 
-											Binding="{Binding credit,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Comment}"
+                <DataGridTextColumn Header="Comment"  IsReadOnly="True" Width="100"
 											Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Debit" IsReadOnly="True" 
+											Binding="{Binding debit,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Credit" IsReadOnly="True" 
+											Binding="{Binding credit,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="BuyRate"
+											Binding="{Binding buy_value,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="SellRate" 
+											Binding="{Binding sell_value,StringFormat=N2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Name" IsReadOnly="True" 
+											Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             </DataGrid.Columns>
 
         </DataGrid>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Button Click="Save" Content="Save"/>
+        </StackPanel>
+
 
 
     </Grid>

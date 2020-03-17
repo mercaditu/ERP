@@ -21,6 +21,7 @@
     <Page.Resources>
         <convert:IsActive2ColorConverter x:Key="Converter" />
         <convert:Bool2Color x:Key="Bool2Color"/>
+        <convert:SalesBudgetPriceUpdate x:Key="SalesBudgetPrice" />
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -77,13 +78,27 @@
                                                     UpdateSourceTrigger=PropertyChanged
                                                     }"></TextBox>
                      
-                        <Label Content="API Key" Style="{StaticResource input_label}"></Label>
+                        <Label Content="User Name" Style="{StaticResource input_label}"></Label>
+                        <TextBox Text="{Binding Source={x:Static
+                                                    mainpref:Settings.Default}, 
+                                                    Path=UserName,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged
+                                                    }"  x:Name="tbxUSerName" Margin="8" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your User Name here."></TextBox>
+                        <Label Content="Password" Style="{StaticResource input_label}"></Label>
+                        <TextBox Text="{Binding Source={x:Static
+                                                    mainpref:Settings.Default}, 
+                                                    Path=Password,
+                                                    Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged
+                                                    }"  x:Name="tbxPassword" Margin="8" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your Password here."></TextBox>
+                        <Label Content="Key" Style="{StaticResource input_label}"></Label>
                         <TextBox Text="{Binding Source={x:Static
                                                     mainpref:Settings.Default}, 
                                                     Path=CognitivoKey,
                                                     Mode=TwoWay,
                                                     UpdateSourceTrigger=PropertyChanged
-                                                    }"  x:Name="tbxAPI" Margin="8" MinHeight="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your API Key here."></TextBox>
+                                                    }" IsReadOnly="True" Margin="8" Height="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your Password here."></TextBox>
                         <TextBlock Text="{lex:Loc Information}" Style="{StaticResource text_HyperLinks}" MouseDown="ClickInformation"></TextBlock>
                         <Controls:ToggleSwitch OnLabel="Close" OffLabel="Open"  Click="ClickInformation"/>
                     </StackPanel>

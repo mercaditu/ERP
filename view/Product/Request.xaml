@@ -29,7 +29,7 @@
         <converter:ToStringFormatConverter x:Key="ToStringFormatConverter" />
         <BooleanToVisibilityConverter x:Key="B2V" />
         <converter:AddTwoValue x:Key="converter" />
-
+    
         <Controller:RequestController x:Key="RequestController"/>
 
         <CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}" />

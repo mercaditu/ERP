@@ -118,6 +118,7 @@ namespace Cognitivo.Menu
 
             //Finance
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Commercial.CurrencyFix", entity.App.Names.CurrencyFixOut, "Money", entity.CurrentSession.Versions.Basic, "0");
+            //dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Commercial.AccountFix", entity.App.Names.CurrencyFixOut, "Money", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Form, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", entity.CurrentSession.Versions.Basic, "0");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespaces.Transaction, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", entity.CurrentSession.Versions.Basic, "0");

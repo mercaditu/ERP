@@ -66,9 +66,10 @@ namespace Cognitivo.Commercial
 
             if(row !=null)
             {
-                string query = @"SELECT app_account_detail.trans_date,app_account.name,debit,credit,comment
+                string query = @"SELECT app_account_detail.trans_date,app_account.name,debit,credit,comment,app_currencyfx.id_currency,buy_value,sell_value,app_account_detail.id_account_detail
                 FROM app_account_detail
                 inner join app_account on app_account_detail.id_account = app_account.id_account
+                inner join app_currencyfx on app_currencyfx.id_currencyfx = app_account_detail.id_currencyfx
                 where app_account_detail.id_currencyfx =@CurrencyfxID";
                 query = query.Replace("@CurrencyfxID", row["id_currencyfx"].ToString());
 
@@ -77,5 +78,58 @@ namespace Cognitivo.Commercial
             }
             
         }
+
+        private void Save(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
+
+        private void accountdetailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            DataGrid datagrid = (DataGrid)sender;
+            DataGridColumn col = e.Column as DataGridColumn;
+            DataRowView row = datagrid.SelectedItem as DataRowView;
+            Int32 id_currencyfx = 0;
+            if (col.Header.ToString() == "BuyRate" || col.Header.ToString() == "SellRate")
+            {
+                using (db dbnew = new db())
+                {
+                    app_currencyfx app_currencyfx = new app_currencyfx();
+                    app_currencyfx.id_currency = Convert.ToInt16(row["id_currency"]);
+                    app_currencyfx.buy_value = Convert.ToDecimal(row["buy_value"]);
+                    app_currencyfx.sell_value = Convert.ToDecimal(row["sell_value"]);
+                    app_currencyfx.is_active = false;
+                    dbnew.app_currencyfx.Add(app_currencyfx);
+                    dbnew.SaveChanges();
+                    id_currencyfx = app_currencyfx.id_currencyfx;
+                }
+
+            }
+            int id_account_detail = Convert.ToInt16(row["id_account_detail"]);
+            app_account_detail account_Detail = db.app_account_detail.Where(x => x.id_account_detail == id_account_detail).FirstOrDefault();
+            if (account_Detail != null)
+            {
+                account_Detail.debit = Convert.ToDecimal(row["debit"]);
+                account_Detail.credit = Convert.ToDecimal(row["credit"]);
+                if (id_currencyfx > 0)
+                {
+                    account_Detail.id_currencyfx = id_currencyfx;
+                }
+
+            }
+           
+
+
+        }
+
     }
 }

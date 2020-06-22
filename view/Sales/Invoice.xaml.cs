@@ -390,28 +390,50 @@ namespace Cognitivo.Sales
                     else
                     {
                         item item = SalesDB.db.items.Find(sbxItem.ItemID);
-                        item_product item_product = item.item_product.FirstOrDefault();
-
-                        if (item_product != null && item_product.can_expire)
+                        if (item.id_item_type == item.item_type.ItemReceipe)
                         {
-                            crud_modalExpire.Visibility = Visibility.Visible;
-                            cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_invoice.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
-                            crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                            item_recepie ItemReceipe = item.item_recepie.FirstOrDefault();
+                            if(ItemReceipe !=null)
+                            {
+                                foreach (item_recepie_detail item_recepie_detail in ItemReceipe.item_recepie_detail)
+                                {
+                                    OpenExpireModal(ref sales_invoice, item_recepie_detail.item, sales_invoice.id_branch, SalesSettings.AllowDuplicateItem);
+                                }
+                            }
+                            
                         }
                         else
                         {
-
-                            sales_invoice_detail _sales_invoice_detail =
-                                SalesDB.Create_Detail(ref sales_invoice, item, null,
-                                SalesSettings.AllowDuplicateItem,
-                               sbxItem.QuantityInStock,
-                                sbxItem.Quantity);
-
-                            sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                            sales_invoice.RaisePropertyChanged("GrandTotal");
+                            OpenExpireModal(ref sales_invoice, item, sales_invoice.id_branch, SalesSettings.AllowDuplicateItem);
                         }
+                        
                     }
                 }
+            }
+        }
+
+        private void OpenExpireModal(ref sales_invoice sales_invoice, item item,int id_branch,bool AllowDuplicateItem)
+        {
+           
+            item_product item_product = item.item_product.FirstOrDefault();
+
+            if (item_product != null && item_product.can_expire)
+            {
+                crud_modalExpire.Visibility = Visibility.Visible;
+                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(id_branch, null, item.item_product.FirstOrDefault().id_item_product);
+                crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+            }
+            else
+            {
+
+                sales_invoice_detail _sales_invoice_detail =
+                    SalesDB.Create_Detail(ref sales_invoice, item, null,
+                    AllowDuplicateItem,
+                   sbxItem.QuantityInStock,
+                    sbxItem.Quantity);
+
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                sales_invoice.RaisePropertyChanged("GrandTotal");
             }
         }
 
@@ -869,28 +891,33 @@ namespace Cognitivo.Sales
                 sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
                 item item = SalesDB.db.items.Find(sbxItem.ItemID);
 
-                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
-
-                if (item != null && item.id_item > 0 && sales_invoice != null)
+                foreach (cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry in crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>())
                 {
-                    if (pnl_ItemMovementExpiry.MovementID > 0)
+                    if (item != null && item.id_item > 0 && sales_invoice != null)
                     {
-                        item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
+                        if (pnl_ItemMovementExpiry.MovementID > 0)
+                        {
+                            item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
-                        Settings SalesSettings = new Settings();
-                        sales_invoice_detail _sales_invoice_detail = SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
-                        _sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
-                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                        sales_invoice.RaisePropertyChanged("GrandTotal");
-                    }
-                    else
-                    {
-                        toolBar.msgWarning("Batch not selected correctly.");
+                            Settings SalesSettings = new Settings();
+                            sales_invoice_detail _sales_invoice_detail = SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
+                            _sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
+                            sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                            sales_invoice.RaisePropertyChanged("GrandTotal");
+                        }
+                        else
+                        {
+                            toolBar.msgWarning("Batch not selected correctly.");
+                        }
                     }
                 }
 
+                //cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
+
+               
+
                 //Cleans for reuse.
-                crud_modalExpire.Children.Clear();
+                //crud_modalExpire.Children.Clear();
             }
         }
 

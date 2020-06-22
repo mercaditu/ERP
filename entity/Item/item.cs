@@ -32,7 +32,10 @@ namespace entity
             Supplies = 6,
 
             [LocalizedDescription("ServiceContract")]
-            ServiceContract = 7
+            ServiceContract = 7,
+
+            [LocalizedDescription("ItemReceipe")]
+            ItemReceipe = 8,
         }
 
         public item()

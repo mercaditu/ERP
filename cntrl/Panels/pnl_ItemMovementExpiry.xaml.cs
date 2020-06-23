@@ -15,6 +15,7 @@ namespace cntrl.Panels
         public ProductMovementDB ProductMovementDB = new ProductMovementDB();
         private CollectionViewSource ExpiryInStockViewSource;
         public int MovementID { get; set; }
+        public int ProductID { get; set; }
 
         public pnl_ItemMovementExpiry(int? BranchID, int? LocationID, int ProductID)
         {
@@ -24,6 +25,7 @@ namespace cntrl.Panels
 
         private void UserControl_Loaded(int? BranchID, int? LocationID, int ProductID)
         {
+            this.ProductID = ProductID;
             ExpiryInStockViewSource = ((CollectionViewSource)(FindResource("ExpiryInStockViewSource")));
 
             //We are not certain if we should search by Location or Branch. This helps in choosing only Branch if is selected.

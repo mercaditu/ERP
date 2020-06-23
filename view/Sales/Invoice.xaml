@@ -38,7 +38,7 @@
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}" />
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailsales_packinglist_relationViewSource" Source="{Binding sales_packinglist_relation, Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" />
     </Page.Resources>
-    <Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
+    <Grid x:Name="MainGrid" DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />

@@ -163,7 +163,7 @@ namespace Cognitivo.Sales
                 }
                 else
                 {
-                    if (SalesDB.Msg.Count()>0)
+                    if (SalesDB.Msg.Count() > 0)
                     {
                         MessageBox.Show(SalesDB.Msg.FirstOrDefault().ToString());
                     }
@@ -242,35 +242,61 @@ namespace Cognitivo.Sales
                     item item = await SalesDB.db.items.FindAsync(sbxItem.ItemID);
                     item_product item_product = item.item_product.FirstOrDefault();
 
-                    if (item_product != null && item_product.can_expire)
+                    if (item.id_item_type == item.item_type.ItemReceipe)
                     {
-                        //If Item can Expire, then show panel
-                        crud_modalExpire.Visibility = Visibility.Visible;
-                        cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(sales_invoice.id_branch, null, item.item_product.FirstOrDefault().id_item_product);
-                        crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
-                    }
-                    else
-                    {
-                        //If Item is normal, then directly insert with QuantityInStock.
-                        decimal QuantityInStock = sbxItem.QuantityInStock;
-                        sales_invoice_detail _sales_invoice_detail =
-                              SalesDB.Create_Detail(ref sales_invoice, item, null,
-                                new Settings().AllowDuplicateItem,
-                                sbxItem.QuantityInStock,
-                                sbxItem.Quantity);
-                        if (sales_invoice.Location != null)
+                        item_recepie ItemReceipe = item.item_recepie.FirstOrDefault();
+                        if (ItemReceipe != null)
                         {
-                            _sales_invoice_detail.id_location = sales_invoice.Location.id_location;
+                            foreach (item_recepie_detail item_recepie_detail in ItemReceipe.item_recepie_detail)
+                            {
+                                OpenExpireModal(ref sales_invoice, item_recepie_detail.item, sales_invoice.id_branch, SalesSettings.AllowDuplicateItem);
+                            }
                         }
 
                     }
-
-                    sales_invoiceViewSource.View.Refresh();
-                    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                    paymentViewSource.View.Refresh();
+                    else
+                    {
+                        OpenExpireModal(ref sales_invoice, item, sales_invoice.id_branch, SalesSettings.AllowDuplicateItem);
+                    }
                 }
             }
+        }
+
+        private void OpenExpireModal(ref sales_invoice sales_invoice, item item, int id_branch, bool AllowDuplicateItem)
+        {
+
+
+            item_product item_product = item.item_product.FirstOrDefault();
+            if (item_product != null && item_product.can_expire)
+            {
+                System.Windows.Controls.Grid crudGrid = new Grid();
+                crudGrid.Visibility = Visibility.Visible;
+                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(id_branch, null, item.item_product.FirstOrDefault().id_item_product);
+                crudGrid.Children.Add(pnl_ItemMovementExpiry);
+                crudGrid.SetValue(Grid.RowProperty, 3);
+                crudGrid.SetValue(Grid.ColumnProperty, 2);
+                crudGrid.IsVisibleChanged += new DependencyPropertyChangedEventHandler(Expire_IsVisibleChanged);
+                MainGrid.Children.Add(crudGrid);
+            }
+            else
+            {
+                decimal QuantityInStock = sbxItem.QuantityInStock;
+                sales_invoice_detail _sales_invoice_detail =
+                      SalesDB.Create_Detail(ref sales_invoice, item, null,
+                        new Settings().AllowDuplicateItem,
+                        sbxItem.QuantityInStock,
+                        sbxItem.Quantity);
+                if (sales_invoice.Location != null)
+                {
+                    _sales_invoice_detail.id_location = sales_invoice.Location.id_location;
+                }
+
+
+            }
+            sales_invoiceViewSource.View.Refresh();
+            CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+            sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            paymentViewSource.View.Refresh();
         }
 
         #endregion SmartBox Selection
@@ -468,12 +494,13 @@ namespace Cognitivo.Sales
 
         private void Expire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
+            Grid crud_modal = sender as Grid;
+            if (crud_modal.Visibility == Visibility.Collapsed || crud_modal.Visibility == Visibility.Hidden)
             {
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 item item = SalesDB.db.items.Find(sbxItem.ItemID);
 
-                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
+                cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modal.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
 
                 if (item != null && item.id_item > 0 && sales_invoice != null)
                 {
@@ -485,18 +512,51 @@ namespace Cognitivo.Sales
                         item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
                         if (item_movement != null)
                         {
-                            decimal QuantityInStock = item_movement.avlquantity;
+                            if (item.id_item_type == item.item_type.ItemReceipe)
+                            {
+                                item_product item_product = SalesDB.db.item_product.Find(pnl_ItemMovementExpiry.ProductID);
+                                if (item_product != null)
+                                {
+                                    item_recepie ItemReceipe = item.item_recepie.FirstOrDefault();
+                                    if (ItemReceipe != null)
+                                    {
+                                        foreach (item_recepie_detail item_recepie_detail in ItemReceipe.item_recepie_detail)
+                                        {
+                                            if (item_recepie_detail.item.id_item == item_product.id_item)
+                                            {
+                                                decimal QuantityInStock = item_movement.avlquantity;
 
-                            sales_invoice_detail _sales_invoice_detail =
-                                  SalesDB.Create_Detail(ref sales_invoice, item, null,
-                                    SalesSettings.AllowDuplicateItem,
-                                    sbxItem.QuantityInStock,
-                                    sbxItem.Quantity);
-                            _sales_invoice_detail.Quantity_InStockLot = QuantityInStock;
-                            _sales_invoice_detail.batch_code = item_movement.code;
-                            _sales_invoice_detail.expire_date = item_movement.expire_date;
-                            //Update Grand Total
-                            (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+                                                sales_invoice_detail _sales_invoice_detail =
+                                                      SalesDB.Create_Detail(ref sales_invoice, item_recepie_detail.item, null,
+                                                        SalesSettings.AllowDuplicateItem,
+                                                        sbxItem.QuantityInStock,
+                                                        sbxItem.Quantity * item_recepie_detail.quantity);
+                                                _sales_invoice_detail.Quantity_InStockLot = QuantityInStock;
+                                                _sales_invoice_detail.batch_code = item_movement.code;
+                                                _sales_invoice_detail.expire_date = item_movement.expire_date;
+                                                //Update Grand Total
+                                                (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                decimal QuantityInStock = item_movement.avlquantity;
+
+                                sales_invoice_detail _sales_invoice_detail =
+                                      SalesDB.Create_Detail(ref sales_invoice, item, null,
+                                        SalesSettings.AllowDuplicateItem,
+                                        sbxItem.QuantityInStock,
+                                        sbxItem.Quantity);
+                                _sales_invoice_detail.Quantity_InStockLot = QuantityInStock;
+                                _sales_invoice_detail.batch_code = item_movement.code;
+                                _sales_invoice_detail.expire_date = item_movement.expire_date;
+                                //Update Grand Total
+                                (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+                            }
                         }
                     }
                 }
@@ -507,7 +567,7 @@ namespace Cognitivo.Sales
                 paymentViewSource.View.Refresh();
 
                 //Cleans for reuse.
-                crud_modalExpire.Children.Clear();
+                crud_modal.Children.Clear();
             }
         }
 

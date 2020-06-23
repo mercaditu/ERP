@@ -414,14 +414,19 @@ namespace Cognitivo.Sales
 
         private void OpenExpireModal(ref sales_invoice sales_invoice, item item,int id_branch,bool AllowDuplicateItem)
         {
-           
-            item_product item_product = item.item_product.FirstOrDefault();
-
+             
+             
+             item_product item_product = item.item_product.FirstOrDefault();
             if (item_product != null && item_product.can_expire)
             {
-                crud_modalExpire.Visibility = Visibility.Visible;
+                System.Windows.Controls.Grid crudGrid = new Grid();
+                crudGrid.Visibility = Visibility.Visible;
                 cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = new cntrl.Panels.pnl_ItemMovementExpiry(id_branch, null, item.item_product.FirstOrDefault().id_item_product);
-                crud_modalExpire.Children.Add(pnl_ItemMovementExpiry);
+                crudGrid.Children.Add(pnl_ItemMovementExpiry);
+                crudGrid.SetValue(Grid.RowProperty, 3);
+                crudGrid.SetValue(Grid.ColumnProperty, 2);
+                crudGrid.IsVisibleChanged += new DependencyPropertyChangedEventHandler(crud_modalExpire_IsVisibleChanged);
+                MainGrid.Children.Add(crudGrid);
             }
             else
             {
@@ -886,12 +891,15 @@ namespace Cognitivo.Sales
 
         private void crud_modalExpire_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (crud_modalExpire.Visibility == Visibility.Collapsed || crud_modalExpire.Visibility == Visibility.Hidden)
+            Grid crud_modal = sender as Grid;
+
+            if (crud_modal.Visibility == Visibility.Collapsed || crud_modal.Visibility == Visibility.Hidden)
             {
                 sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
                 item item = SalesDB.db.items.Find(sbxItem.ItemID);
+               
 
-                foreach (cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry in crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>())
+                foreach (cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry in crud_modal.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>())
                 {
                     if (item != null && item.id_item > 0 && sales_invoice != null)
                     {
@@ -900,11 +908,37 @@ namespace Cognitivo.Sales
                             item_movement item_movement = SalesDB.db.item_movement.Find(pnl_ItemMovementExpiry.MovementID);
 
                             Settings SalesSettings = new Settings();
-                            sales_invoice_detail _sales_invoice_detail = SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
-                            _sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
-                            sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                            sales_invoice.RaisePropertyChanged("GrandTotal");
-                        }
+                            if (item.id_item_type == item.item_type.ItemReceipe)
+                            {
+                                item_product item_product = SalesDB.db.item_product.Find(pnl_ItemMovementExpiry.ProductID);
+                                if(item_product !=null)
+                                {
+                                    item_recepie ItemReceipe = item.item_recepie.FirstOrDefault();
+                                    if (ItemReceipe != null)
+                                    {
+                                        foreach (item_recepie_detail item_recepie_detail in ItemReceipe.item_recepie_detail)
+                                        {
+                                            if(item_recepie_detail.item.id_item == item_product.id_item)
+                                            {
+                                                sales_invoice_detail _sales_invoice_detail = SalesDB.Create_Detail(ref sales_invoice, item_recepie_detail.item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity * item_recepie_detail.quantity);
+                                                _sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
+                                                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                                                sales_invoice.RaisePropertyChanged("GrandTotal");
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                sales_invoice_detail _sales_invoice_detail = SalesDB.Create_Detail(ref sales_invoice, item, item_movement, SalesSettings.AllowDuplicateItem, sbxItem.QuantityInStock, sbxItem.Quantity);
+                                _sales_invoice_detail.Quantity_InStockLot = item_movement.avlquantity;
+                                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                                sales_invoice.RaisePropertyChanged("GrandTotal");
+                            }
+                           
+                        } 
                         else
                         {
                             toolBar.msgWarning("Batch not selected correctly.");
@@ -914,10 +948,10 @@ namespace Cognitivo.Sales
 
                 //cntrl.Panels.pnl_ItemMovementExpiry pnl_ItemMovementExpiry = crud_modalExpire.Children.OfType<cntrl.Panels.pnl_ItemMovementExpiry>().FirstOrDefault();
 
-               
+
 
                 //Cleans for reuse.
-                //crud_modalExpire.Children.Clear();
+                crud_modal.Children.Clear();
             }
         }
 

@@ -47,7 +47,7 @@
                         Executed="DeleteCommandBinding_Executed" />
     </Page.CommandBindings>
 
-    <Grid DataContext="{StaticResource sales_invoiceViewSource}">
+    <Grid x:Name="MainGrid" DataContext="{StaticResource sales_invoiceViewSource}">
         <Grid Name="crud_modalExpire" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
 			  Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="Expire_IsVisibleChanged" />
         <Grid>

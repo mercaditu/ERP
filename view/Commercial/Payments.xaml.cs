@@ -119,13 +119,13 @@ namespace Cognitivo.Commercial
                     .Where(x => x.id_company == CurrentSession.Id_Company
                           && 
                           (
-                             x.payment_schedual.Where(y => y.id_purchase_invoice != null).Count() > 0
-                          ))
+                             x.payment_schedual.Where(y => y.id_purchase_invoice != null || y.id_purchase_order != null).Count() > 0
+                          )).OrderByDescending(x=>x.id_payment)
                           .Select(x => x.id_payment).ToList();
                 payment_detailMadeViewSource.View.Filter = i =>
                 {
                     payment payment = i as payment;
-                    if ( paymentid.Contains(payment.id_payment) )
+                    if (paymentid.Contains(payment.id_payment) )
                     {
                         if (id_contact > 0)
                         {
@@ -156,7 +156,7 @@ namespace Cognitivo.Commercial
             {
                 List<int?> paymentid = PaymentDB.payment_detail.Where(x => x.id_company == CurrentSession.Id_Company
                         && (
-                           x.payment_schedual.Where(y => y.id_sales_invoice != null).Count() > 0
+                           x.payment_schedual.Where(y => y.id_sales_invoice != null || y.id_sales_order != null).Count() > 0
                         )
                         ).Select(x => x.id_payment).ToList();
                 payment_detailReceive.View.Filter = i =>

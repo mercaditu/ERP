@@ -212,13 +212,18 @@ namespace entity
                                 child_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
                                 ModuleName = "PurchaseInvoice";
                             }
-
-                            ///
-                            if (payment_detail.payment_schedual.FirstOrDefault() != null)
+                            if (Parent_Schedual.id_purchase_order != null)
                             {
-                                child_schedual.id_purchase_order = payment_detail.payment_schedual.Select(x => x.id_purchase_order).FirstOrDefault();
+                                child_schedual.id_purchase_order = Parent_Schedual.id_purchase_order;
                                 ModuleName = "PurchaseOrder";
                             }
+
+                            /////
+                            //if (payment_detail.payment_schedual.FirstOrDefault() != null)
+                            //{
+                            //    child_schedual.id_purchase_order = payment_detail.payment_schedual.Select(x => x.id_purchase_order).FirstOrDefault();
+                            //    ModuleName = "PurchaseOrder";
+                            //}
 
                             ///
                             if (payment_detail.id_purchase_return != null)

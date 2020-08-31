@@ -98,7 +98,7 @@
                                                     Path=CognitivoKey,
                                                     Mode=TwoWay,
                                                     UpdateSourceTrigger=PropertyChanged
-                                                    }" IsReadOnly="True" Margin="8" Height="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your Password here."></TextBox>
+                                                    }" Margin="8" Height="128" Width="494" Style="{StaticResource input_textbox}" ToolTip="Place your Password here."></TextBox>
                         <TextBlock Text="{lex:Loc Information}" Style="{StaticResource text_HyperLinks}" MouseDown="ClickInformation"></TextBlock>
                         <Controls:ToggleSwitch OnLabel="Close" OffLabel="Open"  Click="ClickInformation"/>
                     </StackPanel>

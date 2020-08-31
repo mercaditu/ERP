@@ -30,7 +30,7 @@ namespace Cognitivo.Purchase
             await PurchasePackingListDB.purchase_packing.Where(a => a.id_company == CurrentSession.Id_Company).Include(x => x.contact).OrderByDescending(x => x.trans_date).Take(100).Skip(PageIndex).LoadAsync(); //.Include("purchase_packing_detail").LoadAsync();
             purchase_packingViewSource.Source = PurchasePackingListDB.purchase_packing.Local;
             purchase_packingpurchase_packinglist_detailViewSource = FindResource("purchase_packingpurchase_packing_detailViewSource") as CollectionViewSource;
-         
+
 
 
             CollectionViewSource app_branchViewSource = FindResource("app_branchViewSource") as CollectionViewSource;
@@ -286,7 +286,7 @@ namespace Cognitivo.Purchase
                             id_purchase_order_detail = _purchase_packing_detail.id_purchase_order_detail,
                             id_item = _purchase_packing_detail.id_item,
                             item = _purchase_packing_detail.item,
-                            verified_quantity = Quantity,
+                            verified_quantity = _purchase_packing_detail.quantity,
                             quantity = Quantity,
                             security_user = PurchasePackingListDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault(),
                             app_location = PurchasePackingListDB.app_location.Where(x => x.id_branch == purchase_packing.id_branch && x.is_active && x.is_default).FirstOrDefault(),
@@ -314,6 +314,11 @@ namespace Cognitivo.Purchase
 
                         }
 
+                        purchase_packingpurchase_packing_detailApprovedViewSource.Source = _purchase_packing_detail.child.ToList();
+                        if (purchase_packingpurchase_packing_detailApprovedViewSource.View != null)
+                        {
+                            purchase_packingpurchase_packing_detailApprovedViewSource.View.Refresh();
+                        }
                         purchase_packingpurchase_packinglist_detailViewSource.View.Refresh();
 
 
@@ -334,9 +339,9 @@ namespace Cognitivo.Purchase
                 if (purchase_packing.purchase_packing_detail.Count() > 0)
                 {
                     //This code should be in Selection Changed of DataGrid and after inserting new items.
-                    List< purchase_packing_detail> VerifiedItemList = purchase_packing.purchase_packing_detail
+                    List<purchase_packing_detail> VerifiedItemList = purchase_packing.purchase_packing_detail
                         .Where(x => x.verified_by == null)
-                     
+
                         .ToList();
 
                     GridVerifiedList.ItemsSource = VerifiedItemList;
@@ -569,7 +574,7 @@ namespace Cognitivo.Purchase
             }
         }
 
-       
+
 
         private void navPagination_btnFirstPage_Click(object sender)
         {

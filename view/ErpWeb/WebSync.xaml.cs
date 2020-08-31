@@ -68,9 +68,9 @@ namespace Cognitivo.ErpWeb
         {
             Cognitivo.Properties.Settings.Default.Save();
 
-            string key = Cognitivo.Properties.Settings.Default.CognitivoKey;
-            Cognitivo.API.Upload send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, Enums.SyncWith.Local);
-            Cognitivo.Properties.Settings.Default.CognitivoKey = send.getKey(Cognitivo.Properties.Settings.Default.UserName, Cognitivo.Properties.Settings.Default.Password, Enums.SyncWith.Local);
+            //string key = Cognitivo.Properties.Settings.Default.CognitivoKey;
+            //Cognitivo.API.Upload send = new Cognitivo.API.Upload(Cognitivo.Properties.Settings.Default.CognitivoKey, Enums.SyncWith.Local);
+            //Cognitivo.Properties.Settings.Default.CognitivoKey = send.getKey(Cognitivo.Properties.Settings.Default.UserName, Cognitivo.Properties.Settings.Default.Password, Enums.SyncWith.Local);
 
 
 
@@ -436,8 +436,8 @@ namespace Cognitivo.ErpWeb
                         cloudId = item.cloud_id != null ? (int)item.cloud_id : 0,
                         localId = item.id_item,
                         name = item.name,
-                        sku = item.code,
-                        shortDescription = item.description,
+                        code = item.code,
+                        longDescription = item.description,
                         barCode = item.code,
                         price = item.item_price.FirstOrDefault() != null ? item.item_price.FirstOrDefault().value : 0,
                         cost = item.unit_cost,

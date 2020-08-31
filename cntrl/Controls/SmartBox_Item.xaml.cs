@@ -307,7 +307,23 @@ namespace cntrl.Controls
             {
                 int BranchID = CurrentSession.Id_Branch;
                 string strstock = @"
-                                select  
+                                select Max(LocationID) as LocationID, 
+                           Max(Location) as Location,
+                           Max(BranchID) as BranchID,
+                           Max(MovementID) as MovementID,
+                           Max(MovementID) as MovementID,
+						   ItemID,
+                           Max(ProductID) as ProductID,
+                           Max(can_expire) as can_expire,
+                           Max(MovementRelID) as MovementRelID,
+                           Max(Cost) as Cost,
+                           sum(Quantity) as Quantity,
+                           Max(ConversionQuantity) as ConversionQuantity,
+                           Max(BatchCode) as BatchCode,
+                           Max(ExpiryDate) as ExpiryDate,
+                           Max(TransDate) as TransDate,
+                           Max(BarCode) as BarCode
+                            from(  select  
                                 l.id_location as LocationID
                                 , l.name as Location
                                 , l.id_branch as BranchID
@@ -333,7 +349,9 @@ namespace cntrl.Controls
                                 where im.id_company = {0} and l.id_branch = {1}
                                 group by im.id_movement
                                 HAVING (max(im.credit) - sum(IFNULL(child.debit,0))) > 0
-                                order by im.expire_date";
+                                 ) as i
+                                group by ItemID
+                                order by ExpiryDate";
 
                 strstock = String.Format(strstock, CurrentSession.Id_Company, BranchID);
 

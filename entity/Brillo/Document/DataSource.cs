@@ -7,6 +7,9 @@ using System.Data.Entity;
 using Humanizer;
 using entity.BrilloQuery;
 using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace entity.Brillo.Document
 {
@@ -392,6 +395,7 @@ CASE
                     contract = g.sales_budget != null ? g.sales_budget.app_contract != null ? g.sales_budget.app_contract.name != null ? g.sales_budget.app_contract.name : "" : "" : "",
                     condition = g.sales_budget != null ? g.sales_budget.app_condition != null ? g.sales_budget.app_condition.name != null ? g.sales_budget.app_condition.name : "" : "" : "",
                     number = g.sales_budget != null ? g.sales_budget.number != null ? g.sales_budget.number : "" : "",
+
                     comment = g.sales_budget != null ? g.sales_budget.comment != null ? g.sales_budget.comment : "" : "",
                     security_user_name = g.sales_budget != null ? g.sales_budget.security_user != null ? g.sales_budget.security_user.name != null ? g.sales_budget.security_user.name : "" : "" : "",
                     AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
@@ -705,8 +709,23 @@ CASE
 
         private string GetBarcode(string number)
         {
-            clsBarcode clsbarcode = new clsBarcode();
-            return clsbarcode.ConvertToBarcode(number);
+            BarcodeLib.Barcode b = new BarcodeLib.Barcode();
+            Image img = b.Encode(BarcodeLib.TYPE.CODE128, number, 250, 100);
+            using (var ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                ms.Position = 0;
+
+                var bi = new BitmapImage();
+                bi.BeginInit();
+                bi.CacheOption = BitmapCacheOption.OnLoad;
+                bi.StreamSource = ms;
+                bi.EndInit();
+                return Convert.ToBase64String(ms.ToArray());
+
+            }
+            //clsBarcode clsbarcode = new clsBarcode();
+            //return clsbarcode.ConvertToBarcode(number);
         }
 
         private string GetPacking(List<sales_packing_relation> sales_packing_relation)

@@ -284,7 +284,16 @@ namespace Cognitivo.Purchase
                 purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
                 if (purchase_order != null)
                 {
-                    Calculate_vat(sender, e);
+                    if (!purchase_order.is_read)
+                    {
+
+                        btnfinish.Content = "finalizado";
+                    }
+                    else
+                    {
+                        btnfinish.Content = "unfinalizado";
+                    }
+                    //Calculate_vat(sender, e);
                 }
             }
             catch (Exception ex)
@@ -431,11 +440,11 @@ namespace Cognitivo.Purchase
                 }
                 string Description = sbxItem.Text;
                 InvoiceSetting InvoiceSetting = new InvoiceSetting();
-                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, InvoiceSetting.AllowDuplicateItems, sbxItem.Quantity,Description));
+                Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_order, item, contact, InvoiceSetting.AllowDuplicateItems, sbxItem.Quantity, Description));
             }
         }
 
-        private void SelectProduct_Thread(object sender, EventArgs e, purchase_order purchase_order, item item, contact contact, bool AllowDuplicate, decimal quantity,string Description)
+        private void SelectProduct_Thread(object sender, EventArgs e, purchase_order purchase_order, item item, contact contact, bool AllowDuplicate, decimal quantity, string Description)
         {
             purchase_order_detail purchase_order_detail = new purchase_order_detail();
             purchase_order_detail.purchase_order = purchase_order;
@@ -739,7 +748,7 @@ namespace Cognitivo.Purchase
                     toolBar.msgWarning("Please check that Order is Approved Or Invoice Already Created...");
                 }
             }
-         
+
         }
 
 
@@ -759,6 +768,29 @@ namespace Cognitivo.Purchase
             purchase_orderViewSource = FindResource("purchase_orderViewSource") as CollectionViewSource;
             load_PrimaryDataThread();
         }
+        private void btnfinish_Click(object sender, RoutedEventArgs e)
+        {
+            purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
+            if (purchase_order != null)
+            {
+                {
+                    purchase_order.is_read = !purchase_order.is_read;
+                    PurchaseDB.db.SaveChanges();
+                    if (!purchase_order.is_read)
+                    {
+
+                        btnfinish.Content = "finalizado";
+                    }
+                    else
+                    {
+                        btnfinish.Content = "unfinalizado";
+                    }
+                }
+
+            }
+            
+        }
+
 
     }
 }

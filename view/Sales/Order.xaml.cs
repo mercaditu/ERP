@@ -286,6 +286,15 @@ namespace Cognitivo.Sales
                 sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
                 if (sales_order != null)
                 {
+                    if (!sales_order.is_read)
+                    {
+
+                        btnfinish.Content = "finalizado";
+                    }
+                    else
+                    {
+                        btnfinish.Content = "unfinalizado";
+                    }
                     Calculate_vat(sender, e);
                 }
             }
@@ -682,6 +691,25 @@ namespace Cognitivo.Sales
             Load_PrimaryDataThread( );
         }
 
-        
+        private void btnfinish_Click(object sender, RoutedEventArgs e)
+        {
+            sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
+            if(sales_order !=null)
+            {
+                sales_order.is_read = !sales_order.is_read;
+                   SalesDB.db.SaveChanges();
+                Load_PrimaryDataThread();
+                if (!sales_order.is_read)
+                {
+                    
+                    btnfinish.Content = "finalizado";
+                }
+                else
+                {
+                    btnfinish.Content = "unfinalizado";
+                }
+            }
+
+        }
     }
 }

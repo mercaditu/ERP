@@ -81,6 +81,7 @@ namespace entity.Controller.Sales
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
             predicate = predicate.And(x => x.is_archived == false);
+          
             predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Branch);
 
             //If FilterByTerminal is true, then will add aditional Where into query.

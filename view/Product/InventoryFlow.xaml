@@ -23,6 +23,7 @@
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Button Grid.Column="1" HorizontalAlignment="Left" Width="200" Click="Print_Click" Content="Print" />
         <Label Grid.Column="1" HorizontalAlignment="Right" Content="{lex:Loc InventoryFlow}" Style="{StaticResource H3}" />
         <Grid Grid.Column="0">
             <TextBox x:Name="txtsearch" Height="26" Margin="7,0" VerticalAlignment="Center" Padding="14,0,0,0" TextChanged="tbxSearch_TextChanged" />
@@ -35,10 +36,14 @@
                 <DataGridTextColumn Header="Item" Binding="{Binding item.name, Mode=OneWay}" IsReadOnly="True" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto"  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <StackPanel x:Name="stackFlow" Orientation="Horizontal" Background="{StaticResource appConfig}" CanHorizontallyScroll="True" CanVerticallyScroll="True">
+        <Canvas x:Name="PrintCanvas" Grid.Row="1" Grid.Column="1">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"   HorizontalAlignment="Left" VerticalAlignment="Top">
+          
+                <StackPanel x:Name="stackFlow" Orientation="Horizontal" Background="{StaticResource appConfig}" CanHorizontallyScroll="True" CanVerticallyScroll="True">
 
-            </StackPanel>
+                </StackPanel>
+         
         </ScrollViewer>
+        </Canvas>
     </Grid>
 </Page>

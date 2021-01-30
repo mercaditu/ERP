@@ -1,5 +1,6 @@
 ﻿using entity;
 using System.Linq;
+using System.Printing;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -75,6 +76,19 @@ namespace Cognitivo.Product
                     _InventoryFlow.SelectionChanged += Invnetoryflow_SelectionChanged;
                     stackFlow.Children.Add(_InventoryFlow);
                 }
+            }
+        }
+
+       
+
+        private void Print_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            PrintDialog dialog = new PrintDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                //Set PageOrientation to Landscape
+                dialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
+                dialog.PrintVisual(PrintCanvas, "My Canvas");
             }
         }
     }

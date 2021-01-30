@@ -643,6 +643,7 @@ namespace Cognitivo.ErpWeb
                  (x.contact.email != null || x.contact.email != ""))
                    .ToList();
 
+                
                 Dispatcher.BeginInvoke((Action)(() => salesMaximum.Text = salesinvoices.Count.ToString()));
                 Dispatcher.BeginInvoke((Action)(() => progSales.Value = 0));
                 int count = 0;

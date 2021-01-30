@@ -49,7 +49,7 @@
         <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="5" />
 
         <ListBox x:Name="purchase_orderDataGrid" Background="{StaticResource AccentColor_Brush}"
-				 ScrollViewer.VerticalScrollBarVisibility="Auto"
+				 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="Purchase_orderDataGrid_SelectionChanged"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
 				 ItemsSource="{Binding}" Grid.Row="1" Margin="0,0,0,35">
@@ -182,6 +182,9 @@
                             <Label Content="" Style="{StaticResource btn_Label}" />
                             <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
 								<Run Text="{lex:Loc Document}" /></Hyperlink></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
+                            <Button x:Name="btnfinish" Click="btnfinish_Click"></Button>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="" Style="{StaticResource btn_Label}" />

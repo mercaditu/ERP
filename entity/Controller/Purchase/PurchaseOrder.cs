@@ -28,7 +28,7 @@ namespace entity.Controller.Purchase
             var predicate = PredicateBuilder.True<purchase_order>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_archived == false);
-                    
+
             if (filterbyBranch)
             {
                 predicate = predicate.And(x => x.id_branch == CurrentSession.Id_Branch);

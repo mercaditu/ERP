@@ -6,6 +6,7 @@ using System.Linq;
 using MoreLinq;
 using entity.BrilloQuery;
 using System.Data;
+using System.Net.Mail;
 
 namespace entity.Controller.Sales
 {
@@ -498,9 +499,22 @@ namespace entity.Controller.Sales
                 {
                     location = app_branch.name;
                 }
-
-                if (invoice.contact != null)
+                bool isValid = false;
+                if (invoice.contact.email != null && invoice.contact.email != "")
                 {
+                    isValid = IsEmailValid(invoice.contact.email);
+                }
+
+                if (invoice.contact != null && isValid)
+                {
+
+             
+                    Cognitivo.API.Models.Customer customer = new Cognitivo.API.Models.Customer();
+                    customer.name = invoice.contact.name;
+                    customer.taxId = invoice.contact.gov_code;
+                    customer.telephone = invoice.contact.telephone;
+                    customer.email = invoice.contact.email;
+                    customer.address = invoice.contact.address;
 
                     Cognitivo.API.Models.Sales SyncInvoice = new Cognitivo.API.Models.Sales
                     {
@@ -514,7 +528,8 @@ namespace entity.Controller.Sales
                         locationName = location,
                         updatedAt = invoice.timestamp,
                         createdAt = invoice.timestamp,
-                        sentMail = true
+                        sentMail = true,
+                        customer = customer
                     };
 
                     if (invoice.status == Status.Documents_General.Approved)
@@ -559,10 +574,10 @@ namespace entity.Controller.Sales
                         //  Detail.item = SyncItem;
                         SyncInvoice.details.Add(Detail);
                     }
-                    if (SyncInvoice.customerCloudId > 0)
-                    {
+                    //if (SyncInvoice.customerCloudId > 0)
+                    //{
                         SyncInvoices.Add(SyncInvoice);
-                    }
+                    //}
                     Cognitivo.API.Upload send = new Cognitivo.API.Upload(key, synctype);
                     SyncInvoices = send.Transaction(slug, SyncInvoices.ToList()).OfType<object>().ToList();
                     foreach (Cognitivo.API.Models.Sales ResoponseData in SyncInvoices)
@@ -577,6 +592,18 @@ namespace entity.Controller.Sales
                     }
                     db.SaveChanges();
                 }
+            }
+        }
+        public bool IsEmailValid(string emailaddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
             }
         }
         /// <summary>

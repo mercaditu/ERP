@@ -199,6 +199,9 @@
                             <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="Print_Click">
 								<Run Text="{lex:Loc Document}" /></Hyperlink></TextBlock>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
+                            <Button x:Name="btnfinish" Click="btnfinish_Click"></Button>
+                        </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                     IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}"
 								    Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">

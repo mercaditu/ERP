@@ -36,14 +36,20 @@
                 <DataGridTextColumn Header="Item" Binding="{Binding item.name, Mode=OneWay}" IsReadOnly="True" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Canvas x:Name="PrintCanvas" Grid.Row="1" Grid.Column="1">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto"   HorizontalAlignment="Left" VerticalAlignment="Top">
-          
-                <StackPanel x:Name="stackFlow" Orientation="Horizontal" Background="{StaticResource appConfig}" CanHorizontallyScroll="True" CanVerticallyScroll="True">
 
-                </StackPanel>
-         
-        </ScrollViewer>
+
+        <Canvas  x:Name="PrintCanvas" Grid.Row="1" Grid.Column="1"  ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="Auto" Height="Auto">
+           
+                <Grid x:Name="topGrid" Width="{Binding ElementName=PrintCanvas, Path=ActualWidth}" Height="{Binding ElementName=PrintCanvas, Path=ActualHeight}">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"    HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel x:Name="stackFlow" Orientation="Horizontal" Background="{StaticResource appConfig}" CanHorizontallyScroll="True" CanVerticallyScroll="True">
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        
         </Canvas>
+        
+        
     </Grid>
 </Page>

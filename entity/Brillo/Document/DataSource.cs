@@ -579,6 +579,7 @@ CASE
                 packingList = g.sales_invoice != null ? g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()) : "" : "",
                 sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
                 unit_price_discount = g.discount,
+                location_name = g.app_location != null ? g.app_location.name :  "",
 
                 HasRounding = HasRounding,
 

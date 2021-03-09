@@ -24,6 +24,8 @@
 						(select sum(credit - debit) from payment_schedual where id_contact = contacts.id_contact && can_calculate = 1) as AccountPayable,
 						(select sum(debit - credit) from payment_schedual where id_contact = contacts.id_contact && can_calculate = 1) as AccountRecievable,
 						contacts.date_birth as DateOfBirth,
+						contacts.timestamp as TimeStamp,
+						contacts.trans_code_exp as TransCodeExp,
 						TIMESTAMPDIFF(YEAR,contacts.date_birth,CURDATE()) AS Age,
 						geo.name as Geography,
 						rep.name as SalesRep,
@@ -32,6 +34,7 @@
 						role.name as ContactRole,
 						curr.name as Currency,
 						cc.name as CostCenter,
+
 						if(contacts.gender is null, null, if(contacts.gender = 0, 'Male', 'Female')) as Gender
 
 						from contacts

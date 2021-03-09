@@ -178,6 +178,7 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
 
             sales_invoice sales_invoice = SalesDB.Create(SalesSettings.TransDate_Offset, false);
+            sales_invoice.id_sales_rep = CurrentSession.SalesReps.FirstOrDefault().id_sales_rep;
             sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
             app_document_range app_document_range = SalesDB.db.app_document_range.Where(x => x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PointOfSale && x.is_active).FirstOrDefault();
             if (app_document_range != null)
@@ -227,6 +228,17 @@ namespace Cognitivo.Sales
                     payment payment = paymentViewSource.View.CurrentItem as payment;
                     sales_invoice.id_contact = contact.id_contact;
                     sales_invoice.contact = contact;
+                  
+                    if (contact.id_contract !=null)
+                    {
+                        sales_invoice.id_contract = (int)contact.id_contract;
+                    }
+                    if (contact.id_sales_rep != null)
+                    {
+                        sales_invoice.id_sales_rep = contact.id_sales_rep;
+                    }
+                    sales_invoiceViewSource.View.Refresh();
+
                     payment.id_contact = contact.id_contact;
                 }
             }
@@ -315,6 +327,7 @@ namespace Cognitivo.Sales
             payment_typeViewSource.Source = SalesDB.db.payment_type.Local;
 
             cbxSalesRep.ItemsSource = CurrentSession.SalesReps;
+            
 
             CollectionViewSource app_currencyViewSource = FindResource("app_currencyViewSource") as CollectionViewSource;
             app_currencyViewSource.Source = CurrentSession.Currencies;
@@ -613,6 +626,9 @@ namespace Cognitivo.Sales
             }
         }
 
-
+        private void dgvSalesDetail_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            (sales_invoiceViewSource.View.CurrentItem as sales_invoice).RaisePropertyChanged("GrandTotal");
+        }
     }
 }

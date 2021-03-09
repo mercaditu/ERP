@@ -189,6 +189,7 @@ namespace cntrl
 
             reportDataSource1.Name = "DataSet1"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = ReportDt; //SalesDB.SalesByDate;
+            sfdatagrid.ItemsSource = ReportDt;
             reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream reportStream = assembly.GetManifestResourceStream(Report.Path);

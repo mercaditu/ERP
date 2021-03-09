@@ -30,7 +30,7 @@
         <SalesController:InvoiceController x:Key="SalesDB"/>
         <FinanceController:Payment x:Key="PaymentDB"/>
 
-        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
+        
         <converter:Bool2Color x:Key="Bool2Color" />
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
@@ -160,8 +160,8 @@
                                                  LocationID="{Binding Source={x:Static pref:Settings.Default}, Path=Location, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Viewbox>
                         <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True" CanUserDeleteRows="False"
-						                    Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
-						                    ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
+						                    Margin="64,160,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
+						                    ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" CellEditEnding="dgvSalesDetail_CellEditEnding"
                                             Foreground="Black" CellStyle="{StaticResource DataGridCellStyle}">
                             <DataGrid.RowStyle>
                                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
@@ -191,12 +191,16 @@
 
                                 </DataGridTextColumn>
                                 <!-- UnitPrice -->
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" 
 								    Binding="{Binding unit_price, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-								    Visibility="{Binding VATExcluded, Converter={StaticResource BoolToVisibility}, Source={x:Static pref:Settings.Default}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                                <DataGridTextColumn Binding="{Binding discount, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-								    Header="{lex:Loc Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" IsReadOnly="True"
-								    Visibility="{Binding VATExcluded, Converter={StaticResource BoolToVisibility}, Source={x:Static pref:Settings.Default}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+								   />
+
+                                <DataGridTextColumn Binding="{Binding DiscountPercentage_SubTotal_Vat,Mode=TwoWay, StringFormat={}{0:P}, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
+													   Header="{lex:Loc Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"  />
+                           
+
+
+                                
                                 <!-- UnitPrice_Vat -->
                                 <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 								Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"  IsReadOnly="True"
@@ -435,9 +439,9 @@
 						       Foreground="White" />
                     </Border>
                 </Grid>
-                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Source={x:Static entity:CurrentSession.UserRole}, Path=is_master, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BoolToVisibility}}">
+                <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
                     <Border VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Expander IsVisibleChanged="Expander_IsVisibleChanged" Header="{lex:Loc Settings}">
+                      
                             <StackPanel>
                                 <StackPanel.Background>
                                     <SolidColorBrush Color="White" Opacity="0.64"/>
@@ -480,8 +484,9 @@
                                         </ItemsPanelTemplate>
                                     </ComboBox.ItemsPanel>
                                 </ComboBox>
-                            </StackPanel>
-                        </Expander>
+                            
+                        </StackPanel>
+                      
                     </Border>
                 </Grid>
             </StackPanel>

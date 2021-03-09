@@ -88,7 +88,7 @@ namespace Cognitivo.Product
             {
                 //Set PageOrientation to Landscape
                 dialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
-                dialog.PrintVisual(PrintCanvas, "My Canvas");
+               // dialog.PrintVisual(PrintCanvas, "My Canvas");
             }
         }
     }

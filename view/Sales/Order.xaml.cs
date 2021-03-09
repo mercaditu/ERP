@@ -709,6 +709,7 @@ namespace Cognitivo.Sales
                     btnfinish.Content = "unfinalizado";
                 }
             }
+            MessageBox.Show("Orden de venta Finalizar or unfinalizado ..");
 
         }
     }

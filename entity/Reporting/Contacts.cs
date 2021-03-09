@@ -22,6 +22,8 @@ namespace entity.Reporting
         public decimal AccountPayable { get; set; }
         public decimal AccountRecievable { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public DateTime TimeStamp { get; set; }
+        public DateTime TransCodeExp { get; set; }
         public int Age { get; set; }
         public string Geography { get; set; }
         public string SalesRep { get; set; }

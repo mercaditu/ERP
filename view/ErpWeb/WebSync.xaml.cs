@@ -510,84 +510,84 @@ namespace Cognitivo.ErpWeb
                     Items = send.Item(slug, SyncItems.ToList()).OfType<object>().ToList();
 
                     Dispatcher.BeginInvoke((Action)(() => progItem.IsIndeterminate = true));
-                    foreach (Cognitivo.API.Models.Item ResoponseData in Items)
-                    {
+                    //foreach (Cognitivo.API.Models.Item ResoponseData in Items)
+                    //{
 
-                        if (ResoponseData.action == API.Enums.Action.CreateOnCloud)
-                        {
-                            item clouditem = items.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
-                            clouditem.cloud_id = ResoponseData.cloudId;
-                        }
-                        else if (ResoponseData.action == API.Enums.Action.UpdateOnLocal)
-                        {
-                            item clouditem = items.Where(x => x.id_item == ResoponseData.localId).FirstOrDefault();
-                            if (clouditem != null)
-                            {
-                                clouditem.cloud_id = ResoponseData.cloudId;
+                    //    if (ResoponseData.action == API.Enums.Action.CreateOnCloud)
+                    //    {
+                    //        item clouditem = items.Where(x => x.cloud_id == ResoponseData.cloudId).FirstOrDefault();
+                    //        clouditem.cloud_id = ResoponseData.cloudId;
+                    //    }
+                    //    else if (ResoponseData.action == API.Enums.Action.UpdateOnLocal)
+                    //    {
+                    //        item clouditem = items.Where(x => x.id_item == ResoponseData.localId).FirstOrDefault();
+                    //        if (clouditem != null)
+                    //        {
+                    //            clouditem.cloud_id = ResoponseData.cloudId;
 
-                                if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > clouditem.timestamp)
-                                {
-                                    clouditem.name = ResoponseData.name;
-                                    app_vat_group app_vat_group = db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatCloudId).FirstOrDefault();
-                                    if (app_vat_group != null)
-                                    {
-                                        clouditem.id_vat_group = app_vat_group.id_vat_group;
-                                    }
-                                    else
-                                    {
-                                        app_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                                        clouditem.id_vat_group = app_vat_group.id_vat_group;
-                                    }
-                                    clouditem.sku = ResoponseData.sku;
-                                }
-                            }
+                    //            if (Convert.ToDateTime(ResoponseData.updatedAt).ToUniversalTime() > clouditem.timestamp)
+                    //            {
+                    //                clouditem.name = ResoponseData.name;
+                    //                app_vat_group app_vat_group = db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatCloudId).FirstOrDefault();
+                    //                if (app_vat_group != null)
+                    //                {
+                    //                    clouditem.id_vat_group = app_vat_group.id_vat_group;
+                    //                }
+                    //                else
+                    //                {
+                    //                    app_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    //                    clouditem.id_vat_group = app_vat_group.id_vat_group;
+                    //                }
+                    //                clouditem.sku = ResoponseData.sku;
+                    //            }
+                    //        }
 
-                        }
+                    //    }
 
-                        else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
-                        {
-                            item clouditem = new item();
+                    //    else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
+                    //    {
+                    //        item clouditem = new item();
 
-                            clouditem.cloud_id = ResoponseData.cloudId;
-                            clouditem.name = ResoponseData.name;
-                            clouditem.id_item_type = item.item_type.Product;
+                    //        clouditem.cloud_id = ResoponseData.cloudId;
+                    //        clouditem.name = ResoponseData.name;
+                    //        clouditem.id_item_type = item.item_type.Product;
 
-                            app_vat_group app_vat_group = db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatCloudId).FirstOrDefault();
-                            if (app_vat_group != null)
-                            {
-                                clouditem.id_vat_group = app_vat_group.id_vat_group;
-                            }
-                            else
-                            {
-                                app_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-                                clouditem.id_vat_group = app_vat_group.id_vat_group;
-                            }
+                    //        app_vat_group app_vat_group = db.app_vat_group.Where(x => x.cloud_id == ResoponseData.vatCloudId).FirstOrDefault();
+                    //        if (app_vat_group != null)
+                    //        {
+                    //            clouditem.id_vat_group = app_vat_group.id_vat_group;
+                    //        }
+                    //        else
+                    //        {
+                    //            app_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    //            clouditem.id_vat_group = app_vat_group.id_vat_group;
+                    //        }
 
-                            clouditem.sku = ResoponseData.sku;
-                            item_price item_price = new item_price();
-                            item_price.id_price_list = (CurrentSession.PriceLists.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault() ?? CurrentSession.PriceLists.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault()).id_price_list;
-                            item_price.item = clouditem;
-                            item_price.value = Convert.ToDecimal(ResoponseData.price);
-                            app_currency app_currency = CurrentSession.Currencies.Where(x => x.code == ResoponseData.currencyCode).FirstOrDefault();
-                            if (app_currency != null)
-                            {
-                                item_price.id_currency = app_currency.id_currency;
+                    //        clouditem.sku = ResoponseData.sku;
+                    //        item_price item_price = new item_price();
+                    //        item_price.id_price_list = (CurrentSession.PriceLists.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault() ?? CurrentSession.PriceLists.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault()).id_price_list;
+                    //        item_price.item = clouditem;
+                    //        item_price.value = Convert.ToDecimal(ResoponseData.price);
+                    //        app_currency app_currency = CurrentSession.Currencies.Where(x => x.code == ResoponseData.currencyCode).FirstOrDefault();
+                    //        if (app_currency != null)
+                    //        {
+                    //            item_price.id_currency = app_currency.id_currency;
 
-                            }
-                            else
-                            {
-                                item_price.id_currency = CurrentSession.Currency_Default.id_currency;
-                            }
+                    //        }
+                    //        else
+                    //        {
+                    //            item_price.id_currency = CurrentSession.Currency_Default.id_currency;
+                    //        }
 
-                            clouditem.item_price.Add(item_price);
-                            db.items.Add(clouditem);
-                        }
+                    //        clouditem.item_price.Add(item_price);
+                    //        db.items.Add(clouditem);
+                    //    }
 
 
-                    }
+                    //}
 
                     Dispatcher.BeginInvoke((Action)(() => progItem.IsIndeterminate = false));
-                    db.SaveChanges();
+                   // db.SaveChanges();
                     // }
                 }
 
@@ -764,143 +764,143 @@ namespace Cognitivo.ErpWeb
                 {
                     ListSyncInvoices = send.Transaction(slug, SyncInvoices.Skip(i).Take(100).ToList()).OfType<object>().ToList();
                     Dispatcher.BeginInvoke((Action)(() => progSales.IsIndeterminate = true));
-                    foreach (Cognitivo.API.Models.Sales ResoponseData in ListSyncInvoices)
-                    {
+                    //foreach (Cognitivo.API.Models.Sales ResoponseData in ListSyncInvoices)
+                    //{
 
-                        if (ResoponseData.action == API.Enums.Action.CreateOnCloud)
-                        {
-                            sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.localId).FirstOrDefault();
-                            sales_invoice.cloud_id = ResoponseData.cloudId;
-                            sales_invoice.contact.cloud_id = ResoponseData.customerCloudId;
-                        }
-                        //else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
-                        //{
+                    //    if (ResoponseData.action == API.Enums.Action.CreateOnCloud)
+                    //    {
+                    //        sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.localId).FirstOrDefault();
+                    //        sales_invoice.cloud_id = ResoponseData.cloudId;
+                    //        sales_invoice.contact.cloud_id = ResoponseData.customerCloudId;
+                    //    }
+                    //    //else if (ResoponseData.action == API.Enums.Action.CreateOnLocal)
+                    //    //{
 
-                        //    sales_invoice sales_invoice = SalesDB.Create(0, false);
-                        //    sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
-                        //    app_document_range app_document_range = app_document_rangeList.FirstOrDefault();
-                        //    if (app_document_range != null)
-                        //    {
-                        //        sales_invoice.id_range = app_document_range.id_range;
-                        //        sales_invoice.RaisePropertyChanged("id_range");
-                        //        sales_invoice.app_document_range = app_document_range;
-                        //    }
-                        //    contact contact = SalesDB.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == ResoponseData.customerCloudId).FirstOrDefault();
-                        //    if (contact != null)
+                    //    //    sales_invoice sales_invoice = SalesDB.Create(0, false);
+                    //    //    sales_invoice.Location = CurrentSession.Locations.Where(x => x.id_location == Settings.Default.Location).FirstOrDefault();
+                    //    //    app_document_range app_document_range = app_document_rangeList.FirstOrDefault();
+                    //    //    if (app_document_range != null)
+                    //    //    {
+                    //    //        sales_invoice.id_range = app_document_range.id_range;
+                    //    //        sales_invoice.RaisePropertyChanged("id_range");
+                    //    //        sales_invoice.app_document_range = app_document_range;
+                    //    //    }
+                    //    //    contact contact = SalesDB.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == ResoponseData.customerCloudId).FirstOrDefault();
+                    //    //    if (contact != null)
 
-                        //    {
-                        //        sales_invoice.id_contact = contact.id_contact;
-                        //        sales_invoice.contact = contact;
+                    //    //    {
+                    //    //        sales_invoice.id_contact = contact.id_contact;
+                    //    //        sales_invoice.contact = contact;
 
-                        //    }
-
-
-                        //    sales_invoice.cloud_id = ResoponseData.cloudId;
-
-                        //    foreach (Cognitivo.API.Models.SalesDetail details in ResoponseData.details)
-                        //    {
-
-                        //        item item = SalesDB.db.items.Where(x => x.cloud_id == details.itemLocalId).FirstOrDefault();
-                        //        if (item != null)
-                        //        {
-                        //            sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail()
-                        //            {
-                        //                State = EntityState.Added,
-                        //                sales_invoice = sales_invoice,
-                        //                quantity = Convert.ToDecimal(details.quantity),
-                        //                unit_price = Convert.ToDecimal(details.price),
-                        //                Contact = sales_invoice.contact,
-                        //                item_description = item.name,
-                        //                item = item,
-                        //                id_item = item.id_item,
-                        //                id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group,
-                        //                cloud_id = details.cloudId
-
-                        //            };
-                        //            sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
-
-                        //        }
+                    //    //    }
 
 
+                    //    //    sales_invoice.cloud_id = ResoponseData.cloudId;
 
+                    //    //    foreach (Cognitivo.API.Models.SalesDetail details in ResoponseData.details)
+                    //    //    {
 
+                    //    //        item item = SalesDB.db.items.Where(x => x.cloud_id == details.itemLocalId).FirstOrDefault();
+                    //    //        if (item != null)
+                    //    //        {
+                    //    //            sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail()
+                    //    //            {
+                    //    //                State = EntityState.Added,
+                    //    //                sales_invoice = sales_invoice,
+                    //    //                quantity = Convert.ToDecimal(details.quantity),
+                    //    //                unit_price = Convert.ToDecimal(details.price),
+                    //    //                Contact = sales_invoice.contact,
+                    //    //                item_description = item.name,
+                    //    //                item = item,
+                    //    //                id_item = item.id_item,
+                    //    //                id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group,
+                    //    //                cloud_id = details.cloudId
 
-                        //    }
+                    //    //            };
+                    //    //            sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
 
-
-                        //    crm_opportunity crm_opportunity = new crm_opportunity()
-                        //    {
-                        //        id_contact = sales_invoice.id_contact,
-                        //        id_currency = sales_invoice.id_currencyfx,
-                        //        value = sales_invoice.GrandTotal
-                        //    };
-
-                        //    crm_opportunity.sales_invoice.Add(sales_invoice);
-                        //    SalesDB.db.crm_opportunity.Add(crm_opportunity);
-
-                        //    SalesDB.db.sales_invoice.Add(sales_invoice);
-                        //    db.db.contacts.Add(contact);
-                        //}
-                        else if (ResoponseData.action == API.Enums.Action.UpdateOnLocal)
-                        {
-
-                            sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.localId).FirstOrDefault();
-
-                            //contact contact = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == ResoponseData.customerCloudId).FirstOrDefault();
-                            //if (contact != null)
-
-                            //{
-                               // sales_invoice.id_contact = contact.id_contact;
-                                sales_invoice.contact.cloud_id = ResoponseData.customerCloudId;
-
-                            //}
-
-                            if (ResoponseData.status == API.Enums.Status.Approved && ResoponseData.date < DateTime.Now.AddMonths(-2))
-                            {
-                                sales_invoice.is_archived = true;
-                            }
-
-
-
-                            sales_invoice.cloud_id = ResoponseData.cloudId;
-
-                            foreach (Cognitivo.API.Models.SalesDetail details in ResoponseData.details)
-                            {
-
-                                item item = db.db.items.Where(x => x.cloud_id == details.itemLocalId).FirstOrDefault();
-                                if (item != null)
-                                {
-                                    sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail()
-                                    {
-                                        State = EntityState.Added,
-                                        sales_invoice = sales_invoice,
-                                        quantity = Convert.ToDecimal(details.quantity),
-                                        unit_price = Convert.ToDecimal(details.price),
-                                        Contact = sales_invoice.contact,
-                                        item_description = item.name,
-                                        item = item,
-                                        id_item = item.id_item,
-                                        id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group,
-                                        cloud_id = details.cloudId
-
-                                    };
-                                    sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
-
-                                }
+                    //    //        }
 
 
 
 
 
-                            }
+                    //    //    }
+
+
+                    //    //    crm_opportunity crm_opportunity = new crm_opportunity()
+                    //    //    {
+                    //    //        id_contact = sales_invoice.id_contact,
+                    //    //        id_currency = sales_invoice.id_currencyfx,
+                    //    //        value = sales_invoice.GrandTotal
+                    //    //    };
+
+                    //    //    crm_opportunity.sales_invoice.Add(sales_invoice);
+                    //    //    SalesDB.db.crm_opportunity.Add(crm_opportunity);
+
+                    //    //    SalesDB.db.sales_invoice.Add(sales_invoice);
+                    //    //    db.db.contacts.Add(contact);
+                    //    //}
+                    //    else if (ResoponseData.action == API.Enums.Action.UpdateOnLocal)
+                    //    {
+
+                    //        sales_invoice sales_invoice = db.db.sales_invoice.Where(x => x.id_sales_invoice == ResoponseData.localId).FirstOrDefault();
+
+                    //        //contact contact = db.db.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.cloud_id == ResoponseData.customerCloudId).FirstOrDefault();
+                    //        //if (contact != null)
+
+                    //        //{
+                    //           // sales_invoice.id_contact = contact.id_contact;
+                    //            sales_invoice.contact.cloud_id = ResoponseData.customerCloudId;
+
+                    //        //}
+
+                    //        if (ResoponseData.status == API.Enums.Status.Approved && ResoponseData.date < DateTime.Now.AddMonths(-2))
+                    //        {
+                    //            sales_invoice.is_archived = true;
+                    //        }
 
 
 
-                        }
+                    //        sales_invoice.cloud_id = ResoponseData.cloudId;
+
+                    //        foreach (Cognitivo.API.Models.SalesDetail details in ResoponseData.details)
+                    //        {
+
+                    //            item item = db.db.items.Where(x => x.cloud_id == details.itemLocalId).FirstOrDefault();
+                    //            if (item != null)
+                    //            {
+                    //                sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail()
+                    //                {
+                    //                    State = EntityState.Added,
+                    //                    sales_invoice = sales_invoice,
+                    //                    quantity = Convert.ToDecimal(details.quantity),
+                    //                    unit_price = Convert.ToDecimal(details.price),
+                    //                    Contact = sales_invoice.contact,
+                    //                    item_description = item.name,
+                    //                    item = item,
+                    //                    id_item = item.id_item,
+                    //                    id_vat_group = CurrentSession.VAT_Groups.Where(x => x.is_default).FirstOrDefault().id_vat_group,
+                    //                    cloud_id = details.cloudId
+
+                    //                };
+                    //                sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
+
+                    //            }
 
 
-                    }
-                    db.db.SaveChanges();
+
+
+
+                    //        }
+
+
+
+                    //    }
+
+
+                    //}
+                   // db.db.SaveChanges();
 
 
                 }

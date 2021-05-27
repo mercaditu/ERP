@@ -104,12 +104,16 @@ namespace entity
             //{
             foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status == Status.Documents_General.Pending))
             {
-                Discount_Items_Origin(item_transfer_detail, MoveByTruck);
+                if (item_transfer_detail.quantity_origin >= item_transfer_detail.quantity_destination)
+                {
 
-                //transit
-                NumberOfRecords += 1;
-                //item_transfer.status = Status.Transfer.Transit;
-                //item_transfer.RaisePropertyChanged("status");
+                    Discount_Items_Origin(item_transfer_detail, MoveByTruck);
+
+                    //transit
+                    NumberOfRecords += 1;
+                    //item_transfer.status = Status.Transfer.Transit;
+                    //item_transfer.RaisePropertyChanged("status");
+                }
             }
             //  }
 
